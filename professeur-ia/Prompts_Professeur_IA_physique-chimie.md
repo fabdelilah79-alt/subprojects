@@ -1,6 +1,6 @@
 # Prompts — Professeur IA de physique-chimie
 
-Oct 2, 2026 · @abdelilah
+Oct 2, 2026 · @abdelilah · version 2
 
 ## Mode d'emploi
 
@@ -16,6 +16,7 @@ Donnez d'abord le prompt maître, puis les prompts d'étape un par un, en testan
 Ce qu'il faut avoir sous la main :
 
 - une clé d'API Claude (Anthropic) et une clé d'API Gemini (Google) ;
+- facultatif : une clé d'API ElevenLabs (le compte gratuit suffit), pour comparer deux voix à l'étape 5 ;
 - votre cours, au format texte ou Word ;
 - les extraits des orientations pédagogiques qui concernent ce cours ;
 - votre dossier de ressources (simulations, images, documents, figures) ;
@@ -38,7 +39,8 @@ Une application web où un professeur IA enseigne UN cours de physique-chimie à
 - L'élève saisit son nom et sa classe, choisit le cours, puis répond à un QCM diagnostique
   (réponse + justification + degré de certitude). Les questions sont rangées par partie du cours.
 - Le professeur explique au tableau : il parle (voix de synthèse) et écrit en même temps
-  en style manuscrit (texte, formules, schémas).
+  en style manuscrit (texte, formules, schémas). Chaque écrit commence au moment où
+  le mot qui lui correspond est prononcé.
 - Chaque partie du cours est sur un tableau différent. Les anciens tableaux restent consultables : c'est la trace écrite.
 - Chaque partie suit la démarche Prédiction -> Observation -> Explication (POE) : le prof recueille
   la prédiction de l'élève, montre une simulation, une image ou un document, puis explique au tableau.
@@ -58,20 +60,27 @@ Une application web où un professeur IA enseigne UN cours de physique-chimie à
 2. Le LECTEUR, dans le navigateur, joue la partition : voix + écriture + médias, synchronisés.
 3. La partition est le contrat entre les deux. Son format est défini dans schemas/partition.schema.json.
    Toute partition est validée par ce schéma avant d'être jouée.
+4. Synchronisation au mot : chaque action porte une ANCRE, un mot ou un groupe de mots recopié
+   à l'identique depuis texte_dit. Le code calcule l'instant debut_s où ce mot est prononcé,
+   et l'action démarre à cet instant. Les agents n'écrivent jamais de temps en secondes.
 
 ## Les agents (un fichier de code et un fichier de prompt par agent)
 - pedagogique : reçoit le cours, les orientations pédagogiques, le manifeste des ressources et le
   profil de l'élève. Produit le plan POE de la partie : objectif, conceptions visées, question de
   prédiction avec une réaction par réponse possible, ressource d'observation, points d'explication,
   trace écrite visée. La prédiction peut rappeler la réponse de l'élève au QCM.
-- voix : produit le texte oral découpé en beats. Les formules et unités sont écrites en toutes
-  lettres dans texte_dit (« U égale R fois I », « vingt milliampères »).
+- voix : produit le texte oral découpé en beats, en phrases courtes. Les formules, nombres et unités
+  sont écrits en toutes lettres dans texte_dit (« U égale R fois I », « vingt milliampères ») :
+  ni symbole, ni chiffre, ni abréviation. Pour chaque beat, il choisit un ton dans la liste de
+  config/voix.json (par exemple : neutre, enthousiaste, interrogatif, lent_et_clair, encourageant).
 - ecriture : pour chaque beat, uniquement ce qui doit être écrit ou dessiné, pas tout ce qui est dit.
-- architecture : choisit la zone, la couleur, le moment d'affichage des médias et les changements
-  de tableau. Il choisit des ZONES NOMMÉES, jamais des coordonnées : le code calcule les positions.
+  Chaque action reçoit son ancre : le mot de texte_dit au moment duquel elle commence.
+- architecture : choisit la zone, le moment d'affichage des médias et les changements de tableau.
+  Il choisit des ZONES NOMMÉES, jamais des coordonnées : le code calcule les positions.
+  La couleur découle du style ; l'agent peut seulement choisir un autre nom de la palette.
 - chef : vérifie la partition complète (exactitude scientifique, respect des orientations, démarche
-  POE, conceptions du profil traitées, cohérence voix/écriture). Il valide ou renvoie des corrections
-  précises à l'agent concerné. 2 tours de correction au maximum.
+  POE, conceptions du profil traitées, cohérence voix/écriture, ancres bien placées). Il valide ou
+  renvoie des corrections précises à l'agent concerné. 2 tours de correction au maximum.
 - repondeur : répond aux questions de la main levée, en restant dans le programme.
 Le profil de l'élève est calculé par du code simple à partir du QCM : chaque mauvaise réponse
 est étiquetée avec une conception. Pas d'IA pour cela.
@@ -84,31 +93,50 @@ est étiquetée avec une conception. Pas d'IA pour cela.
   Schémas : SVG tracé trait par trait, aspect fait main avec Rough.js, à partir d'une bibliothèque
   d'éléments (pile, lampe, résistance, bécher, flèche...).
 - Modèles de langage : API Claude d'Anthropic avec les sorties structurées (schéma JSON).
-  Modèles dans config/modeles.json : pedagogique et chef -> claude-opus-5-5 ;
+  Modèle et niveau d'effort de chaque agent dans config/modeles.json : pedagogique et chef -> claude-opus-5-5 ;
   voix, ecriture, architecture -> claude-sonnet-5-5 ; repondeur -> claude-haiku-4-5-20251001.
-- Voix : Gemini TTS de Google. gemini-3.8-flash-tts pour le cours, gemini-3.8-flash-lite-tts pour
-  le répondeur. Un audio par beat ; sa durée est enregistrée dans la partition.
-  Synchronisation par beat : l'écriture du beat commence avec son audio et se termine avant la fin.
-- La voix passe par une interface unique (serveur/voix/synthese.py) pour pouvoir changer de
-  fournisseur sans toucher au reste.
+  Le contexte stable (cours, orientations, manifeste, partition modèle) est placé en tête de chaque
+  appel et mis en cache (cache de prompt) : moins cher et plus rapide d'une partie à l'autre.
+  Si l'API refuse de répondre (refus), journalise-le et applique le repli prévu par la documentation.
+- Voix : Gemini 3.8 Flash TTS de Google (version stable). gemini-3.8-flash-tts pour le cours,
+  gemini-3.8-flash-lite-tts (plus rapide) pour le répondeur, avec la même voix.
+  Un audio par beat et par branche de prédiction ; sa durée est enregistrée dans la partition.
+  Fournisseur, modèles, voix, consigne de style et traduction de chaque ton : dans config/voix.json.
+- La voix passe par une interface unique (serveur/voix/synthese.py) :
+  texte + ton (+ texte avant et après, facultatif) -> fichier audio + durée + temps des mots (si disponibles).
+  Deux implémentations derrière cette interface :
+  gemini_tts.py, par défaut : très bonne qualité, peu coûteux, mais ne donne pas le temps des mots ;
+  elevenlabs_tts.py : Eleven v4, donne le temps de chaque caractère et enchaîne l'intonation
+  d'un beat à l'autre, mais coûte nettement plus cher.
+  Le fournisseur est choisi à l'étape 5, à l'écoute, avec des élèves.
+- Ancrage (serveur/voix/ancrage.py) : debut_s = temps réel du mot si le fournisseur le donne,
+  sinon estimation proportionnelle au nombre de caractères qui précèdent l'ancre.
+  L'écriture avance à une vitesse réaliste (config/tableau.json). Si elle dure plus longtemps
+  que la parole, le beat suivant attend la fin de l'écriture, comme un vrai professeur.
+- Cache audio : un même texte, avec la même voix et le même ton, n'est généré qu'une fois.
+- Contrôle de l'audio : si le débit (caractères par seconde) sort de la plage fixée dans
+  config/voix.json, l'audio est régénéré (2 fois au maximum), puis signalé.
 - Ces API sont récentes. Avant de coder un appel, lis la documentation officielle à jour :
   Claude : https://platform.claude.com/docs
   Gemini TTS : https://ai.google.dev/gemini-api/docs/speech-generation
+  ElevenLabs : https://elevenlabs.io/docs/api-reference/text-to-speech/convert-with-timestamps
   Ne te fie pas à ta mémoire.
 - Stockage : fichiers JSON pour les partitions, SQLite pour le journal de recherche.
   Clés d'API dans .env, jamais dans le code.
 
 ## RÈGLES DE STRUCTURE DU CODE (obligatoires à chaque étape)
 1. Un fichier = une seule responsabilité, décrite en une phrase.
-2. 150 lignes maximum par fichier (viser 50 à 120). 30 lignes maximum par fonction.
+2. 150 lignes maximum par fichier de code (viser 50 à 120). 30 lignes maximum par fonction.
+   Ces limites ne s'appliquent ni aux schémas JSON, ni aux prompts, ni aux fichiers .md.
    Si une limite est dépassée, découpe AVANT de continuer.
 3. Noms explicites en français, sans accents : generer_partie, jouer_beat, onglets.js.
 4. En tête de chaque fichier, un commentaire en français : Rôle / Reçoit / Produit / Utilisé par.
 5. Chaque fonction commence par une phrase en français qui dit ce qu'elle fait.
-6. Aucune valeur en dur : couleurs, zones, modèles, durées, chemins -> dans config/.
+6. Aucune valeur en dur : couleurs, zones, modèles, voix, durées, vitesses, chemins -> dans config/.
 7. Les prompts des agents sont dans prompts/*.md, jamais dans le code :
    je dois pouvoir les modifier sans toucher au code.
 8. Un seul fichier parle à l'API Claude (serveur/agents/appel_ia.py).
+   Un seul fichier par fournisseur de voix (serveur/voix/).
    Un seul fichier parle au serveur depuis le navigateur (client/js/api.js).
 9. Aucune nouvelle bibliothèque sans me la proposer et m'expliquer pourquoi.
 10. Pas de code « pour plus tard » : seulement ce que demande l'étape en cours.
@@ -145,7 +173,8 @@ prof-ia/
     routes/                une route par fichier : eleve.py, qcm.py, parties.py, questions.py
     agents/                appel_ia.py + un fichier par agent
     pipeline/              orchestrateur.py (enchaîne les agents), file_attente.py (arrière-plan)
-    voix/                  synthese.py (interface), gemini_tts.py
+    voix/                  synthese.py (interface), gemini_tts.py, elevenlabs_tts.py,
+                           ancrage.py, cache_audio.py
     eleve/                 pseudonymes.py, profil.py
     donnees/               stockage.py, journal_recherche.py
     tests/
@@ -162,29 +191,40 @@ prof-ia/
   sorties/
     parties/               partitions générées + audio, par élève
     valide/                parties validées par l'enseignant (mode figé)
+    cache_audio/           audios déjà générés, réutilisés
+    comparaison_voix/      extraits d'écoute pour choisir la voix (étape 5)
     journaux/              données de recherche
 
 ## Format de la partition (résumé ; le schéma complet est dans schemas/)
-Partie : numero, tableau, titre, beats[].
-Beat : id, phase (prediction | observation | explication | synthese), texte_dit,
+Partie : numero, tableau, titre, generation (modèles, empreinte des prompts, fournisseur et voix, date), beats[].
+Beat : id, phase (prediction | observation | explication | synthese), texte_dit, ton,
        audio (fichier), duree_s, actions[].
+Chaque action, sauf pause et nouveau_tableau, porte aussi :
+- ancre : mot ou groupe de mots recopié de texte_dit ; s'il apparaît plusieurs fois,
+  c'est la première occurrence après l'ancre précédente ;
+- debut_s : calculé par le code, jamais écrit par un agent.
 Types d'action :
-- ecrire : zone, texte, couleur, style (titre | normal | a_retenir)
-- formule : zone, latex, couleur
+- ecrire : zone, texte, style (titre | normal | a_retenir), couleur (facultative)
+- formule : zone, latex, style (normal | a_retenir), couleur (facultative)
 - dessiner : element (nom dans la bibliothèque), zone, parametres
 - media : ressource (id du manifeste), plein_ecran (oui/non), consigne, attendre ("clic_termine")
 - prediction : question, choix[], justifier (oui/non),
-               branches (une courte réaction orale par choix, avec son audio)
+               branches (une courte réaction orale par choix, avec son audio et sa durée)
 - pause : duree_s
 - nouveau_tableau : titre
+Couleur : par défaut, déduite du style ou du type d'action (config/tableau.json) ;
+si elle est donnée, c'est un nom de la palette, jamais un code couleur.
 Jamais d'effacement : la trace écrite reste.
 
 ## Recherche et données
 - Dès l'accueil, le nom de l'élève est remplacé par un pseudonyme (E001, E002...).
   La correspondance nom <-> pseudonyme est stockée à part. Le nom n'est jamais envoyé à une API.
+- L'accueil indique clairement que le professeur, sa voix et ses écrits sont produits par une IA.
 - Événements enregistrés avec horodatage : réponses au QCM (choix, justification, certitude, temps),
   prédictions, ouverture d'un média, plein écran, durée de manipulation, questions et réponses,
   retours aux anciens tableaux, fin de chaque partie, post-test.
+- Chaque partition jouée est conservée avec le pseudonyme de l'élève : on sait exactement ce qu'il
+  a vu et entendu, avec quels modèles, quelle voix et quelle version des prompts (bloc generation).
 - Deux modes dans config/application.json :
   « adaptatif » : parties générées pour chaque élève ;
   « fige » : parties validées par l'enseignant, chargées depuis sorties/valide/, identiques pour tous.
@@ -209,7 +249,7 @@ Objectif : un projet qui démarre et affiche une page, rien de plus.
 - Crée la page d'accueil (nom, classe, choix du cours), qui ne fait encore rien.
 - Crée .env.exemple (noms des clés, sans valeurs), requirements.txt et un README court :
   installer, lancer, arrêter.
-- Crée outils/verifier_structure.py : il liste les fichiers de plus de 150 lignes
+- Crée outils/verifier_structure.py : il liste les fichiers de code de plus de 150 lignes
   et les fonctions de plus de 30 lignes.
 ```
 
@@ -224,15 +264,17 @@ Objectif : définir le format de la partition et disposer d'une partie 1 modèle
 - Écris schemas/manifeste.schema.json, puis propose contenu/manifeste.json en listant les fichiers
   de contenu/ressources/ (id, type, fichier, description, phase POE, ce qui est manipulable).
   Laisse les descriptions à compléter par moi quand tu ne peux pas deviner.
-- Écris schemas/partition.schema.json d'après le résumé de CLAUDE.md. Explique chaque champ en une ligne.
-- Écris outils/valider_partition.py : il vérifie une partition et affiche les erreurs en français.
+- Écris schemas/partition.schema.json d'après le résumé de CLAUDE.md, ancres et ton compris.
+  Explique chaque champ en une ligne.
+- Écris outils/valider_partition.py : il vérifie une partition (schéma, puis chaque ancre présente
+  dans le texte_dit de son beat, dans l'ordre des actions) et affiche les erreurs en français.
 - Lis contenu/cours/[nom du fichier] et propose un BROUILLON de partie 1 dans
-  sorties/valide/partie_1.json : 8 à 12 beats, démarche POE, ressources prises dans le manifeste.
-  Pas encore d'audio.
+  sorties/valide/partie_1.json : 8 à 12 beats, démarche POE, ressources prises dans le manifeste,
+  une ancre par action. Pas encore d'audio.
 Je corrigerai ce brouillon moi-même : il servira d'exemple aux agents.
 ```
 
-Test attendu : le validateur affiche que partie\_1.json est valide. Relisez ensuite le brouillon et corrigez vous-même le contenu scientifique, la démarche et la trace écrite.
+Test attendu : le validateur affiche que partie\_1.json est valide. Relisez ensuite le brouillon et corrigez vous-même le contenu scientifique, la démarche, la trace écrite et la place des ancres : chaque écrit doit commencer sur le bon mot.
 
 ### Étape 3 — Le tableau : texte, formules, onglets
 
@@ -241,15 +283,18 @@ Test attendu : le validateur affiche que partie\_1.json est valide. Relisez ensu
 Objectif : jouer la partition modèle au tableau, sans voix.
 À faire :
 - Tableau SVG fond vert foncé. Zones définies dans config/tableau.json : titre, gauche, droite,
-  a_retenir, cadre_media. Couleurs de craie : titres jaunes, texte blanc, à retenir rouge,
-  schémas bleu clair.
+  a_retenir, cadre_media. Palette de craie nommée dans config/tableau.json : titres jaunes,
+  texte blanc, à retenir rouge, schémas bleu clair. La couleur se déduit du style.
 - Écriture manuscrite animée pour l'action ecrire. Essaie Vara.js et montre-moi le rendu
   de é, è, à, ç, ô. Sinon, police manuscrite révélée progressivement.
+  Vitesse d'écriture réaliste, réglable dans config/tableau.json.
 - Formules KaTeX + mhchem révélées de gauche à droite.
 - Onglets Tableau 1, 2, 3... : nouveau_tableau crée un onglet ; les anciens restent consultables.
 - Si une zone est pleine, signale-le dans la console. Jamais de chevauchement.
 - Page client/demo_tableau.html avec boutons Lecture, Pause, Beat suivant, qui joue
-  sorties/valide/partie_1.json avec une durée fixe de 4 secondes par beat.
+  sorties/valide/partie_1.json avec une durée fixe de 4 secondes par beat. Sans audio, les actions
+  d'un beat sont réparties dans l'ordre sur ces 4 secondes ; si l'écriture dure plus longtemps,
+  le beat suivant attend.
 ```
 
 Test attendu : le titre, le texte et les formules s'écrivent beat par beat, dans les bonnes zones et couleurs, avec les accents bien affichés.
@@ -274,20 +319,32 @@ Test attendu : chaque élément se dessine lisiblement, dans le style craie, et 
 
 ```text
 Étape 5 — La voix. Respecte toutes les règles de CLAUDE.md.
-Objectif : le prof parle et écrit en même temps.
+Objectif : le prof parle et écrit en même temps, chaque écrit commençant sur le bon mot.
 À faire :
-- Lis d'abord la documentation à jour : https://ai.google.dev/gemini-api/docs/speech-generation
-- serveur/voix/synthese.py : interface (texte, style -> fichier audio + durée).
-  serveur/voix/gemini_tts.py : implémentation avec gemini-3.8-flash-tts.
-  Voix et style dans config/voix.json.
-- outils/generer_audio.py : génère l'audio de chaque beat et de chaque branche de prédiction
-  d'une partition, puis enregistre le fichier et la durée dans la partition.
-- Lecteur : chaque beat joue son audio. L'écriture démarre avec l'audio et se termine à 80 %
-  de sa durée (valeur dans config/tableau.json). Le beat suivant démarre à la fin de l'audio.
-- Génère le même beat avec 3 voix françaises différentes pour que je choisisse.
+- Lis d'abord la documentation à jour :
+  Gemini TTS : https://ai.google.dev/gemini-api/docs/speech-generation
+  ElevenLabs : https://elevenlabs.io/docs/api-reference/text-to-speech/convert-with-timestamps
+- serveur/voix/synthese.py : interface (texte, ton, texte avant et après facultatifs
+  -> fichier audio + durée + temps des mots si disponibles). Elle contrôle le débit de l'audio
+  et le régénère s'il sort de la plage de config/voix.json (2 fois au maximum).
+- serveur/voix/gemini_tts.py : gemini-3.8-flash-tts. Le ton devient une consigne de style.
+- serveur/voix/elevenlabs_tts.py : modèle Eleven v4, avec le temps de chaque caractère
+  et l'enchaînement avec le beat précédent et le beat suivant. Seulement si une clé ElevenLabs
+  est présente dans .env ; sinon, ne le crée pas et dis-le-moi.
+- serveur/voix/cache_audio.py : un même texte, avec la même voix et le même ton, n'est généré qu'une fois.
+- serveur/voix/ancrage.py : calcule debut_s de chaque action à partir de son ancre
+  (temps réels des mots, ou estimation proportionnelle au nombre de caractères).
+- outils/generer_audio.py : génère l'audio de chaque beat et de chaque branche de prédiction,
+  enregistre fichier, durée et debut_s dans la partition, puis affiche le coût estimé.
+- Lecteur : chaque action démarre à son debut_s, et l'écriture avance à la vitesse de
+  config/tableau.json. Le beat suivant démarre quand l'audio ET l'écriture sont terminés,
+  après une courte pause réglable.
+- Comparaison à l'aveugle : génère le même passage de 3 beats consécutifs avec 2 voix Gemini
+  et 2 voix ElevenLabs (si la clé existe) dans sorties/comparaison_voix/, sous des noms neutres
+  (A, B, C, D). La correspondance entre lettre et voix est dans un fichier à part.
 ```
 
-Test attendu : la partie 1 est jouée avec la voix, et l'écriture suit la parole. Choisissez la voix avec 2 ou 3 élèves.
+Test attendu : la partie 1 est jouée avec la voix, et chaque formule commence à s'écrire quand le prof la prononce. Faites écouter A, B, C, D à 2 ou 3 élèves sans leur dire qui est qui : la voix est-elle naturelle, claire, identique d'un beat à l'autre ? Notez le fournisseur et la voix retenus dans config/voix.json.
 
 ### Étape 6 — Médias et prédictions
 
@@ -313,7 +370,8 @@ Test attendu : la simulation passe en plein écran, la lecture attend « J'ai te
 Objectif : de l'accueil jusqu'au profil de l'élève.
 À faire :
 - Accueil : nom, classe, choix du cours. Le nom est remplacé tout de suite par un pseudonyme
-  (serveur/eleve/pseudonymes.py).
+  (serveur/eleve/pseudonymes.py). Un court message indique que le professeur, sa voix
+  et ses écrits sont produits par une IA.
 - Écris schemas/qcm.schema.json, puis qcm.html qui lit contenu/qcm/qcm.json : une question à la fois,
   choix + justification + certitude (« Je devine », « Assez sûr », « Certain »), temps de réponse mesuré.
   Chaque question indique sa partie ; chaque mauvais choix indique la conception qu'il révèle.
@@ -331,17 +389,21 @@ Test attendu : après le QCM, un fichier de profil apparaît dans sorties/ avec 
 Étape 8 — Les agents IA. Respecte toutes les règles de CLAUDE.md.
 Objectif : générer automatiquement la partition d'une partie à partir du cours, du profil et du manifeste.
 À faire :
-- Lis d'abord la documentation à jour des sorties structurées :
+- Lis d'abord la documentation à jour des sorties structurées et du cache de prompt :
   https://platform.claude.com/docs/en/build-with-claude/structured-outputs
-- appel_ia.py : seul point d'appel à l'API. Modèle lu dans config/modeles.json, sortie validée
-  par un schéma, 2 nouvelles tentatives en cas d'erreur.
+  https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+- appel_ia.py : seul point d'appel à l'API. Modèle et effort lus dans config/modeles.json,
+  contexte stable mis en cache, sortie validée par un schéma, 2 nouvelles tentatives en cas d'erreur,
+  refus journalisés.
 - Un fichier par agent dans serveur/agents/. Chaque agent lit son prompt dans prompts/ et reçoit
   la partition modèle (sorties/valide/partie_1.json) comme exemple.
 - Rédige un premier brouillon de chaque fichier de prompts/ ; je les relirai et les corrigerai.
 - orchestrateur.py : pedagogique -> voix -> ecriture -> architecture -> chef
-  -> corrections (2 tours maximum) -> audio -> validation par le schéma.
+  -> corrections (2 tours maximum) -> validation par le schéma -> audio (plusieurs beats à la fois,
+  nombre maximal dans config/application.json) -> ancrage -> validation finale.
+  La partition reçoit son bloc generation (modèles, empreinte des prompts, fournisseur et voix, date).
 - outils/generer_partie.py (numéro de la partie en paramètre) : lance toute la chaîne en ligne de commande
-  et affiche la durée et le coût estimé de chaque agent.
+  et affiche la durée et le coût estimé de chaque agent et de la voix.
 ```
 
 Test attendu : une partition de la partie 1 est générée et valide. Comparez-la à votre partition modèle, puis améliorez les prompts des agents dans prompts/.
@@ -376,12 +438,13 @@ Objectif : l'élève pose des questions, le prof y répond au bon moment.
   Les questions sont mises en file.
 - À la fin de la phase d'explication en cours, le prof dit qu'il a vu la question, puis l'agent
   repondeur répond. Contexte : partie en cours + contenu du tableau + orientations.
-- Réponse orale (gemini-3.8-flash-lite-tts) + écriture courte dans une zone « brouillon »,
-  séparée de la trace écrite.
+- Réponse orale avec le modèle rapide de config/voix.json (gemini-3.8-flash-lite-tts, ou son
+  équivalent si un autre fournisseur a été retenu) et la même voix que le cours,
+  + écriture courte dans une zone « brouillon », séparée de la trace écrite.
 - Question hors programme : réponse courte et bienveillante, puis retour au cours.
 ```
 
-Test attendu : une question posée pendant la partie est traitée après l'explication, avec la voix et une écriture dans la zone brouillon.
+Test attendu : une question posée pendant la partie est traitée après l'explication, avec la même voix que le cours et une écriture dans la zone brouillon.
 
 ### Étape 11 — Journal de recherche et post-test
 
@@ -393,11 +456,11 @@ Objectif : recueillir les données de recherche.
   avec le pseudonyme et l'horodatage.
 - À la fin du cours, pose le post-test : contenu/qcm/qcm_post.json
   [mêmes questions que le diagnostic, ou version parallèle].
-- outils/exporter_donnees.py : exporte en CSV, un fichier par type d'événement,
-  prêt pour l'analyse statistique.
+- outils/exporter_donnees.py : exporte en CSV, un fichier par type d'événement, plus un fichier
+  qui relie chaque élève aux partitions qu'il a suivies (bloc generation), prêt pour l'analyse statistique.
 ```
 
-Test attendu : après un parcours complet, les fichiers CSV contiennent vos données, sans aucun nom réel.
+Test attendu : après un parcours complet, les fichiers CSV contiennent vos données, sans aucun nom réel, et vous savez quelle version des prompts et quelle voix chaque élève a eues.
 
 ### Étape 12 — Relecture finale
 
@@ -463,4 +526,15 @@ Je veux changer ceci : [comportement du prof]. Dis-moi d'abord si cela se règle
 montre-moi la ligne à changer pour que je le fasse moi-même.
 ```
 
-Le dernier prompt est important pour votre recherche : la plupart des réglages pédagogiques (ton du prof, longueur des explications, place de la prédiction) se trouvent dans prompts/ et config/, que vous pouvez modifier sans toucher au code.
+Le dernier prompt est important pour votre recherche : la plupart des réglages pédagogiques (ton du prof, longueur des explications, place de la prédiction, voix, vitesse d'écriture) se trouvent dans prompts/ et config/, que vous pouvez modifier sans toucher au code.
+
+## Ce qui change dans la version 2
+
+- **Voix.** Gemini 3.8 Flash TTS est conservé : il est stable depuis le 22 septembre 2026, compte parmi les meilleures voix du moment et reste peu coûteux. Il a cependant une limite pour ce projet : il ne donne pas le moment où chaque mot est prononcé.
+- **Synchronisation au mot.** Chaque action porte une ancre (un mot du texte dit) au lieu de démarrer au début du beat. Le code calcule l'instant exact si le fournisseur le donne, sinon il l'estime. L'écriture garde une vitesse réaliste ; si elle est plus longue que la parole, le beat suivant attend la fin de l'écriture.
+- **ElevenLabs Eleven v4 en option.** Il donne le temps de chaque caractère et enchaîne l'intonation d'un beat à l'autre, mais coûte environ dix fois plus cher (ordre de grandeur). L'étape 5 compare les deux à l'aveugle avec des élèves ; le choix se fait ensuite dans config/voix.json, sans toucher au code.
+- **Voix plus vivante et plus fiable.** Ajout d'un ton par beat, d'un cache audio, d'un contrôle du débit et de la même voix pour le répondeur.
+- **Tableau.** La couleur est déduite du style, ce qui garde une trace écrite cohérente (titres jaunes, à retenir en rouge).
+- **Claude.** Ajout de l'effort réglable par agent, du cache de prompt sur le contexte commun et de la gestion des refus.
+- **Recherche.** Chaque partition jouée garde la trace des modèles, de la voix et de la version des prompts utilisés, et les élèves sont informés que le professeur est une IA.
+- **Structure.** La limite de 150 lignes ne s'applique qu'au code, pas aux schémas JSON ni aux prompts.
