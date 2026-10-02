@@ -1,6 +1,8 @@
 # Bibliothèques Python du projet. Versions fixées pour que tout le monde ait la même chose.
 fastapi==0.142.2
 uvicorn==0.54.0
+# Vérifie les partitions et le manifeste avec leurs schémas JSON (étape 2).
+jsonschema==4.26.0
 # Pour les tests uniquement.
 pytest==9.1.1
 httpx2==2.13.1

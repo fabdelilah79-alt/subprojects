@@ -10,7 +10,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | ARCHITECTURE.md | Cette carte des fichiers et l'explication des réglages. |
 | JOURNAL.md | Suivi du travail, étape par étape. |
 | README.md | Installer, lancer, arrêter, vérifier. |
-| requirements.txt | Bibliothèques Python, avec des versions fixées. |
+| requirements.txt | Bibliothèques Python, avec des versions fixées (dont jsonschema, ajoutée à l'étape 2 pour vérifier les schémas). |
 | .env.exemple | Noms des clés d'API, sans valeurs. À copier sous le nom .env. |
 | .gitignore | Ce qui n'est jamais envoyé dans git : clés d'API, données des élèves, fichiers générés. |
 | config/application.json | Réglages généraux (mode, serveur, cours, classes, chemins, limites de structure). |
@@ -23,6 +23,15 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | serveur/tests/test_main.py | Teste la page d'accueil et la route /api/accueil. |
 | serveur/tests/test_configuration.py | Teste la lecture des réglages. |
 | serveur/tests/test_verifier_structure.py | Teste l'outil de vérification de la structure. |
+| contenu/cours/mouvement_rotation.docx | Le cours de l'enseignant (fait foi). |
+| contenu/cours/mouvement_rotation.md | Version texte du cours, extraite automatiquement, lisible par les agents. |
+| contenu/manifeste.json | Une fiche par ressource (documents, animation, enregistrement). |
+| schemas/manifeste.schema.json | Format du manifeste. |
+| schemas/partition.schema.json | Format de la partition : le contrat entre les agents et le lecteur. |
+| sorties/valide/partie_1.json | Partition modèle de la partie 1 (brouillon à relire par l'enseignant). |
+| outils/valider_partition.py | Vérifie une partition (schéma + contrôles) et affiche les erreurs en français. |
+| outils/controles_partition.py | Contrôles hors schéma : ancres, zones, couleurs, tons, ressources, chiffres dits. Ajouté à l'étape 2. |
+| serveur/tests/test_valider_partition.py | Teste la validation des partitions. |
 | outils/verifier_structure.py | Signale les fichiers de code de plus de 150 lignes et les fonctions de plus de 30 lignes. |
 | client/index.html | Page d'accueil : nom, classe, cours. L'envoi ne fait rien avant l'étape 7. |
 | client/css/theme.css | Réglages visuels de l'interface : couleurs, polices, tailles, espaces. |
@@ -43,7 +52,7 @@ Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les ga
 | mode | « fige » : parties validées, aucun appel à l'IA. « adaptatif » : parties générées pour chaque élève. | fige, pour qu'aucun appel payant ne parte par erreur |
 | serveur.hote | Adresse du serveur. 127.0.0.1 = accessible depuis cet ordinateur seulement. | 127.0.0.1 |
 | serveur.port | Numéro de port : l'adresse devient http://127.0.0.1:8000. | 8000 |
-| cours | Cours proposés à l'accueil : un identifiant et le titre affiché. | à remplacer par votre cours |
+| cours | Cours proposés à l'accueil : un identifiant et le titre affiché. | rotation d'un solide autour d'un axe fixe |
 | classes | Classes proposées à l'accueil. Une liste évite les fautes de frappe dans les données. | à remplacer par vos classes |
 | chemins | Dossiers du projet, relatifs au dossier prof-ia. | client, contenu, prompts, schemas, sorties |
 | generation.audios_en_parallele | Nombre d'audios générés en même temps (étape 8). | 4 |
@@ -91,3 +100,16 @@ Pour l'instant, cadre_media occupe la même place que la zone droite : un média
 ## Design
 
 Les règles sont dans la section « Design de l'interface » de CLAUDE.md. En bref : fond papier, encre presque noire, une seule couleur d'accent (le vert du tableau), polices du système, aucun effet décoratif. Toutes les valeurs visuelles sont dans client/css/theme.css.
+
+## Partition : lire et vérifier
+
+Une partition est un fichier JSON par partie. Chaque beat contient ce que dit le prof (`texte_dit`, tout en lettres), son ton et ses actions au tableau. Chaque action porte une `ancre`, un morceau de `texte_dit` : l'action démarre quand ce morceau est prononcé.
+
+Pour vérifier une partition :
+
+```
+python -m outils.valider_partition sorties/valide/partie_1.json
+```
+
+Erreurs (bloquantes) : champ manquant ou inconnu, ancre absente de `texte_dit` ou dans le désordre, zone, couleur, ton ou ressource inconnus, choix de prédiction sans réaction.
+Avertissements : chiffre ou symbole dans un texte dit, fichier de ressource pas encore fourni.

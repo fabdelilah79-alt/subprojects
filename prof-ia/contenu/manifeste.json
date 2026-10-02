@@ -1,0 +1,64 @@
+{
+  "ressources": [
+    {
+      "id": "manege_nacelles",
+      "type": "image",
+      "fichier": "activite1/doc1_manege.jpg",
+      "description": "Document 1 : un manège à nacelles en mouvement.",
+      "phase_poe": "observation",
+      "manipulable": null,
+      "partie": 1,
+      "a_completer": "Fichier à fournir. Image ou courte vidéo ?"
+    },
+    {
+      "id": "telepherique",
+      "type": "image",
+      "fichier": "activite1/doc2_telepherique.jpg",
+      "description": "Document 2 : un téléphérique avançant sur son câble.",
+      "phase_poe": "observation",
+      "manipulable": null,
+      "partie": 1,
+      "a_completer": "Fichier à fournir."
+    },
+    {
+      "id": "barriere_peage",
+      "type": "image",
+      "fichier": "activite1/doc3_barriere.jpg",
+      "description": "Document 3 : une barrière de péage qui s'ouvre en pivotant autour de son point de fixation.",
+      "phase_poe": "observation",
+      "manipulable": null,
+      "partie": 1,
+      "a_completer": "Fichier à fournir."
+    },
+    {
+      "id": "grande_roue",
+      "type": "animation",
+      "fichier": "activite1/doc4_grande_roue.html",
+      "description": "Document 4 : une grande roue, avec ses bras métalliques et ses nacelles. Le plancher d'une nacelle reste horizontal pendant que la roue tourne.",
+      "phase_poe": "observation",
+      "manipulable": "Lancer, arrêter, ralentir la roue ; suivre une nacelle et un point du bras.",
+      "partie": 1,
+      "a_completer": "Fichier à fournir : une animation (GeoGebra exporté en HTML) ou une vidéo. Si c'est une vidéo, changer le type en video."
+    },
+    {
+      "id": "schema_reperage",
+      "type": "image",
+      "fichier": "activite1/doc5_reperage.png",
+      "description": "Document 5 : point G sur un cercle de centre O et de rayon R, repéré par rapport à l'axe (Ox) et au point A.",
+      "phase_poe": "explication",
+      "manipulable": null,
+      "partie": 1,
+      "a_completer": "Fichier à fournir, ou à remplacer par un schéma dessiné au tableau (étape 4)."
+    },
+    {
+      "id": "enregistrement_coussin_air",
+      "type": "enregistrement",
+      "fichier": "activite2/enregistrement_table.png",
+      "description": "Enregistrement d'un solide en rotation sur une table à coussin d'air : positions successives des points A (6 cm de l'axe) et B (12 cm), avec τ = 40 ms.",
+      "phase_poe": "observation",
+      "manipulable": "Mesurer des arcs à la règle et des angles au rapporteur.",
+      "partie": 2,
+      "a_completer": "Fichier à fournir. Préciser l'échelle de l'enregistrement."
+    }
+  ]
+}

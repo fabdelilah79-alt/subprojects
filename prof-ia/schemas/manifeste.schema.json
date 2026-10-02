@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Manifeste des ressources",
+  "description": "Une fiche par ressource de contenu/ressources/ : ce que c'est, à quoi elle sert dans la démarche POE.",
+  "type": "object",
+  "required": ["ressources"],
+  "additionalProperties": false,
+  "properties": {
+    "ressources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ressource" }
+    }
+  },
+  "$defs": {
+    "ressource": {
+      "type": "object",
+      "required": ["id", "type", "fichier", "description", "phase_poe", "manipulable"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Nom court et unique, utilisé par la partition (minuscules, sans accents).",
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "type": {
+          "description": "Nature de la ressource.",
+          "enum": ["simulation", "animation", "video", "image", "document", "enregistrement"]
+        },
+        "fichier": {
+          "description": "Chemin du fichier, à partir de contenu/ressources/.",
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "description": "Ce que montre la ressource, en une ou deux phrases.",
+          "type": "string",
+          "minLength": 1
+        },
+        "phase_poe": {
+          "description": "Phase de la démarche où la ressource est utilisée.",
+          "enum": ["prediction", "observation", "explication"]
+        },
+        "manipulable": {
+          "description": "Ce que l'élève peut faire avec la ressource, ou null si elle se regarde seulement.",
+          "type": ["string", "null"]
+        },
+        "partie": {
+          "description": "Numéro de la partie du cours où la ressource sert (facultatif).",
+          "type": "integer",
+          "minimum": 1
+        },
+        "a_completer": {
+          "description": "Ce que l'enseignant doit encore préciser ou fournir (facultatif).",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

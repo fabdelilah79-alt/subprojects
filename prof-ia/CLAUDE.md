@@ -154,7 +154,7 @@ prof-ia/
     manifeste.json         une fiche par ressource
   prompts/                 pedagogique.md, voix.md, ecriture.md, architecture.md, chef.md, repondeur.md
   schemas/                 partition, plan_pedagogique, qcm, manifeste (.schema.json)
-  outils/                  verifier_structure.py, valider_partition.py, generer_audio.py,
+  outils/                  verifier_structure.py, valider_partition.py (+ controles_partition.py), generer_audio.py,
                            generer_partie.py, exporter_donnees.py
   serveur/
     main.py                démarre le serveur et branche les routes (court)

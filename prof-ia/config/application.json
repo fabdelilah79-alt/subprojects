@@ -5,7 +5,7 @@
     "port": 8000
   },
   "cours": [
-    { "id": "cours_1", "titre": "Titre de votre cours" }
+    { "id": "rotation", "titre": "Mouvement de rotation d'un solide autour d'un axe fixe" }
   ],
   "classes": ["Classe 1", "Classe 2", "Classe 3"],
   "chemins": {

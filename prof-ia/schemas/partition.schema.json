@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Partition d'une partie du cours",
+  "description": "Ce que le professeur dit et fait au tableau, beat par beat. Contrat entre les agents IA et le lecteur.",
+  "type": "object",
+  "required": ["numero", "tableau", "titre", "generation", "beats"],
+  "additionalProperties": false,
+  "properties": {
+    "numero": { "description": "Numéro de la partie dans le cours.", "type": "integer", "minimum": 1 },
+    "tableau": { "description": "Numéro du tableau (onglet) où s'écrit la partie.", "type": "integer", "minimum": 1 },
+    "titre": { "description": "Titre de la partie.", "type": "string", "minLength": 1 },
+    "generation": { "$ref": "#/$defs/generation" },
+    "beats": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/beat" } }
+  },
+  "$defs": {
+    "generation": {
+      "description": "Traçabilité : qui a produit la partition, quand, avec quels modèles, quelle voix et quels prompts.",
+      "type": "object",
+      "required": ["source", "date"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "description": "enseignant, brouillon (proposé puis relu) ou agents.", "enum": ["enseignant", "brouillon", "agents"] },
+        "date": { "description": "Date de production (AAAA-MM-JJ).", "type": "string", "format": "date" },
+        "modeles": { "description": "Modèle utilisé par chaque agent.", "type": "object", "additionalProperties": { "type": "string" } },
+        "empreinte_prompts": { "description": "Empreinte des fichiers de prompts/, pour savoir quelle version a servi.", "type": "string" },
+        "fournisseur_voix": { "description": "gemini ou elevenlabs.", "type": "string" },
+        "voix": { "description": "Nom de la voix utilisée.", "type": "string" },
+        "relu_par_enseignant": { "description": "true quand l'enseignant a validé le contenu.", "type": "boolean" }
+      }
+    },
+    "beat": {
+      "description": "Une ou deux phrases dites, avec les actions au tableau qui les accompagnent.",
+      "type": "object",
+      "required": ["id", "phase", "texte_dit", "ton", "actions"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "description": "Identifiant unique dans la partie, par exemple p1_b03.", "type": "string", "pattern": "^p[0-9]+_b[0-9]{2}$" },
+        "phase": { "description": "Phase de la démarche POE.", "enum": ["prediction", "observation", "explication", "synthese"] },
+        "texte_dit": { "description": "Ce que dit le professeur, tout en lettres : ni chiffre, ni symbole.", "type": "string", "minLength": 1 },
+        "ton": { "description": "Ton de la voix, pris dans la liste de config/voix.json.", "type": "string" },
+        "audio": { "description": "Fichier audio du beat (ajouté à l'étape 5).", "type": ["string", "null"] },
+        "duree_s": { "description": "Durée de l'audio en secondes (ajoutée à l'étape 5).", "type": ["number", "null"], "minimum": 0 },
+        "actions": { "type": "array", "items": { "$ref": "#/$defs/action" } }
+      }
+    },
+    "ancrage": {
+      "description": "Champs communs aux actions synchronisées avec la parole.",
+      "type": "object",
+      "required": ["ancre"],
+      "properties": {
+        "ancre": { "description": "Mot ou groupe de mots recopié à l'identique depuis texte_dit : l'action démarre quand il est prononcé.", "type": "string", "minLength": 1 },
+        "debut_s": { "description": "Instant de début, calculé par le code. Jamais écrit par un agent.", "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+    "style": { "description": "Style de l'écrit : il fixe la couleur par défaut.", "enum": ["titre", "normal", "a_retenir"] },
+    "couleur": { "description": "Facultatif : un nom de la palette de config/tableau.json, jamais un code couleur.", "type": "string" },
+    "action": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["ecrire", "formule", "dessiner", "media", "prediction", "pause", "nouveau_tableau"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "ecrire" } } }, "then": { "$ref": "#/$defs/ecrire" } },
+        { "if": { "properties": { "type": { "const": "formule" } } }, "then": { "$ref": "#/$defs/formule" } },
+        { "if": { "properties": { "type": { "const": "dessiner" } } }, "then": { "$ref": "#/$defs/dessiner" } },
+        { "if": { "properties": { "type": { "const": "media" } } }, "then": { "$ref": "#/$defs/media" } },
+        { "if": { "properties": { "type": { "const": "prediction" } } }, "then": { "$ref": "#/$defs/prediction" } },
+        { "if": { "properties": { "type": { "const": "pause" } } }, "then": { "$ref": "#/$defs/pause" } },
+        { "if": { "properties": { "type": { "const": "nouveau_tableau" } } }, "then": { "$ref": "#/$defs/nouveau_tableau" } }
+      ]
+    },
+    "ecrire": {
+      "description": "Écrire un texte à la craie, en style manuscrit.",
+      "allOf": [{ "$ref": "#/$defs/ancrage" }],
+      "required": ["zone", "texte", "style"],
+      "properties": {
+        "type": true, "ancre": true, "debut_s": true,
+        "zone": { "description": "Nom d'une zone de config/tableau.json.", "type": "string" },
+        "texte": { "description": "Ce qui s'écrit au tableau.", "type": "string", "minLength": 1 },
+        "style": { "$ref": "#/$defs/style" },
+        "couleur": { "$ref": "#/$defs/couleur" }
+      },
+      "additionalProperties": false
+    },
+    "formule": {
+      "description": "Écrire une formule (LaTeX, avec \\ce{} pour la chimie).",
+      "allOf": [{ "$ref": "#/$defs/ancrage" }],
+      "required": ["zone", "latex", "style"],
+      "properties": {
+        "type": true, "ancre": true, "debut_s": true,
+        "zone": { "type": "string" },
+        "latex": { "description": "Formule en LaTeX.", "type": "string", "minLength": 1 },
+        "style": { "enum": ["normal", "a_retenir"] },
+        "couleur": { "$ref": "#/$defs/couleur" }
+      },
+      "additionalProperties": false
+    },
+    "dessiner": {
+      "description": "Dessiner un schéma à partir de la bibliothèque d'éléments (étape 4).",
+      "allOf": [{ "$ref": "#/$defs/ancrage" }],
+      "required": ["element", "zone"],
+      "properties": {
+        "type": true, "ancre": true, "debut_s": true,
+        "element": { "description": "Nom d'un élément de client/js/tableau/elements/.", "type": "string" },
+        "zone": { "type": "string" },
+        "parametres": { "description": "Réglages propres à l'élément (étiquettes, tailles...).", "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "media": {
+      "description": "Montrer une ressource du manifeste dans le cadre.",
+      "allOf": [{ "$ref": "#/$defs/ancrage" }],
+      "required": ["ressource", "plein_ecran", "consigne"],
+      "properties": {
+        "type": true, "ancre": true, "debut_s": true,
+        "ressource": { "description": "id d'une ressource de contenu/manifeste.json.", "type": "string" },
+        "plein_ecran": { "description": "true : le prof demande de passer en plein écran.", "type": "boolean" },
+        "consigne": { "description": "Consigne affichée à l'élève.", "type": "string", "minLength": 1 },
+        "attendre": { "description": "clic_termine : la lecture attend « J'ai terminé ».", "enum": ["clic_termine"] }
+      },
+      "additionalProperties": false
+    },
+    "prediction": {
+      "description": "Recueillir la prédiction de l'élève, puis réagir selon son choix.",
+      "allOf": [{ "$ref": "#/$defs/ancrage" }],
+      "required": ["question", "choix", "justifier", "branches"],
+      "properties": {
+        "type": true, "ancre": true, "debut_s": true,
+        "question": { "type": "string", "minLength": 1 },
+        "choix": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/choix" } },
+        "justifier": { "description": "true : l'élève écrit une justification.", "type": "boolean" },
+        "branches": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/branche" } }
+      },
+      "additionalProperties": false
+    },
+    "choix": {
+      "type": "object",
+      "required": ["id", "texte"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z]$" },
+        "texte": { "type": "string", "minLength": 1 },
+        "conception": { "description": "Conception que révèle ce choix, ou null pour la réponse attendue.", "type": ["string", "null"] }
+      }
+    },
+    "branche": {
+      "description": "Courte réaction orale du prof à un choix.",
+      "type": "object",
+      "required": ["choix", "texte_dit", "ton"],
+      "additionalProperties": false,
+      "properties": {
+        "choix": { "description": "id du choix concerné.", "type": "string" },
+        "texte_dit": { "type": "string", "minLength": 1 },
+        "ton": { "type": "string" },
+        "audio": { "type": ["string", "null"] },
+        "duree_s": { "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+    "pause": {
+      "description": "Silence, en secondes.",
+      "required": ["duree_s"],
+      "properties": { "type": true, "duree_s": { "type": "number", "exclusiveMinimum": 0 } },
+      "additionalProperties": false
+    },
+    "nouveau_tableau": {
+      "description": "Ouvrir un nouvel onglet de tableau. Jamais d'effacement.",
+      "required": ["titre"],
+      "properties": { "type": true, "titre": { "type": "string", "minLength": 1 } },
+      "additionalProperties": false
+    }
+  }
+}
