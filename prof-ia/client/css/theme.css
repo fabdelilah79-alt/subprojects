@@ -39,6 +39,8 @@ Les couleurs du tableau, elles, sont dans config/tableau.json.
 
   /* Formes. */
   --largeur-lecture: 32rem;
+  --largeur-lecture-large: 48rem;
+  --largeur-scene: 72rem;
   --hauteur-cible: 2.75rem;
   --rayon: 3px;
   --epaisseur-trait: 1px;

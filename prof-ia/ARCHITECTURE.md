@@ -38,6 +38,19 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/css/base.css | Mise en page commune : bandeau, colonne de lecture, parcours de l'élève. |
 | client/css/formulaire.css | Champs, listes, bouton, message, focus clavier. |
 | client/js/api.js | Seul fichier qui parle au serveur depuis le navigateur. |
+| client/demo_tableau.html | Démonstration : joue une partition validée au tableau, sans voix (Lecture, Pause, Beat suivant). |
+| client/css/tableau.css | Style du tableau, des onglets et des boutons de lecture ; déclare la police Caveat. |
+| client/js/demo_tableau.js | Fait fonctionner la démonstration : boutons, état, texte dit, actions pas encore gérées. |
+| client/js/lecteur/lecteur.js | Joue une partition beat par beat ; une seule écriture à la fois. |
+| client/js/lecteur/horloge.js | Horloge de lecture : pause, reprise, accélération (« Beat suivant »). Ajoutée à l'étape 3. |
+| client/js/tableau/tableau.js | Le tableau : une page par onglet, exécute les actions ecrire, formule, nouveau_tableau. |
+| client/js/tableau/zones.js | Calcule les zones et y réserve la place ; signale une zone pleine dans la console. |
+| client/js/tableau/ecriture.js | Écrit un texte en police manuscrite, révélé de gauche à droite, ligne par ligne. |
+| client/js/tableau/formule.js | Écrit une formule KaTeX (et mhchem), révélée de gauche à droite. |
+| client/js/tableau/onglets.js | Liens « Tableau 1, 2… » ; les anciens tableaux restent consultables. |
+| client/bibliotheques/ | KaTeX, mhchem et la police Caveat, copiés dans le projet (voir LISEZMOI.md). |
+| serveur/routes/parties.py | Routes /api/tableau (réglages du tableau) et /api/parties/<n> (partition validée). |
+| serveur/tests/test_parties.py | Teste ces deux routes. |
 | client/js/accueil.js | Remplit les listes de l'accueil et bloque l'envoi pour l'instant. |
 
 Les fichiers `__init__.py` signalent à Python qu'un dossier contient du code ; ils sont vides.
@@ -54,7 +67,7 @@ Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les ga
 | serveur.port | Numéro de port : l'adresse devient http://127.0.0.1:8000. | 8000 |
 | cours | Cours proposés à l'accueil : un identifiant et le titre affiché. | rotation d'un solide autour d'un axe fixe |
 | classes | Classes proposées à l'accueil. Une liste évite les fautes de frappe dans les données. | à remplacer par vos classes |
-| chemins | Dossiers du projet, relatifs au dossier prof-ia. | client, contenu, prompts, schemas, sorties |
+| chemins | Dossiers du projet, relatifs au dossier prof-ia. | client, contenu, prompts, schemas, sorties, parties_validees |
 | generation.audios_en_parallele | Nombre d'audios générés en même temps (étape 8). | 4 |
 | structure.lignes_max_fichier | Longueur maximale d'un fichier de code. | 150 |
 | structure.lignes_max_fonction | Longueur maximale d'une fonction. | 30 |
@@ -74,15 +87,21 @@ Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les ga
 
 | Réglage | Rôle | Valeur de départ |
 |---|---|---|
+| dimensions | Taille du tableau en unités de dessin (il s'adapte ensuite à l'écran). | 1600 × 900 |
 | fond | Couleur du tableau. | vert foncé |
 | palette | Craies disponibles, avec un nom chacune. | jaune, blanc, rouge, bleu_clair |
 | couleur_par_style | Craie utilisée selon le style de l'écrit. | titre jaune, normal blanc, a_retenir rouge, formule blanc, schema bleu_clair |
 | zones | Zones du tableau, en fractions de sa largeur et de sa hauteur (x = 0.03 : à 3 % du bord gauche). | titre, gauche, droite, a_retenir, cadre_media |
 | ecriture.vitesse_caracteres_par_s | Vitesse d'écriture à la craie. | 14 caractères par seconde |
 | ecriture.pause_entre_beats_s | Courte pause entre deux beats. | 0,4 s |
+| police.famille | Police de l'écriture à la craie. | Caveat |
+| police.taille_titre / taille_texte / taille_formule | Tailles d'écriture, en unités du tableau. | 54 / 38 / 30 |
+| police.interligne | Espace entre deux lignes (1,2 = 20 % de la hauteur des lettres). | 1,2 |
+| marge_zone | Marge intérieure de chaque zone. | 14 |
+| espace_entre_ecrits | Espace entre deux écrits d'une même zone. | 6 |
 | demo.duree_beat_s | Durée d'un beat dans la démonstration sans voix (étape 3). | 4 s |
 
-Pour l'instant, cadre_media occupe la même place que la zone droite : un média affiché couvre cette zone. À confirmer à l'étape 6.
+Zones agrandies à l'étape 3 (titre, a_retenir) pour que la partie 1 tienne. Pour l'instant, cadre_media occupe la même place que la zone droite : un média affiché couvre cette zone. À confirmer à l'étape 6.
 
 ### config/voix.json
 

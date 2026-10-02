@@ -1,4 +1,8 @@
 {
+  "dimensions": {
+    "largeur": 1600,
+    "hauteur": 900
+  },
   "fond": "#1f3a30",
   "palette": {
     "jaune": "#f1e08a",
@@ -14,11 +18,36 @@
     "schema": "bleu_clair"
   },
   "zones": {
-    "titre": { "x": 0.03, "y": 0.03, "largeur": 0.94, "hauteur": 0.10 },
-    "gauche": { "x": 0.03, "y": 0.16, "largeur": 0.45, "hauteur": 0.54 },
-    "droite": { "x": 0.52, "y": 0.16, "largeur": 0.45, "hauteur": 0.54 },
-    "a_retenir": { "x": 0.03, "y": 0.74, "largeur": 0.94, "hauteur": 0.23 },
-    "cadre_media": { "x": 0.52, "y": 0.16, "largeur": 0.45, "hauteur": 0.54 }
+    "titre": {
+      "x": 0.03,
+      "y": 0.03,
+      "largeur": 0.94,
+      "hauteur": 0.11
+    },
+    "gauche": {
+      "x": 0.03,
+      "y": 0.16,
+      "largeur": 0.45,
+      "hauteur": 0.53
+    },
+    "droite": {
+      "x": 0.52,
+      "y": 0.16,
+      "largeur": 0.45,
+      "hauteur": 0.53
+    },
+    "a_retenir": {
+      "x": 0.03,
+      "y": 0.72,
+      "largeur": 0.94,
+      "hauteur": 0.26
+    },
+    "cadre_media": {
+      "x": 0.52,
+      "y": 0.16,
+      "largeur": 0.45,
+      "hauteur": 0.53
+    }
   },
   "ecriture": {
     "vitesse_caracteres_par_s": 14,
@@ -26,5 +55,14 @@
   },
   "demo": {
     "duree_beat_s": 4
-  }
+  },
+  "police": {
+    "famille": "Caveat",
+    "taille_titre": 54,
+    "taille_texte": 38,
+    "taille_formule": 30,
+    "interligne": 1.2
+  },
+  "marge_zone": 14,
+  "espace_entre_ecrits": 6
 }

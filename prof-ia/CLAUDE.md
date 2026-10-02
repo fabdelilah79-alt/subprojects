@@ -59,8 +59,8 @@ est étiquetée avec une conception. Pas d'IA pour cela.
 ## Choix techniques
 - Serveur : Python 3 + FastAPI. Client : HTML + CSS + JavaScript sans framework (modules ES),
   sans étape de compilation.
-- Tableau : SVG. Écriture manuscrite : tester Vara.js ; si les accents français ne s'affichent pas,
-  utiliser une police manuscrite révélée progressivement. Formules : KaTeX avec l'extension mhchem.
+- Tableau : SVG. Écriture manuscrite : police Caveat révélée progressivement (Vara.js testé à l'étape 3 :
+  pas d'accents français, abandonné). Formules : KaTeX avec l'extension mhchem.
   Schémas : SVG tracé trait par trait, aspect fait main avec Rough.js, à partir d'une bibliothèque
   d'éléments (pile, lampe, résistance, bécher, flèche...).
 - Modèles de langage : API Claude d'Anthropic avec les sorties structurées (schéma JSON).
@@ -168,12 +168,14 @@ prof-ia/
     donnees/               stockage.py, journal_recherche.py
     tests/
   client/
-    index.html, qcm.html, attente.html, classe.html
-    css/                   theme.css (réglages visuels), base.css, formulaire.css
+    index.html, qcm.html, attente.html, classe.html, demo_tableau.html
+    css/                   theme.css (réglages visuels), base.css, formulaire.css, tableau.css
+    bibliotheques/         KaTeX, mhchem, police Caveat (copiées : pas besoin d'internet)
     js/
       api.js               seul fichier qui parle au serveur
       accueil.js           page d'accueil
-      lecteur/             lecteur.js (enchaîne les beats), audio.js
+      demo_tableau.js      page de démonstration du tableau
+      lecteur/             lecteur.js (enchaîne les beats), horloge.js (pause, accélération), audio.js
       tableau/             tableau.js, zones.js, ecriture.js, formule.js, dessin.js, onglets.js
         elements/          un fichier par élément de schéma
       medias/              cadre_media.js (simulation, image, document, plein écran)

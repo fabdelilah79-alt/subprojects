@@ -1,0 +1,128 @@
+/*
+Rôle : style du tableau et de ce qui l'entoure (onglets, boutons de lecture, texte dit).
+Reçoit : les variables de client/css/theme.css et la police Caveat de client/bibliotheques/polices/.
+Produit : un tableau au format 16/9 qui occupe la largeur, sans effet décoratif.
+Utilisé par : client/demo_tableau.html (et plus tard la page de classe).
+*/
+@font-face {
+  font-family: "Caveat";
+  font-weight: 500;
+  font-display: block;
+  src: url("../bibliotheques/polices/caveat-latin-ext-500-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Caveat";
+  font-weight: 500;
+  font-display: block;
+  src: url("../bibliotheques/polices/caveat-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2212;
+}
+
+.scene {
+  max-width: var(--largeur-scene);
+  margin: 0 auto;
+  padding: var(--espace-4);
+}
+
+/* Onglets : de simples liens texte au-dessus du tableau. */
+.onglets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-1) var(--espace-4);
+  min-height: var(--hauteur-cible);
+  align-items: center;
+}
+
+.onglet {
+  min-height: var(--hauteur-cible);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--encre-douce);
+  font: inherit;
+  cursor: pointer;
+}
+
+.onglet[aria-current="page"] {
+  color: var(--encre);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.onglet:focus-visible {
+  outline: var(--epaisseur-focus) solid var(--tableau);
+  outline-offset: var(--epaisseur-focus);
+}
+
+/* Le tableau : toutes les pages sont superposées, une seule est visible. */
+.planche {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: var(--epaisseur-trait) solid var(--tableau-fonce);
+  border-radius: var(--rayon);
+  background: var(--tableau);
+  overflow: hidden;
+}
+
+.page-tableau {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.page-tableau.cache {
+  visibility: hidden;
+}
+
+.formule-craie {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.formule-mesure {
+  position: absolute;
+  visibility: hidden;
+}
+
+.commandes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-3);
+  margin-top: var(--espace-3);
+}
+
+.commandes .bouton {
+  margin-top: 0;
+}
+
+.bouton-second {
+  background: var(--surface);
+  color: var(--tableau);
+}
+
+.bouton-second:hover {
+  background: var(--papier);
+}
+
+.etat,
+.legende,
+.remarques {
+  margin: 0;
+  color: var(--encre-douce);
+  font-size: var(--taille-petite);
+}
+
+.legende {
+  margin-top: var(--espace-4);
+}
+
+.texte-dit {
+  max-width: var(--largeur-lecture-large);
+  margin: var(--espace-1) 0 var(--espace-3);
+  font-size: var(--taille-chapeau);
+}

@@ -2,7 +2,7 @@
 Rôle : seul fichier qui parle au serveur depuis le navigateur.
 Reçoit : les demandes des autres scripts du client.
 Produit : les réponses du serveur, déjà lues en JSON.
-Utilisé par : client/js/accueil.js.
+Utilisé par : client/js/accueil.js, client/js/demo_tableau.js.
 */
 
 async function lire(chemin) {
@@ -17,4 +17,14 @@ async function lire(chemin) {
 export function lire_options_accueil() {
   // Récupère les cours et les classes à proposer sur la page d'accueil.
   return lire("/api/accueil");
+}
+
+export function lire_reglages_tableau() {
+  // Récupère les réglages du tableau : dimensions, zones, couleurs, police, vitesse d'écriture.
+  return lire("/api/tableau");
+}
+
+export function lire_partie(numero) {
+  // Récupère la partition validée d'une partie du cours.
+  return lire(`/api/parties/${numero}`);
 }

@@ -39,3 +39,27 @@ Problèmes restants, à faire par l'enseignant :
 - Le cours Word se termine par une phrase étrangère au cours (« C'est une excellente remarque pédagogique… ») : à supprimer.
 - Vouvoiement ou tutoiement du prof : à confirmer (le brouillon vouvoie).
 - Le schéma « repere_cercle » sera dessiné à l'étape 4.
+
+## 2026-10-02 — Étape 3 : le tableau qui écrit
+
+Fait :
+- Vara.js essayé : ses polices n'ont pas d'accents (é, è, à, ç, ô deviennent « ? »). Remplacé par la police
+  manuscrite Caveat, révélée de gauche à droite.
+- Tableau SVG vert, zones de config/tableau.json, couleurs de craie selon le style, aucun chevauchement
+  (zone pleine : message dans la console et écrit non affiché).
+- Formules KaTeX + mhchem révélées de gauche à droite.
+- Onglets Tableau 1, 2… ; les anciens restent consultables.
+- client/demo_tableau.html : Lecture, Pause, Beat suivant ; 4 s par beat ; une seule écriture à la fois.
+- Routes /api/tableau et /api/parties/<n> ; 3 nouveaux tests (17 au total).
+- Zones titre et a_retenir agrandies : toute la partie 1 tient au tableau.
+
+Ajouts signalés :
+- client/js/lecteur/horloge.js, client/js/demo_tableau.js, client/css/tableau.css.
+- client/bibliotheques/ : KaTeX 0.19.0, mhchem, police Caveat (copiés, pour travailler sans internet).
+- Réglages ajoutés : dimensions, police, marge_zone, espace_entre_ecrits (config/tableau.json) ;
+  chemins.parties_validees (config/application.json).
+
+Problèmes restants :
+- θ et Δ n'existent pas dans la police Caveat : le navigateur les prend dans une autre police (un peu différente).
+- Actions dessiner (étape 4), media et prediction (étape 6) : pas encore au tableau, signalées sous les boutons.
+- La pause arrête l'écriture en cours ; Beat suivant termine le beat en cours d'un coup.

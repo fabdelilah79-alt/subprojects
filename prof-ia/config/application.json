@@ -13,7 +13,8 @@
     "contenu": "contenu",
     "prompts": "prompts",
     "schemas": "schemas",
-    "sorties": "sorties"
+    "sorties": "sorties",
+    "parties_validees": "sorties/valide"
   },
   "generation": {
     "audios_en_parallele": 4

@@ -1,0 +1,44 @@
+<!doctype html>
+<!--
+Rôle : page de démonstration du tableau : joue une partition validée, sans voix.
+Reçoit : le numéro de partie dans l'adresse (demo_tableau.html?partie=1).
+Produit : le tableau qui écrit, des onglets et trois boutons (Lecture, Pause, Beat suivant).
+Utilisé par : l'enseignant, pour vérifier une partition à l'étape 3.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Démonstration du tableau · Professeur IA</title>
+  <link rel="stylesheet" href="bibliotheques/katex/katex.min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/formulaire.css">
+  <link rel="stylesheet" href="css/tableau.css">
+  <script defer src="bibliotheques/katex/katex.min.js"></script>
+  <script defer src="bibliotheques/katex/contrib/mhchem.min.js"></script>
+  <script type="module" src="js/demo_tableau.js"></script>
+</head>
+<body>
+  <header class="bandeau">
+    <span class="bandeau-nom">Professeur IA</span>
+    <span class="bandeau-matiere">Démonstration du tableau</span>
+  </header>
+
+  <main class="scene">
+    <nav id="onglets" class="onglets" aria-label="Tableaux"></nav>
+    <div id="planche" class="planche"></div>
+
+    <div class="commandes">
+      <button id="lecture" type="button" class="bouton">Lecture</button>
+      <button id="pause" type="button" class="bouton bouton-second">Pause</button>
+      <button id="suivant" type="button" class="bouton bouton-second">Beat suivant</button>
+      <p id="etat" class="etat" role="status">Chargement…</p>
+    </div>
+
+    <p class="legende">Le professeur dirait :</p>
+    <p id="texte-dit" class="texte-dit"></p>
+    <p id="remarques" class="remarques"></p>
+  </main>
+</body>
+</html>
