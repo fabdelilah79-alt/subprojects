@@ -1,0 +1,122 @@
+{
+  "titre": "Questionnaire de départ : rotation d'un solide autour d'un axe fixe",
+  "cours": "rotation",
+  "statut": "brouillon à valider par l'enseignant",
+  "consigne": "Répondez sans chercher dans le cours. Il n'y a pas de note : vos réponses aident le professeur à préparer son explication.",
+  "certitudes": [
+    { "id": "devine", "texte": "Je devine", "niveau": 0, "si_erreur": "fragile" },
+    { "id": "assez_sur", "texte": "Assez sûr", "niveau": 1, "si_erreur": "probable" },
+    { "id": "certain", "texte": "Certain", "niveau": 2, "si_erreur": "ancree" }
+  ],
+  "conceptions": {
+    "trajectoire_circulaire_egale_rotation": "Tout objet qui décrit un cercle est en rotation (confusion trajectoire circulaire / rotation du solide).",
+    "systeme_porteur_seul_en_mouvement": "Seul le système porteur bouge ; l'objet transporté n'a pas de mouvement à décrire.",
+    "meme_trajectoire_tous_points": "Tous les points d'un solide en rotation ont la même trajectoire (même cercle, même rayon).",
+    "trajectoire_rectiligne_en_rotation": "Les points d'un solide en rotation se déplacent en ligne droite.",
+    "angle_en_degres_dans_s_egal_r_theta": "On peut utiliser l'angle en degrés dans s = R·θ.",
+    "relation_s_theta_inversee": "L'arc s'obtient en divisant l'angle par le rayon (s = θ / R).",
+    "omega_depend_de_la_distance_a_l_axe": "Les points éloignés de l'axe tournent plus vite : leur vitesse angulaire est plus grande.",
+    "plus_pres_de_l_axe_plus_rapide": "Les points proches de l'axe sont les plus rapides.",
+    "vitesse_lineaire_identique_tous_points": "Tous les points d'un solide en rotation ont la même vitesse linéaire.",
+    "vitesse_instantanee_sur_un_seul_intervalle": "La vitesse instantanée en M1 se calcule sur un seul intervalle (de M0 à M1).",
+    "oubli_du_double_intervalle": "Entre M0 et M2, la durée est τ (au lieu de 2τ).",
+    "uniforme_egale_meme_vitesse_lineaire": "« Uniforme » veut dire que tous les points ont la même vitesse linéaire.",
+    "uniforme_egale_angle_constant": "« Uniforme » veut dire que la position angulaire θ ne change pas.",
+    "theta_uniforme_courbe": "En rotation uniforme, θ(t) est représentée par une courbe (parabole).",
+    "confusion_theta_et_omega": "Confusion entre la position angulaire θ et la vitesse angulaire ω (graphe horizontal).",
+    "tours_par_minute_egal_hertz": "300 tours par minute = 300 Hz (oubli de la conversion des minutes en secondes).",
+    "confusion_frequence_periode": "Confusion entre la fréquence f et la période T."
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "partie": 1,
+      "enonce": "Une grande roue tourne. Pendant ce temps, une nacelle accrochée à la roue reste toujours horizontale. Quel est le mouvement de la nacelle ?",
+      "choix": [
+        { "id": "A", "texte": "Une rotation autour de l'axe de la roue, comme les bras.", "correct": false, "conception": "trajectoire_circulaire_egale_rotation" },
+        { "id": "B", "texte": "Une translation circulaire : elle reste parallèle à elle-même.", "correct": true },
+        { "id": "C", "texte": "Aucun mouvement propre : c'est seulement la roue qui bouge.", "correct": false, "conception": "systeme_porteur_seul_en_mouvement" }
+      ]
+    },
+    {
+      "id": "q2",
+      "partie": 1,
+      "enonce": "Une porte tourne autour de ses gonds. Que peut-on dire des trajectoires des points de la porte (sauf ceux qui sont sur l'axe des gonds) ?",
+      "choix": [
+        { "id": "A", "texte": "Ce sont des cercles, tous de même rayon.", "correct": false, "conception": "meme_trajectoire_tous_points" },
+        { "id": "B", "texte": "Ce sont des segments de droite.", "correct": false, "conception": "trajectoire_rectiligne_en_rotation" },
+        { "id": "C", "texte": "Ce sont des arcs de cercles centrés sur l'axe des gonds, de rayons différents.", "correct": true }
+      ]
+    },
+    {
+      "id": "q3",
+      "partie": 1,
+      "enonce": "Un point se déplace sur un cercle de rayon R = 0,5 m. Il tourne d'un angle θ = 2 rad. Quelle est la longueur de l'arc parcouru ?",
+      "choix": [
+        { "id": "A", "texte": "s = 1 m", "correct": true },
+        { "id": "B", "texte": "s = 4 m", "correct": false, "conception": "relation_s_theta_inversee" },
+        { "id": "C", "texte": "s ≈ 57 m", "correct": false, "conception": "angle_en_degres_dans_s_egal_r_theta" }
+      ]
+    },
+    {
+      "id": "q4",
+      "partie": 2,
+      "enonce": "Un disque tourne autour de son axe. Le point A est à 5 cm de l'axe, le point B à 10 cm. Comparez leurs vitesses angulaires ωA et ωB au même instant.",
+      "choix": [
+        { "id": "A", "texte": "ωB = 2 ωA : B est deux fois plus loin de l'axe.", "correct": false, "conception": "omega_depend_de_la_distance_a_l_axe" },
+        { "id": "B", "texte": "ωA = ωB : tous les points du disque tournent du même angle.", "correct": true },
+        { "id": "C", "texte": "ωA = 2 ωB : A est plus près de l'axe.", "correct": false, "conception": "plus_pres_de_l_axe_plus_rapide" }
+      ]
+    },
+    {
+      "id": "q5",
+      "partie": 2,
+      "enonce": "Même disque, mêmes points A (5 cm de l'axe) et B (10 cm). Comparez leurs vitesses linéaires VA et VB au même instant.",
+      "choix": [
+        { "id": "A", "texte": "VA = VB : ils appartiennent au même solide.", "correct": false, "conception": "vitesse_lineaire_identique_tous_points" },
+        { "id": "B", "texte": "VA = 2 VB : A est plus près de l'axe.", "correct": false, "conception": "plus_pres_de_l_axe_plus_rapide" },
+        { "id": "C", "texte": "VB = 2 VA : B parcourt un arc deux fois plus long pendant la même durée.", "correct": true }
+      ]
+    },
+    {
+      "id": "q6",
+      "partie": 2,
+      "enonce": "Sur un enregistrement, deux positions successives d'un point sont séparées par la durée τ. Pour calculer sa vitesse instantanée à la position M1, quelle expression utilise-t-on ?",
+      "choix": [
+        { "id": "A", "texte": "V1 = arc M0M1 / τ", "correct": false, "conception": "vitesse_instantanee_sur_un_seul_intervalle" },
+        { "id": "B", "texte": "V1 = arc M0M2 / 2τ", "correct": true },
+        { "id": "C", "texte": "V1 = arc M0M2 / τ", "correct": false, "conception": "oubli_du_double_intervalle" }
+      ]
+    },
+    {
+      "id": "q7",
+      "partie": 3,
+      "enonce": "Que signifie : « le solide est en rotation uniforme » ?",
+      "choix": [
+        { "id": "A", "texte": "Tous ses points ont la même vitesse linéaire.", "correct": false, "conception": "uniforme_egale_meme_vitesse_lineaire" },
+        { "id": "B", "texte": "Sa position angulaire θ ne change pas.", "correct": false, "conception": "uniforme_egale_angle_constant" },
+        { "id": "C", "texte": "Sa vitesse angulaire ω reste constante au cours du temps.", "correct": true }
+      ]
+    },
+    {
+      "id": "q8",
+      "partie": 3,
+      "enonce": "Pour un solide en rotation uniforme, quelle est l'allure de la courbe qui représente la position angulaire θ en fonction du temps t ?",
+      "choix": [
+        { "id": "A", "texte": "Une droite qui monte (fonction affine).", "correct": true },
+        { "id": "B", "texte": "Une courbe qui monte de plus en plus vite (parabole).", "correct": false, "conception": "theta_uniforme_courbe" },
+        { "id": "C", "texte": "Une droite horizontale.", "correct": false, "conception": "confusion_theta_et_omega" }
+      ]
+    },
+    {
+      "id": "q9",
+      "partie": 3,
+      "enonce": "Un ventilateur tourne à 300 tours par minute. Quelle est sa fréquence de rotation ?",
+      "choix": [
+        { "id": "A", "texte": "f = 300 Hz", "correct": false, "conception": "tours_par_minute_egal_hertz" },
+        { "id": "B", "texte": "f = 5 Hz", "correct": true },
+        { "id": "C", "texte": "f = 0,2 Hz", "correct": false, "conception": "confusion_frequence_periode" }
+      ]
+    }
+  ]
+}

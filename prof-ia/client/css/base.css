@@ -2,7 +2,7 @@
 Rôle : style commun des pages hors tableau (texte, bandeau, colonne de lecture, parcours).
 Reçoit : les variables de client/css/theme.css.
 Produit : la mise en page sobre de l'accueil (et plus tard du QCM et de l'attente).
-Utilisé par : client/index.html.
+Utilisé par : client/index.html, qcm.html, attente.html, demo_tableau.html.
 */
 *,
 *::before,
@@ -67,6 +67,14 @@ h1 {
 .parcours [aria-current="step"] {
   color: var(--encre);
   font-weight: 600;
+}
+
+.note {
+  margin: calc(-1 * var(--espace-4)) 0 var(--espace-5);
+  padding-left: var(--espace-3);
+  border-left: var(--epaisseur-focus) solid var(--tableau);
+  color: var(--encre-douce);
+  font-size: var(--taille-petite);
 }
 
 .chapeau {

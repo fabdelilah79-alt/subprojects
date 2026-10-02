@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QCM diagnostique",
+  "description": "Questions rangées par partie du cours ; chaque mauvais choix indique la conception qu'il révèle.",
+  "type": "object",
+  "required": ["titre", "cours", "consigne", "certitudes", "conceptions", "questions"],
+  "additionalProperties": false,
+  "properties": {
+    "titre": { "description": "Titre affiché en haut du questionnaire.", "type": "string", "minLength": 1 },
+    "cours": { "description": "id du cours (config/application.json).", "type": "string" },
+    "statut": { "description": "Par exemple « brouillon » ou « validé par l'enseignant ».", "type": "string" },
+    "consigne": { "description": "Phrase affichée avant la première question.", "type": "string", "minLength": 1 },
+    "certitudes": {
+      "description": "Degrés de certitude proposés, du plus faible (niveau 0) au plus fort.",
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "texte", "niveau", "si_erreur"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z_]+$" },
+          "texte": { "description": "Texte affiché à l'élève.", "type": "string" },
+          "niveau": { "description": "0 = le plus faible.", "type": "integer", "minimum": 0 },
+          "si_erreur": { "description": "Solidité d'une conception quand l'élève se trompe avec ce degré de certitude.", "type": "string" }
+        }
+      }
+    },
+    "conceptions": {
+      "description": "Dictionnaire : identifiant de la conception -> description en une phrase.",
+      "type": "object",
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "questions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/question" } }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "required": ["id", "partie", "enonce", "choix"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "description": "Identifiant unique : q1, q2…", "type": "string", "pattern": "^q[0-9]+$" },
+        "partie": { "description": "Partie du cours concernée.", "type": "integer", "minimum": 1 },
+        "enonce": { "type": "string", "minLength": 1 },
+        "choix": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/choix" } }
+      }
+    },
+    "choix": {
+      "type": "object",
+      "required": ["id", "texte", "correct"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z]$" },
+        "texte": { "type": "string", "minLength": 1 },
+        "correct": { "description": "true pour la réponse attendue.", "type": "boolean" },
+        "conception": { "description": "Pour un mauvais choix : l'identifiant de la conception révélée.", "type": "string" }
+      }
+    }
+  }
+}

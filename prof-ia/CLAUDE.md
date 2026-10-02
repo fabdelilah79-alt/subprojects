@@ -170,19 +170,22 @@ prof-ia/
     tests/
   client/
     index.html, qcm.html, attente.html, classe.html, demo_tableau.html
-    css/                   theme.css (réglages visuels), base.css, formulaire.css, tableau.css, medias.css, interaction.css
+    css/                   theme.css (réglages visuels), base.css, formulaire.css, parcours.css, tableau.css, medias.css, interaction.css
     bibliotheques/         KaTeX, mhchem, Rough.js, police Caveat (copiées : pas besoin d'internet)
     js/
       api.js               seul fichier qui parle au serveur
       accueil.js           page d'accueil
+      attente.js           page d'attente
+      session_eleve.js     pseudonyme de la séance (jamais le nom)
       demo_tableau.js      page de démonstration du tableau
       lecteur/             lecteur.js (enchaîne les beats), horloge.js (pause, accélération), audio.js
       tableau/             tableau.js, zones.js, ecriture.js, formule.js, dessin.js, crayon.js, onglets.js, catalogue.js
         elements/          un fichier par élément de schéma (+ index.js, la liste des éléments)
       medias/              cadre_media.js (simulation, image, document, plein écran)
-      interaction/         prediction.js, main_levee.js, qcm.js
+      interaction/         prediction.js, main_levee.js, qcm.js (+ qcm_question.js)
   sorties/
-    parties/               partitions générées + audio, par élève
+    parties/               un dossier par élève (pseudonyme) : eleve, reponses_qcm, profil, partitions
+    prive/                 correspondance nom <-> pseudonyme (jamais dans git, jamais envoyée à une API)
     valide/                parties validées par l'enseignant (mode figé)
     cache_audio/           audios déjà générés, réutilisés
     comparaison_voix/      extraits d'écoute pour choisir la voix (étape 5)

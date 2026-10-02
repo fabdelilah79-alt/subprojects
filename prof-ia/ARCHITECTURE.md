@@ -19,7 +19,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | config/voix.json | Fournisseur de voix, modèles, style, tons, contrôle du débit. |
 | serveur/main.py | Démarre le serveur web, branche les routes et sert contenu/ressources/ à l'adresse /ressources. |
 | serveur/configuration.py | Lit les fichiers de config/. Ajouté à l'étape 1 (absent de l'arborescence d'origine). |
-| serveur/routes/eleve.py | Routes /api/accueil (cours et classes) et /api/evenements (événements de l'élève, affichés dans le terminal). |
+| serveur/routes/eleve.py | Routes /api/accueil, /api/eleve (inscription, pseudonyme) et /api/evenements (événements, avec le pseudonyme). |
 | serveur/tests/test_main.py | Teste la page d'accueil et la route /api/accueil. |
 | serveur/tests/test_configuration.py | Teste la lecture des réglages. |
 | serveur/tests/test_verifier_structure.py | Teste l'outil de vérification de la structure. |
@@ -62,6 +62,17 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/js/lecteur/audio.js | Fait parler le prof : joue l'audio en suivant l'horloge ; silence de la bonne durée si le fichier manque. |
 | client/js/interaction/prediction.js | Pose la question de prédiction (choix + justification), signale la réponse, joue la réaction prévue. |
 | client/css/interaction.css | Style du panneau de prédiction. |
+| contenu/qcm/qcm.json | QCM diagnostique (brouillon) : 9 questions, 3 par partie ; chaque mauvais choix renvoie à une conception. |
+| schemas/qcm.schema.json | Format du QCM. |
+| serveur/eleve/pseudonymes.py | Remplace le nom par un pseudonyme (E001…) ; correspondance gardée dans sorties/prive/. |
+| serveur/eleve/profil.py | Calcule le profil sans IA : réussites par partie, conceptions détectées et leur solidité (selon la certitude). |
+| serveur/donnees/stockage.py | Range les fichiers de chaque élève dans sorties/parties/<pseudonyme>/ ; refuse tout pseudonyme mal formé. |
+| serveur/routes/qcm.py | /api/qcm (sans les bonnes réponses) et /api/qcm/reponses (enregistre réponses et profil). |
+| serveur/tests/test_qcm.py + conftest.py | Testent le QCM, le pseudonyme et le profil ; les tests écrivent dans un dossier temporaire. |
+| client/qcm.html + js/interaction/qcm.js + qcm_question.js | Le QCM, une question à la fois : choix, justification, certitude, temps. |
+| client/attente.html + js/attente.js | Page d'attente : barre simulée, puis « Entrer en classe ». |
+| client/js/session_eleve.js | Garde le pseudonyme pendant la séance (sessionStorage). |
+| client/css/parcours.css | Style du QCM et de la page d'attente. |
 | client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». |
 | client/css/medias.css | Style du cadre des médias. |
 | contenu/ressources/animations/ | Simulations interactives : grande_roue, reperage, coussin_air, rotation_uniforme (+ commun/style.css, commun/outils.js, LISEZMOI.md). |
@@ -83,6 +94,8 @@ Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les ga
 | serveur.port | Numéro de port : l'adresse devient http://127.0.0.1:8000. | 8000 |
 | cours | Cours proposés à l'accueil : un identifiant et le titre affiché. | rotation d'un solide autour d'un axe fixe |
 | classes | Classes proposées à l'accueil. Une liste évite les fautes de frappe dans les données. | à remplacer par vos classes |
+| pseudonymes.prefixe / chiffres | Forme des pseudonymes : E001, E002… | E / 3 |
+| attente_simulee_s | Durée de la barre de la page d'attente (simulée jusqu'à l'étape 9). | 6 |
 | chemins | Dossiers du projet, relatifs au dossier prof-ia. | client, contenu, prompts, schemas, sorties, parties_validees |
 | generation.audios_en_parallele | Nombre d'audios générés en même temps (étape 8). | 4 |
 | structure.lignes_max_fichier | Longueur maximale d'un fichier de code. | 150 |

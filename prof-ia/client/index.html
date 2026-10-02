@@ -2,7 +2,7 @@
 <!--
 Rôle : page d'accueil de l'élève (nom, classe, choix du cours).
 Reçoit : la liste des cours et des classes, chargée par js/accueil.js.
-Produit : le formulaire d'accueil. Il ne fait encore rien : l'enregistrement arrive à l'étape 7.
+Produit : le formulaire d'accueil ; à l'envoi, l'élève reçoit un pseudonyme et passe au questionnaire.
 Utilisé par : le navigateur, à l'adresse du serveur.
 -->
 <html lang="fr">
@@ -30,6 +30,7 @@ Utilisé par : le navigateur, à l'adresse du serveur.
 
     <h1>Avant de commencer</h1>
     <p class="chapeau">Indiquez votre nom et votre classe, puis choisissez le cours.</p>
+    <p class="note">Votre professeur est une intelligence artificielle : sa voix, ce qu'il écrit au tableau et ses réponses sont produits par ordinateur. Votre nom n'est pas transmis : un code le remplace dans les données.</p>
 
     <form id="formulaire-accueil" class="formulaire">
       <div class="champ">

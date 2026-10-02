@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from serveur.configuration import chemin_projet, lire_config
-from serveur.routes import eleve, parties
+from serveur.routes import eleve, parties, qcm
 
 
 def creer_application():
@@ -17,6 +17,7 @@ def creer_application():
     application = FastAPI(title="Professeur IA")
     application.include_router(eleve.routeur)
     application.include_router(parties.routeur)
+    application.include_router(qcm.routeur)
     application.mount("/audio", StaticFiles(directory=chemin_projet("cache_audio")), name="audio")
     ressources = StaticFiles(directory=chemin_projet("contenu") / "ressources", html=True)
     application.mount("/ressources", ressources, name="ressources")

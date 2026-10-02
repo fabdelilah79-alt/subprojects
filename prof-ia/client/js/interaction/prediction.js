@@ -19,7 +19,7 @@ const insecables = (texte) => texte.replace(/ ([?!:;])/g, "\u00a0$1");
 
 function ligne_de_choix(choix) {
   // Crée une option : un bouton radio et son texte, cliquables ensemble.
-  const etiquette = creer("label", { class: "prediction-choix" });
+  const etiquette = creer("label", { class: "choix" });
   etiquette.append(creer("input", { type: "radio", name: "choix", value: choix.id, required: "" }));
   etiquette.append(creer("span", {}, insecables(`${choix.id}. ${choix.texte}`)));
   return etiquette;

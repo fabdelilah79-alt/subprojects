@@ -1,0 +1,56 @@
+/*
+Rôle : style propre aux pages du parcours de l'élève (questionnaire, attente).
+Reçoit : les variables de client/css/theme.css.
+Produit : l'avancement, les questions du QCM, la barre de progression, le bouton-lien.
+Utilisé par : client/qcm.html, client/attente.html.
+*/
+.avancement {
+  margin: 0 0 var(--espace-3);
+  color: var(--encre-douce);
+  font-size: var(--taille-petite);
+  font-variant-numeric: tabular-nums;
+}
+
+.qcm-question {
+  display: grid;
+  gap: var(--espace-4);
+}
+
+.qcm-question fieldset {
+  display: grid;
+  gap: var(--espace-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.qcm-enonce legend {
+  margin-bottom: var(--espace-3);
+  font-family: var(--police-titre);
+  font-size: var(--taille-chapeau);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.qcm-certitude {
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+}
+
+.qcm-certitude legend {
+  margin-bottom: var(--espace-2);
+  font-size: var(--taille-petite);
+  font-weight: 600;
+}
+
+.progression {
+  width: 100%;
+  height: 0.5rem;
+  margin-bottom: var(--espace-5);
+  accent-color: var(--tableau);
+}
+
+.bouton-lien {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}

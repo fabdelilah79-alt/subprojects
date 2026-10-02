@@ -1,0 +1,38 @@
+<!doctype html>
+<!--
+Rôle : page d'attente pendant que le professeur prépare son tableau.
+Reçoit : la durée d'attente simulée (config/application.json, via /api/accueil).
+Produit : un message et une barre de progression, puis le bouton pour entrer en classe.
+Utilisé par : l'élève, après le questionnaire. La progression est simulée (le vrai état arrive à l'étape 9).
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Préparation · Professeur IA</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/formulaire.css">
+  <link rel="stylesheet" href="css/parcours.css">
+  <script type="module" src="js/attente.js"></script>
+</head>
+<body>
+  <header class="bandeau">
+    <span class="bandeau-nom">Professeur IA</span>
+    <span class="bandeau-matiere">Physique-chimie</span>
+  </header>
+
+  <main class="page">
+    <ol class="parcours" aria-label="Étapes">
+      <li>1. Accueil</li>
+      <li>2. Questionnaire</li>
+      <li aria-current="step">3. Cours au tableau</li>
+    </ol>
+
+    <h1>Merci pour vos réponses</h1>
+    <p class="chapeau" id="etat" aria-live="polite">Le professeur prépare son tableau…</p>
+    <progress id="progression" class="progression" max="100" value="0" aria-label="Préparation du tableau"></progress>
+    <a id="entrer" class="bouton bouton-lien" href="demo_tableau.html" hidden>Entrer en classe</a>
+  </main>
+</body>
+</html>

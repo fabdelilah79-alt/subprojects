@@ -107,3 +107,20 @@ Problèmes restants :
 - Pas encore de vraie voix : gemini_tts.py et elevenlabs_tts.py seront écrits avec la clé et la documentation à jour,
   ainsi que la comparaison à l'aveugle des voix.
 - Les événements ne sont pas encore enregistrés (étape 11 : journal SQLite) ni liés à un élève (étape 7 : pseudonyme).
+
+## 2026-10-02 — Étape 7 : accueil, QCM et profil de l'élève
+
+Fait :
+- QCM diagnostique rédigé (brouillon) à partir du cours : 9 questions, 3 par partie, 17 conceptions décrites.
+- Accueil : message sur l'IA ; à l'envoi, le serveur remplace le nom par un pseudonyme (E001…).
+  La correspondance est dans sorties/prive/ (ignoré par git, jamais envoyé à une API).
+- qcm.html : une question à la fois, choix + justification + certitude obligatoires, temps mesuré.
+- Le navigateur ne reçoit jamais les bonnes réponses ni les conceptions.
+- profil.py : réussites par partie, conceptions détectées, solidité (ancrée / probable / fragile selon la certitude).
+- Page d'attente (barre simulée), puis entrée en classe. Les événements portent maintenant le pseudonyme.
+- 5 nouveaux tests (27 au total) ; parcours complet testé dans le navigateur : le vrai nom n'apparaît que dans la correspondance.
+
+Problèmes restants :
+- QCM à relire et valider par l'enseignant (puis passer « statut » à « validé »).
+- Classes à remplacer dans config/application.json.
+- Un même élève qui revient reçoit un nouveau pseudonyme (à décider : faut-il le reconnaître ?).

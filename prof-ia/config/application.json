@@ -15,8 +15,15 @@
     "schemas": "schemas",
     "sorties": "sorties",
     "parties_validees": "sorties/valide",
-    "cache_audio": "sorties/cache_audio"
+    "cache_audio": "sorties/cache_audio",
+    "eleves": "sorties/parties",
+    "prive": "sorties/prive"
   },
+  "pseudonymes": {
+    "prefixe": "E",
+    "chiffres": 3
+  },
+  "attente_simulee_s": 6,
   "generation": {
     "audios_en_parallele": 4
   },

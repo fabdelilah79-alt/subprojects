@@ -13,4 +13,5 @@ sorties/parties/*
 sorties/cache_audio/*
 sorties/comparaison_voix/*
 sorties/journaux/*
+sorties/prive/
 !sorties/*/.gitkeep

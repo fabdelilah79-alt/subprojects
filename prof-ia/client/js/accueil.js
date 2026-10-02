@@ -1,10 +1,11 @@
 /*
 Rôle : faire fonctionner la page d'accueil (listes des cours et des classes).
 Reçoit : les options envoyées par le serveur, via api.js.
-Produit : les listes remplies. L'envoi du formulaire est bloqué jusqu'à l'étape 7.
+Produit : les listes remplies ; à l'envoi, l'inscription (pseudonyme) puis le passage au questionnaire.
 Utilisé par : client/index.html.
 */
-import { lire_options_accueil } from "./api.js";
+import { inscrire_eleve, lire_options_accueil } from "./api.js";
+import { memoriser_pseudonyme } from "./session_eleve.js";
 
 const message = document.querySelector("#message");
 
@@ -38,11 +39,19 @@ async function preparer_accueil() {
   }
 }
 
-function bloquer_envoi(evenement) {
-  // Empêche l'envoi : l'enregistrement de l'élève sera branché à l'étape 7.
+async function commencer(evenement) {
+  // Inscrit l'élève (le serveur remplace son nom par un pseudonyme), puis ouvre le questionnaire.
   evenement.preventDefault();
-  afficher_message("Formulaire complet. L'enregistrement sera branché à l'étape 7.");
+  const donnees = new FormData(evenement.target);
+  try {
+    const { pseudonyme } = await inscrire_eleve(donnees.get("nom"), donnees.get("classe"), donnees.get("cours"));
+    memoriser_pseudonyme(pseudonyme);
+    location.href = "qcm.html";
+  } catch (erreur) {
+    afficher_message("L'inscription n'a pas fonctionné. Vérifiez que le serveur est lancé.", "erreur");
+    console.error(erreur);
+  }
 }
 
-document.querySelector("#formulaire-accueil").addEventListener("submit", bloquer_envoi);
+document.querySelector("#formulaire-accueil").addEventListener("submit", commencer);
 preparer_accueil();

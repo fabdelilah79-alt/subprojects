@@ -25,7 +25,8 @@ def test_options_accueil_lues_dans_la_config():
     reglages = lire_config("application")
     reponse = client.get("/api/accueil")
     assert reponse.status_code == 200
-    assert reponse.json() == {"cours": reglages["cours"], "classes": reglages["classes"]}
+    assert reponse.json()["cours"] == reglages["cours"]
+    assert reponse.json()["classes"] == reglages["classes"]
 
 
 def test_evenement_recu():
