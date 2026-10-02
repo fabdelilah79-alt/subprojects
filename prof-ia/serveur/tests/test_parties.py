@@ -1,5 +1,5 @@
 """
-Rôle : vérifier les routes /api/tableau et /api/parties/<numéro>.
+Rôle : vérifier les routes /api/tableau, /api/manifeste, /api/parties/<numéro> et /ressources.
 Reçoit : l'application de serveur/main.py.
 Produit : des tests pytest (réussis ou échoués).
 Utilisé par : la commande « python -m pytest ».
@@ -30,3 +30,12 @@ def test_partie_absente():
     reponse = client.get("/api/parties/99")
     assert reponse.status_code == 404
     assert "Partie 99 introuvable" in reponse.json()["detail"]
+
+
+def test_manifeste_et_simulation_servis():
+    """Le manifeste est servi, et la simulation de la grande roue est accessible."""
+    ressources = client.get("/api/manifeste").json()["ressources"]
+    roue = next(r for r in ressources if r["id"] == "grande_roue")
+    reponse = client.get(f"/ressources/{roue['fichier']}")
+    assert reponse.status_code == 200
+    assert "Grande roue" in reponse.text

@@ -43,10 +43,10 @@
       "hauteur": 0.26
     },
     "cadre_media": {
-      "x": 0.52,
-      "y": 0.16,
-      "largeur": 0.45,
-      "hauteur": 0.53
+      "x": 0.36,
+      "y": 0.03,
+      "largeur": 0.62,
+      "hauteur": 0.94
     }
   },
   "ecriture": {
@@ -64,5 +64,14 @@
     "interligne": 1.2
   },
   "marge_zone": 14,
-  "espace_entre_ecrits": 6
+  "espace_entre_ecrits": 6,
+  "dessin": {
+    "vitesse_trait_par_s": 700,
+    "rugosite": 1.1,
+    "epaisseur": 3,
+    "taille_etiquette": 36,
+    "graine": 7,
+    "taille_max": 440,
+    "taille_min": 180
+  }
 }

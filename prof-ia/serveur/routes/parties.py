@@ -1,7 +1,7 @@
 """
 Rôle : routes qui donnent au navigateur de quoi jouer une partie au tableau.
-Reçoit : les demandes sur /api/tableau et /api/parties/<numéro>.
-Produit : les réglages du tableau (config/tableau.json) et la partition demandée.
+Reçoit : les demandes sur /api/tableau, /api/manifeste et /api/parties/<numéro>.
+Produit : les réglages du tableau, le manifeste des ressources et la partition demandée.
 Utilisé par : serveur/main.py ; appelé depuis client/js/api.js.
 """
 import json
@@ -17,6 +17,13 @@ routeur = APIRouter(prefix="/api")
 def reglages_tableau():
     """Renvoie les réglages du tableau : dimensions, zones, couleurs, police, vitesse d'écriture."""
     return lire_config("tableau")
+
+
+@routeur.get("/manifeste")
+def manifeste():
+    """Renvoie le manifeste des ressources : pour chaque id, son type et son fichier."""
+    chemin = chemin_projet("contenu") / "manifeste.json"
+    return json.loads(chemin.read_text(encoding="utf-8"))
 
 
 @routeur.get("/parties/{numero}")

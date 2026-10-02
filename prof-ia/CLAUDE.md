@@ -151,6 +151,7 @@ prof-ia/
     orientations/          extraits des orientations pédagogiques
     qcm/                   qcm.json (diagnostic), qcm_post.json (post-test)
     ressources/            simulations, images, documents, figures
+      animations/          simulations interactives HTML du cours (commun/ : style et outils partagés)
     manifeste.json         une fiche par ressource
   prompts/                 pedagogique.md, voix.md, ecriture.md, architecture.md, chef.md, repondeur.md
   schemas/                 partition, plan_pedagogique, qcm, manifeste (.schema.json)
@@ -169,15 +170,15 @@ prof-ia/
     tests/
   client/
     index.html, qcm.html, attente.html, classe.html, demo_tableau.html
-    css/                   theme.css (réglages visuels), base.css, formulaire.css, tableau.css
-    bibliotheques/         KaTeX, mhchem, police Caveat (copiées : pas besoin d'internet)
+    css/                   theme.css (réglages visuels), base.css, formulaire.css, tableau.css, medias.css
+    bibliotheques/         KaTeX, mhchem, Rough.js, police Caveat (copiées : pas besoin d'internet)
     js/
       api.js               seul fichier qui parle au serveur
       accueil.js           page d'accueil
       demo_tableau.js      page de démonstration du tableau
       lecteur/             lecteur.js (enchaîne les beats), horloge.js (pause, accélération), audio.js
-      tableau/             tableau.js, zones.js, ecriture.js, formule.js, dessin.js, onglets.js
-        elements/          un fichier par élément de schéma
+      tableau/             tableau.js, zones.js, ecriture.js, formule.js, dessin.js, crayon.js, onglets.js, catalogue.js
+        elements/          un fichier par élément de schéma (+ index.js, la liste des éléments)
       medias/              cadre_media.js (simulation, image, document, plein écran)
       interaction/         prediction.js, main_levee.js, qcm.js
   sorties/

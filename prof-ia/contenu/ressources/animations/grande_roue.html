@@ -1,0 +1,29 @@
+<!doctype html>
+<!--
+Rôle : simulation de la grande roue (activité 1, document 4) : comparer le mouvement d'une nacelle et celui d'un bras.
+Reçoit : les actions de l'élève (lancer, vitesse, traces, positions marquées).
+Produit : la roue animée ; la trajectoire d'un point de nacelle et celle d'un point du bras.
+Utilisé par : le cadre des médias du tableau (ressource « grande_roue » du manifeste).
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grande roue</title>
+  <link rel="stylesheet" href="commun/style.css">
+  <script type="module" src="grande_roue.js"></script>
+</head>
+<body>
+  <p class="titre">La grande roue : une nacelle et un bras</p>
+  <div class="scene"><svg viewBox="0 0 640 420" role="img" aria-label="Grande roue en mouvement"></svg></div>
+  <p class="mesures">Segment <strong>jaune</strong> : relie le plancher et le plafond d'une nacelle. Point <span style="color: var(--rouge)">rouge</span> : un point du bras.</p>
+  <div class="commandes">
+    <button id="lancer" type="button" aria-pressed="false">Lancer</button>
+    <label for="vitesse">Vitesse <input id="vitesse" type="range" min="1" max="10" value="4"><output for="vitesse"></output></label>
+    <label><input id="trace-nacelle" type="checkbox"> Trace : plancher de la nacelle</label>
+    <label><input id="trace-bras" type="checkbox"> Trace : point du bras</label>
+    <button id="marquer" type="button">Marquer</button>
+    <button id="effacer" type="button">Effacer</button>
+  </div>
+</body>
+</html>

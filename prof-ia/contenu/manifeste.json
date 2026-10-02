@@ -32,13 +32,12 @@
     },
     {
       "id": "grande_roue",
-      "type": "animation",
-      "fichier": "activite1/doc4_grande_roue.html",
-      "description": "Document 4 : une grande roue, avec ses bras métalliques et ses nacelles. Le plancher d'une nacelle reste horizontal pendant que la roue tourne.",
+      "type": "simulation",
+      "fichier": "animations/grande_roue.html",
+      "description": "Document 4 animé : une grande roue tourne. On compare un segment d'une nacelle (plancher-plafond) et un point d'un bras ; on peut tracer leurs trajectoires et marquer des positions successives.",
       "phase_poe": "observation",
-      "manipulable": "Lancer, arrêter, ralentir la roue ; suivre une nacelle et un point du bras.",
-      "partie": 1,
-      "a_completer": "Fichier à fournir : une animation (GeoGebra exporté en HTML) ou une vidéo. Si c'est une vidéo, changer le type en video."
+      "manipulable": "Lancer ou arrêter la roue, régler la vitesse, afficher les trajectoires, marquer des positions.",
+      "partie": 1
     },
     {
       "id": "schema_reperage",
@@ -51,6 +50,15 @@
       "a_completer": "Fichier à fournir, ou à remplacer par un schéma dessiné au tableau (étape 4)."
     },
     {
+      "id": "reperage",
+      "type": "simulation",
+      "fichier": "animations/reperage.html",
+      "description": "Document 5 interactif : point G sur un cercle de centre O et de rayon R ; abscisse angulaire θ (en ° et en rad) et abscisse curviligne s = R·θ.",
+      "phase_poe": "explication",
+      "manipulable": "Déplacer G sur le cercle, changer le rayon R, afficher ou cacher θ et s.",
+      "partie": 1
+    },
+    {
       "id": "enregistrement_coussin_air",
       "type": "enregistrement",
       "fichier": "activite2/enregistrement_table.png",
@@ -59,6 +67,24 @@
       "manipulable": "Mesurer des arcs à la règle et des angles au rapporteur.",
       "partie": 2,
       "a_completer": "Fichier à fournir. Préciser l'échelle de l'enregistrement."
+    },
+    {
+      "id": "coussin_air",
+      "type": "simulation",
+      "fichier": "animations/coussin_air.html",
+      "description": "Enregistrement simulé d'un solide en rotation (τ = 40 ms, OA = 6 cm, OB = 12 cm) : arcs et angle mesurés autour d'une position i ; calculs de Vi, ωi et R·ωi sur demande.",
+      "phase_poe": "observation",
+      "manipulable": "Régler ω, choisir une rotation uniforme ou accélérée, enregistrer, choisir la position i, afficher les calculs.",
+      "partie": 2
+    },
+    {
+      "id": "rotation_uniforme",
+      "type": "simulation",
+      "fichier": "animations/rotation_uniforme.html",
+      "description": "Rotation uniforme d'un disque : la courbe θ(t) se trace en direct (droite de pente ω, d'ordonnée à l'origine θ0) ; équations horaires, période T et fréquence f sur demande.",
+      "phase_poe": "observation",
+      "manipulable": "Régler ω et θ0, lancer, mettre en pause, recommencer, afficher les équations.",
+      "partie": 3
     }
   ]
 }

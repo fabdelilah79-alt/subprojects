@@ -50,10 +50,10 @@ def test_ancre_absente(partition, tmp_path):
 
 def test_ancres_dans_le_desordre(partition, tmp_path):
     """Deux ancres inversées sont signalées."""
-    actions = partition["beats"][9]["actions"]
+    actions = partition["beats"][10]["actions"]
     actions[0], actions[1] = actions[1], actions[0]
     erreurs, _ = verifier(partition, tmp_path)
-    assert erreurs == ["p1_b10, action 2 : l'ancre « s égale R fois thêta » arrive avant l'ancre précédente"]
+    assert erreurs == ["p1_b11, action 2 : l'ancre « s égale R fois thêta » arrive avant l'ancre précédente"]
 
 
 def test_zone_et_ton_inconnus(partition, tmp_path):
@@ -67,7 +67,7 @@ def test_zone_et_ton_inconnus(partition, tmp_path):
 
 def test_chiffres_dans_texte_dit(partition, tmp_path):
     """Un chiffre dans texte_dit donne un avertissement, pas une erreur."""
-    partition["beats"][10]["texte_dit"] = partition["beats"][10]["texte_dit"].replace("quarante-cinq", "45")
+    partition["beats"][11]["texte_dit"] = partition["beats"][11]["texte_dit"].replace("quarante-cinq", "45")
     erreurs, avertissements = verifier(partition, tmp_path)
     assert erreurs == []
     assert any("contient 4 5" in a for a in avertissements)

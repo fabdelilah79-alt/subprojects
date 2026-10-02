@@ -1,0 +1,28 @@
+<!doctype html>
+<!--
+Rôle : simulation de l'enregistrement sur table à coussin d'air (activité 2) : vitesses linéaires et vitesse angulaire.
+Reçoit : la vitesse angulaire, le type de rotation (uniforme ou accélérée), la position étudiée.
+Produit : les positions A0…A8 et B0…B8 (τ = 40 ms), les arcs et l'angle mesurés ; les calculs si on les demande.
+Utilisé par : le cadre des médias du tableau (ressource « coussin_air » du manifeste).
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Table à coussin d'air</title>
+  <link rel="stylesheet" href="commun/style.css">
+  <script type="module" src="coussin_air.js"></script>
+</head>
+<body>
+  <p class="titre">Enregistrement d'un solide en rotation (τ = 40 ms ; OA = 6 cm ; OB = 12 cm)</p>
+  <div class="scene"><svg viewBox="0 0 640 420" aria-label="Disque en rotation et positions enregistrées"></svg></div>
+  <p class="mesures" id="mesures" aria-live="polite">Cliquez sur « Enregistrer ».</p>
+  <div class="commandes">
+    <button id="enregistrer" type="button">Enregistrer</button>
+    <label for="omega">ω <input id="omega" type="range" min="2" max="12" step="0.5" value="7.5"><output for="omega"></output></label>
+    <label><input id="accelere" type="checkbox"> Rotation accélérée</label>
+    <label for="position">Position étudiée i <input id="position" type="range" min="1" max="7" value="1" disabled><output for="position"></output></label>
+    <label><input id="calculs" type="checkbox"> Afficher les calculs</label>
+  </div>
+</body>
+</html>

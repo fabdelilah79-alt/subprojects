@@ -63,3 +63,28 @@ Problèmes restants :
 - θ et Δ n'existent pas dans la police Caveat : le navigateur les prend dans une autre police (un peu différente).
 - Actions dessiner (étape 4), media et prediction (étape 6) : pas encore au tableau, signalées sous les boutons.
 - La pause arrête l'écriture en cours ; Beat suivant termine le beat en cours d'un coup.
+
+## 2026-10-02 — Étape 4 : les schémas, et simulations interactives (demande de l'enseignant)
+
+Fait (étape 4) :
+- Rough.js ajouté (prévu dans CLAUDE.md) : traits d'aspect fait main, révélés trait par trait.
+- Bibliothèque adaptée au cours de rotation : point, segment, fleche, cercle, angle, axe_rotation,
+  repere_cercle (O, A, G, θ, s), disque_points (disque, axe, A et B).
+- L'action « dessiner » réserve un carré dans la zone, sans chevauchement. Le repère du beat 8 s'affiche.
+- Bouton « Tous les éléments » : la bibliothèque sur un onglet à part.
+
+Fait (à la demande de l'enseignant, en avance sur l'étape 6) :
+- Quatre simulations interactives dans contenu/ressources/animations/ : grande roue, repérage,
+  table à coussin d'air (uniforme ou accélérée), rotation uniforme avec θ(t). Valeurs conformes au cours
+  (arc A2A4 = 3,6 cm, 34°, VA = 0,45 m/s, ω = 7,5 rad/s).
+- Cadre des médias : la simulation s'ouvre sur le tableau, Plein écran, la lecture attend « J'ai terminé ».
+- Manifeste : 4 simulations ajoutées. Partie 1 : nouveau beat p1_b10 (simulation de repérage) ; beats renumérotés.
+- Routes /api/manifeste et /ressources ; 1 nouveau test (18 au total).
+
+Corrigé en testant :
+- Les pointillés de l'axe (Δ) disparaissaient après le tracé.
+- Le catalogue devenait la page où le cours s'écrivait.
+
+Problèmes restants :
+- Les événements des médias (ouverture, plein écran, durée) seront enregistrés à l'étape 6, avec la prédiction.
+- Les ressources image (documents 1, 2, 3, 5 et enregistrement réel) restent à fournir.

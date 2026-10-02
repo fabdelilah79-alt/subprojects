@@ -1,0 +1,27 @@
+<!doctype html>
+<!--
+Rôle : simulation du repérage d'un point sur un cercle (activité 1, document 5) : abscisse angulaire θ et abscisse curviligne s.
+Reçoit : le déplacement du point G (souris, doigt ou flèches du clavier) et le rayon R.
+Produit : θ en degrés et en radians, s = R·θ, l'angle et l'arc dessinés.
+Utilisé par : le cadre des médias du tableau (ressource « reperage » du manifeste).
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repérage d'un point sur un cercle</title>
+  <link rel="stylesheet" href="commun/style.css">
+  <script type="module" src="reperage.js"></script>
+</head>
+<body>
+  <p class="titre">Repérer le point G : par un angle ou par un arc ?</p>
+  <div class="scene"><svg viewBox="0 0 640 400" aria-label="Cercle de centre O, point G mobile"></svg></div>
+  <p class="mesures" id="mesures" aria-live="polite"></p>
+  <div class="commandes">
+    <label for="rayon">Rayon R <input id="rayon" type="range" min="2" max="9" step="0.5" value="6"><output for="rayon"></output></label>
+    <label><input id="voir-angle" type="checkbox" checked> Angle θ</label>
+    <label><input id="voir-arc" type="checkbox" checked> Arc s</label>
+    <span>Déplacez G avec la souris, le doigt ou les flèches du clavier.</span>
+  </div>
+</body>
+</html>

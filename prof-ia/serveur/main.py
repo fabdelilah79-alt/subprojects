@@ -13,10 +13,12 @@ from serveur.routes import eleve, parties
 
 
 def creer_application():
-    """Crée l'application : d'abord les routes /api, puis les pages du client."""
+    """Crée l'application : routes /api, ressources de l'enseignant (/ressources), puis pages du client."""
     application = FastAPI(title="Professeur IA")
     application.include_router(eleve.routeur)
     application.include_router(parties.routeur)
+    ressources = StaticFiles(directory=chemin_projet("contenu") / "ressources", html=True)
+    application.mount("/ressources", ressources, name="ressources")
     pages = StaticFiles(directory=chemin_projet("client"), html=True)
     application.mount("/", pages, name="client")
     return application

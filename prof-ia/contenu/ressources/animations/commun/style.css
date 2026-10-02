@@ -1,0 +1,122 @@
+/*
+Rôle : style commun des simulations : fond de tableau, craies, commandes sobres.
+Reçoit : rien.
+Produit : une page qui remplit le cadre (simulation en haut, commandes en bas), lisible en petit comme en plein écran.
+Utilisé par : toutes les simulations de contenu/ressources/animations/.
+*/
+:root {
+  --fond: #173027;
+  --trait: #3e5c50;
+  --craie: #f3f0e6;
+  --craie-douce: #c2ccc6;
+  --jaune: #f1e08a;
+  --rouge: #ef8f80;
+  --bleu: #a6d4e4;
+  --vert: #b5e0a2;
+  --rayon: 3px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--fond);
+  color: var(--craie);
+  font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.titre {
+  margin: 0;
+  padding: 0.5rem 0.75rem 0;
+  color: var(--jaune);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.scene {
+  flex: 1;
+  min-height: 0;
+}
+
+.scene svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mesures {
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  min-height: 3em;
+  font-variant-numeric: tabular-nums;
+}
+
+.mesures strong {
+  color: var(--jaune);
+  font-weight: 600;
+}
+
+.commandes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 0.25rem 0.75rem 0.5rem;
+  border-top: 1px solid var(--trait);
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--craie-douce);
+  border-radius: var(--rayon);
+  background: none;
+  color: var(--craie);
+  font: inherit;
+  cursor: pointer;
+}
+
+button[aria-pressed="true"] {
+  border-color: var(--jaune);
+  color: var(--jaune);
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+}
+
+input[type="range"] {
+  width: 7rem;
+  accent-color: var(--jaune);
+}
+
+input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--jaune);
+}
+
+output {
+  min-width: 4.5em;
+  color: var(--jaune);
+  font-variant-numeric: tabular-nums;
+}
+
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--jaune);
+  outline-offset: 2px;
+}

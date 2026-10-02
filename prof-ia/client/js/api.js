@@ -28,3 +28,8 @@ export function lire_partie(numero) {
   // Récupère la partition validée d'une partie du cours.
   return lire(`/api/parties/${numero}`);
 }
+
+export function lire_manifeste() {
+  // Récupère le manifeste : type et fichier de chaque ressource (simulation, image, document).
+  return lire("/api/manifeste");
+}

@@ -17,7 +17,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | config/modeles.json | Modèle Claude et niveau d'effort de chaque agent. |
 | config/tableau.json | Couleurs du tableau, zones, vitesse d'écriture. |
 | config/voix.json | Fournisseur de voix, modèles, style, tons, contrôle du débit. |
-| serveur/main.py | Démarre le serveur web et branche les routes. |
+| serveur/main.py | Démarre le serveur web, branche les routes et sert contenu/ressources/ à l'adresse /ressources. |
 | serveur/configuration.py | Lit les fichiers de config/. Ajouté à l'étape 1 (absent de l'arborescence d'origine). |
 | serveur/routes/eleve.py | Route /api/accueil : renvoie les cours et les classes de l'accueil. |
 | serveur/tests/test_main.py | Teste la page d'accueil et la route /api/accueil. |
@@ -48,8 +48,15 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/js/tableau/ecriture.js | Écrit un texte en police manuscrite, révélé de gauche à droite, ligne par ligne. |
 | client/js/tableau/formule.js | Écrit une formule KaTeX (et mhchem), révélée de gauche à droite. |
 | client/js/tableau/onglets.js | Liens « Tableau 1, 2… » ; les anciens tableaux restent consultables. |
-| client/bibliotheques/ | KaTeX, mhchem et la police Caveat, copiés dans le projet (voir LISEZMOI.md). |
-| serveur/routes/parties.py | Routes /api/tableau (réglages du tableau) et /api/parties/<n> (partition validée). |
+| client/bibliotheques/ | KaTeX, mhchem, Rough.js et la police Caveat, copiés dans le projet (voir LISEZMOI.md). |
+| client/js/tableau/dessin.js | Dessine un schéma trait par trait dans un carré réservé de la zone. |
+| client/js/tableau/crayon.js | Outils de dessin à la craie (Rough.js) : ligne, cercle, arc, point, étiquette, flèche. Ajouté à l'étape 4. |
+| client/js/tableau/catalogue.js | Bouton « Tous les éléments » : dessine toute la bibliothèque sur un onglet à part. Ajouté à l'étape 4. |
+| client/js/tableau/elements/*.js | Un fichier par élément : point, segment, fleche, cercle, angle, axe_rotation, repere_cercle, disque_points ; index.js les liste. |
+| client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». |
+| client/css/medias.css | Style du cadre des médias. |
+| contenu/ressources/animations/ | Simulations interactives : grande_roue, reperage, coussin_air, rotation_uniforme (+ commun/style.css, commun/outils.js, LISEZMOI.md). |
+| serveur/routes/parties.py | Routes /api/tableau (réglages du tableau), /api/manifeste et /api/parties/<n> (partition validée). |
 | serveur/tests/test_parties.py | Teste ces deux routes. |
 | client/js/accueil.js | Remplit les listes de l'accueil et bloque l'envoi pour l'instant. |
 
@@ -99,9 +106,13 @@ Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les ga
 | police.interligne | Espace entre deux lignes (1,2 = 20 % de la hauteur des lettres). | 1,2 |
 | marge_zone | Marge intérieure de chaque zone. | 14 |
 | espace_entre_ecrits | Espace entre deux écrits d'une même zone. | 6 |
+| dessin.vitesse_trait_par_s | Vitesse du trait de craie pour les schémas. | 700 |
+| dessin.rugosite / epaisseur / graine | Aspect fait main (0 = règle parfaite), épaisseur du trait, graine (même dessin à chaque fois). | 1,1 / 3 / 7 |
+| dessin.taille_etiquette | Taille des noms de points et d'angles. | 36 |
+| dessin.taille_min / taille_max | Côté minimal et maximal du carré d'un schéma. | 180 / 440 |
 | demo.duree_beat_s | Durée d'un beat dans la démonstration sans voix (étape 3). | 4 s |
 
-Zones agrandies à l'étape 3 (titre, a_retenir) pour que la partie 1 tienne. Pour l'instant, cadre_media occupe la même place que la zone droite : un média affiché couvre cette zone. À confirmer à l'étape 6.
+Zones agrandies à l'étape 3 (titre, a_retenir) pour que la partie 1 tienne. cadre_media couvre la droite du tableau (62 % de la largeur) : le cadre d'une simulation se pose par-dessus le tableau, puis se ferme sans rien effacer.
 
 ### config/voix.json
 

@@ -14,8 +14,17 @@
       "texte_dit": "Bonjour. Aujourd'hui, nous étudions le mouvement de rotation d'un solide autour d'un axe fixe. Commençons par un objet que vous connaissez bien : la grande roue.",
       "ton": "enthousiaste",
       "actions": [
-        { "type": "nouveau_tableau", "titre": "Rotation ou translation ?" },
-        { "type": "ecrire", "ancre": "le mouvement de rotation", "zone": "titre", "style": "titre", "texte": "Mouvement de rotation d'un solide autour d'un axe fixe" }
+        {
+          "type": "nouveau_tableau",
+          "titre": "Rotation ou translation ?"
+        },
+        {
+          "type": "ecrire",
+          "ancre": "le mouvement de rotation",
+          "zone": "titre",
+          "style": "titre",
+          "texte": "Mouvement de rotation d'un solide autour d'un axe fixe"
+        }
       ]
     },
     {
@@ -29,15 +38,39 @@
           "ancre": "Choisissez une réponse",
           "question": "Quand la grande roue tourne, quel est le mouvement d'une nacelle ?",
           "choix": [
-            { "id": "A", "texte": "Elle tourne autour de l'axe de la roue, comme les bras : c'est une rotation.", "conception": "trajectoire_circulaire_egale_rotation" },
-            { "id": "B", "texte": "Elle reste toujours droite, parallèle à elle-même : ce n'est pas une rotation.", "conception": null },
-            { "id": "C", "texte": "Je ne sais pas.", "conception": null }
+            {
+              "id": "A",
+              "texte": "Elle tourne autour de l'axe de la roue, comme les bras : c'est une rotation.",
+              "conception": "trajectoire_circulaire_egale_rotation"
+            },
+            {
+              "id": "B",
+              "texte": "Elle reste toujours droite, parallèle à elle-même : ce n'est pas une rotation.",
+              "conception": null
+            },
+            {
+              "id": "C",
+              "texte": "Je ne sais pas.",
+              "conception": null
+            }
           ],
           "justifier": true,
           "branches": [
-            { "choix": "A", "texte_dit": "C'est une réponse très fréquente, parce que la nacelle décrit bien un cercle. Gardons cette idée et vérifions-la ensemble.", "ton": "encourageant" },
-            { "choix": "B", "texte_dit": "Intéressant. Vous avez remarqué quelque chose d'important. Vérifions-le ensemble.", "ton": "encourageant" },
-            { "choix": "C", "texte_dit": "Pas de souci, c'est justement ce que nous allons observer.", "ton": "encourageant" }
+            {
+              "choix": "A",
+              "texte_dit": "C'est une réponse très fréquente, parce que la nacelle décrit bien un cercle. Gardons cette idée et vérifions-la ensemble.",
+              "ton": "encourageant"
+            },
+            {
+              "choix": "B",
+              "texte_dit": "Intéressant. Vous avez remarqué quelque chose d'important. Vérifions-le ensemble.",
+              "ton": "encourageant"
+            },
+            {
+              "choix": "C",
+              "texte_dit": "Pas de souci, c'est justement ce que nous allons observer.",
+              "ton": "encourageant"
+            }
           ]
         }
       ]
@@ -64,7 +97,13 @@
       "texte_dit": "Traçons un segment imaginaire entre le plancher et le plafond de la nacelle. Pendant tout le mouvement, ce segment reste parallèle à lui-même.",
       "ton": "lent_et_clair",
       "actions": [
-        { "type": "ecrire", "ancre": "reste parallèle", "zone": "gauche", "style": "normal", "texte": "Nacelle : un segment de la nacelle reste parallèle à lui-même." }
+        {
+          "type": "ecrire",
+          "ancre": "reste parallèle",
+          "zone": "gauche",
+          "style": "normal",
+          "texte": "Nacelle : un segment de la nacelle reste parallèle à lui-même."
+        }
       ]
     },
     {
@@ -73,7 +112,13 @@
       "texte_dit": "La nacelle ne tourne donc pas sur elle-même : elle est en translation circulaire. Sa trajectoire est un cercle, et pourtant ce n'est pas une rotation.",
       "ton": "neutre",
       "actions": [
-        { "type": "ecrire", "ancre": "translation circulaire", "zone": "gauche", "style": "normal", "texte": "→ translation circulaire (et non rotation)" }
+        {
+          "type": "ecrire",
+          "ancre": "translation circulaire",
+          "zone": "gauche",
+          "style": "normal",
+          "texte": "→ translation circulaire (et non rotation)"
+        }
       ]
     },
     {
@@ -82,7 +127,13 @@
       "texte_dit": "Regardons maintenant le bras de la roue. Chacun de ses points décrit un cercle, et tous ces cercles ont le même centre, sur l'axe de la roue.",
       "ton": "neutre",
       "actions": [
-        { "type": "ecrire", "ancre": "Chacun de ses points", "zone": "gauche", "style": "normal", "texte": "Bras : chaque point décrit un cercle centré sur l'axe." }
+        {
+          "type": "ecrire",
+          "ancre": "Chacun de ses points",
+          "zone": "gauche",
+          "style": "normal",
+          "texte": "Bras : chaque point décrit un cercle centré sur l'axe."
+        }
       ]
     },
     {
@@ -91,7 +142,13 @@
       "texte_dit": "Voici la définition. Un solide est en rotation autour d'un axe fixe quand tous ses points décrivent des cercles centrés sur cet axe, dans des plans perpendiculaires à l'axe. Les points situés sur l'axe, eux, restent immobiles.",
       "ton": "lent_et_clair",
       "actions": [
-        { "type": "ecrire", "ancre": "Un solide est en rotation", "zone": "a_retenir", "style": "a_retenir", "texte": "Rotation autour d'un axe fixe (Δ) : tous les points du solide décrivent des cercles centrés sur (Δ), dans des plans perpendiculaires à (Δ)." }
+        {
+          "type": "ecrire",
+          "ancre": "Un solide est en rotation",
+          "zone": "a_retenir",
+          "style": "a_retenir",
+          "texte": "Rotation autour d'un axe fixe (Δ) : tous les points du solide décrivent des cercles centrés sur (Δ), dans des plans perpendiculaires à (Δ)."
+        }
       ]
     },
     {
@@ -100,8 +157,27 @@
       "texte_dit": "Comment repérer un point G qui tourne sur un cercle de centre O et de rayon R ? Première méthode : l'angle thêta entre l'axe O x et le segment O G. C'est l'abscisse angulaire, en radians.",
       "ton": "interrogatif",
       "actions": [
-        { "type": "dessiner", "ancre": "un cercle de centre O", "element": "repere_cercle", "zone": "droite", "parametres": { "centre": "O", "point": "G", "origine": "A", "axe": "x", "angle": "θ", "arc": "s" } },
-        { "type": "formule", "ancre": "l'abscisse angulaire", "zone": "gauche", "style": "normal", "latex": "\\theta(t) = \\left(\\vec{Ox}, \\vec{OG}\\right) \\quad (\\text{rad})" }
+        {
+          "type": "dessiner",
+          "ancre": "un cercle de centre O",
+          "element": "repere_cercle",
+          "zone": "droite",
+          "parametres": {
+            "centre": "O",
+            "point": "G",
+            "origine": "A",
+            "axe": "x",
+            "angle": "θ",
+            "arc": "s"
+          }
+        },
+        {
+          "type": "formule",
+          "ancre": "l'abscisse angulaire",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "\\theta(t) = \\left(\\vec{Ox}, \\vec{OG}\\right) \\quad (\\text{rad})"
+        }
       ]
     },
     {
@@ -110,27 +186,73 @@
       "texte_dit": "Deuxième méthode : la longueur de l'arc parcouru depuis le point A, sur le cercle. C'est l'abscisse curviligne s, en mètres.",
       "ton": "neutre",
       "actions": [
-        { "type": "formule", "ancre": "l'abscisse curviligne", "zone": "gauche", "style": "normal", "latex": "s(t) = \\overset{\\frown}{AG} \\quad (\\text{m})" }
+        {
+          "type": "formule",
+          "ancre": "l'abscisse curviligne",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "s(t) = \\overset{\\frown}{AG} \\quad (\\text{m})"
+        }
       ]
     },
     {
       "id": "p1_b10",
-      "phase": "synthese",
-      "texte_dit": "Ces deux repérages sont liés : l'arc est égal au rayon multiplié par l'angle. s égale R fois thêta, avec thêta en radians, R et s en mètres.",
-      "ton": "lent_et_clair",
+      "phase": "explication",
+      "texte_dit": "À vous de manipuler. Ouvrez la simulation et déplacez le point G sur le cercle. Regardez comment thêta et s changent ensemble, puis changez le rayon. Cliquez sur « J'ai terminé » quand vous avez trouvé le lien entre s, R et thêta.",
+      "ton": "encourageant",
       "actions": [
-        { "type": "formule", "ancre": "s égale R fois thêta", "zone": "a_retenir", "style": "a_retenir", "latex": "s(t) = R \\cdot \\theta(t)" },
-        { "type": "ecrire", "ancre": "avec thêta en radians", "zone": "a_retenir", "style": "normal", "texte": "θ en rad ; R et s en m" }
+        {
+          "type": "media",
+          "ancre": "Ouvrez la simulation",
+          "ressource": "reperage",
+          "plein_ecran": true,
+          "consigne": "Déplacez G, puis changez R. Quel lien voyez-vous entre s, R et θ ?",
+          "attendre": "clic_termine"
+        }
       ]
     },
     {
       "id": "p1_b11",
       "phase": "synthese",
+      "texte_dit": "Ces deux repérages sont liés : l'arc est égal au rayon multiplié par l'angle. s égale R fois thêta, avec thêta en radians, R et s en mètres.",
+      "ton": "lent_et_clair",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "s égale R fois thêta",
+          "zone": "a_retenir",
+          "style": "a_retenir",
+          "latex": "s(t) = R \\cdot \\theta(t)"
+        },
+        {
+          "type": "ecrire",
+          "ancre": "avec thêta en radians",
+          "zone": "a_retenir",
+          "style": "normal",
+          "texte": "θ en rad ; R et s en m"
+        }
+      ]
+    },
+    {
+      "id": "p1_b12",
+      "phase": "synthese",
       "texte_dit": "Un exemple : une porte de quatre-vingt-dix centimètres de large pivote de quarante-cinq degrés, soit pi sur quatre radians. La poignée parcourt un arc d'environ soixante et onze centimètres.",
       "ton": "neutre",
       "actions": [
-        { "type": "formule", "ancre": "soit pi sur quatre", "zone": "gauche", "style": "normal", "latex": "45^\\circ = \\frac{\\pi}{4}\\ \\text{rad}" },
-        { "type": "formule", "ancre": "La poignée parcourt", "zone": "gauche", "style": "normal", "latex": "s = 0{,}90 \\times \\frac{\\pi}{4} \\approx 0{,}71\\ \\text{m}" }
+        {
+          "type": "formule",
+          "ancre": "soit pi sur quatre",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "45^\\circ = \\frac{\\pi}{4}\\ \\text{rad}"
+        },
+        {
+          "type": "formule",
+          "ancre": "La poignée parcourt",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "s = 0{,}90 \\times \\frac{\\pi}{4} \\approx 0{,}71\\ \\text{m}"
+        }
       ]
     }
   ]

@@ -1,15 +1,16 @@
 /*
 Rôle : le tableau vert. Il crée une page par tableau et exécute les actions d'écriture.
 Reçoit : l'endroit de la page où dessiner, la barre d'onglets, les réglages de config/tableau.json.
-Produit : un objet avec executer(action, horloge) et gere(type).
+Produit : un objet avec executer(action, horloge), gere(type) et ouvrir_page(titre).
 Utilisé par : client/js/demo_tableau.js (et plus tard la page de classe).
 */
+import { dessiner } from "./dessin.js";
 import { creer_element_svg, ecrire_texte } from "./ecriture.js";
 import { ecrire_formule } from "./formule.js";
 import { creer_onglets } from "./onglets.js";
 import { creer_zones } from "./zones.js";
 
-const ACTIONS_GEREES = new Set(["nouveau_tableau", "ecrire", "formule"]);
+const ACTIONS_GEREES = new Set(["nouveau_tableau", "ecrire", "formule", "dessiner"]);
 
 async function charger_police(reglages) {
   // Attend que la police manuscrite soit prête, pour mesurer les textes correctement.
@@ -18,7 +19,8 @@ async function charger_police(reglages) {
 }
 
 function couleur_de(action, reglages) {
-  // Choisit la couleur : celle demandée, sinon celle du style (une formule normale a sa couleur propre).
+  // Choisit la couleur : celle demandée, sinon celle du style (formule normale et schéma ont la leur).
+  if (action.type === "dessiner") return reglages.palette[action.couleur ?? reglages.couleur_par_style.schema];
   const cle = action.type === "formule" && action.style === "normal" ? "formule" : action.style;
   const nom = action.couleur ?? reglages.couleur_par_style[cle];
   return reglages.palette[nom];
@@ -37,24 +39,29 @@ export async function creer_tableau(planche, barre_onglets, reglages) {
   // Prépare le tableau : police chargée, onglets prêts, aucune page encore.
   await charger_police(reglages);
   const pages = [];
+  let page_ecriture = null;
   const afficher = (numero) => pages.forEach((page, i) => page.svg.classList.toggle("cache", i !== numero));
   const onglets = creer_onglets(barre_onglets, afficher);
 
-  function nouvelle_page(titre) {
-    // Ouvre un nouveau tableau ; les anciens restent consultables par leur onglet.
-    pages.push(creer_page(planche, reglages));
+  function nouvelle_page(titre, pour_le_cours = true) {
+    // Ouvre un nouveau tableau ; les anciens restent consultables. Le catalogue n'en devient pas la page d'écriture.
+    const page = creer_page(planche, reglages);
+    pages.push(page);
     afficher(onglets.ajouter(titre));
+    if (pour_le_cours) page_ecriture = page;
+    return page;
   }
 
   async function executer(action, horloge) {
     // Exécute une action au tableau et attend qu'elle soit finie.
     if (action.type === "nouveau_tableau") return nouvelle_page(action.titre);
-    if (!pages.length) nouvelle_page("Tableau");
-    const page = pages.at(-1);
+    if (!page_ecriture) nouvelle_page("Tableau");
+    const page = page_ecriture;
     const couleur = couleur_de(action, reglages);
     if (action.type === "ecrire") return ecrire_texte(page, action, couleur, reglages, horloge);
+    if (action.type === "dessiner") return dessiner(page, action, couleur, reglages, horloge);
     return ecrire_formule(page, action, couleur, reglages, horloge);
   }
 
-  return { executer, gere: (type) => ACTIONS_GEREES.has(type) };
+  return { executer, gere: (type) => ACTIONS_GEREES.has(type), ouvrir_page: (titre) => nouvelle_page(titre, false) };
 }
