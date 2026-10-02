@@ -2,7 +2,7 @@
 Rôle : horloge de la lecture, que l'on peut mettre en pause ou accélérer.
 Reçoit : les ordres pause, reprise et accélération du lecteur.
 Produit : le temps écoulé (en secondes, pauses exclues), des attentes et des animations qui le suivent.
-Utilisé par : client/js/lecteur/lecteur.js, client/js/tableau/ecriture.js, client/js/tableau/formule.js.
+Utilisé par : lecteur.js, audio.js, le tableau (écriture, formules, dessins), les médias et la prédiction.
 */
 
 export function creer_horloge() {
@@ -17,6 +17,7 @@ export function creer_horloge() {
     accelerer() { rapide = true; },
     ralentir() { rapide = false; },
     est_rapide: () => rapide,
+    en_pause: () => depart === null,
   };
 }
 
@@ -43,5 +44,17 @@ export function animer(horloge, duree_s, dessiner) {
       else requestAnimationFrame(etape);
     };
     etape();
+  });
+}
+
+export function attendre_acceleration(horloge, suivi) {
+  // Se termine si l'on passe au beat suivant (horloge accélérée), sauf si suivi.fini est devenu vrai avant.
+  return new Promise((resoudre) => {
+    const verifier = () => {
+      if (suivi.fini) return;
+      if (horloge.est_rapide()) resoudre();
+      else requestAnimationFrame(verifier);
+    };
+    verifier();
   });
 }

@@ -19,7 +19,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | config/voix.json | Fournisseur de voix, modèles, style, tons, contrôle du débit. |
 | serveur/main.py | Démarre le serveur web, branche les routes et sert contenu/ressources/ à l'adresse /ressources. |
 | serveur/configuration.py | Lit les fichiers de config/. Ajouté à l'étape 1 (absent de l'arborescence d'origine). |
-| serveur/routes/eleve.py | Route /api/accueil : renvoie les cours et les classes de l'accueil. |
+| serveur/routes/eleve.py | Routes /api/accueil (cours et classes) et /api/evenements (événements de l'élève, affichés dans le terminal). |
 | serveur/tests/test_main.py | Teste la page d'accueil et la route /api/accueil. |
 | serveur/tests/test_configuration.py | Teste la lecture des réglages. |
 | serveur/tests/test_verifier_structure.py | Teste l'outil de vérification de la structure. |
@@ -53,6 +53,15 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/js/tableau/crayon.js | Outils de dessin à la craie (Rough.js) : ligne, cercle, arc, point, étiquette, flèche. Ajouté à l'étape 4. |
 | client/js/tableau/catalogue.js | Bouton « Tous les éléments » : dessine toute la bibliothèque sur un onglet à part. Ajouté à l'étape 4. |
 | client/js/tableau/elements/*.js | Un fichier par élément : point, segment, fleche, cercle, angle, axe_rotation, repere_cercle, disque_points ; index.js les liste. |
+| serveur/voix/synthese.py | Interface unique de la voix : texte + ton -> audio + durée (+ temps des mots) ; contrôle du débit. |
+| serveur/voix/voix_essai.py | Voix d'essai sans clé : WAV muet de la durée de la parole. Ajoutée à l'étape 5 (en attendant la clé). |
+| serveur/voix/cache_audio.py | Un même audio n'est produit qu'une fois (sorties/cache_audio/, servi à /audio). |
+| serveur/voix/ancrage.py | Calcule debut_s de chaque action (temps des mots, ou estimation proportionnelle). |
+| outils/generer_audio.py | Produit l'audio d'une partition (beats et réactions), calcule debut_s, vérifie, affiche le coût. |
+| serveur/tests/test_voix.py | Teste la voix d'essai, le cache et l'ancrage. |
+| client/js/lecteur/audio.js | Fait parler le prof : joue l'audio en suivant l'horloge ; silence de la bonne durée si le fichier manque. |
+| client/js/interaction/prediction.js | Pose la question de prédiction (choix + justification), signale la réponse, joue la réaction prévue. |
+| client/css/interaction.css | Style du panneau de prédiction. |
 | client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». |
 | client/css/medias.css | Style du cadre des médias. |
 | contenu/ressources/animations/ | Simulations interactives : grande_roue, reperage, coussin_air, rotation_uniforme (+ commun/style.css, commun/outils.js, LISEZMOI.md). |
@@ -118,7 +127,9 @@ Zones agrandies à l'étape 3 (titre, a_retenir) pour que la partie 1 tienne. ca
 
 | Réglage | Rôle | Valeur de départ |
 |---|---|---|
-| fournisseur | Voix utilisée : gemini ou elevenlabs. | gemini |
+| fournisseur | Voix utilisée : essai (sans clé, muette), gemini ou elevenlabs. | essai, en attendant la clé |
+| essai.debit_caracteres_par_s / frequence_hz / marge_s | Durée simulée de la parole (14 caractères par seconde) et format du fichier muet. | 14 / 8000 / 0,3 |
+| <fournisseur>.cout_par_million_caracteres | Prix, pour le coût estimé affiché par generer_audio. | 0 pour essai |
 | gemini.modele_cours / modele_repondeur | Modèles de voix pour le cours et pour les réponses. | gemini-3.8-flash-tts / gemini-3.8-flash-lite-tts |
 | gemini.voix | Nom de la voix. null = pas encore choisie. | choisie à l'étape 5 |
 | elevenlabs.* | Mêmes réglages pour ElevenLabs. Noms des modèles à confirmer dans la documentation à l'étape 5. | eleven_v4 / eleven_v4_turbo |

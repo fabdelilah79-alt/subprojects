@@ -1,10 +1,12 @@
 /*
 Rôle : faire fonctionner la page de démonstration du tableau (boutons, état, texte dit, médias, catalogue).
 Reçoit : la partition demandée dans l'adresse (?partie=1 par défaut) et les réglages du tableau.
-Produit : la partition jouée au tableau, sans voix, avec une durée fixe par beat.
+Produit : la partition jouée : voix (si l'audio est généré), tableau, médias, prédiction.
 Utilisé par : client/demo_tableau.html.
 */
-import { lire_manifeste, lire_partie, lire_reglages_tableau } from "./api.js";
+import { envoyer_evenement, lire_manifeste, lire_partie, lire_reglages_tableau } from "./api.js";
+import { creer_prediction } from "./interaction/prediction.js";
+import { creer_voix } from "./lecteur/audio.js";
 import { creer_horloge } from "./lecteur/horloge.js";
 import { creer_lecteur } from "./lecteur/lecteur.js";
 import { creer_cadre_media } from "./medias/cadre_media.js";
@@ -14,7 +16,9 @@ import { creer_tableau } from "./tableau/tableau.js";
 const etat = document.querySelector("#etat");
 const texte_dit = document.querySelector("#texte-dit");
 const remarques = document.querySelector("#remarques");
-const ETAPE_PREVUE = { prediction: 6, pause: 5 };
+const ETAPE_PREVUE = { pause: 5 };
+const signaler = (type, donnees) => envoyer_evenement(type, donnees).catch((e) => console.warn(e));
+const afficher_texte_dit = (texte) => { texte_dit.textContent = texte; };
 
 function creer_rappels(partition) {
   // Prépare ce que la page affiche à chaque beat, pour chaque action non encore gérée, et à la fin.
@@ -53,8 +57,11 @@ async function demarrer() {
     const [reglages, partition, manifeste] = await Promise.all([lire_reglages_tableau(), lire_partie(numero), lire_manifeste()]);
     const planche = document.querySelector("#planche");
     const tableau = await creer_tableau(planche, document.querySelector("#onglets"), reglages);
-    const executants = [tableau, creer_cadre_media(planche, reglages, manifeste)];
-    const lecteur = creer_lecteur(partition, executants, reglages, creer_horloge(), creer_rappels(partition));
+    const voix = creer_voix();
+    const executants = [tableau, creer_cadre_media(planche, reglages, manifeste, signaler),
+      creer_prediction(planche, voix, signaler, afficher_texte_dit)];
+    const contexte = { executants, voix, reglages, horloge: creer_horloge(), rappels: creer_rappels(partition) };
+    const lecteur = creer_lecteur(partition, contexte);
     brancher_boutons(lecteur, tableau, reglages);
     etat.textContent = `Partie ${partition.numero} : ${partition.titre}. Prêt.`;
   } catch (erreur) {

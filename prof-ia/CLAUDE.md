@@ -163,14 +163,14 @@ prof-ia/
     routes/                une route par fichier : eleve.py, qcm.py, parties.py, questions.py
     agents/                appel_ia.py + un fichier par agent
     pipeline/              orchestrateur.py (enchaîne les agents), file_attente.py (arrière-plan)
-    voix/                  synthese.py (interface), gemini_tts.py, elevenlabs_tts.py,
+    voix/                  synthese.py (interface), voix_essai.py (sans clé), gemini_tts.py, elevenlabs_tts.py,
                            ancrage.py, cache_audio.py
     eleve/                 pseudonymes.py, profil.py
     donnees/               stockage.py, journal_recherche.py
     tests/
   client/
     index.html, qcm.html, attente.html, classe.html, demo_tableau.html
-    css/                   theme.css (réglages visuels), base.css, formulaire.css, tableau.css, medias.css
+    css/                   theme.css (réglages visuels), base.css, formulaire.css, tableau.css, medias.css, interaction.css
     bibliotheques/         KaTeX, mhchem, Rough.js, police Caveat (copiées : pas besoin d'internet)
     js/
       api.js               seul fichier qui parle au serveur

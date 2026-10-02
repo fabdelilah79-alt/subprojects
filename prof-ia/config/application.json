@@ -14,7 +14,8 @@
     "prompts": "prompts",
     "schemas": "schemas",
     "sorties": "sorties",
-    "parties_validees": "sorties/valide"
+    "parties_validees": "sorties/valide",
+    "cache_audio": "sorties/cache_audio"
   },
   "generation": {
     "audios_en_parallele": 4

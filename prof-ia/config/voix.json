@@ -1,5 +1,11 @@
 {
-  "fournisseur": "gemini",
+  "fournisseur": "essai",
+  "essai": {
+    "debit_caracteres_par_s": 14,
+    "frequence_hz": 8000,
+    "marge_s": 0.3,
+    "cout_par_million_caracteres": 0
+  },
   "gemini": {
     "modele_cours": "gemini-3.8-flash-tts",
     "modele_repondeur": "gemini-3.8-flash-lite-tts",
@@ -18,6 +24,9 @@
     "lent_et_clair": "lentement, en détachant les mots importants",
     "encourageant": "avec bienveillance, pour encourager l'élève"
   },
-  "debit_caracteres_par_s": { "min": 8, "max": 22 },
+  "debit_caracteres_par_s": {
+    "min": 8,
+    "max": 22
+  },
   "nouvelles_tentatives_max": 2
 }

@@ -5,7 +5,8 @@
   "generation": {
     "source": "brouillon",
     "date": "2026-10-02",
-    "relu_par_enseignant": false
+    "relu_par_enseignant": false,
+    "fournisseur_voix": "essai"
   },
   "beats": [
     {
@@ -23,9 +24,12 @@
           "ancre": "le mouvement de rotation",
           "zone": "titre",
           "style": "titre",
-          "texte": "Mouvement de rotation d'un solide autour d'un axe fixe"
+          "texte": "Mouvement de rotation d'un solide autour d'un axe fixe",
+          "debut_s": 2.64
         }
-      ]
+      ],
+      "audio": "b7ed5717d035f29d1abb.wav",
+      "duree_s": 11.8
     },
     {
       "id": "p1_b02",
@@ -59,21 +63,30 @@
             {
               "choix": "A",
               "texte_dit": "C'est une réponse très fréquente, parce que la nacelle décrit bien un cercle. Gardons cette idée et vérifions-la ensemble.",
-              "ton": "encourageant"
+              "ton": "encourageant",
+              "audio": "97d544ff82d5c554b110.wav",
+              "duree_s": 9.014
             },
             {
               "choix": "B",
               "texte_dit": "Intéressant. Vous avez remarqué quelque chose d'important. Vérifions-le ensemble.",
-              "ton": "encourageant"
+              "ton": "encourageant",
+              "audio": "df392256116d5d96ec6e.wav",
+              "duree_s": 6.086
             },
             {
               "choix": "C",
               "texte_dit": "Pas de souci, c'est justement ce que nous allons observer.",
-              "ton": "encourageant"
+              "ton": "encourageant",
+              "audio": "d9289627e9393c3066e4.wav",
+              "duree_s": 4.443
             }
-          ]
+          ],
+          "debut_s": 7.93
         }
-      ]
+      ],
+      "audio": "ce4da8e608eea7bc6d72.wav",
+      "duree_s": 10.943
     },
     {
       "id": "p1_b03",
@@ -87,9 +100,12 @@
           "ressource": "grande_roue",
           "plein_ecran": true,
           "consigne": "Suivez une seule nacelle : son plancher reste-t-il horizontal ? Suivez ensuite un point du bras.",
-          "attendre": "clic_termine"
+          "attendre": "clic_termine",
+          "debut_s": 0.0
         }
-      ]
+      ],
+      "audio": "b1d80ef85ff15e779010.wav",
+      "duree_s": 13.086
     },
     {
       "id": "p1_b04",
@@ -102,9 +118,12 @@
           "ancre": "reste parallèle",
           "zone": "gauche",
           "style": "normal",
-          "texte": "Nacelle : un segment de la nacelle reste parallèle à lui-même."
+          "texte": "Nacelle : un segment de la nacelle reste parallèle à lui-même.",
+          "debut_s": 8.46
         }
-      ]
+      ],
+      "audio": "316422b1029045d1619c.wav",
+      "duree_s": 10.443
     },
     {
       "id": "p1_b05",
@@ -117,9 +136,12 @@
           "ancre": "translation circulaire",
           "zone": "gauche",
           "style": "normal",
-          "texte": "→ translation circulaire (et non rotation)"
+          "texte": "→ translation circulaire (et non rotation)",
+          "debut_s": 4.26
         }
-      ]
+      ],
+      "audio": "708578acb6f53c309555.wav",
+      "duree_s": 11.014
     },
     {
       "id": "p1_b06",
@@ -132,9 +154,12 @@
           "ancre": "Chacun de ses points",
           "zone": "gauche",
           "style": "normal",
-          "texte": "Bras : chaque point décrit un cercle centré sur l'axe."
+          "texte": "Bras : chaque point décrit un cercle centré sur l'axe.",
+          "debut_s": 3.02
         }
-      ]
+      ],
+      "audio": "59879f80fab1213d97d3.wav",
+      "duree_s": 10.371
     },
     {
       "id": "p1_b07",
@@ -147,9 +172,12 @@
           "ancre": "Un solide est en rotation",
           "zone": "a_retenir",
           "style": "a_retenir",
-          "texte": "Rotation autour d'un axe fixe (Δ) : tous les points du solide décrivent des cercles centrés sur (Δ), dans des plans perpendiculaires à (Δ)."
+          "texte": "Rotation autour d'un axe fixe (Δ) : tous les points du solide décrivent des cercles centrés sur (Δ), dans des plans perpendiculaires à (Δ).",
+          "debut_s": 1.53
         }
-      ]
+      ],
+      "audio": "0c93bc4ee3d76d46117b.wav",
+      "duree_s": 16.443
     },
     {
       "id": "p1_b08",
@@ -169,16 +197,20 @@
             "axe": "x",
             "angle": "θ",
             "arc": "s"
-          }
+          },
+          "debut_s": 3.07
         },
         {
           "type": "formule",
           "ancre": "l'abscisse angulaire",
           "zone": "gauche",
           "style": "normal",
-          "latex": "\\theta(t) = \\left(\\vec{Ox}, \\vec{OG}\\right) \\quad (\\text{rad})"
+          "latex": "\\theta(t) = \\left(\\vec{Ox}, \\vec{OG}\\right) \\quad (\\text{rad})",
+          "debut_s": 11.25
         }
-      ]
+      ],
+      "audio": "1a2abf4df17cb066e66e.wav",
+      "duree_s": 13.657
     },
     {
       "id": "p1_b09",
@@ -191,9 +223,12 @@
           "ancre": "l'abscisse curviligne",
           "zone": "gauche",
           "style": "normal",
-          "latex": "s(t) = \\overset{\\frown}{AG} \\quad (\\text{m})"
+          "latex": "s(t) = \\overset{\\frown}{AG} \\quad (\\text{m})",
+          "debut_s": 6.57
         }
-      ]
+      ],
+      "audio": "d8f3ac15ac811253081c.wav",
+      "duree_s": 9.157
     },
     {
       "id": "p1_b10",
@@ -207,9 +242,12 @@
           "ressource": "reperage",
           "plein_ecran": true,
           "consigne": "Déplacez G, puis changez R. Quel lien voyez-vous entre s, R et θ ?",
-          "attendre": "clic_termine"
+          "attendre": "clic_termine",
+          "debut_s": 1.53
         }
-      ]
+      ],
+      "audio": "d9b8a4af1b00b0ba21d1.wav",
+      "duree_s": 16.729
     },
     {
       "id": "p1_b11",
@@ -222,16 +260,20 @@
           "ancre": "s égale R fois thêta",
           "zone": "a_retenir",
           "style": "a_retenir",
-          "latex": "s(t) = R \\cdot \\theta(t)"
+          "latex": "s(t) = R \\cdot \\theta(t)",
+          "debut_s": 5.74
         },
         {
           "type": "ecrire",
           "ancre": "avec thêta en radians",
           "zone": "a_retenir",
           "style": "normal",
-          "texte": "θ en rad ; R et s en m"
+          "texte": "θ en rad ; R et s en m",
+          "debut_s": 7.36
         }
-      ]
+      ],
+      "audio": "5fdb748859a866c191a1.wav",
+      "duree_s": 10.3
     },
     {
       "id": "p1_b12",
@@ -244,16 +286,20 @@
           "ancre": "soit pi sur quatre",
           "zone": "gauche",
           "style": "normal",
-          "latex": "45^\\circ = \\frac{\\pi}{4}\\ \\text{rad}"
+          "latex": "45^\\circ = \\frac{\\pi}{4}\\ \\text{rad}",
+          "debut_s": 7.01
         },
         {
           "type": "formule",
           "ancre": "La poignée parcourt",
           "zone": "gauche",
           "style": "normal",
-          "latex": "s = 0{,}90 \\times \\frac{\\pi}{4} \\approx 0{,}71\\ \\text{m}"
+          "latex": "s = 0{,}90 \\times \\frac{\\pi}{4} \\approx 0{,}71\\ \\text{m}",
+          "debut_s": 9.05
         }
-      ]
+      ],
+      "audio": "5c60c83c46069bfa3d23.wav",
+      "duree_s": 13.871
     }
   ]
 }

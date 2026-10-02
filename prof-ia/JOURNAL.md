@@ -88,3 +88,22 @@ Corrigé en testant :
 Problèmes restants :
 - Les événements des médias (ouverture, plein écran, durée) seront enregistrés à l'étape 6, avec la prédiction.
 - Les ressources image (documents 1, 2, 3, 5 et enregistrement réel) restent à fournir.
+
+## 2026-10-02 — Étape 5 (sans clé d'API) et étape 6 : voix, prédiction, événements
+
+Fait (étape 5, sans clé : l'enseignant ajoutera la clé Gemini plus tard) :
+- Interface de la voix (synthese.py), cache audio, contrôle du débit, ancrage (debut_s), outils/generer_audio.py.
+- Voix « essai » : fichiers WAV muets de la durée de la parole, pour tester toute la chaîne sans clé.
+- Lecteur : le prof « parle » (audio joué en suivant pause, reprise, Beat suivant), chaque écrit part à son debut_s.
+- Partie 1 complétée : audio, durées et debut_s (148 s de parole estimée).
+
+Fait (étape 6) :
+- Prédiction : question, choix, justification obligatoire, puis réaction du prof selon le choix.
+- Événements envoyés au serveur (api.js -> /api/evenements) : prediction (avec la conception révélée et le temps),
+  media_ouvert, plein_ecran, media_termine (durée de manipulation). Le serveur les affiche dans le terminal.
+- 4 nouveaux tests (22 au total).
+
+Problèmes restants :
+- Pas encore de vraie voix : gemini_tts.py et elevenlabs_tts.py seront écrits avec la clé et la documentation à jour,
+  ainsi que la comparaison à l'aveugle des voix.
+- Les événements ne sont pas encore enregistrés (étape 11 : journal SQLite) ni liés à un élève (étape 7 : pseudonyme).

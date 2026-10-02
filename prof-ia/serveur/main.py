@@ -17,6 +17,7 @@ def creer_application():
     application = FastAPI(title="Professeur IA")
     application.include_router(eleve.routeur)
     application.include_router(parties.routeur)
+    application.mount("/audio", StaticFiles(directory=chemin_projet("cache_audio")), name="audio")
     ressources = StaticFiles(directory=chemin_projet("contenu") / "ressources", html=True)
     application.mount("/ressources", ressources, name="ressources")
     pages = StaticFiles(directory=chemin_projet("client"), html=True)

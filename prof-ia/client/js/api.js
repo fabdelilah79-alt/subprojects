@@ -1,7 +1,7 @@
 /*
 Rôle : seul fichier qui parle au serveur depuis le navigateur.
 Reçoit : les demandes des autres scripts du client.
-Produit : les réponses du serveur, déjà lues en JSON.
+Produit : les réponses du serveur, déjà lues en JSON ; l'envoi des événements de l'élève.
 Utilisé par : client/js/accueil.js, client/js/demo_tableau.js.
 */
 
@@ -32,4 +32,14 @@ export function lire_partie(numero) {
 export function lire_manifeste() {
   // Récupère le manifeste : type et fichier de chaque ressource (simulation, image, document).
   return lire("/api/manifeste");
+}
+
+export function envoyer_evenement(type, donnees) {
+  // Envoie au serveur un événement de l'élève (prédiction, média ouvert…), avec l'heure du navigateur.
+  const corps = { type, donnees, horodatage: new Date().toISOString() };
+  return fetch("/api/evenements", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(corps),
+  });
 }

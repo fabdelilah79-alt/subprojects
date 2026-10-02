@@ -41,6 +41,15 @@ Ouvrez http://127.0.0.1:8000 dans le navigateur.
 
 Ctrl + C dans le terminal où tourne le serveur.
 
+## Générer la voix d'une partie
+
+```
+python -m outils.generer_audio sorties/valide/partie_1.json
+```
+
+Sans clé d'API, la voix « essai » produit des fichiers muets de la bonne durée : tout se synchronise, le professeur se tait.
+Avec une clé, changez « fournisseur » dans config/voix.json, puis relancez la commande.
+
 ## Vérifier
 
 ```
