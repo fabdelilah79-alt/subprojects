@@ -1,0 +1,46 @@
+/*
+Rôle : réglages visuels de l'interface (couleurs, polices, tailles, espaces), en un seul endroit.
+Reçoit : rien.
+Produit : des variables CSS utilisées par toutes les feuilles de style.
+Utilisé par : client/css/base.css et toutes les pages de client/.
+Les couleurs du tableau, elles, sont dans config/tableau.json.
+*/
+:root {
+  /* Couleurs : papier, encre, et une seule couleur d'accent, le vert du tableau. */
+  --papier: #f6f4ee;
+  --surface: #fffefa;
+  --encre: #1c201e;
+  --encre-douce: #565c58;
+  --trait: #dcd8ce;
+  --trait-fort: #a9a59b;
+  --tableau: #1f3a30;
+  --tableau-fonce: #15291f;
+  --craie: #f3f0e6;
+  --erreur: #9a2a1f;
+
+  /* Polices du système : aucun téléchargement. Serif pour les titres, sans-serif pour le reste. */
+  --police-titre: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --police-texte: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Échelle des tailles de texte. */
+  --taille-petite: 0.875rem;
+  --taille-texte: 1rem;
+  --taille-chapeau: 1.125rem;
+  --taille-titre: 2.125rem;
+  --taille-titre-etroit: 1.75rem;
+
+  /* Échelle des espaces. */
+  --espace-1: 0.25rem;
+  --espace-2: 0.5rem;
+  --espace-3: 1rem;
+  --espace-4: 1.5rem;
+  --espace-5: 2.5rem;
+  --espace-6: 4.5rem;
+
+  /* Formes. */
+  --largeur-lecture: 32rem;
+  --hauteur-cible: 2.75rem;
+  --rayon: 3px;
+  --epaisseur-trait: 1px;
+  --epaisseur-focus: 2px;
+}

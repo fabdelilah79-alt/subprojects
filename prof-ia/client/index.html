@@ -1,0 +1,57 @@
+<!doctype html>
+<!--
+Rôle : page d'accueil de l'élève (nom, classe, choix du cours).
+Reçoit : la liste des cours et des classes, chargée par js/accueil.js.
+Produit : le formulaire d'accueil. Il ne fait encore rien : l'enregistrement arrive à l'étape 7.
+Utilisé par : le navigateur, à l'adresse du serveur.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accueil · Professeur IA</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/formulaire.css">
+  <script type="module" src="js/accueil.js"></script>
+</head>
+<body>
+  <header class="bandeau">
+    <span class="bandeau-nom">Professeur IA</span>
+    <span class="bandeau-matiere">Physique-chimie</span>
+  </header>
+
+  <main class="page">
+    <ol class="parcours" aria-label="Étapes">
+      <li aria-current="step">1. Accueil</li>
+      <li>2. Questionnaire</li>
+      <li>3. Cours au tableau</li>
+    </ol>
+
+    <h1>Avant de commencer</h1>
+    <p class="chapeau">Indiquez votre nom et votre classe, puis choisissez le cours.</p>
+
+    <form id="formulaire-accueil" class="formulaire">
+      <div class="champ">
+        <label for="nom">Nom et prénom</label>
+        <input id="nom" name="nom" type="text" autocomplete="off" spellcheck="false" required>
+      </div>
+
+      <div class="champ">
+        <label for="classe">Classe</label>
+        <select id="classe" name="classe" required>
+          <option value="">Choisir votre classe</option>
+        </select>
+      </div>
+
+      <div class="champ">
+        <label for="cours">Cours</label>
+        <select id="cours" name="cours" required></select>
+      </div>
+
+      <button type="submit" class="bouton">Commencer</button>
+      <p id="message" class="message" role="status"></p>
+    </form>
+  </main>
+</body>
+</html>

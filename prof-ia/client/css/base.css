@@ -1,0 +1,92 @@
+/*
+Rôle : style commun des pages hors tableau (texte, bandeau, colonne de lecture, parcours).
+Reçoit : les variables de client/css/theme.css.
+Produit : la mise en page sobre de l'accueil (et plus tard du QCM et de l'attente).
+Utilisé par : client/index.html.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  font-size: var(--taille-texte);
+  line-height: 1.55;
+}
+
+h1 {
+  margin: 0 0 var(--espace-3);
+  font-family: var(--police-titre);
+  font-size: var(--taille-titre);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+/* Bandeau du haut : nom de l'application à gauche, matière à droite. */
+.bandeau {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espace-3);
+  padding: var(--espace-3) var(--espace-4);
+  border-bottom: var(--epaisseur-trait) solid var(--trait);
+  font-size: var(--taille-petite);
+}
+
+.bandeau-nom {
+  font-weight: 600;
+}
+
+.bandeau-matiere {
+  color: var(--encre-douce);
+}
+
+/* Colonne de lecture étroite, alignée à gauche dans la page. */
+.page {
+  max-width: var(--largeur-lecture);
+  margin: 0 auto;
+  padding: var(--espace-6) var(--espace-4) var(--espace-5);
+}
+
+/* Parcours de l'élève : l'étape en cours est en encre, les autres en gris. */
+.parcours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-1) var(--espace-4);
+  margin: 0 0 var(--espace-5);
+  padding: 0;
+  list-style: none;
+  color: var(--encre-douce);
+  font-size: var(--taille-petite);
+}
+
+.parcours [aria-current="step"] {
+  color: var(--encre);
+  font-weight: 600;
+}
+
+.chapeau {
+  margin: 0 0 var(--espace-5);
+  color: var(--encre-douce);
+  font-size: var(--taille-chapeau);
+}
+
+@media (max-width: 40rem) {
+  .bandeau,
+  .page {
+    padding-left: var(--espace-3);
+    padding-right: var(--espace-3);
+  }
+
+  .page {
+    padding-top: var(--espace-5);
+  }
+
+  h1 {
+    font-size: var(--taille-titre-etroit);
+  }
+}

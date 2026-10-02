@@ -1,6 +1,6 @@
 # Prompts — Professeur IA de physique-chimie
 
-Oct 2, 2026 · @abdelilah · version 2
+Oct 2, 2026 · @abdelilah · version 2.1
 
 ## Mode d'emploi
 
@@ -124,6 +124,23 @@ est étiquetée avec une conception. Pas d'IA pour cela.
 - Stockage : fichiers JSON pour les partitions, SQLite pour le journal de recherche.
   Clés d'API dans .env, jamais dans le code.
 
+## Design de l'interface (sobre, fait pour la classe)
+Le tableau vert est le seul élément visuel fort. Le reste de l'interface s'efface.
+- Fond papier clair, texte presque noir, une seule couleur d'accent : le vert du tableau.
+- Polices du système, sans téléchargement : titres en serif (esprit manuel scolaire),
+  texte et boutons en sans-serif. Tailles et espaces pris dans une échelle fixe.
+- Bordures fines (1 px), coins de 3 px au plus, alignement à gauche, beaucoup d'espace.
+- Interdits : dégradés, ombres portées, effets de verre ou de flou, emoji, icônes décoratives,
+  illustrations, animations d'interface (seule l'écriture au tableau est animée),
+  slogans et formules creuses (« Bienvenue dans l'avenir de l'apprentissage »).
+- Textes courts et concrets. L'interface vouvoie l'élève.
+- Accessibilité : contraste suffisant (niveau AA), focus clavier visible, une étiquette par champ,
+  texte de 16 px au moins, zones cliquables de 44 px de haut au moins.
+- Couleurs, polices, tailles et espaces de l'interface : variables CSS dans un seul fichier,
+  client/css/theme.css. Les couleurs du tableau restent dans config/tableau.json.
+- Écran de classe : le tableau occupe la plus grande place ; une colonne étroite à droite
+  accueille la main levée ; les onglets des tableaux sont de simples liens texte au-dessus du tableau.
+
 ## RÈGLES DE STRUCTURE DU CODE (obligatoires à chaque étape)
 1. Un fichier = une seule responsabilité, décrite en une phrase.
 2. 150 lignes maximum par fichier de code (viser 50 à 120). 30 lignes maximum par fonction.
@@ -170,6 +187,7 @@ prof-ia/
                            generer_partie.py, exporter_donnees.py
   serveur/
     main.py                démarre le serveur et branche les routes (court)
+    configuration.py       lit les fichiers de config/
     routes/                une route par fichier : eleve.py, qcm.py, parties.py, questions.py
     agents/                appel_ia.py + un fichier par agent
     pipeline/              orchestrateur.py (enchaîne les agents), file_attente.py (arrière-plan)
@@ -180,9 +198,10 @@ prof-ia/
     tests/
   client/
     index.html, qcm.html, attente.html, classe.html
-    css/
+    css/                   theme.css (réglages visuels), base.css, formulaire.css
     js/
       api.js               seul fichier qui parle au serveur
+      accueil.js           page d'accueil
       lecteur/             lecteur.js (enchaîne les beats), audio.js
       tableau/             tableau.js, zones.js, ecriture.js, formule.js, dessin.js, onglets.js
         elements/          un fichier par élément de schéma
@@ -247,6 +266,7 @@ Objectif : un projet qui démarre et affiche une page, rien de plus.
 - Crée les fichiers de config/ avec des valeurs de départ, et explique chaque réglage dans ARCHITECTURE.md.
 - Crée un serveur FastAPI minimal qui sert les pages de client/.
 - Crée la page d'accueil (nom, classe, choix du cours), qui ne fait encore rien.
+  Respecte la section Design de CLAUDE.md ; toutes les valeurs visuelles vont dans client/css/theme.css.
 - Crée .env.exemple (noms des clés, sans valeurs), requirements.txt et un README court :
   installer, lancer, arrêter.
 - Crée outils/verifier_structure.py : il liste les fichiers de code de plus de 150 lignes
@@ -529,6 +549,8 @@ montre-moi la ligne à changer pour que je le fasse moi-même.
 Le dernier prompt est important pour votre recherche : la plupart des réglages pédagogiques (ton du prof, longueur des explications, place de la prédiction, voix, vitesse d'écriture) se trouvent dans prompts/ et config/, que vous pouvez modifier sans toucher au code.
 
 ## Ce qui change dans la version 2
+
+- **Design (2.1).** Nouvelle section « Design de l'interface » dans le prompt maître : interface sobre, une seule couleur d'accent (le vert du tableau), polices du système, et une liste d'interdits (dégradés, ombres, emoji, icônes décoratives, slogans) pour éviter l'aspect générique des interfaces faites par IA.
 
 - **Voix.** Gemini 3.8 Flash TTS est conservé : il est stable depuis le 22 septembre 2026, compte parmi les meilleures voix du moment et reste peu coûteux. Il a cependant une limite pour ce projet : il ne donne pas le moment où chaque mot est prononcé.
 - **Synchronisation au mot.** Chaque action porte une ancre (un mot du texte dit) au lieu de démarrer au début du beat. Le code calcule l'instant exact si le fournisseur le donne, sinon il l'estime. L'écriture garde une vitesse réaliste ; si elle est plus longue que la parole, le beat suivant attend la fin de l'écriture.

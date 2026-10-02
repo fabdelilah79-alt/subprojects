@@ -1,0 +1,12 @@
+{
+  "agents": {
+    "pedagogique": { "modele": "claude-opus-5-5", "effort": "high" },
+    "chef": { "modele": "claude-opus-5-5", "effort": "high" },
+    "voix": { "modele": "claude-sonnet-5-5", "effort": "medium" },
+    "ecriture": { "modele": "claude-sonnet-5-5", "effort": "medium" },
+    "architecture": { "modele": "claude-sonnet-5-5", "effort": "medium" },
+    "repondeur": { "modele": "claude-haiku-4-5-20251001" }
+  },
+  "nouvelles_tentatives_max": 2,
+  "tours_de_correction_max": 2
+}

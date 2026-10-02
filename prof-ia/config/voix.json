@@ -1,0 +1,23 @@
+{
+  "fournisseur": "gemini",
+  "gemini": {
+    "modele_cours": "gemini-3.8-flash-tts",
+    "modele_repondeur": "gemini-3.8-flash-lite-tts",
+    "voix": null
+  },
+  "elevenlabs": {
+    "modele_cours": "eleven_v4",
+    "modele_repondeur": "eleven_v4_turbo",
+    "voix": null
+  },
+  "consigne_style": "Professeur de physique-chimie au lycée. Voix chaleureuse et posée, débit modéré, articulation nette, français standard.",
+  "tons": {
+    "neutre": "sur un ton neutre et posé",
+    "enthousiaste": "avec enthousiasme, sans exagérer",
+    "interrogatif": "avec curiosité, comme quand on pose une vraie question",
+    "lent_et_clair": "lentement, en détachant les mots importants",
+    "encourageant": "avec bienveillance, pour encourager l'élève"
+  },
+  "debit_caracteres_par_s": { "min": 8, "max": 22 },
+  "nouvelles_tentatives_max": 2
+}

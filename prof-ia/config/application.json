@@ -1,0 +1,27 @@
+{
+  "mode": "fige",
+  "serveur": {
+    "hote": "127.0.0.1",
+    "port": 8000
+  },
+  "cours": [
+    { "id": "cours_1", "titre": "Titre de votre cours" }
+  ],
+  "classes": ["Classe 1", "Classe 2", "Classe 3"],
+  "chemins": {
+    "client": "client",
+    "contenu": "contenu",
+    "prompts": "prompts",
+    "schemas": "schemas",
+    "sorties": "sorties"
+  },
+  "generation": {
+    "audios_en_parallele": 4
+  },
+  "structure": {
+    "lignes_max_fichier": 150,
+    "lignes_max_fonction": 30,
+    "extensions_code": [".py", ".js", ".html", ".css"],
+    "dossiers_ignores": [".git", ".venv", "venv", "__pycache__", ".pytest_cache", "node_modules", "contenu", "sorties", "bibliotheques"]
+  }
+}

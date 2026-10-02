@@ -1,0 +1,30 @@
+{
+  "fond": "#1f3a30",
+  "palette": {
+    "jaune": "#f1e08a",
+    "blanc": "#f3f0e6",
+    "rouge": "#ef8f80",
+    "bleu_clair": "#a6d4e4"
+  },
+  "couleur_par_style": {
+    "titre": "jaune",
+    "normal": "blanc",
+    "a_retenir": "rouge",
+    "formule": "blanc",
+    "schema": "bleu_clair"
+  },
+  "zones": {
+    "titre": { "x": 0.03, "y": 0.03, "largeur": 0.94, "hauteur": 0.10 },
+    "gauche": { "x": 0.03, "y": 0.16, "largeur": 0.45, "hauteur": 0.54 },
+    "droite": { "x": 0.52, "y": 0.16, "largeur": 0.45, "hauteur": 0.54 },
+    "a_retenir": { "x": 0.03, "y": 0.74, "largeur": 0.94, "hauteur": 0.23 },
+    "cadre_media": { "x": 0.52, "y": 0.16, "largeur": 0.45, "hauteur": 0.54 }
+  },
+  "ecriture": {
+    "vitesse_caracteres_par_s": 14,
+    "pause_entre_beats_s": 0.4
+  },
+  "demo": {
+    "duree_beat_s": 4
+  }
+}

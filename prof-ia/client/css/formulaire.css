@@ -1,0 +1,80 @@
+/*
+Rôle : style des formulaires (étiquettes, champs, listes, bouton, message).
+Reçoit : les variables de client/css/theme.css.
+Produit : des champs lisibles, un bouton vert tableau, un focus clavier bien visible.
+Utilisé par : client/index.html.
+*/
+.formulaire {
+  display: grid;
+  gap: var(--espace-4);
+}
+
+.champ {
+  display: grid;
+  gap: var(--espace-2);
+}
+
+label {
+  font-size: var(--taille-petite);
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: var(--hauteur-cible);
+  padding: var(--espace-2) var(--espace-3);
+  border: var(--epaisseur-trait) solid var(--trait-fort);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+}
+
+/* Flèche des listes dessinée en CSS, pour un rendu identique sur tous les systèmes. */
+select {
+  appearance: none;
+  padding-right: var(--espace-5);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--encre-douce) 50%),
+    linear-gradient(135deg, var(--encre-douce) 50%, transparent 50%);
+  background-position: calc(100% - 1.25rem) 55%, calc(100% - 0.9rem) 55%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
+input:focus-visible,
+select:focus-visible,
+.bouton:focus-visible {
+  outline: var(--epaisseur-focus) solid var(--tableau);
+  outline-offset: var(--epaisseur-focus);
+}
+
+.bouton {
+  justify-self: start;
+  min-height: var(--hauteur-cible);
+  margin-top: var(--espace-2);
+  padding: var(--espace-2) var(--espace-4);
+  border: var(--epaisseur-trait) solid var(--tableau);
+  border-radius: var(--rayon);
+  background: var(--tableau);
+  color: var(--craie);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bouton:hover {
+  background: var(--tableau-fonce);
+}
+
+.message {
+  min-height: 1.5em;
+  margin: 0;
+  color: var(--encre-douce);
+  font-size: var(--taille-petite);
+}
+
+.message[data-type="erreur"] {
+  color: var(--erreur);
+}

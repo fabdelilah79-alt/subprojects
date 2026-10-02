@@ -1,0 +1,16 @@
+# Clés d'API : jamais dans git.
+.env
+
+# Fichiers techniques de Python.
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+
+# Données des élèves et fichiers générés : jamais dans git.
+# Seules les parties validées par l'enseignant (sorties/valide/) sont gardées.
+sorties/parties/*
+sorties/cache_audio/*
+sorties/comparaison_voix/*
+sorties/journaux/*
+!sorties/*/.gitkeep
