@@ -2,7 +2,7 @@
 Rôle : seul fichier qui parle au serveur depuis le navigateur.
 Reçoit : les demandes des autres scripts du client.
 Produit : les réponses du serveur, déjà lues en JSON ; l'envoi des événements de l'élève.
-Utilisé par : accueil.js, qcm.js, attente.js, demo_tableau.js.
+Utilisé par : accueil.js, attente.js, classe.js, demo_tableau.js, interaction/qcm.js, interaction/main_levee.js.
 */
 import { lire_pseudonyme } from "./session_eleve.js";
 
@@ -57,12 +57,27 @@ export function inscrire_eleve(nom, classe, cours) {
   return envoyer("/api/eleve", { nom, classe, cours });
 }
 
-export function lire_qcm() {
-  // Récupère le questionnaire, sans les bonnes réponses.
-  return lire("/api/qcm");
+export function lire_qcm(test = "pre") {
+  // Récupère le questionnaire de départ (pre) ou de fin (post), sans les bonnes réponses.
+  return lire(`/api/qcm?test=${test}`);
 }
 
-export function envoyer_reponses_qcm(pseudonyme, reponses) {
-  // Envoie toutes les réponses au QCM ; le serveur calcule le profil.
-  return envoyer("/api/qcm/reponses", { pseudonyme, reponses });
+export function envoyer_reponses_qcm(pseudonyme, reponses, test = "pre", partiel = false) {
+  // Envoie les réponses au questionnaire ; le serveur calcule le profil (partiel : premières questions seulement).
+  return envoyer("/api/qcm/reponses", { pseudonyme, reponses, test, partiel });
+}
+
+export function lire_etat_parties(pseudonyme) {
+  // Récupère l'état de préparation de chaque partie du cours pour cet élève.
+  return lire(`/api/eleve/${pseudonyme}/etat`);
+}
+
+export function lire_partie_eleve(pseudonyme, numero) {
+  // Récupère la partition préparée pour cet élève.
+  return lire(`/api/eleve/${pseudonyme}/parties/${numero}`);
+}
+
+export function poser_question(pseudonyme, question, partie, deja_au_tableau) {
+  // Envoie une question de la main levée ; le serveur renvoie la réponse du professeur (texte et audio).
+  return envoyer("/api/questions", { pseudonyme, question, partie, deja_au_tableau });
 }

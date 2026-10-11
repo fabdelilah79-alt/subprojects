@@ -1,0 +1,279 @@
+{
+  "numero": 3,
+  "tableau": 3,
+  "titre": "Rotation uniforme et équations horaires",
+  "generation": {
+    "source": "brouillon",
+    "date": "2026-10-11",
+    "relu_par_enseignant": false,
+    "fournisseur_voix": "essai"
+  },
+  "beats": [
+    {
+      "id": "p3_b01",
+      "phase": "prediction",
+      "texte_dit": "Dernière partie : la rotation uniforme. Un disque tourne de façon très régulière : sa vitesse angulaire oméga ne change pas.",
+      "ton": "enthousiaste",
+      "actions": [
+        {
+          "type": "nouveau_tableau",
+          "titre": "Rotation uniforme"
+        },
+        {
+          "type": "ecrire",
+          "ancre": "la rotation uniforme",
+          "zone": "titre",
+          "style": "titre",
+          "texte": "Rotation uniforme et équations horaires",
+          "debut_s": 1.33
+        }
+      ],
+      "audio": "a7958dcbef53e25e5c00.wav",
+      "duree_s": 9.157
+    },
+    {
+      "id": "p3_b02",
+      "phase": "prediction",
+      "texte_dit": "Si l'on trace la position angulaire thêta en fonction du temps, quelle allure aura la courbe ? Choisissez une réponse et dites pourquoi.",
+      "ton": "interrogatif",
+      "actions": [
+        {
+          "type": "prediction",
+          "ancre": "Choisissez une réponse",
+          "question": "En rotation uniforme, quelle est l'allure de la courbe θ en fonction du temps t ?",
+          "choix": [
+            {
+              "id": "A",
+              "texte": "Une droite qui monte.",
+              "conception": null
+            },
+            {
+              "id": "B",
+              "texte": "Une courbe qui monte de plus en plus vite.",
+              "conception": "theta_uniforme_courbe"
+            },
+            {
+              "id": "C",
+              "texte": "Une droite horizontale, puisque rien ne change.",
+              "conception": "confusion_theta_et_omega"
+            }
+          ],
+          "justifier": true,
+          "branches": [
+            {
+              "choix": "A",
+              "texte_dit": "Gardez votre idée en tête, et vérifions-la avec la simulation.",
+              "ton": "encourageant",
+              "audio": "031d35bdd673a40c719f.wav",
+              "duree_s": 4.729
+            },
+            {
+              "choix": "B",
+              "texte_dit": "Le disque tourne, et l'angle grandit, c'est vrai. Regardons à quel rythme il grandit.",
+              "ton": "encourageant",
+              "audio": "b1c74fb7095d4cb10df4.wav",
+              "duree_s": 6.371
+            },
+            {
+              "choix": "C",
+              "texte_dit": "Quelque chose reste bien constant ici. Regardons si c'est l'angle, ou autre chose.",
+              "ton": "encourageant",
+              "audio": "5ac370d8f90d9241d1cb.wav",
+              "duree_s": 6.157
+            }
+          ],
+          "debut_s": 7.0
+        }
+      ],
+      "audio": "2c67ef620472d50ad260.wav",
+      "duree_s": 10.014
+    },
+    {
+      "id": "p3_b03",
+      "phase": "observation",
+      "texte_dit": "Ouvrez la simulation de la rotation uniforme et passez en plein écran. Lancez le disque, regardez la courbe se tracer, puis changez oméga et thêta zéro. Cliquez sur « J'ai terminé » quand vous avez décrit la courbe.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "media",
+          "ancre": "Ouvrez la simulation",
+          "ressource": "rotation_uniforme",
+          "plein_ecran": true,
+          "consigne": "Lancez, regardez la courbe θ(t), puis changez ω et θ₀. Que devient la courbe ?",
+          "attendre": "clic_termine",
+          "debut_s": 0.0
+        }
+      ],
+      "audio": "855dfb06716b4f7e606e.wav",
+      "duree_s": 15.657
+    },
+    {
+      "id": "p3_b04",
+      "phase": "explication",
+      "texte_dit": "Quand la vitesse angulaire reste constante, on dit que la rotation est uniforme. Attention : c'est oméga qui est constant, pas l'angle thêta, qui augmente.",
+      "ton": "lent_et_clair",
+      "actions": [
+        {
+          "type": "ecrire",
+          "ancre": "la rotation est uniforme",
+          "zone": "gauche",
+          "style": "normal",
+          "texte": "Rotation uniforme : ω = constante",
+          "debut_s": 4.03
+        }
+      ],
+      "audio": "0e36d4fb6999035dbb49.wav",
+      "duree_s": 11.371
+    },
+    {
+      "id": "p3_b05",
+      "phase": "explication",
+      "texte_dit": "Partons de la définition : oméga égale la variation d'angle divisée par la durée. En isolant thêta, on obtient l'équation horaire : thêta égale oméga fois t plus thêta zéro.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "Partons de la définition",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "\\omega = \\dfrac{\\theta(t) - \\theta_0}{t - 0}",
+          "debut_s": 0.0
+        },
+        {
+          "type": "formule",
+          "ancre": "thêta égale oméga fois t",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "\\theta(t) = \\omega \\cdot t + \\theta_0",
+          "debut_s": 9.66
+        }
+      ],
+      "audio": "c032347dec26c3d6888e.wav",
+      "duree_s": 12.657
+    },
+    {
+      "id": "p3_b06",
+      "phase": "explication",
+      "texte_dit": "C'est bien une droite qui monte : sa pente est oméga, et elle coupe l'axe vertical en thêta zéro. En multipliant par R, on obtient l'abscisse curviligne : s égale V fois t plus s zéro.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "ecrire",
+          "ancre": "sa pente est oméga",
+          "zone": "gauche",
+          "style": "normal",
+          "texte": "droite de pente ω, qui part de θ₀",
+          "debut_s": 2.48
+        },
+        {
+          "type": "formule",
+          "ancre": "s égale V fois t",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "s(t) = V \\cdot t + s_0",
+          "debut_s": 11.32
+        }
+      ],
+      "audio": "b2030f19386d820ec2cc.wav",
+      "duree_s": 13.443
+    },
+    {
+      "id": "p3_b07",
+      "phase": "explication",
+      "texte_dit": "Le point repasse régulièrement au même endroit. La durée d'un tour complet, soit deux pi radians, s'appelle la période T : T égale deux pi divisé par oméga.",
+      "ton": "interrogatif",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "T égale deux pi",
+          "zone": "droite",
+          "style": "normal",
+          "latex": "T = \\dfrac{2\\pi}{\\omega} \\quad (\\text{s})",
+          "debut_s": 9.02
+        }
+      ],
+      "audio": "d41f17f05ed6884d13fd.wav",
+      "duree_s": 11.443
+    },
+    {
+      "id": "p3_b08",
+      "phase": "explication",
+      "texte_dit": "Le nombre de tours par seconde s'appelle la fréquence f, en hertz. C'est l'inverse de la période : f égale un sur T, soit oméga divisé par deux pi.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "f égale un sur T",
+          "zone": "droite",
+          "style": "normal",
+          "latex": "f = \\dfrac{1}{T} = \\dfrac{\\omega}{2\\pi} \\quad (\\text{Hz})",
+          "debut_s": 7.27
+        }
+      ],
+      "audio": "b25fb5dc480c7ffd2e5a.wav",
+      "duree_s": 10.8
+    },
+    {
+      "id": "p3_b09",
+      "phase": "explication",
+      "texte_dit": "Un exemple : un ventilateur tourne à trois cents tours par minute. Une minute dure soixante secondes, donc il fait cinq tours par seconde : f égale cinq hertz, et oméga égale dix pi, environ trente et un radians par seconde.",
+      "ton": "encourageant",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "cinq tours par seconde",
+          "zone": "droite",
+          "style": "normal",
+          "latex": "f = \\dfrac{300}{60} = 5\\ \\text{Hz}",
+          "debut_s": 8.37
+        },
+        {
+          "type": "formule",
+          "ancre": "oméga égale dix pi",
+          "zone": "droite",
+          "style": "normal",
+          "latex": "\\omega = 2\\pi f = 10\\pi \\approx 31{,}4\\ \\text{rad.s}^{-1}",
+          "debut_s": 11.86
+        }
+      ],
+      "audio": "93fc4d7d603ad48d9c6a.wav",
+      "duree_s": 16.3
+    },
+    {
+      "id": "p3_b10",
+      "phase": "synthese",
+      "texte_dit": "Retenez. En rotation uniforme, oméga est constant, et les équations horaires sont : thêta égale oméga t plus thêta zéro, et s égale V t plus s zéro.",
+      "ton": "lent_et_clair",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "les équations horaires",
+          "zone": "a_retenir",
+          "style": "a_retenir",
+          "latex": "\\omega = \\text{cte} : \\quad \\theta(t) = \\omega t + \\theta_0 \\quad ; \\quad s(t) = V t + s_0",
+          "debut_s": 3.97
+        }
+      ],
+      "audio": "bd447d64359fe7525b09.wav",
+      "duree_s": 10.871
+    },
+    {
+      "id": "p3_b11",
+      "phase": "synthese",
+      "texte_dit": "Et la période et la fréquence : T égale deux pi sur oméga, en secondes, et f égale un sur T, en hertz.",
+      "ton": "lent_et_clair",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "T égale deux pi sur oméga",
+          "zone": "a_retenir",
+          "style": "a_retenir",
+          "latex": "T = \\dfrac{2\\pi}{\\omega}\\ (\\text{s}) \\quad ; \\quad f = \\dfrac{1}{T}\\ (\\text{Hz})",
+          "debut_s": 2.38
+        }
+      ],
+      "audio": "5fbd924a261ebff70841.wav",
+      "duree_s": 7.586
+    }
+  ]
+}

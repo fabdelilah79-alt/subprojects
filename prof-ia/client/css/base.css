@@ -2,12 +2,17 @@
 Rôle : style commun des pages hors tableau (texte, bandeau, colonne de lecture, parcours).
 Reçoit : les variables de client/css/theme.css.
 Produit : la mise en page sobre de l'accueil (et plus tard du QCM et de l'attente).
-Utilisé par : client/index.html, qcm.html, attente.html, demo_tableau.html.
+Utilisé par : toutes les pages de client/.
 */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Un élément caché (attribut hidden) reste caché, même si sa classe lui donne un affichage. */
+[hidden] {
+  display: none !important;
 }
 
 body {

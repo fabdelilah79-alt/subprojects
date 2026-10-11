@@ -153,29 +153,32 @@ prof-ia/
     ressources/            simulations, images, documents, figures
       animations/          simulations interactives HTML du cours (commun/ : style et outils partagés)
     manifeste.json         une fiche par ressource
-  prompts/                 pedagogique.md, voix.md, ecriture.md, architecture.md, chef.md, repondeur.md
-  schemas/                 partition, plan_pedagogique, qcm, manifeste (.schema.json)
+  prompts/                 commun.md (règles partagées), pedagogique.md, voix.md, ecriture.md, architecture.md, chef.md, repondeur.md
+  schemas/                 partition, plan_pedagogique, qcm, manifeste (.schema.json) ; agents/ : réponse de chaque agent
   outils/                  verifier_structure.py, valider_partition.py (+ controles_partition.py), generer_audio.py,
                            generer_partie.py, exporter_donnees.py
   serveur/
     main.py                démarre le serveur et branche les routes (court)
     configuration.py       lit les fichiers de config/
-    routes/                une route par fichier : eleve.py, qcm.py, parties.py, questions.py
-    agents/                appel_ia.py + un fichier par agent
-    pipeline/              orchestrateur.py (enchaîne les agents), file_attente.py (arrière-plan)
+    cles.py                lit les clés d'API dans .env
+    routes/                une route par fichier : eleve.py, qcm.py, parties.py, classe.py, questions.py
+    agents/                appel_ia.py, commun.py + un fichier par agent
+    pipeline/              orchestrateur.py (enchaîne les agents), assemblage.py (construit la partition),
+                           donnees_eleve.py (ce que l'agent sait de l'élève), file_attente.py (arrière-plan)
     voix/                  synthese.py (interface), voix_essai.py (sans clé), gemini_tts.py, elevenlabs_tts.py,
-                           ancrage.py, cache_audio.py
+                           ancrage.py, cache_audio.py, audio_partition.py
     eleve/                 pseudonymes.py, profil.py
     donnees/               stockage.py, journal_recherche.py
-    tests/
+    tests/                 un fichier de test par module ; faux_claude.py (jamais d'appel réel)
   client/
-    index.html, qcm.html, attente.html, classe.html, demo_tableau.html
-    css/                   theme.css (réglages visuels), base.css, formulaire.css, parcours.css, tableau.css, medias.css, interaction.css
+    index.html, qcm.html, attente.html, classe.html, fin.html, demo_tableau.html
+    css/                   theme.css (réglages visuels), base.css, formulaire.css, parcours.css, tableau.css, medias.css, interaction.css, classe.css
     bibliotheques/         KaTeX, mhchem, Rough.js, police Caveat (copiées : pas besoin d'internet)
     js/
       api.js               seul fichier qui parle au serveur
       accueil.js           page d'accueil
       attente.js           page d'attente
+      classe.js            la classe (+ classe_attente.js : entre deux parties)
       session_eleve.js     pseudonyme de la séance (jamais le nom)
       demo_tableau.js      page de démonstration du tableau
       lecteur/             lecteur.js (enchaîne les beats), horloge.js (pause, accélération), audio.js

@@ -1,8 +1,9 @@
 /*
 Rôle : jouer une partition beat par beat : le professeur parle, et chaque action démarre au bon moment.
-Reçoit : la partition et un contexte : exécutants (tableau, médias, prédiction), voix, réglages, horloge, rappels.
-Produit : un objet avec lecture(), pause() et beat_suivant().
-Utilisé par : client/js/demo_tableau.js (et plus tard la page de classe).
+Reçoit : la partition et un contexte : exécutants (tableau, médias, prédiction), voix, réglages, horloge, rappels,
+         et, si besoin, entre_beats(index, beat) : appelé après chaque beat (réponses de la main levée).
+Produit : un objet avec lecture(), pause(), beat_suivant() et jouer() (promesse tenue à la fin de la partition).
+Utilisé par : client/js/demo_tableau.js et client/js/classe.js.
 */
 import { attendre_jusqu_a } from "./horloge.js";
 
@@ -36,6 +37,7 @@ async function jouer_partition(partition, contexte) {
     contexte.rappels.sur_beat(index, beat);
     await jouer_beat(beat, contexte);
     contexte.horloge.ralentir();
+    if (contexte.entre_beats) await contexte.entre_beats(index, beat);
   }
   contexte.rappels.sur_fin();
 }
@@ -43,16 +45,15 @@ async function jouer_partition(partition, contexte) {
 export function creer_lecteur(partition, contexte) {
   // Prépare la lecture de la partition ; elle démarre au premier appui sur Lecture ou Beat suivant.
   const { horloge } = contexte;
-  let demarre = false;
+  let lecture_en_cours = null;
   const demarrer = () => {
-    if (!demarre) {
-      demarre = true;
-      jouer_partition(partition, contexte);
-    }
+    lecture_en_cours ??= jouer_partition(partition, contexte);
+    return lecture_en_cours;
   };
   return {
     lecture() { horloge.reprendre(); demarrer(); },
     pause() { horloge.pause(); },
     beat_suivant() { demarrer(); horloge.accelerer(); },
+    jouer() { horloge.reprendre(); return demarrer(); },
   };
 }

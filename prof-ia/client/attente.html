@@ -1,9 +1,9 @@
 <!doctype html>
 <!--
 Rôle : page d'attente pendant que le professeur prépare son tableau.
-Reçoit : la durée d'attente simulée (config/application.json, via /api/accueil).
+Reçoit : l'état de préparation de la partie 1 de l'élève (via /api/eleve/<pseudonyme>/etat).
 Produit : un message et une barre de progression, puis le bouton pour entrer en classe.
-Utilisé par : l'élève, après le questionnaire. La progression est simulée (le vrai état arrive à l'étape 9).
+Utilisé par : l'élève, après le questionnaire.
 -->
 <html lang="fr">
 <head>
@@ -27,12 +27,13 @@ Utilisé par : l'élève, après le questionnaire. La progression est simulée (
       <li>1. Accueil</li>
       <li>2. Questionnaire</li>
       <li aria-current="step">3. Cours au tableau</li>
+      <li>4. Questionnaire de fin</li>
     </ol>
 
     <h1>Merci pour vos réponses</h1>
     <p class="chapeau" id="etat" aria-live="polite">Le professeur prépare son tableau…</p>
-    <progress id="progression" class="progression" max="100" value="0" aria-label="Préparation du tableau"></progress>
-    <a id="entrer" class="bouton bouton-lien" href="demo_tableau.html" hidden>Entrer en classe</a>
+    <progress id="progression" class="progression" max="100" aria-label="Préparation du tableau"></progress>
+    <a id="entrer" class="bouton bouton-lien" href="classe.html" hidden>Entrer en classe</a>
   </main>
 </body>
 </html>

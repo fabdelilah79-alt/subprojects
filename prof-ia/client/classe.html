@@ -1,0 +1,72 @@
+<!doctype html>
+<!--
+Rôle : la classe : le professeur IA fait son cours au tableau, partie après partie ; l'élève peut lever la main.
+Reçoit : le pseudonyme de la séance et les parties préparées pour cet élève (via /api/eleve/...).
+Produit : le tableau, la voix, les sous-titres, les médias, les prédictions, la main levée et le brouillon ;
+          à la fin, le lien vers le questionnaire de fin.
+Utilisé par : l'élève, après la page d'attente.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>En classe · Professeur IA</title>
+  <link rel="stylesheet" href="bibliotheques/katex/katex.min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/formulaire.css">
+  <link rel="stylesheet" href="css/tableau.css">
+  <link rel="stylesheet" href="css/medias.css">
+  <link rel="stylesheet" href="css/interaction.css">
+  <link rel="stylesheet" href="css/parcours.css">
+  <link rel="stylesheet" href="css/classe.css">
+  <script defer src="bibliotheques/katex/katex.min.js"></script>
+  <script defer src="bibliotheques/katex/contrib/mhchem.min.js"></script>
+  <script defer src="bibliotheques/rough/rough.js"></script>
+  <script type="module" src="js/classe.js"></script>
+</head>
+<body>
+  <header class="bandeau">
+    <span class="bandeau-nom">Professeur IA</span>
+    <span class="bandeau-matiere">Physique-chimie</span>
+  </header>
+
+  <main class="classe">
+    <section class="classe-tableau" aria-label="Tableau">
+      <nav id="onglets" class="onglets" aria-label="Tableaux"></nav>
+      <div id="planche" class="planche"></div>
+    </section>
+
+    <aside class="classe-cote">
+      <p id="etat" class="etat" role="status">Chargement…</p>
+      <div class="commandes">
+        <button id="lecture" type="button" class="bouton">Commencer le cours</button>
+        <button id="pause" type="button" class="bouton bouton-second" hidden>Pause</button>
+      </div>
+
+      <p class="legende">Le professeur dit :</p>
+      <p id="texte-dit" class="texte-dit" aria-live="polite"></p>
+
+      <section class="main-levee" aria-label="Poser une question">
+        <button id="lever-main" type="button" class="bouton bouton-second" hidden>Lever la main</button>
+        <form id="formulaire-question" class="formulaire-question" hidden>
+          <label for="question">Votre question (n'écrivez pas votre nom)</label>
+          <textarea id="question" name="question" rows="3" required></textarea>
+          <div class="commandes">
+            <button type="submit" class="bouton">Envoyer</button>
+            <button id="annuler-question" type="button" class="bouton bouton-second">Annuler</button>
+          </div>
+        </form>
+        <p id="suivi-question" class="message" role="status"></p>
+      </section>
+
+      <section id="brouillon" class="brouillon" aria-label="Brouillon du professeur" hidden>
+        <p class="legende">Brouillon</p>
+        <ol id="echanges" class="echanges"></ol>
+      </section>
+
+      <a id="questionnaire-fin" class="bouton bouton-lien" href="qcm.html?test=post" hidden>Questionnaire de fin</a>
+    </aside>
+  </main>
+</body>
+</html>

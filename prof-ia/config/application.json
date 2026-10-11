@@ -7,7 +7,8 @@
   "cours": [
     {
       "id": "rotation",
-      "titre": "Mouvement de rotation d'un solide autour d'un axe fixe"
+      "titre": "Mouvement de rotation d'un solide autour d'un axe fixe",
+      "parties": 3
     }
   ],
   "classes": [
@@ -32,9 +33,10 @@
     "prefixe": "E",
     "chiffres": 3
   },
-  "attente_simulee_s": 6,
   "generation": {
-    "audios_en_parallele": 4
+    "audios_en_parallele": 4,
+    "agents_en_parallele": 2,
+    "intervalle_suivi_s": 2
   },
   "structure": {
     "lignes_max_fichier": 150,
@@ -56,5 +58,12 @@
       "sorties",
       "bibliotheques"
     ]
+  },
+  "main_levee": {
+    "longueur_max_question": 400,
+    "beats_deja_dits_max": 12,
+    "ton_reponse": "encourageant",
+    "message_sans_cle": "Je note votre question. Votre professeur y répondra en classe. Continuons.",
+    "message_erreur": "Je n'arrive pas à répondre maintenant. Gardez votre question, nous y reviendrons. Continuons."
   }
 }

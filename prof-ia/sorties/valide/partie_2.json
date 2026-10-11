@@ -1,0 +1,288 @@
+{
+  "numero": 2,
+  "tableau": 2,
+  "titre": "Vitesse linéaire et vitesse angulaire",
+  "generation": {
+    "source": "brouillon",
+    "date": "2026-10-11",
+    "relu_par_enseignant": false,
+    "fournisseur_voix": "essai"
+  },
+  "beats": [
+    {
+      "id": "p2_b01",
+      "phase": "prediction",
+      "texte_dit": "Deuxième partie : la vitesse d'un point qui tourne. Sur un disque en rotation, prenons deux points : A, à six centimètres de l'axe, et B, à douze centimètres.",
+      "ton": "enthousiaste",
+      "actions": [
+        {
+          "type": "nouveau_tableau",
+          "titre": "Vitesses"
+        },
+        {
+          "type": "ecrire",
+          "ancre": "la vitesse d'un point qui tourne",
+          "zone": "titre",
+          "style": "titre",
+          "texte": "Vitesse linéaire et vitesse angulaire",
+          "debut_s": 1.32
+        }
+      ],
+      "audio": "55cb8fe31fbc30354b85.wav",
+      "duree_s": 11.586
+    },
+    {
+      "id": "p2_b02",
+      "phase": "prediction",
+      "texte_dit": "Pendant une même durée, lequel des deux points parcourt le plus long chemin ? Et lequel tourne du plus grand angle ? Choisissez une réponse et dites pourquoi.",
+      "ton": "interrogatif",
+      "actions": [
+        {
+          "type": "prediction",
+          "ancre": "Choisissez une réponse",
+          "question": "Pendant une même durée, comparez les points A (à 6 cm de l'axe) et B (à 12 cm).",
+          "choix": [
+            {
+              "id": "A",
+              "texte": "A et B parcourent le même chemin et tournent du même angle.",
+              "conception": "vitesse_lineaire_identique_tous_points"
+            },
+            {
+              "id": "B",
+              "texte": "B parcourt un plus long chemin et tourne d'un plus grand angle.",
+              "conception": "omega_depend_de_la_distance_a_l_axe"
+            },
+            {
+              "id": "C",
+              "texte": "B parcourt un plus long chemin, mais A et B tournent du même angle.",
+              "conception": null
+            },
+            {
+              "id": "D",
+              "texte": "A va plus vite, car il est plus près de l'axe.",
+              "conception": "plus_pres_de_l_axe_plus_rapide"
+            }
+          ],
+          "justifier": true,
+          "branches": [
+            {
+              "choix": "A",
+              "texte_dit": "Ils appartiennent bien au même solide, c'est vrai. Regardons si leurs chemins ont la même longueur.",
+              "ton": "encourageant",
+              "audio": "6529a2ab2a4c2e806625.wav",
+              "duree_s": 7.371
+            },
+            {
+              "choix": "B",
+              "texte_dit": "Vous avez senti que B va plus vite. Regardons de près ce qui se passe pour les angles.",
+              "ton": "encourageant",
+              "audio": "134613eba360efb7af52.wav",
+              "duree_s": 6.443
+            },
+            {
+              "choix": "C",
+              "texte_dit": "Intéressant : vous séparez le chemin et l'angle. Vérifions-le sur l'enregistrement.",
+              "ton": "encourageant",
+              "audio": "af3469580a82df6d0bc9.wav",
+              "duree_s": 6.229
+            },
+            {
+              "choix": "D",
+              "texte_dit": "Près de l'axe, le mouvement paraît vif, c'est vrai. Mesurons les chemins pour en être sûrs.",
+              "ton": "encourageant",
+              "audio": "61adb2343f56de228276.wav",
+              "duree_s": 6.8
+            }
+          ],
+          "debut_s": 8.58
+        }
+      ],
+      "audio": "47fb583a0cb56f9c93de.wav",
+      "duree_s": 11.586
+    },
+    {
+      "id": "p2_b03",
+      "phase": "observation",
+      "texte_dit": "Ouvrez la simulation de la table à coussin d'air et passez en plein écran. Enregistrez le mouvement, choisissez une position, puis comparez les arcs et les angles de A et de B. Cliquez sur « J'ai terminé » quand vous avez comparé.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "media",
+          "ancre": "Ouvrez la simulation",
+          "ressource": "coussin_air",
+          "plein_ecran": true,
+          "consigne": "Enregistrez, choisissez une position i, puis comparez les arcs et les angles de A et de B autour de i.",
+          "attendre": "clic_termine",
+          "debut_s": 0.0
+        }
+      ],
+      "audio": "8c109f8125bcdcd54707.wav",
+      "duree_s": 16.729
+    },
+    {
+      "id": "p2_b04",
+      "phase": "explication",
+      "texte_dit": "Pour la vitesse au point A un, on encadre cette position : on prend l'arc entre la position précédente A zéro et la position suivante A deux. Entre ces deux positions, il s'écoule deux tau.",
+      "ton": "lent_et_clair",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "on prend l'arc",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "V_{A1} = \\dfrac{\\overset{\\frown}{A_0A_2}}{2\\tau}",
+          "debut_s": 4.31
+        }
+      ],
+      "audio": "734fd3f9b292b0006438.wav",
+      "duree_s": 13.8
+    },
+    {
+      "id": "p2_b05",
+      "phase": "explication",
+      "texte_dit": "Avec tau égal à quarante millisecondes et un arc de trois virgule six centimètres, V A un vaut zéro virgule quarante-cinq mètre par seconde. Pour B, l'arc est presque deux fois plus long : environ zéro virgule quatre-vingt-cinq mètre par seconde.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "V A un vaut",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "V_{A1} = \\dfrac{3{,}6 \\times 10^{-2}}{2 \\times 40 \\times 10^{-3}} = 0{,}45\\ \\text{m.s}^{-1}",
+          "debut_s": 6.03
+        },
+        {
+          "type": "formule",
+          "ancre": "Pour B",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "V_{B1} \\approx 0{,}85\\ \\text{m.s}^{-1} \\quad (B \\text{ va plus vite})",
+          "debut_s": 10.24
+        }
+      ],
+      "audio": "a47f88ea70137ee824e7.wav",
+      "duree_s": 17.871
+    },
+    {
+      "id": "p2_b06",
+      "phase": "explication",
+      "texte_dit": "Et les angles ? Entre les positions zéro et deux, A et B balaient le même angle : trente-quatre degrés, soit environ zéro virgule six radian. On définit alors la vitesse angulaire oméga un : l'angle balayé divisé par deux tau.",
+      "ton": "interrogatif",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "la vitesse angulaire oméga un",
+          "zone": "droite",
+          "style": "normal",
+          "latex": "\\omega_1 = \\dfrac{\\theta_2 - \\theta_0}{2\\tau}",
+          "debut_s": 11.57
+        }
+      ],
+      "audio": "3e952925296d09dfec59.wav",
+      "duree_s": 16.443
+    },
+    {
+      "id": "p2_b07",
+      "phase": "explication",
+      "texte_dit": "Le calcul donne sept virgule cinq radians par seconde, pour A comme pour B. À un instant donné, tous les points du solide ont la même vitesse angulaire.",
+      "ton": "neutre",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "Le calcul donne",
+          "zone": "droite",
+          "style": "normal",
+          "latex": "\\omega_{A1} = \\omega_{B1} = \\dfrac{0{,}6}{2 \\times 40 \\times 10^{-3}} = 7{,}5\\ \\text{rad.s}^{-1}",
+          "debut_s": 0.0
+        },
+        {
+          "type": "ecrire",
+          "ancre": "tous les points du solide",
+          "zone": "droite",
+          "style": "normal",
+          "texte": "→ même ω pour tous les points",
+          "debut_s": 7.05
+        }
+      ],
+      "audio": "2f4eeae9f2a2f9f25f18.wav",
+      "duree_s": 11.157
+    },
+    {
+      "id": "p2_b08",
+      "phase": "explication",
+      "texte_dit": "Comparons R fois oméga à la vitesse. Pour A : zéro virgule zéro six fois sept virgule cinq donne zéro virgule quarante-cinq mètre par seconde, exactement V A un. Pour B, on trouve zéro virgule quatre-vingt-dix, très proche de la mesure.",
+      "ton": "interrogatif",
+      "actions": [
+        {
+          "type": "formule",
+          "ancre": "Pour A",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "R_A \\cdot \\omega = 0{,}06 \\times 7{,}5 = 0{,}45\\ \\text{m.s}^{-1} = V_{A1}",
+          "debut_s": 2.69
+        },
+        {
+          "type": "formule",
+          "ancre": "Pour B, on trouve",
+          "zone": "gauche",
+          "style": "normal",
+          "latex": "R_B \\cdot \\omega = 0{,}12 \\times 7{,}5 = 0{,}90\\ \\text{m.s}^{-1} \\approx V_{B1}",
+          "debut_s": 11.78
+        }
+      ],
+      "audio": "0e497d7735a1ff913cd4.wav",
+      "duree_s": 17.157
+    },
+    {
+      "id": "p2_b09",
+      "phase": "synthese",
+      "texte_dit": "Retenez. Tous les points d'un solide en rotation ont, à chaque instant, la même vitesse angulaire. Et la vitesse linéaire est égale au rayon multiplié par la vitesse angulaire : V égale R fois oméga.",
+      "ton": "lent_et_clair",
+      "actions": [
+        {
+          "type": "ecrire",
+          "ancre": "Tous les points",
+          "zone": "a_retenir",
+          "style": "a_retenir",
+          "texte": "À chaque instant, tous les points du solide ont la même vitesse angulaire ω (rad.s⁻¹).",
+          "debut_s": 0.66
+        },
+        {
+          "type": "formule",
+          "ancre": "V égale R fois oméga",
+          "zone": "a_retenir",
+          "style": "a_retenir",
+          "latex": "V_i = R \\cdot \\omega_i \\quad (V \\text{ en m.s}^{-1},\\ R \\text{ en m})",
+          "debut_s": 12.98
+        }
+      ],
+      "audio": "5d3871fc5fda00c95e5d.wav",
+      "duree_s": 14.514
+    },
+    {
+      "id": "p2_b10",
+      "phase": "synthese",
+      "texte_dit": "Le point B, deux fois plus loin de l'axe, va donc deux fois plus vite que A, alors que les deux points tournent ensemble, du même angle.",
+      "ton": "encourageant",
+      "actions": [
+        {
+          "type": "dessiner",
+          "ancre": "deux fois plus loin",
+          "zone": "droite",
+          "element": "disque_points",
+          "parametres": {
+            "noms": [
+              "A",
+              "B"
+            ],
+            "centre": "O",
+            "angle_deg": 25
+          },
+          "debut_s": 0.88
+        }
+      ],
+      "audio": "7cc7e1ef10f5a02af919.wav",
+      "duree_s": 10.014
+    }
+  ]
+}

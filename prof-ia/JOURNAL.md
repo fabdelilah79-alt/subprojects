@@ -124,3 +124,31 @@ Problèmes restants :
 - QCM à relire et valider par l'enseignant (puis passer « statut » à « validé »).
 - Classes à remplacer dans config/application.json.
 - Un même élève qui revient reçoit un nouveau pseudonyme (à décider : faut-il le reconnaître ?).
+
+## 2026-10-11 — Étapes 8 à 12 : l'application complète, prête à recevoir les clés
+
+Fait (sans clé : tout ce qui parle à l'IA est testé avec de faux clients, aucun appel réel) :
+- Étape 8 : six agents (prompts/*.md, schémas de réponse), appel_ia.py (cache du contexte, sortie JSON imposée,
+  effort, repli, nouveaux essais, coût), assemblage de la partition par le code, orchestrateur avec relecture
+  du chef (deux tours de corrections au plus), outils/generer_partie.py. Voix Gemini écrite (gemini_tts.py).
+- Brouillons des parties 2 (vitesses) et 3 (rotation uniforme), avec prédiction et simulation ; vérifiés au tableau.
+- Étape 9 : file d'attente (partie N, puis N+1 pendant que l'élève suit N ; repli sur la partie validée),
+  vraie page d'attente, page de classe (classe.html), attente utile entre deux parties (« à retenir » à recopier).
+- Étape 10 : main levée (question notée, réponse à la fin de la phrase, à voix haute et au brouillon).
+  Sans clé : le professeur dit qu'il note la question.
+- Étape 11 : journal de recherche SQLite (tous les événements, sous pseudonyme), questionnaire de fin
+  (qcm.html?test=post), export CSV (outils/exporter_donnees.py), sans jamais lire la correspondance des noms.
+- 44 tests réussis ; structure conforme ; parcours complet testé dans le navigateur.
+
+Choix signalés :
+- Entre deux parties, on ne repose pas les questions du QCM (cela fausserait le questionnaire de fin) :
+  on montre « à retenir » de la partie précédente.
+- Les réponses à la partie 1 du QCM partent dès la 3e question : la préparation de la partie 1 commence plus tôt.
+- Bibliothèques anthropic et google-genai ajoutées à requirements.txt (prévues dans CLAUDE.md).
+- Corrigé : un élément caché (bouton « Entrer en classe »…) restait visible ; règle [hidden] ajoutée à base.css.
+
+Problèmes restants, à faire par l'enseignant :
+- Relire les parties 1, 2 et 3 (sorties/valide/) et le QCM ; décider si le questionnaire de fin garde les mêmes questions.
+- Ajouter les clés dans .env, puis suivre le README (« Ajouter les clés ») : voix Gemini, mode adaptatif.
+- Vérifier les prix dans config/modeles.json et les noms des modèles de voix dans config/voix.json.
+- ElevenLabs (comparaison des voix) n'est pas écrit : seulement utile si la voix Gemini ne convient pas.

@@ -13,6 +13,15 @@ from serveur.pipeline.assemblage import assembler
 from serveur.voix.audio_partition import completer
 
 ORDRE = ("pedagogique", "voix", "ecriture", "architecture")
+# Messages d'avancement, lisibles par l'élève sur la page d'attente.
+AVANCEMENT = {
+    "pedagogique": "Le professeur choisit comment présenter la partie…",
+    "voix": "Il prépare ce qu'il va dire…",
+    "ecriture": "Il prépare ce qu'il va écrire au tableau…",
+    "architecture": "Il organise son tableau…",
+    "chef": "Il relit sa préparation…",
+    "audio": "Il enregistre sa voix…",
+}
 
 
 class ErreurGeneration(Exception):
@@ -36,7 +45,7 @@ def lancer(agent, numero, eleve, travaux, corrections, bilan):
 def produire_depuis(premier, numero, eleve, travaux, corrections, bilan, signaler):
     """Relance les agents à partir de « premier » (ceux d'après dépendent de son travail)."""
     for agent in ORDRE[ORDRE.index(premier):]:
-        signaler(f"Agent {agent}…")
+        signaler(AVANCEMENT[agent])
         lancer(agent, numero, eleve, travaux, corrections.get(agent, ()), bilan)
 
 
@@ -56,7 +65,7 @@ def relire(numero, eleve, travaux, bilan, signaler):
     for tour in range(tours + 1):
         partition, remarques = assembler(numero, *(travaux[a] for a in ORDRE))
         erreurs = remarques + valider_document(partition)[0]
-        signaler(f"Relecture par le chef (tour {tour + 1})…")
+        signaler(AVANCEMENT["chef"])
         avis, compte = chef.verifier(partition, travaux["pedagogique"], eleve["profil"], erreurs)
         bilan["appels"].append(compte)
         bilan["commentaire_chef"] = avis["commentaire"]
@@ -85,7 +94,7 @@ def generer(numero, eleve, signaler=print):
     partition, erreurs = relire(numero, eleve, travaux, bilan, signaler)
     if erreurs:
         raise ErreurGeneration("Partition encore invalide après les corrections : " + " ; ".join(erreurs[:5]))
-    signaler("Voix du professeur…")
+    signaler(AVANCEMENT["audio"])
     bilan["voix"] = completer(partition)
     erreurs, avertissements = valider_document(partition)
     if erreurs:

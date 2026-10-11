@@ -1,0 +1,119 @@
+/*
+Rôle : mise en page de la classe : le tableau à gauche, la colonne de l'élève à droite (dessous sur téléphone).
+Reçoit : les variables de client/css/theme.css.
+Produit : la grille de la page, la main levée, le brouillon du professeur, le panneau d'attente entre deux parties.
+Utilisé par : client/classe.html.
+*/
+.classe {
+  display: grid;
+  gap: var(--espace-4);
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: var(--espace-4);
+}
+
+@media (min-width: 64rem) {
+  .classe {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    align-items: start;
+  }
+}
+
+@media (max-width: 40rem) {
+  .classe {
+    padding: var(--espace-3);
+  }
+}
+
+.classe-cote {
+  display: grid;
+  gap: var(--espace-2);
+  min-width: 0;
+}
+
+.classe-cote .texte-dit {
+  margin-bottom: 0;
+}
+
+.main-levee {
+  padding-top: var(--espace-3);
+  border-top: var(--epaisseur-trait) solid var(--trait);
+}
+
+.formulaire-question {
+  display: grid;
+  gap: var(--espace-2);
+}
+
+.formulaire-question label {
+  font-size: var(--taille-petite);
+  font-weight: 600;
+}
+
+/* Le brouillon : un petit tableau, écrit à la craie, pour les réponses à la main levée. */
+.brouillon {
+  padding: var(--espace-3);
+  border-radius: var(--rayon);
+  background: var(--tableau);
+  color: var(--craie);
+}
+
+.brouillon .legende {
+  margin: 0 0 var(--espace-2);
+  color: var(--craie);
+  opacity: 0.75;
+}
+
+.echanges {
+  display: grid;
+  gap: var(--espace-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.echange-question {
+  margin: 0;
+  font-size: var(--taille-petite);
+  opacity: 0.8;
+}
+
+.echange-ecrit {
+  margin: var(--espace-1) 0 0;
+  font-family: "Caveat", var(--police-texte);
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+/* Entre deux parties : ce qu'il faut retenir, pendant que le professeur prépare la suite. */
+.panneau-attente {
+  position: absolute;
+  z-index: 1;
+  inset: 8% 10%;
+  display: grid;
+  align-content: start;
+  gap: var(--espace-3);
+  padding: var(--espace-4);
+  overflow: auto;
+  border: var(--epaisseur-trait) solid var(--tableau-fonce);
+  border-radius: var(--rayon);
+  background: var(--papier);
+}
+
+.panneau-attente h2 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-size: var(--taille-chapeau);
+}
+
+.panneau-attente ul {
+  display: grid;
+  gap: var(--espace-2);
+  margin: 0;
+  padding-left: var(--espace-4);
+}
+
+.panneau-attente progress {
+  width: 100%;
+  accent-color: var(--tableau);
+}
