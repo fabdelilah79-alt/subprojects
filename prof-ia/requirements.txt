@@ -6,5 +6,6 @@ jsonschema==4.26.0
 # Pour les tests uniquement.
 pytest==9.1.1
 httpx2==2.13.1
+# Agents IA (Claude) et voix du professeur (Gemini) : servent seulement quand les clés sont dans .env.
 anthropic==1.13.0
 google-genai==2.29.0
