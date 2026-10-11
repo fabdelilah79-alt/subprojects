@@ -1,0 +1,102 @@
+{
+  "type": "object",
+  "properties": {
+    "titre_tableau": {
+      "type": "string",
+      "description": "Titre de l'onglet du tableau de cette partie."
+    },
+    "placements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "beat_id": {
+            "type": "string",
+            "description": "id du beat."
+          },
+          "action_index": {
+            "type": "integer",
+            "description": "Position de l'action dans la liste de l'agent écriture pour ce beat (0 = première)."
+          },
+          "zone": {
+            "type": "string",
+            "description": "Nom d'une zone du tableau."
+          }
+        },
+        "required": [
+          "beat_id",
+          "action_index",
+          "zone"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "medias": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "beat_id": {
+            "type": "string",
+            "description": "id du beat."
+          },
+          "ancre": {
+            "type": "string",
+            "description": "Mot ou groupe de mots recopié À L'IDENTIQUE depuis le texte_dit du beat."
+          },
+          "ressource": {
+            "type": "string",
+            "description": "id du manifeste."
+          },
+          "consigne": {
+            "type": "string",
+            "description": "Consigne affichée à l'élève."
+          },
+          "plein_ecran": {
+            "type": "boolean"
+          },
+          "attendre_clic": {
+            "type": "boolean",
+            "description": "true : la lecture attend « J'ai terminé »."
+          }
+        },
+        "required": [
+          "beat_id",
+          "ancre",
+          "ressource",
+          "consigne",
+          "plein_ecran",
+          "attendre_clic"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "prediction": {
+      "type": "object",
+      "properties": {
+        "beat_id": {
+          "type": "string",
+          "description": "id du beat où la question est posée."
+        },
+        "ancre": {
+          "type": "string",
+          "description": "Mot ou groupe de mots recopié À L'IDENTIQUE depuis le texte_dit du beat."
+        }
+      },
+      "required": [
+        "beat_id",
+        "ancre"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "titre_tableau",
+    "placements",
+    "medias",
+    "prediction"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mise en place au tableau (agent architecture)"
+}

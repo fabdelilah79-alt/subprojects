@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "p<numéro>_b<deux chiffres>, par exemple p2_b03."
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "prediction",
+              "observation",
+              "explication",
+              "synthese"
+            ]
+          },
+          "texte_dit": {
+            "type": "string",
+            "description": "Une ou deux phrases dites, tout en lettres : ni chiffre ni symbole."
+          },
+          "ton": {
+            "type": "string",
+            "description": "Un ton de la liste donnée."
+          }
+        },
+        "required": [
+          "id",
+          "phase",
+          "texte_dit",
+          "ton"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "branches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "choix": {
+            "type": "string",
+            "description": "Lettre du choix de prédiction."
+          },
+          "texte_dit": {
+            "type": "string",
+            "description": "Réaction orale courte, tout en lettres."
+          },
+          "ton": {
+            "type": "string",
+            "description": "Un ton de la liste donnée."
+          }
+        },
+        "required": [
+          "choix",
+          "texte_dit",
+          "ton"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Une réaction par choix de la prédiction."
+    }
+  },
+  "required": [
+    "beats",
+    "branches"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Texte oral découpé en beats (agent voix)"
+}

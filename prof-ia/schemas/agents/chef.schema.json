@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "valide": {
+      "type": "boolean",
+      "description": "true si la partition peut être jouée telle quelle."
+    },
+    "corrections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "agent": {
+            "type": "string",
+            "enum": [
+              "pedagogique",
+              "voix",
+              "ecriture",
+              "architecture"
+            ]
+          },
+          "consigne": {
+            "type": "string",
+            "description": "Correction précise à faire par cet agent."
+          }
+        },
+        "required": [
+          "agent",
+          "consigne"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "commentaire": {
+      "type": "string",
+      "description": "Bilan en deux phrases pour l'enseignant."
+    }
+  },
+  "required": [
+    "valide",
+    "corrections",
+    "commentaire"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vérification de la partition (agent chef)"
+}

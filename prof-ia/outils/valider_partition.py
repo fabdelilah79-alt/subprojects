@@ -2,7 +2,7 @@
 Rôle : vérifier une partition avant qu'elle soit jouée, et dire en français ce qui ne va pas.
 Reçoit : le chemin d'une partition (par exemple sorties/valide/partie_1.json).
 Produit : la liste des erreurs et des avertissements. Code de sortie 0 si la partition est valide, 1 sinon.
-Utilisé par : l'enseignant (python -m outils.valider_partition <fichier>) ; plus tard, l'orchestrateur.
+Utilisé par : l'enseignant (python -m outils.valider_partition <fichier>) et serveur/pipeline/orchestrateur.py.
 """
 import json
 import sys
@@ -56,10 +56,12 @@ def erreurs_schema(document, chemin_schema):
 
 
 def references_projet(manifeste):
-    """Rassemble les noms autorisés : zones, palette, tons et ressources."""
+    """Rassemble les noms autorisés : zones, palette, tons, éléments de schéma et ressources."""
     tableau, voix = lire_config("tableau"), lire_config("voix")
+    dossier_elements = chemin_projet("client") / "js" / "tableau" / "elements"
     return {
         "zones": set(tableau["zones"]),
+        "elements": {f.stem for f in dossier_elements.glob("*.js") if f.stem != "index"},
         "palette": set(tableau["palette"]),
         "tons": set(voix["tons"]),
         "ressources": {r["id"] for r in manifeste["ressources"]},
@@ -73,12 +75,16 @@ def ressources_absentes(manifeste):
 
 
 def valider(chemin_partition):
-    """Vérifie une partition et renvoie (erreurs, avertissements)."""
+    """Vérifie une partition (fichier) et renvoie (erreurs, avertissements)."""
+    return valider_document(lire_json(chemin_partition))
+
+
+def valider_document(partition):
+    """Vérifie une partition déjà lue (dictionnaire) et renvoie (erreurs, avertissements)."""
     schemas, contenu = chemin_projet("schemas"), chemin_projet("contenu")
     manifeste = lire_json(contenu / "manifeste.json")
     erreurs = erreurs_schema(manifeste, schemas / "manifeste.schema.json")
     erreurs = [f"manifeste, {e}" for e in erreurs]
-    partition = lire_json(chemin_partition)
     erreurs += erreurs_schema(partition, schemas / "partition.schema.json")
     if erreurs:
         return erreurs, []

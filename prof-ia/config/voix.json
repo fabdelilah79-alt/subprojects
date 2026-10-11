@@ -9,7 +9,10 @@
   "gemini": {
     "modele_cours": "gemini-3.8-flash-tts",
     "modele_repondeur": "gemini-3.8-flash-lite-tts",
-    "voix": null
+    "voix": "Charon",
+    "frequence_hz": 24000,
+    "gabarit_demande": "{consigne} Lis à voix haute, sans rien ajouter, le texte suivant :\n{texte}",
+    "cout_par_million_caracteres": 16
   },
   "elevenlabs": {
     "modele_cours": "eleven_v4",

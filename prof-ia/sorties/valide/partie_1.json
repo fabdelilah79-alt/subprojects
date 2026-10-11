@@ -28,7 +28,7 @@
           "debut_s": 2.64
         }
       ],
-      "audio": "b7ed5717d035f29d1abb.wav",
+      "audio": "69b2ae39d457254f52c7.wav",
       "duree_s": 11.8
     },
     {
@@ -64,28 +64,28 @@
               "choix": "A",
               "texte_dit": "C'est une réponse très fréquente, parce que la nacelle décrit bien un cercle. Gardons cette idée et vérifions-la ensemble.",
               "ton": "encourageant",
-              "audio": "97d544ff82d5c554b110.wav",
+              "audio": "f9402e52ca2e7a7f4df4.wav",
               "duree_s": 9.014
             },
             {
               "choix": "B",
               "texte_dit": "Intéressant. Vous avez remarqué quelque chose d'important. Vérifions-le ensemble.",
               "ton": "encourageant",
-              "audio": "df392256116d5d96ec6e.wav",
+              "audio": "2225ace01f139ad013a7.wav",
               "duree_s": 6.086
             },
             {
               "choix": "C",
               "texte_dit": "Pas de souci, c'est justement ce que nous allons observer.",
               "ton": "encourageant",
-              "audio": "d9289627e9393c3066e4.wav",
+              "audio": "b404c5bc0cc1e25a4a57.wav",
               "duree_s": 4.443
             }
           ],
           "debut_s": 7.93
         }
       ],
-      "audio": "ce4da8e608eea7bc6d72.wav",
+      "audio": "5f0583ee6dea3964633a.wav",
       "duree_s": 10.943
     },
     {
@@ -104,7 +104,7 @@
           "debut_s": 0.0
         }
       ],
-      "audio": "b1d80ef85ff15e779010.wav",
+      "audio": "cc20d0cddc94f705e61c.wav",
       "duree_s": 13.086
     },
     {
@@ -122,7 +122,7 @@
           "debut_s": 8.46
         }
       ],
-      "audio": "316422b1029045d1619c.wav",
+      "audio": "965997fccc577c07b45f.wav",
       "duree_s": 10.443
     },
     {
@@ -140,7 +140,7 @@
           "debut_s": 4.26
         }
       ],
-      "audio": "708578acb6f53c309555.wav",
+      "audio": "ae01dc0c0df535b4d493.wav",
       "duree_s": 11.014
     },
     {
@@ -158,7 +158,7 @@
           "debut_s": 3.02
         }
       ],
-      "audio": "59879f80fab1213d97d3.wav",
+      "audio": "76397adca1786ddbb3e5.wav",
       "duree_s": 10.371
     },
     {
@@ -176,7 +176,7 @@
           "debut_s": 1.53
         }
       ],
-      "audio": "0c93bc4ee3d76d46117b.wav",
+      "audio": "282ee4682885d9fafec2.wav",
       "duree_s": 16.443
     },
     {
@@ -209,7 +209,7 @@
           "debut_s": 11.25
         }
       ],
-      "audio": "1a2abf4df17cb066e66e.wav",
+      "audio": "804db1292bda5a6d1452.wav",
       "duree_s": 13.657
     },
     {
@@ -227,7 +227,7 @@
           "debut_s": 6.57
         }
       ],
-      "audio": "d8f3ac15ac811253081c.wav",
+      "audio": "5f667142601c2371f0ef.wav",
       "duree_s": 9.157
     },
     {
@@ -246,7 +246,7 @@
           "debut_s": 1.53
         }
       ],
-      "audio": "d9b8a4af1b00b0ba21d1.wav",
+      "audio": "e67fc648abfd911c5184.wav",
       "duree_s": 16.729
     },
     {
@@ -272,7 +272,7 @@
           "debut_s": 7.36
         }
       ],
-      "audio": "5fdb748859a866c191a1.wav",
+      "audio": "a2791671c4c3cef35ddb.wav",
       "duree_s": 10.3
     },
     {
@@ -298,7 +298,7 @@
           "debut_s": 9.05
         }
       ],
-      "audio": "5c60c83c46069bfa3d23.wav",
+      "audio": "15624dfbde0f7bbaf347.wav",
       "duree_s": 13.871
     }
   ]

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "reponse_orale": {
+      "type": "string",
+      "description": "Réponse dite par le professeur, tout en lettres, trois phrases au plus."
+    },
+    "ecrit_brouillon": {
+      "type": "string",
+      "description": "Ce qui s'écrit dans la zone brouillon : une ligne courte, ou vide."
+    },
+    "hors_programme": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "reponse_orale",
+    "ecrit_brouillon",
+    "hors_programme"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Réponse à une question de la main levée (agent répondeur)"
+}

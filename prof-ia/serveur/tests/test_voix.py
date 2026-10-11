@@ -35,3 +35,44 @@ def test_ancrage_avec_temps_des_mots():
     beat = {"texte_dit": "un deux trois", "duree_s": 3.0, "actions": [{"type": "ecrire", "ancre": "trois"}]}
     calculer_debuts(beat, [(0, 0.0), (3, 0.8), (8, 2.1)])
     assert beat["actions"][0]["debut_s"] == 2.1
+
+
+class FauxGemini:
+    """Faux client Gemini : renvoie 1 seconde de silence au format PCM 24 kHz, sans appel réseau."""
+
+    def __init__(self):
+        self.models = self
+        self.demandes = []
+
+    def generate_content(self, model, contents, config):
+        """Imite la réponse de l'API : candidates[0].content.parts[0].inline_data.data."""
+        from types import SimpleNamespace as N
+        self.demandes.append((model, contents))
+        partie = N(inline_data=N(data=b"\x00\x00" * 24000))
+        return N(candidates=[N(content=N(parts=[partie]))])
+
+
+def test_gemini_avec_faux_client(tmp_path):
+    """Le fournisseur Gemini écrit un WAV de la bonne durée et utilise le modèle demandé."""
+    from serveur.configuration import lire_config
+    from serveur.voix import gemini_tts
+    faux = FauxGemini()
+    gemini_tts.definir_client(faux)
+    reglages = lire_config("voix")["gemini"]
+    duree, temps = gemini_tts.produire("Bonjour.", "Voix posée.", reglages, tmp_path / "a.wav", "repondeur")
+    gemini_tts.definir_client(None)
+    assert (duree, temps) == (1.0, None)
+    assert faux.demandes[0][0] == reglages["modele_repondeur"]
+    assert "Bonjour." in faux.demandes[0][1]
+
+
+def test_cle_gemini_absente(monkeypatch):
+    """Sans clé Gemini, la synthèse s'arrête avec un message clair."""
+    import pytest
+    from serveur.voix import gemini_tts, synthese
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setattr("serveur.cles.charger_env", lambda: None)
+    monkeypatch.setattr(synthese, "lire_config", lambda nom: {**__import__("serveur.configuration").configuration.lire_config(nom), "fournisseur": "gemini"})
+    gemini_tts.definir_client(None)
+    with pytest.raises(synthese.ErreurVoix, match="GEMINI_API_KEY"):
+        synthese.synthetiser("Texte jamais dit auparavant pour ce test.", "neutre")

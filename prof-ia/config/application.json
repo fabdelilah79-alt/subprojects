@@ -5,9 +5,16 @@
     "port": 8000
   },
   "cours": [
-    { "id": "rotation", "titre": "Mouvement de rotation d'un solide autour d'un axe fixe" }
+    {
+      "id": "rotation",
+      "titre": "Mouvement de rotation d'un solide autour d'un axe fixe"
+    }
   ],
-  "classes": ["Classe 1", "Classe 2", "Classe 3"],
+  "classes": [
+    "Classe 1",
+    "Classe 2",
+    "Classe 3"
+  ],
   "chemins": {
     "client": "client",
     "contenu": "contenu",
@@ -17,7 +24,9 @@
     "parties_validees": "sorties/valide",
     "cache_audio": "sorties/cache_audio",
     "eleves": "sorties/parties",
-    "prive": "sorties/prive"
+    "prive": "sorties/prive",
+    "journal": "sorties/journaux/journal.sqlite",
+    "exports": "sorties/journaux/exports"
   },
   "pseudonymes": {
     "prefixe": "E",
@@ -30,7 +39,22 @@
   "structure": {
     "lignes_max_fichier": 150,
     "lignes_max_fonction": 30,
-    "extensions_code": [".py", ".js", ".html", ".css"],
-    "dossiers_ignores": [".git", ".venv", "venv", "__pycache__", ".pytest_cache", "node_modules", "contenu", "sorties", "bibliotheques"]
+    "extensions_code": [
+      ".py",
+      ".js",
+      ".html",
+      ".css"
+    ],
+    "dossiers_ignores": [
+      ".git",
+      ".venv",
+      "venv",
+      "__pycache__",
+      ".pytest_cache",
+      "node_modules",
+      "contenu",
+      "sorties",
+      "bibliotheques"
+    ]
   }
 }

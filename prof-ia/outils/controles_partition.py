@@ -1,6 +1,6 @@
 """
 Rôle : contrôles d'une partition que le schéma JSON ne peut pas faire seul.
-Reçoit : une partition déjà lue, les réglages (zones, palette, tons) et le manifeste.
+Reçoit : une partition déjà lue, les réglages (zones, palette, tons, éléments) et le manifeste.
 Produit : deux listes de messages en français : erreurs (bloquantes) et avertissements.
 Utilisé par : outils/valider_partition.py.
 """
@@ -43,6 +43,8 @@ def erreurs_action(beat, numero, action, references):
         erreurs.append(f"{lieu} : zone « {action['zone']} » inconnue (voir config/tableau.json)")
     if "couleur" in action and action["couleur"] not in references["palette"]:
         erreurs.append(f"{lieu} : couleur « {action['couleur']} » absente de la palette")
+    if action["type"] == "dessiner" and action["element"] not in references["elements"]:
+        erreurs.append(f"{lieu} : élément de schéma « {action['element']} » inconnu (voir client/js/tableau/elements/)")
     if action["type"] == "media" and action["ressource"] not in references["ressources"]:
         erreurs.append(f"{lieu} : ressource « {action['ressource']} » absente de contenu/manifeste.json")
     if action["type"] == "prediction":

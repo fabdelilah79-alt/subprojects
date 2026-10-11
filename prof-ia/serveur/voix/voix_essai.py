@@ -8,8 +8,11 @@ Sert à tester toute la chaîne (cache, ancrage, lecture synchronisée) avant d'
 import wave
 
 
-def produire(texte, reglages, chemin):
-    """Écrit un WAV silencieux d'une durée proportionnelle au texte ; renvoie (durée, temps des mots)."""
+def produire(texte, consigne, reglages, chemin, usage="cours"):
+    """Écrit un WAV silencieux d'une durée proportionnelle au texte ; renvoie (durée, temps des mots).
+
+    La consigne de jeu et l'usage ne changent rien pour une voix muette.
+    """
     duree = len(texte) / reglages["debit_caracteres_par_s"] + reglages["marge_s"]
     frequence = reglages["frequence_hz"]
     with wave.open(str(chemin), "wb") as fichier:

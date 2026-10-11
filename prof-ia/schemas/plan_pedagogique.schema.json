@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "titre": {
+      "type": "string",
+      "description": "Titre court de la partie."
+    },
+    "objectif": {
+      "type": "string",
+      "description": "Ce que l'élève saura faire à la fin de la partie, en une phrase."
+    },
+    "conceptions_visees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifiant de la conception (celui du QCM)."
+          },
+          "comment_la_traiter": {
+            "type": "string",
+            "description": "Comment la partie va la faire évoluer."
+          }
+        },
+        "required": [
+          "id",
+          "comment_la_traiter"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Conceptions du profil à traiter dans cette partie."
+    },
+    "prediction": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string",
+          "description": "Question de prédiction posée avant l'observation."
+        },
+        "choix": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Lettre majuscule : A, B, C…"
+              },
+              "texte": {
+                "type": "string",
+                "description": "Texte du choix."
+              },
+              "conception": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Conception révélée par ce choix, ou null pour la réponse attendue."
+              }
+            },
+            "required": [
+              "id",
+              "texte",
+              "conception"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "reactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "choix": {
+                "type": "string",
+                "description": "Lettre du choix."
+              },
+              "idee": {
+                "type": "string",
+                "description": "Idée de la réaction orale du professeur à ce choix, sans donner la réponse."
+              }
+            },
+            "required": [
+              "choix",
+              "idee"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "question",
+        "choix",
+        "reactions"
+      ],
+      "additionalProperties": false
+    },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "ressource": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "id d'une ressource du manifeste à observer, ou null."
+        },
+        "consigne": {
+          "type": "string",
+          "description": "Ce que l'élève doit faire ou regarder."
+        },
+        "plein_ecran": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ressource",
+        "consigne",
+        "plein_ecran"
+      ],
+      "additionalProperties": false
+    },
+    "points_explication": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Un point d'explication, dans l'ordre."
+      },
+      "description": "Étapes de l'explication après l'observation."
+    },
+    "trace_ecrite": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "texte",
+              "formule",
+              "schema"
+            ]
+          },
+          "contenu": {
+            "type": "string",
+            "description": "Texte, LaTeX ou description du schéma."
+          },
+          "a_retenir": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "type",
+          "contenu",
+          "a_retenir"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Ce qui doit rester au tableau à la fin."
+    }
+  },
+  "required": [
+    "titre",
+    "objectif",
+    "conceptions_visees",
+    "prediction",
+    "observation",
+    "points_explication",
+    "trace_ecrite"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plan pédagogique d'une partie (agent pédagogique)"
+}

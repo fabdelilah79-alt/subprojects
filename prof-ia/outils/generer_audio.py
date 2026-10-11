@@ -10,23 +10,8 @@ from pathlib import Path
 
 from outils.valider_partition import valider
 from serveur.configuration import lire_config
-from serveur.voix.ancrage import calculer_debuts
-from serveur.voix.synthese import ErreurVoix, synthetiser
-
-
-def completer_beat(beat, bilan):
-    """Ajoute l'audio et la durée d'un beat, puis les instants de ses actions."""
-    resultat = synthetiser(beat["texte_dit"], beat["ton"])
-    beat["audio"], beat["duree_s"] = resultat["audio"], resultat["duree_s"]
-    calculer_debuts(beat, resultat["temps_mots"])
-    bilan["caracteres"] += len(beat["texte_dit"])
-    if not resultat["debit_normal"]:
-        bilan["anomalies"].append(beat["id"])
-    for action in beat["actions"]:
-        for branche in action.get("branches", []):
-            reaction = synthetiser(branche["texte_dit"], branche["ton"])
-            branche["audio"], branche["duree_s"] = reaction["audio"], reaction["duree_s"]
-            bilan["caracteres"] += len(branche["texte_dit"])
+from serveur.voix.audio_partition import completer
+from serveur.voix.synthese import ErreurVoix
 
 
 def cout_estime(caracteres):
@@ -39,10 +24,7 @@ def cout_estime(caracteres):
 def generer(chemin):
     """Complète toute la partition, la vérifie, puis l'enregistre ; renvoie le bilan."""
     partition = json.loads(chemin.read_text(encoding="utf-8"))
-    bilan = {"caracteres": 0, "anomalies": []}
-    for beat in partition["beats"]:
-        completer_beat(beat, bilan)
-    partition["generation"]["fournisseur_voix"] = lire_config("voix")["fournisseur"]
+    bilan = completer(partition)
     chemin.write_text(json.dumps(partition, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     bilan["erreurs"], _ = valider(chemin)
     bilan["duree_totale"] = sum(beat["duree_s"] for beat in partition["beats"])

@@ -1,12 +1,63 @@
 {
   "agents": {
-    "pedagogique": { "modele": "claude-opus-5-5", "effort": "high" },
-    "chef": { "modele": "claude-opus-5-5", "effort": "high" },
-    "voix": { "modele": "claude-sonnet-5-5", "effort": "medium" },
-    "ecriture": { "modele": "claude-sonnet-5-5", "effort": "medium" },
-    "architecture": { "modele": "claude-sonnet-5-5", "effort": "medium" },
-    "repondeur": { "modele": "claude-haiku-4-5-20251001" }
+    "pedagogique": {
+      "modele": "claude-opus-5-5",
+      "effort": "high",
+      "max_tokens": 32000,
+      "repli": true
+    },
+    "chef": {
+      "modele": "claude-opus-5-5",
+      "effort": "high",
+      "max_tokens": 32000,
+      "repli": true
+    },
+    "voix": {
+      "modele": "claude-sonnet-5-5",
+      "effort": "medium",
+      "max_tokens": 24000,
+      "repli": true
+    },
+    "ecriture": {
+      "modele": "claude-sonnet-5-5",
+      "effort": "medium",
+      "max_tokens": 24000,
+      "repli": true
+    },
+    "architecture": {
+      "modele": "claude-sonnet-5-5",
+      "effort": "medium",
+      "max_tokens": 24000,
+      "repli": true
+    },
+    "repondeur": {
+      "modele": "claude-haiku-4-5-20251001",
+      "max_tokens": 4000,
+      "repli": false
+    }
   },
   "nouvelles_tentatives_max": 2,
-  "tours_de_correction_max": 2
+  "tours_de_correction_max": 2,
+  "beta_repli": "server-side-fallback-2026-07-01",
+  "attente_entre_tentatives_s": 5,
+  "prix_par_million_de_jetons": {
+    "claude-opus-5-5": {
+      "entree": 4,
+      "sortie": 20,
+      "cache_lecture": 0.2,
+      "cache_ecriture": 5
+    },
+    "claude-sonnet-5-5": {
+      "entree": 2,
+      "sortie": 10,
+      "cache_lecture": 0.2,
+      "cache_ecriture": 2.5
+    },
+    "claude-haiku-4-5-20251001": {
+      "entree": 1,
+      "sortie": 5,
+      "cache_lecture": 0.1,
+      "cache_ecriture": 1.25
+    }
+  }
 }
