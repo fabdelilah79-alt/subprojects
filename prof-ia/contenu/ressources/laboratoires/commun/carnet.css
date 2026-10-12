@@ -1,0 +1,201 @@
+/*
+Rôle : style du carnet de laboratoire : spirale, papier ligné, feuille de mission imprimée, stylo rouge et vert, tampon.
+Reçoit : rien.
+Produit : l'apparence réaliste du carnet, ouvert devant l'élève ou fermé sur la paillasse.
+Utilisé par : la page de chaque simulation (avec labo.css).
+*/
+.carnet {
+  position: absolute;
+  width: 410px;
+  height: 576px;
+  padding: 26px 18px 12px 30px;
+  border-radius: 4px;
+  background:
+    linear-gradient(90deg, transparent 22px, #e6a3a3 22px, #e6a3a3 24px, transparent 24px),
+    repeating-linear-gradient(180deg, #fbfaf3 0 27px, #c9d7e6 27px 28px);
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px #d8d4c4;
+  transform-origin: 50% 100%;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 6;
+  color: var(--encre);
+}
+
+.carnet-spirale {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: -10px;
+  height: 26px;
+  background: radial-gradient(circle at 50% 70%, transparent 5px, #8d949b 5px, #e4e7ea 7px, #6a7178 9px, transparent 9px) 0 0 / 22px 26px repeat-x;
+  cursor: grab;
+}
+
+.carnet-page {
+  height: calc(100% - 46px);
+  overflow-y: auto;
+  touch-action: pan-y;
+}
+
+.carnet-couverture {
+  display: none;
+}
+
+.carnet.ferme {
+  cursor: pointer;
+  background: linear-gradient(160deg, #2f4a6e, #1c3150);
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+}
+
+.carnet.ferme > :not(.carnet-couverture) {
+  visibility: hidden;
+}
+
+.carnet.ferme .carnet-couverture {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+  color: #f4efe0;
+  font: 500 64px/1 var(--main);
+  text-align: center;
+}
+
+.carnet-marques {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.carnet-marque {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #b9b19a;
+  border-radius: 0 0 6px 6px;
+  background: #efe7cf;
+  color: var(--encre);
+  font: 500 20px var(--main);
+  cursor: pointer;
+}
+
+.carnet-marque[aria-pressed="true"] { background: #f7d65b; border-color: #c9a92a; }
+.carnet-marque.accomplie { color: var(--stylo-vert); }
+.carnet-marque:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.carnet-titre {
+  margin: 4px 0 2px;
+  font: 700 19px/1.3 var(--imprime);
+}
+
+.carnet-objectif {
+  margin: 0 0 6px;
+  font: italic 16px/1.4 var(--imprime);
+}
+
+.carnet-donnees {
+  margin: 0 0 8px;
+  padding: 4px 8px;
+  border: 1px solid #c9c2a8;
+  background: #fffdf4;
+  transform: rotate(-0.6deg);
+  font: 14px/1.35 var(--imprime);
+}
+
+.carnet-donnees p {
+  margin: 0;
+}
+
+.carnet-etapes {
+  margin: 0;
+  padding-left: 22px;
+  font: 16px/1.4 var(--imprime);
+}
+
+.carnet-etapes li { margin-bottom: 6px; }
+.carnet-etapes li.faite { color: #5b6470; text-decoration: line-through 1px; text-decoration-color: var(--stylo-vert); }
+.carnet-etapes li.faite::marker { content: "✓ "; color: var(--stylo-vert); font-weight: 700; }
+.carnet-etapes li.courante { font-weight: 700; }
+.carnet-etapes li.a-venir { color: #8a9099; }
+
+.carnet-choix {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin: 4px 0;
+  padding: 4px 10px;
+  border: 1px dashed #9aa3ad;
+  border-radius: 20px;
+  background: transparent;
+  color: var(--encre);
+  font: 500 21px/1.1 var(--main);
+  text-align: left;
+  cursor: pointer;
+}
+
+.carnet-choix:hover { border-style: solid; border-color: var(--encre); }
+
+.carnet-reponse {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.carnet-reponse input {
+  width: 120px;
+  min-height: 40px;
+  padding: 0 8px;
+  border: 0;
+  border-bottom: 2px solid var(--encre);
+  background: transparent;
+  color: var(--encre);
+  font: 500 24px var(--main);
+}
+
+.carnet-unite { font: 500 22px var(--main); }
+
+.carnet-bouton {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 2px solid var(--encre);
+  border-radius: 6px;
+  background: #fff8dc;
+  color: var(--encre);
+  font: 500 21px var(--main);
+  cursor: pointer;
+}
+
+.carnet-message { margin: 4px 0 0; font: 500 21px/1.15 var(--main); }
+.carnet-message.faux { color: var(--stylo-rouge); }
+.carnet-message.juste { color: var(--stylo-vert); }
+.carnet-astuce { margin: 4px 0 0; color: #6b5300; font: 500 20px/1.15 var(--main); }
+.carnet-conclusion { margin: 6px 0; font: 500 21px/1.2 var(--main); color: var(--stylo-vert); }
+
+.carnet-tampon {
+  width: max-content;
+  margin: 8px auto;
+  padding: 4px 14px;
+  border: 3px double #b3261e;
+  border-radius: 6px;
+  color: #b3261e;
+  font: 700 22px var(--interface);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+  opacity: 0.85;
+}
+
+.carnet-fermer {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #b9b19a;
+  border-radius: 6px;
+  background: #efe7cf;
+  color: var(--encre);
+  font: 500 19px var(--main);
+  cursor: pointer;
+}

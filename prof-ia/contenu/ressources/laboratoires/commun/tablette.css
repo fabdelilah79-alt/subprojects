@@ -1,0 +1,218 @@
+/*
+Rôle : style de la tablette numérique : cadre noir, écran, barre des applications, tableur et graphique.
+Reçoit : rien.
+Produit : l'apparence réaliste de la tablette, couchée sur la paillasse ou prise en main.
+Utilisé par : la page de chaque simulation (avec labo.css).
+*/
+.tablette {
+  position: absolute;
+  width: 640px;
+  height: 420px;
+  transform-origin: 50% 100%;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 5;
+}
+
+.tablette-cadre {
+  position: relative;
+  height: 100%;
+  padding: 16px 30px 16px 18px;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #3a3e44, #15171a 45%, #0b0c0e);
+  box-shadow: 0 0 0 2px #50555c, 0 22px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  cursor: grab;
+}
+
+.tablette.posee .tablette-cadre {
+  box-shadow: 0 0 0 2px #50555c, 0 6px 6px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.tablette-ecran {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f7f8fa;
+  color: #1c2127;
+  cursor: default;
+}
+
+.tablette.posee .tablette-ecran > * {
+  pointer-events: none;
+}
+
+.tablette.posee .tablette-ecran {
+  filter: brightness(0.75);
+}
+
+.tablette-poser {
+  position: absolute;
+  right: -7px;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.tablette-poser::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #6d737b;
+  border-radius: 50%;
+}
+
+.tablette-statut {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #e6e9ee;
+  border-bottom: 1px solid #c9cfd6;
+}
+
+.tablette-onglet,
+.tablette-bouton {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid #b8c0c9;
+  border-radius: 6px;
+  background: #fff;
+  color: #1c2127;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.tablette-onglet[aria-pressed="true"] {
+  background: #1f6f4a;
+  border-color: #1f6f4a;
+  color: #fff;
+}
+
+.tablette-heure {
+  margin-left: auto;
+  font-size: 13px;
+  color: #59626c;
+}
+
+.tablette-app {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 8px;
+  touch-action: pan-y;
+}
+
+.tableur-barre,
+.courbe-barre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.tableur-nom {
+  min-width: 40px;
+  padding: 4px 6px;
+  border: 1px solid #c9cfd6;
+  background: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
+.tableur-formule {
+  flex: 1;
+  min-height: 30px;
+  padding: 4px 6px;
+  border: 1px solid #c9cfd6;
+  background: #fff;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 15px;
+}
+
+.tableur {
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.tableur th {
+  min-width: 30px;
+  padding: 2px 4px;
+  background: #e6e9ee;
+  border: 1px solid #c9cfd6;
+  color: #59626c;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.tableur td {
+  padding: 0;
+  border: 1px solid #c9cfd6;
+}
+
+.tableur input {
+  width: 128px;
+  height: 26px;
+  padding: 0 6px;
+  border: 0;
+  background: #fff;
+  font-size: 16px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tableur input.entete {
+  background: #f1f5ee;
+  font-weight: 700;
+  text-align: center;
+}
+
+.tableur input.calculee {
+  color: #1f4f8f;
+}
+
+.tableur input:focus {
+  outline: 2px solid #1f6f4a;
+  outline-offset: -2px;
+}
+
+.courbe-barre select {
+  min-height: 34px;
+  max-width: 104px;
+  font-size: 15px;
+}
+
+.courbe-equation {
+  min-height: 22px;
+  margin: 0;
+  color: #1f4f8f;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.courbe-dessin {
+  display: block;
+  width: 100%;
+  height: 252px;
+}
+
+.courbe-grille { stroke: #dfe4ea; stroke-width: 1; }
+.courbe-axe { fill: none; stroke: #1c2127; stroke-width: 1.5; }
+.courbe-graduation { font-size: 11px; fill: #3b4450; }
+.courbe-nom { font-size: 13px; font-weight: 700; fill: #1c2127; }
+.courbe-point { stroke: #c0392b; stroke-width: 2.2; transform-box: fill-box; transform-origin: center; }
+.courbe-modele { stroke: #1f4f8f; stroke-width: 2; }
+.courbe-point.apparait { animation: apparaitre 0.25s both; }
+.courbe-modele.trace { stroke-dasharray: 900; animation: tracer 1s ease-out both; }
+
+@keyframes apparaitre { from { opacity: 0; transform: scale(0.2); } }
+@keyframes tracer { from { stroke-dashoffset: 900; } to { stroke-dashoffset: 0; } }

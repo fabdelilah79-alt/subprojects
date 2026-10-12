@@ -243,3 +243,30 @@ Elle est placée dans le contexte de tous les agents (environ 1 300 jetons, mis 
 Chaque partie déclare les objectifs qu'elle traite (generation.objectifs_officiels) ; la validation refuse un
 objectif inconnu, et `python -m outils.couverture_orientations` montre ce qui est couvert.
 Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, SA, STM, STE, PC, SMA, SMB (2e année).
+
+## Laboratoires virtuels (une simulation par activité du programme)
+
+| Fichier | Rôle |
+|---|---|
+| contenu/ressources/laboratoires/LISEZMOI.md | Mode d'emploi, et tableau activités / objectifs officiels -> simulations. |
+| contenu/ressources/laboratoires/<nom>.html | Simulation autonome (un seul fichier), produite par outils/assembler_laboratoire.py. |
+| contenu/ressources/laboratoires/commun/base.js | Espace de noms Labo : éléments SVG et HTML, nombres à la française, écriture scientifique, annonces, animations. |
+| contenu/ressources/laboratoires/commun/scene.js | Scène fixe 1024 × 640 mise à l'échelle ; zoom à deux doigts jusqu'à 5×, molette, double-tap. |
+| contenu/ressources/laboratoires/commun/glisser.js | Glisser-déposer réaliste (objet soulevé, ombre), toucher bref, chute. |
+| contenu/ressources/laboratoires/commun/materiaux.js | Matières 2,5D (métal, laiton, verre, eau, bois, mousse, brique, astres), ombres, flèches, tiges métalliques. |
+| contenu/ressources/laboratoires/commun/decor.js | Mur, carrelage, paillasse, placards, étagère de verrerie, pense-bête. |
+| contenu/ressources/laboratoires/commun/espace.js | Ciel étoilé, Soleil, Terre et Lune réalistes (nuit du côté opposé au Soleil). |
+| contenu/ressources/laboratoires/commun/continents.js | Contours des continents (latitude, longitude) et projection de la Terre vue de l'espace. |
+| contenu/ressources/laboratoires/commun/sonde.js | Sonde spatiale et afficheur de son capteur. |
+| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, recopie). |
+| contenu/ressources/laboratoires/commun/tableur.js | Feuille de calcul de la tablette (une par mission). |
+| contenu/ressources/laboratoires/commun/courbe.js | Application Graphique : points qui se dessinent, modélisation par une droite. |
+| contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
+| contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
+| contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
+| contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes. |
+| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions). |
+| contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
+| contenu/ressources/laboratoires/sources/<nom>/ | page.html, un fichier par appareil, simulation.js (missions). |
+| outils/assembler_laboratoire.py | Intègre styles, scripts et polices dans un seul fichier HTML par simulation. |
+| serveur/tests/test_assembler_laboratoire.py | Vérifie que chaque simulation assemblée n'appelle aucun fichier externe. |
