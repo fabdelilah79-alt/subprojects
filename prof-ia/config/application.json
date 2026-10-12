@@ -43,7 +43,8 @@
     "eleves": "sorties/parties",
     "prive": "sorties/prive",
     "journal": "sorties/journaux/journal.sqlite",
-    "exports": "sorties/journaux/exports"
+    "exports": "sorties/journaux/exports",
+    "laboratoires": "contenu/ressources/laboratoires"
   },
   "pseudonymes": {
     "prefixe": "E",

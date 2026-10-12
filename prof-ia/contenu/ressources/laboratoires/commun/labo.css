@@ -1,0 +1,141 @@
+/*
+Rôle : style de la scène du laboratoire : écran plein, scène fixe de 1024 × 640 px, écritures manuscrites, objets.
+Reçoit : rien.
+Produit : la mise en page commune à toutes les simulations (aucun panneau : seulement le laboratoire).
+Utilisé par : la page de chaque simulation (avec tablette.css et carnet.css).
+*/
+@font-face {
+  font-family: "Caveat";
+  src: url("polices/caveat-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2212;
+}
+
+@font-face {
+  font-family: "Caveat";
+  src: url("polices/caveat-latin-ext-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  --main: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+  --imprime: Georgia, "Times New Roman", serif;
+  --interface: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --encre: #1f2a44;
+  --stylo-rouge: #b3261e;
+  --stylo-vert: #1e6b3a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #101214;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#ecran {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#etage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1024px;
+  height: 640px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  font-family: var(--interface);
+}
+
+#labo {
+  position: absolute;
+  inset: 0;
+  width: 1024px;
+  height: 640px;
+}
+
+.glissable {
+  cursor: grab;
+}
+
+.souleve {
+  cursor: grabbing;
+}
+
+.numero-paillasse {
+  font: 600 15px var(--interface);
+  fill: #7a8077;
+  letter-spacing: 0.05em;
+}
+
+.pense-bete-titre {
+  font: 500 19px var(--main);
+  fill: #6b5300;
+}
+
+.pense-bete-texte {
+  font: 500 22px var(--main);
+  fill: var(--encre);
+}
+
+.graduation {
+  font: 600 9px var(--interface);
+  fill: #1d1d1d;
+}
+
+.etiquette-objet {
+  font: 700 11px var(--interface);
+  fill: #3b2a05;
+}
+
+.etiquette-carton {
+  font: 500 17px var(--main);
+  fill: var(--encre);
+}
+
+.titre-document {
+  font: 700 15px var(--imprime);
+  fill: #1d1d1d;
+}
+
+.texte-document {
+  font: 13px var(--imprime);
+  fill: #1d1d1d;
+}
+
+.zone-depot {
+  fill: none;
+  stroke: #f1e08a;
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.zone-depot.active {
+  opacity: 0.9;
+}
+
+input,
+select,
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid #f1b434;
+  outline-offset: 2px;
+}

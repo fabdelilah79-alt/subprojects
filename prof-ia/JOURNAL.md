@@ -175,3 +175,31 @@ Problèmes restants, à faire par l'enseignant :
 - Relire les fiches : l'extraction et la traduction de l'arabe ont été faites par l'IA (statut indiqué dans index.json).
 - Le document date de 2007 : vérifier qu'il n'existe pas de version plus récente pour vos classes.
 - Choisir la filière de vos classes dans config/application.json (SE par défaut).
+
+## 2026-10-12 — Laboratoires virtuels : chapitre tronc commun « Exemples d'actions mécaniques »
+
+Fait :
+- Moteur commun des laboratoires (contenu/ressources/laboratoires/commun/) : scène fixe 1024 × 640 mise à
+  l'échelle (même mise en page sur téléphone, portable, TBI), zoom à deux doigts jusqu'à 5×, glisser-déposer
+  réaliste, tablette (tableur à formules, graphique avec modélisation), carnet de missions, pense-bête,
+  tableau magnétique de tri. Aucun panneau : seulement le laboratoire, ou l'espace pour les astres.
+- Une simulation par activité de la fiche : A1 échelle des distances (O1), A2 gravitation (O2 : observation,
+  actions réciproques, découverte de F = G·m·M/d² avec des sondes, G donnée comme constante), A3 force
+  pressante (O4, O5, O6 : brique et mousse, classement des forces, capsule manométrique, baromètre).
+  Deux compléments pour O3 (sans activité dans la fiche) : poids au dynamomètre, poids en altitude.
+- outils/assembler_laboratoire.py : un seul fichier HTML autonome par simulation (186 à 213 ko).
+- Vérifié : parcours complet des 5 simulations avec de vrais gestes (aucune erreur), pincement réel à
+  deux doigts, rapport 1,6 identique sur 4 tailles d'écran, 52 tests réussis, structure conforme.
+
+Choix signalés :
+- Dégradés, ombres et animations sont utilisés dans les laboratoires (réalisme demandé), pas dans l'interface.
+- Les anciennes simulations de contenu/ressources/animations/ sont laissées en place (le cours de rotation
+  les utilise encore) ; elles seront remplacées quand le chapitre de rotation sera refait.
+- contenu/ est exclu du contrôle de structure : les fichiers des laboratoires respectent quand même
+  la limite de 150 lignes, sauf deux feuilles de style (carnet.css : 201, tablette.css : 218).
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer les 5 simulations avec des élèves ; relire les consignes, les tolérances et les réponses attendues.
+- Décider si les deux simulations complémentaires O3 sont gardées.
+- Les messages postMessage des simulations ne sont pas encore enregistrés dans le journal de recherche,
+  et les simulations ne sont pas encore dans contenu/manifeste.json (le cours actuel est la rotation).
