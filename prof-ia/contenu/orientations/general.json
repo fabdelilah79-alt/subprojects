@@ -1,0 +1,40 @@
+{
+  "source": "Orientations pédagogiques générales et programmes de physique-chimie, cycle secondaire qualifiant, Maroc, novembre 2007 (pages 3 à 18).",
+  "finalites": [
+    "Donner une culture scientifique et une formation spécialisée.",
+    "Suivre les nouveautés scientifiques et technologiques.",
+    "Former l'élève à la démarche scientifique.",
+    "Développer les capacités et les compétences de recherche scientifique.",
+    "Aider l'élève à choisir son orientation."
+  ],
+  "demarche": [
+    "Partir d'une situation-problème ou d'un phénomène du vécu ; faire émerger les représentations de l'élève.",
+    "L'expérience est l'entrée privilégiée : observer, émettre une hypothèse, expérimenter, mesurer, modéliser, conclure.",
+    "Exploiter des documents (historiques en particulier), des simulations et les technologies de l'information (TIC).",
+    "Relier la physique-chimie à la vie courante, à l'environnement, à la santé et à l'industrie.",
+    "Respecter les règles de sécurité au laboratoire et la protection de l'environnement.",
+    "Réinvestir les acquis des niveaux précédents en les rappelant brièvement.",
+    "Ne pas aborder les notions d'un niveau supérieur."
+  ],
+  "ecriture_scientifique": [
+    "Unités du Système international ; résultats avec le bon nombre de chiffres significatifs.",
+    "Vérifier l'homogénéité des formules par l'équation aux dimensions.",
+    "Nomenclature officielle de l'IUPAC en chimie organique.",
+    "Préciser l'état physique des espèces : (s), (l), (g), (aq).",
+    "Écrire H3O+ (oxonium), recommandé par l'IUPAC, dans les équations acide-base.",
+    "Flèche simple pour une transformation totale ; double flèche ⇌ pour une transformation qui se fait dans les deux sens (2e année du bac)."
+  ],
+  "cahier_eleve": [
+    "Plan détaillé du cours.",
+    "Schémas des expériences avec légendes et commentaires.",
+    "Résultats des expériences et graphiques.",
+    "Termes nouveaux avec leur équivalent en français.",
+    "Lois fondamentales.",
+    "Démonstrations scientifiques.",
+    "Exercices d'application corrigés."
+  ],
+  "evaluation": [
+    "Évaluation diagnostique, formative et sommative ; contrôles continus surveillés.",
+    "Les résultats des contrôles servent aussi à améliorer l'enseignement."
+  ]
+}

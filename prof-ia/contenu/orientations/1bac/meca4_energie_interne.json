@@ -1,0 +1,59 @@
+{
+  "id": "1bac/meca4_energie_interne",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Travail mécanique et énergie",
+  "titre": "Travail et énergie interne",
+  "filieres": [
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SM"
+      ],
+      "cours": 4,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    47,
+    51,
+    56,
+    57
+  ],
+  "prerequis": [
+    "1bac/meca3_travail_energie"
+  ],
+  "contenus": [
+    "Effets du travail : élévation de température, déformation élastique, changement d'état physique ou chimique.",
+    "Travail des forces pressantes sur un gaz parfait.",
+    "Énergie interne.",
+    "Premier principe de la thermodynamique."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître les effets du travail reçu par un système."
+    },
+    {
+      "id": "O2",
+      "texte": "Calculer le travail des forces pressantes."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître la notion d'énergie interne d'un système."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître et utiliser le premier principe de la thermodynamique."
+    }
+  ],
+  "activites": [
+    "Effets du travail et modes de transfert dans un système mécaniquement isolé (expériences, vécu, documents)."
+  ],
+  "orientations": [
+    "Introduire l'énergie interne à partir de la non-conservation de l'énergie mécanique."
+  ],
+  "hors_programme": []
+}

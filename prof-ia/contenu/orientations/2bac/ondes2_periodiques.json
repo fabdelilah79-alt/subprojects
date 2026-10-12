@@ -1,0 +1,83 @@
+{
+  "id": "2bac/ondes2_periodiques",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Ondes",
+  "titre": "Ondes mécaniques progressives périodiques",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    79,
+    83,
+    84,
+    85,
+    112,
+    118,
+    119
+  ],
+  "prerequis": [
+    "2bac/ondes1_mecaniques"
+  ],
+  "contenus": [
+    "Périodicité temporelle et spatiale.",
+    "Onde sinusoïdale : période, fréquence, longueur d'onde.",
+    "Diffraction d'une onde mécanique sinusoïdale."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Reconnaître une onde progressive périodique et sa période."
+    },
+    {
+      "id": "O2",
+      "texte": "Définir période, fréquence et longueur d'onde ; utiliser λ = v·T."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître les conditions d'apparition de la diffraction."
+    },
+    {
+      "id": "O4",
+      "texte": "Définir un milieu dispersif."
+    },
+    {
+      "id": "O5",
+      "texte": "Exploiter des documents pour reconnaître la diffraction ; réaliser une expérience de diffraction d'ondes sonores ou ultrasonores."
+    }
+  ],
+  "activites": [
+    "Onde sinusoïdale le long d'une corde (stroboscope) ; onde sonore (oscilloscope).",
+    "Diffraction dans la cuve à ondes ou avec des ultrasons ; simulation."
+  ],
+  "orientations": [
+    "Les termes longueur d'onde et fréquence ne s'emploient que pour les ondes progressives sinusoïdales.",
+    "Diffraction : onde plane à la surface de l'eau (obstacle ou fente) ; ultrasons à travers une fente.",
+    "Observer les valeurs extrêmes de longueur d'onde SANS interprétation.",
+    "Dispersion limitée à la mesure de la célérité d'une onde périodique plane à la surface de l'eau, qui dépend de la fréquence."
+  ],
+  "hors_programme": [
+    "Interprétation théorique de la diffraction."
+  ]
+}

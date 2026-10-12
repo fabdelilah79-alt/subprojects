@@ -1,0 +1,69 @@
+{
+  "id": "tronc_commun/meca2_mouvement",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Le mouvement",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 6,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    19,
+    23
+  ],
+  "contenus": [
+    "Relativité du mouvement : référentiel, repère de temps, trajectoire.",
+    "Vitesse : vitesse moyenne ; vecteur vitesse instantanée.",
+    "Mouvement rectiligne uniforme : équation horaire.",
+    "Mouvement circulaire uniforme."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Choisir un repère d'espace et de temps ; décrire la trajectoire dans un référentiel."
+    },
+    {
+      "id": "O2",
+      "texte": "Calculer une vitesse moyenne et convertir km/h ↔ m/s."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître la relation approchée de la vitesse instantanée et représenter le vecteur vitesse."
+    },
+    {
+      "id": "O4",
+      "texte": "Exploiter des enregistrements de mouvements."
+    },
+    {
+      "id": "O5",
+      "texte": "Reconnaître un mouvement rectiligne uniforme par son équation horaire et l'utiliser (distance, vitesse, durée)."
+    },
+    {
+      "id": "O6",
+      "texte": "Représenter les vecteurs vitesse à différents instants d'un mouvement circulaire uniforme."
+    }
+  ],
+  "activites": [
+    "Exemples de la vie courante sur la relativité du mouvement.",
+    "Décrire le mouvement d'un point par rapport à un référentiel (choix du repère d'espace et de temps).",
+    "Déterminer expérimentalement une vitesse instantanée.",
+    "Mettre en évidence expérimentalement les caractéristiques du MRU et du MCU."
+  ],
+  "orientations": [
+    "Montrer la nécessité du référentiel : référentiel terrestre pour les mouvements à la surface de la Terre, géocentrique pour les satellites et la Lune.",
+    "Introduire la vitesse moyenne, puis le vecteur vitesse instantanée.",
+    "MCU : exemples de la Lune et des satellites."
+  ],
+  "hors_programme": []
+}

@@ -1,0 +1,59 @@
+{
+  "id": "1bac/elec1_energie_electrostatique",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Énergie potentielle électrostatique",
+  "filieres": [
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SM"
+      ],
+      "cours": 8,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    47,
+    58,
+    59,
+    60
+  ],
+  "prerequis": [
+    "tronc_commun/elec1_courant_continu"
+  ],
+  "contenus": [
+    "Champ électrostatique : loi de Coulomb ; champ d'une charge ponctuelle (vecteur, unité, lignes de champ) ; superposition de deux champs ; champ uniforme.",
+    "Énergie potentielle d'une charge dans un champ uniforme : travail de la force électrostatique, potentiel, différence de potentiel, équipotentielles ; relation Epe/travail ; conservation de l'énergie totale."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître la loi de Coulomb."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître le champ électrostatique et E = F/q ; tracer des lignes de champ."
+    },
+    {
+      "id": "O3",
+      "texte": "Calculer W = q·(VA - VB)."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître le potentiel en un point et Epe = q·V + C."
+    }
+  ],
+  "activites": [
+    "Électrisation par frottement, contact, influence.",
+    "Lignes de champ (huile de ricin et semoule) ; champ uniforme entre deux plaques.",
+    "Établir le travail de la force électrostatique et son lien avec la ddp et Epe."
+  ],
+  "orientations": [
+    "Le champ électrostatique sert à introduire l'énergie potentielle électrostatique d'une charge dans un champ uniforme (filière SM seulement)."
+  ],
+  "hors_programme": []
+}

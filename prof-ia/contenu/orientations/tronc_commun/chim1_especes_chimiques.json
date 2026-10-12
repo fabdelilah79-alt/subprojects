@@ -1,0 +1,49 @@
+{
+  "id": "tronc_commun/chim1_especes_chimiques",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "La chimie autour de nous",
+  "titre": "Espèces chimiques",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 2,
+      "exercices": 2,
+      "pour": "chim1 à chim3"
+    }
+  ],
+  "source_pages": [
+    20,
+    34
+  ],
+  "contenus": [
+    "Notion d'espèce chimique.",
+    "Inventaire et classement d'espèces chimiques.",
+    "Espèces naturelles et espèces synthétiques."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Savoir que certaines espèces chimiques proviennent de la nature et d'autres de la chimie de synthèse."
+    }
+  ],
+  "activites": [
+    "Utiliser les cinq sens pour identifier des espèces dans un produit naturel (fruit) ou fabriqué (papier).",
+    "Tests de détection ; inventaire et classement (naturelles/synthétiques).",
+    "Documents sur l'industrie chimique."
+  ],
+  "orientations": [
+    "Découvrir que les corps (aliments, détergents…) sont des espèces chimiques : sens, observation, lecture d'étiquettes, documents.",
+    "ÉVITER la confusion entre « synthétique » et « artificiel ».",
+    "Utiliser des indicateurs (sulfate de cuivre anhydre, papier pH, phénolphtaléine) pour l'inventaire.",
+    "Laisser l'élève proposer une expérience pour tester une hypothèse."
+  ],
+  "hors_programme": []
+}

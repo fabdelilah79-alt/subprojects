@@ -1,0 +1,67 @@
+{
+  "id": "tronc_commun/chim5_molecules",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "Constituants de la matière",
+  "titre": "Géométrie de quelques molécules",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 4,
+      "exercices": 0,
+      "pour": "voir chim4"
+    }
+  ],
+  "source_pages": [
+    20,
+    38
+  ],
+  "prerequis": [
+    "tronc_commun/chim4_atome"
+  ],
+  "contenus": [
+    "Règles du duet et de l'octet.",
+    "Ions monoatomiques stables.",
+    "Représentation de Lewis.",
+    "Géométrie des molécules : doublets, liaisons simples, représentation de Cram."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Utiliser les règles du duet et de l'octet pour expliquer la charge des ions monoatomiques."
+    },
+    {
+      "id": "O2",
+      "texte": "Écrire la représentation de Lewis de CO2, C2H4, N2, O2, C2H6, H2O, NH3, CH4, HCl, Cl2, H2."
+    },
+    {
+      "id": "O3",
+      "texte": "Écrire des formules développées et semi-développées conformes aux règles (C2H7N, C2H6O, C4H10)."
+    },
+    {
+      "id": "O4",
+      "texte": "Prévoir la géométrie de H2O, NH3, CH4 par répulsion des doublets liants et non liants ; représentation de Cram."
+    }
+  ],
+  "activites": [
+    "Formules développées, semi-développées, brutes.",
+    "Modèles moléculaires et logiciels ; représentation de Cram."
+  ],
+  "orientations": [
+    "Les atomes ne sont pas isolés, sauf les gaz nobles.",
+    "Se limiter aux énoncés du duet et de l'octet ; distinguer doublets liants et non liants.",
+    "Mentionner les limites du modèle de Lewis (certains oxydes d'azote).",
+    "Liaisons multiples et isomérie abordées simplement.",
+    "Géométrie de molécules simples contenant C, H, O, N ; conventions de Cram."
+  ],
+  "hors_programme": [
+    "Critères énergétiques de la stabilité (règles du duet et de l'octet seulement)."
+  ]
+}

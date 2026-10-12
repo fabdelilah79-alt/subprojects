@@ -148,19 +148,21 @@ prof-ia/
   config/                  modeles.json, tableau.json, voix.json, application.json
   contenu/                 ce que fournit l'enseignant
     cours/                 le cours
-    orientations/          extraits des orientations pédagogiques
+    orientations/          programme officiel : PDF source, index.json, general.json, une fiche JSON par chapitre
+                           (tronc_commun/, 1bac/, 2bac/)
     qcm/                   qcm.json (diagnostic), qcm_post.json (post-test)
     ressources/            simulations, images, documents, figures
       animations/          simulations interactives HTML du cours (commun/ : style et outils partagés)
     manifeste.json         une fiche par ressource
   prompts/                 commun.md (règles partagées), pedagogique.md, voix.md, ecriture.md, architecture.md, chef.md, repondeur.md
-  schemas/                 partition, plan_pedagogique, qcm, manifeste (.schema.json) ; agents/ : réponse de chaque agent
+  schemas/                 partition, plan_pedagogique, qcm, manifeste, orientations_chapitre (.schema.json) ; agents/ : réponse de chaque agent
   outils/                  verifier_structure.py, valider_partition.py (+ controles_partition.py), generer_audio.py,
-                           generer_partie.py, exporter_donnees.py
+                           generer_partie.py, exporter_donnees.py, couverture_orientations.py
   serveur/
     main.py                démarre le serveur et branche les routes (court)
     configuration.py       lit les fichiers de config/
     cles.py                lit les clés d'API dans .env
+    orientations.py        fiche du programme officiel du cours, adaptée à la filière
     routes/                une route par fichier : eleve.py, qcm.py, parties.py, classe.py, questions.py
     agents/                appel_ia.py, commun.py + un fichier par agent
     pipeline/              orchestrateur.py (enchaîne les agents), assemblage.py (construit la partition),

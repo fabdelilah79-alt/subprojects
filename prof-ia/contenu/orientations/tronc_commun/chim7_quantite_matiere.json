@@ -1,0 +1,66 @@
+{
+  "id": "tronc_commun/chim7_quantite_matiere",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "Transformations de la matière",
+  "titre": "Outils de description d'un système : la mole et la concentration",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 8,
+      "exercices": 4,
+      "pour": "chim7 et chim8"
+    }
+  ],
+  "source_pages": [
+    20,
+    40
+  ],
+  "contenus": [
+    "Mole, quantité de matière, constante d'Avogadro, masses molaires atomique et moléculaire.",
+    "Volume molaire ; masse volumique et densité.",
+    "Concentration molaire des espèces moléculaires en solution : soluté, solvant, solution aqueuse, dissolution, dilution."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Calculer une masse molaire moléculaire à partir des masses molaires atomiques."
+    },
+    {
+      "id": "O2",
+      "texte": "Déterminer une quantité de matière à partir de la masse d'un solide ou du volume d'un liquide ou d'un gaz."
+    },
+    {
+      "id": "O3",
+      "texte": "Prélever une quantité de matière à la pipette."
+    },
+    {
+      "id": "O4",
+      "texte": "Distinguer solution moléculaire et solution ionique ; dissoudre une espèce moléculaire ; diluer."
+    },
+    {
+      "id": "O5",
+      "texte": "Préparer une solution de concentration donnée (balance, fiole jaugée, pipette) ; utiliser C = n/V."
+    }
+  ],
+  "activites": [
+    "Comment mesurer une même quantité (mole) d'espèces différentes ?",
+    "Dissolution d'espèces moléculaires (sucre, diiode, alcool)."
+  ],
+  "orientations": [
+    "La mole est introduite par le passage du microscopique au macroscopique ; NA par un changement d'échelle.",
+    "Le volume molaire dépend de la température et de la pression.",
+    "Concentration molaire limitée aux espèces moléculaires ; le diiode est traité comme moléculaire sans évoquer I3⁻."
+  ],
+  "hors_programme": [
+    "Concentration des solutions ioniques (vue en 1re année du bac).",
+    "Ion triiodure I3⁻."
+  ]
+}

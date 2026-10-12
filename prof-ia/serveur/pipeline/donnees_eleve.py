@@ -1,12 +1,13 @@
 """
 Rôle : rassembler ce que l'agent pédagogique doit savoir d'un élève pour préparer une partie, sans son nom.
 Reçoit : le pseudonyme de l'élève (ou rien, pour une partie générique) et le numéro de la partie.
-Produit : un dictionnaire : questions du QCM de la partie avec ses réponses, profil, résumé de la partie
-          précédente, prédictions et questions déjà posées (historique).
+Produit : un dictionnaire : objectifs officiels de la partie, questions du QCM de la partie avec ses réponses,
+          profil, résumé de la partie précédente, prédictions et questions déjà posées (historique).
 Utilisé par : serveur/pipeline/file_attente.py et outils/generer_partie.py.
 """
 import json
 
+from serveur import orientations
 from serveur.configuration import chemin_projet
 from serveur.donnees import journal_recherche
 from serveur.donnees.stockage import dossier_eleve
@@ -69,15 +70,17 @@ def historique(pseudonyme):
 
 def preparer(numero, pseudonyme=None):
     """Prépare les données de l'élève pour une partie ; sans pseudonyme : partie générique (profil vide)."""
+    objectifs = orientations.objectifs_de_la_partie(numero)
     if pseudonyme is None:
-        return {"partie": numero, "qcm_de_la_partie": qcm_de_la_partie(numero, []), "profil": None,
-                "resume_precedent": resume_precedent(None, numero), "historique": []}
+        return {"partie": numero, "objectifs_officiels": objectifs, "qcm_de_la_partie": qcm_de_la_partie(numero, []),
+                "profil": None, "resume_precedent": resume_precedent(None, numero), "historique": []}
     dossier = dossier_eleve(pseudonyme)
     profil = lire_json(dossier / "profil.json")
     if profil:
         profil = {cle: valeur for cle, valeur in profil.items() if cle != "pseudonyme"}
     return {
         "partie": numero,
+        "objectifs_officiels": objectifs,
         "qcm_de_la_partie": qcm_de_la_partie(numero, lire_json(dossier / "reponses_qcm.json", [])),
         "profil": profil,
         "resume_precedent": resume_precedent(dossier, numero),

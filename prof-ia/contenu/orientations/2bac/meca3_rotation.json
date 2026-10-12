@@ -1,0 +1,79 @@
+{
+  "id": "2bac/meca3_rotation",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Relation entre la somme des moments et l'accélération angulaire",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    81,
+    95,
+    114,
+    132
+  ],
+  "prerequis": [
+    "1bac/meca1_rotation",
+    "1bac/meca3_travail_energie"
+  ],
+  "contenus": [
+    "Abscisse angulaire, accélération angulaire.",
+    "Relation fondamentale de la dynamique en rotation autour d'un axe fixe ; rôle du moment d'inertie.",
+    "Mouvement d'un système mécanique (translation et rotation)."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Repérer un point d'un solide en rotation par son abscisse angulaire."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître l'accélération angulaire et son unité ; aT et aN en fonction des grandeurs angulaires."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître et appliquer ΣM = JΔ·θ̈ ; unité du moment d'inertie."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître la rotation uniformément variée et ses équations horaires."
+    },
+    {
+      "id": "O5",
+      "texte": "Étudier un système de corps en translation et en rotation."
+    }
+  ],
+  "activites": [
+    "Enregistrements : abscisse et accélération angulaires par encadrement.",
+    "Vérification expérimentale de la relation fondamentale ; rôle du moment d'inertie."
+  ],
+  "orientations": [
+    "Rappeler la méthode d'encadrement et la relation v = R·ω (acquis de 1re année).",
+    "θ̇ = dθ/dt et θ̈ = d²θ/dt² par analogie avec la translation.",
+    "Moments d'inertie donnés pour des formes simples.",
+    "Types de rotation à partir de θ̈ = 0 et θ̈ = cte."
+  ],
+  "hors_programme": []
+}

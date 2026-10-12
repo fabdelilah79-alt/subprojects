@@ -1,0 +1,72 @@
+{
+  "id": "tronc_commun/elec4_montages_electroniques",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Montages électroniques",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 13,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    19,
+    32
+  ],
+  "prerequis": [
+    "tronc_commun/elec3_montages_electriques"
+  ],
+  "contenus": [
+    "Transistor : effet transistor, régimes de fonctionnement, montages.",
+    "Amplificateur opérationnel : propriétés, montages simples.",
+    "Chaîne électronique."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître le comportement d'un transistor NPN dans un circuit, ses régimes et sa fonction."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître IE = IB + IC et IC = β·IB."
+    },
+    {
+      "id": "O3",
+      "texte": "Identifier capteur, traitement et sortie dans un montage (détecteur de lumière, indicateur de niveau ou de température)."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître l'AO idéal en régime linéaire et sa caractéristique de transfert."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître le suiveur, l'inverseur Us = -(R2/R1)·Ue et le non-inverseur Us = ((R1+R2)/R1)·Ue."
+    },
+    {
+      "id": "O6",
+      "texte": "Connaître la notion de chaîne électronique."
+    }
+  ],
+  "activites": [
+    "Comportement d'un NPN ; montages à transistor.",
+    "AO : suiveur, inverseur, non-inverseur (oscilloscope bicourbe)."
+  ],
+  "orientations": [
+    "Les dipôles commandés servent d'introduction à l'électronique.",
+    "Étude expérimentale limitée au transistor NPN.",
+    "Montages à transistor ou à AO pour introduire la chaîne électronique.",
+    "Utiliser simulations et audiovisuel."
+  ],
+  "hors_programme": [
+    "Transistor PNP (étude expérimentale limitée au NPN)."
+  ]
+}

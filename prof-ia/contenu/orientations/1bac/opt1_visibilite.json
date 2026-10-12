@@ -1,0 +1,65 @@
+{
+  "id": "1bac/opt1_visibilite",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Optique",
+  "titre": "Conditions de visibilité d'un objet",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 3,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    48,
+    62,
+    63,
+    64
+  ],
+  "contenus": [
+    "Rôle de l'œil dans la vision directe.",
+    "Propagation rectiligne : modèle du rayon lumineux.",
+    "Réflexion et réfraction.",
+    "Effet des lentilles convergentes et divergentes sur un faisceau parallèle."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Savoir qu'un objet n'est vu que s'il est lumineux ou éclairé."
+    },
+    {
+      "id": "O2",
+      "texte": "Savoir que l'image se forme et s'interprète dans le cerveau."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître la réflexion et le principe du retour inverse de la lumière."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître la réfraction et les lois de Descartes."
+    }
+  ],
+  "activites": [
+    "Questions guidées : peut-on voir la lumière ? quelles sont les conditions de vision ?",
+    "Réflexion et réfraction : expériences et observations courantes.",
+    "Lentilles convergentes et divergentes face à un faisceau parallèle."
+  ],
+  "orientations": [
+    "Insister : la lumière ne se voit pas ; ce sont les objets (sources ou éclairés) qui envoient la lumière à l'œil.",
+    "Ne pas confondre l'image formée dans le cerveau et l'« image » sur un écran.",
+    "Retour inverse via l'étude expérimentale des lois de Descartes de la réflexion ; lois de la réfraction par l'expérience.",
+    "Facteurs de la distance focale : nature du milieu et rayons des faces."
+  ],
+  "hors_programme": []
+}

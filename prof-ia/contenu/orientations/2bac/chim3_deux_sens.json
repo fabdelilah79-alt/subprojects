@@ -1,0 +1,92 @@
+{
+  "id": "2bac/chim3_deux_sens",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Transformations non totales",
+  "titre": "Transformations chimiques qui se produisent dans les deux sens",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 10,
+      "exercices": 3,
+      "pour": "chim3 à chim5"
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 13,
+      "exercices": 4,
+      "pour": "chim3 à chim5"
+    }
+  ],
+  "source_pages": [
+    82,
+    100,
+    101,
+    115,
+    139,
+    140
+  ],
+  "contenus": [
+    "Le pH et sa mesure.",
+    "Avancement final différent de l'avancement maximal.",
+    "Modélisation par deux réactions inverses simultanées (⇌).",
+    "Taux d'avancement final τ = xf/xmax, τ ≤ 1."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Définir acide et base selon Brønsted ; écrire l'équation et identifier les couples."
+    },
+    {
+      "id": "O2",
+      "texte": "Définir le pH (pH = -log[H3O+]) et le mesurer au pH-mètre."
+    },
+    {
+      "id": "O3",
+      "texte": "Calculer l'avancement final de la réaction d'un acide avec l'eau à partir de C et du pH ; comparer à xmax."
+    },
+    {
+      "id": "O4",
+      "texte": "Définir et déterminer le taux d'avancement final."
+    }
+  ],
+  "activites": [
+    "Mise en évidence par le pH que la transformation n'est pas totale (exemples acide-base)."
+  ],
+  "orientations": [
+    "Distinguer concentrations initiales (indice i) et finales (indice éq ou f).",
+    "Exemple : acide éthanoïque dans l'eau, [H3O+] = [CH3COO-] < C ; ajouts (acide pur, éthanoate de sodium) pour montrer les deux sens.",
+    "Le taux d'avancement permet de comparer des acides (ou des bases) de même concentration."
+  ],
+  "hors_programme": [],
+  "specifique": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "contenus": [
+        "Interprétation microscopique de l'équilibre dynamique (chocs efficaces entre réactifs et entre produits)."
+      ]
+    }
+  ]
+}

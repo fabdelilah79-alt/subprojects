@@ -1,0 +1,847 @@
+{
+  "source": {
+    "titre": "Orientations pédagogiques générales et programmes spécifiques de l'enseignement de la physique-chimie au cycle secondaire qualifiant",
+    "date": "novembre 2007",
+    "pays": "Maroc",
+    "langue_originale": "arabe",
+    "fichier": "instructionsPC lycee.pdf",
+    "statut": "extraction et traduction faites par l'assistant IA : à relire et valider par l'enseignant"
+  },
+  "general": "general.json",
+  "niveaux": [
+    {
+      "id": "tronc_commun",
+      "titre": "Tronc commun",
+      "filieres": {
+        "TCS": "Tronc commun scientifique",
+        "TCT": "Tronc commun technologique"
+      },
+      "horaire_annuel_h": {
+        "TCS": 136,
+        "TCT": 136
+      },
+      "pages": [
+        16,
+        42
+      ],
+      "chapitres": [
+        {
+          "id": "tronc_commun/meca1_interactions",
+          "titre": "Exemples d'actions mécaniques (interactions)",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/meca2_mouvement",
+          "titre": "Le mouvement",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/meca3_inertie",
+          "titre": "Principe d'inertie",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/meca4_quantite_mouvement",
+          "titre": "Quantité de mouvement",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/meca5_equilibre",
+          "titre": "Équilibre d'un solide",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/elec1_courant_continu",
+          "titre": "Courant électrique continu",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/elec2_tension",
+          "titre": "Tension électrique",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/elec3_montages_electriques",
+          "titre": "Montages électriques",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/elec4_montages_electroniques",
+          "titre": "Montages électroniques",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim1_especes_chimiques",
+          "titre": "Espèces chimiques",
+          "discipline": "chimie",
+          "domaine": "La chimie autour de nous",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim2_extraction",
+          "titre": "Extraction, séparation et identification d'espèces chimiques",
+          "discipline": "chimie",
+          "domaine": "La chimie autour de nous",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim3_synthese",
+          "titre": "Synthèse d'espèces chimiques",
+          "discipline": "chimie",
+          "domaine": "La chimie autour de nous",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim4_atome",
+          "titre": "Modèle de l'atome",
+          "discipline": "chimie",
+          "domaine": "Constituants de la matière",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim5_molecules",
+          "titre": "Géométrie de quelques molécules",
+          "discipline": "chimie",
+          "domaine": "Constituants de la matière",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim6_classification",
+          "titre": "Classification périodique des éléments",
+          "discipline": "chimie",
+          "domaine": "Constituants de la matière",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim7_quantite_matiere",
+          "titre": "Outils de description d'un système : la mole et la concentration",
+          "discipline": "chimie",
+          "domaine": "Transformations de la matière",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        },
+        {
+          "id": "tronc_commun/chim8_transformation",
+          "titre": "Transformation chimique d'un système",
+          "discipline": "chimie",
+          "domaine": "Transformations de la matière",
+          "filieres": [
+            "TCS",
+            "TCT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1bac",
+      "titre": "1re année du baccalauréat",
+      "filieres": {
+        "SE": "Sciences expérimentales",
+        "ST": "Sciences et technologies",
+        "SM": "Sciences mathématiques"
+      },
+      "horaire_annuel_h": {
+        "SE": 136,
+        "ST": 136,
+        "SM": 170
+      },
+      "pages": [
+        43,
+        73
+      ],
+      "chapitres": [
+        {
+          "id": "1bac/meca1_rotation",
+          "titre": "Rotation d'un solide indéformable autour d'un axe fixe",
+          "discipline": "physique",
+          "domaine": "Travail mécanique et énergie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/meca2_travail_puissance",
+          "titre": "Travail et puissance d'une force",
+          "discipline": "physique",
+          "domaine": "Travail mécanique et énergie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/meca3_travail_energie",
+          "titre": "Le travail, mode de transfert d'énergie : énergie cinétique, potentielle, mécanique",
+          "discipline": "physique",
+          "domaine": "Travail mécanique et énergie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/meca4_energie_interne",
+          "titre": "Travail et énergie interne",
+          "discipline": "physique",
+          "domaine": "Travail mécanique et énergie",
+          "filieres": [
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/meca5_thermique",
+          "titre": "Énergie thermique, transfert thermique",
+          "discipline": "physique",
+          "domaine": "Travail mécanique et énergie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/elec1_energie_electrostatique",
+          "titre": "Énergie potentielle électrostatique",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/elec2_transfert_energie",
+          "titre": "Transfert d'énergie dans un circuit électrique, puissance électrique",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/elec3_magnetisme",
+          "titre": "Magnétisme : champ magnétique et forces électromagnétiques",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/opt1_visibilite",
+          "titre": "Conditions de visibilité d'un objet",
+          "discipline": "physique",
+          "domaine": "Optique",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/opt2_images",
+          "titre": "Obtention de l'image d'un objet : miroir plan, lentille mince convergente",
+          "discipline": "physique",
+          "domaine": "Optique",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/opt3_instruments",
+          "titre": "Quelques instruments d'optique",
+          "discipline": "physique",
+          "domaine": "Optique",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/chim1_importance_mesure",
+          "titre": "Importance de la mesure des quantités de matière dans la vie courante",
+          "discipline": "chimie",
+          "domaine": "La mesure en chimie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/chim2_grandeurs_quantite_matiere",
+          "titre": "Grandeurs physiques liées aux quantités de matière",
+          "discipline": "chimie",
+          "domaine": "La mesure en chimie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/chim3_conductance",
+          "titre": "Détermination des quantités de matière par une mesure physique : la conductance",
+          "discipline": "chimie",
+          "domaine": "La mesure en chimie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/chim4_titrages",
+          "titre": "Détermination des quantités de matière par une réaction chimique : acide-base, oxydoréduction, titrages",
+          "discipline": "chimie",
+          "domaine": "La mesure en chimie",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/chim5_chimie_organique",
+          "titre": "Expansion de la chimie organique",
+          "discipline": "chimie",
+          "domaine": "Chimie organique",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        },
+        {
+          "id": "1bac/chim6_formule_chimique",
+          "titre": "Lecture d'une formule chimique : squelette carboné et groupes caractéristiques",
+          "discipline": "chimie",
+          "domaine": "Chimie organique",
+          "filieres": [
+            "SE",
+            "ST",
+            "SM"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2bac",
+      "titre": "2e année du baccalauréat",
+      "filieres": {
+        "SVT": "Sciences de la vie et de la Terre",
+        "SA": "Sciences agronomiques",
+        "STM": "Sciences et technologies mécaniques",
+        "STE": "Sciences et technologies électriques",
+        "PC": "Sciences physiques",
+        "SMA": "Sciences mathématiques A",
+        "SMB": "Sciences mathématiques B"
+      },
+      "horaire_annuel_h": {
+        "SVT": 136,
+        "SA": 136,
+        "STM": 136,
+        "STE": 136,
+        "PC": 204,
+        "SMA": 204,
+        "SMB": 204
+      },
+      "pages": [
+        74,
+        145
+      ],
+      "chapitres": [
+        {
+          "id": "2bac/intro_physicien",
+          "titre": "Les questions que se pose le physicien",
+          "discipline": "physique",
+          "domaine": "Introduction",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/ondes1_mecaniques",
+          "titre": "Ondes mécaniques progressives",
+          "discipline": "physique",
+          "domaine": "Ondes",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/ondes2_periodiques",
+          "titre": "Ondes mécaniques progressives périodiques",
+          "discipline": "physique",
+          "domaine": "Ondes",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/ondes3_lumiere",
+          "titre": "Propagation d'une onde lumineuse",
+          "discipline": "physique",
+          "domaine": "Ondes",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/ondes4_reseau",
+          "titre": "Diffraction de la lumière par un réseau",
+          "discipline": "physique",
+          "domaine": "Ondes",
+          "filieres": [
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/nucl1_decroissance",
+          "titre": "Décroissance radioactive",
+          "discipline": "physique",
+          "domaine": "Transformations nucléaires",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/nucl2_masse_energie",
+          "titre": "Noyaux, masse et énergie",
+          "discipline": "physique",
+          "domaine": "Transformations nucléaires",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/elec1_dipole_rc",
+          "titre": "Dipôle RC",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/elec2_dipole_rl",
+          "titre": "Dipôle RL",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/elec3_rlc_libre",
+          "titre": "Oscillations libres d'un circuit RLC série",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/elec4_rlc_force",
+          "titre": "Oscillations forcées d'un circuit RLC série",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/elec5_modulation",
+          "titre": "Ondes électromagnétiques et communication : modulation d'amplitude",
+          "discipline": "physique",
+          "domaine": "Électricité",
+          "filieres": [
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/meca1_newton",
+          "titre": "Lois de Newton",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/meca2_applications",
+          "titre": "Applications des lois de Newton : chute, mouvements plans",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/meca3_rotation",
+          "titre": "Relation entre la somme des moments et l'accélération angulaire",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/meca4_oscillants",
+          "titre": "Systèmes mécaniques oscillants",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/meca5_energie",
+          "titre": "Aspects énergétiques des oscillateurs mécaniques",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/meca6_atome",
+          "titre": "L'atome et la mécanique de Newton",
+          "discipline": "physique",
+          "domaine": "Mécanique",
+          "filieres": [
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/intro_chimiste",
+          "titre": "Les questions que se pose le chimiste",
+          "discipline": "chimie",
+          "domaine": "Introduction",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim1_rapides_lentes",
+          "titre": "Transformations rapides et transformations lentes",
+          "discipline": "chimie",
+          "domaine": "Transformations rapides et lentes",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim2_suivi_temporel",
+          "titre": "Suivi temporel d'une transformation, vitesse de réaction",
+          "discipline": "chimie",
+          "domaine": "Transformations rapides et lentes",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim3_deux_sens",
+          "titre": "Transformations chimiques qui se produisent dans les deux sens",
+          "discipline": "chimie",
+          "domaine": "Transformations non totales",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim4_equilibre",
+          "titre": "État d'équilibre d'un système chimique",
+          "discipline": "chimie",
+          "domaine": "Transformations non totales",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim5_acide_base",
+          "titre": "Transformations associées aux réactions acide-base en solution aqueuse",
+          "discipline": "chimie",
+          "domaine": "Transformations non totales",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim6_evolution_spontanee",
+          "titre": "Évolution spontanée d'un système chimique",
+          "discipline": "chimie",
+          "domaine": "Sens d'évolution d'un système chimique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim7_piles",
+          "titre": "Transformations spontanées dans les piles et production d'énergie",
+          "discipline": "chimie",
+          "domaine": "Sens d'évolution d'un système chimique",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim8_transformations_forcees",
+          "titre": "Exemples de transformations forcées : l'électrolyse",
+          "discipline": "chimie",
+          "domaine": "Sens d'évolution d'un système chimique",
+          "filieres": [
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim9_esterification",
+          "titre": "Réactions d'estérification et d'hydrolyse",
+          "discipline": "chimie",
+          "domaine": "Contrôle de l'évolution des systèmes chimiques",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        },
+        {
+          "id": "2bac/chim10_controle",
+          "titre": "Contrôle de l'évolution : changement de réactif, catalyse",
+          "discipline": "chimie",
+          "domaine": "Contrôle de l'évolution des systèmes chimiques",
+          "filieres": [
+            "SVT",
+            "SA",
+            "STM",
+            "STE",
+            "PC",
+            "SMA",
+            "SMB"
+          ]
+        }
+      ]
+    }
+  ]
+}

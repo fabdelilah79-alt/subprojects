@@ -1,0 +1,125 @@
+{
+  "id": "2bac/meca4_oscillants",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Systèmes mécaniques oscillants",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 6,
+      "exercices": 2
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 9,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    81,
+    96,
+    97,
+    114,
+    133,
+    134
+  ],
+  "prerequis": [
+    "2bac/meca1_newton",
+    "2bac/meca3_rotation"
+  ],
+  "contenus": [
+    "Présentation : pendule pesant, pendule simple, pendule de torsion, solide-ressort ; position d'équilibre, amplitude, période propre ; amortissement.",
+    "Solide-ressort : force de rappel, équation différentielle sans frottement, période propre.",
+    "Pendule de torsion : couple de rappel, équation différentielle, période propre.",
+    "Résonance : excitateur, résonateur, amplitude, influence de l'amortissement."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Reconnaître les oscillateurs mécaniques ; amplitude, position d'équilibre, période propre ; types d'amortissement."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître la force de rappel F = -K·x·i ; établir l'équation différentielle du solide-ressort horizontal."
+    },
+    {
+      "id": "O3",
+      "texte": "Écrire l'équation horaire y(t) = ym·cos(2π·t/T0 + φ) ; déterminer les constantes par les conditions initiales."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître la période propre du solide-ressort et du pendule de torsion."
+    },
+    {
+      "id": "O5",
+      "texte": "Reconnaître la résonance mécanique : période de l'excitateur proche de la période propre ; influence de l'amortissement."
+    }
+  ],
+  "activites": [
+    "Enregistrements x = f(t) : influence de la masse, de la raideur, de l'amortissement.",
+    "Pendule de torsion : influence du moment d'inertie et de la constante de torsion.",
+    "Résonance avec un montage distinguant clairement excitateur et résonateur."
+  ],
+  "orientations": [
+    "Présenter les oscillateurs sans équation ni expression de la période propre.",
+    "Amortissement mis en évidence expérimentalement, sans expression des frottements.",
+    "La solution de l'équation différentielle est DONNÉE.",
+    "Pseudo-période ≈ période propre (amortissement faible), montré expérimentalement.",
+    "Résonance : variation qualitative de l'amplitude SANS tracer la courbe de résonance."
+  ],
+  "hors_programme": [
+    "Étude théorique de l'amortissement.",
+    "Courbe de résonance mécanique."
+  ],
+  "specifique": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "orientations": [
+        "Ne pas traiter le solide-ressort dans d'autres situations (ressort vertical, incliné), même en exercice."
+      ]
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "contenus": [
+        "Pendule pesant : équation différentielle, période propre, amortissement ; pendule simple."
+      ],
+      "objectifs": [
+        {
+          "id": "O6",
+          "texte": "Établir l'équation différentielle du pendule pesant (petites oscillations) ; isochronisme ; période du pendule simple."
+        }
+      ],
+      "orientations": [
+        "Le solide-ressort est aussi étudié en exercice en position verticale ou inclinée."
+      ]
+    }
+  ]
+}

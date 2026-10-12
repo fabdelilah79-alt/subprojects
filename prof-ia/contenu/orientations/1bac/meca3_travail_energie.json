@@ -1,0 +1,92 @@
+{
+  "id": "1bac/meca3_travail_energie",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Travail mécanique et énergie",
+  "titre": "Le travail, mode de transfert d'énergie : énergie cinétique, potentielle, mécanique",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST"
+      ],
+      "cours": 11,
+      "exercices": 3
+    },
+    {
+      "filieres": [
+        "SM"
+      ],
+      "cours": 15,
+      "exercices": 3
+    }
+  ],
+  "source_pages": [
+    47,
+    51,
+    54,
+    55
+  ],
+  "prerequis": [
+    "1bac/meca2_travail_puissance"
+  ],
+  "contenus": [
+    "Énergie cinétique d'un solide en translation et en rotation autour d'un axe fixe ; moment d'inertie et son unité ; théorème de l'énergie cinétique.",
+    "Énergie potentielle de pesanteur (près de la Terre) ; relation entre travail du poids et variation d'Epp ; conversion Epp ↔ Ec.",
+    "Énergie mécanique : conservation (chute libre, glissement sans frottement sur un plan incliné) ; non-conservation et interprétation ; ΔEm = -Q."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître l'expression de l'énergie cinétique en translation et en rotation ; unités (dont le moment d'inertie)."
+    },
+    {
+      "id": "O2",
+      "texte": "Appliquer le théorème de l'énergie cinétique (translation, rotation autour d'un axe fixe)."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître Epp = m·g·z + cte et l'utiliser ; relier travail du poids et variation d'Epp."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître l'énergie mécanique et la conversion Epp ↔ Ec."
+    },
+    {
+      "id": "O5",
+      "texte": "Analyser la non-conservation de l'énergie mécanique ; relation ΔEm = -Q."
+    }
+  ],
+  "activites": [
+    "Approche de Ec (translation, rotation).",
+    "Chute libre ou glissement sans frottement : relation entre variation de Ec et travaux.",
+    "Établir Epp à partir du travail du poids.",
+    "Conservation de Em sous le seul poids ; non-conservation avec frottement."
+  ],
+  "orientations": [
+    "Introduire Ec à partir d'exemples et de documents ; moment d'inertie DONNÉ pour des solides homogènes simples (disque, cylindre, boule).",
+    "Étude expérimentale du théorème limitée à la translation sans frottement, puis généralisation ; le théorème reste valable si les forces ne sont pas constantes.",
+    "Epp limitée aux corps près de la Terre, déduite du travail du poids ; choisir un état de référence.",
+    "Conservation de Em quand seul le poids travaille ; non-conservation par frottement : ΔEm = -Q avec Q = -W(f).",
+    "Éviter les pertes excessives dues au souffleur de la table à coussin d'air."
+  ],
+  "hors_programme": [
+    "Calcul du moment d'inertie (il est donné)."
+  ],
+  "specifique": [
+    {
+      "filieres": [
+        "SE",
+        "ST"
+      ],
+      "orientations": [
+        "Epp : se limiter aux cas où la constante est nulle."
+      ]
+    }
+  ]
+}

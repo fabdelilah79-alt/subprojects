@@ -1,0 +1,71 @@
+{
+  "id": "tronc_commun/meca1_interactions",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Exemples d'actions mécaniques (interactions)",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 6,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    19,
+    22
+  ],
+  "contenus": [
+    "Gravitation universelle : forces de gravitation, échelle des distances dans l'univers (de l'atome aux galaxies), loi de la gravitation universelle de Newton.",
+    "Poids d'un corps : P = m·g ; intensité de la pesanteur en altitude g = g0·R²/(R+h)².",
+    "Actions mécaniques de contact : réparties et localisées ; intérieures et extérieures.",
+    "Force pressante ; pression P = F/S et ses unités."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître l'échelle des distances dans l'univers (atomes, astres)."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître et appliquer la loi de la gravitation universelle de Newton."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître et utiliser P = m·g et g = g0·R²/(R+h)²."
+    },
+    {
+      "id": "O4",
+      "texte": "Classer les forces : intérieures/extérieures, de contact/à distance, réparties/localisées."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître la force pressante et ses caractéristiques."
+    },
+    {
+      "id": "O6",
+      "texte": "Connaître et utiliser la relation P = F/S et les unités de pression."
+    }
+  ],
+  "activites": [
+    "Documents ou logiciels sur l'univers (atome, Terre, système solaire, galaxies) pour comparer les dimensions.",
+    "Mouvement de la Terre autour du Soleil, de la Lune autour de la Terre.",
+    "Expériences mettant en évidence la force pressante."
+  ],
+  "orientations": [
+    "Rappeler le principe des actions réciproques.",
+    "Partir de l'observation des corps de l'univers pour introduire la loi de Newton.",
+    "Rappeler le poids vu au collège, puis donner P = m·g et sa représentation à une altitude h.",
+    "Classer les forces (intérieures/extérieures, contact/à distance, réparties/localisées) pour préparer l'étude du frottement.",
+    "Pression : cas d'un fluide ; unités usuelles (cm de mercure, bar, atmosphère) ; expériences sur la force pressante.",
+    "Évoquer les aspects positifs et négatifs de la force pressante dans la vie courante."
+  ],
+  "hors_programme": []
+}

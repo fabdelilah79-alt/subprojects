@@ -1,0 +1,89 @@
+{
+  "id": "2bac/meca1_newton",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Lois de Newton",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    80,
+    93,
+    113,
+    128
+  ],
+  "prerequis": [
+    "tronc_commun/meca2_mouvement",
+    "tronc_commun/meca3_inertie",
+    "tronc_commun/meca4_quantite_mouvement"
+  ],
+  "contenus": [
+    "Vecteurs vitesse et accélération ; repère de Frenet.",
+    "Deuxième loi : rôle de la masse, choix du référentiel, centre d'inertie, référentiels galiléens.",
+    "Troisième loi : actions réciproques."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître les vecteurs vitesse et accélération ; unité de l'accélération."
+    },
+    {
+      "id": "O2",
+      "texte": "Exprimer l'accélération dans un repère cartésien et dans le repère de Frenet."
+    },
+    {
+      "id": "O3",
+      "texte": "Utiliser le produit a·v pour savoir si un mouvement est accéléré ou ralenti."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître les référentiels galiléens."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître la deuxième loi ΣFext = m·aG et son domaine de validité ; rôle de la masse."
+    },
+    {
+      "id": "O6",
+      "texte": "Appliquer la deuxième loi pour déterminer vG et aG."
+    },
+    {
+      "id": "O7",
+      "texte": "Connaître et appliquer la troisième loi."
+    }
+  ],
+  "activites": [
+    "Vecteurs vitesse et accélération à partir d'enregistrements.",
+    "Vérification expérimentale de ΣF = m·ΔvG/Δt en variant m, ΣF ou ΔvG/Δt."
+  ],
+  "orientations": [
+    "Rappeler les acquis du tronc commun ; grandeurs cinématiques introduites progressivement selon les besoins.",
+    "Rappeler le principe d'inertie pour introduire le référentiel galiléen.",
+    "Deuxième loi pour le point matériel puis théorème du centre d'inertie, préparé par F = Δp/Δt.",
+    "Référentiels terrestre, géocentrique, héliocentrique (Copernic) ; existence de référentiels non galiléens.",
+    "Utiliser l'équation aux dimensions."
+  ],
+  "hors_programme": []
+}

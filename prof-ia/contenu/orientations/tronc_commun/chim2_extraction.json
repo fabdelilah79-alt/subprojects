@@ -1,0 +1,63 @@
+{
+  "id": "tronc_commun/chim2_extraction",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "La chimie autour de nous",
+  "titre": "Extraction, séparation et identification d'espèces chimiques",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 3,
+      "exercices": 0,
+      "pour": "voir chim1"
+    }
+  ],
+  "source_pages": [
+    20,
+    35
+  ],
+  "contenus": [
+    "Approche historique.",
+    "Techniques d'extraction.",
+    "Séparation et identification (chromatographie sur couche mince)."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître les techniques d'extraction (par solvant, hydrodistillation) et les règles de sécurité."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître la verrerie : ampoule à décanter, montage de chauffage à reflux…"
+    },
+    {
+      "id": "O3",
+      "texte": "Exploiter un tableau de données (changement d'état, solubilité, densité) pour prévoir l'état physique, choisir le solvant, prévoir la phase supérieure."
+    },
+    {
+      "id": "O4",
+      "texte": "Réaliser et exploiter une chromatographie sur couche mince."
+    }
+  ],
+  "activites": [
+    "Documents historiques : enfleurage, macération, décoction.",
+    "Extraction par infusion, hydrodistillation, solvant ; décantation ; filtration sous vide.",
+    "CCM (encre, colorants alimentaires, extraits de plantes) ; révélation des espèces incolores (UV, révélateur)."
+  ],
+  "orientations": [
+    "Méthodes traditionnelles puis activités expérimentales par observation et manipulation, SANS interprétation.",
+    "Densité et solubilité à partir des acquis.",
+    "Exemples d'espèces extraites du monde végétal ou animal (colorants, parfums).",
+    "Séparations fondées sur les propriétés physiques ; chromatographie pour identifier par comparaison avec une référence."
+  ],
+  "hors_programme": [
+    "Interprétation théorique des techniques d'extraction."
+  ]
+}

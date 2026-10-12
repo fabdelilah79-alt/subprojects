@@ -1,0 +1,113 @@
+{
+  "id": "2bac/nucl2_masse_energie",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Transformations nucléaires",
+  "titre": "Noyaux, masse et énergie",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 4,
+      "exercices": 1
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 8,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    80,
+    86,
+    87,
+    88,
+    112,
+    121,
+    122
+  ],
+  "prerequis": [
+    "2bac/nucl1_decroissance"
+  ],
+  "contenus": [
+    "Équivalence masse-énergie : défaut de masse, énergie de liaison, unités, énergie de liaison par nucléon, courbe d'Aston.",
+    "Bilan de masse et d'énergie d'une transformation nucléaire (α, β+, β-)."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Définir et calculer le défaut de masse et l'énergie de liaison ; énergie de liaison par nucléon."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître l'électron-volt et convertir J ↔ eV ; utiliser E = m·c²."
+    },
+    {
+      "id": "O3",
+      "texte": "Analyser la courbe d'Aston."
+    },
+    {
+      "id": "O4",
+      "texte": "Faire le bilan énergétique d'une réaction nucléaire."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître des applications et des dangers de la radioactivité."
+    }
+  ],
+  "activites": [
+    "Documents sur les applications des réactions nucléaires."
+  ],
+  "orientations": [
+    "Bilan énergétique avec les masses des NOYAUX et non des atomes.",
+    "Utiliser l'équation aux dimensions."
+  ],
+  "hors_programme": [
+    "Écriture du neutrino et de l'antineutrino."
+  ],
+  "specifique": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "contenus": [
+        "Fission et fusion : domaines sur la courbe d'Aston ; bilans ; utilisations de l'énergie nucléaire."
+      ],
+      "objectifs": [
+        {
+          "id": "O6",
+          "texte": "Définir la fission et la fusion, écrire leurs équations et faire leur bilan énergétique."
+        }
+      ],
+      "activites": [
+        "Découverte de la fission et de la fusion ; fusion et étoiles ; fission industrielle et déchets."
+      ],
+      "orientations": [
+        "Fission et fusion ne sont pas spontanées bien qu'elles libèrent de l'énergie.",
+        "Applications de la fission : réacteurs, bombe A ; la fusion est la source d'énergie des étoiles (hélium dans le Soleil)."
+      ],
+      "hors_programme": [
+        "Aspects technologiques de la fission et de la fusion."
+      ]
+    }
+  ]
+}

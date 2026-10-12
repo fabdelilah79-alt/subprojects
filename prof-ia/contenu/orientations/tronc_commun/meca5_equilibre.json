@@ -1,0 +1,78 @@
+{
+  "id": "tronc_commun/meca5_equilibre",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Équilibre d'un solide",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 12,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    19,
+    26
+  ],
+  "prerequis": [
+    "tronc_commun/meca1_interactions"
+  ],
+  "contenus": [
+    "Force exercée par un ressort ; poussée d'Archimède.",
+    "Équilibre d'un solide soumis à trois forces : première condition ; contact avec frottement.",
+    "Équilibre d'un solide mobile autour d'un axe fixe : moment d'une force, moment d'un couple, deuxième condition, couple de torsion."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître F = K·Δl (raideur et son unité)."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître la poussée d'Archimède F = ρ·V·g et ses caractéristiques."
+    },
+    {
+      "id": "O3",
+      "texte": "Appliquer la première condition d'équilibre (méthodes graphique du polygone et analytique)."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître le coefficient de frottement."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître le moment d'une force (expression algébrique, unité) et le moment d'un couple."
+    },
+    {
+      "id": "O6",
+      "texte": "Appliquer les conditions générales d'équilibre : ΣF = 0 et ΣM = 0."
+    },
+    {
+      "id": "O7",
+      "texte": "Connaître le moment du couple de torsion M = -C·θ et l'unité de la constante de torsion."
+    }
+  ],
+  "activites": [
+    "Relation tension/allongement d'un ressort.",
+    "Mesure de la poussée d'Archimède.",
+    "Vecteurs des trois forces à l'équilibre (référentiel terrestre).",
+    "Mise en évidence du frottement.",
+    "Effet de rotation d'une force ; moment d'un couple ; théorème des moments ; M = -C·θ."
+  ],
+  "orientations": [
+    "Rappeler les acquis du collège (équilibre sous deux forces).",
+    "Méthode : système étudié, bilan des forces, conditions d'équilibre.",
+    "Importance du frottement dans la vie courante ; ressort pour étalonner un dynamomètre.",
+    "Le frottement est représenté par une force répartie ou par ses composantes.",
+    "Théorème des moments d'abord limité à deux forces dans un plan perpendiculaire à l'axe ne passant pas par l'axe, puis généralisé."
+  ],
+  "hors_programme": []
+}

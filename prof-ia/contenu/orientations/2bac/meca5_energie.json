@@ -1,0 +1,98 @@
+{
+  "id": "2bac/meca5_energie",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Aspects énergétiques des oscillateurs mécaniques",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 3,
+      "exercices": 1
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    81,
+    97,
+    98,
+    114,
+    134,
+    135
+  ],
+  "prerequis": [
+    "2bac/meca4_oscillants",
+    "1bac/meca3_travail_energie"
+  ],
+  "contenus": [
+    "Travail de la force d'un ressort ; énergie potentielle élastique ; énergie mécanique du solide-ressort.",
+    "Énergie potentielle de torsion ; énergie mécanique du pendule de torsion."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Calculer le travail élémentaire et le travail de la force d'un ressort."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître Epe = ½·K·x² + cte ; état de référence."
+    },
+    {
+      "id": "O3",
+      "texte": "Exploiter la conservation ou la non-conservation de l'énergie mécanique ; diagrammes d'énergie."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître l'énergie potentielle de torsion et l'énergie mécanique du pendule de torsion."
+    }
+  ],
+  "activites": [
+    "Établir Epe à partir du travail ; exploiter des enregistrements et diagrammes d'énergie."
+  ],
+  "orientations": [
+    "Rappeler Ec, Epp, Em et le théorème de l'énergie cinétique.",
+    "Travail de la force du ressort par méthode graphique ou par intégration.",
+    "Conservation étudiée sur le solide-ressort horizontal."
+  ],
+  "hors_programme": [],
+  "specifique": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "contenus": [
+        "Énergie mécanique du pendule pesant."
+      ],
+      "objectifs": [
+        {
+          "id": "O5",
+          "texte": "Exprimer et exploiter l'énergie mécanique du pendule pesant."
+        }
+      ]
+    }
+  ]
+}

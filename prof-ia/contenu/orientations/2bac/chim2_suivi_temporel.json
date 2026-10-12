@@ -1,0 +1,88 @@
+{
+  "id": "2bac/chim2_suivi_temporel",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Transformations rapides et lentes",
+  "titre": "Suivi temporel d'une transformation, vitesse de réaction",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 0,
+      "exercices": 0,
+      "pour": "voir chim1"
+    }
+  ],
+  "source_pages": [
+    81,
+    82,
+    99,
+    115,
+    137,
+    138
+  ],
+  "prerequis": [
+    "2bac/chim1_rapides_lentes"
+  ],
+  "contenus": [
+    "Courbes d'évolution d'une quantité de matière, d'une concentration et de l'avancement ; tableau d'avancement.",
+    "Vitesse volumique v = (1/V)·dx/dt ; évolution au cours du temps.",
+    "Temps de demi-réaction t1/2 ; choix de la méthode de suivi."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Analyser les opérations d'un suivi temporel et exploiter les résultats."
+    },
+    {
+      "id": "O2",
+      "texte": "Définir l'équivalence d'un titrage et en déduire la quantité titrée."
+    },
+    {
+      "id": "O3",
+      "texte": "Tracer n, C ou x en fonction du temps à partir de mesures."
+    },
+    {
+      "id": "O4",
+      "texte": "Savoir que la vitesse augmente généralement avec la concentration et la température."
+    },
+    {
+      "id": "O5",
+      "texte": "Interpréter qualitativement la variation de la vitesse sur une courbe."
+    },
+    {
+      "id": "O6",
+      "texte": "Définir t1/2 et le déterminer."
+    }
+  ],
+  "activites": [
+    "Prélèvements, trempe et titrage (H2O2 et I-, dismutation de H2O2, I- et S2O8 2-).",
+    "Manomètre ou conductimètre ; tableur-grapheur pour x = f(t)."
+  ],
+  "orientations": [
+    "La vitesse volumique, définie à partir de l'avancement, ne dépend ni du réactif choisi ni du volume.",
+    "La vitesse NE se calcule PAS : elle se détermine graphiquement (tangentes) et se compare.",
+    "t1/2 : durée pour que l'avancement atteigne la moitié de sa valeur finale (transformation totale : disparition de la moitié du réactif limitant)."
+  ],
+  "hors_programme": [
+    "Calcul numérique de la vitesse à partir d'un tableau de valeurs.",
+    "Mécanisme réactionnel.",
+    "Ordre de réaction et loi de vitesse (déduit : non cité par le programme)."
+  ]
+}

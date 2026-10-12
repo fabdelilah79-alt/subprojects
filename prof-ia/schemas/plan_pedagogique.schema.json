@@ -9,6 +9,14 @@
       "type": "string",
       "description": "Ce que l'élève saura faire à la fin de la partie, en une phrase."
     },
+    "objectifs_officiels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "id d'un objectif de la fiche du programme officiel (O1, O2…)."
+      },
+      "description": "Objectifs du programme officiel traités dans cette partie : ceux attribués à la partie, en priorité."
+    },
     "conceptions_visees": {
       "type": "array",
       "items": {
@@ -171,6 +179,7 @@
   "required": [
     "titre",
     "objectif",
+    "objectifs_officiels",
     "conceptions_visees",
     "prediction",
     "observation",

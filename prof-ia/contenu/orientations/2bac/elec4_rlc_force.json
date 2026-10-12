@@ -1,0 +1,66 @@
+{
+  "id": "2bac/elec4_rlc_force",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Oscillations forcées d'un circuit RLC série",
+  "filieres": [
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 6,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    113,
+    126
+  ],
+  "prerequis": [
+    "2bac/elec3_rlc_libre"
+  ],
+  "contenus": [
+    "Oscillations forcées en régime sinusoïdal.",
+    "Courant alternatif : intensité et tension efficaces, impédance.",
+    "Résonance d'intensité : bande passante, facteur de qualité.",
+    "Puissance en régime sinusoïdal : facteur de puissance."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Distinguer oscillations libres et forcées ; excitateur et résonateur."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître l'impédance et son unité ; résoudre l'équation par la construction de Fresnel."
+    },
+    {
+      "id": "O3",
+      "texte": "Reconnaître la résonance ; facteur de qualité ; bande passante à -3 dB ; surtension."
+    },
+    {
+      "id": "O4",
+      "texte": "Savoir que la puissance moyenne n'est consommée que par effet Joule (R·I²) ; facteur de puissance."
+    }
+  ],
+  "activites": [
+    "Oscillations forcées : observer u et i.",
+    "Résonance : tracer I = f(N) pour deux ou trois valeurs de R."
+  ],
+  "orientations": [
+    "Utiliser la construction de Fresnel.",
+    "Parler du retard d'une grandeur sur l'autre, PAS du déphasage."
+  ],
+  "hors_programme": [
+    "Impédance complexe.",
+    "Notion de déphasage."
+  ]
+}

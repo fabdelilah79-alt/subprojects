@@ -1,0 +1,95 @@
+{
+  "id": "1bac/elec3_magnetisme",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Magnétisme : champ magnétique et forces électromagnétiques",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST"
+      ],
+      "cours": 9,
+      "exercices": 3
+    },
+    {
+      "filieres": [
+        "SM"
+      ],
+      "cours": 13,
+      "exercices": 4
+    }
+  ],
+  "source_pages": [
+    47,
+    58,
+    61
+  ],
+  "contenus": [
+    "Champ magnétique : action d'un aimant et d'un courant sur une aiguille aimantée ; vecteur champ ; lignes de champ ; champ uniforme ; superposition ; champ magnétique terrestre.",
+    "Champ créé par un courant : proportionnalité B/I (sans milieu magnétique) ; conducteur rectiligne, spire circulaire, solénoïde.",
+    "Forces électromagnétiques : loi de Laplace (direction, sens, intensité F = I·l·B·sinα).",
+    "Applications : haut-parleur, moteur à courant continu."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Déterminer la direction et le sens du champ avec une aiguille aimantée ; caractéristiques du vecteur champ ; lignes de champ."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître les composantes du champ magnétique terrestre."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître la proportionnalité entre B et I et l'appliquer."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître et appliquer la loi de Laplace."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître le principe du haut-parleur électrodynamique et du moteur électrique."
+    }
+  ],
+  "activites": [
+    "Document historique (expérience d'Œrsted…) ; aimant brisé ; superposition de champs ; mesure du champ terrestre.",
+    "Champ d'un conducteur rectiligne, d'une spire, d'une bobine ; comparaison bobine/barreau aimanté.",
+    "Force de Laplace : rails de Laplace, interaction de deux courants parallèles, faisceau d'électrons près d'un aimant ; haut-parleur, moteur."
+  ],
+  "orientations": [
+    "L'action sur une aiguille aimantée sert à introduire le champ ; unité tesla, mesure au teslamètre (sonde à effet Hall).",
+    "Donner les expressions de B pour un conducteur rectiligne et au centre d'une spire.",
+    "Caractéristiques de la force de Laplace pour toutes les filières.",
+    "L'induction (f.é.m.) vue au collège : se limiter à l'observation du phénomène pour montrer le couplage."
+  ],
+  "hors_programme": [
+    "Étude quantitative de l'induction électromagnétique."
+  ],
+  "specifique": [
+    {
+      "filieres": [
+        "SM"
+      ],
+      "contenus": [
+        "Couplage électromécanique : conversion électrique → mécanique, rôle moteur des forces de Laplace, conversion mécanique → électrique."
+      ],
+      "objectifs": [
+        {
+          "id": "O6",
+          "texte": "Interpréter la conversion d'énergie électrique en énergie mécanique et inversement."
+        }
+      ],
+      "orientations": [
+        "Expression vectorielle de la force de Laplace (filière SM seulement) ; travail des forces de Laplace dans un circuit simple (rails) ; rendement global."
+      ]
+    }
+  ]
+}

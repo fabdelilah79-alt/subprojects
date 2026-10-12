@@ -1,0 +1,63 @@
+{
+  "id": "tronc_commun/meca3_inertie",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Principe d'inertie",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 4,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    19,
+    24
+  ],
+  "contenus": [
+    "Énoncé du principe d'inertie.",
+    "Centre d'inertie.",
+    "Relation barycentrique."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître l'énoncé du principe d'inertie."
+    },
+    {
+      "id": "O2",
+      "texte": "Distinguer corps isolé et pseudo-isolé."
+    },
+    {
+      "id": "O3",
+      "texte": "Exploiter un enregistrement pour repérer le centre d'inertie."
+    },
+    {
+      "id": "O4",
+      "texte": "Situer le centre d'inertie de solides homogènes simples."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître et utiliser la relation barycentrique."
+    }
+  ],
+  "activites": [
+    "Aimant approché d'une bille en mouvement, bille heurtant un obstacle, palets sur table à coussin d'air.",
+    "Vérification expérimentale du principe d'inertie.",
+    "Centre d'inertie : mouvement d'ensemble et mouvement propre ; barycentre de deux palets solidaires."
+  ],
+  "orientations": [
+    "OBJECTIF PRINCIPAL : amener l'élève à dépasser la conception « une force est nécessaire pour entretenir un mouvement rectiligne uniforme ».",
+    "La propriété barycentrique est vérifiée expérimentalement.",
+    "Centre d'inertie limité à des solides homogènes simples (tige, barre, disque, sphère)."
+  ],
+  "hors_programme": []
+}

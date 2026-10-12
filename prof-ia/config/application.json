@@ -8,7 +8,23 @@
     {
       "id": "rotation",
       "titre": "Mouvement de rotation d'un solide autour d'un axe fixe",
-      "parties": 3
+      "parties": 3,
+      "orientations": "1bac/meca1_rotation",
+      "filiere": "SE",
+      "objectifs_par_partie": {
+        "1": [
+          "O1",
+          "O2"
+        ],
+        "2": [
+          "O3",
+          "O4"
+        ],
+        "3": [
+          "O5",
+          "O6"
+        ]
+      }
     }
   ],
   "classes": [

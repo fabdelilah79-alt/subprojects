@@ -1,0 +1,51 @@
+{
+  "id": "1bac/chim5_chimie_organique",
+  "niveau": "1bac",
+  "discipline": "chimie",
+  "domaine": "Chimie organique",
+  "titre": "Expansion de la chimie organique",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 2,
+      "exercices": 0
+    }
+  ],
+  "source_pages": [
+    49,
+    70,
+    71
+  ],
+  "contenus": [
+    "Domaines de la chimie organique ; matières naturelles (photosynthèse, biochimie, hydrocarbures fossiles).",
+    "Le carbone, élément de base ; liaisons avec les autres atomes.",
+    "Jalons historiques ; importance économique."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Savoir que les molécules organiques sont constituées principalement de carbone et d'hydrogène."
+    },
+    {
+      "id": "O2",
+      "texte": "Décrire, avec le duet et l'octet, les liaisons simples, doubles et triples que forme le carbone."
+    }
+  ],
+  "activites": [
+    "Documents : composition des espèces organiques, histoire, diversité des molécules, importance économique."
+  ],
+  "orientations": [
+    "Montrer l'importance de la chimie de synthèse en réinvestissant le tronc commun.",
+    "Identifier les liaisons et leur orientation dans l'espace à partir des représentations de Lewis."
+  ],
+  "hors_programme": []
+}

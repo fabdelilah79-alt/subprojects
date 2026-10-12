@@ -1,0 +1,76 @@
+{
+  "id": "2bac/chim7_piles",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Sens d'évolution d'un système chimique",
+  "titre": "Transformations spontanées dans les piles et production d'énergie",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 0,
+      "exercices": 0,
+      "pour": "voir chim6"
+    }
+  ],
+  "source_pages": [
+    82,
+    102,
+    103,
+    116,
+    142,
+    143
+  ],
+  "prerequis": [
+    "2bac/chim6_evolution_spontanee"
+  ],
+  "contenus": [
+    "Transfert spontané d'électrons entre deux couples Mn+/M (mélangés ou séparés).",
+    "Constitution et fonctionnement d'une pile : sens du courant, f.é.m., porteurs de charge, pont salin, réactions aux électrodes.",
+    "La pile, système hors équilibre ; pile usée ; quantité maximale d'électricité débitée."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Schématiser une pile."
+    },
+    {
+      "id": "O2",
+      "texte": "Utiliser le critère d'évolution pour prévoir le sens de déplacement des porteurs de charge."
+    },
+    {
+      "id": "O3",
+      "texte": "Interpréter le fonctionnement d'une pile (polarité, f.é.m., porteurs)."
+    },
+    {
+      "id": "O4",
+      "texte": "Écrire les réactions aux électrodes ; relier quantité de matière, intensité et durée."
+    }
+  ],
+  "activites": [
+    "Piles Fe/Fe2+//Cu2+/Cu et Cu/Cu2+//Ag+/Ag (ampèremètre, voltmètre).",
+    "Documents : histoire et caractéristiques des piles usuelles, dangers, recyclage."
+  ],
+  "orientations": [
+    "Piles étudiées expérimentalement seulement avec des couples Mn+/M(s).",
+    "On ne demande pas de prévoir les réactions aux électrodes mais d'interpréter les observations à partir des couples.",
+    "Respiration et photosynthèse présentées simplement (spontanée/forcée), sans connaissances de SVT."
+  ],
+  "hors_programme": []
+}

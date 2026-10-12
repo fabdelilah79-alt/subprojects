@@ -1,0 +1,103 @@
+{
+  "id": "2bac/nucl1_decroissance",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Transformations nucléaires",
+  "titre": "Décroissance radioactive",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 4,
+      "exercices": 1
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 3,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    79,
+    86,
+    87,
+    88,
+    112,
+    121,
+    122
+  ],
+  "prerequis": [
+    "tronc_commun/chim4_atome"
+  ],
+  "contenus": [
+    "Stabilité et instabilité des noyaux : composition, isotopes, notation AZX, diagramme (N,Z).",
+    "Radioactivité α, β+, β-, émission γ ; lois de conservation (charge, nombre de nucléons).",
+    "Loi de décroissance : évolution, activité, demi-vie, datation."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître AZX et la composition du noyau ; définir les isotopes."
+    },
+    {
+      "id": "O2",
+      "texte": "Repérer les domaines de stabilité dans le diagramme (N,Z) ; définir un noyau radioactif."
+    },
+    {
+      "id": "O3",
+      "texte": "Définir les radioactivités α, β+, β- et l'émission γ ; écrire une équation nucléaire avec les lois de conservation."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître la loi de décroissance et exploiter sa courbe ; 1 Bq = une désintégration par seconde."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître τ, t1/2 et leurs relations avec λ ; unités par l'équation aux dimensions."
+    },
+    {
+      "id": "O6",
+      "texte": "Expliquer le principe de la datation et choisir le radioélément adapté."
+    },
+    {
+      "id": "O7",
+      "texte": "Calculer moyenne, variance et écart-type d'un comptage (tableur ou calculatrice)."
+    }
+  ],
+  "activites": [
+    "Diagramme (N,Z) ; découverte de la radioactivité (Becquerel).",
+    "Radioactivité dans l'environnement ; exemples de datation.",
+    "Compteur : caractère aléatoire, courbes, radioactivité naturelle."
+  ],
+  "orientations": [
+    "Nucléide et élément chimique avec leurs symboles ; ordres de grandeur des noyaux ; évoquer l'étoile à neutrons.",
+    "Commenter la forme de la courbe moyenne du diagramme (N,Z) SANS expliquer les causes de l'instabilité.",
+    "Caractère aléatoire de la désintégration sans étude statistique théorique ou expérimentale.",
+    "Loi sous forme différentielle -dN = λ·N·dt et intégrale N(t) = N0·e^(-λt) ; activité a(t) = a0·e^(-λt).",
+    "Datation par méthodes graphique et calculatoire.",
+    "Compteur Geiger et compteur à scintillations SANS détails techniques.",
+    "Effets biologiques liés à l'activité et à l'énergie déposée dans le corps."
+  ],
+  "hors_programme": [
+    "Causes de l'instabilité des noyaux.",
+    "Écriture du neutrino et de l'antineutrino dans les équations.",
+    "Fonctionnement technique des compteurs."
+  ]
+}

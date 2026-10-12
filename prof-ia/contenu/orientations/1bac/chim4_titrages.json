@@ -1,0 +1,79 @@
+{
+  "id": "1bac/chim4_titrages",
+  "niveau": "1bac",
+  "discipline": "chimie",
+  "domaine": "La mesure en chimie",
+  "titre": "Détermination des quantités de matière par une réaction chimique : acide-base, oxydoréduction, titrages",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 9,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    48,
+    65,
+    67,
+    69
+  ],
+  "prerequis": [
+    "1bac/chim3_conductance"
+  ],
+  "contenus": [
+    "Réactions acido-basiques : transfert de protons ; acide et base selon Brønsted ; couples ; couples de l'eau H3O+/H2O et H2O/HO-, eau ampholyte.",
+    "Réactions d'oxydoréduction : transfert d'électrons ; oxydant, réducteur ; couple Ox/Red ; demi-équations Ox + n e- ⇌ Red ; réducteurs (métaux), oxydants (dihalogènes, dioxygène).",
+    "Titrages directs : réaction support, tableau d'avancement, équivalence."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Définir un acide et une base selon Brønsted ; connaître H3O+/H2O, H2O/HO-, NH4+/NH3, CH3CO2H/CH3CO2-."
+    },
+    {
+      "id": "O2",
+      "texte": "Écrire l'équation d'une réaction acide-base."
+    },
+    {
+      "id": "O3",
+      "texte": "Définir oxydant et réducteur ; connaître H+/H2, Mn+/M, Fe3+/Fe2+, MnO4-/Mn2+, I2/I-, S4O6 2-/S2O3 2-."
+    },
+    {
+      "id": "O4",
+      "texte": "Écrire l'équation d'une réaction d'oxydoréduction."
+    },
+    {
+      "id": "O5",
+      "texte": "Définir l'équivalence et en déduire la quantité de matière du réactif titré."
+    },
+    {
+      "id": "O6",
+      "texte": "Estimer la précision d'une mesure (chiffres significatifs)."
+    }
+  ],
+  "activites": [
+    "Transfert de protons avec des indicateurs colorés ; acides et bases de la vie courante (vinaigre, déboucheur…).",
+    "Transfert d'électrons ; eau de Javel, acide ascorbique.",
+    "Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique ou d'une eau de Javel.",
+    "Titrage des ions fer(II) par le permanganate en milieu acide, ou du diiode par le thiosulfate."
+  ],
+  "orientations": [
+    "Introduire acide-base et oxydoréduction avec des réactions TOTALES (une seule réaction, flèche simple).",
+    "Choisir un couple dont l'acide et la base ont des couleurs différentes pour montrer le transfert ; même méthode pour l'oxydoréduction.",
+    "Les protons et les électrons ne sont pas libres en solution aqueuse.",
+    "Titrages limités aux électrolytes forts (dissociation totale)."
+  ],
+  "hors_programme": [
+    "Force des acides, des bases, des oxydants et des réducteurs.",
+    "Polyacides et polybases."
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "2bac/chim5_acide_base",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Transformations non totales",
+  "titre": "Transformations associées aux réactions acide-base en solution aqueuse",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 0,
+      "exercices": 0,
+      "pour": "voir chim3"
+    }
+  ],
+  "source_pages": [
+    82,
+    100,
+    101,
+    102,
+    115,
+    116,
+    139,
+    140,
+    141
+  ],
+  "prerequis": [
+    "2bac/chim4_equilibre"
+  ],
+  "contenus": [
+    "Autoprotolyse de l'eau ; produit ionique Ke, pKe.",
+    "Échelle de pH : solution acide, basique, neutre.",
+    "Constante d'acidité KA, pKA ; comparaison d'acides et de bases.",
+    "Constante d'équilibre d'une réaction acide-base.",
+    "Diagrammes de prédominance et de distribution ; indicateur coloré, zone de virage.",
+    "Titrage acide-base suivi au pH-mètre : volume à l'équivalence, choix de l'indicateur."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître Ke ; déterminer si une solution est acide, basique ou neutre."
+    },
+    {
+      "id": "O2",
+      "texte": "Calculer [H3O+], [HO-] et le pH."
+    },
+    {
+      "id": "O3",
+      "texte": "Écrire KA ; calculer la constante d'une réaction acide-base à partir des KA."
+    },
+    {
+      "id": "O4",
+      "texte": "Déterminer l'espèce prédominante à partir du pH et du pKA."
+    },
+    {
+      "id": "O5",
+      "texte": "Suivre un titrage par pH-métrie ; déterminer le volume équivalent ; choisir un indicateur coloré."
+    }
+  ],
+  "activites": [
+    "pH de produits courants et de milieux biologiques.",
+    "Courbe de titrage pH = f(V) ; choix de l'indicateur."
+  ],
+  "orientations": [
+    "Pour un acide avec l'eau : Qr,éq = KA.",
+    "Éviter « acide fort / faible », « base forte / faible » (sens ambigu).",
+    "pH entre 0 et 14 seulement ; exemples de la vie courante.",
+    "[A] > [B] ⇒ A prédomine.",
+    "Point d'équivalence : extremum de dpH/dV ; ensuite méthode graphique ou logiciel ; titrer un produit courant.",
+    "Montrer par le pH que la réaction de titrage est quasi totale (τ ≈ 1)."
+  ],
+  "hors_programme": [
+    "Polyacides et polybases (seulement monoacides et monobases).",
+    "pH négatif ou supérieur à 14."
+  ]
+}

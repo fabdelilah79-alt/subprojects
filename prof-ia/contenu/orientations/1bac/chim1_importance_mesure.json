@@ -1,0 +1,44 @@
+{
+  "id": "1bac/chim1_importance_mesure",
+  "niveau": "1bac",
+  "discipline": "chimie",
+  "domaine": "La mesure en chimie",
+  "titre": "Importance de la mesure des quantités de matière dans la vie courante",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 1,
+      "exercices": 0
+    }
+  ],
+  "source_pages": [
+    48,
+    65,
+    66
+  ],
+  "contenus": [
+    "Nécessité de la mesure : santé et protection de l'environnement, analyses biologiques, agroalimentaire."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître quelques techniques de mesure."
+    }
+  ],
+  "activites": [
+    "Montrer la nécessité de la mesure par des exemples (sécurité, environnement, analyses biologiques, agroalimentaire)."
+  ],
+  "orientations": [
+    "Partir d'exemples de différents domaines de la vie courante."
+  ],
+  "hors_programme": []
+}

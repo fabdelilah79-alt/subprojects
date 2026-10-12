@@ -1,0 +1,81 @@
+{
+  "id": "1bac/chim3_conductance",
+  "niveau": "1bac",
+  "discipline": "chimie",
+  "domaine": "La mesure en chimie",
+  "titre": "Détermination des quantités de matière par une mesure physique : la conductance",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 6,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    48,
+    65,
+    66,
+    67,
+    68,
+    69
+  ],
+  "prerequis": [
+    "1bac/chim2_grandeurs_quantite_matiere"
+  ],
+  "contenus": [
+    "Conductance G : méthode de mesure ; facteurs (température, électrodes S et L, nature et concentration) ; courbe d'étalonnage G = f(C).",
+    "Conductivité σ : G = σ·S/L ; relation σ-C.",
+    "Conductivité molaire ionique λ et σ = Σ λi·[Xi] ; comparaison de λ(H3O+) et λ(HO-) aux autres ions ; limites de l'étalonnage."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Savoir que les ions sont indispensables à la conduction ; relier conductance et résistance."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître les facteurs qui influent sur la conductance (C, L, S)."
+    },
+    {
+      "id": "O3",
+      "texte": "Relier conductance et conductivité."
+    },
+    {
+      "id": "O4",
+      "texte": "Tracer une courbe d'étalonnage G = f(C) et l'utiliser pour déterminer une concentration inconnue."
+    },
+    {
+      "id": "O5",
+      "texte": "Relier la conductivité d'une solution diluée aux conductivités molaires ioniques et aux concentrations."
+    },
+    {
+      "id": "O6",
+      "texte": "Interpréter les conductivités de solutions de même concentration ayant un ion commun."
+    }
+  ],
+  "activites": [
+    "Mesurer R et G avec GBF, ampèremètre, voltmètre et deux électrodes planes parallèles.",
+    "Courbe d'étalonnage avec NaCl.",
+    "Comparer les conductances de NaOH, KOH, HCl, NH4Cl, NaCl, KCl de même concentration."
+  ],
+  "orientations": [
+    "Concentrations inconnues déterminées par interpolation sur la courbe G = f(C) (solutions ≤ 10^-2 mol/L).",
+    "Placer l'élève en situation-problème.",
+    "Toutes les mesures dans les mêmes conditions (température, état et distance des électrodes : grandeurs d'influence).",
+    "Conductivité molaire ionique introduite expérimentalement par comparaison d'électrolytes forts (NaCl, KCl, NaOH, KOH).",
+    "σ = Σ λi·[Xi] en unités SI : σ en S·m⁻¹, λ en S·m²·mol⁻¹, [Xi] en mol·m⁻³ ; λ assimilées à leurs valeurs à dilution infinie (tables).",
+    "Observer que H3O+ et HO- ont une conductivité molaire plus grande."
+  ],
+  "hors_programme": [
+    "Mobilité des ions."
+  ]
+}

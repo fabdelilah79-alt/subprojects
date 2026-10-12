@@ -152,3 +152,26 @@ Problèmes restants, à faire par l'enseignant :
 - Ajouter les clés dans .env, puis suivre le README (« Ajouter les clés ») : voix Gemini, mode adaptatif.
 - Vérifier les prix dans config/modeles.json et les noms des modèles de voix dans config/voix.json.
 - ElevenLabs (comparaison des voix) n'est pas écrit : seulement utile si la voix Gemini ne convient pas.
+
+## 2026-10-12 — Programme officiel : fiches JSON des orientations nationales
+
+Fait :
+- Lecture complète du document officiel (PDF de 165 pages, en arabe, 2007), page par page : son texte
+  n'est pas lisible par un programme (polices anciennes), il a donc été lu en image.
+- 63 fiches JSON (17 tronc commun, 17 en 1re année, 29 en 2e année), plus index.json et general.json.
+  Chaque fiche : contenus, objectifs numérotés, activités, orientations, hors programme, horaire, pages
+  sources, et ajouts propres à certaines filières (par exemple SM en 1re année, PC/SM en 2e année).
+- Les agents reçoivent seulement la fiche du cours, adaptée à la filière (environ 1 300 jetons, mis en cache),
+  avec des règles strictes dans prompts/commun.md, pedagogique.md, chef.md, repondeur.md.
+- Chaque partie déclare ses objectifs officiels ; un objectif inconnu est refusé à la validation ;
+  outils/couverture_orientations.py montre la couverture. Parties 1 à 3 : O1-O2, O3-O4, O5-O6.
+- 5 nouveaux tests (49 au total).
+
+Choix signalés :
+- JSON plutôt que RAG : plus court, exact et reproductible pour un chapitre à la fois.
+- Quelques éléments « hors programme » sont déduits de la progression (et signalés « déduit » dans la fiche).
+
+Problèmes restants, à faire par l'enseignant :
+- Relire les fiches : l'extraction et la traduction de l'arabe ont été faites par l'IA (statut indiqué dans index.json).
+- Le document date de 2007 : vérifier qu'il n'existe pas de version plus récente pour vos classes.
+- Choisir la filière de vos classes dans config/application.json (SE par défaut).

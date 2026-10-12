@@ -1,0 +1,63 @@
+{
+  "id": "2bac/ondes4_reseau",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Ondes",
+  "titre": "Diffraction de la lumière par un réseau",
+  "filieres": [
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 3,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    112,
+    118,
+    120
+  ],
+  "prerequis": [
+    "2bac/ondes3_lumiere"
+  ],
+  "contenus": [
+    "Définition du réseau et caractéristiques.",
+    "Diffraction d'une lumière monochromatique.",
+    "Diffraction de la lumière blanche."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître un réseau : nombre de traits par unité de longueur, pas du réseau."
+    },
+    {
+      "id": "O2",
+      "texte": "Représenter le trajet des rayons après le réseau."
+    },
+    {
+      "id": "O3",
+      "texte": "Établir les directions θ des maximums et calculer le nombre de maximums (faibles déviations)."
+    },
+    {
+      "id": "O4",
+      "texte": "Réaliser une expérience de diffraction par un réseau."
+    }
+  ],
+  "activites": [
+    "Modèles de réseau (CD…).",
+    "Questions guidées : que se passe-t-il quand la fente rétrécit ? influence du nombre de traits par unité de longueur ?"
+  ],
+  "orientations": [
+    "Diffraction de la lumière monochromatique par un réseau en incidence normale et non normale.",
+    "Exploiter la diffraction pour montrer la nature ondulatoire de la lumière."
+  ],
+  "hors_programme": []
+}

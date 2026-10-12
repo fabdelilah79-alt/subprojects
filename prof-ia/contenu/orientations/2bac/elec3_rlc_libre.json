@@ -1,0 +1,90 @@
+{
+  "id": "2bac/elec3_rlc_libre",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Oscillations libres d'un circuit RLC série",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 6,
+      "exercices": 2
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 6,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    80,
+    92,
+    113,
+    125
+  ],
+  "prerequis": [
+    "2bac/elec2_dipole_rl"
+  ],
+  "contenus": [
+    "Décharge d'un condensateur dans une bobine ; amortissement ; pseudo-période.",
+    "Interprétation énergétique : échanges condensateur/bobine, effet Joule.",
+    "Étude analytique à amortissement négligeable : période propre.",
+    "Entretien des oscillations (expérimental et théorique)."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Reconnaître les régimes périodique, pseudo-périodique et apériodique."
+    },
+    {
+      "id": "O2",
+      "texte": "Établir l'équation différentielle (amortissement négligeable) ; q(t) et i(t)."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître l'expression de la période propre."
+    },
+    {
+      "id": "O4",
+      "texte": "Interpréter énergétiquement les trois régimes."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître le rôle du dispositif d'entretien."
+    },
+    {
+      "id": "O6",
+      "texte": "Mesurer une période ou une pseudo-période."
+    }
+  ],
+  "activites": [
+    "Décharge oscillante amortie (oscilloscope, ordinateur).",
+    "Évolution graphique des énergies.",
+    "Entretien par un circuit intégré."
+  ],
+  "orientations": [
+    "Se limiter au rôle fonctionnel du dispositif d'entretien.",
+    "Montrer comment produire une tension sinusoïdale de fréquence donnée."
+  ],
+  "hors_programme": [
+    "Étude détaillée de l'amortissement."
+  ]
+}

@@ -11,6 +11,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 
 from outils.controles_partition import avertissements_partition, erreurs_partition
+from serveur import orientations
 from serveur.configuration import RACINE, chemin_projet, lire_config
 
 
@@ -56,7 +57,7 @@ def erreurs_schema(document, chemin_schema):
 
 
 def references_projet(manifeste):
-    """Rassemble les noms autorisés : zones, palette, tons, éléments de schéma et ressources."""
+    """Rassemble les noms autorisés : zones, palette, tons, éléments, ressources, objectifs officiels du cours."""
     tableau, voix = lire_config("tableau"), lire_config("voix")
     dossier_elements = chemin_projet("client") / "js" / "tableau" / "elements"
     return {
@@ -65,6 +66,7 @@ def references_projet(manifeste):
         "palette": set(tableau["palette"]),
         "tons": set(voix["tons"]),
         "ressources": {r["id"] for r in manifeste["ressources"]},
+        "objectifs": {o["id"] for o in orientations.fiche_du_cours()["objectifs"]},
     }
 
 

@@ -1,0 +1,95 @@
+{
+  "id": "1bac/chim2_grandeurs_quantite_matiere",
+  "niveau": "1bac",
+  "discipline": "chimie",
+  "domaine": "La mesure en chimie",
+  "titre": "Grandeurs physiques liées aux quantités de matière",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 6,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    48,
+    65,
+    66,
+    68
+  ],
+  "prerequis": [
+    "tronc_commun/chim7_quantite_matiere",
+    "tronc_commun/chim8_transformation"
+  ],
+  "contenus": [
+    "Masse, volume, pression : solides et liquides ; gaz (P, V, T, n) ; loi de Boyle-Mariotte ; température absolue ; équation d'état PV = nRT ; volume molaire.",
+    "Concentration et solutions électrolytiques : solide ionique ; dissolution (solides ioniques, liquides, gaz) ; molécules polaires (HCl, H2O) ; solvatation, cas du proton ; concentration du soluté apporté C et concentration effective [X].",
+    "Suivi d'une transformation : avancement, tableau d'avancement, bilan de matière."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Choisir et utiliser correctement le matériel de laboratoire."
+    },
+    {
+      "id": "O2",
+      "texte": "Lire les pictogrammes de danger et adopter un comportement sûr."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître le modèle du gaz parfait et PV = nRT ; déterminer n à partir de (P, V, T)."
+    },
+    {
+      "id": "O4",
+      "texte": "Déterminer la quantité de matière d'un solide (masse) et d'un soluté (C et V)."
+    },
+    {
+      "id": "O5",
+      "texte": "Expliquer la cohésion d'un solide ionique par l'interaction électrique entre ions voisins."
+    },
+    {
+      "id": "O6",
+      "texte": "Écrire l'équation de dissolution d'une espèce dans l'eau."
+    },
+    {
+      "id": "O7",
+      "texte": "Calculer la concentration d'une solution électrolytique ; distinguer concentration du soluté apporté et concentration effective des ions."
+    },
+    {
+      "id": "O8",
+      "texte": "Décrire l'évolution des quantités de matière avec l'avancement ; déterminer l'avancement maximal."
+    },
+    {
+      "id": "O9",
+      "texte": "Prévoir le volume ou la pression finale d'un gaz produit à température constante."
+    }
+  ],
+  "activites": [
+    "Vérifier PV = cte (expérience et logiciel).",
+    "Préparer des solutions électrolytiques et détecter les ions ; migration des ions.",
+    "Transformation produisant un gaz : mesure du volume ou de la pression (manomètre absolu ou différentiel)."
+  ],
+  "orientations": [
+    "Solide ionique : chaque ion entouré d'ions de signe opposé ; solide neutre ; seulement sa formule statistique.",
+    "Polarité due à la non-coïncidence des barycentres des charges ; électronégativité utilisée sans échelle, seulement par la classification.",
+    "Solvatation = interaction ion/dipôle ; H+(aq) est une écriture simplifiée ; H3O+ (oxonium) est recommandé par l'IUPAC pour les équations acide-base.",
+    "Préciser l'état physique (s), (l), (g), (aq).",
+    "Une solution de chlorure de sodium s'écrit Na+(aq) + Cl-(aq) (simplification acceptée : Na+ + Cl-), jamais NaCl.",
+    "Dissolution : NaCl(s) → Na+(aq) + Cl-(aq) ; HNO3(l) → H+(aq) + NO3-(aq) ; HCl(g) → H+(aq) + Cl-(aq).",
+    "Exemple : Na2SO4 à C = 0,1 mol/L donne [Na+] = 2[SO4 2-] = 0,2 mol/L."
+  ],
+  "hors_programme": [
+    "Maille cristalline et calculs sur le réseau ionique.",
+    "Moment dipolaire et ses calculs.",
+    "Échelle d'électronégativité."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "1bac/chim6_formule_chimique",
+  "niveau": "1bac",
+  "discipline": "chimie",
+  "domaine": "Chimie organique",
+  "titre": "Lecture d'une formule chimique : squelette carboné et groupes caractéristiques",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 11,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    49,
+    70,
+    71,
+    73
+  ],
+  "prerequis": [
+    "1bac/chim5_chimie_organique"
+  ],
+  "contenus": [
+    "Squelette carboné : chaînes linéaires, ramifiées, cycliques, saturées ou non ; formules brute, semi-développée, topologique ; isomérie Z/E.",
+    "Influence de la chaîne sur Téb, densité, solubilité ; distillation fractionnée.",
+    "Modification du squelette (allongement, raccourcissement, ramification, cyclisation, déshydrogénation) ; pétrochimie ; polyaddition.",
+    "Groupes caractéristiques : amine, halogénoalcane, alcool, aldéhyde, cétone, acide carboxylique ; réactivité des alcools (oxydation, déshydratation, substitution)."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Reconnaître une chaîne carbonée saturée, linéaire ou non ; nommer alcanes et alcènes ; reconnaître une double liaison."
+    },
+    {
+      "id": "O2",
+      "texte": "Écrire formules brutes et semi-développées de molécules simples ; prévoir des isomères de constitution."
+    },
+    {
+      "id": "O3",
+      "texte": "Écrire le motif d'un polymère -(CH2-CHA)n- à partir du monomère CH2=CHA."
+    },
+    {
+      "id": "O4",
+      "texte": "Reconnaître et nommer amines, halogénoalcanes, alcools, aldéhydes, cétones, acides carboxyliques."
+    },
+    {
+      "id": "O5",
+      "texte": "Reconnaître l'oxydation ou la déshydratation d'un alcool ; famille du produit d'oxydation ménagée ; équation avec le permanganate en milieu acide."
+    },
+    {
+      "id": "O6",
+      "texte": "Utiliser extraction, chauffage à reflux, filtration sous vide, CCM, distillation fractionnée en justifiant le matériel."
+    },
+    {
+      "id": "O7",
+      "texte": "Définir et calculer un rendement."
+    }
+  ],
+  "activites": [
+    "Expériences sur l'influence du squelette (densité, solubilité, Téb) ; tests des groupes caractéristiques.",
+    "Modèles moléculaires et logiciels ; documents sur la pétrochimie et la polymérisation.",
+    "Synthèse : acide benzoïque par oxydation de l'alcool benzylique par le permanganate en milieu basique."
+  ],
+  "orientations": [
+    "Nomenclature et isomérie limitées aux alcanes jusqu'à 6 atomes de carbone et aux alcènes CHA=CHB.",
+    "Groupes limités à -CO2H, -CO-, -OH, -X, -NH2, -CHO et familles correspondantes.",
+    "Amines sans détail (reconnaître le groupe amine dans un acide aminé).",
+    "Procédés industriels (craquage catalytique, vapocraquage, reformage) sans détail : seulement les changements de squelette.",
+    "Nomenclature officielle de l'IUPAC."
+  ],
+  "hors_programme": [
+    "Alcanes de plus de six atomes de carbone (nomenclature, isomérie).",
+    "Détail des procédés industriels.",
+    "Étude détaillée des amines."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "id": "2bac/chim4_equilibre",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Transformations non totales",
+  "titre": "État d'équilibre d'un système chimique",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 0,
+      "exercices": 0,
+      "pour": "voir chim3"
+    }
+  ],
+  "source_pages": [
+    82,
+    100,
+    101,
+    115,
+    139,
+    140
+  ],
+  "prerequis": [
+    "2bac/chim3_deux_sens",
+    "1bac/chim3_conductance"
+  ],
+  "contenus": [
+    "Quotient de réaction Qr (espèces dissoutes) ; cas homogène et hétérogène.",
+    "Qr,éq ; constante d'équilibre K à une température donnée.",
+    "Influence de l'état initial sur le taux d'avancement final."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Relier la conductance aux concentrations effectives des ions."
+    },
+    {
+      "id": "O2",
+      "texte": "Savoir qu'à l'équilibre le système est en équilibre dynamique."
+    },
+    {
+      "id": "O3",
+      "texte": "Écrire Qr à partir de l'équation."
+    },
+    {
+      "id": "O4",
+      "texte": "Savoir que Qr,éq = K ne dépend pas des concentrations initiales."
+    },
+    {
+      "id": "O5",
+      "texte": "Savoir que le taux d'avancement final dépend de K et de l'état initial."
+    }
+  ],
+  "activites": [
+    "Conductimétrie : Qr,éq constant pour différents états initiaux (acides carboxyliques).",
+    "Taux d'avancement final d'acides de même concentration."
+  ],
+  "orientations": [
+    "Qr = [C]^c·[D]^d / ([A]^a·[B]^b) avec les concentrations en mol/L sans unité ; Qr sans dimension.",
+    "Seules les espèces dissoutes interviennent dans Qr.",
+    "K ne dépend que de la température : mentionné sans justification ni expérience."
+  ],
+  "hors_programme": [
+    "Influence de la température sur K (étude)."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "2bac/elec2_dipole_rl",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Dipôle RL",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 5,
+      "exercices": 2
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    80,
+    91,
+    112,
+    124
+  ],
+  "prerequis": [
+    "2bac/elec1_dipole_rc"
+  ],
+  "contenus": [
+    "Bobine : description, symbole ; u = r·i + L·di/dt en convention récepteur ; inductance et unité.",
+    "Dipôle RL : réponse à un échelon de tension (étude expérimentale et théorique) ; énergie stockée."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Représenter une bobine en convention récepteur ; connaître u = r·i + L·di/dt."
+    },
+    {
+      "id": "O2",
+      "texte": "Déterminer L ; utiliser l'équation aux dimensions."
+    },
+    {
+      "id": "O3",
+      "texte": "Établir l'équation différentielle et vérifier sa solution."
+    },
+    {
+      "id": "O4",
+      "texte": "Savoir que la bobine retarde l'établissement et la rupture du courant (i continue) ; τ = L/R."
+    },
+    {
+      "id": "O5",
+      "texte": "Exploiter des enregistrements ; influence de R et L."
+    },
+    {
+      "id": "O6",
+      "texte": "Connaître l'énergie stockée dans une bobine."
+    }
+  ],
+  "activites": [
+    "Bobine en courant continu et variable.",
+    "Inductance par une tension triangulaire.",
+    "Réponse RL à un échelon ; mesure de τ."
+  ],
+  "orientations": [
+    "L mise en évidence expérimentalement avec une tension triangulaire.",
+    "Un noyau de fer doux augmente l'inductance ; la relation reste valable sans noyau.",
+    "Équation différentielle i + (L/R)·di/dt = E/R ; régime permanent ; tension aux bornes de la bobine exploitée graphiquement."
+  ],
+  "hors_programme": [
+    "Force électromotrice d'auto-induction e = -L·di/dt."
+  ]
+}

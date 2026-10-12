@@ -10,6 +10,7 @@ from types import SimpleNamespace as N
 PLAN = {
     "titre": "Vitesse angulaire et vitesse linéaire",
     "objectif": "Relier la vitesse d'un point à sa distance à l'axe.",
+    "objectifs_officiels": ["O3", "O4"],
     "conceptions_visees": [{"id": "meme_vitesse_tous_points", "comment_la_traiter": "Comparer deux points du disque."}],
     "prediction": {
         "question": "Deux points d'un disque qui tourne : lequel va le plus vite ?",

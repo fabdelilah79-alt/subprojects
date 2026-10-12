@@ -1,0 +1,54 @@
+{
+  "id": "2bac/intro_physicien",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Introduction",
+  "titre": "Les questions que se pose le physicien",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 2,
+      "exercices": 0
+    }
+  ],
+  "source_pages": [
+    79,
+    83,
+    112,
+    117
+  ],
+  "contenus": [
+    "Activités du physicien et rôles de la physique dans la société.",
+    "Questions du physicien dans son métier."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Situer les activités du physicien et ses préoccupations (communication, ondes, énergie nucléaire, satellites)."
+    }
+  ],
+  "activites": [
+    "Analyser un article ou une intervention de physicien."
+  ],
+  "orientations": [
+    "Faire émerger les questions qui structurent le programme de l'année ; évoquer les stratégies de résolution de problèmes."
+  ],
+  "hors_programme": []
+}

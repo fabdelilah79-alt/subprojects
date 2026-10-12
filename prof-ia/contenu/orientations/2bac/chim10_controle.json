@@ -1,0 +1,81 @@
+{
+  "id": "2bac/chim10_controle",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Contrôle de l'évolution des systèmes chimiques",
+  "titre": "Contrôle de l'évolution : changement de réactif, catalyse",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 0,
+      "exercices": 0,
+      "pour": "voir chim9"
+    }
+  ],
+  "source_pages": [
+    83,
+    103,
+    104,
+    116,
+    143,
+    144
+  ],
+  "prerequis": [
+    "2bac/chim9_esterification"
+  ],
+  "contenus": [
+    "Synthèse d'un ester à partir d'un anhydride d'acide et d'un alcool.",
+    "Hydrolyse basique des esters : saponification, préparation d'un savon, propriétés ; relations structure-propriétés.",
+    "Catalyse."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Écrire l'équation de la réaction d'un anhydride avec un alcool ; savoir qu'elle est rapide et totale."
+    },
+    {
+      "id": "O2",
+      "texte": "Écrire l'équation de saponification."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître les parties hydrophile et hydrophobe d'un ion carboxylate à longue chaîne."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître le rôle accélérateur et sélectif du catalyseur."
+    }
+  ],
+  "activites": [
+    "Synthèse de l'aspirine.",
+    "Préparation d'un savon et étude de ses propriétés."
+  ],
+  "orientations": [
+    "Pour améliorer le rendement, se limiter à l'anhydride d'acide.",
+    "Savon : réinvestir les relations structure-propriétés (1re année).",
+    "Une seule réaction est l'exception : on peut favoriser une réaction (ex. titrage direct de l'aspirine en évitant la saponification).",
+    "Catalyseur : rôle cinétique et sélectif, ne modifie pas l'état d'équilibre ; choix industriel d'un catalyseur sélectif."
+  ],
+  "hors_programme": [
+    "Explication de la réactivité des anhydrides par comparaison avec les acides.",
+    "Autocatalyse.",
+    "Mécanisme réactionnel de la catalyse."
+  ]
+}

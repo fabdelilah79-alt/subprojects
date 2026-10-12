@@ -1,0 +1,84 @@
+{
+  "id": "2bac/ondes1_mecaniques",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Ondes",
+  "titre": "Ondes mécaniques progressives",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    79,
+    83,
+    84,
+    85,
+    112,
+    118,
+    119
+  ],
+  "contenus": [
+    "Définition d'une onde mécanique et célérité.",
+    "Ondes longitudinales et transversales ; propriétés.",
+    "Onde progressive à une dimension ; notion de retard."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Définir une onde mécanique et sa célérité."
+    },
+    {
+      "id": "O2",
+      "texte": "Distinguer ondes longitudinales et transversales ; propriétés générales des ondes."
+    },
+    {
+      "id": "O3",
+      "texte": "Définir une onde progressive à une dimension ; relier l'élongation d'un point à celle de la source (retard)."
+    },
+    {
+      "id": "O4",
+      "texte": "Exploiter la relation entre retard, distance et célérité."
+    },
+    {
+      "id": "O5",
+      "texte": "Mesurer un retard ou une célérité (oscilloscope)."
+    }
+  ],
+  "activites": [
+    "Exemples familiers : vagues, sons, séismes.",
+    "Corde, ressort, cuve à ondes, ondes sonores : mesure du retard, calcul de la célérité.",
+    "Influence de l'inertie et de la rigidité du milieu sur la célérité."
+  ],
+  "orientations": [
+    "Introduire l'onde par l'expérience ; comparer le mouvement d'un corps et la propagation d'une perturbation.",
+    "La célérité ne dépend pas de la forme de la perturbation (milieux à une dimension) mais du milieu et de son état (température, tension de la corde, rigidité).",
+    "Définition : propagation d'une perturbation sans transport de matière ; elle ne suppose aucun caractère périodique.",
+    "Ondes sonores dans les fluides : qualitativement, ondes de compression-dilatation.",
+    "Se limiter aux ondes progressives à une dimension qui se propagent sans déformation.",
+    "Célérité de la lumière dans le vide notée c, dans les autres milieux v."
+  ],
+  "hors_programme": [
+    "Représentation mathématique y = f(x, t).",
+    "Représentation graphique du mouvement d'un point à partir de la forme de l'onde, et inversement."
+  ]
+}

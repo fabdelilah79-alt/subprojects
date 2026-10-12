@@ -1,0 +1,55 @@
+{
+  "id": "2bac/chim8_transformations_forcees",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Sens d'évolution d'un système chimique",
+  "titre": "Exemples de transformations forcées : l'électrolyse",
+  "filieres": [
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 0,
+      "exercices": 0,
+      "pour": "voir chim6"
+    }
+  ],
+  "source_pages": [
+    116,
+    142,
+    143
+  ],
+  "prerequis": [
+    "2bac/chim7_piles"
+  ],
+  "contenus": [
+    "Changer le sens d'évolution en imposant un courant inverse : transformation forcée.",
+    "Réactions aux électrodes : anode et cathode.",
+    "Électrolyse : principe et applications courantes et industrielles."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Savoir que l'électrolyse est une transformation forcée."
+    },
+    {
+      "id": "O2",
+      "texte": "Identifier l'anode (oxydation) et la cathode (réduction) à partir du sens du courant imposé."
+    }
+  ],
+  "activites": [
+    "Mise en évidence de l'électrolyse ; accumulateur au plomb ; électrolyse d'une solution de chlorure de sodium.",
+    "Respiration et photosynthèse."
+  ],
+  "orientations": [
+    "Utiliser une pile (spontanée) comme générateur pour réaliser une électrolyse (forcée)."
+  ],
+  "hors_programme": []
+}

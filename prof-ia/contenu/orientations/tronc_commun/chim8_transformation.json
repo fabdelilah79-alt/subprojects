@@ -1,0 +1,60 @@
+{
+  "id": "tronc_commun/chim8_transformation",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "Transformations de la matière",
+  "titre": "Transformation chimique d'un système",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 8,
+      "exercices": 0,
+      "pour": "voir chim7"
+    }
+  ],
+  "source_pages": [
+    20,
+    41
+  ],
+  "prerequis": [
+    "tronc_commun/chim7_quantite_matiere"
+  ],
+  "contenus": [
+    "Modélisation : état initial, état final, réaction chimique, équation (réactifs, produits, coefficients stœchiométriques).",
+    "Bilan de matière : avancement, quantités de matière au cours de la réaction, tableau d'avancement."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Décrire un système chimique et son évolution."
+    },
+    {
+      "id": "O2",
+      "texte": "Écrire et ajuster une équation chimique."
+    },
+    {
+      "id": "O3",
+      "texte": "Comprendre l'avancement et le calculer."
+    },
+    {
+      "id": "O4",
+      "texte": "Dresser un tableau d'avancement et faire un bilan de matière."
+    }
+  ],
+  "activites": [
+    "Expériences : cuivre et nitrate d'argent, fer et sulfate de cuivre, combustions, sodium et dichlore, précipitation de l'hydroxyde de cuivre.",
+    "Influence des quantités de réactifs sur l'avancement maximal (acide éthanoïque et hydrogénocarbonate de sodium)."
+  ],
+  "orientations": [
+    "Ajuster une équation = conservation des éléments et des charges.",
+    "La transformation se fait par étapes ; les quantités variables s'expriment par une grandeur nouvelle : l'avancement."
+  ],
+  "hors_programme": []
+}

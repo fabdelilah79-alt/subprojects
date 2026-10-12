@@ -1,0 +1,79 @@
+{
+  "id": "1bac/opt2_images",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Optique",
+  "titre": "Obtention de l'image d'un objet : miroir plan, lentille mince convergente",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST"
+      ],
+      "cours": 8,
+      "exercices": 2
+    },
+    {
+      "filieres": [
+        "SM"
+      ],
+      "cours": 10,
+      "exercices": 3
+    }
+  ],
+  "source_pages": [
+    48,
+    62,
+    63,
+    64
+  ],
+  "prerequis": [
+    "1bac/opt1_visibilite"
+  ],
+  "contenus": [
+    "Miroir plan : image et position ; point image conjugué ; lois de la réflexion.",
+    "Lentille mince convergente : conditions de Gauss ; centre optique, foyers, distance focale, vergence ; construction (objet plan perpendiculaire à l'axe, objet à l'infini) ; relations de conjugaison et de grandissement ; loupe."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Déterminer expérimentalement et graphiquement la position et la taille d'une image (miroir plan)."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître les conditions de Gauss."
+    },
+    {
+      "id": "O3",
+      "texte": "Représenter une lentille mince convergente, placer centre et foyers ; vergence et unité."
+    },
+    {
+      "id": "O4",
+      "texte": "Construire graphiquement l'image d'un objet ; nature de l'objet et de l'image."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître et utiliser les relations de conjugaison et de grandissement."
+    },
+    {
+      "id": "O6",
+      "texte": "Connaître le rôle de la loupe et construire l'image qu'elle donne."
+    }
+  ],
+  "activites": [
+    "Image par un miroir plan ; champ de vision ; expérience des deux bougies.",
+    "Caractéristiques d'une lentille ; construction géométrique.",
+    "Établir les relations de conjugaison et de grandissement (algébriques, le plus simplement possible)."
+  ],
+  "orientations": [
+    "L'axe optique principal est orienté dans le sens de propagation de la lumière pour les constructions."
+  ],
+  "hors_programme": [
+    "Foyers secondaires de la lentille convergente."
+  ]
+}

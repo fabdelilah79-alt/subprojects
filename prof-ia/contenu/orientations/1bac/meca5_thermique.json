@@ -1,0 +1,77 @@
+{
+  "id": "1bac/meca5_thermique",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Travail mécanique et énergie",
+  "titre": "Énergie thermique, transfert thermique",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST"
+      ],
+      "cours": 5,
+      "exercices": 2
+    },
+    {
+      "filieres": [
+        "SM"
+      ],
+      "cours": 6,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    47,
+    51,
+    56,
+    57
+  ],
+  "contenus": [
+    "Chaleur massique d'un corps pur ; Q = m·c·Δθ et convention de signe.",
+    "Équilibre thermique ; calorimétrie.",
+    "Chaleur latente de changement d'état.",
+    "Transfert par rayonnement."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Savoir que la chaleur est un mode de transfert d'énergie."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître et utiliser Q = m·c·Δθ ; unité."
+    },
+    {
+      "id": "O3",
+      "texte": "Écrire la relation d'équilibre thermique."
+    },
+    {
+      "id": "O4",
+      "texte": "Déterminer une capacité thermique et une chaleur massique (métal)."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître la chaleur latente de changement d'état et son unité."
+    },
+    {
+      "id": "O6",
+      "texte": "Savoir que le rayonnement est un mode de transfert."
+    }
+  ],
+  "activites": [
+    "Expériences simples : paramètres dont dépend Q.",
+    "Capacité thermique d'un calorimètre, chaleur massique d'un métal, chaleur latente de fusion de la glace.",
+    "Exemples et documents sur le rayonnement."
+  ],
+  "orientations": [
+    "Q dépend de la masse, de la nature et de la variation de température : établir l'expression à partir d'expériences simples.",
+    "Le bilan calorimétrique ne dépend que des états initial et final."
+  ],
+  "hors_programme": []
+}

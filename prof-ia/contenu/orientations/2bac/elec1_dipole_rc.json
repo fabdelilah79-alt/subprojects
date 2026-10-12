@@ -1,0 +1,96 @@
+{
+  "id": "2bac/elec1_dipole_rc",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Dipôle RC",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 6,
+      "exercices": 1
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 5,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    80,
+    89,
+    90,
+    112,
+    123,
+    124
+  ],
+  "contenus": [
+    "Condensateur : description, symbole, charges des armatures, intensité, convention récepteur ; i = dq/dt ; q = C·u ; capacité ; associations série et parallèle.",
+    "Dipôle RC : réponse à un échelon de tension (étude expérimentale et théorique) ; énergie stockée."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Représenter un condensateur et orienter un circuit en convention récepteur."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître i = dq/dt et q = C·u ; capacité et unité."
+    },
+    {
+      "id": "O3",
+      "texte": "Calculer la capacité équivalente en série et en parallèle."
+    },
+    {
+      "id": "O4",
+      "texte": "Établir l'équation différentielle de la charge et vérifier sa solution."
+    },
+    {
+      "id": "O5",
+      "texte": "Savoir que la tension aux bornes du condensateur est continue ; connaître τ = RC et son influence."
+    },
+    {
+      "id": "O6",
+      "texte": "Exploiter des enregistrements de charge et de décharge."
+    },
+    {
+      "id": "O7",
+      "texte": "Connaître l'énergie stockée dans un condensateur."
+    }
+  ],
+  "activites": [
+    "Charge par un générateur de courant idéal (u = f(t)).",
+    "Réponse RC à un échelon : uC(t) à l'oscilloscope ou à l'ordinateur ; influence de R et C ; mesure de τ.",
+    "Énergie stockée ; applications (flash)."
+  ],
+  "orientations": [
+    "Aucune extension sur la technologie des condensateurs.",
+    "q = C·u établie par la charge à courant constant (générateur de courant et voltmètre électronique, non étudiés).",
+    "Orienter le circuit par une flèche ; i positive dans le sens de la flèche.",
+    "Équation différentielle u + RC·du/dt = E ; régime permanent.",
+    "Stockage et décharge non instantanés car la tension aux bornes est continue."
+  ],
+  "hors_programme": [
+    "Condensateur électrochimique.",
+    "Capacité d'un condensateur plan.",
+    "Technologie des condensateurs."
+  ]
+}

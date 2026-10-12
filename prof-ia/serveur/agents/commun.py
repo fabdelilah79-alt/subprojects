@@ -8,6 +8,7 @@ Le contexte stable est identique d'un appel à l'autre (même texte, même ordre
 import json
 from functools import lru_cache
 
+from serveur import orientations
 from serveur.agents.appel_ia import appeler
 from serveur.configuration import chemin_projet
 
@@ -31,13 +32,12 @@ def partition_modele():
 
 @lru_cache(maxsize=1)
 def contexte_stable():
-    """Assemble le contexte commun : règles, cours, orientations, manifeste, partition modèle."""
+    """Assemble le contexte commun : règles, cours, programme officiel du chapitre, manifeste, partition modèle."""
     contenu = chemin_projet("contenu")
-    orientations = [lire_texte(f) for f in sorted((contenu / "orientations").glob("*")) if f.suffix in (".md", ".txt")]
     morceaux = [
         lire_texte(chemin_projet("prompts") / "commun.md"),
         "# Le cours\n\n" + "\n\n".join(lire_texte(f) for f in sorted((contenu / "cours").glob("*.md"))),
-        "# Orientations pédagogiques\n\n" + ("\n\n".join(orientations) or "(aucun extrait fourni)"),
+        "# Programme officiel (orientations pédagogiques nationales)\n\n" + orientations.texte_pour_agents(),
         "# Manifeste des ressources\n\n" + json.dumps(json.loads(lire_texte(contenu / "manifeste.json")), ensure_ascii=False, sort_keys=True),
         "# Partition modèle (exemple validé par l'enseignant)\n\n" + partition_modele(),
     ]

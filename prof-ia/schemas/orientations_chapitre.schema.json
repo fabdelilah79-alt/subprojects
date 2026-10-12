@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fiche d'un chapitre des orientations pédagogiques nationales",
+  "description": "Extrait structuré et court du programme officiel pour un chapitre : ce que les agents doivent respecter.",
+  "type": "object",
+  "required": ["id", "niveau", "discipline", "domaine", "titre", "filieres", "duree_h", "source_pages",
+               "contenus", "objectifs", "orientations", "hors_programme"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "description": "niveau/nom, identique au chemin du fichier sans .json.", "type": "string", "pattern": "^[a-z0-9_]+/[a-z0-9_]+$" },
+    "niveau": { "enum": ["tronc_commun", "1bac", "2bac"] },
+    "discipline": { "enum": ["physique", "chimie"] },
+    "domaine": { "description": "Partie du programme (mécanique, électricité, ondes…).", "type": "string", "minLength": 1 },
+    "titre": { "type": "string", "minLength": 1 },
+    "filieres": { "description": "Codes des filières concernées (voir index.json).", "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "duree_h": {
+      "description": "Horaire officiel : cours et exercices, par groupe de filières. « pour » : quand l'horaire couvre plusieurs chapitres.",
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["filieres", "cours", "exercices"], "additionalProperties": false,
+        "properties": {
+          "filieres": { "type": "array", "items": { "type": "string" } },
+          "cours": { "type": "number", "minimum": 0 },
+          "exercices": { "type": "number", "minimum": 0 },
+          "pour": { "type": "string" }
+        }
+      }
+    },
+    "source_pages": { "description": "Pages du document officiel (numérotation imprimée en bas de page).", "type": "array", "minItems": 1, "items": { "type": "integer" } },
+    "prerequis": { "description": "id d'autres fiches dont les acquis sont rappelés.", "type": "array", "items": { "type": "string" } },
+    "contenus": { "description": "Contenus du programme, dans l'ordre.", "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "objectifs": { "description": "Savoirs et savoir-faire exigibles, numérotés.", "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/objectif" } },
+    "activites": { "description": "Activités proposées par le programme.", "type": "array", "items": { "type": "string" } },
+    "orientations": { "description": "Consignes officielles : démarche, limites, notations.", "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "hors_programme": { "description": "Ce qu'il ne faut PAS aborder.", "type": "array", "items": { "type": "string" } },
+    "travaux_pratiques": { "type": "array", "items": { "type": "string" } },
+    "specifique": {
+      "description": "Ajouts (ou limites) propres à certaines filières.",
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["filieres"], "additionalProperties": false,
+        "properties": {
+          "filieres": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "contenus": { "type": "array", "items": { "type": "string" } },
+          "objectifs": { "type": "array", "items": { "$ref": "#/$defs/objectif" } },
+          "activites": { "type": "array", "items": { "type": "string" } },
+          "orientations": { "type": "array", "items": { "type": "string" } },
+          "hors_programme": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "objectif": {
+      "type": "object", "required": ["id", "texte"], "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^O[0-9]+$" },
+        "texte": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

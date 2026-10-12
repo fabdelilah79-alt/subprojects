@@ -1,0 +1,93 @@
+{
+  "id": "2bac/chim9_esterification",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Contrôle de l'évolution des systèmes chimiques",
+  "titre": "Réactions d'estérification et d'hydrolyse",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 7,
+      "exercices": 2,
+      "pour": "chim9 et chim10"
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 10,
+      "exercices": 2,
+      "pour": "chim9 et chim10"
+    }
+  ],
+  "source_pages": [
+    83,
+    103,
+    104,
+    116,
+    143,
+    144
+  ],
+  "prerequis": [
+    "1bac/chim6_formule_chimique",
+    "2bac/chim4_equilibre"
+  ],
+  "contenus": [
+    "Formation d'un ester à partir d'un acide et d'un alcool ; équation.",
+    "Hydrolyse d'un ester ; équation.",
+    "Équilibre ; rendement ; catalyseur.",
+    "Contrôle de la vitesse (température, catalyseur) et de l'état final (excès de réactif, élimination d'un produit)."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Reconnaître les groupes -CO2R, -OH, -COOH, -CO-O-CO-."
+    },
+    {
+      "id": "O2",
+      "texte": "Écrire les équations d'estérification et d'hydrolyse ; retrouver l'acide et l'alcool d'un ester."
+    },
+    {
+      "id": "O3",
+      "texte": "Nommer les esters de cinq atomes de carbone au plus."
+    },
+    {
+      "id": "O4",
+      "texte": "Savoir que ces réactions sont inverses, lentes, et conduisent à un équilibre."
+    },
+    {
+      "id": "O5",
+      "texte": "Savoir qu'un catalyseur accélère sans modifier l'équilibre ; un excès de réactif ou l'élimination d'un produit déplace l'équilibre."
+    },
+    {
+      "id": "O6",
+      "texte": "Calculer un rendement ; justifier le matériel (reflux, distillation fractionnée, filtration sous vide) ; sécurité."
+    }
+  ],
+  "activites": [
+    "Mise en évidence de la lenteur et de l'équilibre ; modifier la vitesse ou le taux d'avancement."
+  ],
+  "orientations": [
+    "Esters et anhydrides : réinvestir la 1re année et aborder des applications industrielles.",
+    "Ajouter un réactif ou éliminer un produit diminue Qr (Qr < K) : évolution dans le sens direct."
+  ],
+  "hors_programme": [
+    "Mécanisme de l'estérification (déduit : le programme exclut les mécanismes réactionnels)."
+  ]
+}

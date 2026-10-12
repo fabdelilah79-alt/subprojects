@@ -25,7 +25,8 @@
         "empreinte_prompts": { "description": "Empreinte des fichiers de prompts/, pour savoir quelle version a servi.", "type": "string" },
         "fournisseur_voix": { "description": "gemini ou elevenlabs.", "type": "string" },
         "voix": { "description": "Nom de la voix utilisée.", "type": "string" },
-        "relu_par_enseignant": { "description": "true quand l'enseignant a validé le contenu.", "type": "boolean" }
+        "relu_par_enseignant": { "description": "true quand l'enseignant a validé le contenu.", "type": "boolean" },
+        "objectifs_officiels": { "description": "id des objectifs du programme officiel traités (fiche du chapitre).", "type": "array", "items": { "type": "string", "pattern": "^O[0-9]+$" } }
       }
     },
     "beat": {

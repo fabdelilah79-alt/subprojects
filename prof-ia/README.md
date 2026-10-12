@@ -72,6 +72,16 @@ python -m outils.exporter_donnees
 Fichiers CSV dans sorties/journaux/exports/ (aucun nom d'élève). La correspondance nom ↔ pseudonyme reste
 dans sorties/prive/ : ne la partagez pas.
 
+## Programme officiel
+
+Les orientations nationales sont dans contenu/orientations/ : une fiche par chapitre et par niveau.
+Pour un autre cours, indiquez dans config/application.json la fiche (`"orientations": "2bac/elec1_dipole_rc"`),
+la filière (`"filiere": "PC"`) et les objectifs de chaque partie (`"objectifs_par_partie"`). Pour vérifier :
+
+```
+python -m outils.couverture_orientations
+```
+
 ## Vérifier
 
 ```

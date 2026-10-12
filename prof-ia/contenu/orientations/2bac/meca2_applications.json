@@ -1,0 +1,127 @@
+{
+  "id": "2bac/meca2_applications",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Applications des lois de Newton : chute, mouvements plans",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 6,
+      "exercices": 2
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 13,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    80,
+    81,
+    94,
+    113,
+    114,
+    129,
+    130,
+    131
+  ],
+  "prerequis": [
+    "2bac/meca1_newton"
+  ],
+  "contenus": [
+    "Chute libre verticale d'un solide.",
+    "Mouvements plans : solide sur un plan horizontal et incliné ; projectile dans un champ de pesanteur uniforme."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Définir la chute libre ; établir et résoudre son équation différentielle."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître le mouvement rectiligne uniformément varié et ses équations horaires ; exploiter vG = f(t)."
+    },
+    {
+      "id": "O3",
+      "texte": "Appliquer la deuxième loi à un solide sur un plan horizontal ou incliné, avec ou sans frottement."
+    },
+    {
+      "id": "O4",
+      "texte": "Projectile : équations horaires, trajectoire, flèche et portée ; importance des conditions initiales."
+    }
+  ],
+  "activites": [
+    "Bille en chute libre.",
+    "Solide sur plan horizontal ou incliné.",
+    "Logiciels et vidéos de projectiles de masses différentes (air négligé)."
+  ],
+  "orientations": [
+    "Rappeler le champ de pesanteur uniforme ; utiliser l'ordinateur et la caméra.",
+    "La chute libre définit le mouvement rectiligne uniformément varié ; l'accélération ne dépend pas de la masse.",
+    "Mouvements rectilignes : ẍ = cte et ẍ = 0.",
+    "Projectile : négliger tous les frottements."
+  ],
+  "hors_programme": [],
+  "specifique": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "contenus": [
+        "Chute verticale avec frottement (modèles F = -k·v et F = -k·v²) ; vitesse limite, temps caractéristique ; méthode d'Euler.",
+        "Particule chargée dans un champ électrostatique uniforme (E = U/d, F = q·E) ; déviation.",
+        "Particule chargée dans un champ magnétique uniforme (force de Lorentz, v0 ⟂ B) ; mouvement circulaire uniforme.",
+        "Satellites et planètes : référentiels héliocentrique et géocentrique ; lois de Kepler ; gravitation ; mouvement circulaire uniforme."
+      ],
+      "objectifs": [
+        {
+          "id": "O5",
+          "texte": "Exploiter vG = f(t) : vitesse limite, temps caractéristique, régimes initial et permanent ; méthode d'Euler au tableur."
+        },
+        {
+          "id": "O6",
+          "texte": "Établir les équations du mouvement d'une particule chargée dans un champ électrostatique uniforme ; déviation."
+        },
+        {
+          "id": "O7",
+          "texte": "Connaître la force de Lorentz ; mouvement circulaire uniforme d'une particule chargée (v0 ⟂ B)."
+        },
+        {
+          "id": "O8",
+          "texte": "Connaître les trois lois de Kepler ; démontrer la troisième ; appliquer la deuxième loi à un satellite ou une planète."
+        }
+      ],
+      "orientations": [
+        "Temps caractéristique : abscisse de l'intersection de la tangente à l'origine avec l'asymptote vlim.",
+        "Méthode numérique itérative (Euler) : discuter l'importance du pas et la validité du modèle.",
+        "Particules chargées : appliquer ΣF = m·a ou ΣF = dp/dt (points matériels) ; oscilloscope ; spectrographe de masse, cyclotron.",
+        "Satellites : se limiter aux mouvements circulaires uniformes ; satellite géostationnaire ; simulations de mise en orbite."
+      ],
+      "hors_programme": [
+        "Particule chargée dont la vitesse initiale n'est pas perpendiculaire au champ magnétique.",
+        "Orbites elliptiques (étude dynamique)."
+      ]
+    }
+  ]
+}

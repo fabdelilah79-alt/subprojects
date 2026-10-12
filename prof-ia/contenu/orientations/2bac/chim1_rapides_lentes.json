@@ -1,0 +1,90 @@
+{
+  "id": "2bac/chim1_rapides_lentes",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Transformations rapides et lentes",
+  "titre": "Transformations rapides et transformations lentes",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE"
+      ],
+      "cours": 6,
+      "exercices": 2,
+      "pour": "chim1 et chim2"
+    },
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 9,
+      "exercices": 2,
+      "pour": "chim1 et chim2"
+    }
+  ],
+  "source_pages": [
+    81,
+    99,
+    115,
+    137
+  ],
+  "prerequis": [
+    "1bac/chim4_titrages"
+  ],
+  "contenus": [
+    "Rappel : couples Ox/Red, équations d'oxydoréduction avec demi-équations.",
+    "Mise en évidence de transformations rapides et lentes.",
+    "Facteurs cinétiques : température, concentration des réactifs."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Écrire l'équation d'oxydoréduction et identifier les couples."
+    },
+    {
+      "id": "O2",
+      "texte": "Définir oxydant et réducteur."
+    },
+    {
+      "id": "O3",
+      "texte": "Mettre en évidence l'influence des facteurs cinétiques à partir de résultats expérimentaux."
+    }
+  ],
+  "activites": [
+    "H2O2 + I- ; S2O3 2- + H+ ; liqueurs de Fehling et de Tollens ; manomètre, conductimètre.",
+    "Vie courante : autocuiseur, conservation des aliments par le froid."
+  ],
+  "orientations": [
+    "Partir d'observations qualitatives avant toute mesure."
+  ],
+  "hors_programme": [],
+  "specifique": [
+    {
+      "filieres": [
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "contenus": [
+        "Interprétation microscopique : la réaction par chocs efficaces ; influence de la concentration et de la température sur leur nombre par unité de temps."
+      ],
+      "orientations": [
+        "Interprétation microscopique qualitative uniquement ; on peut l'illustrer par une simulation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "tronc_commun/elec3_montages_electriques",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Montages électriques",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 13,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    19,
+    30,
+    31
+  ],
+  "prerequis": [
+    "tronc_commun/elec2_tension"
+  ],
+  "contenus": [
+    "Association de conducteurs ohmiques.",
+    "Caractéristiques de dipôles passifs.",
+    "Dipôle actif : générateur, récepteur.",
+    "Point de fonctionnement ; loi de Pouillet."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître R = ρ·l/S et la conductance G."
+    },
+    {
+      "id": "O2",
+      "texte": "Calculer une résistance équivalente en série et en parallèle."
+    },
+    {
+      "id": "O3",
+      "texte": "Utiliser le diviseur de tension U = R1/(R1+R2)·U0."
+    },
+    {
+      "id": "O4",
+      "texte": "Tracer et exploiter la caractéristique d'un dipôle passif ; tension de seuil, tension Zener."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître le rôle des dipôles commandés : photorésistance, thermistance, DEL."
+    },
+    {
+      "id": "O6",
+      "texte": "Appliquer la loi d'Ohm pour un générateur (E, r, courant de court-circuit) et pour un récepteur (E', r')."
+    },
+    {
+      "id": "O7",
+      "texte": "Déterminer un point de fonctionnement (expérience, graphique, calcul) ; associer des générateurs en série ; loi de Pouillet."
+    }
+  ],
+  "activites": [
+    "Associations série/dérivation (ohmmètre), diviseur de tension.",
+    "Caractéristiques : lampe, diode, Zener, thermistance, photorésistance, DEL ; pile ; électrolyseur.",
+    "Point de fonctionnement."
+  ],
+  "orientations": [
+    "Rappels du collège ; montage série avec variation d'intensité pour tracer une caractéristique.",
+    "Zener observée à l'oscilloscope.",
+    "Générateur et électrolyseur étudiés dans la même séance de TP ; la loi d'Ohm est dégagée au cours suivant.",
+    "Conventions générateur/récepteur SANS algébriser l'intensité.",
+    "Partir d'un problème d'adaptation entre éléments d'un circuit.",
+    "Effet de la température (thermistance) et de la lumière (photorésistance), mesuré à l'ohmmètre."
+  ],
+  "hors_programme": [
+    "Algébrisation de l'intensité du courant."
+  ]
+}

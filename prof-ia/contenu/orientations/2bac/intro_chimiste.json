@@ -1,0 +1,55 @@
+{
+  "id": "2bac/intro_chimiste",
+  "niveau": "2bac",
+  "discipline": "chimie",
+  "domaine": "Introduction",
+  "titre": "Les questions que se pose le chimiste",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 2,
+      "exercices": 0
+    }
+  ],
+  "source_pages": [
+    81,
+    98,
+    114,
+    136
+  ],
+  "contenus": [
+    "Rôle de la chimie dans la société ; activités du chimiste.",
+    "Questions du chimiste dans son métier."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Classer les activités du chimiste (extraction, analyse, synthèse, recyclage) et situer ses préoccupations (coût, déchets, environnement, santé)."
+    }
+  ],
+  "activites": [
+    "Analyser un article, une vidéo ou une intervention de chimiste."
+  ],
+  "orientations": [
+    "Faire émerger les questions de l'année : une transformation est-elle toujours rapide ? toujours totale ? son sens est-il prévisible, peut-on l'inverser ? comment la contrôler ?",
+    "Exemples de stratégies, surtout en chimie organique."
+  ],
+  "hors_programme": []
+}

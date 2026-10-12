@@ -1,0 +1,65 @@
+{
+  "id": "1bac/opt3_instruments",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Optique",
+  "titre": "Quelques instruments d'optique",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 5,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    48,
+    62,
+    63,
+    64
+  ],
+  "prerequis": [
+    "1bac/opt2_images"
+  ],
+  "contenus": [
+    "Modélisation expérimentale d'un instrument : la lunette astronomique.",
+    "Le microscope : construction de l'image, conjugaison et grandissement ; diamètre apparent, grossissement commercial, cercle oculaire."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître le rôle des éléments de la lunette astronomique et du microscope."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître le diamètre apparent, le grossissement commercial et le cercle oculaire."
+    },
+    {
+      "id": "O3",
+      "texte": "Construire la marche d'un faisceau dans un instrument."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître les limites du microscope."
+    }
+  ],
+  "activites": [
+    "Activités documentaires et expérimentales sur la lunette.",
+    "Principe du microscope."
+  ],
+  "orientations": [
+    "Étude documentaire et expérimentale pour clarifier les notions et montrer l'importance de l'optique.",
+    "Cercle oculaire : seulement son intérêt pratique, qualitativement."
+  ],
+  "hors_programme": [
+    "Étude quantitative du cercle oculaire."
+  ]
+}

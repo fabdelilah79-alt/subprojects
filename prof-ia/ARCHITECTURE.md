@@ -105,6 +105,15 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | serveur/tests/faux_claude.py | Faux client Claude pour les tests : jamais d'appel réel ni de clé. |
 | serveur/tests/test_agents.py, test_classe.py, test_questions.py, test_export.py | Testent agents et orchestrateur, file d'attente et classe, main levée, export. |
 
+| contenu/orientations/instructionsPC lycee.pdf | Document officiel (2007, en arabe) : orientations pédagogiques et programmes de physique-chimie du lycée. |
+| contenu/orientations/index.json | Niveaux, filières, horaires annuels et liste des 63 chapitres. |
+| contenu/orientations/general.json | Règles générales : finalités, démarche, écriture scientifique, cahier de l'élève. |
+| contenu/orientations/<niveau>/<chapitre>.json | Une fiche par chapitre (tronc_commun, 1bac, 2bac) : contenus, objectifs O1…, activités, orientations, hors programme, ajouts par filière. |
+| schemas/orientations_chapitre.schema.json | Format d'une fiche de chapitre. |
+| serveur/orientations.py | Lit les fiches, adapte celle du cours à la filière, prépare le texte compact donné aux agents et les objectifs de chaque partie. |
+| outils/couverture_orientations.py | Tableau pour l'enseignant : quels objectifs officiels sont traités par quelles parties. |
+| serveur/tests/test_orientations.py | Vérifie les 63 fiches, l'index, l'adaptation par filière et le lien avec le cours. |
+
 Les fichiers `__init__.py` signalent à Python qu'un dossier contient du code ; ils sont vides.
 Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les garde.
 
@@ -117,7 +126,10 @@ Les dossiers encore vides contiennent un fichier `.gitkeep`, pour que git les ga
 | mode | « fige » : parties validées, aucun appel à l'IA. « adaptatif » : parties générées pour chaque élève. | fige, pour qu'aucun appel payant ne parte par erreur |
 | serveur.hote | Adresse du serveur. 127.0.0.1 = accessible depuis cet ordinateur seulement. | 127.0.0.1 |
 | serveur.port | Numéro de port : l'adresse devient http://127.0.0.1:8000. | 8000 |
-| cours | Cours proposés à l'accueil : un identifiant, le titre affiché et le nombre de parties. | rotation d'un solide autour d'un axe fixe, 3 parties |
+| cours | Cours proposés à l'accueil : identifiant, titre affiché, nombre de parties. | rotation d'un solide autour d'un axe fixe, 3 parties |
+| cours.orientations | Fiche du programme officiel du chapitre (contenu/orientations/<niveau>/<chapitre>). | 1bac/meca1_rotation |
+| cours.filiere | Filière de la classe : elle choisit les ajouts propres à la filière (codes dans contenu/orientations/index.json). | SE |
+| cours.objectifs_par_partie | Objectifs officiels (O1, O2…) attribués à chaque partie : l'agent pédagogique les reçoit. | 1 : O1, O2 ; 2 : O3, O4 ; 3 : O5, O6 |
 | classes | Classes proposées à l'accueil. Une liste évite les fautes de frappe dans les données. | à remplacer par vos classes |
 | pseudonymes.prefixe / chiffres | Forme des pseudonymes : E001, E002… | E / 3 |
 | chemins | Dossiers et fichiers du projet, relatifs au dossier prof-ia (dont le journal SQLite et le dossier des exports). | voir le fichier |
@@ -221,3 +233,13 @@ Tout est sous pseudonyme. La correspondance nom ↔ pseudonyme est seulement dan
 | sorties/parties/<pseudonyme>/ | eleve.json, reponses_qcm.json, profil.json, reponses_qcm_post.json, profil_post.json, partie_<n>.json (et leur bilan). |
 | sorties/journaux/journal.sqlite | Un événement par ligne : inscription, qcm_pre, qcm_post, prediction, media_ouvert, plein_ecran, media_termine, partie_servie, partie_commencee, partie_terminee, retour_onglet, main_levee, question_posee, reponse_donnee, generation, generation_erreur. |
 | sorties/journaux/exports/ | Les CSV produits par `python -m outils.exporter_donnees` (séparateur ;, ouverts directement par un tableur). |
+
+## Programme officiel
+
+Les orientations pédagogiques nationales (PDF officiel) sont résumées en fiches JSON courtes, une par chapitre
+et par niveau. L'application n'en lit qu'une : celle du cours, adaptée à la filière de la classe.
+Elle est placée dans le contexte de tous les agents (environ 1 300 jetons, mis en cache) avec des règles strictes
+(prompts/commun.md) : objectifs à servir, hors programme interdit, orientations à suivre à la lettre.
+Chaque partie déclare les objectifs qu'elle traite (generation.objectifs_officiels) ; la validation refuse un
+objectif inconnu, et `python -m outils.couverture_orientations` montre ce qui est couvert.
+Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, SA, STM, STE, PC, SMA, SMB (2e année).

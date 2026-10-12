@@ -1,0 +1,55 @@
+{
+  "id": "tronc_commun/chim3_synthese",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "La chimie autour de nous",
+  "titre": "Synthèse d'espèces chimiques",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 3,
+      "exercices": 0,
+      "pour": "voir chim1"
+    }
+  ],
+  "source_pages": [
+    20,
+    36
+  ],
+  "contenus": [
+    "Nécessité de la chimie de synthèse.",
+    "Synthèse d'une espèce chimique.",
+    "Comparaison d'une espèce synthétique et d'une espèce naturelle."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Respecter la sécurité et l'environnement pendant une synthèse."
+    },
+    {
+      "id": "O2",
+      "texte": "Proposer une méthode expérimentale pour comparer deux espèces."
+    },
+    {
+      "id": "O3",
+      "texte": "Interpréter, discuter et présenter les résultats d'une analyse comparative."
+    }
+  ],
+  "activites": [
+    "Synthétiser une espèce (chauffage à reflux, filtration, séparation).",
+    "Synthétiser une espèce existant dans la nature et vérifier qu'elle est identique à l'espèce naturelle."
+  ],
+  "orientations": [
+    "Exemples en chimie organique ou industrielle : polymères, médicaments, colorants, arômes, savon.",
+    "Montrer qu'on peut synthétiser un équivalent d'une espèce naturelle.",
+    "Nécessité du montage à reflux ; écriture simplifiée des réactions avec noms ou formules brutes."
+  ],
+  "hors_programme": []
+}

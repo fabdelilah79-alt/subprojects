@@ -1,0 +1,70 @@
+{
+  "id": "tronc_commun/elec2_tension",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Tension électrique",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 3,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    19,
+    28,
+    29
+  ],
+  "prerequis": [
+    "tronc_commun/elec1_courant_continu"
+  ],
+  "contenus": [
+    "Tension continue et sa représentation.",
+    "Différence de potentiel.",
+    "Tensions variables."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Représenter la tension comme grandeur algébrique (flèche) ; utiliser voltmètre et oscilloscope."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître UAB = VA - VB."
+    },
+    {
+      "id": "O3",
+      "texte": "Appliquer l'additivité des tensions en série et l'égalité en dérivation."
+    },
+    {
+      "id": "O4",
+      "texte": "Exprimer un résultat avec ses incertitudes et le bon nombre de chiffres significatifs."
+    },
+    {
+      "id": "O5",
+      "texte": "Caractériser une tension variable (sinusoïdale, triangulaire, carrée) : période, fréquence, valeur maximale ; U = Umax/√2."
+    },
+    {
+      "id": "O6",
+      "texte": "Utiliser la sensibilité verticale et le balayage : U = Sv·y, t = b·x."
+    }
+  ],
+  "activites": [
+    "Mesures de tensions continues.",
+    "Différence de potentiel.",
+    "Observation de tensions variables à l'oscilloscope."
+  ],
+  "orientations": [
+    "Notions vues au collège : consolider et interpréter.",
+    "Utiliser simulations et audiovisuel."
+  ],
+  "hors_programme": []
+}

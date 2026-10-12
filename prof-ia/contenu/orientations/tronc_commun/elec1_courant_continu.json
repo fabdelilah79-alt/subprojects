@@ -1,0 +1,67 @@
+{
+  "id": "tronc_commun/elec1_courant_continu",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Électricité",
+  "titre": "Courant électrique continu",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 3,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    19,
+    28,
+    29
+  ],
+  "contenus": [
+    "Deux types d'électricité.",
+    "Courant électrique et sens conventionnel.",
+    "Intensité : quantité d'électricité ; courant continu."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Expliquer l'électrisation par frottement ; connaître les deux types d'électricité et leurs interactions."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître la charge élémentaire e et interpréter l'électrisation par la structure de la matière."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître le sens conventionnel et la nature du courant (électrons, ions)."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître Q = n·e et I = Q/t avec leurs unités."
+    },
+    {
+      "id": "O5",
+      "texte": "Appliquer la conservation de la charge (loi des nœuds) ; utiliser un ampèremètre."
+    }
+  ],
+  "activites": [
+    "Expériences simples et documents.",
+    "Nature du courant dans les métaux et les électrolytes.",
+    "Loi des nœuds en série et en dérivation."
+  ],
+  "orientations": [
+    "Notions vues au collège : dossiers/documents préparés par les élèves pour consolider et interpréter.",
+    "Les deux types d'électricité et le sens conventionnel servent à approcher la notion de convention.",
+    "Se limiter à l'électrisation par frottement.",
+    "Utiliser simulations et audiovisuel."
+  ],
+  "hors_programme": [
+    "Électrisation par contact et par influence : se limiter à l'électrisation par frottement."
+  ]
+}

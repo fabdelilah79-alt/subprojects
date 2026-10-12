@@ -90,12 +90,13 @@ def empreinte_prompts():
     return somme.hexdigest()[:12]
 
 
-def generation():
-    """Renseigne la traçabilité : source, date, modèles des agents, empreinte des prompts."""
+def generation(plan):
+    """Renseigne la traçabilité : source, date, modèles, empreinte des prompts, objectifs officiels traités."""
     agents = lire_config("modeles")["agents"]
     modeles = {nom: agents[nom]["modele"] for nom in ("pedagogique", "voix", "ecriture", "architecture", "chef")}
     return {"source": "agents", "date": date.today().isoformat(), "modeles": modeles,
-            "empreinte_prompts": empreinte_prompts(), "relu_par_enseignant": False}
+            "empreinte_prompts": empreinte_prompts(), "relu_par_enseignant": False,
+            "objectifs_officiels": plan["objectifs_officiels"]}
 
 
 def assembler(numero, plan, voix, ecriture, architecture):
@@ -108,5 +109,5 @@ def assembler(numero, plan, voix, ecriture, architecture):
         ranger(nouveau)
         beats.append(nouveau)
     beats[0]["actions"].insert(0, {"type": "nouveau_tableau", "titre": architecture["titre_tableau"]})
-    partition = {"numero": numero, "tableau": numero, "titre": plan["titre"], "generation": generation(), "beats": beats}
+    partition = {"numero": numero, "tableau": numero, "titre": plan["titre"], "generation": generation(plan), "beats": beats}
     return partition, remarques

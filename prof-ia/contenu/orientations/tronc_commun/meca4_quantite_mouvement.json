@@ -1,0 +1,63 @@
+{
+  "id": "tronc_commun/meca4_quantite_mouvement",
+  "niveau": "tronc_commun",
+  "discipline": "physique",
+  "domaine": "Mécanique",
+  "titre": "Quantité de mouvement",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 4,
+      "exercices": 1
+    }
+  ],
+  "source_pages": [
+    19,
+    25
+  ],
+  "prerequis": [
+    "tronc_commun/meca3_inertie"
+  ],
+  "contenus": [
+    "Quantité de mouvement d'un solide.",
+    "Conservation de la quantité de mouvement d'un système pseudo-isolé.",
+    "Relation F = Δp/Δt."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Définir la quantité de mouvement et donner son unité."
+    },
+    {
+      "id": "O2",
+      "texte": "Représenter le vecteur quantité de mouvement."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître et appliquer la loi de conservation de la quantité de mouvement."
+    },
+    {
+      "id": "O4",
+      "texte": "Déterminer la direction et le sens d'une force à partir de la variation de p entre deux instants (et inversement)."
+    }
+  ],
+  "activites": [
+    "Définition et représentation de p.",
+    "Expériences de conservation (solide pseudo-isolé) puis généralisation.",
+    "Applications : recul d'une arme, choc, barque.",
+    "Vérification expérimentale de F = Δp/Δt."
+  ],
+  "orientations": [
+    "Établir la conservation à partir de l'« explosion » de deux mobiles sur table à coussin d'air ou de deux chariots sur un banc.",
+    "Applications : recul d'une arme, choc, barque sans moteur.",
+    "Relier l'action des forces à la variation de p (Terre agissant sur une bille) : approche de la dynamique, avec vérification expérimentale."
+  ],
+  "hors_programme": []
+}

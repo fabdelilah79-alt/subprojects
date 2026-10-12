@@ -1,0 +1,81 @@
+{
+  "id": "2bac/ondes3_lumiere",
+  "niveau": "2bac",
+  "discipline": "physique",
+  "domaine": "Ondes",
+  "titre": "Propagation d'une onde lumineuse",
+  "filieres": [
+    "SVT",
+    "SA",
+    "STM",
+    "STE",
+    "PC",
+    "SMA",
+    "SMB"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SVT",
+        "SA",
+        "STM",
+        "STE",
+        "PC",
+        "SMA",
+        "SMB"
+      ],
+      "cours": 4,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    79,
+    83,
+    85,
+    112,
+    118,
+    119
+  ],
+  "prerequis": [
+    "2bac/ondes2_periodiques",
+    "1bac/opt1_visibilite"
+  ],
+  "contenus": [
+    "Diffraction de la lumière monochromatique et blanche.",
+    "Propagation dans le vide : modèle ondulatoire.",
+    "Milieux transparents : indice de réfraction ; dispersion par un prisme."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître la nature ondulatoire de la lumière par la diffraction ; influence de la largeur de la fente."
+    },
+    {
+      "id": "O2",
+      "texte": "Connaître et utiliser λ = c/ν et θ = λ/a."
+    },
+    {
+      "id": "O3",
+      "texte": "Distinguer lumière monochromatique et polychromatique ; limites du spectre visible ; UV et IR."
+    },
+    {
+      "id": "O4",
+      "texte": "Savoir que la fréquence ne change pas d'un milieu transparent à un autre."
+    },
+    {
+      "id": "O5",
+      "texte": "Définir l'indice de réfraction et le déterminer pour une fréquence."
+    }
+  ],
+  "activites": [
+    "Diffraction par une fente, un fil ou un obstacle ; vérifier θ = λ/a.",
+    "Dispersion de la lumière blanche par un prisme."
+  ],
+  "orientations": [
+    "Nature ondulatoire de la lumière présentée par analogie avec la diffraction des ondes mécaniques.",
+    "θ : écart angulaire entre le milieu de la frange centrale et la première extinction ; a : largeur de la fente ou épaisseur de l'obstacle.",
+    "Le prisme permet de revenir sur la notion de milieu dispersif ; lois de Descartes pour établir les formules du prisme.",
+    "Utiliser l'équation aux dimensions pour vérifier l'homogénéité."
+  ],
+  "hors_programme": []
+}

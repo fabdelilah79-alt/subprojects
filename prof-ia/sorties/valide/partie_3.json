@@ -6,7 +6,11 @@
     "source": "brouillon",
     "date": "2026-10-11",
     "relu_par_enseignant": false,
-    "fournisseur_voix": "essai"
+    "fournisseur_voix": "essai",
+    "objectifs_officiels": [
+      "O5",
+      "O6"
+    ]
   },
   "beats": [
     {

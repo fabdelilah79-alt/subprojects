@@ -1,0 +1,74 @@
+{
+  "id": "1bac/meca2_travail_puissance",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Travail mécanique et énergie",
+  "titre": "Travail et puissance d'une force",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 6,
+      "exercices": 0
+    }
+  ],
+  "source_pages": [
+    47,
+    51,
+    52,
+    53
+  ],
+  "prerequis": [
+    "1bac/meca1_rotation",
+    "tronc_commun/meca5_equilibre"
+  ],
+  "contenus": [
+    "Notion de travail, unité.",
+    "Travail d'une force constante : déplacement rectiligne et curviligne.",
+    "Travail du poids dans un champ de pesanteur uniforme ; travail moteur et résistant.",
+    "Travail de forces constantes en translation rectiligne.",
+    "Travail d'une force de moment constant et d'un couple de moment constant en rotation autour d'un axe fixe.",
+    "Puissance moyenne et instantanée, unité."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître l'effet d'actions mécaniques dont le point d'application se déplace."
+    },
+    {
+      "id": "O2",
+      "texte": "Calculer le travail d'une force constante (translation rectiligne ou curviligne) ; travail moteur ou résistant."
+    },
+    {
+      "id": "O3",
+      "texte": "Calculer le travail du poids ; savoir qu'il ne dépend pas du chemin suivi."
+    },
+    {
+      "id": "O4",
+      "texte": "Calculer le travail d'une force de moment constant et d'un couple de moment constant."
+    },
+    {
+      "id": "O5",
+      "texte": "Calculer une puissance moyenne et instantanée (translation et rotation) ; unité."
+    }
+  ],
+  "activites": [
+    "Documents, logiciels ou expériences simples sur l'effet d'actions mécaniques dont le point d'application se déplace."
+  ],
+  "orientations": [
+    "Variation de vitesse étudiée par la chute libre ou le glissement sans frottement sur un plan incliné.",
+    "Rappeler le moment d'une force et le moment d'un couple pour préparer le travail en rotation.",
+    "Se LIMITER au travail d'une force constante (ou d'un ensemble de forces constantes) en translation, et d'un moment constant en rotation."
+  ],
+  "hors_programme": [
+    "Travail d'une force non constante (2e année du bac)."
+  ]
+}

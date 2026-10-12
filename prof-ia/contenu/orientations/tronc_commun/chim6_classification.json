@@ -1,0 +1,61 @@
+{
+  "id": "tronc_commun/chim6_classification",
+  "niveau": "tronc_commun",
+  "discipline": "chimie",
+  "domaine": "Constituants de la matière",
+  "titre": "Classification périodique des éléments",
+  "filieres": [
+    "TCS",
+    "TCT"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "TCS",
+        "TCT"
+      ],
+      "cours": 2,
+      "exercices": 0,
+      "pour": "voir chim4"
+    }
+  ],
+  "source_pages": [
+    20,
+    39
+  ],
+  "prerequis": [
+    "tronc_commun/chim5_molecules"
+  ],
+  "contenus": [
+    "Classification de Mendeleïev.",
+    "Critères actuels de classification.",
+    "Familles chimiques ; formules de molécules usuelles."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Connaître les critères actuels de classification."
+    },
+    {
+      "id": "O2",
+      "texte": "Prévoir la charge des ions monoatomiques et le nombre de liaisons (familles du carbone, de l'azote, de l'oxygène, du fluor)."
+    },
+    {
+      "id": "O3",
+      "texte": "Situer un élément dans la classification ; connaître quelques familles (alcalins, halogènes…)."
+    },
+    {
+      "id": "O4",
+      "texte": "Écrire des formules brutes et développées à l'aide de la classification."
+    }
+  ],
+  "activites": [
+    "Documents et multimédia sur l'histoire de la découverte des éléments et la méthode de Mendeleïev.",
+    "Problème : nombre de liaisons d'un élément à partir de sa position."
+  ],
+  "orientations": [
+    "Méthode de Mendeleïev fondée sur les propriétés chimiques connues ; critères actuels : Z croissant, lignes et colonnes selon la structure électronique.",
+    "La classification actuelle diffère peu de celle de Mendeleïev ; documents historiques (de l'Antiquité à Lavoisier, Mendeleïev, aujourd'hui)."
+  ],
+  "hors_programme": []
+}

@@ -1,6 +1,6 @@
 """
 Rôle : contrôles d'une partition que le schéma JSON ne peut pas faire seul.
-Reçoit : une partition déjà lue, les réglages (zones, palette, tons, éléments) et le manifeste.
+Reçoit : une partition déjà lue, les réglages (zones, palette, tons, éléments), le manifeste et les objectifs officiels.
 Produit : deux listes de messages en français : erreurs (bloquantes) et avertissements.
 Utilisé par : outils/valider_partition.py.
 """
@@ -66,7 +66,9 @@ def erreurs_beat(beat, references):
 
 def erreurs_partition(partition, references):
     """Renvoie toutes les erreurs bloquantes de la partition (après le schéma)."""
-    erreurs, vus = [], set()
+    inconnus = set(partition["generation"].get("objectifs_officiels", [])) - references["objectifs"]
+    erreurs = [f"objectif officiel {o} absent de la fiche du programme du cours" for o in sorted(inconnus)]
+    vus = set()
     for beat in partition["beats"]:
         if beat["id"] in vus:
             erreurs.append(f"{beat['id']} : identifiant de beat en double")

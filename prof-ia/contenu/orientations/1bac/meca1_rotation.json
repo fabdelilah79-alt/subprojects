@@ -1,0 +1,80 @@
+{
+  "id": "1bac/meca1_rotation",
+  "niveau": "1bac",
+  "discipline": "physique",
+  "domaine": "Travail mécanique et énergie",
+  "titre": "Rotation d'un solide indéformable autour d'un axe fixe",
+  "filieres": [
+    "SE",
+    "ST",
+    "SM"
+  ],
+  "duree_h": [
+    {
+      "filieres": [
+        "SE",
+        "ST",
+        "SM"
+      ],
+      "cours": 5,
+      "exercices": 2
+    }
+  ],
+  "source_pages": [
+    47,
+    51,
+    52,
+    53
+  ],
+  "prerequis": [
+    "tronc_commun/meca2_mouvement"
+  ],
+  "contenus": [
+    "Abscisse curviligne, abscisse angulaire, vitesse angulaire.",
+    "Vitesse d'un point d'un solide en rotation.",
+    "Rotation uniforme : période, fréquence, équation horaire."
+  ],
+  "objectifs": [
+    {
+      "id": "O1",
+      "texte": "Reconnaître un mouvement de rotation autour d'un axe fixe et le distinguer d'une translation circulaire."
+    },
+    {
+      "id": "O2",
+      "texte": "Repérer un point d'un solide en rotation par son abscisse angulaire θ et son abscisse curviligne s (s = R·θ)."
+    },
+    {
+      "id": "O3",
+      "texte": "Connaître la vitesse angulaire et son unité."
+    },
+    {
+      "id": "O4",
+      "texte": "Connaître et utiliser la relation entre vitesse linéaire et vitesse angulaire : v = R·ω."
+    },
+    {
+      "id": "O5",
+      "texte": "Connaître les caractéristiques de la rotation uniforme : période et fréquence."
+    },
+    {
+      "id": "O6",
+      "texte": "Exploiter les équations horaires θ(t) et s(t) de la rotation uniforme."
+    }
+  ],
+  "activites": [
+    "Documents et exemples du vécu pour introduire la rotation autour d'un axe fixe.",
+    "Réaliser et exploiter des enregistrements du mouvement d'un point d'un solide en rotation.",
+    "Mettre en évidence expérimentalement les caractéristiques de la rotation uniforme."
+  ],
+  "orientations": [
+    "Exploiter l'étude expérimentale du mouvement d'un point pour définir abscisse curviligne, abscisse angulaire, vitesse angulaire, vitesse linéaire et leur relation.",
+    "Définir la rotation uniforme, ses caractéristiques et ses équations horaires θ(t), s(t) et leur relation.",
+    "Distinguer rotation et translation circulaire par des exemples du vécu (et le mouvement de certaines planètes)."
+  ],
+  "hors_programme": [
+    "Accélération angulaire et relation fondamentale de la dynamique en rotation (programme de 2e année du bac ; déduit de la progression).",
+    "Énergie et moment d'inertie (chapitre suivant ; déduit de la progression)."
+  ],
+  "travaux_pratiques": [
+    "Mouvement circulaire uniforme : vérifier v = R·ω, déterminer la nature du mouvement, établir l'équation horaire."
+  ]
+}
