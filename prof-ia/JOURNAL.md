@@ -278,3 +278,13 @@ Fait :
 
 Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : précision de lecture sur la règle (tolérance 3 mm), vitesse du lancer pour le choc.
+
+## 2026-10-15 — Correction : la bille de « Actions mécaniques » ne partait pas
+
+Problème signalé par l'enseignant : dans tc_meca3_a1_actions, toucher la bille ne la lâchait pas.
+- Cause : la bille est redessinée à chaque image ; pendant un appui normal (plus long qu'un clic instantané),
+  l'élément touché disparaissait et le navigateur annulait le « clic ».
+- Correction (bille.js) : le geste est suivi par l'outil de glisser-déposer commun, sur le groupe de la bille ;
+  un toucher court, un appui long ou un petit glissé lâchent la bille.
+- Les tests de parcours font désormais des appuis de 150 ms (au lieu de clics instantanés) : les 16 simulations
+  passent ; toucher au doigt vérifié sur écran tactile simulé.

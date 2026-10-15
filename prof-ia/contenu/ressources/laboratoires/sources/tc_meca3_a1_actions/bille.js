@@ -2,7 +2,7 @@
 Rôle : bille d'acier lâchée en haut de la gouttière : elle descend, roule sur le plateau (léger frottement), est attirée
        par l'aimant (action à distance, en 1/d²), rebondit sur la cale (action de contact), s'arrête sur le feutre du bord.
        Une photographie à pose multiple garde une image de la bille toutes les 0,06 s.
-Reçoit : le groupe SVG, l'aimant et la cale (Labo.ObjetPlateau) ; un toucher sur la bille (lâcher, ou remettre en haut).
+Reçoit : le groupe SVG, l'aimant et la cale (Labo.ObjetPlateau) ; un toucher (ou un petit glissé) sur la bille : la lâcher, ou la remettre en haut.
 Produit : new Labo.Bille(parent, aimant, cale) ; fait noté à la fin de chaque lancer :
           lancer_bille = { aimant, cale (posés ?), deviation_mm, rebond, collee }.
 Utilisé par : poste_bille.js.
@@ -15,8 +15,9 @@ Utilisé par : poste_bille.js.
     Object.assign(this, { aimant, cale, etat: "haut", s: 0 });
     this.photos = L.svg("g", { "pointer-events": "none" }, parent);
     this.g = L.svg("g", { class: "bille", role: "button", "aria-label": "Bille d'acier" }, parent);
-    this.g.addEventListener("pointerdown", (e) => { e.labo_pris = true; });
-    this.g.addEventListener("click", () => this.toucher());
+    // Le geste est suivi sur le groupe (qui reste en place) : la bille est redessinée à chaque image.
+    const ici = () => this.ecran || { x: 0, y: 0 };
+    L.glissable(this.g, { soulever: false, debut: ici, fin: () => this.toucher() });
     this.dessiner();
     this.tourner();
   }
@@ -107,6 +108,7 @@ Utilisé par : poste_bille.js.
     this.g.replaceChildren();
     const p = this.etat === "haut" || this.etat === "descente" ? { ...L.Plateau.sur_gouttiere(this.s), k: 0.9 } : L.Plateau.vers_ecran(this.pos.x, this.pos.y);
     const r = R * p.k * 1.25;
+    this.ecran = { x: p.x, y: p.y - r };
     L.svg("circle", { cx: p.x, cy: p.y - r, r: r + 10, fill: "#000", opacity: 0.001 }, this.g);
     L.Plateau.dessiner_bille(this.g, { x: p.x, y: p.y - r }, r);
   };
