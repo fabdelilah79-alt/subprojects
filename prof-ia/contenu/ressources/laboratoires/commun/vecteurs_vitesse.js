@@ -42,9 +42,13 @@ Utilisé par : poste_coussin_air.js (simulations « vitesse instantanée » et �
     // À chaque ouverture de la feuille : une flèche courte au départ de chaque point demandé.
     const g = L.svg("g", {}, feuille.outils);
     let etat = {}, enregistrement = null;
-    L.ecouter("enregistrement", (e) => { if (e.nouveau) { etat = {}; L.missions.noter("vecteurs", {}); } enregistrement = e.points; });
+    L.ecouter("enregistrement", (e) => {
+      if (e.mobile !== feuille.mobile) return;
+      if (e.nouveau) { etat = {}; L.missions.noter("vecteurs", {}); }
+      enregistrement = e.points;
+    });
     L.ecouter("feuille", (e) => {
-      if (!e.ouverte) return;
+      if (!e.ouverte || e.feuille !== feuille) return;
       g.replaceChildren();
       if (!quand()) return;
       echelle(g, echelle_mm_par_ms);

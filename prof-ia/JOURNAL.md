@@ -237,3 +237,21 @@ Problèmes restants, à faire par l'enseignant :
 - Essayer les 4 simulations avec des élèves : vitesse du lancer, lisibilité des points sur le téléphone
   (zoomer pour mesurer au millimètre), tolérances des mesures (± 1,5 mm sur une distance).
 - Les simulations ne sont pas encore dans contenu/manifeste.json.
+
+## 2026-10-15 — Laboratoires virtuels : chapitre tronc commun « Principe d'inertie »
+
+Fait :
+- Une simulation par activité de la fiche :
+  - A1 actions et mouvement (O2) : bille d'acier, gouttière, aimant, cale en bois, photographie à pose
+    multiple ; palet sur la table à coussin d'air avec et sans air ;
+  - A2 principe d'inertie (O1, O2) : palet au repos, palet lancé (distances mesurées au tableur), table inclinée ;
+  - A3 centre d'inertie (O3, O4, O5) : deux palets solidaires lancés en tournant, curseur sur la feuille pour
+    trouver G, mesure de GA et GB, relation barycentrique ; gommettes au centre de quatre solides homogènes.
+- Matériel commun : soufflerie (commun/soufflerie.js) ; plusieurs tables à coussin d'air dans une même
+  simulation (chaque table ne reçoit que ses étincelles ; le relevé indique la table et l'air) ; l'éclateur
+  s'arrête seul quand le mobile s'arrête ; deux électrodes (marques A et B) pour les palets solidaires.
+- Vérifié : parcours complets des 3 nouvelles simulations et des 4 du chapitre « Le mouvement », sans erreur.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : force de l'aimant, position de la cale, vitesse de rotation des palets solidaires.
+- Les simulations ne sont pas encore dans contenu/manifeste.json.

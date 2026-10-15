@@ -273,6 +273,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/outils_mesure.js | Transparent millimétré (origine du repère) et règle graduée qui pivote. |
 | contenu/ressources/laboratoires/commun/vecteurs_vitesse.js | Flèches-vecteurs vitesse à tracer sur la feuille, et leur vérification. |
 | contenu/ressources/laboratoires/commun/verif_enregistrement.js | Calculs de vérification sur un enregistrement : alignement, coordonnées, vitesse, distance. |
+| contenu/ressources/laboratoires/commun/soufflerie.js | Soufflerie de la table à coussin d'air : air en marche ou coupé (frottement), observation du palet. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

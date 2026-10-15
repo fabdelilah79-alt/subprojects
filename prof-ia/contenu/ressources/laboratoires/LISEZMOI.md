@@ -46,6 +46,18 @@ feuille d'enregistrement que l'on prend en main (points numérotés M0, M1...), 
 Les vérifications lisent l'enregistrement **réellement obtenu** par l'élève : chaque lancer donne d'autres
 valeurs attendues. Si l'élève reprend le mobile en main pendant l'enregistrement, la feuille repart de zéro.
 
+## Chapitre tronc commun « Principe d'inertie » (fiche tronc_commun/meca3_inertie)
+
+Objectif principal de la fiche : dépasser la conception « une force est nécessaire pour entretenir un mouvement
+rectiligne uniforme ». La table à coussin d'air reçoit une **soufflerie** : sans air, le palet frotte et s'arrête vite ;
+avec l'air, il glisse sans ralentir.
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca3_a1_actions.html | A1 : aimant approché d'une bille en mouvement, bille heurtant un obstacle, palets sur table à coussin d'air | O2 | Lâche une bille d'acier depuis une gouttière ; une photographie à pose multiple montre une droite (léger ralentissement dû aux frottements), une courbe quand il pose l'aimant près du trajet (action à distance), un rebond sur la cale en bois (action de contact). Puis lance le palet sans air (il s'arrête), avec l'air (il glisse) : poids et action de l'air se compensent, le palet est pseudo-isolé. |
+| tc_meca3_a2_principe.html | A2 : vérification expérimentale du principe d'inertie | O1, O2 | Palet posé avec l'air : il reste immobile. Palet lancé : distances MiMi+1 mesurées à la règle au tableur, toutes égales (mouvement rectiligne uniforme), énoncé du principe. Table inclinée : actions non compensées, mouvement non uniforme. Sonde spatiale isolée. |
+| tc_meca3_a3_centre_inertie.html | A3 : centre d'inertie, mouvement d'ensemble et mouvement propre ; barycentre de deux palets solidaires | O3, O4, O5 | Deux palets de 400 g et 200 g reliés par une tige, lancés en tournant : les traces A et B sont des courbes. Sur la feuille, un curseur vert glisse le long de A0B0 et place une croix au même point de chaque segment AiBi : l'élève cherche où les croix sont alignées et régulières (G), mesure GA et GB, découvre mA·GA = mB·GB. Puis colle une gommette au centre d'inertie d'une tige, d'une barre, d'un disque et d'une sphère ; exercice sur la relation barycentrique. |
+
 ## Modifier ou ajouter une simulation
 
 Les sources sont dans `sources/<nom>/` : `page.html` (liste des scripts), un fichier par appareil, et

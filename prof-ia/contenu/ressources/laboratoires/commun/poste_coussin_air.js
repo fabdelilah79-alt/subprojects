@@ -1,11 +1,13 @@
 /*
 Rôle : paillasse « table à coussin d'air » prête à l'emploi : table posée sur la paillasse (à plat, ou inclinée
        par une cale), mobile autoporteur, éclateur, feuille d'enregistrement et outils de mesure demandés.
-Reçoit : le groupe SVG de la paillasse et { inclinaison_mm_s2, fil, outils: ["transparent", "regle"], vecteurs }.
+Reçoit : le groupe SVG de la paillasse et { nom, inclinaison_mm_s2, fil, soufflerie, outils: ["transparent", "regle"], vecteurs }.
 Produit : Labo.poste_coussin_air(groupe, reglages) -> { pense_bete, table, eclateur, feuille, outils }.
 Utilisé par : les simulations de mouvement (tc_meca2_a2_repere, tc_meca2_a3_vitesse, tc_meca2_a4_mru_mcu).
 */
 (function (L) {
+  let numero = 0;
+
   function cale(g) {
     // Cale en bois sous les pieds du fond : la table penche vers l'élève.
     for (const x of [262, 742]) {
@@ -17,12 +19,12 @@ Utilisé par : les simulations de mouvement (tc_meca2_a2_repere, tc_meca2_a3_vit
   L.poste_coussin_air = function (g, reglages = {}) {
     // Construit la paillasse et branche tous les éléments ensemble.
     if (reglages.inclinaison_mm_s2) cale(g);
-    const table = new L.CoussinAir(g, reglages);
+    const table = new L.CoussinAir(g, { ...reglages, nom: reglages.nom || `table${++numero}` });
     const eclateur = new L.Eclateur(g, table, 808, 398);
     const pense_bete = L.decor.pense_bete(g, 24, 40, 230);
     const dessus = L.svg("g", { class: "calque-dessus" }, g);
     const feuille = new L.Feuille(table, dessus, table);
-    const outils = {};
+    const outils = reglages.soufflerie ? { soufflerie: L.soufflerie(g, table, 16, 410) } : {};
     for (const nom of reglages.outils || []) outils[nom] = L[nom](feuille);
     // Avec un fil, les flèches n'apparaissent que pour un enregistrement circulaire (fil accroché).
     const quand = reglages.fil ? () => !!table.fil_accroche : () => true;

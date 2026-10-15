@@ -2,7 +2,7 @@
 Rôle : table à coussin d'air (60 cm × 40 cm) vue en perspective, et son mobile autoporteur : on le lance d'un
        geste du doigt ; il glisse sans frottement (mouvement rectiligne uniforme), descend si la table est inclinée,
        ou tourne autour du clou central s'il est retenu par un fil (mouvement circulaire uniforme).
-Reçoit : le groupe SVG, les réglages { inclinaison_mm_s2, fil } ; les gestes de l'élève.
+Reçoit : le groupe SVG, les réglages { inclinaison_mm_s2, fil, nom (pour reconnaître la table) } ; les gestes de l'élève.
 Produit : new Labo.CoussinAir(parent, reglages) : pos (mm), vitesse (mm/s), sur_image(fonction(dt)), vers_table(p),
           vers_ecran(x, y) ; constantes Labo.CoussinAir.TABLE. Avec un fil : l'élève accroche lui-même l'anneau
           du fil au mobile (fait noté « fil_accroche »).
@@ -40,14 +40,14 @@ Utilisé par : enregistrement.js et les simulations de mouvement (tronc commun, 
     return feuille;
   }
 
-  function CoussinAir(parent, { inclinaison_mm_s2 = 0, fil = false } = {}) {
+  function CoussinAir(parent, { inclinaison_mm_s2 = 0, fil = false, nom = "table" } = {}) {
     // Construit la table et le mobile ; le mobile part du coin bas gauche, immobile.
     this.g = L.svg("g", { class: "coussin-air" }, parent);
     this.feuille = dessiner_table(this.g, fil);
     this.traces = L.svg("g", {}, this.g);
     this.fil_svg = L.svg("path", { fill: "none", stroke: "#e9e2cf", "stroke-width": 1.4 }, this.g);
     this.mobile = L.svg("g", { class: "mobile-autoporteur" }, this.g);
-    Object.assign(this, { pos: { x: 90, y: inclinaison_mm_s2 ? L.CoussinAir.TABLE.h - L.CoussinAir.TABLE.rayon : 330 }, vitesse: { x: 0, y: 0 }, a: inclinaison_mm_s2, fil, rayon_fil: 0, ecouteurs: [] });
+    Object.assign(this, { pos: { x: 90, y: inclinaison_mm_s2 ? L.CoussinAir.TABLE.h - L.CoussinAir.TABLE.rayon : 330 }, vitesse: { x: 0, y: 0 }, a: inclinaison_mm_s2, fil, nom, rayon_fil: 0, ecouteurs: [] });
     this.dessiner_mobile();
     this.rendre_lancable();
     if (fil) this.poignee_fil();
@@ -78,7 +78,7 @@ Utilisé par : enregistrement.js et les simulations de mouvement (tronc commun, 
     const historique = [];
     L.glissable(this.mobile, {
       soulever: false,
-      debut: () => { this.tenu = true; this.vitesse = { x: 0, y: 0 }; this.rayon_fil = 0; historique.length = 0; L.annoncer("mobile_pris"); return vers_ecran(this.pos.x, this.pos.y); },
+      debut: () => { this.tenu = true; this.vitesse = { x: 0, y: 0 }; this.rayon_fil = 0; historique.length = 0; L.annoncer("mobile_pris", { mobile: this }); return vers_ecran(this.pos.x, this.pos.y); },
       deplacer: (p) => {
         const q = vers_table(p);
         this.pos = { x: Math.max(T.rayon, Math.min(T.l - T.rayon, q.x)), y: Math.max(T.rayon, Math.min(T.h - T.rayon, q.y)) };
