@@ -1,15 +1,16 @@
 /*
 Rôle : règles du glisser-déposer de la paillasse du poids : on accroche les objets en chaîne sous le dynamomètre
        (seul le dernier se décroche), on les repose sur la paillasse ou dans le coffret ; on note les mesures faites.
-Reçoit : le dynamomètre, les objets, les calques SVG, les places du coffret.
+Reçoit : le dynamomètre (ou tout objet qui a crochet(), charger(N), sur_mouvement(), calibre), les objets, les calques SVG,
+         les places du coffret et sa zone { x1, x2, base }, le préfixe des faits notés (plusieurs paillasses).
 Produit : Labo.accrochage(reglages) ; faits notés : poids_accroche, poids_mesures (masses en kg), poids_surcharge, caillou_pese.
-Utilisé par : poste_poids.js.
+Utilisé par : poste_poids.js (tc_meca1_o3_poids), le poste du ressort (tc_meca5_a1_ressort).
 */
 (function (L) {
   const G = 9.81;
   const PRISE_PX = 34;
 
-  L.accrochage = function ({ dyn, objets, calques, places, cible }) {
+  L.accrochage = function ({ dyn, objets, calques, places, cible, coffret = { x1: 140, x2: 380, base: 490 }, prefixe = "" }) {
     // Branche le glisser-déposer de chaque objet et la mise à jour de la chaîne suspendue.
     const chaine = [];
     const mesures = new Set();
@@ -30,13 +31,13 @@ Utilisé par : poste_poids.js.
     function noter_mesure() {
       // Ressort immobile : on note ce qui a été pesé.
       const poids = chaine.reduce((s, o) => s + o.masse_kg * G, 0);
-      L.missions.noter("poids_surcharge", poids > L.Dynamometre.CALIBRE_N);
+      L.missions.noter(prefixe + "poids_surcharge", poids > dyn.calibre);
       if (!chaine.length) return;
-      L.missions.noter("poids_accroche", true);
-      if (chaine.some((o) => o.type === "caillou")) L.missions.noter("caillou_pese", true);
-      else if (poids <= L.Dynamometre.CALIBRE_N) {
+      L.missions.noter(prefixe + "poids_accroche", true);
+      if (chaine.some((o) => o.type === "caillou")) L.missions.noter(prefixe + "caillou_pese", true);
+      else if (poids <= dyn.calibre) {
         mesures.add(Math.round(chaine.reduce((s, o) => s + o.masse_kg, 0) * 1000) / 1000);
-        L.missions.noter("poids_mesures", [...mesures]);
+        L.missions.noter(prefixe + "poids_mesures", [...mesures]);
       }
     }
 
@@ -74,7 +75,7 @@ Utilisé par : poste_poids.js.
         return recharger();
       }
       const base = p.y + o.hauteur_debout;
-      if (o.place !== undefined && p.x > 140 && p.x < 380 && base > 430 && base < 545) return poser(o, places[o.place], 490, true);
+      if (o.place !== undefined && p.x > coffret.x1 && p.x < coffret.x2 && base > coffret.base - 60 && base < coffret.base + 55) return poser(o, places[o.place], coffret.base, true);
       if (base > 440 && base < 578) return poser(o, p.x, base, false);
       poser(o, Math.max(30, Math.min(1000, p.x)), 545, true);
     }
@@ -99,7 +100,7 @@ Utilisé par : poste_poids.js.
     }
 
     objets.forEach((o) => {
-      if (o.place !== undefined) poser(o, places[o.place], 490, false);
+      if (o.place !== undefined) poser(o, places[o.place], coffret.base, false);
       rendre_mobile(o);
     });
     dyn.sur_mouvement((repos) => { suivre_ressort(); if (repos) noter_mesure(); });

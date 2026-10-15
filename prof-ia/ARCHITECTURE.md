@@ -276,6 +276,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/soufflerie.js | Soufflerie de la table à coussin d'air : air en marche ou coupé (frottement), observation du palet. |
 | contenu/ressources/laboratoires/commun/dessin_palet.js | Dessin d'un palet autoporteur (surcharge, lettre, câble) pour les systèmes de plusieurs mobiles. |
 | contenu/ressources/laboratoires/commun/surcharge.js | Surcharge en laiton à poser sur un mobile ou à retirer, par glisser-déposer. |
+| contenu/ressources/laboratoires/commun/dynamometre.js | Dynamomètre à ressort réglable (calibre, graduations), oscillation amortie. |
+| contenu/ressources/laboratoires/commun/masses.js | Masses marquées et caillou, dessinés debout ou suspendus. |
+| contenu/ressources/laboratoires/commun/accrochage.js | Accrocher des masses en chaîne sous un dynamomètre ou un ressort ; mesures notées. |
+| contenu/ressources/laboratoires/commun/potence.js | Potence de laboratoire et coffret de masses marquées. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

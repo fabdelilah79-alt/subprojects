@@ -528,6 +528,145 @@
       "conceptions": [
         "Le vecteur force a toujours la direction du mouvement."
       ]
+    },
+    {
+      "id": "tc_meca5_a1_ressort",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca5_a1_ressort.html",
+      "description": "Laboratoire virtuel : deux ressorts suspendus à une potence, règle graduée et index ; masses marquées à accrocher.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca5_equilibre",
+      "activite": "Relation tension/allongement d'un ressort.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "La tension d'un ressort",
+          "ce_que_fait_l_eleve": "Lit la longueur à vide, accroche au moins 4 masses, relève m, T = m·g, l et Δl au tableur, trace T en fonction de Δl : droite passant par l'origine, T = K·Δl, K ≈ 25 N/m.",
+          "conclusion": "La tension d'un ressort est proportionnelle à son allongement : T = K·Δl ; K est la raideur du ressort, en N/m."
+        },
+        {
+          "titre": "Un ressort plus raide",
+          "ce_que_fait_l_eleve": "Avec un ressort plus raide, mesure K à partir d'une seule masse (200 g), compare les raideurs, et explique l'étalonnage d'un dynamomètre.",
+          "conclusion": "Plus un ressort est raide, plus sa raideur K est grande et moins il s'allonge sous la même tension. Un dynamomètre est un ressort étalonné."
+        }
+      ],
+      "duree_min": 20
+    },
+    {
+      "id": "tc_meca5_a2_archimede",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca5_a2_archimede.html",
+      "description": "Laboratoire virtuel : dynamomètre fin (2 N), deux cylindres de même volume (aluminium, plastique), béchers d'eau et d'eau salée sur un support élévateur.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca5_equilibre",
+      "activite": "Mesure de la poussée d'Archimède.",
+      "objectifs": [
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Mesurer la poussée d'Archimède",
+          "ce_que_fait_l_eleve": "Pèse le cylindre d'aluminium dans l'air (P), l'immerge entièrement en montant le support élévateur (poids apparent P'), calcule F = P − P', puis l'immerge à moitié : la poussée dépend du volume immergé.",
+          "conclusion": "Un liquide exerce sur un corps immergé une poussée verticale, vers le haut : F = P − P' (poids réel moins poids apparent). Elle dépend du volume immergé."
+        },
+        {
+          "titre": "De quoi dépend la poussée ?",
+          "ce_que_fait_l_eleve": "Compare avec le cylindre en plastique de même volume (même poussée), puis avec l'eau salée (poussée plus grande) ; calcule ρ·V·g et énonce les caractéristiques de la poussée.",
+          "conclusion": "Poussée d'Archimède : F = ρ·V·g (ρ : masse volumique du liquide, V : volume immergé). Verticale, vers le haut. Elle ne dépend pas de la masse du solide."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "La poussée d'Archimède dépend de la masse du corps immergé.",
+        "Un corps plus lourd subit une poussée plus grande."
+      ]
+    },
+    {
+      "id": "tc_meca5_a3_trois_forces",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca5_a3_trois_forces.html",
+      "description": "Laboratoire virtuel : table à forces verticale, anneau tenu par trois fils (deux sur des poulies), porte-masses et masses à fente, rapporteur, polygone des forces.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca5_equilibre",
+      "activite": "Vecteurs des trois forces à l'équilibre (référentiel terrestre).",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "L'anneau en équilibre",
+          "ce_que_fait_l_eleve": "Charge les porte-masses, observe l'anneau en équilibre (forces coplanaires et concourantes), mesure au rapporteur les angles des fils avec l'horizontale, vérifie que les projections horizontales et verticales s'annulent (méthode analytique).",
+          "conclusion": "À l'équilibre, les trois forces sont dans un même plan, concourantes en O, et la somme de leurs projections sur deux axes est nulle (méthode analytique)."
+        },
+        {
+          "titre": "Le polygone des forces",
+          "ce_que_fait_l_eleve": "Fait apparaître les vecteurs F1, F2, F3 et les met bout à bout : le triangle des forces est fermé (méthode graphique) ; applique la condition d'équilibre à un lustre suspendu par deux câbles.",
+          "conclusion": "Première condition d'équilibre : F1 + F2 + F3 = 0 ; le polygone (ici un triangle) des forces est fermé."
+        }
+      ],
+      "duree_min": 25
+    },
+    {
+      "id": "tc_meca5_a4_frottement",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca5_a4_frottement.html",
+      "description": "Laboratoire virtuel : plan inclinable avec un pavé de bois et un pavé à semelle de caoutchouc (angle de frottement), puis traction horizontale d'un pavé au dynamomètre (index du maximum).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca5_equilibre",
+      "activite": "Mise en évidence du frottement.",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le plan inclinable",
+          "ce_que_fait_l_eleve": "Pose le pavé sur le plan, soulève lentement le plan jusqu'au glissement, lit l'angle φ et calcule k = tan φ ; recommence avec le caoutchouc ; représente la réaction R inclinée sur la normale.",
+          "conclusion": "Le pavé glisse quand l'angle dépasse l'angle de frottement φ ; le coefficient de frottement est k = tan φ. Il dépend des surfaces en contact."
+        },
+        {
+          "titre": "Tirer un pavé",
+          "ce_que_fait_l_eleve": "Tire le pavé au dynamomètre jusqu'au démarrage, lit la force maximale, recommence avec 200 g de plus : F_max / P = k ; importance du frottement dans la vie courante.",
+          "conclusion": "Le pavé démarre quand la force atteint k·P : la force de frottement maximale est proportionnelle au poids, et k est le même qu'avec le plan incliné."
+        }
+      ],
+      "duree_min": 20
+    },
+    {
+      "id": "tc_meca5_a5_moments",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca5_a5_moments.html",
+      "description": "Laboratoire virtuel : barre à trous mobile autour d'un axe fixe et masses marquées (moment d'une force, théorème des moments) ; pendule de torsion à cadran gradué, couple appliqué par deux fils et des masses à fente.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca5_equilibre",
+      "activite": "Effet de rotation d'une force ; moment d'un couple ; théorème des moments ; M = -C·θ.",
+      "objectifs": [
+        "O5",
+        "O6",
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Le moment d'une force",
+          "ce_que_fait_l_eleve": "Accroche une masse à 15 cm de l'axe (la barre tourne), puis sur l'axe (pas de rotation) ; équilibre 200 g à 10 cm par 100 g à 20 cm, trouve un équilibre à trois masses ; énonce le théorème des moments ; calcule M = F·d.",
+          "conclusion": "Moment d'une force par rapport à l'axe : M = F·d (N·m), d distance de l'axe à la droite d'action. Équilibre : la somme algébrique des moments est nulle."
+        },
+        {
+          "titre": "Le couple de torsion",
+          "ce_que_fait_l_eleve": "Applique un couple de deux forces égales au tambour du fil de torsion, relève M = F·d et θ pour 3 charges, trace M en fonction de θ : M = C·θ, C ≈ 0,02 N·m/rad ; signification du signe dans M = −C·θ.",
+          "conclusion": "Le fil tordu exerce un couple de torsion de moment M = −C·θ (C : constante de torsion, en N·m/rad). À l'équilibre, il compense le moment du couple appliqué."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "L'effet de rotation d'une force ne dépend que de sa valeur."
+      ]
     }
   ]
 }

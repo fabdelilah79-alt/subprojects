@@ -288,3 +288,22 @@ Problème signalé par l'enseignant : dans tc_meca3_a1_actions, toucher la bille
   un toucher court, un appui long ou un petit glissé lâchent la bille.
 - Les tests de parcours font désormais des appuis de 150 ms (au lieu de clics instantanés) : les 16 simulations
   passent ; toucher au doigt vérifié sur écran tactile simulé.
+
+## 2026-10-15 — Laboratoires virtuels : chapitre tronc commun « Équilibre d'un solide »
+
+Fait :
+- Une simulation par activité de la fiche : A1 ressort (O1), A2 poussée d'Archimède (O2), A3 trois forces
+  à l'équilibre, méthodes analytique et graphique (O3), A4 frottement (O4), A5 moments, théorème des moments,
+  couple de torsion (O5, O6, O7). Les 5 simulations sont inscrites au manifeste.
+- Matériel commun : le dynamomètre, les masses marquées et l'accrochage (chapitre 1) passent dans commun/
+  et deviennent réglables (calibre, préfixe des faits) ; potence.js (potence et coffret de masses).
+- Tableur : la formule PI() est acceptée (comme dans un tableur habituel), en plus de PI.
+- Corrections après captures : équilibre de l'anneau calculé avec le porte-masses posé sur la paillasse
+  quand une force est trop grande ; position d'équilibre du cylindre dans le liquide (le ressort du
+  dynamomètre se raccourcit) ; noix du plan inclinable sur la tige ; longueur du dynamomètre de traction.
+- Vérifié : parcours complets des 21 simulations des cinq chapitres de mécanique, sans erreur.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : vitesse d'immobilisation des ressorts (2 s), précision de lecture des angles.
+- Deux fonctions anciennes (accrochage.js, analyseur de formules.js) contiennent des fonctions internes et
+  dépassent 30 lignes au sens strict du contrôle : à découper lors d'une prochaine étape.

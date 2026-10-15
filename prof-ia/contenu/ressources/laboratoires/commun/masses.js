@@ -3,7 +3,7 @@ Rôle : objets que l'on accroche au dynamomètre : masses marquées en laiton à
        et caillou de masse inconnue tenu par une ficelle. Chaque objet sait se dessiner, debout ou suspendu.
 Reçoit : le groupe SVG et la description de l'objet (masse, taille, inscription).
 Produit : new ObjetSuspendu(parent, description) avec placer(x, y), pendre(oui), hauteur_debout, hauteur_pendu.
-Utilisé par : poste_poids.js.
+Utilisé par : accrochage.js, poste_poids.js (tc_meca1_o3_poids), les simulations d'équilibre (tc_meca5_*).
 */
 (function (L) {
   function masse_marquee(g, largeur, hauteur, inscription) {

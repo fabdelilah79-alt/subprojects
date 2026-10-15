@@ -1208,7 +1208,7 @@ Utilisé par : tableur.js.
       const j = jetons[i++] || {};
       if (j.nombre !== undefined) return j.nombre;
       if (j.cellule) return lire(j.cellule);
-      if (j.fonction === "PI") return Math.PI;
+      if (j.fonction === "PI") { if (voir().signe === "(" && (jetons[i + 1] || {}).signe === ")") i += 2; return Math.PI; }
       if (j.fonction) {
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();

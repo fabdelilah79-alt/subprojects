@@ -81,6 +81,16 @@ python -m outils.assembler_laboratoire tc_meca1_a3_force_pressante
 
 Pour essayer pendant l'écriture, ouvrez directement `sources/<nom>/page.html` dans le navigateur.
 
+## Chapitre tronc commun « Équilibre d'un solide » (fiche tronc_commun/meca5_equilibre)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca5_a1_ressort.html | A1 : relation tension/allongement d'un ressort | O1 | Accroche des masses marquées sous un ressort, lit sa longueur sur la règle, trace T en fonction de Δl : T = K·Δl (K ≈ 25 N/m). Avec un ressort plus raide, mesure K en une mesure ; étalonnage d'un dynamomètre. |
+| tc_meca5_a2_archimede.html | A2 : mesure de la poussée d'Archimède | O2 | Cylindre accroché à un dynamomètre fin, plongé dans un bécher posé sur un support élévateur : F = P − P' ; immersion à moitié ; cylindre de même volume mais de masse différente ; eau salée ; F = ρ·V·g. |
+| tc_meca5_a3_trois_forces.html | A3 : vecteurs des trois forces à l'équilibre | O3 | Table à forces : anneau tenu par trois fils et des porte-masses chargés de masses à fente ; angles au rapporteur, projections (méthode analytique) ; vecteurs mis bout à bout : triangle fermé (méthode graphique). |
+| tc_meca5_a4_frottement.html | A4 : mise en évidence du frottement | O4 | Plan inclinable : angle de démarrage φ du pavé, k = tan φ, bois puis caoutchouc. Traction horizontale au dynamomètre (index du maximum) : F_max = k·P, avec et sans surcharge. |
+| tc_meca5_a5_moments.html | A5 : effet de rotation, moment d'un couple, théorème des moments, M = −C·θ | O5, O6, O7 | Barre à trous et masses marquées : rotation, force sur l'axe, équilibres à deux et trois masses, ΣM = 0. Pendule de torsion : couple de deux forces, M en fonction de θ, constante de torsion C. |
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
