@@ -1,7 +1,7 @@
 /*
 Rôle : démarrer une simulation de laboratoire : scène, matières, paillasses, tablette, carnet, missions ;
        le pense-bête de chaque paillasse montre l'étape en cours de sa mission.
-Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet (facultatif),
+Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet et repos_tablette (facultatifs),
          paillasses: [fabrique, ...], missions: [...] }.
          Chaque fabrique reçoit le groupe SVG de sa paillasse et renvoie { pense_bete }.
 Produit : Labo.demarrer(simulation) : le laboratoire prêt à manipuler.
@@ -9,11 +9,12 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
 */
 (function (L) {
   function pense_betes(postes) {
-    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission.
+    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission (la dernière mission ouverte).
     L.ecouter("missions", (e) => {
-      e.missions.forEach((m) => {
+      e.missions.forEach((m, i) => {
         const feuille = postes[m.paillasse]?.pense_bete;
-        if (!feuille) return;
+        const suivante = e.missions.slice(i + 1).some((x, j) => x.paillasse === m.paillasse && i + 1 + j <= e.courante);
+        if (!feuille || i > e.courante || suivante) return;
         if (m.accomplie) return feuille.ecrire("Mission accomplie", m.conclusion_courte || "Ouvrez le carnet pour la suite.");
         const etape = m.etapes[m.etape];
         feuille.ecrire(`Étape ${m.etape + 1} sur ${m.etapes.length}`, etape.court || etape.consigne);
@@ -36,7 +37,7 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
       if (simulation.decor !== "aucun") L.decor.paillasse(g, numero);
       return fabrique(g);
     });
-    L.tablette.creer(etage, simulation.missions);
+    L.tablette.creer(etage, simulation.missions, simulation.repos_tablette);
     L.carnet.creer(etage, simulation.repos_carnet);
     pense_betes(postes);
     L.missions.demarrer(simulation, camera);

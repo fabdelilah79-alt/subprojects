@@ -1836,8 +1836,9 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       const m = mission();
       const q = m.etapes[m.etape]?.question;
       if (!q || m.accomplie) return;
-      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(q.attendu) : q.tolerance;
-      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), q.attendu, tolerance);
+      const attendu = typeof q.attendu === "function" ? q.attendu(etat.faits) : q.attendu;
+      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(attendu) : q.tolerance;
+      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), attendu, tolerance);
       prevenir_parent("reponse", { mission: m.id, etape: m.etape + 1, reponse: String(valeur), juste });
       if (juste) avancer(m, etat.vue);
       etat.messages[m.id] = { texte: juste ? q.bravo || "Exact." : q.aide, juste };
@@ -1943,7 +1944,7 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
 /*
 Rôle : démarrer une simulation de laboratoire : scène, matières, paillasses, tablette, carnet, missions ;
        le pense-bête de chaque paillasse montre l'étape en cours de sa mission.
-Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet (facultatif),
+Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet et repos_tablette (facultatifs),
          paillasses: [fabrique, ...], missions: [...] }.
          Chaque fabrique reçoit le groupe SVG de sa paillasse et renvoie { pense_bete }.
 Produit : Labo.demarrer(simulation) : le laboratoire prêt à manipuler.
@@ -1951,11 +1952,12 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
 */
 (function (L) {
   function pense_betes(postes) {
-    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission.
+    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission (la dernière mission ouverte).
     L.ecouter("missions", (e) => {
-      e.missions.forEach((m) => {
+      e.missions.forEach((m, i) => {
         const feuille = postes[m.paillasse]?.pense_bete;
-        if (!feuille) return;
+        const suivante = e.missions.slice(i + 1).some((x, j) => x.paillasse === m.paillasse && i + 1 + j <= e.courante);
+        if (!feuille || i > e.courante || suivante) return;
         if (m.accomplie) return feuille.ecrire("Mission accomplie", m.conclusion_courte || "Ouvrez le carnet pour la suite.");
         const etape = m.etapes[m.etape];
         feuille.ecrire(`Étape ${m.etape + 1} sur ${m.etapes.length}`, etape.court || etape.consigne);
@@ -1978,7 +1980,7 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
       if (simulation.decor !== "aucun") L.decor.paillasse(g, numero);
       return fabrique(g);
     });
-    L.tablette.creer(etage, simulation.missions);
+    L.tablette.creer(etage, simulation.missions, simulation.repos_tablette);
     L.carnet.creer(etage, simulation.repos_carnet);
     pense_betes(postes);
     L.missions.demarrer(simulation, camera);
@@ -2226,17 +2228,24 @@ Rôle : bouton-poussoir lumineux posé sur un poste (par exemple « Pause / Lect
        un appui l'enfonce et change son voyant ; utilisable au doigt, à la souris et au clavier (Entrée, Espace).
 Reçoit : le groupe SVG, la position, les deux inscriptions (repos, enfoncé) et la fonction à appeler.
 Produit : Labo.bouton_poussoir(parent, x, y, { textes: [repos, enfonce], sur_changement(enfonce) }) -> { regler(enfonce) }.
-Utilisé par : les simulations où le temps s'écoule (tc_meca1_a2_gravitation).
+Utilisé par : les simulations où le temps s'écoule (gravitation, relativité), l'éclateur (eclateur.js).
 */
 (function (L) {
+  function dessiner(g, textes) {
+    // Socle métallique (largeur adaptée à l'inscription), capuchon coloré et son reflet, inscription gravée.
+    const largeur = 44 + Math.max(...textes.map((t) => t.length)) * 7.6;
+    L.svg("rect", { x: -largeur / 2, y: -17, width: largeur, height: 34, rx: 6, fill: "url(#acier)", stroke: "#1b1e21", filter: "url(#ombre)" }, g);
+    return {
+      capuchon: L.svg("circle", { cx: -largeur / 2 + 20, cy: 0, r: 11, stroke: "#111", "stroke-width": 1 }, g),
+      reflet: L.svg("ellipse", { cx: -largeur / 2 + 17, cy: -4, rx: 5, ry: 3, fill: "#fff", opacity: 0.45 }, g),
+      texte: L.texte(g, 18, 1, "", { "font-size": 13, "font-weight": 700, fill: "#e8edf1" }),
+    };
+  }
+
   L.bouton_poussoir = function (parent, x, y, { textes, sur_changement }) {
-    // Construit le bouton : socle métallique, capuchon coloré, voyant et inscription gravée.
+    // Construit le bouton et le rend utilisable au doigt, à la souris et au clavier.
     const g = L.svg("g", { transform: `translate(${x} ${y})`, class: "bouton-poussoir", role: "button", tabindex: 0 }, parent);
-    L.svg("rect", { x: -48, y: -17, width: 96, height: 34, rx: 6, fill: "url(#acier)", stroke: "#1b1e21", filter: "url(#ombre)" }, g);
-    const capuchon = L.svg("circle", { cx: -28, cy: 0, r: 11, stroke: "#111", "stroke-width": 1 }, g);
-    const reflet = L.svg("ellipse", { cx: -31, cy: -4, rx: 5, ry: 3, fill: "#fff", opacity: 0.45 }, g);
-    const texte = L.texte(g, 12, 1, "", { "font-size": 13, "font-weight": 700, fill: "#e8edf1" });
-    const etat = { enfonce: false };
+    const { capuchon, reflet, texte } = dessiner(g, textes), etat = { enfonce: false };
 
     function regler(enfonce) {
       // Affiche l'état : en marche (capuchon vert, « Pause ») ou arrêté (capuchon orange enfoncé, « Lecture »).
@@ -2249,12 +2258,7 @@ Utilisé par : les simulations où le temps s'écoule (tc_meca1_a2_gravitation).
       g.setAttribute("aria-label", textes[enfonce ? 1 : 0]);
     }
 
-    function appuyer() {
-      // Un appui change l'état et prévient la scène.
-      regler(!etat.enfonce);
-      sur_changement(etat.enfonce);
-    }
-
+    const appuyer = () => { regler(!etat.enfonce); sur_changement(etat.enfonce); };
     g.addEventListener("pointerdown", (e) => { e.labo_pris = true; });
     g.addEventListener("dblclick", (e) => { e.labo_pris = true; });
     g.addEventListener("click", appuyer);

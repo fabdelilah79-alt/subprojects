@@ -214,3 +214,26 @@ Fait (demande de l'enseignant : la Lune est petite et bouge, on ne pouvait pas y
 - Chaque scène est découpée à sa taille : les cercles de la scène voisine ne débordent plus.
 - Vérifié : temps arrêté puis relancé au clavier, flèche posée sur la Lune immobile ; parcours complets
   de l'activité 2, de l'activité 3 et de l'altitude sans erreur ; 52 tests réussis.
+
+## 2026-10-15 — Laboratoires virtuels : chapitre tronc commun « Le mouvement »
+
+Fait :
+- Matériel commun (commun/) : table à coussin d'air en perspective (mobile lancé au doigt, table horizontale
+  ou inclinée, fil accroché au clou central pour le mouvement circulaire), éclateur (τ = 20, 40, 60 ms),
+  feuille d'enregistrement que l'on prend en main, transparent millimétré, règle qui pivote, flèches-vecteurs
+  vitesse à tracer, calculs de vérification sur l'enregistrement de l'élève.
+- Une simulation par activité de la fiche : A1 relativité (O1 : rue, cycliste, caméra fixe et caméra
+  embarquée, cycloïde / cercle, bouton « Pause »), A2 repère d'espace et de temps (O1, O4), A3 vitesse
+  instantanée (O2, O3, O4, table inclinée), A4 MRU et MCU (O4, O5, O6, deux missions).
+- Corrections après captures : rue remontée pour que le vélo et les traces ne passent plus sous la tablette
+  et le carnet (posés sur un muret) ; points du stroboscope régulièrement espacés ; numéros Mi placés de part
+  et d'autre de la trajectoire (lisibles sur un cercle) ; feuille neuve si le mobile est repris en main
+  pendant l'enregistrement ; flèches-vecteurs cachées tant que le fil n'est pas accroché (mission MCU).
+- demarrage.js : la place de la tablette posée peut être choisie (repos_tablette) ; bouton.js découpé.
+- Vérifié : parcours complets des 9 simulations (meca1 et meca2) avec de vrais gestes, sans erreur ;
+  52 tests réussis ; structure conforme.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer les 4 simulations avec des élèves : vitesse du lancer, lisibilité des points sur le téléphone
+  (zoomer pour mesurer au millimètre), tolérances des mesures (± 1,5 mm sur une distance).
+- Les simulations ne sont pas encore dans contenu/manifeste.json.

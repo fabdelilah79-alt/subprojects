@@ -84,8 +84,9 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       const m = mission();
       const q = m.etapes[m.etape]?.question;
       if (!q || m.accomplie) return;
-      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(q.attendu) : q.tolerance;
-      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), q.attendu, tolerance);
+      const attendu = typeof q.attendu === "function" ? q.attendu(etat.faits) : q.attendu;
+      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(attendu) : q.tolerance;
+      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), attendu, tolerance);
       prevenir_parent("reponse", { mission: m.id, etape: m.etape + 1, reponse: String(valeur), juste });
       if (juste) avancer(m, etat.vue);
       etat.messages[m.id] = { texte: juste ? q.bravo || "Exact." : q.aide, juste };

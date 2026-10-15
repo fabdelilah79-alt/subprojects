@@ -266,7 +266,15 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
 | contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes. |
 | contenu/ressources/laboratoires/commun/bouton.js | Bouton-poussoir lumineux (par exemple « Pause / Lecture » du temps), au doigt, à la souris et au clavier. |
-| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions). |
+| contenu/ressources/laboratoires/commun/coussin_air.js | Table à coussin d'air en perspective, clou central, mobile lancé d'un geste, fil à accrocher. |
+| contenu/ressources/laboratoires/commun/coussin_air_mouvement.js | Mouvement du mobile image par image : glissement, pente, rotation autour du clou, rebonds. |
+| contenu/ressources/laboratoires/commun/eclateur.js | Éclateur : durée τ, bouton « Enregistrer », un point toutes les τ (30 au plus). |
+| contenu/ressources/laboratoires/commun/feuille_enregistrement.js | Feuille d'enregistrement : points sur la table, feuille relevée à l'échelle, numéros Mi. |
+| contenu/ressources/laboratoires/commun/outils_mesure.js | Transparent millimétré (origine du repère) et règle graduée qui pivote. |
+| contenu/ressources/laboratoires/commun/vecteurs_vitesse.js | Flèches-vecteurs vitesse à tracer sur la feuille, et leur vérification. |
+| contenu/ressources/laboratoires/commun/verif_enregistrement.js | Calculs de vérification sur un enregistrement : alignement, coordonnées, vitesse, distance. |
+| contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
+| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
 | contenu/ressources/laboratoires/sources/<nom>/ | page.html, un fichier par appareil, simulation.js (missions). |
 | outils/assembler_laboratoire.py | Intègre styles, scripts et polices dans un seul fichier HTML par simulation. |

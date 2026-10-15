@@ -3,17 +3,24 @@ Rôle : bouton-poussoir lumineux posé sur un poste (par exemple « Pause / Lect
        un appui l'enfonce et change son voyant ; utilisable au doigt, à la souris et au clavier (Entrée, Espace).
 Reçoit : le groupe SVG, la position, les deux inscriptions (repos, enfoncé) et la fonction à appeler.
 Produit : Labo.bouton_poussoir(parent, x, y, { textes: [repos, enfonce], sur_changement(enfonce) }) -> { regler(enfonce) }.
-Utilisé par : les simulations où le temps s'écoule (tc_meca1_a2_gravitation).
+Utilisé par : les simulations où le temps s'écoule (gravitation, relativité), l'éclateur (eclateur.js).
 */
 (function (L) {
+  function dessiner(g, textes) {
+    // Socle métallique (largeur adaptée à l'inscription), capuchon coloré et son reflet, inscription gravée.
+    const largeur = 44 + Math.max(...textes.map((t) => t.length)) * 7.6;
+    L.svg("rect", { x: -largeur / 2, y: -17, width: largeur, height: 34, rx: 6, fill: "url(#acier)", stroke: "#1b1e21", filter: "url(#ombre)" }, g);
+    return {
+      capuchon: L.svg("circle", { cx: -largeur / 2 + 20, cy: 0, r: 11, stroke: "#111", "stroke-width": 1 }, g),
+      reflet: L.svg("ellipse", { cx: -largeur / 2 + 17, cy: -4, rx: 5, ry: 3, fill: "#fff", opacity: 0.45 }, g),
+      texte: L.texte(g, 18, 1, "", { "font-size": 13, "font-weight": 700, fill: "#e8edf1" }),
+    };
+  }
+
   L.bouton_poussoir = function (parent, x, y, { textes, sur_changement }) {
-    // Construit le bouton : socle métallique, capuchon coloré, voyant et inscription gravée.
+    // Construit le bouton et le rend utilisable au doigt, à la souris et au clavier.
     const g = L.svg("g", { transform: `translate(${x} ${y})`, class: "bouton-poussoir", role: "button", tabindex: 0 }, parent);
-    L.svg("rect", { x: -48, y: -17, width: 96, height: 34, rx: 6, fill: "url(#acier)", stroke: "#1b1e21", filter: "url(#ombre)" }, g);
-    const capuchon = L.svg("circle", { cx: -28, cy: 0, r: 11, stroke: "#111", "stroke-width": 1 }, g);
-    const reflet = L.svg("ellipse", { cx: -31, cy: -4, rx: 5, ry: 3, fill: "#fff", opacity: 0.45 }, g);
-    const texte = L.texte(g, 12, 1, "", { "font-size": 13, "font-weight": 700, fill: "#e8edf1" });
-    const etat = { enfonce: false };
+    const { capuchon, reflet, texte } = dessiner(g, textes), etat = { enfonce: false };
 
     function regler(enfonce) {
       // Affiche l'état : en marche (capuchon vert, « Pause ») ou arrêté (capuchon orange enfoncé, « Lecture »).
@@ -26,12 +33,7 @@ Utilisé par : les simulations où le temps s'écoule (tc_meca1_a2_gravitation).
       g.setAttribute("aria-label", textes[enfonce ? 1 : 0]);
     }
 
-    function appuyer() {
-      // Un appui change l'état et prévient la scène.
-      regler(!etat.enfonce);
-      sur_changement(etat.enfonce);
-    }
-
+    const appuyer = () => { regler(!etat.enfonce); sur_changement(etat.enfonce); };
     g.addEventListener("pointerdown", (e) => { e.labo_pris = true; });
     g.addEventListener("dblclick", (e) => { e.labo_pris = true; });
     g.addEventListener("click", appuyer);
