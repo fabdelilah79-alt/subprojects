@@ -203,3 +203,14 @@ Problèmes restants, à faire par l'enseignant :
 - Décider si les deux simulations complémentaires O3 sont gardées.
 - Les messages postMessage des simulations ne sont pas encore enregistrés dans le journal de recherche,
   et les simulations ne sont pas encore dans contenu/manifeste.json (le cours actuel est la rotation).
+
+## 2026-10-15 — Laboratoires : bouton « Pause » dans la simulation Soleil-Terre-Lune
+
+Fait (demande de l'enseignant : la Lune est petite et bouge, on ne pouvait pas y poser la flèche F_T/L) :
+- commun/bouton.js : bouton-poussoir lumineux « Pause / Lecture » sur le bord du poste d'observation
+  (doigt, souris, clavier) ; la date affiche « temps arrêté ». Le carnet invite à l'utiliser.
+- Flèche posée : on retient l'astre le plus proche du point de dépôt (la Lune près de la Terre n'est plus
+  confondue avec la Terre) ; le nom F_T/L s'écrit à côté de la Lune.
+- Chaque scène est découpée à sa taille : les cercles de la scène voisine ne débordent plus.
+- Vérifié : temps arrêté puis relancé au clavier, flèche posée sur la Lune immobile ; parcours complets
+  de l'activité 2, de l'activité 3 et de l'altitude sans erreur ; 52 tests réussis.

@@ -1971,8 +1971,10 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
     etage.prepend(dessin);
     L.materiaux(dessin);
     const camera = L.svg("g", {}, dessin);
+    const cadre = L.svg("clipPath", { id: "cadre-paillasse" }, dessin.querySelector("defs"));
+    L.svg("rect", { width: L.LARGEUR, height: L.HAUTEUR }, cadre);
     const postes = simulation.paillasses.map((fabrique, numero) => {
-      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)` }, camera);
+      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)`, "clip-path": "url(#cadre-paillasse)" }, camera);
       if (simulation.decor !== "aucun") L.decor.paillasse(g, numero);
       return fabrique(g);
     });

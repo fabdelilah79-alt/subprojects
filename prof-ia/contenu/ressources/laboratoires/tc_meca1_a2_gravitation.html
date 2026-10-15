@@ -1971,8 +1971,10 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
     etage.prepend(dessin);
     L.materiaux(dessin);
     const camera = L.svg("g", {}, dessin);
+    const cadre = L.svg("clipPath", { id: "cadre-paillasse" }, dessin.querySelector("defs"));
+    L.svg("rect", { width: L.LARGEUR, height: L.HAUTEUR }, cadre);
     const postes = simulation.paillasses.map((fabrique, numero) => {
-      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)` }, camera);
+      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)`, "clip-path": "url(#cadre-paillasse)" }, camera);
       if (simulation.decor !== "aucun") L.decor.paillasse(g, numero);
       return fabrique(g);
     });
@@ -2220,6 +2222,50 @@ Utilisé par : les simulations de gravitation (tc_meca1_a2_gravitation, tc_meca1
 </script>
   <script>
 /*
+Rôle : bouton-poussoir lumineux posé sur un poste (par exemple « Pause / Lecture » du temps qui s'écoule) :
+       un appui l'enfonce et change son voyant ; utilisable au doigt, à la souris et au clavier (Entrée, Espace).
+Reçoit : le groupe SVG, la position, les deux inscriptions (repos, enfoncé) et la fonction à appeler.
+Produit : Labo.bouton_poussoir(parent, x, y, { textes: [repos, enfonce], sur_changement(enfonce) }) -> { regler(enfonce) }.
+Utilisé par : les simulations où le temps s'écoule (tc_meca1_a2_gravitation).
+*/
+(function (L) {
+  L.bouton_poussoir = function (parent, x, y, { textes, sur_changement }) {
+    // Construit le bouton : socle métallique, capuchon coloré, voyant et inscription gravée.
+    const g = L.svg("g", { transform: `translate(${x} ${y})`, class: "bouton-poussoir", role: "button", tabindex: 0 }, parent);
+    L.svg("rect", { x: -48, y: -17, width: 96, height: 34, rx: 6, fill: "url(#acier)", stroke: "#1b1e21", filter: "url(#ombre)" }, g);
+    const capuchon = L.svg("circle", { cx: -28, cy: 0, r: 11, stroke: "#111", "stroke-width": 1 }, g);
+    const reflet = L.svg("ellipse", { cx: -31, cy: -4, rx: 5, ry: 3, fill: "#fff", opacity: 0.45 }, g);
+    const texte = L.texte(g, 12, 1, "", { "font-size": 13, "font-weight": 700, fill: "#e8edf1" });
+    const etat = { enfonce: false };
+
+    function regler(enfonce) {
+      // Affiche l'état : en marche (capuchon vert, « Pause ») ou arrêté (capuchon orange enfoncé, « Lecture »).
+      etat.enfonce = enfonce;
+      capuchon.setAttribute("fill", enfonce ? "#f2a33a" : "#3fbf6a");
+      capuchon.setAttribute("r", enfonce ? 10 : 11);
+      reflet.setAttribute("opacity", enfonce ? 0.25 : 0.45);
+      texte.textContent = textes[enfonce ? 1 : 0];
+      g.setAttribute("aria-pressed", String(enfonce));
+      g.setAttribute("aria-label", textes[enfonce ? 1 : 0]);
+    }
+
+    function appuyer() {
+      // Un appui change l'état et prévient la scène.
+      regler(!etat.enfonce);
+      sur_changement(etat.enfonce);
+    }
+
+    g.addEventListener("pointerdown", (e) => { e.labo_pris = true; });
+    g.addEventListener("dblclick", (e) => { e.labo_pris = true; });
+    g.addEventListener("click", appuyer);
+    g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); appuyer(); } });
+    regler(false);
+    return { regler };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : flèches-forces aimantées posées sur le bord du poste d'observation : F_{S/T}, F_{T/S}, F_{T/L}.
        L'élève pose chaque flèche sur l'astre qui SUBIT l'action ; elle devient alors un vecteur, d'origine le centre
        de cet astre, dirigé vers l'astre qui l'attire, et elle suit le mouvement. Sur un mauvais astre, elle revient.
@@ -2251,7 +2297,8 @@ Utilisé par : poste_systeme_solaire.js, simulation.js.
     const bout = { x: de.x + ux * f.longueur, y: de.y + uy * f.longueur };
     L.svg("line", { x1: de.x, y1: de.y, x2: bout.x, y2: bout.y, stroke: COULEURS[f.couleur], "stroke-width": 2.6, "marker-end": `url(#fleche-${f.couleur})` }, calque);
     L.svg("circle", { cx: de.x, cy: de.y, r: 2.2, fill: COULEURS[f.couleur] }, calque);
-    L.texte_exposants(calque, bout.x - uy * 16 - 14, bout.y + ux * 16, f.nom, { "font-size": 14, "font-weight": 700, fill: "#ffffff" });
+    const nom = f.longueur > 60 ? { x: bout.x - uy * 16 - 14, y: bout.y + ux * 16 } : { x: de.x - ux * (de.r + 14) - 14, y: de.y - uy * (de.r + 14) };
+    L.texte_exposants(calque, nom.x, nom.y, f.nom, { "font-size": 14, "font-weight": 700, fill: "#ffffff", stroke: "#03050b", "stroke-width": 3, "paint-order": "stroke" });
   }
 
   L.fleches_forces = function (g, calque) {
@@ -2292,7 +2339,8 @@ Utilisé par : poste_systeme_solaire.js, simulation.js.
 Rôle : vue réaliste du système Soleil-Terre-Lune depuis l'espace, un peu au-dessus du plan de l'orbite.
        Le temps s'écoule (une année en 40 s) ; saisir la Terre arrête le temps et permet d'avancer ou de reculer.
        La Lune fait 13,37 tours par an (12,37 nouvelles lunes). Au premier plan, le bord du poste d'observation
-       où sont posés la tablette, le carnet et le plateau des flèches-forces.
+       où sont posés la tablette, le carnet, le plateau des flèches-forces et le bouton « Pause / Lecture »
+       (indispensable pour poser une flèche sur la Lune, petite et rapide).
 Reçoit : le groupe SVG de la scène.
 Produit : Labo.poste_systeme_solaire(groupe) -> {} ; faits : annees (tours de la Terre), fleches_placees, fleche_erreur.
 Utilisé par : simulation.js.
@@ -2329,7 +2377,7 @@ Utilisé par : simulation.js.
     const vecteurs = L.svg("g", { "pointer-events": "none" }, g);
     console_observation(g);
     const affichage = L.texte(g, C.x, 24, "", { fill: "#d5dde8", "font-size": 16, "font-weight": 600 });
-    const etat = { theta: Math.PI / 2, parcouru: 0, saisie: false, dernier_fait: 0 };
+    const etat = { theta: Math.PI / 2, parcouru: 0, saisie: false, pause: false, dernier_fait: 0 };
 
     function astres() {
       // Positions à l'écran : la Terre plus grosse quand elle est au premier plan (perspective).
@@ -2348,7 +2396,7 @@ Utilisé par : simulation.js.
       Object.entries({ cx: a.terre.x, cy: a.terre.y, rx: LUNE.rx * a.k, ry: LUNE.ry * a.k }).forEach(([c, v]) => orbite_lune.setAttribute(c, v));
       if (a.lune.devant) systeme.append(lune.g); else systeme.insertBefore(lune.g, terre.g);
       (Math.sin(etat.theta) < 0 ? derriere : devant).append(systeme);
-      affichage.textContent = date(etat.parcouru);
+      affichage.textContent = date(etat.parcouru) + (etat.pause ? " — temps arrêté" : "");
       L.annoncer("astres", a);
     }
 
@@ -2366,7 +2414,7 @@ Utilisé par : simulation.js.
       // Le temps s'écoule tant que l'élève ne tient pas la Terre.
       const dt = avant === null ? 0 : Math.min(0.05, (instant - avant) / 1000);
       avant = instant;
-      if (!etat.saisie) avancer((2 * Math.PI * dt) / ANNEE_S);
+      if (!etat.saisie && !etat.pause) avancer((2 * Math.PI * dt) / ANNEE_S);
       requestAnimationFrame(tourner);
     };
     requestAnimationFrame(tourner);
@@ -2382,6 +2430,7 @@ Utilisé par : simulation.js.
       fin: () => { etat.saisie = false; },
     });
     L.fleches_forces(g, vecteurs);
+    L.bouton_poussoir(g, 640, 598, { textes: ["Pause", "Lecture"], sur_changement: (arret) => { etat.pause = arret; dessiner(); } });
     dessiner();
     return {};
   };
@@ -2578,10 +2627,10 @@ Utilisé par : page.html (dernier script).
     conclusion: "Le Soleil attire la Terre, la Terre attire la Lune : ces actions à distance (gravitation) les font tourner. Les actions réciproques sont égales et opposées.",
     conclusion_courte: "Gravitation : actions à distance, réciproques.",
     etapes: [
-      { consigne: "Observez une année complète : la Terre fait un tour autour du Soleil, la Lune tourne autour de la Terre. Regardez leurs faces éclairées.", court: "Observez une année complète.", verifier: ({ faits }) => (faits.annees || 0) >= 1, aide_geste: "Saisissez la Terre pour arrêter le temps, faites-la glisser pour avancer ou reculer." },
+      { consigne: "Observez une année complète : la Terre fait un tour autour du Soleil, la Lune tourne autour de la Terre. Regardez leurs faces éclairées.", court: "Observez une année complète.", verifier: ({ faits }) => (faits.annees || 0) >= 1, aide_geste: "Le bouton « Pause » arrête le temps. Saisissez la Terre et faites-la glisser pour avancer ou reculer." },
       { consigne: "En une année, combien de nouvelles lunes y a-t-il (la Lune passe entre la Terre et le Soleil) ?", court: "Combien de nouvelles lunes en un an ?", question: { type: "nombre", unite: "", attendu: 12.4, tolerance: 0.65, aide: "Saisissez la Terre et avancez lentement le temps : comptez chaque passage de la Lune entre la Terre et le Soleil.", bravo: "Exact : 12 ou 13 nouvelles lunes par an (12,4 en moyenne)." } },
       { consigne: "La Terre ne part pas en ligne droite : elle tourne autour du Soleil. Pourquoi ?", court: "Répondez dans le carnet.", question: choix(["Le Soleil attire la Terre (action à distance : la gravitation)", "Le vent solaire pousse la Terre", "Aucune action ne s'exerce sur elle"], "Pour changer la direction d'un mouvement, il faut une action mécanique.", "Exact : c'est l'attraction gravitationnelle du Soleil.") },
-      { consigne: "Posez chaque flèche-force sur l'astre qui subit l'action : F_{S/T} (Soleil sur Terre), F_{T/S} (Terre sur Soleil), F_{T/L} (Terre sur Lune).", court: "Posez les 3 flèches sur les bons astres.", verifier: fleches, aide_geste: "La flèche F_{A/B} se pose sur B : c'est B qui subit l'action de A." },
+      { consigne: "Posez chaque flèche-force sur l'astre qui subit l'action : F_{S/T} (Soleil sur Terre), F_{T/S} (Terre sur Soleil), F_{T/L} (Terre sur Lune).", court: "Posez les 3 flèches sur les bons astres.", verifier: fleches, aide_geste: "Appuyez sur « Pause » pour arrêter le temps, puis posez la flèche F_{A/B} sur B : c'est B qui subit l'action de A." },
       { consigne: "Comparez F_{T/S} et F_{S/T} (principe des actions réciproques).", court: "Répondez dans le carnet.", question: choix(["Même droite d'action, même intensité, sens opposés", "F_{T/S} est beaucoup plus petite, car la Terre est plus légère", "F_{T/S} est nulle"], "Relisez le principe des actions réciproques.", "Exact : F_{T/S} = −F_{S/T}.") },
     ],
   };

@@ -2,7 +2,8 @@
 Rôle : vue réaliste du système Soleil-Terre-Lune depuis l'espace, un peu au-dessus du plan de l'orbite.
        Le temps s'écoule (une année en 40 s) ; saisir la Terre arrête le temps et permet d'avancer ou de reculer.
        La Lune fait 13,37 tours par an (12,37 nouvelles lunes). Au premier plan, le bord du poste d'observation
-       où sont posés la tablette, le carnet et le plateau des flèches-forces.
+       où sont posés la tablette, le carnet, le plateau des flèches-forces et le bouton « Pause / Lecture »
+       (indispensable pour poser une flèche sur la Lune, petite et rapide).
 Reçoit : le groupe SVG de la scène.
 Produit : Labo.poste_systeme_solaire(groupe) -> {} ; faits : annees (tours de la Terre), fleches_placees, fleche_erreur.
 Utilisé par : simulation.js.
@@ -39,7 +40,7 @@ Utilisé par : simulation.js.
     const vecteurs = L.svg("g", { "pointer-events": "none" }, g);
     console_observation(g);
     const affichage = L.texte(g, C.x, 24, "", { fill: "#d5dde8", "font-size": 16, "font-weight": 600 });
-    const etat = { theta: Math.PI / 2, parcouru: 0, saisie: false, dernier_fait: 0 };
+    const etat = { theta: Math.PI / 2, parcouru: 0, saisie: false, pause: false, dernier_fait: 0 };
 
     function astres() {
       // Positions à l'écran : la Terre plus grosse quand elle est au premier plan (perspective).
@@ -58,7 +59,7 @@ Utilisé par : simulation.js.
       Object.entries({ cx: a.terre.x, cy: a.terre.y, rx: LUNE.rx * a.k, ry: LUNE.ry * a.k }).forEach(([c, v]) => orbite_lune.setAttribute(c, v));
       if (a.lune.devant) systeme.append(lune.g); else systeme.insertBefore(lune.g, terre.g);
       (Math.sin(etat.theta) < 0 ? derriere : devant).append(systeme);
-      affichage.textContent = date(etat.parcouru);
+      affichage.textContent = date(etat.parcouru) + (etat.pause ? " — temps arrêté" : "");
       L.annoncer("astres", a);
     }
 
@@ -76,7 +77,7 @@ Utilisé par : simulation.js.
       // Le temps s'écoule tant que l'élève ne tient pas la Terre.
       const dt = avant === null ? 0 : Math.min(0.05, (instant - avant) / 1000);
       avant = instant;
-      if (!etat.saisie) avancer((2 * Math.PI * dt) / ANNEE_S);
+      if (!etat.saisie && !etat.pause) avancer((2 * Math.PI * dt) / ANNEE_S);
       requestAnimationFrame(tourner);
     };
     requestAnimationFrame(tourner);
@@ -92,6 +93,7 @@ Utilisé par : simulation.js.
       fin: () => { etat.saisie = false; },
     });
     L.fleches_forces(g, vecteurs);
+    L.bouton_poussoir(g, 640, 598, { textes: ["Pause", "Lecture"], sur_changement: (arret) => { etat.pause = arret; dessiner(); } });
     dessiner();
     return {};
   };

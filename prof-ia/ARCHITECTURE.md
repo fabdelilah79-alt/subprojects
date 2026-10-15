@@ -265,6 +265,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
 | contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
 | contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes. |
+| contenu/ressources/laboratoires/commun/bouton.js | Bouton-poussoir lumineux (par exemple « Pause / Lecture » du temps), au doigt, à la souris et au clavier. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
 | contenu/ressources/laboratoires/sources/<nom>/ | page.html, un fichier par appareil, simulation.js (missions). |
