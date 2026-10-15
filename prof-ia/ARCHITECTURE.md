@@ -25,7 +25,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | serveur/tests/test_verifier_structure.py | Teste l'outil de vérification de la structure. |
 | contenu/cours/mouvement_rotation.docx | Le cours de l'enseignant (fait foi). |
 | contenu/cours/mouvement_rotation.md | Version texte du cours, extraite automatiquement, lisible par les agents. |
-| contenu/manifeste.json | Une fiche par ressource (documents, animation, enregistrement). |
+| contenu/manifeste.json | Une fiche par ressource (documents, animations, enregistrements, laboratoires virtuels) : chapitre, activité et objectifs officiels, missions. |
 | schemas/manifeste.schema.json | Format du manifeste. |
 | schemas/partition.schema.json | Format de la partition : le contrat entre les agents et le lecteur. |
 | sorties/valide/partie_1.json, partie_2.json, partie_3.json | Les trois parties (brouillons à relire par l'enseignant) : servies en mode figé, et en repli en mode adaptatif. La partie 1 sert aussi de modèle aux agents. |
@@ -81,7 +81,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/js/accueil.js | Remplit les listes de l'accueil ; à l'envoi, inscrit l'élève (pseudonyme) et ouvre le questionnaire. |
 | serveur/cles.py | Lit les clés d'API dans .env (jamais dans le code) ; dit si une clé est présente ; message clair si elle manque. |
 | serveur/agents/appel_ia.py | Seul fichier qui parle à l'API Claude : contexte en cache, sortie JSON imposée par un schéma, effort, repli, nouveaux essais, coût. |
-| serveur/agents/commun.py | Contexte stable partagé par les agents (règles, cours, manifeste, partition modèle) et appel d'un agent. |
+| serveur/agents/commun.py | Contexte stable partagé par les agents (règles, cours, ressources du chapitre du cours, partition modèle) et appel d'un agent. |
 | serveur/agents/pedagogique.py, voix.py, ecriture.py, architecture.py, chef.py, repondeur.py | Les six agents : chacun lit son prompt (prompts/<nom>.md) et répond au format de schemas/agents/<nom>.schema.json. |
 | prompts/commun.md + prompts/<agent>.md | Les consignes des agents, en français. Seul endroit où elles sont écrites. |
 | schemas/plan_pedagogique.schema.json, schemas/agents/*.schema.json | Format imposé à la réponse de chaque agent. |

@@ -8,7 +8,8 @@
       "phase_poe": "observation",
       "manipulable": null,
       "partie": 1,
-      "a_completer": "Fichier à fournir. Image ou courte vidéo ?"
+      "a_completer": "Fichier à fournir. Image ou courte vidéo ?",
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "telepherique",
@@ -18,7 +19,8 @@
       "phase_poe": "observation",
       "manipulable": null,
       "partie": 1,
-      "a_completer": "Fichier à fournir."
+      "a_completer": "Fichier à fournir.",
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "barriere_peage",
@@ -28,7 +30,8 @@
       "phase_poe": "observation",
       "manipulable": null,
       "partie": 1,
-      "a_completer": "Fichier à fournir."
+      "a_completer": "Fichier à fournir.",
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "grande_roue",
@@ -37,7 +40,8 @@
       "description": "Document 4 animé : une grande roue tourne. On compare un segment d'une nacelle (plancher-plafond) et un point d'un bras ; on peut tracer leurs trajectoires et marquer des positions successives.",
       "phase_poe": "observation",
       "manipulable": "Lancer ou arrêter la roue, régler la vitesse, afficher les trajectoires, marquer des positions.",
-      "partie": 1
+      "partie": 1,
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "schema_reperage",
@@ -47,7 +51,8 @@
       "phase_poe": "explication",
       "manipulable": null,
       "partie": 1,
-      "a_completer": "Fichier à fournir, ou à remplacer par un schéma dessiné au tableau (étape 4)."
+      "a_completer": "Fichier à fournir, ou à remplacer par un schéma dessiné au tableau (étape 4).",
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "reperage",
@@ -56,7 +61,8 @@
       "description": "Document 5 interactif : point G sur un cercle de centre O et de rayon R ; abscisse angulaire θ (en ° et en rad) et abscisse curviligne s = R·θ.",
       "phase_poe": "explication",
       "manipulable": "Déplacer G sur le cercle, changer le rayon R, afficher ou cacher θ et s.",
-      "partie": 1
+      "partie": 1,
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "enregistrement_coussin_air",
@@ -66,7 +72,8 @@
       "phase_poe": "observation",
       "manipulable": "Mesurer des arcs à la règle et des angles au rapporteur.",
       "partie": 2,
-      "a_completer": "Fichier à fournir. Préciser l'échelle de l'enregistrement."
+      "a_completer": "Fichier à fournir. Préciser l'échelle de l'enregistrement.",
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "coussin_air",
@@ -75,7 +82,8 @@
       "description": "Enregistrement simulé d'un solide en rotation (τ = 40 ms, OA = 6 cm, OB = 12 cm) : arcs et angle mesurés autour d'une position i ; calculs de Vi, ωi et R·ωi sur demande.",
       "phase_poe": "observation",
       "manipulable": "Régler ω, choisir une rotation uniforme ou accélérée, enregistrer, choisir la position i, afficher les calculs.",
-      "partie": 2
+      "partie": 2,
+      "chapitre": "1bac/meca1_rotation"
     },
     {
       "id": "rotation_uniforme",
@@ -84,7 +92,326 @@
       "description": "Rotation uniforme d'un disque : la courbe θ(t) se trace en direct (droite de pente ω, d'ordonnée à l'origine θ0) ; équations horaires, période T et fréquence f sur demande.",
       "phase_poe": "observation",
       "manipulable": "Régler ω et θ0, lancer, mettre en pause, recommencer, afficher les équations.",
-      "partie": 3
+      "partie": 3,
+      "chapitre": "1bac/meca1_rotation"
+    },
+    {
+      "id": "tc_meca1_a1_echelle",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca1_a1_echelle.html",
+      "description": "Laboratoire virtuel : frise des puissances de dix, de l'atome aux galaxies. L'élève convertit des longueurs en mètre et les place sur la frise.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca1_interactions",
+      "activite": "Documents ou logiciels sur l'univers (atome, Terre, système solaire, galaxies) pour comparer les dimensions.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "L'échelle des distances dans l'Univers",
+          "ce_que_fait_l_eleve": "Convertit 8 longueurs (noyau, atome, Terre, distance Terre-Lune, Terre-Soleil, galaxie...) en mètre au tableur, place les étiquettes aimantées sur la frise des puissances de dix, compare les ordres de grandeur et calcule la durée du trajet de la lumière du Soleil à la Terre.",
+          "conclusion": "Les longueurs de l'Univers vont de 10⁻¹⁵ m (noyau) à 10²¹ m (galaxie) : 36 ordres de grandeur."
+        }
+      ],
+      "duree_min": 15
+    },
+    {
+      "id": "tc_meca1_a2_gravitation",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca1_a2_gravitation.html",
+      "description": "Laboratoire virtuel : le Soleil, la Terre et la Lune vus dans l'espace (mouvements, actions réciproques), puis des sondes pour découvrir la loi de la gravitation universelle. G est donnée, jamais modifiée.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca1_interactions",
+      "activite": "Mouvement de la Terre autour du Soleil, de la Lune autour de la Terre.",
+      "objectifs": [
+        "O2",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le Soleil, la Terre et la Lune",
+          "ce_que_fait_l_eleve": "Observe une année (phases de la Lune), arrête le temps avec le bouton « Pause » et pose les vecteurs-forces F_S/T, F_T/S et F_T/L.",
+          "conclusion": "Le Soleil attire la Terre, la Terre attire la Lune : ces actions à distance (gravitation) les font tourner. Les actions réciproques sont égales et opposées."
+        },
+        {
+          "titre": "De quoi dépend la force de gravitation ? Les masses",
+          "ce_que_fait_l_eleve": "Place des sondes de masses différentes près de la Terre puis de la Lune, relève F au tableur et trouve que F est proportionnelle à m et à M.",
+          "conclusion": "La force de gravitation est proportionnelle à la masse m de la sonde et à la masse M de l'astre."
+        },
+        {
+          "titre": "De quoi dépend la force de gravitation ? La distance",
+          "ce_que_fait_l_eleve": "Éloigne la sonde, trace F en fonction de 1/d², calcule F·d²/(m·M) et retrouve la constante G, puis calcule la force Terre-Lune.",
+          "conclusion": "Loi de la gravitation universelle : F = G · m · M / d², avec G ≈ 6,67 × 10^{−11} N·m²/kg²."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "Seule la Terre attire la Lune, la Lune n'attire pas la Terre.",
+        "La force de gravitation ne dépend que de la masse de l'astre."
+      ]
+    },
+    {
+      "id": "tc_meca1_a3_force_pressante",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca1_a3_force_pressante.html",
+      "description": "Laboratoire virtuel : brique posée sur la mousse (effet de la force pressante), classement des actions mécaniques, capsule manométrique dans l'eau et baromètre.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca1_interactions",
+      "activite": "Expériences mettant en évidence la force pressante.",
+      "objectifs": [
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Force pressante et pression",
+          "ce_que_fait_l_eleve": "Pose la brique sur la mousse par ses trois faces, puis deux briques, mesure l'enfoncement au réglet, calcule P = F/S au tableur et classe les actions sur le tableau magnétique.",
+          "conclusion": "La pression P = F / S (en pascal, Pa) augmente quand la force pressante augmente ou quand la surface pressée diminue."
+        },
+        {
+          "titre": "La force pressante dans un liquide",
+          "ce_que_fait_l_eleve": "Plonge la capsule manométrique dans l'eau à différentes profondeurs et orientations, trace Δh en fonction de h, puis lit le baromètre en hPa, bar et cmHg.",
+          "conclusion": "Dans un liquide, la pression augmente avec la profondeur et ne dépend pas de l'orientation de la surface pressée."
+        }
+      ],
+      "duree_min": 30
+    },
+    {
+      "id": "tc_meca1_o3_poids",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca1_o3_poids.html",
+      "description": "Laboratoire virtuel (complément, sans activité dans la fiche) : masses marquées accrochées à un dynamomètre pour trouver P = m·g.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca1_interactions",
+      "activite": null,
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Le poids d'un corps",
+          "ce_que_fait_l_eleve": "Accroche des masses marquées au dynamomètre, relève P au tableur, trace P en fonction de m, trouve g ≈ 9,8 N/kg puis détermine la masse d'un caillou.",
+          "conclusion": "P et m sont proportionnels : P = m·g, avec g ≈ 9,8 N/kg, l'intensité de la pesanteur au sol."
+        }
+      ],
+      "duree_min": 15
+    },
+    {
+      "id": "tc_meca1_o3_altitude",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca1_o3_altitude.html",
+      "description": "Laboratoire virtuel (complément, sans activité dans la fiche) : une sonde de 1000 kg éloignée de la Terre jusqu'à 36 000 km pour découvrir g = g0·R²/(R+h)².",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca1_interactions",
+      "activite": null,
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "La force de gravitation et l'altitude",
+          "ce_que_fait_l_eleve": "Déplace la sonde de 0 à 36 000 km d'altitude, relève F au tableur, trace F en fonction de h puis de 1/(R+h)², trouve g = g0·R²/(R+h)² et l'applique à la Station spatiale internationale.",
+          "conclusion": "Le poids diminue avec l'altitude : F = m · g, avec g = g_{0} · R² / (R + h)². À h = R, g est divisée par 4."
+        }
+      ],
+      "duree_min": 15
+    },
+    {
+      "id": "tc_meca2_a1_relativite",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca2_a1_relativite.html",
+      "description": "Laboratoire virtuel : un cycliste passe dans une rue, filmé par une caméra fixe (référentiel terrestre) et par une caméra embarquée sur le vélo (référentiel du vélo), avec un stroboscope.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca2_mouvement",
+      "activite": "Exemples de la vie courante sur la relativité du mouvement.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "La relativité du mouvement",
+          "ce_que_fait_l_eleve": "Regarde un passage avec la caméra fixe (la valve décrit une cycloïde), touche la caméra du porte-bagages (la valve décrit un cercle, le casque est immobile), puis choisit le référentiel adapté (terrestre, géocentrique).",
+          "conclusion": "La trajectoire d'un point dépend du référentiel : pour décrire un mouvement, il faut d'abord choisir un référentiel."
+        }
+      ],
+      "duree_min": 10,
+      "conceptions": [
+        "Le mouvement d'un objet est le même pour tous les observateurs.",
+        "Un objet est immobile ou en mouvement dans l'absolu."
+      ]
+    },
+    {
+      "id": "tc_meca2_a2_repere",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca2_a2_repere.html",
+      "description": "Laboratoire virtuel : table à coussin d'air et éclateur ; l'élève enregistre un mouvement et choisit un repère d'espace (transparent millimétré) et un repère de temps.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca2_mouvement",
+      "activite": "Décrire le mouvement d'un point par rapport à un référentiel (choix du repère d'espace et de temps).",
+      "objectifs": [
+        "O1",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Repérer le mouvement d'un point",
+          "ce_que_fait_l_eleve": "Enregistre un lancer, pose l'origine du transparent millimétré sur M0, relève t, x et y de M0 à M6 au tableur, trace la trajectoire et répond sur le choix du repère et de l'origine des dates.",
+          "conclusion": "Pour décrire un mouvement, on choisit un référentiel (ici la table), un repère d'espace (O, x, y) et un repère de temps (origine des dates t = 0)."
+        }
+      ],
+      "duree_min": 20
+    },
+    {
+      "id": "tc_meca2_a3_vitesse",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca2_a3_vitesse.html",
+      "description": "Laboratoire virtuel : table à coussin d'air inclinée ; l'élève mesure des distances à la règle pour approcher la vitesse instantanée et trace des vecteurs vitesse.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca2_mouvement",
+      "activite": "Déterminer expérimentalement une vitesse instantanée.",
+      "objectifs": [
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "La vitesse instantanée",
+          "ce_que_fait_l_eleve": "Enregistre le mouvement sur la table inclinée, calcule la vitesse moyenne entre M2 et M4, remplit le tableau vi = Mi-1Mi+1 / 2τ pour i = 1 à 8, trace v en fonction de t, trace les vecteurs v3 et v7 et convertit en km/h.",
+          "conclusion": "Vitesse instantanée en Mi : vi ≈ Mi-1Mi+1 / (2τ). Le vecteur vitesse est tangent à la trajectoire, dans le sens du mouvement ; sa longueur suit une échelle."
+        }
+      ],
+      "duree_min": 25
+    },
+    {
+      "id": "tc_meca2_a4_mru_mcu",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca2_a4_mru_mcu.html",
+      "description": "Laboratoire virtuel : table à coussin d'air horizontale ; mobile lancé librement (mouvement rectiligne uniforme), puis retenu par un fil au clou central (mouvement circulaire uniforme).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca2_mouvement",
+      "activite": "Mettre en évidence expérimentalement les caractéristiques du MRU et du MCU.",
+      "objectifs": [
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Le mouvement rectiligne uniforme",
+          "ce_que_fait_l_eleve": "Lance le mobile sans fil, relève x = M0Mi au tableur, modélise x = v·t et utilise l'équation horaire (distance en 5 s, durée pour 2 m).",
+          "conclusion": "Mouvement rectiligne uniforme : trajectoire droite, vitesse constante ; équation horaire x = v·t + x0."
+        },
+        {
+          "titre": "Le mouvement circulaire uniforme",
+          "ce_que_fait_l_eleve": "Accroche le fil au mobile, enregistre, vérifie que les distances Mi-1Mi+1 sont égales, trace v2, v6 et v10 tangents au cercle, puis compare avec la Lune et les satellites.",
+          "conclusion": "Mouvement circulaire uniforme : trajectoire circulaire, valeur de la vitesse constante ; le vecteur vitesse, tangent au cercle, change de direction."
+        }
+      ],
+      "duree_min": 30
+    },
+    {
+      "id": "tc_meca3_a1_actions",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca3_a1_actions.html",
+      "description": "Laboratoire virtuel : bille d'acier lâchée d'une gouttière (photographie à pose multiple) près d'un aimant ou contre une cale en bois ; palet sur la table à coussin d'air avec et sans air.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca3_inertie",
+      "activite": "Aimant approché d'une bille en mouvement, bille heurtant un obstacle, palets sur table à coussin d'air.",
+      "objectifs": [
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "La bille, l'aimant et la cale",
+          "ce_que_fait_l_eleve": "Lâche la bille sur le plateau vide (droite, léger ralentissement dû aux frottements), puis avec l'aimant près du trajet (trajectoire courbée : action à distance), puis avec la cale sur le trajet (rebond : action de contact).",
+          "conclusion": "Une action mécanique modifie le mouvement : elle peut changer la direction et la valeur de la vitesse. Sans action (ou avec des actions qui se compensent), pas de changement."
+        },
+        {
+          "titre": "Le palet sur la table à coussin d'air",
+          "ce_que_fait_l_eleve": "Lance le palet air coupé (il s'arrête vite : frottement), puis avec l'air (il glisse sans ralentir : poids et action de l'air se compensent, palet pseudo-isolé).",
+          "conclusion": "Avec l'air, le poids du palet et l'action de l'air se compensent : le palet est pseudo-isolé, il glisse en ligne droite à vitesse constante. Aucune force n'est nécessaire pour entretenir ce mouvement."
+        }
+      ],
+      "duree_min": 15,
+      "conceptions": [
+        "Une force est nécessaire pour entretenir un mouvement rectiligne uniforme.",
+        "La force reçue au départ s'épuise, c'est pourquoi un objet finit par s'arrêter."
+      ]
+    },
+    {
+      "id": "tc_meca3_a2_principe",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca3_a2_principe.html",
+      "description": "Laboratoire virtuel : vérification du principe d'inertie sur une table à coussin d'air horizontale avec soufflerie, puis sur une table inclinée.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca3_inertie",
+      "activite": "Vérification expérimentale du principe d'inertie.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Le palet au repos",
+          "ce_que_fait_l_eleve": "Met l'air sous le palet posé et constate qu'il reste immobile : son poids et l'action de l'air se compensent (pseudo-isolé).",
+          "conclusion": "Un palet posé, soulevé par l'air, reste immobile : son poids et l'action de l'air se compensent, il est pseudo-isolé."
+        },
+        {
+          "titre": "Le palet lancé",
+          "ce_que_fait_l_eleve": "Enregistre un lancer, mesure à la règle les distances MiMi+1 (i = 0 à 9) au tableur, constate qu'elles sont égales et énonce le principe d'inertie.",
+          "conclusion": "Principe d'inertie : dans un référentiel terrestre, tout corps isolé ou pseudo-isolé persévère dans son état de repos ou de mouvement rectiligne uniforme."
+        },
+        {
+          "titre": "Sur la table inclinée",
+          "ce_que_fait_l_eleve": "Enregistre un lancer sur la table inclinée : le mouvement n'est plus rectiligne uniforme car les actions ne se compensent plus ; cas d'une sonde spatiale isolée.",
+          "conclusion": "Sur la table inclinée, le poids et l'action de l'air ne se compensent plus : le mouvement n'est plus rectiligne uniforme."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "Une force est nécessaire pour entretenir un mouvement rectiligne uniforme."
+      ]
+    },
+    {
+      "id": "tc_meca3_a3_centre_inertie",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca3_a3_centre_inertie.html",
+      "description": "Laboratoire virtuel : deux palets solidaires (400 g et 200 g) lancés en tournant sur la table à coussin d'air ; recherche du centre d'inertie sur l'enregistrement ; centre d'inertie de solides homogènes.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca3_inertie",
+      "activite": "Centre d'inertie : mouvement d'ensemble et mouvement propre ; barycentre de deux palets solidaires.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Deux palets solidaires",
+          "ce_que_fait_l_eleve": "Enregistre le mouvement des deux palets (traces A et B courbes), fait glisser un curseur le long de A0B0 jusqu'à ce que les croix soient alignées et régulièrement espacées (point G), mesure GA et GB, découvre mA·GA = mB·GB et la relation barycentrique ; mouvement d'ensemble et mouvement propre.",
+          "conclusion": "Le centre d'inertie G est le seul point du solide qui décrit un mouvement rectiligne uniforme (mouvement d'ensemble) ; les autres points tournent autour de G (mouvement propre). G vérifie mA·GA = mB·GB."
+        },
+        {
+          "titre": "Centre d'inertie des solides homogènes",
+          "ce_que_fait_l_eleve": "Colle une gommette au centre d'inertie d'une tige, d'une barre, d'un disque et d'une sphère homogènes, puis applique la relation barycentrique à deux boules reliées par une tige.",
+          "conclusion": "Le centre d'inertie d'un solide homogène qui a un centre de symétrie est ce centre de symétrie (milieu d'une tige, centre d'un disque, d'une sphère)."
+        }
+      ],
+      "duree_min": 30
     }
   ]
 }

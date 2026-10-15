@@ -3,18 +3,29 @@
   "title": "Manifeste des ressources",
   "description": "Une fiche par ressource de contenu/ressources/ : ce que c'est, à quoi elle sert dans la démarche POE.",
   "type": "object",
-  "required": ["ressources"],
+  "required": [
+    "ressources"
+  ],
   "additionalProperties": false,
   "properties": {
     "ressources": {
       "type": "array",
-      "items": { "$ref": "#/$defs/ressource" }
+      "items": {
+        "$ref": "#/$defs/ressource"
+      }
     }
   },
   "$defs": {
     "ressource": {
       "type": "object",
-      "required": ["id", "type", "fichier", "description", "phase_poe", "manipulable"],
+      "required": [
+        "id",
+        "type",
+        "fichier",
+        "description",
+        "phase_poe",
+        "manipulable"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -24,7 +35,14 @@
         },
         "type": {
           "description": "Nature de la ressource.",
-          "enum": ["simulation", "animation", "video", "image", "document", "enregistrement"]
+          "enum": [
+            "simulation",
+            "animation",
+            "video",
+            "image",
+            "document",
+            "enregistrement"
+          ]
         },
         "fichier": {
           "description": "Chemin du fichier, à partir de contenu/ressources/.",
@@ -38,11 +56,81 @@
         },
         "phase_poe": {
           "description": "Phase de la démarche où la ressource est utilisée.",
-          "enum": ["prediction", "observation", "explication"]
+          "enum": [
+            "prediction",
+            "observation",
+            "explication"
+          ]
         },
         "manipulable": {
           "description": "Ce que l'élève peut faire avec la ressource, ou null si elle se regarde seulement.",
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "chapitre": {
+          "description": "Chapitre du programme où la ressource sert : id de la fiche des orientations (niveau/chapitre). Les agents ne reçoivent que les ressources du chapitre du cours.",
+          "type": "string",
+          "pattern": "^(tronc_commun|1bac|2bac)/[a-z0-9_]+$"
+        },
+        "activite": {
+          "description": "Activité de la fiche officielle que la ressource met en œuvre (texte recopié), ou null pour un complément.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "objectifs": {
+          "description": "Objectifs de la fiche officielle travaillés (O1, O2...).",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^O[0-9]+$"
+          },
+          "minItems": 1
+        },
+        "conceptions": {
+          "description": "Conceptions d'élèves que la ressource aide à dépasser (facultatif).",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "missions": {
+          "description": "Pour un laboratoire virtuel : ses missions, dans l'ordre, et ce que l'élève y fait.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "titre",
+              "ce_que_fait_l_eleve",
+              "conclusion"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "titre": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ce_que_fait_l_eleve": {
+                "type": "string",
+                "minLength": 1
+              },
+              "conclusion": {
+                "description": "Ce que l'élève doit retenir à la fin de la mission.",
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "duree_min": {
+          "description": "Durée de manipulation estimée, en minutes.",
+          "type": "integer",
+          "minimum": 1
         },
         "partie": {
           "description": "Numéro de la partie du cours où la ressource sert (facultatif).",

@@ -72,6 +72,12 @@ python -m outils.assembler_laboratoire tc_meca1_a3_force_pressante
 
 Pour essayer pendant l'écriture, ouvrez directement `sources/<nom>/page.html` dans le navigateur.
 
+## Inscription au manifeste
+
+Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
+objectifs, missions (titre, ce que fait l'élève, conclusion), durée estimée. Les agents ne reçoivent que les ressources
+du chapitre du cours choisi dans `config/application.json`. Un test vérifie que chaque simulation de `sources/` est inscrite.
+
 ## Ce que la simulation envoie à la page du professeur
 
 Quand elle est ouverte dans le cadre des médias, la simulation envoie (postMessage) :
