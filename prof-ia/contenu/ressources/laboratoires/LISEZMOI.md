@@ -58,6 +58,15 @@ avec l'air, il glisse sans ralentir.
 | tc_meca3_a2_principe.html | A2 : vérification expérimentale du principe d'inertie | O1, O2 | Palet posé avec l'air : il reste immobile. Palet lancé : distances MiMi+1 mesurées à la règle au tableur, toutes égales (mouvement rectiligne uniforme), énoncé du principe. Table inclinée : actions non compensées, mouvement non uniforme. Sonde spatiale isolée. |
 | tc_meca3_a3_centre_inertie.html | A3 : centre d'inertie, mouvement d'ensemble et mouvement propre ; barycentre de deux palets solidaires | O3, O4, O5 | Deux palets de 400 g et 200 g reliés par une tige, lancés en tournant : les traces A et B sont des courbes. Sur la feuille, un curseur vert glisse le long de A0B0 et place une croix au même point de chaque segment AiBi : l'élève cherche où les croix sont alignées et régulières (G), mesure GA et GB, découvre mA·GA = mB·GB. Puis colle une gommette au centre d'inertie d'une tige, d'une barre, d'un disque et d'une sphère ; exercice sur la relation barycentrique. |
 
+## Chapitre tronc commun « Quantité de mouvement » (fiche tronc_commun/meca4_quantite_mouvement)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca4_a1_quantite.html | A1 : définition et représentation de p | O1, O2 | Lance un mobile de 300 g sur la table à coussin d'air, mesure sa vitesse, calcule p = m·v (kg·m/s) et trace le vecteur p à l'échelle. Pose une surcharge de 300 g : à vitesse égale, p double. |
+| tc_meca4_a2_conservation.html | A2 : expériences de conservation, puis généralisation | O3 | « Explosion » : deux mobiles serrés contre un ressort, retenus par un fil que l'élève coupe. Avec la surcharge sur A, mA·vA = mB·vB et pA + pB = 0 ; sans surcharge, vA = vB. Loi de conservation, exercice des patineurs. |
+| tc_meca4_a3_applications.html | A3 : applications (recul d'une arme, choc, barque) | O3 | Choc de deux mobiles qui se collent (mA·vA = (mA + mB)·v') ; enfant qui saute d'une barque sur un lac (bouées graduées) ; canon à ressort sur un chariot qui recule (rail gradué, barrière lumineuse) ; recul d'un fusil. |
+| tc_meca4_a4_force.html | A4 : vérification expérimentale de F = Δp/Δt | O4 | Chronophotographie d'une bille lâchée devant une règle (fils de lecture rouges) : t et y au tableur, v3, v7, Δp/Δt = m·g = P, Δp vertical vers le bas. Bille lancée horizontalement devant un quadrillage : vx constante, Δp vertical. |
+
 ## Modifier ou ajouter une simulation
 
 Les sources sont dans `sources/<nom>/` : `page.html` (liste des scripts), un fichier par appareil, et

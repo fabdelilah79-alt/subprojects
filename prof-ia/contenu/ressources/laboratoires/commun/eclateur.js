@@ -4,7 +4,7 @@ Rôle : éclateur (générateur d'étincelles) relié au mobile : bouton rotatif
        Un nouvel enregistrement se fait sur une feuille neuve ; il s'arrête seul après 30 points ou à l'arrêt du mobile.
 Reçoit : le groupe SVG, le mobile (Labo.CoussinAir), la position du boîtier.
 Produit : new Labo.Eclateur(parent, mobile, x, y) : points (liste { t, x, y } en s et mm), tau_s ;
-          fait noté « enregistrement » = { tau_s, points, fil, table, air } à la fin de chaque enregistrement.
+          fait noté « enregistrement » = { tau_s, points, fil, table, air, masse_kg } à la fin de chaque enregistrement.
 Utilisé par : les simulations de mouvement avec la table à coussin d'air.
 */
 (function (L) {
@@ -79,7 +79,7 @@ Utilisé par : les simulations de mouvement avec la table à coussin d'air.
       L.annoncer("etincelle", { mobile: this.mobile, point: this.points[this.points.length - 1], points: this.points });
       if (this.points.length >= MAX_POINTS) this.finir();
     }
-    if (this.points.length > 1 && Math.hypot(m.vitesse.x, m.vitesse.y) < 2) this.finir();
+    if (this.points.length > 1 && m.immobile()) this.finir();
   };
 
   E.finir = function () {
@@ -88,7 +88,7 @@ Utilisé par : les simulations de mouvement avec la table à coussin d'air.
     this.actif = false;
     this.bouton.regler(false);
     this.voyant.setAttribute("fill", "#5a1d1d");
-    L.missions.noter("enregistrement", { tau_s: this.tau_s, points: this.points.map((p) => ({ ...p })), fil: !!this.mobile.rayon_fil, table: this.mobile.nom, air: !this.mobile.sans_air });
+    L.missions.noter("enregistrement", { tau_s: this.tau_s, points: this.points.map((p) => ({ ...p })), fil: !!this.mobile.rayon_fil, table: this.mobile.nom, air: !this.mobile.sans_air, masse_kg: this.mobile.masse_kg ?? null });
     L.annoncer("enregistrement", { mobile: this.mobile, points: this.points, fini: true });
   };
 

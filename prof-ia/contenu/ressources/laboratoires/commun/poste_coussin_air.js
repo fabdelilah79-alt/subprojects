@@ -28,7 +28,7 @@ Utilisé par : les simulations de mouvement (tc_meca2_a2_repere, tc_meca2_a3_vit
     for (const nom of reglages.outils || []) outils[nom] = L[nom](feuille);
     // Avec un fil, les flèches n'apparaissent que pour un enregistrement circulaire (fil accroché).
     const quand = reglages.fil ? () => !!table.fil_accroche : () => true;
-    if (reglages.vecteurs) outils.vecteurs = L.vecteurs_vitesse(feuille, { ...reglages.vecteurs, quand });
+    if (reglages.vecteurs) outils.vecteurs = L.vecteurs_vitesse(feuille, { ...reglages.vecteurs, quand: reglages.vecteurs.quand || quand });
     return { pense_bete, table, eclateur, feuille, outils };
   };
 })(window.Labo);

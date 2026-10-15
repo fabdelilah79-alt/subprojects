@@ -69,11 +69,13 @@ Utilisé par : outils_mesure.js et les simulations de mouvement.
     this.dessin.replaceChildren();
     for (const [nom, points] of series(this.points)) {
       const pas = nom === "M" ? 1 : 2;
+      let dernier = null;
       points.forEach((pt, i) => {
-        // Deux séries (A et B) : un numéro sur deux, pour rester lisible.
+        // Deux séries (A et B) : un numéro sur deux ; pas de numéro à moins de 9 mm du précédent (points serrés).
         const p = vers_feuille(pt.x, pt.y);
         L.svg("circle", { cx: p.x, cy: p.y, r: 1.6, fill: "#111" }, this.dessin);
-        if (i % pas) return;
+        if (i % pas || (dernier && Math.hypot(pt.x - dernier.x, pt.y - dernier.y) < 9)) return;
+        dernier = pt;
         const e = place_numero(points, i, p, (i / pas) % 2 ? 1 : -1);
         L.texte(this.dessin, e.x, e.y, `${nom}${i}`, { class: "etiquette-carton", "font-size": 7.5, fill: "#666" });
       });

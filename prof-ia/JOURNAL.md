@@ -255,3 +255,26 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : force de l'aimant, position de la cale, vitesse de rotation des palets solidaires.
 - Les simulations ne sont pas encore dans contenu/manifeste.json.
+
+## 2026-10-15 — Manifeste des ressources : les laboratoires virtuels
+
+Fait (demande de l'enseignant : que l'IA trouve les simulations avec leurs métadonnées) :
+- schemas/manifeste.schema.json : nouveaux champs facultatifs chapitre, activite (texte officiel), objectifs,
+  conceptions, missions (titre, ce que fait l'élève, conclusion), duree_min.
+- contenu/manifeste.json : toutes les simulations des laboratoires ; les 9 ressources du cours de rotation
+  reçoivent leur chapitre (1bac/meca1_rotation).
+- serveur/agents/commun.py : les agents ne reçoivent que les ressources du chapitre du cours choisi.
+- Tests : filtre par chapitre ; chaque simulation de laboratoires/sources/ est inscrite au manifeste.
+
+## 2026-10-15 — Laboratoires virtuels : chapitre tronc commun « Quantité de mouvement »
+
+Fait :
+- Une simulation par activité de la fiche : A1 définition de p (O1, O2), A2 explosion de deux mobiles
+  (O3), A3 choc, barque, recul d'un canon (O3), A4 F = Δp/Δt par chronophotographie (O4).
+- Matériel commun : dessin_palet.js, surcharge.js ; flèches de quantité de mouvement (lettre p, échelle en
+  kg·m/s) ; l'éclateur note la masse du mobile ; une seule étiquette par point resté immobile ou très serré.
+- Les 4 simulations sont inscrites au manifeste avec leurs métadonnées.
+- Vérifié : parcours complets des 16 simulations des quatre chapitres, sans erreur ; 54 tests réussis.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : précision de lecture sur la règle (tolérance 3 mm), vitesse du lancer pour le choc.

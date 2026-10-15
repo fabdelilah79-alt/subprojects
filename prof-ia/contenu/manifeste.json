@@ -412,6 +412,122 @@
         }
       ],
       "duree_min": 30
+    },
+    {
+      "id": "tc_meca4_a1_quantite",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca4_a1_quantite.html",
+      "description": "Laboratoire virtuel : table à coussin d'air, mobile de 300 g et surcharge de 300 g ; l'élève calcule p = m·v et trace le vecteur quantité de mouvement.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca4_quantite_mouvement",
+      "activite": "Définition et représentation de p.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "La quantité de mouvement d'un mobile",
+          "ce_que_fait_l_eleve": "Enregistre un lancer du mobile de 300 g, mesure sa vitesse à la règle, calcule p = m·v en kg·m/s, trace le vecteur p5 à l'échelle (1 cm ↔ 0,05 kg·m/s) et donne l'unité de p.",
+          "conclusion": "La quantité de mouvement d'un solide est p = m·v (en kg·m/s) ; son vecteur a la direction et le sens du vecteur vitesse."
+        },
+        {
+          "titre": "Le rôle de la masse",
+          "ce_que_fait_l_eleve": "Pose la surcharge de 300 g sur le mobile, enregistre un nouveau lancer, calcule p ; constate qu'à vitesse égale p est proportionnelle à m ; calcule p d'une voiture.",
+          "conclusion": "À vitesse égale, la quantité de mouvement est proportionnelle à la masse."
+        }
+      ],
+      "duree_min": 20
+    },
+    {
+      "id": "tc_meca4_a2_conservation",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca4_a2_conservation.html",
+      "description": "Laboratoire virtuel : « explosion » de deux mobiles A et B serrés contre un ressort comprimé et retenus par un fil, sur la table à coussin d'air ; surcharge à poser sur A.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca4_quantite_mouvement",
+      "activite": "Expériences de conservation (solide pseudo-isolé) puis généralisation.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "L'explosion de deux mobiles",
+          "ce_que_fait_l_eleve": "Pose la surcharge sur A (400 g contre 200 g), enregistre, coupe le fil, mesure vA et vB à la règle, compare pA et pB : vecteurs opposés, pA + pB = 0 ; la quantité de mouvement du système se conserve.",
+          "conclusion": "Avant : le système {A, B} est immobile, sa quantité de mouvement est nulle. Après : mA·vA = mB·vB et les vecteurs sont opposés, pA + pB = 0. La quantité de mouvement du système pseudo-isolé se conserve."
+        },
+        {
+          "titre": "Avec deux masses égales",
+          "ce_que_fait_l_eleve": "Recommence sans surcharge (masses égales) : vA = vB ; énonce la loi de conservation et l'applique à deux patineurs qui se repoussent.",
+          "conclusion": "Loi de conservation : la quantité de mouvement d'un système isolé ou pseudo-isolé se conserve."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "La quantité de mouvement d'un système immobile peut devenir non nulle sans action extérieure."
+      ]
+    },
+    {
+      "id": "tc_meca4_a3_applications",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca4_a3_applications.html",
+      "description": "Laboratoire virtuel : choc de deux mobiles qui se collent sur la table à coussin d'air ; enfant qui saute d'une barque sur un lac ; canon à ressort sur un chariot qui recule (photographies à pose multiple).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca4_quantite_mouvement",
+      "activite": "Applications : recul d'une arme, choc, barque.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Le choc de deux mobiles",
+          "ce_que_fait_l_eleve": "Lance A (200 g) vers B (400 g) immobile ; ils se collent ; mesure vA avant et v' après le choc, vérifie mA·vA = (mA + mB)·v'.",
+          "conclusion": "Au cours du choc, la quantité de mouvement du système {A, B} se conserve : mA·vA = (mA + mB)·v'."
+        },
+        {
+          "titre": "Le saut depuis la barque",
+          "ce_que_fait_l_eleve": "Fait sauter l'enfant (40 kg, 2,4 m/s) de la barque (80 kg) vers le ponton, mesure la vitesse de recul de la barque avec les bouées graduées, vérifie p(barque) = − p(enfant).",
+          "conclusion": "Le système {enfant, barque} est pseudo-isolé et immobile au départ : sa quantité de mouvement reste nulle, la barque recule."
+        },
+        {
+          "titre": "Le recul du canon",
+          "ce_que_fait_l_eleve": "Fait tirer le canon (bille de 50 g à 3,2 m/s, chariot de 400 g), mesure la vitesse de recul sur le rail gradué, vérifie la conservation, calcule le recul d'un fusil.",
+          "conclusion": "Au tir, la bille et l'arme partent en sens opposés : m_bille·v_bille = m_arme·v_arme. C'est le recul d'une arme."
+        }
+      ],
+      "duree_min": 30
+    },
+    {
+      "id": "tc_meca4_a4_force",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_meca4_a4_force.html",
+      "description": "Laboratoire virtuel : chronophotographie d'une bille de 50 g lâchée par un électroaimant devant une règle verticale, puis lancée horizontalement devant un tableau quadrillé ; fils de lecture pour mesurer.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/meca4_quantite_mouvement",
+      "activite": "Vérification expérimentale de F = Δp/Δt.",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "La chute d'une bille",
+          "ce_que_fait_l_eleve": "Lâche la bille, relève t et y des 10 images au tableur, calcule v3, v7 puis Δp/Δt et le compare au poids P = m·g : F = Δp/Δt ; Δp est vertical vers le bas, comme le poids.",
+          "conclusion": "Pour la bille qui tombe, Δp/Δt = m·g = P : la force qui agit est égale à la variation de la quantité de mouvement par unité de temps, F = Δp/Δt ; Δp a la direction et le sens de la force."
+        },
+        {
+          "titre": "La bille lancée horizontalement",
+          "ce_que_fait_l_eleve": "Lance la bille horizontalement : la distance horizontale entre deux images est constante (vx = 1 m/s), Δp est vertical vers le bas ; la direction de la force se déduit de Δp.",
+          "conclusion": "La vitesse horizontale reste constante, la vitesse verticale augmente : Δp est vertical vers le bas, donc la force (le poids) est verticale vers le bas."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "Le vecteur force a toujours la direction du mouvement."
+      ]
     }
   ]
 }
