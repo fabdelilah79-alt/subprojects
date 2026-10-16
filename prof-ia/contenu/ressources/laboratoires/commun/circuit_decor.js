@@ -3,7 +3,7 @@ Rôle : décor d'une paillasse d'électricité vue de plus haut : un bandeau de 
        travail où l'on pose les appareils et les fils, le bord avant et les placards.
 Reçoit : le groupe SVG de la paillasse et son numéro.
 Produit : Labo.decor_circuit(groupe, numero) -> { pense_bete } ; Labo.PLAN_CIRCUIT : hauteurs (fond, avant, placard) ;
-          Labo.PRISES_MUR : centres des prises du mur ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
+          Labo.PRISES_MUR : centres des prises du mur ; Labo.bouton_rond(g, x, y, texte, action, rayon) : touche ronde ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
           Labo.boitier(groupe, x, y, largeur, profondeur, hauteur, { dessus, face }) : boîtier d'appareil vu d'en haut.
 Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer), les composants circuit_*.js.
 */
@@ -53,6 +53,16 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
     L.svg("rect", { x, y: y + p - 4, width: l, height: h + 4, rx: 3, fill: face, stroke: "#00000050" }, g);
     L.svg("rect", { x, y, width: l, height: p, rx: 4, fill: dessus, stroke: "#00000040" }, g);
     L.svg("rect", { x: x + 3, y: y + 1.5, width: l - 6, height: 2, rx: 1, fill: "#fff", opacity: 0.35 }, g);
+  };
+
+  L.bouton_rond = function (g, x, y, texte, action, rayon = 9) {
+    // Petit bouton poussoir rond, touchable.
+    const b = L.svg("g", { class: "bouton-rond", role: "button", "aria-label": texte }, g);
+    L.svg("circle", { cx: x + 0.8, cy: y + 1.5, r: rayon, fill: "#000", opacity: 0.3 }, b);
+    L.svg("circle", { cx: x, cy: y, r: rayon, fill: "url(#acier)", stroke: "#111" }, b);
+    L.texte(b, x, y + 0.5, texte, { "font-size": texte.length > 2 ? 7 : 10, "font-weight": 700, fill: "#eef" });
+    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: action });
+    return b;
   };
 
   L.decor_circuit = function (g, numero) {

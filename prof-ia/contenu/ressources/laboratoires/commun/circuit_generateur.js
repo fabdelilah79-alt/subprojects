@@ -2,7 +2,8 @@
 Rôle : générateur de tension continue (alimentation de laboratoire) : tension E fixe, petite résistance interne ;
        il limite son courant (voyant « LIMIT ») en cas de court-circuit. Son afficheur montre la tension à ses bornes.
        Un bouton Marche/Arrêt (en marche au départ) ; son cordon secteur est branché dans la prise du mur par une fiche.
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), I_max (A), lettres (noms des bornes − et +, ex. ["N", "P"]) }.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), I_max (A), lettres (noms des bornes − et +, ex. ["N", "P"]),
+         reglable (touches de réglage de la tension, 0 à 12 V) }.
 Produit : Labo.generateur(circuit, reglage) -> composant { id, E, i (courant débité, A) } ; bornes « + » (rouge) et « − » (noire) ;
           fait noté « court_circuit » quand le courant est limité.
 Utilisé par : les postes des simulations d'électricité.
@@ -39,12 +40,20 @@ Utilisé par : les postes des simulations d'électricité.
     return { afficheur, voyant };
   }
 
-  L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null }) {
+  function reglage(g, x, y, changer) {
+    // Alimentation réglable (0 à 12 V) : touches de réglage grossier (±1 V) et fin (±0,1 V) sur la face avant.
+    L.svg("rect", { x: x + 6, y: y + 78, width: 128, height: 30, fill: "#5f7383" }, g);
+    L.texte(g, x + 62, y + 84, "TENSION : grossier  ·  fin", { "font-size": 6.5, "font-weight": 700, fill: "#dfe8ee" });
+    [[-1, "−1", 18], [1, "+1", 44], [-0.1, "−0,1", 82], [0.1, "+0,1", 108]].forEach(([d, t, dx]) => L.bouton_rond(g, x + dx, y + 97, t, () => changer(d), 9));
+  }
+
+  L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null, reglable = false }) {
     // Construit le générateur, ses deux bornes et son modèle électrique (E, r, limitation de courant).
     const comp = { id, E, i: 0, limite: false, marche: true, g: L.svg("g", { class: "generateur" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 168, y: y + 24 }, c.prise());
     const vue = dessiner(comp.g, x, y);
     interrupteur_secteur(comp.g, x, y, comp, () => { comp.marche = !comp.marche; c.calculer(); });
+    if (reglable) reglage(comp.g, x, y, (d) => { comp.E = Math.max(0, Math.min(12, Math.round((comp.E + d) * 10) / 10)); Object.assign(dipole, { j: comp.limite ? I_max : comp.E / r }); c.calculer(); });
     c.borne(comp, "−", x + 40, y + 58, L.NOIR_BORNE);
     c.borne(comp, "+", x + 150, y + 58, L.ROUGE_BORNE);
     if (lettres) [[18, lettres[0]], [172, lettres[1]]].forEach(([dx, t]) => L.texte(comp.g, x + dx, y + 58, t, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" }));
@@ -52,7 +61,7 @@ Utilisé par : les postes des simulations d'électricité.
     dipole.ajuster = (u, i) => {
       // Courant trop fort : le générateur passe en limitation ; tension revenue sous E : il repasse en tension.
       if (!comp.limite && i > I_max) { comp.limite = true; Object.assign(dipole, { g: 1e-6, j: I_max }); return true; }
-      if (comp.limite && -u > E) { comp.limite = false; Object.assign(dipole, { g: 1 / r, j: E / r }); return true; }
+      if (comp.limite && -u > comp.E) { comp.limite = false; Object.assign(dipole, { g: 1 / r, j: comp.E / r }); return true; }
       return false;
     };
     comp.dipoles = () => (comp.marche ? [dipole] : []);

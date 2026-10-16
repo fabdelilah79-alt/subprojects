@@ -4,8 +4,8 @@ Rôle : générateur basse fréquence (GBF) : tension alternative sinusoïdale, 
        en vrai. Résistance de sortie 50 Ω ; bornes SORTIE (rouge) et masse (noire).
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, forme, f (Hz), Umax (V) }.
 Produit : Labo.gbf(c, reglage) -> composant { forme, f, Umax } ; il tient à jour c.alternatif = { forme, f, Umax } ;
-          Labo.forme_tension(forme, phase) -> valeur entre −1 et 1 ; Labo.bouton_rond(g, x, y, texte, action).
-Utilisé par : les postes des simulations de tensions variables ; oscilloscope.js (bouton_rond, forme_tension).
+          Labo.forme_tension(forme, phase) -> valeur entre −1 et 1.
+Utilisé par : les postes des simulations de tensions variables ; circuit.js et oscilloscope_ecran.js (forme_tension).
 */
 (function (L) {
   const FREQUENCES = [50, 100, 200, 250, 500, 1000, 2000], R_SORTIE = 50;
@@ -16,16 +16,6 @@ Utilisé par : les postes des simulations de tensions variables ; oscilloscope.j
     if (forme === "triangle") return (2 / Math.PI) * Math.asin(s);
     if (forme === "carre") return s >= 0 ? 1 : -1;
     return s;
-  };
-
-  L.bouton_rond = function (g, x, y, texte, action, rayon = 9) {
-    // Petit bouton poussoir rond, touchable.
-    const b = L.svg("g", { class: "bouton-rond", role: "button", "aria-label": texte }, g);
-    L.svg("circle", { cx: x + 0.8, cy: y + 1.5, r: rayon, fill: "#000", opacity: 0.3 }, b);
-    L.svg("circle", { cx: x, cy: y, r: rayon, fill: "url(#acier)", stroke: "#111" }, b);
-    L.texte(b, x, y + 0.5, texte, { "font-size": 10, "font-weight": 700, fill: "#eef" });
-    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: action });
-    return b;
   };
 
   function symbole(g, x, y, forme) {
