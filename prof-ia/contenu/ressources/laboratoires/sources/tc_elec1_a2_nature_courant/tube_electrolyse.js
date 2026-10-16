@@ -17,12 +17,18 @@ Utilisé par : postes_courant.js.
   }
 
   function dessiner_fixe(g, x, y, xg, xd) {
-    // Potence, pince, verre du tube, électrodes de graphite.
+    // Potence, pince, verre du tube, bouchons et électrodes de graphite qui les traversent.
     L.svg("rect", { x: x + 20, y: y + 286, width: 190, height: 18, rx: 3, fill: "url(#acier)", filter: "url(#ombre)" }, g);
     L.tige(g, `M${x + 188} ${y - 40} V${y + 288}`, 8);
     L.svg("rect", { x: xd + 10, y: y + 40, width: x + 186 - xd - 10, height: 7, fill: "url(#metal-h)" }, g);
+    L.svg("rect", { x: x + 179, y: y + 34, width: 18, height: 19, rx: 2, fill: "url(#acier)" }, g);
     L.svg("path", { d: u_tube(xg, xd, y, 0, 200), fill: "none", stroke: "#cfe3ea", "stroke-width": 26, opacity: 0.35 }, g);
-    for (const xe of [xg, xd]) L.svg("rect", { x: xe - 4, y: y - 34, width: 8, height: 150, rx: 2, fill: "#2b2d2f", stroke: "#111" }, g);
+    L.svg("rect", { x: xd - 16, y: y + 36, width: 32, height: 15, rx: 4, fill: "none", stroke: "#3a3f44", "stroke-width": 4 }, g);
+    L.svg("rect", { x: xd - 16, y: y + 36, width: 32, height: 15, rx: 4, fill: "none", stroke: "#8a3b2a", "stroke-width": 1.5, opacity: 0.8 }, g);
+    for (const xe of [xg, xd]) {
+      L.svg("path", { d: `M${xe - 13} ${y - 8} h26 l-2 16 h-22 Z`, fill: "#a0703f", stroke: "#6d4a26" }, g);
+      L.svg("rect", { x: xe - 4, y: y - 34, width: 8, height: 150, rx: 2, fill: "#2b2d2f", stroke: "#111" }, g);
+    }
   }
 
   function dessiner_liquides(g, y, xg, xd, h) {

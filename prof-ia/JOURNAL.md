@@ -307,3 +307,21 @@ Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : vitesse d'immobilisation des ressorts (2 s), précision de lecture des angles.
 - Deux fonctions anciennes (accrochage.js, analyseur de formules.js) contiennent des fonctions internes et
   dépassent 30 lignes au sens strict du contrôle : à découper lors d'une prochaine étape.
+
+## 2026-10-16 — Laboratoires virtuels : chapitre tronc commun « Courant électrique continu »
+
+Fait :
+- Une simulation par activité de la fiche : A1 électrisation par frottement (O1, O2), A2 nature du courant
+  dans les métaux et les électrolytes, Q = I·Δt (O3, O4), A3 loi des nœuds et ampèremètre (O5).
+  Les 3 simulations sont inscrites au manifeste (33 ressources).
+- Nouveau matériel commun pour toute l'électricité : fils posés par l'élève (glisser d'une borne à l'autre,
+  fiches empilées), calcul des courants, générateur (Marche/Arrêt, limitation, fiche dans la prise murale),
+  lampe, DEL, interrupteur, multimètre en ampèremètre (calibres, dépassement), décor de paillasse vue de haut.
+- Corrections après captures : baguettes reposées sur la paillasse quand on les lâche, torsion du fil de
+  l'étrier, électrons placés entre les noyaux dans la loupe, cordon secteur terminé par une fiche dans la prise
+  (remarque de l'enseignant), bouchons et pince du tube en U, étiquettes lisibles.
+- Vérifié : parcours complets des 3 simulations, sans erreur ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : facilité à tirer les fils sur tablette (zone de prise des bornes : 13 px),
+  vitesse de migration des ions (temps accéléré × 60), seuil d'attraction des petits papiers.

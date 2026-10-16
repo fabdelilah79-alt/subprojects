@@ -2222,11 +2222,13 @@ Rôle : décor d'une paillasse d'électricité vue de plus haut : un bandeau de 
        travail où l'on pose les appareils et les fils, le bord avant et les placards.
 Reçoit : le groupe SVG de la paillasse et son numéro.
 Produit : Labo.decor_circuit(groupe, numero) -> { pense_bete } ; Labo.PLAN_CIRCUIT : hauteurs (fond, avant, placard) ;
+          Labo.PRISE_MUR : centre de la prise murale ;
           Labo.boitier(groupe, x, y, largeur, profondeur, hauteur, { dessus, face }) : boîtier d'appareil vu d'en haut.
 Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer), les composants circuit_*.js.
 */
 (function (L) {
   L.PLAN_CIRCUIT = { fond: 168, avant: 585, placard: 598 };
+  L.PRISE_MUR = { x: 960, y: 130 };
   const P = L.PLAN_CIRCUIT;
 
   function mur(g) {
@@ -2234,7 +2236,7 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
     L.svg("rect", { x: 0, y: 0, width: L.LARGEUR, height: P.fond, fill: "url(#mur)" }, g);
     L.svg("rect", { x: 0, y: 96, width: L.LARGEUR, height: P.fond - 96, fill: "url(#carrelage)" }, g);
     L.svg("rect", { x: 0, y: 92, width: L.LARGEUR, height: 5, fill: "#b9bdb5" }, g);
-    const prise = L.svg("g", { transform: "translate(940 110)" }, g);
+    const prise = L.svg("g", { transform: `translate(${L.PRISE_MUR.x - 20} ${L.PRISE_MUR.y - 20})` }, g);
     L.svg("rect", { width: 40, height: 40, rx: 4, fill: "#f7f7f4", stroke: "#b8bbb4" }, prise);
     L.svg("circle", { cx: 20, cy: 20, r: 12, fill: "#e6e7e2", stroke: "#c4c7c0" }, prise);
     for (const dx of [15, 25]) L.svg("circle", { cx: dx, cy: 20, r: 2, fill: "#555" }, prise);
@@ -2274,15 +2276,41 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
 /*
 Rôle : générateur de tension continue (alimentation de laboratoire) : tension E fixe, petite résistance interne ;
        il limite son courant (voyant « LIMIT ») en cas de court-circuit. Son afficheur montre la tension à ses bornes.
+       Un bouton Marche/Arrêt (en marche au départ) ; son cordon secteur est branché dans la prise du mur par une fiche.
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), I_max (A) }.
 Produit : Labo.generateur(circuit, reglage) -> composant { id, E, i (courant débité, A) } ; bornes « + » (rouge) et « − » (noire) ;
           fait noté « court_circuit » quand le courant est limité.
 Utilisé par : les postes des simulations d'électricité.
 */
 (function (L) {
+  function cordon(g, x, y) {
+    // Cordon secteur : il sort de l'arrière du boîtier et finit par une fiche enfoncée dans la prise du mur.
+    const P = L.PRISE_MUR;
+    L.svg("path", { d: `M${x + 168} ${y + 24} C${x + 200} ${y - 30} ${P.x - 40} ${P.y + 70} ${P.x} ${P.y + 22}`, fill: "none", stroke: "#2a2d30", "stroke-width": 5, "stroke-linecap": "round" }, g);
+    L.svg("rect", { x: P.x - 4, y: P.y + 8, width: 8, height: 16, rx: 3, fill: "#34373a" }, g);
+    L.svg("circle", { cx: P.x + 1, cy: P.y + 2, r: 13, fill: "#000", opacity: 0.25 }, g);
+    L.svg("circle", { cx: P.x, cy: P.y, r: 12, fill: "#3a3d41", stroke: "#1c1e20" }, g);
+    for (const dy of [-6, 0, 6]) L.svg("rect", { x: P.x - 8, y: P.y + dy - 1, width: 16, height: 2, rx: 1, fill: "#4c5055" }, g);
+    L.svg("circle", { cx: P.x - 4, cy: P.y - 5, r: 3, fill: "#fff", opacity: 0.12 }, g);
+  }
+
+  function interrupteur_secteur(g, x, y, comp, basculer) {
+    // Bouton Marche/Arrêt à bascule sur la face avant, avec son voyant vert ; un toucher le bascule.
+    const b = L.svg("g", { class: "marche-arret", role: "button", "aria-label": "Marche / Arrêt" }, g);
+    const dessiner = () => {
+      b.replaceChildren();
+      L.svg("rect", { x: x + 146, y: y + 84, width: 30, height: 20, rx: 2, fill: "#1c1f22" }, b);
+      L.svg("rect", { x: x + 149, y: y + 86, width: 24, height: 16, rx: 1.5, fill: comp.marche ? "#c9302c" : "#7a1d1a" }, b);
+      L.svg("rect", { x: x + 149, y: comp.marche ? y + 86 : y + 94, width: 24, height: 8, fill: "#fff", opacity: 0.18 }, b);
+      L.texte(b, x + 161, y + 94, comp.marche ? "I" : "O", { "font-size": 9, "font-weight": 700, fill: "#fff" });
+      L.svg("circle", { cx: x + 136, cy: y + 94, r: 3, fill: comp.marche ? "#5cf08a" : "#1d3a24" }, b);
+    };
+    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: () => { basculer(); dessiner(); } });
+    dessiner();
+  }
+
   function dessiner(g, x, y) {
-    // Boîtier bleu-gris : cordon vers la prise du mur, plaque, afficheur vert, voyant de limitation.
-    L.svg("path", { d: `M${x + 176} ${y + 6} C${x + 196} ${y - 22} 900 180 958 140`, fill: "none", stroke: "#2a2d30", "stroke-width": 5, "stroke-linecap": "round" }, g);
+    // Boîtier bleu-gris : plaque, afficheur vert, voyant de limitation, grille d'aération.
     L.boitier(g, x, y, 190, 78, 34, { dessus: "#c9d3da", face: "#5f7383" });
     L.svg("rect", { x: x + 10, y: y + 9, width: 84, height: 13, rx: 2, fill: "#2c3e50" }, g);
     L.texte(g, x + 52, y + 16, "GÉNÉRATEUR =", { "font-size": 7.5, fill: "#e6eef4", "font-weight": 700, "letter-spacing": 0.6 });
@@ -2291,7 +2319,7 @@ Utilisé par : les postes des simulations d'électricité.
     L.texte(g, x + 171, y + 19, "V", { "font-size": 10, "font-weight": 700, fill: "#5cf08a" });
     const voyant = L.svg("circle", { cx: x + 95, cy: y + 50, r: 4, fill: "#4a1712" }, g);
     L.texte(g, x + 95, y + 62, "LIMIT", { "font-size": 6.5, fill: "#2c3e50", "font-weight": 700 });
-    for (let k = 0; k < 9; k++) L.svg("rect", { x: x + 20 + k * 17, y: y + 92, width: 10, height: 3, rx: 1.5, fill: "#3b4a56" }, g);
+    for (let k = 0; k < 6; k++) L.svg("rect", { x: x + 20 + k * 17, y: y + 92, width: 10, height: 3, rx: 1.5, fill: "#3b4a56" }, g);
     L.texte(g, x + 150, y + 38, "+", { "font-size": 13, "font-weight": 700, fill: L.ROUGE_BORNE });
     L.texte(g, x + 40, y + 38, "−", { "font-size": 15, "font-weight": 700, fill: "#222" });
     return { afficheur, voyant };
@@ -2299,8 +2327,10 @@ Utilisé par : les postes des simulations d'électricité.
 
   L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1 }) {
     // Construit le générateur, ses deux bornes et son modèle électrique (E, r, limitation de courant).
-    const comp = { id, E, i: 0, limite: false, g: L.svg("g", { class: "generateur" }, c.calque_composants) };
+    const comp = { id, E, i: 0, limite: false, marche: true, g: L.svg("g", { class: "generateur" }, c.calque_composants) };
+    cordon(comp.g, x, y);
     const vue = dessiner(comp.g, x, y);
+    interrupteur_secteur(comp.g, x, y, comp, () => { comp.marche = !comp.marche; c.calculer(); });
     c.borne(comp, "−", x + 40, y + 58, L.NOIR_BORNE);
     c.borne(comp, "+", x + 150, y + 58, L.ROUGE_BORNE);
     const dipole = { a: "−", b: "+", g: 1 / r, j: E / r };
@@ -2310,10 +2340,10 @@ Utilisé par : les postes des simulations d'électricité.
       if (comp.limite && -u > E) { comp.limite = false; Object.assign(dipole, { g: 1 / r, j: E / r }); return true; }
       return false;
     };
-    comp.dipoles = () => [dipole];
+    comp.dipoles = () => (comp.marche ? [dipole] : []);
     comp.mettre_a_jour = ({ u, i }) => {
-      comp.i = i[0];
-      vue.afficheur.textContent = L.nombre(Math.max(0, u("+", "−")), 1);
+      comp.i = i[0] || 0;
+      vue.afficheur.textContent = comp.marche ? L.nombre(Math.max(0, u("+", "−")), 1) : "";
       vue.voyant.setAttribute("fill", comp.limite ? "#ff5a3c" : "#4a1712");
       if (comp.limite) L.missions.noter("court_circuit", id);
     };
@@ -2327,7 +2357,7 @@ Rôle : petits appareils du circuit, chacun sur son support à deux bornes : lam
        puissance reçue), diode électroluminescente avec sa résistance de protection (elle ne laisse passer le courant
        que dans un sens : de sa borne + vers sa borne −), interrupteur à couteau (un toucher l'ouvre ou le ferme).
 Reçoit : le circuit (circuit.js) et le réglage de chaque appareil { id, x, y, ... }.
-Produit : Labo.lampe(c, { id, x, y, U_n, I_n }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
+Produit : Labo.lampe(c, { id, x, y, U_n, I_n, etiquette }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
           Labo.interrupteur(c, { id, x, y }) -> { ferme } ; bornes « 1 » et « 2 » (DEL : « + » et « − »).
 Utilisé par : les postes des simulations d'électricité.
 */
@@ -2342,10 +2372,10 @@ Utilisé par : les postes des simulations d'électricité.
     c.borne(comp, bornes[1], x + L_SUPPORT - 14, y + 33, couleurs[1]);
   }
 
-  L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1 }) {
+  L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1, etiquette = "" }) {
     // Lampe sur douille : verre, filament, halo dont l'éclat suit la puissance reçue (P / P nominale).
     const comp = { id, i: 0, eclat: 0, g: L.svg("g", { class: `lampe lampe-${id}` }, c.calque_composants) };
-    support(c, comp, x, y, `${L.nombre(U_n, 0)} V – ${L.nombre(I_n, 1)} A`);
+    support(c, comp, x, y, `${etiquette ? etiquette + " : " : ""}${String(U_n).replace(".", ",")} V – ${String(I_n).replace(".", ",")} A`);
     const cx = x + L_SUPPORT / 2, R = U_n / I_n;
     L.svg("ellipse", { cx, cy: y + 18, rx: 14, ry: 6, fill: "url(#metal-h)", stroke: "#555" }, comp.g);
     const halo = L.svg("circle", { cx, cy: y - 2, r: 46, fill: "url(#halo)", opacity: 0 }, comp.g);
@@ -2418,7 +2448,7 @@ Utilisé par : les postes des simulations d'électricité.
 Rôle : multimètre numérique utilisé en ampèremètre : un commutateur rotatif (OFF, 10 A, 200 mA, 20 mA), trois bornes
        (10A, mA, COM). Le courant qui entre par la borne 10A ou mA et sort par COM s'affiche positif, négatif dans l'autre
        sens ; au-delà du calibre, l'afficheur montre « 1 » (dépassement). Un toucher sur un repère du commutateur le tourne.
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (« OFF », « 10A », « 200mA », « 20mA ») }.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (« OFF », « 10A », « 200mA », « 20mA »), etiquette (nom écrit sur l'appareil) }.
 Produit : Labo.multimetre(c, reglage) -> composant { mode, valeur (A, signée), lecture (texte affiché), depasse } ;
           fait noté « calibre » = { <id> : mode } à chaque changement de calibre.
 Utilisé par : les postes des simulations d'électricité.
@@ -2475,10 +2505,11 @@ Utilisé par : les postes des simulations d'électricité.
     unite.textContent = m.unite;
   }
 
-  L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF" }) {
+  L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF", etiquette = "" }) {
     // Construit l'appareil, ses bornes (shunts : 0,01 Ω sur 10A, 1 Ω sur mA) et son commutateur.
     const comp = { id, x, mode, valeur: 0, lecture: "", depasse: false, courants: { "10A": 0, mA: 0 }, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
     corps(comp.g, x, y);
+    if (etiquette) L.texte(comp.g, x + 64, y + 68, etiquette, { "font-size": 11, "font-weight": 700, fill: "#ffd54f" });
     const ecran = L.texte(comp.g, x + 102, y + 34, "", { "text-anchor": "end", "font-size": 24, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17" });
     const unite = L.texte(comp.g, x + 108, y + 51, "", { "text-anchor": "end", "font-size": 7.5, "font-weight": 700, fill: "#1b1f17" });
     const tourner = commutateur(comp.g, x, y, comp, (nom) => {
@@ -2517,12 +2548,18 @@ Utilisé par : postes_courant.js.
   }
 
   function dessiner_fixe(g, x, y, xg, xd) {
-    // Potence, pince, verre du tube, électrodes de graphite.
+    // Potence, pince, verre du tube, bouchons et électrodes de graphite qui les traversent.
     L.svg("rect", { x: x + 20, y: y + 286, width: 190, height: 18, rx: 3, fill: "url(#acier)", filter: "url(#ombre)" }, g);
     L.tige(g, `M${x + 188} ${y - 40} V${y + 288}`, 8);
     L.svg("rect", { x: xd + 10, y: y + 40, width: x + 186 - xd - 10, height: 7, fill: "url(#metal-h)" }, g);
+    L.svg("rect", { x: x + 179, y: y + 34, width: 18, height: 19, rx: 2, fill: "url(#acier)" }, g);
     L.svg("path", { d: u_tube(xg, xd, y, 0, 200), fill: "none", stroke: "#cfe3ea", "stroke-width": 26, opacity: 0.35 }, g);
-    for (const xe of [xg, xd]) L.svg("rect", { x: xe - 4, y: y - 34, width: 8, height: 150, rx: 2, fill: "#2b2d2f", stroke: "#111" }, g);
+    L.svg("rect", { x: xd - 16, y: y + 36, width: 32, height: 15, rx: 4, fill: "none", stroke: "#3a3f44", "stroke-width": 4 }, g);
+    L.svg("rect", { x: xd - 16, y: y + 36, width: 32, height: 15, rx: 4, fill: "none", stroke: "#8a3b2a", "stroke-width": 1.5, opacity: 0.8 }, g);
+    for (const xe of [xg, xd]) {
+      L.svg("path", { d: `M${xe - 13} ${y - 8} h26 l-2 16 h-22 Z`, fill: "#a0703f", stroke: "#6d4a26" }, g);
+      L.svg("rect", { x: xe - 4, y: y - 34, width: 8, height: 150, rx: 2, fill: "#2b2d2f", stroke: "#111" }, g);
+    }
   }
 
   function dessiner_liquides(g, y, xg, xd, h) {

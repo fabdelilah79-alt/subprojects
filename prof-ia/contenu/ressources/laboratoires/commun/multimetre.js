@@ -2,7 +2,7 @@
 Rôle : multimètre numérique utilisé en ampèremètre : un commutateur rotatif (OFF, 10 A, 200 mA, 20 mA), trois bornes
        (10A, mA, COM). Le courant qui entre par la borne 10A ou mA et sort par COM s'affiche positif, négatif dans l'autre
        sens ; au-delà du calibre, l'afficheur montre « 1 » (dépassement). Un toucher sur un repère du commutateur le tourne.
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (« OFF », « 10A », « 200mA », « 20mA ») }.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (« OFF », « 10A », « 200mA », « 20mA »), etiquette (nom écrit sur l'appareil) }.
 Produit : Labo.multimetre(c, reglage) -> composant { mode, valeur (A, signée), lecture (texte affiché), depasse } ;
           fait noté « calibre » = { <id> : mode } à chaque changement de calibre.
 Utilisé par : les postes des simulations d'électricité.
@@ -59,10 +59,11 @@ Utilisé par : les postes des simulations d'électricité.
     unite.textContent = m.unite;
   }
 
-  L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF" }) {
+  L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF", etiquette = "" }) {
     // Construit l'appareil, ses bornes (shunts : 0,01 Ω sur 10A, 1 Ω sur mA) et son commutateur.
     const comp = { id, x, mode, valeur: 0, lecture: "", depasse: false, courants: { "10A": 0, mA: 0 }, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
     corps(comp.g, x, y);
+    if (etiquette) L.texte(comp.g, x + 64, y + 68, etiquette, { "font-size": 11, "font-weight": 700, fill: "#ffd54f" });
     const ecran = L.texte(comp.g, x + 102, y + 34, "", { "text-anchor": "end", "font-size": 24, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17" });
     const unite = L.texte(comp.g, x + 108, y + 51, "", { "text-anchor": "end", "font-size": 7.5, "font-weight": 700, fill: "#1b1f17" });
     const tourner = commutateur(comp.g, x, y, comp, (nom) => {

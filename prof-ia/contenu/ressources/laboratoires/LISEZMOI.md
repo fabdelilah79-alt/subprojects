@@ -91,6 +91,19 @@ Pour essayer pendant l'écriture, ouvrez directement `sources/<nom>/page.html` d
 | tc_meca5_a4_frottement.html | A4 : mise en évidence du frottement | O4 | Plan inclinable : angle de démarrage φ du pavé, k = tan φ, bois puis caoutchouc. Traction horizontale au dynamomètre (index du maximum) : F_max = k·P, avec et sans surcharge. |
 | tc_meca5_a5_moments.html | A5 : effet de rotation, moment d'un couple, théorème des moments, M = −C·θ | O5, O6, O7 | Barre à trous et masses marquées : rotation, force sur l'axe, équilibres à deux et trois masses, ΣM = 0. Pendule de torsion : couple de deux forces, M en fonction de θ, constante de torsion C. |
 
+## Chapitre tronc commun « Courant électrique continu » (fiche tronc_commun/elec1_courant_continu)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec1_a1_electrisation.html | A1 : expériences simples (électrisation par frottement) | O1, O2 | Frotte une baguette de PVC (laine) ou de verre (soie) et l'approche de petits papiers ; pose un PVC frotté sur un étrier suspendu, approche un autre PVC (répulsion) puis le verre (attraction) ; loupe « modèle » : électrons en excès ou en manque ; n = |Q|/e. |
+| tc_elec1_a2_nature_courant.html | A2 : nature du courant dans les métaux et les électrolytes | O3, O4 | Pose lui-même les fils : circuit en série avec une DEL (le courant a un sens, sens conventionnel) ; loupe sur un fil (électrons libres en sens inverse de I) ; multimètre en ampèremètre, Q = I·Δt, n = Q/e ; tube en U d'électrolyse (migration des ions colorés, inversion du générateur). |
+| tc_elec1_a3_loi_noeuds.html | A3 : loi des nœuds en série et en dérivation | O5 | Deux lampes différentes en série, ampèremètre déplacé à trois endroits (même intensité), calibre 20 mA dépassé, choix du calibre ; deux lampes en dérivation avec A, A1, A2 : I = I1 + I2 dans le tableur ; conservation de la charge. |
+
+Le matériel électrique est commun (dossier `commun/`, fichiers `circuit*.js` et `multimetre.js`) : on tire un fil
+depuis une borne et on le lâche sur une autre ; on tire un fil posé pour le débrancher. Les fiches s'empilent sur une
+borne (c'est alors un nœud). Les courants sont calculés à chaque changement (méthode des nœuds). Le générateur limite
+son courant en cas de court-circuit (voyant LIMIT) ; il a un bouton Marche/Arrêt et son cordon est branché dans la prise.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

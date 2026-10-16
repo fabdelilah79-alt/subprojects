@@ -3,7 +3,7 @@ Rôle : petits appareils du circuit, chacun sur son support à deux bornes : lam
        puissance reçue), diode électroluminescente avec sa résistance de protection (elle ne laisse passer le courant
        que dans un sens : de sa borne + vers sa borne −), interrupteur à couteau (un toucher l'ouvre ou le ferme).
 Reçoit : le circuit (circuit.js) et le réglage de chaque appareil { id, x, y, ... }.
-Produit : Labo.lampe(c, { id, x, y, U_n, I_n }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
+Produit : Labo.lampe(c, { id, x, y, U_n, I_n, etiquette }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
           Labo.interrupteur(c, { id, x, y }) -> { ferme } ; bornes « 1 » et « 2 » (DEL : « + » et « − »).
 Utilisé par : les postes des simulations d'électricité.
 */
@@ -18,10 +18,10 @@ Utilisé par : les postes des simulations d'électricité.
     c.borne(comp, bornes[1], x + L_SUPPORT - 14, y + 33, couleurs[1]);
   }
 
-  L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1 }) {
+  L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1, etiquette = "" }) {
     // Lampe sur douille : verre, filament, halo dont l'éclat suit la puissance reçue (P / P nominale).
     const comp = { id, i: 0, eclat: 0, g: L.svg("g", { class: `lampe lampe-${id}` }, c.calque_composants) };
-    support(c, comp, x, y, `${L.nombre(U_n, 0)} V – ${L.nombre(I_n, 1)} A`);
+    support(c, comp, x, y, `${etiquette ? etiquette + " : " : ""}${String(U_n).replace(".", ",")} V – ${String(I_n).replace(".", ",")} A`);
     const cx = x + L_SUPPORT / 2, R = U_n / I_n;
     L.svg("ellipse", { cx, cy: y + 18, rx: 14, ry: 6, fill: "url(#metal-h)", stroke: "#555" }, comp.g);
     const halo = L.svg("circle", { cx, cy: y - 2, r: 46, fill: "url(#halo)", opacity: 0 }, comp.g);

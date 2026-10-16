@@ -746,6 +746,37 @@
         "Dans un fil, les électrons vont de la borne + vers la borne −.",
         "Le courant ne passe pas dans une solution, ou y est porté par des électrons."
       ]
+    },
+    {
+      "id": "tc_elec1_a3_loi_noeuds",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec1_a3_loi_noeuds.html",
+      "description": "Laboratoire virtuel : l'élève pose les fils entre générateur, interrupteur, deux lampes différentes et des multimètres (ampèremètres, calibres 10 A, 200 mA, 20 mA) ; circuit en série (un ampèremètre déplacé), circuit en dérivation (trois ampèremètres A, A1, A2) ; tableur sur la tablette.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec1_courant_continu",
+      "activite": "Loi des nœuds en série et en dérivation.",
+      "objectifs": [
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "L'intensité dans un circuit en série",
+          "ce_que_fait_l_eleve": "Monte L1 et L2 en série, insère le multimètre à trois endroits, recopie les intensités dans le tableur : la même intensité partout ; essaie le calibre 20 mA (dépassement « 1 ») et choisis le bon calibre.",
+          "conclusion": "Dans un circuit en série, l'intensité du courant est la même en tout point : le courant ne s'use pas. On choisit le plus petit calibre supérieur à la valeur mesurée."
+        },
+        {
+          "titre": "La loi des nœuds",
+          "ce_que_fait_l_eleve": "Monte L1 et L2 en dérivation avec A, A1, A2, recopie I, I1, I2 et calcule I1 + I2 dans le tableur : loi des nœuds I = I1 + I2, conservation de la charge.",
+          "conclusion": "Loi des nœuds : la somme des intensités des courants qui arrivent à un nœud est égale à la somme des intensités de ceux qui en partent (I = I1 + I2). Elle traduit la conservation de la charge électrique."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "Le courant s'use en traversant les lampes.",
+        "La lampe qui brille le moins reçoit le moins de courant, même en série.",
+        "Au nœud, le courant se partage en deux moitiés égales."
+      ]
     }
   ]
 }
