@@ -667,6 +667,43 @@
       "conceptions": [
         "L'effet de rotation d'une force ne dépend que de sa valeur."
       ]
+    },
+    {
+      "id": "tc_elec1_a1_electrisation",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec1_a1_electrisation.html",
+      "description": "Laboratoire virtuel : baguettes de PVC et de verre frottées sur la laine ou la soie, coupelle de petits papiers ; baguette suspendue à un étrier (attraction, répulsion) ; loupe « modèle » qui montre noyaux et électrons de la matière.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec1_courant_continu",
+      "activite": "Expériences simples et documents.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Électriser par frottement",
+          "ce_que_fait_l_eleve": "Approche une baguette non frottée puis frottée des petits papiers ; électrise le PVC avec la laine et le verre avec la soie : les corps légers sont attirés.",
+          "conclusion": "Frottés, le PVC (avec la laine) et le verre (avec la soie) s'électrisent : ils attirent les corps légers."
+        },
+        {
+          "titre": "Deux types d'électricité",
+          "ce_que_fait_l_eleve": "Pose un PVC frotté sur l'étrier ; approche un second PVC frotté (répulsion) puis le verre frotté (attraction) ; énonce les deux types d'électricité et leurs interactions ; convention : verre frotté positif.",
+          "conclusion": "Il existe deux types d'électricité : positive (verre frotté avec la soie) et négative (PVC frotté avec la laine). Deux corps de même électricité se repoussent, de types différents s'attirent."
+        },
+        {
+          "titre": "Interpréter l'électrisation",
+          "ce_que_fait_l_eleve": "Promène la loupe sur le PVC et sur la laine frottés : électrons en excès ou en manque ; seuls les électrons se déplacent ; calcule n = |Q|/e et retiens Q = n·e.",
+          "conclusion": "Le frottement fait passer des électrons d'un corps à l'autre. La charge d'un corps est un multiple de la charge élémentaire : Q = n·e, avec e = 1,6 × 10⁻¹⁹ C."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "Le frottement fabrique de l'électricité.",
+        "Pendant le frottement, ce sont les charges positives qui se déplacent.",
+        "Un corps électrisé attire tous les autres corps électrisés."
+      ]
     }
   ]
 }
