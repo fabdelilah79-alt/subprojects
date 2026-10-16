@@ -2,9 +2,9 @@
 Rôle : écran de l'oscilloscope : quadrillage de 10 divisions sur 8 (1 division = 20 px), graduations de 0,2 division
        sur les axes centraux, repère de la masse (niveau 0 V) et trace verte de la tension, déclenchée sur un front
        montant (la courbe commence par un passage à zéro en montant, elle est donc immobile).
-Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé : tension continue, tension alternative (pour 1 V du GBF),
-         réglages du GBF { forme, f, Umax }, sensibilité Sv (V/div) et balayage b (ms/div).
-Produit : Labo.ecran_oscillo(groupe, x, y) -> tracer({ u_dc, ua, alternatif, Sv, b }).
+Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé : tension continue, onde (tensions à des instants régulièrement
+         répartis sur une période, ou null), fréquence f (Hz), sensibilité Sv (V/div) et balayage b (ms/div).
+Produit : Labo.ecran_oscillo(groupe, x, y) -> tracer({ u_dc, onde, f, Sv, b }).
 Utilisé par : oscilloscope.js.
 */
 (function (L) {
@@ -22,6 +22,22 @@ Utilisé par : oscilloscope.js.
     for (let k = 0; k <= NY * 5; k++) L.svg("line", { x1: cx - 2, y1: y + k * 4, x2: cx + 2, y2: y + k * 4, ...traits }, g);
   }
 
+  function valeur(onde, phase) {
+    // Tension à une fraction de période donnée (onde périodique, interpolation entre deux instants calculés).
+    const n = onde.length, p = (((phase % 1) + 1) % 1) * n, k = Math.floor(p), r = p - k;
+    return onde[k % n] * (1 - r) + onde[(k + 1) % n] * r;
+  }
+
+  function declenchement(onde) {
+    // Déclenchement sur front montant au niveau 0 V (ou au niveau moyen si la tension ne passe pas par 0) : fraction de période.
+    const min = Math.min(...onde), max = Math.max(...onde), niveau = min < 0 && max > 0 ? 0 : (min + max) / 2, n = onde.length;
+    for (let k = 0; k < n; k++) {
+      const a = onde[k], b = onde[(k + 1) % n];
+      if (a <= niveau && b > niveau) return (k + (niveau - a) / (b - a)) / n;
+    }
+    return 0;
+  }
+
   L.ecran_oscillo = function (g, x, y) {
     // Dessine l'écran ; renvoie la fonction qui trace la tension et le repère de masse.
     quadrillage(g, x, y);
@@ -30,12 +46,11 @@ Utilisé par : oscilloscope.js.
     const calque = L.svg("g", { "clip-path": `url(#${id})` }, g), cy = y + (NY * DIV) / 2;
     L.svg("path", { d: `M${x - 7} ${cy - 4} l6 4 l-6 4 Z`, fill: "#ffcc4d" }, g);
     L.texte(g, x - 12, cy, "1", { "font-size": 7, "font-weight": 700, fill: "#ffcc4d" });
-    return ({ u_dc, ua, alternatif, Sv, b }) => {
+    return ({ u_dc, onde, f, Sv, b }) => {
       calque.replaceChildren();
-      const T = alternatif ? 1 / alternatif.f : 1, decalage = ua < 0 ? T / 2 : 0, duree = (NX * b) / 1000, points = [];
+      const duree = (NX * b) / 1000, depart = onde ? declenchement(onde) : 0, points = [];
       for (let k = 0; k <= N; k++) {
-        const t = (k / N) * duree, alt = alternatif ? ua * alternatif.Umax * L.forme_tension(alternatif.forme, 2 * Math.PI * alternatif.f * (t + decalage)) : 0;
-        const v = Math.max(-50 * Sv, Math.min(50 * Sv, u_dc + alt));
+        const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
         points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
       }
       L.svg("polyline", { points: points.join(" "), fill: "none", stroke: "#7cff9a", "stroke-width": 3, opacity: 0.25 }, calque);

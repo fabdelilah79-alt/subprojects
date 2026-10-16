@@ -3,7 +3,8 @@ Rôle : oscilloscope à une voie : écran 10 × 8 divisions, sensibilité vertic
        par des touches −/+, entrée CH1 par un adaptateur BNC-bananes (borne Y1 rouge, masse noire). Résistance d'entrée
        1 MΩ. On lit U = Sv·y (y en divisions verticales) et t = b·x (x en divisions horizontales).
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, Sv, b }.
-Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, b, u_dc, ua } ; fait noté « oscillo » = { Sv, b, u_dc, ua, gbf }.
+Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, b, u_dc, onde } ;
+          fait noté « oscillo » = { Sv, b, u_dc (moyenne), u_max, u_min, gbf }.
 Utilisé par : les postes des simulations de tensions variables.
 */
 (function (L) {
@@ -42,19 +43,25 @@ Utilisé par : les postes des simulations de tensions variables.
 
   L.oscilloscope = function (c, { id = "oscillo", x, y, Sv = 1, b = 0.5 }) {
     // Construit l'oscilloscope ; à chaque calcul du circuit, il retrace la tension entre Y1 et la masse.
-    const comp = { id, Sv, b, u_dc: 0, ua: 0, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
+    const comp = { id, Sv, b, u_dc: 0, onde: null, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 330, y: y + 24 }, c.prise());
     corps(comp.g, x, y);
     const tracer = L.ecran_oscillo(comp.g, x + 18, y + 34);
+    const arrondi = (v) => Math.round(v * 1000) / 1000;
     const retracer = () => {
-      tracer({ u_dc: comp.u_dc, ua: comp.ua, alternatif: c.alternatif, Sv: comp.Sv, b: comp.b });
-      L.missions.noter("oscillo", { Sv: comp.Sv, b: comp.b, u_dc: Math.round(comp.u_dc * 1000) / 1000, ua: Math.round(comp.ua * 1000) / 1000, gbf: c.alternatif ? { ...c.alternatif } : null });
+      tracer({ u_dc: comp.u_dc, onde: comp.onde, f: c.alternatif ? c.alternatif.f : 0, Sv: comp.Sv, b: comp.b });
+      const o = comp.onde || [comp.u_dc];
+      L.missions.noter("oscillo", { Sv: comp.Sv, b: comp.b, u_dc: arrondi(comp.u_dc), u_max: arrondi(Math.max(...o)), u_min: arrondi(Math.min(...o)), gbf: c.alternatif ? { ...c.alternatif } : null });
     };
     reglage(comp.g, x, y + 24, SV, () => comp.Sv, "V", (v) => { comp.Sv = v; retracer(); });
     reglage(comp.g, x, y + 86, B, () => comp.b, "ms", (v) => { comp.b = v; retracer(); });
     entree(c, comp, x, y);
     comp.dipoles = () => [{ a: "Y1", b: "masse", g: 1e-6, j: 0 }];
-    comp.mettre_a_jour = ({ u, ua }) => { comp.u_dc = u("Y1", "masse"); comp.ua = ua("Y1", "masse"); retracer(); };
+    comp.mettre_a_jour = ({ u, onde }) => {
+      comp.onde = onde("Y1", "masse");
+      comp.u_dc = comp.onde ? comp.onde.reduce((s, v) => s + v, 0) / comp.onde.length : u("Y1", "masse");
+      retracer();
+    };
     return c.ajouter(comp);
   };
 })(window.Labo);

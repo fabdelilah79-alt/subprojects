@@ -1963,15 +1963,16 @@ Utilisé par : les simulations où le temps s'écoule (gravitation, relativité)
 /*
 Rôle : calcule les potentiels et les courants d'un circuit en courant continu (méthode des nœuds). Chaque dipôle est
        vu comme une conductance g en parallèle avec une source de courant j : i(a→b) = g·(Va − Vb) + j.
-       Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Une DEL change d'état
-       (passante ou bloquée) : on recalcule jusqu'à ce que son état ne change plus.
+       Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Un dipôle non linéaire
+       (DEL, lampe, diode) est remplacé par sa tangente au point de fonctionnement : on recalcule jusqu'à stabilité.
 Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ajuster(u, i) (facultatif :
          renvoie vrai si le dipôle change d'état et met à jour g et j) }.
-Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) }.
+Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) } ;
+          Labo.dipole_non_lineaire(a, b, courant(u), pas_max) -> dipôle à caractéristique quelconque.
 Utilisé par : circuit.js.
 */
 (function (L) {
-  const FUITE = 1e-9, TOURS = 12;
+  const FUITE = 1e-9, TOURS = 60;
 
   function eliminer(A, B) {
     // Résout A·x = B (pivot de Gauss partiel) ; A et B sont modifiés.
@@ -2010,8 +2011,26 @@ Utilisé par : circuit.js.
     return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0)) };
   }
 
+  L.dipole_non_lineaire = function (a, b, courant, pas_max) {
+    // Dipôle de caractéristique i = courant(u) : remplacé par sa tangente au dernier point ; à chaque tour, la tension
+    // de ce point se rapproche de la tension calculée, d'au plus pas_max (méthode de Newton amortie).
+    const d = { a, b, u0: 0 };
+    const tangente = (u) => {
+      const h = 1e-5, i = courant(u), g = Math.max(1e-9, (courant(u + h) - courant(u - h)) / (2 * h));
+      Object.assign(d, { u0: u, g, j: i - g * u });
+    };
+    tangente(0);
+    d.ajuster = (u) => {
+      const v = d.u0 + Math.max(-pas_max, Math.min(pas_max, u - d.u0));
+      if (Math.abs(v - d.u0) < 1e-6) return false;
+      tangente(v);
+      return true;
+    };
+    return d;
+  };
+
   L.resoudre_circuit = function (n, dipoles) {
-    // Calcule, puis laisse les dipôles non linéaires (DEL) changer d'état et recalcule, jusqu'à stabilité.
+    // Calcule, puis laisse les dipôles non linéaires (DEL, lampe, diode) se réajuster et recalcule, jusqu'à stabilité.
     let r = une_fois(n, dipoles);
     for (let t = 0; t < TOURS; t++) {
       let change = false;
@@ -2028,8 +2047,9 @@ Utilisé par : circuit.js.
 Rôle : le circuit électrique d'une paillasse : il réunit les composants, leurs bornes et les fils posés par l'élève,
        calcule les courants et les tensions à chaque changement et les donne aux composants.
 Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ajuster }],
-         mettre_a_jour({ u(a, b), ua(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « alternatif » (s'il y a un
-         GBF, c.alternatif = { forme, f, Umax } : ua donne la tension alternative pour 1 V d'amplitude du GBF).
+         mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
+         un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
+         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
 Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), sur_calcul(f),
           fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
           prise() (prise murale libre pour un appareil branché sur le secteur) } ;
@@ -2037,7 +2057,7 @@ Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom,
 Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fils), circuit_*.js (composants).
 */
 (function (L) {
-  const G_FIL = 1000;
+  const G_FIL = 1000, ECHANTILLONS = 72;
   L.ROUGE_BORNE = "#c62828";
   L.NOIR_BORNE = "#1d1f22";
 
@@ -2049,20 +2069,21 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
     L.svg("circle", { cx: x, cy: y - 1, r: 2.3, fill: "#151719" }, g);
   }
 
-  function distribuer(c, cles, r, ra, pris) {
-    // Donne à chaque composant ses courants, ses tensions continues u et alternatives ua ; à chaque fil son courant.
-    const V = (cle) => r.potentiels[cles[cle]], Va = (cle) => (ra ? ra.potentiels[cles[cle]] : 0);
+  function distribuer(c, cles, r, ondes, pris) {
+    // Donne à chaque composant ses courants, ses tensions u et, s'il y a un GBF, l'onde de ses tensions ; à chaque fil son courant.
+    const V = (cle) => r.potentiels[cles[cle]];
     let k = 0;
     for (const comp of c.composants) {
       const n = pris[comp.id], cle = (x) => `${comp.id}.${x}`;
-      comp.mettre_a_jour?.({ u: (a, b) => V(cle(a)) - V(cle(b)), ua: (a, b) => Va(cle(a)) - Va(cle(b)), i: r.courants.slice(k, k + n) });
+      const onde = (a, b) => (ondes ? ondes.map((P) => P[cles[cle(a)]] - P[cles[cle(b)]]) : null);
+      comp.mettre_a_jour?.({ u: (a, b) => V(cle(a)) - V(cle(b)), onde, i: r.courants.slice(k, k + n) });
       k += n;
     }
     c.fils.forEach((f) => { f.i = r.courants[k++]; });
   }
 
   function assembler(c, cles, mode) {
-    // Dipôles des composants (mode « continu », ou « alternatif » : sources continues éteintes, GBF d'amplitude 1 V) et des fils.
+    // Dipôles des composants (mode « continu », ou « instant » : GBF à sa valeur c.instant) et des fils.
     const dipoles = [], pris = {};
     for (const comp of c.composants) {
       const liste = comp.dipoles ? comp.dipoles(mode) : [];
@@ -2070,8 +2091,19 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
       for (const d of liste) dipoles.push({ ...d, a: cles[`${comp.id}.${d.a}`], b: cles[`${comp.id}.${d.b}`], source: d, ajuster: undefined });
     }
     for (const f of c.fils) dipoles.push({ a: cles[f.a], b: cles[f.b], g: G_FIL, j: 0 });
-    if (mode === "continu") for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i) => { const ch = d.source.ajuster(u, i); Object.assign(d, { g: d.source.g, j: d.source.j }); return ch; };
+    for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i) => { const ch = d.source.ajuster(u, i); Object.assign(d, { g: d.source.g, j: d.source.j }); return ch; };
     return { dipoles, pris };
+  }
+
+  function echantillonner(c, cles, n) {
+    // Tension variable : le circuit est recalculé à ÉCHANTILLONS instants d'une période du GBF ; renvoie les potentiels.
+    const { forme, Umax } = c.alternatif, ondes = [];
+    for (let k = 0; k < ECHANTILLONS; k++) {
+      c.instant = Umax * L.forme_tension(forme, (2 * Math.PI * k) / ECHANTILLONS);
+      ondes.push(L.resoudre_circuit(n, assembler(c, cles, "instant").dipoles).potentiels);
+    }
+    c.instant = 0;
+    return ondes;
   }
 
   L.circuit = function (parent) {
@@ -2091,12 +2123,11 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
       return b;
     };
     c.calculer = () => {
-      // Numérote les bornes (un nœud chacune), résout le continu (et l'alternatif s'il y a un GBF), puis prévient.
+      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), puis prévient.
       const cles = {};
       Object.keys(c.bornes).forEach((cle, n) => { cles[cle] = n; });
-      const n = Object.keys(cles).length, dc = assembler(c, cles, "continu");
-      const r = L.resoudre_circuit(n, dc.dipoles), ra = c.alternatif ? L.resoudre_circuit(n, assembler(c, cles, "alternatif").dipoles) : null;
-      distribuer(c, cles, r, ra, dc.pris);
+      const n = Object.keys(cles).length, ondes = c.alternatif ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu");
+      distribuer(c, cles, L.resoudre_circuit(n, dc.dipoles), ondes, dc.pris);
       L.fils.dessiner(c);
       for (const f of c.ecouteurs) f(c);
     };
@@ -2326,7 +2357,7 @@ Utilisé par : les postes des simulations de tension.
     L.texte(comp.g, x + 112, y + 18, "+", { "font-size": 13, "font-weight": 700, fill: "#ff6b5b" });
     c.borne(comp, "−", x + 18, y + 42, L.NOIR_BORNE);
     c.borne(comp, "+", x + 112, y + 42, L.ROUGE_BORNE);
-    comp.dipoles = (mode) => [{ a: "−", b: "+", g: 1 / R_INTERNE, j: mode === "alternatif" ? 0 : E / R_INTERNE }];
+    comp.dipoles = () => [{ a: "−", b: "+", g: 1 / R_INTERNE, j: E / R_INTERNE }];
     return c.ajouter(comp);
   };
 })(window.Labo);
@@ -2403,7 +2434,7 @@ Utilisé par : les postes des simulations de tensions variables ; oscilloscope.j
     L.bouton_rond(comp.g, x + 202, y + 54, "+", () => changer({ Umax: Math.min(10, comp.Umax + 0.5) }));
     c.borne(comp, "sortie", x + 150, y + 86, L.ROUGE_BORNE);
     c.borne(comp, "masse", x + 194, y + 86, L.NOIR_BORNE);
-    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / R_SORTIE, j: mode === "alternatif" ? 1 / R_SORTIE : 0 }];
+    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / R_SORTIE, j: mode === "instant" ? c.instant / R_SORTIE : 0 }];
     c.ajouter(comp);
     changer({});
     return comp;
@@ -2415,9 +2446,9 @@ Utilisé par : les postes des simulations de tensions variables ; oscilloscope.j
 Rôle : écran de l'oscilloscope : quadrillage de 10 divisions sur 8 (1 division = 20 px), graduations de 0,2 division
        sur les axes centraux, repère de la masse (niveau 0 V) et trace verte de la tension, déclenchée sur un front
        montant (la courbe commence par un passage à zéro en montant, elle est donc immobile).
-Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé : tension continue, tension alternative (pour 1 V du GBF),
-         réglages du GBF { forme, f, Umax }, sensibilité Sv (V/div) et balayage b (ms/div).
-Produit : Labo.ecran_oscillo(groupe, x, y) -> tracer({ u_dc, ua, alternatif, Sv, b }).
+Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé : tension continue, onde (tensions à des instants régulièrement
+         répartis sur une période, ou null), fréquence f (Hz), sensibilité Sv (V/div) et balayage b (ms/div).
+Produit : Labo.ecran_oscillo(groupe, x, y) -> tracer({ u_dc, onde, f, Sv, b }).
 Utilisé par : oscilloscope.js.
 */
 (function (L) {
@@ -2435,6 +2466,22 @@ Utilisé par : oscilloscope.js.
     for (let k = 0; k <= NY * 5; k++) L.svg("line", { x1: cx - 2, y1: y + k * 4, x2: cx + 2, y2: y + k * 4, ...traits }, g);
   }
 
+  function valeur(onde, phase) {
+    // Tension à une fraction de période donnée (onde périodique, interpolation entre deux instants calculés).
+    const n = onde.length, p = (((phase % 1) + 1) % 1) * n, k = Math.floor(p), r = p - k;
+    return onde[k % n] * (1 - r) + onde[(k + 1) % n] * r;
+  }
+
+  function declenchement(onde) {
+    // Déclenchement sur front montant au niveau 0 V (ou au niveau moyen si la tension ne passe pas par 0) : fraction de période.
+    const min = Math.min(...onde), max = Math.max(...onde), niveau = min < 0 && max > 0 ? 0 : (min + max) / 2, n = onde.length;
+    for (let k = 0; k < n; k++) {
+      const a = onde[k], b = onde[(k + 1) % n];
+      if (a <= niveau && b > niveau) return (k + (niveau - a) / (b - a)) / n;
+    }
+    return 0;
+  }
+
   L.ecran_oscillo = function (g, x, y) {
     // Dessine l'écran ; renvoie la fonction qui trace la tension et le repère de masse.
     quadrillage(g, x, y);
@@ -2443,12 +2490,11 @@ Utilisé par : oscilloscope.js.
     const calque = L.svg("g", { "clip-path": `url(#${id})` }, g), cy = y + (NY * DIV) / 2;
     L.svg("path", { d: `M${x - 7} ${cy - 4} l6 4 l-6 4 Z`, fill: "#ffcc4d" }, g);
     L.texte(g, x - 12, cy, "1", { "font-size": 7, "font-weight": 700, fill: "#ffcc4d" });
-    return ({ u_dc, ua, alternatif, Sv, b }) => {
+    return ({ u_dc, onde, f, Sv, b }) => {
       calque.replaceChildren();
-      const T = alternatif ? 1 / alternatif.f : 1, decalage = ua < 0 ? T / 2 : 0, duree = (NX * b) / 1000, points = [];
+      const duree = (NX * b) / 1000, depart = onde ? declenchement(onde) : 0, points = [];
       for (let k = 0; k <= N; k++) {
-        const t = (k / N) * duree, alt = alternatif ? ua * alternatif.Umax * L.forme_tension(alternatif.forme, 2 * Math.PI * alternatif.f * (t + decalage)) : 0;
-        const v = Math.max(-50 * Sv, Math.min(50 * Sv, u_dc + alt));
+        const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
         points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
       }
       L.svg("polyline", { points: points.join(" "), fill: "none", stroke: "#7cff9a", "stroke-width": 3, opacity: 0.25 }, calque);
@@ -2463,7 +2509,8 @@ Rôle : oscilloscope à une voie : écran 10 × 8 divisions, sensibilité vertic
        par des touches −/+, entrée CH1 par un adaptateur BNC-bananes (borne Y1 rouge, masse noire). Résistance d'entrée
        1 MΩ. On lit U = Sv·y (y en divisions verticales) et t = b·x (x en divisions horizontales).
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, Sv, b }.
-Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, b, u_dc, ua } ; fait noté « oscillo » = { Sv, b, u_dc, ua, gbf }.
+Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, b, u_dc, onde } ;
+          fait noté « oscillo » = { Sv, b, u_dc (moyenne), u_max, u_min, gbf }.
 Utilisé par : les postes des simulations de tensions variables.
 */
 (function (L) {
@@ -2502,19 +2549,25 @@ Utilisé par : les postes des simulations de tensions variables.
 
   L.oscilloscope = function (c, { id = "oscillo", x, y, Sv = 1, b = 0.5 }) {
     // Construit l'oscilloscope ; à chaque calcul du circuit, il retrace la tension entre Y1 et la masse.
-    const comp = { id, Sv, b, u_dc: 0, ua: 0, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
+    const comp = { id, Sv, b, u_dc: 0, onde: null, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 330, y: y + 24 }, c.prise());
     corps(comp.g, x, y);
     const tracer = L.ecran_oscillo(comp.g, x + 18, y + 34);
+    const arrondi = (v) => Math.round(v * 1000) / 1000;
     const retracer = () => {
-      tracer({ u_dc: comp.u_dc, ua: comp.ua, alternatif: c.alternatif, Sv: comp.Sv, b: comp.b });
-      L.missions.noter("oscillo", { Sv: comp.Sv, b: comp.b, u_dc: Math.round(comp.u_dc * 1000) / 1000, ua: Math.round(comp.ua * 1000) / 1000, gbf: c.alternatif ? { ...c.alternatif } : null });
+      tracer({ u_dc: comp.u_dc, onde: comp.onde, f: c.alternatif ? c.alternatif.f : 0, Sv: comp.Sv, b: comp.b });
+      const o = comp.onde || [comp.u_dc];
+      L.missions.noter("oscillo", { Sv: comp.Sv, b: comp.b, u_dc: arrondi(comp.u_dc), u_max: arrondi(Math.max(...o)), u_min: arrondi(Math.min(...o)), gbf: c.alternatif ? { ...c.alternatif } : null });
     };
     reglage(comp.g, x, y + 24, SV, () => comp.Sv, "V", (v) => { comp.Sv = v; retracer(); });
     reglage(comp.g, x, y + 86, B, () => comp.b, "ms", (v) => { comp.b = v; retracer(); });
     entree(c, comp, x, y);
     comp.dipoles = () => [{ a: "Y1", b: "masse", g: 1e-6, j: 0 }];
-    comp.mettre_a_jour = ({ u, ua }) => { comp.u_dc = u("Y1", "masse"); comp.ua = ua("Y1", "masse"); retracer(); };
+    comp.mettre_a_jour = ({ u, onde }) => {
+      comp.onde = onde("Y1", "masse");
+      comp.u_dc = comp.onde ? comp.onde.reduce((s, v) => s + v, 0) / comp.onde.length : u("Y1", "masse");
+      retracer();
+    };
     return c.ajouter(comp);
   };
 })(window.Labo);
@@ -2522,9 +2575,10 @@ Utilisé par : les postes des simulations de tensions variables.
   <script>
 /*
 Rôle : ce que mesure le multimètre selon la position de son commutateur : tension continue (V⎓), tension alternative
-       (V~, valeur efficace vraie « TRMS »), intensité continue (A⎓). Calibres, résolution et précision comme sur un
-       appareil réel à 2000 points ; au-delà du calibre, l'afficheur montre « 1 ».
-Reçoit : l'état du multimètre (mode, tensions et courants reçus du circuit).
+       (V~, valeur efficace vraie « TRMS »), intensité continue (A⎓), résistance (Ω : l'appareil envoie un petit courant
+       de test et mesure la tension). Calibres, résolution et précision d'un appareil réel à 2000 points ; au-delà du
+       calibre (ou circuit ouvert en ohmmètre), l'afficheur montre « 1 ».
+Reçoit : l'état du multimètre (mode, tension continue, onde de tension s'il y a un GBF, courants reçus du circuit).
 Produit : Labo.MULTIMETRE_MODES (positions du commutateur), Labo.multimetre_lire(comp) -> { valeur, lecture, unite, depasse } ;
           Labo.multimetre_incertitude(mode, valeur) -> incertitude de la notice (même unité que valeur).
 Utilisé par : multimetre.js.
@@ -2533,28 +2587,34 @@ Utilisé par : multimetre.js.
   // precision : [part de la lecture, nombre d'unités du dernier chiffre] (notice de l'appareil).
   L.MULTIMETRE_MODES = [
     { nom: "OFF", angle: 0, texte: "OFF" },
-    { nom: "200mV", angle: 30, texte: "200m", type: "V", calibre: 0.2, unite: "mV", facteur: 1000, decimales: 1, precision: [0.005, 2] },
-    { nom: "2V", angle: 60, texte: "2", type: "V", calibre: 2, unite: "V", facteur: 1, decimales: 3, precision: [0.005, 2] },
-    { nom: "20V", angle: 90, texte: "20", type: "V", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.005, 2] },
-    { nom: "200V", angle: 120, texte: "200", type: "V", calibre: 200, unite: "V", facteur: 1, decimales: 1, precision: [0.005, 2] },
-    { nom: "200V~", angle: 150, texte: "200", type: "VAC", calibre: 200, unite: "V", facteur: 1, decimales: 1, precision: [0.01, 3] },
-    { nom: "20V~", angle: 180, texte: "20", type: "VAC", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.01, 3] },
-    { nom: "10A", angle: 210, texte: "10A", type: "A", borne: "10A", calibre: 10, unite: "A", facteur: 1, decimales: 2, precision: [0.02, 3] },
-    { nom: "200mA", angle: 240, texte: "200m", type: "A", borne: "mA", calibre: 0.2, unite: "mA", facteur: 1000, decimales: 1, precision: [0.01, 2] },
-    { nom: "20mA", angle: 270, texte: "20m", type: "A", borne: "mA", calibre: 0.02, unite: "mA", facteur: 1000, decimales: 2, precision: [0.01, 2] },
+    { nom: "2V", angle: 30, texte: "2", type: "V", calibre: 2, unite: "V", facteur: 1, decimales: 3, precision: [0.005, 2] },
+    { nom: "20V", angle: 60, texte: "20", type: "V", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.005, 2] },
+    { nom: "200V", angle: 90, texte: "200", type: "V", calibre: 200, unite: "V", facteur: 1, decimales: 1, precision: [0.005, 2] },
+    { nom: "20V~", angle: 120, texte: "20", type: "VAC", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.01, 3] },
+    { nom: "10A", angle: 150, texte: "10A", type: "A", borne: "10A", calibre: 10, unite: "A", facteur: 1, decimales: 2, precision: [0.02, 3] },
+    { nom: "200mA", angle: 180, texte: "200m", type: "A", borne: "mA", calibre: 0.2, unite: "mA", facteur: 1000, decimales: 1, precision: [0.01, 2] },
+    { nom: "20mA", angle: 210, texte: "20m", type: "A", borne: "mA", calibre: 0.02, unite: "mA", facteur: 1000, decimales: 2, precision: [0.01, 2] },
+    { nom: "200Ω", angle: 240, texte: "200", type: "R", calibre: 200, test: 1e-3, unite: "Ω", facteur: 1, decimales: 1, precision: [0.008, 3] },
+    { nom: "2kΩ", angle: 270, texte: "2k", type: "R", calibre: 2000, test: 1e-3, unite: "kΩ", facteur: 1e-3, decimales: 3, precision: [0.008, 3] },
+    { nom: "20kΩ", angle: 300, texte: "20k", type: "R", calibre: 20000, test: 1e-4, unite: "kΩ", facteur: 1e-3, decimales: 2, precision: [0.008, 3] },
+    { nom: "200kΩ", angle: 330, texte: "200k", type: "R", calibre: 200000, test: 1e-5, unite: "kΩ", facteur: 1e-3, decimales: 1, precision: [0.008, 3] },
   ];
-  L.MULTIMETRE_GROUPES = [{ type: "V", texte: "V⎓", angle: 75, couleur: "#f4f4ee" }, { type: "VAC", texte: "V~", angle: 165, couleur: "#ffb74d" }, { type: "A", texte: "A⎓", angle: 255, couleur: "#80deea" }];
-  const EFFICACE = { sinus: Math.SQRT1_2, triangle: 1 / Math.sqrt(3), carre: 1 };
+  L.MULTIMETRE_GROUPES = [{ type: "V", texte: "V⎓", angle: 60, couleur: "#f4f4ee" }, { type: "VAC", texte: "V~", angle: 120, couleur: "#ffb74d" }, { type: "A", texte: "A⎓", angle: 180, couleur: "#80deea" }, { type: "R", texte: "Ω", angle: 285, couleur: "#c5e1a5" }];
+  const COMPLIANCE_V = 2.8;
+  const moyenne = (t) => t.reduce((s, v) => s + v, 0) / t.length;
 
   L.multimetre_lire = function (comp) {
-    // Valeur mesurée (V ou A, signée en continu) et texte de l'afficheur pour le mode choisi.
+    // Valeur mesurée (V, A ou Ω) et texte de l'afficheur pour le mode choisi. En V~ : valeur efficace vraie (TRMS)
+    // de la partie variable ; en V⎓ : valeur moyenne ; en Ω : tension aux bornes divisée par le courant de test.
     const m = L.MULTIMETRE_MODES.find((k) => k.nom === comp.mode);
     if (!m.type) return { valeur: 0, lecture: "", unite: "", depasse: false };
-    let v = 0;
-    if (m.type === "V") v = comp.u_continue;
-    else if (m.type === "VAC") v = comp.alternatif ? Math.abs(comp.u_alternative) * comp.alternatif.Umax * EFFICACE[comp.alternatif.forme] : 0;
-    else v = comp.courants[m.borne];
-    const resolution = Math.pow(10, -m.decimales) / m.facteur, depasse = Math.abs(v) > m.calibre - resolution / 2;
+    const onde = comp.onde, moy = onde ? moyenne(onde) : comp.u_continue;
+    let v = 0, hors = false;
+    if (m.type === "V") v = moy;
+    else if (m.type === "VAC") v = onde ? Math.sqrt(Math.max(0, moyenne(onde.map((x) => x * x)) - moy * moy)) : 0;
+    else if (m.type === "A") v = comp.courants[m.borne];
+    else { v = comp.u_continue / m.test; hors = comp.u_continue > COMPLIANCE_V || v < 0; }
+    const resolution = Math.pow(10, -m.decimales) / m.facteur, depasse = hors || Math.abs(v) > m.calibre - resolution / 2;
     return { valeur: v, lecture: depasse ? "1" : (v * m.facteur).toFixed(m.decimales), unite: m.unite, depasse };
   };
 
@@ -2567,8 +2627,9 @@ Utilisé par : multimetre.js.
 </script>
   <script>
 /*
-Rôle : multimètre numérique : commutateur rotatif (OFF ; V⎓ 200 mV à 200 V ; V~ 20 V et 200 V ; A⎓ 20 mA, 200 mA, 10 A),
-       quatre bornes (10A, mA, COM, VΩ). En voltmètre, il mesure U = V(VΩ) − V(COM) (résistance d'entrée 10 MΩ) ;
+Rôle : multimètre numérique : commutateur rotatif (OFF ; V⎓ 2 à 200 V ; V~ 20 V ; A⎓ 20 mA, 200 mA, 10 A ; Ω 200 Ω à
+       200 kΩ), quatre bornes (10A, mA, COM, VΩ). En voltmètre, il mesure U = V(VΩ) − V(COM) (résistance d'entrée 10 MΩ) ;
+       en ohmmètre, il envoie un courant de test par VΩ (le dipôle mesuré doit être isolé du circuit) ;
        en ampèremètre, le courant qui entre par 10A ou mA et sort par COM. La borne mA est protégée par un fusible
        (0,25 A) : branché en dérivation sur un générateur, il grille ; un toucher sur l'étiquette le remplace.
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (nom d'un mode de multimetre_mesure.js), etiquette }.
@@ -2623,7 +2684,7 @@ Utilisé par : les postes des simulations d'électricité.
       ecran.setAttribute("text-anchor", r.depasse ? "start" : "end");
       ecran.textContent = r.lecture;
       unite.textContent = r.unite;
-      type.textContent = m.type === "VAC" ? "AC" : m.type ? "DC" : "";
+      type.textContent = { V: "DC", A: "DC", VAC: "AC" }[m.type] || "";
     };
   }
 
@@ -2645,7 +2706,7 @@ Utilisé par : les postes des simulations d'électricité.
 
   L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF", etiquette = "" }) {
     // Construit l'appareil : bornes (shunts 0,01 Ω sur 10A, 1 Ω sur mA ; 10 MΩ entre VΩ et COM) et commutateur.
-    const comp = { id, mode, valeur: 0, lecture: "", depasse: false, fusible: true, courants: { "10A": 0, mA: 0 }, u_continue: 0, u_alternative: 0, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
+    const comp = { id, mode, valeur: 0, lecture: "", depasse: false, fusible: true, courants: { "10A": 0, mA: 0 }, u_continue: 0, onde: null, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
     corps(comp.g, x, y);
     if (etiquette) L.texte(comp.g, x + 118, y + 71, etiquette, { "font-size": 11, "font-weight": 700, fill: "#ffd54f" });
     const ecrire = afficheur(comp.g, x, y);
@@ -2653,9 +2714,10 @@ Utilisé par : les postes des simulations d'électricité.
     tourner();
     const surveiller = fusible(c, comp, x, y);
     for (const [nom, dx, couleur] of BORNES) c.borne(comp, nom, x + dx, y + 212, couleur);
-    comp.dipoles = () => [{ a: "10A", b: "COM", g: 100, j: 0 }, { a: "mA", b: "COM", g: comp.fusible ? 1 : 1e-9, j: 0 }, { a: "VΩ", b: "COM", g: 1e-7, j: 0 }];
-    comp.mettre_a_jour = ({ u, i, ua }) => {
-      Object.assign(comp, { courants: { "10A": i[0], mA: i[1] }, u_continue: u("VΩ", "COM"), u_alternative: ua("VΩ", "COM"), alternatif: c.alternatif });
+    const test = () => (L.MULTIMETRE_MODES.find((m) => m.nom === comp.mode).test || 0);
+    comp.dipoles = () => [{ a: "10A", b: "COM", g: 100, j: 0 }, { a: "mA", b: "COM", g: comp.fusible ? 1 : 1e-9, j: 0 }, { a: "COM", b: "VΩ", g: 1e-7, j: test() }];
+    comp.mettre_a_jour = ({ u, i, onde }) => {
+      Object.assign(comp, { courants: { "10A": i[0], mA: i[1] }, u_continue: u("VΩ", "COM"), onde: onde("VΩ", "COM") });
       surveiller();
       ecrire(comp);
     };
@@ -2683,7 +2745,7 @@ Utilisé par : simulation.js.
     c.sur_calcul(() => {
       const aux_bornes = c.meme_noeud(`${m.id}.VΩ`, "gbf.sortie") && c.meme_noeud(`${m.id}.COM`, "gbf.masse");
       L.missions.noter("voltmetre_gbf", aux_bornes ? { mode: m.mode, valeur: Math.round(m.valeur * 1000) / 1000, depasse: m.depasse, forme: c.alternatif.forme } : null);
-      if (Math.abs(o.ua) > 0.5) { vues.add(c.alternatif.forme); L.missions.noter("formes_vues", [...vues]); }
+      if (o.onde && Math.max(...o.onde) - Math.min(...o.onde) > 1) { vues.add(c.alternatif.forme); L.missions.noter("formes_vues", [...vues]); }
     });
     c.calculer();
     return { pense_bete };
@@ -2704,12 +2766,13 @@ Utilisé par : page.html (dernier script).
   const nombre = (attendu, tolerance, aide, bravo, relative = false) => ({ type: "nombre", unite: "", attendu, [relative ? "tolerance_relative" : "tolerance"]: tolerance, aide, bravo });
   const O = (faits) => faits.oscillo || {};
   const G = (faits) => O(faits).gbf || { f: 500, Umax: 3, forme: "sinus" };
-  const voit_gbf = (faits) => Math.abs(O(faits).ua || 0) > 0.5;
+  const amplitude = (faits) => ((O(faits).u_max || 0) - (O(faits).u_min || 0)) / 2;
+  const voit_gbf = (faits) => amplitude(faits) > 0.5;
 
   function bien_regle({ faits }) {
     // Sinusoïde : amplitude de 2,5 à 4 divisions, une période de 4 à 10 divisions.
     if (!voit_gbf(faits)) return false;
-    const o = O(faits), g = G(faits), y = (g.Umax * Math.abs(o.ua)) / o.Sv, x = 1000 / g.f / o.b;
+    const o = O(faits), g = G(faits), y = amplitude(faits) / o.Sv, x = 1000 / g.f / o.b;
     if (y > 4) return "La courbe sort de l'écran : augmentez Sv (plus de volts par division).";
     if (y < 2.5) return "La courbe est trop petite : diminuez Sv.";
     if (x > 10) return "On ne voit pas une période entière : augmentez b.";
@@ -2743,7 +2806,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Combien de divisions horizontales x occupe une période ?", court: "x pour une période (div) ?", question: nombre((faits) => 1000 / G(faits).f / O(faits).b, 0.2, "Mesurez entre deux passages à zéro en montant (zoomez).", "Exact.") },
       { consigne: "Calculez la période T = b·x (en ms).", court: "T (ms) ?", question: nombre((faits) => 1000 / G(faits).f, 0.03, "T = b × x, avec b en ms/div.", "Exact.", true) },
       { consigne: "Calculez la fréquence f = 1/T (en Hz). Comparez avec l'afficheur du GBF.", court: "f (Hz) ?", question: nombre((faits) => G(faits).f, 0.03, "T en secondes : 2 ms = 0,002 s.", "Exact : c'est la fréquence affichée par le GBF.", true) },
-      { consigne: "Mesurez la valeur maximale Umax = Sv·y (y : divisions entre le niveau de la masse et le sommet), en V.", court: "Umax (V) ?", question: nombre((faits) => G(faits).Umax * Math.abs(O(faits).ua || 1), 0.12, "Umax = Sv × y.", "Exact.") },
+      { consigne: "Mesurez la valeur maximale Umax = Sv·y (y : divisions entre le niveau de la masse et le sommet), en V.", court: "Umax (V) ?", question: nombre((faits) => amplitude(faits), 0.12, "Umax = Sv × y.", "Exact.") },
       { consigne: "Réglez le multimètre sur V~ 20 et branchez-le aux bornes du GBF (VΩ sur SORTIE, COM sur la masse).", court: "Voltmètre V~ aux bornes du GBF.", verifier: ({ faits }) => (faits.voltmetre_gbf && faits.voltmetre_gbf.mode === "20V~" && faits.voltmetre_gbf.forme === "sinus") || false },
       { consigne: "Le voltmètre affiche U. Comparez U à Umax/√2. Le voltmètre en mode alternatif mesure…", court: "Répondez dans le carnet.", question: choix(["la valeur efficace U = Umax/√2", "la valeur maximale Umax", "la valeur moyenne de la tension"], "Calculez Umax/√2.", "Exact.") },
     ],

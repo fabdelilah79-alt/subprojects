@@ -55,7 +55,7 @@ Utilisé par : les postes des simulations d'électricité.
       if (comp.limite && -u > E) { comp.limite = false; Object.assign(dipole, { g: 1 / r, j: E / r }); return true; }
       return false;
     };
-    comp.dipoles = (mode) => (!comp.marche ? [] : mode === "alternatif" ? [{ ...dipole, j: 0, ajuster: undefined }] : [dipole]);
+    comp.dipoles = () => (comp.marche ? [dipole] : []);
     comp.mettre_a_jour = ({ u, i }) => {
       comp.i = i[0] || 0;
       vue.afficheur.textContent = comp.marche ? L.nombre(Math.max(0, u("+", "−")), 1) : "";

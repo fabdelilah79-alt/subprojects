@@ -19,7 +19,7 @@ Utilisé par : les postes des simulations de tension.
     L.texte(comp.g, x + 112, y + 18, "+", { "font-size": 13, "font-weight": 700, fill: "#ff6b5b" });
     c.borne(comp, "−", x + 18, y + 42, L.NOIR_BORNE);
     c.borne(comp, "+", x + 112, y + 42, L.ROUGE_BORNE);
-    comp.dipoles = (mode) => [{ a: "−", b: "+", g: 1 / R_INTERNE, j: mode === "alternatif" ? 0 : E / R_INTERNE }];
+    comp.dipoles = () => [{ a: "−", b: "+", g: 1 / R_INTERNE, j: E / R_INTERNE }];
     return c.ajouter(comp);
   };
 })(window.Labo);

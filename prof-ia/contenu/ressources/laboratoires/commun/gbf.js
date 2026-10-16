@@ -69,7 +69,7 @@ Utilisé par : les postes des simulations de tensions variables ; oscilloscope.j
     L.bouton_rond(comp.g, x + 202, y + 54, "+", () => changer({ Umax: Math.min(10, comp.Umax + 0.5) }));
     c.borne(comp, "sortie", x + 150, y + 86, L.ROUGE_BORNE);
     c.borne(comp, "masse", x + 194, y + 86, L.NOIR_BORNE);
-    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / R_SORTIE, j: mode === "alternatif" ? 1 / R_SORTIE : 0 }];
+    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / R_SORTIE, j: mode === "instant" ? c.instant / R_SORTIE : 0 }];
     c.ajouter(comp);
     changer({});
     return comp;

@@ -3,7 +3,7 @@ Rôle : petits appareils du circuit, chacun sur son support à deux bornes : lam
        puissance reçue), diode électroluminescente avec sa résistance de protection (elle ne laisse passer le courant
        que dans un sens : de sa borne + vers sa borne −), interrupteur à couteau (un toucher l'ouvre ou le ferme).
 Reçoit : le circuit (circuit.js) et le réglage de chaque appareil { id, x, y, ... }.
-Produit : Labo.lampe(c, { id, x, y, U_n, I_n, etiquette, lettres }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
+Produit : Labo.lampe(c, { id, x, y, U_n, I_n, etiquette, lettres }) -> { i, u, eclat } ; Labo.support_dipole(...) ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
           Labo.interrupteur(c, { id, x, y, lettres }) -> { ferme } ; bornes « 1 » et « 2 » (DEL : « + » et « − »).
 Utilisé par : les postes des simulations d'électricité.
 */
@@ -19,6 +19,8 @@ Utilisé par : les postes des simulations d'électricité.
     if (lettres) [5, L_SUPPORT - 5].forEach((dx, k) => L.texte(comp.g, x + dx, y + 14, lettres[k], { "font-size": 11, "font-weight": 700, fill: "#1a3d7c" }));
   }
 
+  L.support_dipole = support;
+
   function symbole_del(g, cx, cy) {
     // Symbole normalisé de la DEL : triangle (sens passant de + vers −), barre, deux flèches de lumière qui sortent.
     const trait = { stroke: "#222", "stroke-width": 1.3, fill: "none" };
@@ -31,7 +33,7 @@ Utilisé par : les postes des simulations d'électricité.
   }
 
   L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1, etiquette = "", lettres = null }) {
-    // Lampe sur douille : verre, filament, halo dont l'éclat suit la puissance reçue (P / P nominale).
+    // Lampe sur douille : verre, filament, halo dont l'éclat suit la puissance reçue (P / P nominale) ; R du filament variable.
     const comp = { id, i: 0, eclat: 0, g: L.svg("g", { class: `lampe lampe-${id}` }, c.calque_composants) };
     support(c, comp, x, y, `${etiquette ? etiquette + " : " : ""}${String(U_n).replace(".", ",")} V – ${String(I_n).replace(".", ",")} A`, ["1", "2"], [GRIS_BORNE, GRIS_BORNE], lettres);
     const cx = x + L_SUPPORT / 2, R = U_n / I_n;
@@ -40,10 +42,13 @@ Utilisé par : les postes des simulations d'électricité.
     const ampoule = L.svg("circle", { cx, cy: y - 2, r: 17, fill: "#ffe9a0", opacity: 0 }, comp.g);
     L.svg("circle", { cx, cy: y - 2, r: 17, fill: "url(#verre)", stroke: "#9fb6be" }, comp.g);
     const filament = L.svg("path", { d: `M${cx - 7} ${y + 6} L${cx - 5} ${y - 4} l2 -3 l2 3 l2 -3 l2 3 l2 -3 L${cx + 7} ${y + 6}`, fill: "none", stroke: "#6b5b45", "stroke-width": 1 }, comp.g);
-    comp.dipoles = () => [{ a: "1", b: "2", g: 1 / R, j: 0 }];
-    comp.mettre_a_jour = ({ i }) => {
+    // Filament de tungstène : sa résistance croît avec la température ; à froid, elle vaut environ 12 % de R à chaud.
+    const dipole = L.dipole_non_lineaire("1", "2", (u) => u / (R * (0.12 + 0.88 * Math.sqrt(Math.abs(u) / U_n))), 1);
+    comp.dipoles = () => [dipole];
+    comp.mettre_a_jour = ({ u, i }) => {
       comp.i = i[0];
-      comp.eclat = Math.min(1.4, (comp.i * comp.i * R) / (U_n * I_n));
+      comp.u = u("1", "2");
+      comp.eclat = Math.min(1.4, Math.abs(comp.u * comp.i) / (U_n * I_n));
       const e = Math.pow(comp.eclat, 0.6);
       halo.setAttribute("opacity", Math.min(1, e));
       ampoule.setAttribute("opacity", Math.min(0.9, e));
@@ -69,7 +74,7 @@ Utilisé par : les postes des simulations d'électricité.
       if (dipole.passante && i < 0) { Object.assign(dipole, { passante: false, g: 1e-9, j: 0 }); return true; }
       return false;
     };
-    comp.dipoles = (mode) => (mode === "alternatif" ? [{ ...dipole, j: 0, ajuster: undefined }] : [dipole]);
+    comp.dipoles = () => [dipole];
     comp.mettre_a_jour = ({ u, i }) => {
       comp.i = i[0];
       comp.u = u("+", "−");

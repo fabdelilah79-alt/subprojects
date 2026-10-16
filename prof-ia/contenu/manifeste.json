@@ -891,6 +891,50 @@
         "U = Umax/√2 pour toute tension variable.",
         "La valeur affichée par le voltmètre en alternatif est la valeur maximale."
       ]
+    },
+    {
+      "id": "tc_elec3_a1_associations",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec3_a1_associations.html",
+      "description": "Laboratoire virtuel : résistances sur support au code des couleurs (valeurs réelles dans la tolérance), multimètre en ohmmètre (calibres 200 Ω à 200 kΩ), planche de fils résistants (constantan et cuivre, longueurs et sections différentes), diviseur de tension avec un générateur 12 V ; l'élève pose les fils.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec3_montages_electriques",
+      "activite": "Associations série/dérivation (ohmmètre), diviseur de tension.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Mesurer une résistance",
+          "ce_que_fait_l_eleve": "Mesure R1, R2, R3 à l'ohmmètre en choisissant le calibre ; lit le code des couleurs et vérifie la tolérance de 5 %.",
+          "conclusion": "L'ohmmètre mesure la résistance d'un dipôle isolé du circuit. On choisit le plus petit calibre supérieur à la valeur. La valeur réelle d'une résistance est comprise dans l'intervalle donné par sa tolérance (5 % pour l'anneau or)."
+        },
+        {
+          "titre": "Associations de résistances",
+          "ce_que_fait_l_eleve": "Mesure R1 et R2 en série (Req = R1 + R2) puis en parallèle (G = G1 + G2, Req plus petite que chacune).",
+          "conclusion": "En série, les résistances s'ajoutent : Req = R1 + R2. En parallèle, les conductances (G = 1/R, en siemens) s'ajoutent : 1/Req = 1/R1 + 1/R2 ; Req est plus petite que chacune des résistances."
+        },
+        {
+          "titre": "Résistance d'un fil : R = ρ·l/S",
+          "ce_que_fait_l_eleve": "Mesure quatre fils : R proportionnelle à l, inversement proportionnelle à S, dépendant du matériau ; calcule ρ du constantan.",
+          "conclusion": "La résistance d'un fil est proportionnelle à sa longueur l et inversement proportionnelle à sa section S : R = ρ·l/S. La résistivité ρ (en Ω·m) dépend du matériau."
+        },
+        {
+          "titre": "Le diviseur de tension",
+          "ce_que_fait_l_eleve": "Monte un diviseur de tension, mesure U0 et U aux bornes de R2 et vérifie U = R2/(R1 + R2)·U0.",
+          "conclusion": "Diviseur de tension : la tension aux bornes de R2 vaut U = R2/(R1 + R2)·U0, où U0 est la tension appliquée à l'ensemble."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "La valeur d'une résistance est exactement celle du code des couleurs.",
+        "En parallèle, la résistance équivalente est plus grande que chacune des résistances.",
+        "La résistance d'un fil ne dépend que de sa longueur.",
+        "L'ohmmètre peut mesurer une résistance dans un circuit alimenté."
+      ]
     }
   ]
 }

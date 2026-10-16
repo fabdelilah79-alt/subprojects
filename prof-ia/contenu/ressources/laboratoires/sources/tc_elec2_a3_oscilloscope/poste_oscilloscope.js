@@ -17,7 +17,7 @@ Utilisé par : simulation.js.
     c.sur_calcul(() => {
       const aux_bornes = c.meme_noeud(`${m.id}.VΩ`, "gbf.sortie") && c.meme_noeud(`${m.id}.COM`, "gbf.masse");
       L.missions.noter("voltmetre_gbf", aux_bornes ? { mode: m.mode, valeur: Math.round(m.valeur * 1000) / 1000, depasse: m.depasse, forme: c.alternatif.forme } : null);
-      if (Math.abs(o.ua) > 0.5) { vues.add(c.alternatif.forme); L.missions.noter("formes_vues", [...vues]); }
+      if (o.onde && Math.max(...o.onde) - Math.min(...o.onde) > 1) { vues.add(c.alternatif.forme); L.missions.noter("formes_vues", [...vues]); }
     });
     c.calculer();
     return { pense_bete };

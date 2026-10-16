@@ -11,12 +11,13 @@ Utilisé par : page.html (dernier script).
   const nombre = (attendu, tolerance, aide, bravo, relative = false) => ({ type: "nombre", unite: "", attendu, [relative ? "tolerance_relative" : "tolerance"]: tolerance, aide, bravo });
   const O = (faits) => faits.oscillo || {};
   const G = (faits) => O(faits).gbf || { f: 500, Umax: 3, forme: "sinus" };
-  const voit_gbf = (faits) => Math.abs(O(faits).ua || 0) > 0.5;
+  const amplitude = (faits) => ((O(faits).u_max || 0) - (O(faits).u_min || 0)) / 2;
+  const voit_gbf = (faits) => amplitude(faits) > 0.5;
 
   function bien_regle({ faits }) {
     // Sinusoïde : amplitude de 2,5 à 4 divisions, une période de 4 à 10 divisions.
     if (!voit_gbf(faits)) return false;
-    const o = O(faits), g = G(faits), y = (g.Umax * Math.abs(o.ua)) / o.Sv, x = 1000 / g.f / o.b;
+    const o = O(faits), g = G(faits), y = amplitude(faits) / o.Sv, x = 1000 / g.f / o.b;
     if (y > 4) return "La courbe sort de l'écran : augmentez Sv (plus de volts par division).";
     if (y < 2.5) return "La courbe est trop petite : diminuez Sv.";
     if (x > 10) return "On ne voit pas une période entière : augmentez b.";
@@ -50,7 +51,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Combien de divisions horizontales x occupe une période ?", court: "x pour une période (div) ?", question: nombre((faits) => 1000 / G(faits).f / O(faits).b, 0.2, "Mesurez entre deux passages à zéro en montant (zoomez).", "Exact.") },
       { consigne: "Calculez la période T = b·x (en ms).", court: "T (ms) ?", question: nombre((faits) => 1000 / G(faits).f, 0.03, "T = b × x, avec b en ms/div.", "Exact.", true) },
       { consigne: "Calculez la fréquence f = 1/T (en Hz). Comparez avec l'afficheur du GBF.", court: "f (Hz) ?", question: nombre((faits) => G(faits).f, 0.03, "T en secondes : 2 ms = 0,002 s.", "Exact : c'est la fréquence affichée par le GBF.", true) },
-      { consigne: "Mesurez la valeur maximale Umax = Sv·y (y : divisions entre le niveau de la masse et le sommet), en V.", court: "Umax (V) ?", question: nombre((faits) => G(faits).Umax * Math.abs(O(faits).ua || 1), 0.12, "Umax = Sv × y.", "Exact.") },
+      { consigne: "Mesurez la valeur maximale Umax = Sv·y (y : divisions entre le niveau de la masse et le sommet), en V.", court: "Umax (V) ?", question: nombre((faits) => amplitude(faits), 0.12, "Umax = Sv × y.", "Exact.") },
       { consigne: "Réglez le multimètre sur V~ 20 et branchez-le aux bornes du GBF (VΩ sur SORTIE, COM sur la masse).", court: "Voltmètre V~ aux bornes du GBF.", verifier: ({ faits }) => (faits.voltmetre_gbf && faits.voltmetre_gbf.mode === "20V~" && faits.voltmetre_gbf.forme === "sinus") || false },
       { consigne: "Le voltmètre affiche U. Comparez U à Umax/√2. Le voltmètre en mode alternatif mesure…", court: "Répondez dans le carnet.", question: choix(["la valeur efficace U = Umax/√2", "la valeur maximale Umax", "la valeur moyenne de la tension"], "Calculez Umax/√2.", "Exact.") },
     ],

@@ -1,15 +1,16 @@
 /*
 Rôle : calcule les potentiels et les courants d'un circuit en courant continu (méthode des nœuds). Chaque dipôle est
        vu comme une conductance g en parallèle avec une source de courant j : i(a→b) = g·(Va − Vb) + j.
-       Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Une DEL change d'état
-       (passante ou bloquée) : on recalcule jusqu'à ce que son état ne change plus.
+       Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Un dipôle non linéaire
+       (DEL, lampe, diode) est remplacé par sa tangente au point de fonctionnement : on recalcule jusqu'à stabilité.
 Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ajuster(u, i) (facultatif :
          renvoie vrai si le dipôle change d'état et met à jour g et j) }.
-Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) }.
+Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) } ;
+          Labo.dipole_non_lineaire(a, b, courant(u), pas_max) -> dipôle à caractéristique quelconque.
 Utilisé par : circuit.js.
 */
 (function (L) {
-  const FUITE = 1e-9, TOURS = 12;
+  const FUITE = 1e-9, TOURS = 60;
 
   function eliminer(A, B) {
     // Résout A·x = B (pivot de Gauss partiel) ; A et B sont modifiés.
@@ -48,8 +49,26 @@ Utilisé par : circuit.js.
     return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0)) };
   }
 
+  L.dipole_non_lineaire = function (a, b, courant, pas_max) {
+    // Dipôle de caractéristique i = courant(u) : remplacé par sa tangente au dernier point ; à chaque tour, la tension
+    // de ce point se rapproche de la tension calculée, d'au plus pas_max (méthode de Newton amortie).
+    const d = { a, b, u0: 0 };
+    const tangente = (u) => {
+      const h = 1e-5, i = courant(u), g = Math.max(1e-9, (courant(u + h) - courant(u - h)) / (2 * h));
+      Object.assign(d, { u0: u, g, j: i - g * u });
+    };
+    tangente(0);
+    d.ajuster = (u) => {
+      const v = d.u0 + Math.max(-pas_max, Math.min(pas_max, u - d.u0));
+      if (Math.abs(v - d.u0) < 1e-6) return false;
+      tangente(v);
+      return true;
+    };
+    return d;
+  };
+
   L.resoudre_circuit = function (n, dipoles) {
-    // Calcule, puis laisse les dipôles non linéaires (DEL) changer d'état et recalcule, jusqu'à stabilité.
+    // Calcule, puis laisse les dipôles non linéaires (DEL, lampe, diode) se réajuster et recalcule, jusqu'à stabilité.
     let r = une_fois(n, dipoles);
     for (let t = 0; t < TOURS; t++) {
       let change = false;
