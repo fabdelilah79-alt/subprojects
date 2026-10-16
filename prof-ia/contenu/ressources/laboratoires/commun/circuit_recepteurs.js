@@ -68,7 +68,7 @@ Utilisé par : les postes des simulations d'électricité.
       if (dipole.passante && i < 0) { Object.assign(dipole, { passante: false, g: 1e-9, j: 0 }); return true; }
       return false;
     };
-    comp.dipoles = () => [dipole];
+    comp.dipoles = (mode) => (mode === "alternatif" ? [{ ...dipole, j: 0, ajuster: undefined }] : [dipole]);
     comp.mettre_a_jour = ({ u, i }) => {
       comp.i = i[0];
       comp.u = u("+", "−");

@@ -50,8 +50,8 @@ Utilisé par : simulation.js.
     const { pense_bete } = L.decor_circuit(g, 1), c = L.circuit(g);
     L.generateur(c, { x: 40, y: 196, E: 6 });
     const k = L.interrupteur(c, { x: 70, y: 420 });
-    const l1 = L.lampe(c, { id: "l1", x: 470, y: 440, I_n: 0.1, etiquette: "L1" });
-    const l2 = L.lampe(c, { id: "l2", x: 650, y: 440, I_n: 0.05, etiquette: "L2" });
+    const l1 = L.lampe(c, { id: "l1", x: 470, y: 470, I_n: 0.1, etiquette: "L1" });
+    const l2 = L.lampe(c, { id: "l2", x: 650, y: 470, I_n: 0.05, etiquette: "L2" });
     const ms = ["A", "A1", "A2"].map((nom, n) => L.multimetre(c, { id: nom, x: 290 + n * 180, y: 186, etiquette: nom }));
     c.sur_calcul(() => {
       const mesures = Object.fromEntries(ms.filter(valide).map((m) => [m.id, arrondi(Math.abs(m.valeur))]));
