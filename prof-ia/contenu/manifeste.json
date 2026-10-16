@@ -704,6 +704,48 @@
         "Pendant le frottement, ce sont les charges positives qui se déplacent.",
         "Un corps électrisé attire tous les autres corps électrisés."
       ]
+    },
+    {
+      "id": "tc_elec1_a2_nature_courant",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec1_a2_nature_courant.html",
+      "description": "Laboratoire virtuel : l'élève pose lui-même les fils entre générateur, interrupteur, lampe, DEL et multimètre (ampèremètre) ; loupe « modèle » sur un fil de cuivre (électrons libres) ; tube en U d'électrolyse du dichromate de cuivre (migration des ions colorés, inversion de polarité).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec1_courant_continu",
+      "activite": "Nature du courant dans les métaux et les électrolytes.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le sens du courant",
+          "ce_que_fait_l_eleve": "Réalise un circuit en série avec une DEL, ferme l'interrupteur, puis échange les fils de la DEL : le courant a un sens ; sens conventionnel de + vers − hors du générateur.",
+          "conclusion": "Le courant électrique a un sens. Par convention, à l'extérieur du générateur, il va de la borne + vers la borne −."
+        },
+        {
+          "titre": "Le courant dans un métal",
+          "ce_que_fait_l_eleve": "Promène la loupe sur un fil, circuit fermé puis ouvert : les électrons libres avancent en sens inverse de I, ou s'agitent sans avancer.",
+          "conclusion": "Dans un métal, le courant est un déplacement d'ensemble d'électrons libres, en sens inverse du sens conventionnel."
+        },
+        {
+          "titre": "Intensité et quantité d'électricité",
+          "ce_que_fait_l_eleve": "Branche le multimètre en série (mA, COM, calibre 200 mA), lis I, calcule Q = I·Δt pour 2 min et n = Q/e ; 1 A = 1 C/s.",
+          "conclusion": "La quantité d'électricité Q qui traverse un circuit pendant Δt vaut Q = I·Δt (Q en coulombs, I en ampères, Δt en secondes) ; elle correspond à n = Q/e électrons."
+        },
+        {
+          "titre": "Le courant dans un électrolyte",
+          "ce_que_fait_l_eleve": "Branche le tube en U en série avec le multimètre, observe la migration des ions Cu²⁺ (vers −) et dichromate (vers +), inverse le générateur : double migration des ions.",
+          "conclusion": "Dans un électrolyte, le courant est dû à la double migration des ions : les cations dans le sens conventionnel du courant, les anions en sens inverse."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "Le courant sort des deux bornes du générateur et s'use dans la lampe.",
+        "Dans un fil, les électrons vont de la borne + vers la borne −.",
+        "Le courant ne passe pas dans une solution, ou y est porté par des électrons."
+      ]
     }
   ]
 }
