@@ -335,3 +335,7 @@ Problèmes restants, à faire par l'enseignant :
   pendant 20 s (ou jusqu'à un nouveau frottement) ; en lâchant la baguette, les papiers collés retombent dans la
   coupelle ; la baguette glisse jusqu'à sa place au lieu de sauter.
 - Vérifié : parcours complets des 3 simulations du chapitre ; papiers immobiles une fois retombés.
+- Chute des papiers (remarque de l'enseignant : elle n'était pas physique, le papier glissait en ligne droite vers
+  sa place de départ). Nouveau fichier papiers_mouvement.js : chaque morceau a un point au sol et une hauteur ;
+  attiré, il part de l'arrêt et accélère vers la baguette ; détaché, il tombe sous son poids, freiné par l'air
+  (vitesse limite faible), se balance, tournoie et se pose juste en dessous ; son ombre au sol suit sa hauteur.
