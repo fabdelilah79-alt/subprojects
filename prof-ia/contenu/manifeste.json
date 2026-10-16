@@ -777,6 +777,81 @@
         "La lampe qui brille le moins reçoit le moins de courant, même en série.",
         "Au nœud, le courant se partage en deux moitiés égales."
       ]
+    },
+    {
+      "id": "tc_elec2_a1_tensions_continues",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec2_a1_tensions_continues.html",
+      "description": "Laboratoire virtuel : générateur (bornes P et N), interrupteur, deux lampes (A, B et C, D) et multimètre en voltmètre (V⎓, calibres, notice de précision) ; l'élève pose les fils ; tableur sur la tablette.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec2_tension",
+      "activite": "Mesures de tensions continues.",
+      "objectifs": [
+        "O1",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le voltmètre et la tension",
+          "ce_que_fait_l_eleve": "Mesure U_PN au voltmètre en dérivation, échange les fils (U_NP = −U_PN), représente U_PN par une flèche vers P, constate le dépassement sur 2 V, calcule l'incertitude de la notice et écrit U_PN = (6,00 ± 0,05) V.",
+          "conclusion": "La tension se mesure avec un voltmètre branché en dérivation. C'est une grandeur algébrique : U_{NP} = −U_{PN}. U_{PN} est représentée par une flèche qui pointe vers P. On choisit le plus petit calibre supérieur à la valeur, et on donne le résultat avec son incertitude : U_{PN} = (6,00 ± 0,05) V."
+        },
+        {
+          "titre": "Les tensions dans un circuit en série",
+          "ce_que_fait_l_eleve": "Monte deux lampes en série, mesure U_PN, U_AB et U_CD et vérifie U_PN = U_AB + U_CD dans le tableur ; interrupteur ouvert, U_EF = U_PN sans courant.",
+          "conclusion": "Loi d'additivité des tensions : dans un circuit en série, U_{PN} = U_{AB} + U_{CD}. Interrupteur ouvert, aucun courant ne circule, mais la tension à ses bornes est égale à celle du générateur."
+        },
+        {
+          "titre": "Les tensions en dérivation",
+          "ce_que_fait_l_eleve": "Monte les lampes en dérivation et vérifie U_AB = U_CD = U_PN.",
+          "conclusion": "Les tensions aux bornes de dipôles montés en dérivation sont égales : U_{AB} = U_{CD} = U_{PN}."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "La tension circule dans le circuit comme le courant.",
+        "Pas de courant, donc pas de tension (interrupteur ouvert).",
+        "Deux lampes en série reçoivent chacune la tension du générateur.",
+        "La tension n'a pas de signe."
+      ]
+    },
+    {
+      "id": "tc_elec2_a2_potentiel",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec2_a2_potentiel.html",
+      "description": "Laboratoire virtuel : générateur 12 V, plaquette de trois résistances en série au code des couleurs (100, 220 et 330 Ω entre les points A, B, C, D) et voltmètre ; l'élève choisit le point de référence (masse).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec2_tension",
+      "activite": "Différence de potentiel.",
+      "objectifs": [
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Le potentiel d'un point",
+          "ce_que_fait_l_eleve": "Masse en D : mesure U_AD, U_BD, U_CD et écrit les potentiels V_A, V_B, V_C, V_D dans le tableur.",
+          "conclusion": "On choisit un point de référence, la masse, de potentiel nul. Le potentiel V_{A} d'un point A est la tension entre A et la masse : avec la masse en D, V_{A} = U_{AD}."
+        },
+        {
+          "titre": "La tension, différence de potentiel",
+          "ce_que_fait_l_eleve": "Mesure U_AB et U_BC et les compare à V_A − V_B et V_B − V_C : U_AB = V_A − V_B ; calcul de U_FE.",
+          "conclusion": "La tension entre deux points est la différence de leurs potentiels : U_{AB} = V_{A} − V_{B}. Elle est algébrique : U_{BA} = −U_{AB}."
+        },
+        {
+          "titre": "Changer de point de référence",
+          "ce_que_fait_l_eleve": "Masse en C : les potentiels changent (V_D < 0), la tension U_AB reste la même.",
+          "conclusion": "Le potentiel d'un point dépend du point de référence choisi ; la tension entre deux points n'en dépend pas."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "Le potentiel et la tension sont la même chose.",
+        "Le potentiel d'un point est fixé une fois pour toutes.",
+        "La tension change si l'on change de masse."
+      ]
     }
   ]
 }

@@ -3,19 +3,20 @@ Rôle : petits appareils du circuit, chacun sur son support à deux bornes : lam
        puissance reçue), diode électroluminescente avec sa résistance de protection (elle ne laisse passer le courant
        que dans un sens : de sa borne + vers sa borne −), interrupteur à couteau (un toucher l'ouvre ou le ferme).
 Reçoit : le circuit (circuit.js) et le réglage de chaque appareil { id, x, y, ... }.
-Produit : Labo.lampe(c, { id, x, y, U_n, I_n, etiquette }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
-          Labo.interrupteur(c, { id, x, y }) -> { ferme } ; bornes « 1 » et « 2 » (DEL : « + » et « − »).
+Produit : Labo.lampe(c, { id, x, y, U_n, I_n, etiquette, lettres }) -> { i, eclat } ; Labo.del(c, { id, x, y }) -> { i, u, allumee } ;
+          Labo.interrupteur(c, { id, x, y, lettres }) -> { ferme } ; bornes « 1 » et « 2 » (DEL : « + » et « − »).
 Utilisé par : les postes des simulations d'électricité.
 */
 (function (L) {
   const L_SUPPORT = 92, P_SUPPORT = 46, SEUIL_DEL = 1.9, R_DEL = 100, GRIS_BORNE = "#4a4f55";
 
-  function support(c, comp, x, y, etiquette, bornes = ["1", "2"], couleurs = [GRIS_BORNE, GRIS_BORNE]) {
-    // Support en plastique gris, son étiquette sur la face avant, deux bornes.
+  function support(c, comp, x, y, etiquette, bornes = ["1", "2"], couleurs = [GRIS_BORNE, GRIS_BORNE], lettres = null) {
+    // Support en plastique gris, son étiquette sur la face avant, deux bornes (avec leur lettre, si elle est donnée).
     L.boitier(comp.g, x, y, L_SUPPORT, P_SUPPORT, 12, { dessus: "#e3e1da", face: "#a8a59b" });
     L.texte(comp.g, x + L_SUPPORT / 2, y + P_SUPPORT + 4, etiquette, { "font-size": 8, "font-weight": 700, fill: "#2a2a28" });
     c.borne(comp, bornes[0], x + 14, y + 33, couleurs[0]);
     c.borne(comp, bornes[1], x + L_SUPPORT - 14, y + 33, couleurs[1]);
+    if (lettres) [5, L_SUPPORT - 5].forEach((dx, k) => L.texte(comp.g, x + dx, y + 14, lettres[k], { "font-size": 11, "font-weight": 700, fill: "#1a3d7c" }));
   }
 
   function symbole_del(g, cx, cy) {
@@ -29,10 +30,10 @@ Utilisé par : les postes des simulations d'électricité.
     }
   }
 
-  L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1, etiquette = "" }) {
+  L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1, etiquette = "", lettres = null }) {
     // Lampe sur douille : verre, filament, halo dont l'éclat suit la puissance reçue (P / P nominale).
     const comp = { id, i: 0, eclat: 0, g: L.svg("g", { class: `lampe lampe-${id}` }, c.calque_composants) };
-    support(c, comp, x, y, `${etiquette ? etiquette + " : " : ""}${String(U_n).replace(".", ",")} V – ${String(I_n).replace(".", ",")} A`);
+    support(c, comp, x, y, `${etiquette ? etiquette + " : " : ""}${String(U_n).replace(".", ",")} V – ${String(I_n).replace(".", ",")} A`, ["1", "2"], [GRIS_BORNE, GRIS_BORNE], lettres);
     const cx = x + L_SUPPORT / 2, R = U_n / I_n;
     L.svg("ellipse", { cx, cy: y + 18, rx: 14, ry: 6, fill: "url(#metal-h)", stroke: "#555" }, comp.g);
     const halo = L.svg("circle", { cx, cy: y - 2, r: 46, fill: "url(#halo)", opacity: 0 }, comp.g);
@@ -80,10 +81,10 @@ Utilisé par : les postes des simulations d'électricité.
     return c.ajouter(comp);
   };
 
-  L.interrupteur = function (c, { id = "interrupteur", x, y }) {
+  L.interrupteur = function (c, { id = "interrupteur", x, y, lettres = null }) {
     // Interrupteur à couteau : lame métallique et poignée rouge ; un toucher l'ouvre ou le ferme.
     const comp = { id, ferme: false, g: L.svg("g", { class: `interrupteur interrupteur-${id}`, role: "button", "aria-label": "Interrupteur" }, c.calque_composants) };
-    support(c, comp, x, y, "K");
+    support(c, comp, x, y, "K", ["1", "2"], [GRIS_BORNE, GRIS_BORNE], lettres);
     const lame = L.svg("g", {}, comp.g), pivot = { x: x + 24, y: y + 18 }, pince = { x: x + 70, y: y + 18 };
     for (const p of [pivot, pince]) L.svg("rect", { x: p.x - 4, y: p.y - 6, width: 8, height: 10, fill: "url(#laiton)" }, comp.g);
     const dessiner = () => {

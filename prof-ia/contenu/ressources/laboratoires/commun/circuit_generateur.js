@@ -2,7 +2,7 @@
 Rôle : générateur de tension continue (alimentation de laboratoire) : tension E fixe, petite résistance interne ;
        il limite son courant (voyant « LIMIT ») en cas de court-circuit. Son afficheur montre la tension à ses bornes.
        Un bouton Marche/Arrêt (en marche au départ) ; son cordon secteur est branché dans la prise du mur par une fiche.
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), I_max (A) }.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), I_max (A), lettres (noms des bornes − et +, ex. ["N", "P"]) }.
 Produit : Labo.generateur(circuit, reglage) -> composant { id, E, i (courant débité, A) } ; bornes « + » (rouge) et « − » (noire) ;
           fait noté « court_circuit » quand le courant est limité.
 Utilisé par : les postes des simulations d'électricité.
@@ -50,7 +50,7 @@ Utilisé par : les postes des simulations d'électricité.
     return { afficheur, voyant };
   }
 
-  L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1 }) {
+  L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null }) {
     // Construit le générateur, ses deux bornes et son modèle électrique (E, r, limitation de courant).
     const comp = { id, E, i: 0, limite: false, marche: true, g: L.svg("g", { class: "generateur" }, c.calque_composants) };
     cordon(comp.g, x, y);
@@ -58,6 +58,7 @@ Utilisé par : les postes des simulations d'électricité.
     interrupteur_secteur(comp.g, x, y, comp, () => { comp.marche = !comp.marche; c.calculer(); });
     c.borne(comp, "−", x + 40, y + 58, L.NOIR_BORNE);
     c.borne(comp, "+", x + 150, y + 58, L.ROUGE_BORNE);
+    if (lettres) [[18, lettres[0]], [172, lettres[1]]].forEach(([dx, t]) => L.texte(comp.g, x + dx, y + 58, t, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" }));
     const dipole = { a: "−", b: "+", g: 1 / r, j: E / r };
     dipole.ajuster = (u, i) => {
       // Courant trop fort : le générateur passe en limitation ; tension revenue sous E : il repasse en tension.
