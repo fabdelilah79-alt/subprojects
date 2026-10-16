@@ -133,6 +133,17 @@ Nouveau matériel commun : `circuit_semiconducteurs.js`, `thermistance.js`, `pho
 `electrolyseur.js`, `caracteristique.js` (relevé des points I, U) ; ohmmètre dans le multimètre ; alimentation réglable ;
 deuxième courbe facultative sur le graphique de la tablette.
 
+## Chapitre tronc commun « Montages électroniques » (fiche tronc_commun/elec4_montages_electroniques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec4_a1_transistor.html | A1 : comportement d'un transistor NPN ; montages à transistor | O1, O2, O3, O6 | Effet transistor : un faible courant de base commande la lampe du collecteur ; régimes bloqué, linéaire, saturé ; trois ampèremètres : I_C = β·I_B (β ≈ 150) et I_E = I_B + I_C au tableur ; détecteur d'obscurité câblé (photorésistance, transistor, DEL) : capteur, traitement, sortie. |
+| tc_elec4_a2_ao.html | A2 : AO, suiveur, inverseur, non-inverseur (oscilloscope bicourbe) | O4, O5, O6 | AO 741 alimenté en ±15 V ; caractéristique de transfert Us = f(ε) au voltmètre (±13,5 V, ε = 0 en régime linéaire) ; suiveur (Us = Ue) ; inverseur R1 = 10 kΩ, R2 = 22 kΩ (Us = −2,2·Ue, opposition de phase, écrêtage) ; non-inverseur (Us = 3,2·Ue) ; l'AO dans une chaîne électronique. |
+
+Nouveau matériel commun : `transistor.js` (BC547, brochage C-B-E du boîtier TO-92), `amplificateur_operationnel.js`
+(alimentation symétrique et AO avec une tension de décalage de 1 mV, comme un vrai 741) ; sources commandées dans le
+calcul des circuits ; oscilloscope à deux voies (Y1, Y2, masse commune) ; calibre 2 mA du multimètre (13 positions).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

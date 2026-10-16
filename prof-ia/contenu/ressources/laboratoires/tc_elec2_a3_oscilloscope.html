@@ -2588,7 +2588,9 @@ Utilisé par : les postes des simulations de tensions variables.
     const prises = voies === 1 ? [["CH1", 289]] : [["CH1", 266], ["CH2", 312]];
     for (const [t, dx] of prises) {
       L.svg("circle", { cx: x + dx, cy: y + 168, r: 8, fill: "url(#metal)", stroke: "#444" }, comp.g);
-      L.texte(comp.g, x + dx, y + 156, t, { "font-size": 7, "font-weight": 700, fill: "#37474f" });
+      // Une voie : nom au-dessus de la prise ; deux voies : à sa gauche (les trois cadres de réglage occupent le dessus).
+      if (voies === 1) L.texte(comp.g, x + dx, y + 156, t, { "font-size": 7, "font-weight": 700, fill: "#37474f" });
+      else L.texte(comp.g, x + dx - 17, y + 169, t, { "font-size": 6.5, "font-weight": 700, fill: "#37474f" });
     }
     const bornes = voies === 1 ? [["Y1", 270, L.ROUGE_BORNE], ["masse", 308, L.NOIR_BORNE]] : [["Y1", 258, L.ROUGE_BORNE], ["Y2", 290, "#e0a800"], ["masse", 322, L.NOIR_BORNE]];
     L.svg("rect", { x: x + 244, y: y + 180, width: 96, height: 42, rx: 4, fill: "#2b2f33" }, comp.g);
@@ -2614,8 +2616,8 @@ Utilisé par : les postes des simulations de tensions variables.
     // Construit l'oscilloscope ; à chaque calcul du circuit, il retrace les tensions entre Y1 (et Y2) et la masse.
     const comp = { id, Sv, Sv2, b, voies, v1: { onde: null, u_dc: 0 }, v2: { onde: null, u_dc: 0 }, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 330, y: y + 24 }, c.prise());
-    const deux = voies === 2, rangs = deux ? [20, 70, 120] : [24, 86];
-    corps(comp.g, x, y, deux ? [[20, "VOLTS/DIV  CH1"], [70, "VOLTS/DIV  CH2"], [120, "TIME/DIV"]] : [[24, "VOLTS/DIV  CH1"], [86, "TIME/DIV"]]);
+    const deux = voies === 2, rangs = deux ? [12, 58, 104] : [24, 86];
+    corps(comp.g, x, y, deux ? [[12, "VOLTS/DIV  CH1"], [58, "VOLTS/DIV  CH2"], [104, "TIME/DIV"]] : [[24, "VOLTS/DIV  CH1"], [86, "TIME/DIV"]]);
     const tracer = L.ecran_oscillo(comp.g, x + 18, y + 34, deux);
     const retracer = () => {
       const traces = [{ ...comp.v1, Sv: comp.Sv, couleur: "#b8ffc8" }, ...(deux ? [{ ...comp.v2, Sv: comp.Sv2, couleur: "#ffe27a" }] : [])];

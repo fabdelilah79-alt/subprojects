@@ -280,26 +280,28 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/masses.js | Masses marquées et caillou, dessinés debout ou suspendus. |
 | contenu/ressources/laboratoires/commun/accrochage.js | Accrocher des masses en chaîne sous un dynamomètre ou un ressort ; mesures notées. |
 | contenu/ressources/laboratoires/commun/potence.js | Potence de laboratoire et coffret de masses marquées. |
-| contenu/ressources/laboratoires/commun/circuit_solveur.js | Calcul des potentiels et des courants d'un circuit continu (méthode des nœuds, DEL et limitation itérées). |
+| contenu/ressources/laboratoires/commun/circuit_solveur.js | Calcul des potentiels et des courants d'un circuit continu (méthode des nœuds, DEL et limitation itérées, sources commandées par une tension pour le transistor et l'AO). |
 | contenu/ressources/laboratoires/commun/circuit.js | Circuit d'une paillasse : composants, bornes, fils ; recalcul et distribution des courants à chaque changement. |
 | contenu/ressources/laboratoires/commun/circuit_fils.js | Fils de connexion : tirer d'une borne à l'autre, débrancher, fiches banane empilées, câble souple. |
 | contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, bloc de prises, plan de travail), boîtiers, cordons secteur. |
 | contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur. |
 | contenu/ressources/laboratoires/commun/circuit_recepteurs.js | Lampe (éclat selon la puissance), DEL avec résistance de protection, interrupteur à couteau. |
-| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur (V⎓, V~, A⎓), quatre bornes, afficheur, fusible de la borne mA. |
+| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur à 13 positions (V⎓, V~, A⎓ jusqu'au calibre 2 mA, Ω), quatre bornes, afficheur, fusible de la borne mA. |
 | contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS. |
 | contenu/ressources/laboratoires/commun/mesure_tension.js | Reconnaît la tension U_XY mesurée par un voltmètre entre deux points nommés. |
 | contenu/ressources/laboratoires/commun/circuit_resistances.js | Résistances au vrai code des couleurs (support, plaquette), planche de fils résistants. |
 | contenu/ressources/laboratoires/commun/circuit_pile.js | Pile plate de 4,5 V dans un boîtier à bornes. |
 | contenu/ressources/laboratoires/commun/gbf.js | Générateur basse fréquence : formes sinus, triangle, carré ; fréquence affichée ; amplitude réglable. |
-| contenu/ressources/laboratoires/commun/oscilloscope.js | Oscilloscope à une voie : réglages Sv et b, entrée Y1 et masse, cordon secteur. |
-| contenu/ressources/laboratoires/commun/oscilloscope_ecran.js | Écran de l'oscilloscope : quadrillage 10 × 8, repère de masse, trace déclenchée sur front montant. |
+| contenu/ressources/laboratoires/commun/oscilloscope.js | Oscilloscope à une ou deux voies : réglages Sv (par voie) et b, entrées Y1, Y2 et masse commune, cordon secteur. |
+| contenu/ressources/laboratoires/commun/oscilloscope_ecran.js | Écran de l'oscilloscope : quadrillage 10 × 8, repère de masse de chaque voie, une ou deux traces déclenchées sur front montant. |
 | contenu/ressources/laboratoires/commun/circuit_semiconducteurs.js | Diode 1N4007 et diode Zener 5,1 V sur support (caractéristiques exponentielles, symbole, bague de cathode). |
 | contenu/ressources/laboratoires/commun/thermistance.js | Thermistance CTN : sonde à plonger dans des béchers, température qui évolue, R(T). |
 | contenu/ressources/laboratoires/commun/photoresistance.js | Photorésistance : éclairement par une lampe de poche déplaçable, cache noir, R(E). |
 | contenu/ressources/laboratoires/commun/rheostat.js | Rhéostat à curseur (bornes A, B, C), résistance variable. |
 | contenu/ressources/laboratoires/commun/electrolyseur.js | Électrolyseur : récepteur E', r' (coude arrondi), bulles plus abondantes à la cathode. |
 | contenu/ressources/laboratoires/commun/caracteristique.js | Relevé des points (I, U) d'un dipôle quand les appareils sont bien branchés ; vérification du tableur. |
+| contenu/ressources/laboratoires/commun/transistor.js | Transistor NPN BC547 sur support (modèle d'Ebers-Moll) : régimes bloqué, linéaire, saturé ; courants I_B, I_C, I_E. |
+| contenu/ressources/laboratoires/commun/amplificateur_operationnel.js | Alimentation symétrique ±15 V et AO 741 sur plaquette : régime linéaire ou saturé (±13,5 V), choisi de façon cohérente. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

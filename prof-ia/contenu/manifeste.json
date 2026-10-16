@@ -1098,6 +1098,51 @@
         "Plus on augmente I_B, plus I_C augmente, sans limite.",
         "Le courant qui sort par l'émetteur est égal au courant de collecteur."
       ]
+    },
+    {
+      "id": "tc_elec4_a2_ao",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec4_a2_ao.html",
+      "description": "Laboratoire virtuel de l'amplificateur opérationnel (741) alimenté en ±15 V : caractéristique de transfert Us = f(ε) relevée au voltmètre (saturation à ±13,5 V, ε = 0 en régime linéaire) ; montages suiveur, inverseur (R1 = 10 kΩ, R2 = 22 kΩ, Us = −2,2·Ue, opposition de phase, écrêtage) et non-inverseur (Us = 3,2·Ue) observés à l'oscilloscope bicourbe ; place de l'AO dans une chaîne électronique.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec4_montages_electroniques",
+      "activite": "AO : suiveur, inverseur, non-inverseur (oscilloscope bicourbe).",
+      "objectifs": [
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "La caractéristique de transfert",
+          "ce_que_fait_l_eleve": "Alimente l'AO, applique ε = V+ − V− de −4,5 V à +4,5 V, relève Us et trace la caractéristique de transfert ; lis Vsat.",
+          "conclusion": "Sans liaison entre la sortie et l'entrée e−, l'AO est saturé : Us = +Vsat si ε > 0, Us = −Vsat si ε < 0 (Vsat ≈ 13,5 V pour une alimentation ±15 V). Le régime linéaire (Us = A·ε, A ≈ 2·10⁵) n'existe que pour |ε| < 0,1 mV : pour l'AO idéal, ε = 0 en régime linéaire, et les courants d'entrée sont nuls (i+ = i− = 0)."
+        },
+        {
+          "titre": "Le montage suiveur",
+          "ce_que_fait_l_eleve": "Monte le suiveur, compare Ue et Us à l'oscilloscope bicourbe (même sensibilité).",
+          "conclusion": "Montage suiveur : la sortie est reliée à e− (contre-réaction), l'AO fonctionne en régime linéaire, ε = 0 donc Us = Ue. Comme i+ = 0, il ne prélève aucun courant au circuit d'entrée : il « recopie » une tension sans la perturber."
+        },
+        {
+          "titre": "Le montage inverseur",
+          "ce_que_fait_l_eleve": "Monte l'inverseur, constate l'opposition de phase, trace Us en fonction de Ue (coefficient −R2/R1 = −2,2), puis observe l'écrêtage en saturation.",
+          "conclusion": "Montage inverseur : e+ à la masse, R1 entre l'entrée et e−, R2 entre e− et s. En régime linéaire, ε = 0 et i− = 0 : Us = −(R2/R1)·Ue (ici −2,2). Us est en opposition de phase avec Ue. Si (R2/R1)·Ue max dépasse Vsat, la sortie est écrêtée à ±13,5 V : l'AO est saturé."
+        },
+        {
+          "titre": "Le montage non-inverseur",
+          "ce_que_fait_l_eleve": "Monte le non-inverseur, mesure Ue max et Us max, retrouve (R1 + R2)/R1 = 3,2 ; place de l'AO dans une chaîne électronique.",
+          "conclusion": "Montage non-inverseur : Us = ((R1 + R2)/R1)·Ue = (1 + R2/R1)·Ue (ici 3,2), en phase avec Ue. Dans une chaîne électronique (capteur → traitement → sortie), un montage à AO est un circuit de traitement : il amplifie le signal du capteur."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Un AO amplifie toujours, quel que soit le montage.",
+        "Un AO fonctionne sans alimentation.",
+        "La tension de sortie peut dépasser la tension d'alimentation.",
+        "L'écrêtage vient d'un mauvais réglage de l'oscilloscope.",
+        "L'AO fournit de l'énergie sans en recevoir."
+      ]
     }
   ]
 }

@@ -380,3 +380,24 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : durée de stabilisation de la CTN (constante de temps 4 s), précision demandée pour r et r'
   (12 et 15 %), lecture de l'intersection (tolérance 7 mA).
+
+## 2026-10-16 — Laboratoires virtuels : chapitre tronc commun « Montages électroniques »
+
+Fait :
+- Deux simulations : A1 transistor NPN — effet transistor, régimes, I_C = β·I_B, I_E = I_B + I_C, détecteur
+  d'obscurité (O1, O2, O3, O6) ; A2 amplificateur opérationnel — caractéristique de transfert, suiveur, inverseur,
+  non-inverseur à l'oscilloscope bicourbe, chaîne électronique (O4, O5, O6). Inscrites au manifeste (42 ressources).
+- Calcul des circuits : sources commandées par une tension (transfert du transistor, sortie de l'AO). Transistor
+  d'Ebers-Moll (β ≈ 150). AO : l'état linéaire, saturé + ou saturé − est choisi pour être cohérent avec ε (la méthode
+  de Newton sur une courbe en tanh restait bloquée en saturation dans le suiveur).
+- Matériel commun modifié (signalé) : multimètre à 13 positions (calibre 2 mA ajouté) ; oscilloscope réécrit pour une
+  ou deux voies ; option « nom » du générateur (G1, G2).
+- Détails corrigés après captures : brochage du BC547 (C, B, E de gauche à droite, côté plat devant) ; prises BNC de
+  l'oscilloscope bicourbe cachées sous les touches TIME/DIV ; noms des bornes de l'AO cachés par les fiches ; pile
+  déplacée (ses fils couvraient les touches du générateur) ; à l'étape de l'écrêtage, les deux courbes doivent tenir
+  dans l'écran, pour ne pas confondre la saturation de l'AO avec une courbe coupée par le bord de l'écran.
+- Vérifié : parcours complets des 12 simulations d'électricité ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : tolérance des lectures à l'oscilloscope (0,15 V + 3 %), nombre de couples (ε, Us) demandés
+  (8), place de la pile qui fixe V− à 4,5 V (à expliquer avant la manipulation).
