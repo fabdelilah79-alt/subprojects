@@ -3,7 +3,7 @@ Rôle : baguettes (PVC, verre) et chiffons (laine, soie) : l'élève fait glisse
        le frottement fait passer des électrons, et la baguette se charge (PVC frotté avec la laine : négatif ; verre frotté
        avec la soie : positif). La charge augmente avec le frottement, jusqu'à une limite.
 Reçoit : le groupe SVG ; la liste des baguettes et des chiffons (positions de repos) ; les gestes de l'élève.
-Produit : Labo.frottement(groupe, { baguettes, chiffons, sur_deplacement }) -> { baguettes (état : q en nC, pos, matiere) } ;
+Produit : Labo.frottement(groupe, { baguettes, chiffons, sur_deplacement }) -> { baguettes (état : q en nC, pos, matiere, tenue) } ;
           chaque chiffon reçoit la charge opposée (c.q) ;
           fait noté « charges » = { <id de la baguette> : q (nC) } à chaque lâcher.
 Utilisé par : poste_papier.js, poste_etrier.js.
@@ -41,10 +41,14 @@ Utilisé par : poste_papier.js, poste_etrier.js.
   }
 
   function reposer(b) {
-    // Lâchée (sauf sur l'étrier), la baguette est reposée à sa place sur la paillasse ; elle garde sa charge.
+    // Lâchée (sauf sur l'étrier), la baguette glisse jusqu'à sa place sur la paillasse ; elle garde sa charge.
     if (b.pose_sur_etrier) return;
-    b.pos = { ...b.repos };
-    dessiner_baguette(b.g, b);
+    const de = { ...b.pos };
+    b.arret = L.animer(0.35, (t) => {
+      const k = L.adoucir(t);
+      b.pos = { x: de.x + (b.repos.x - de.x) * k, y: de.y + (b.repos.y - de.y) * k };
+      dessiner_baguette(b.g, b);
+    });
   }
 
   L.frottement = function (g, { baguettes, chiffons, sur_deplacement = () => {} }) {
@@ -58,9 +62,9 @@ Utilisé par : poste_papier.js, poste_etrier.js.
     for (const b of etat) {
       dessiner_baguette(b.g, b);
       L.glissable(b.g, {
-        debut: () => (b.pose_sur_etrier ? null : { ...b.pos }),
+        debut: () => { if (b.pose_sur_etrier) return null; b.arret?.(); b.tenue = true; return { ...b.pos }; },
         deplacer: (p) => { frotter(b, chiffons, p.x - b.pos.x); b.pos = p; dessiner_baguette(b.g, b); sur_deplacement(b); },
-        lacher: () => { L.missions.noter("charges", Object.fromEntries(etat.map((x) => [x.id, Math.round(x.q * 100) / 100]))); sur_deplacement(b, true); reposer(b); },
+        lacher: () => { b.tenue = false; L.missions.noter("charges", Object.fromEntries(etat.map((x) => [x.id, Math.round(x.q * 100) / 100]))); sur_deplacement(b, true); reposer(b); },
       });
     }
     return { baguettes: etat, redessiner: (b) => dessiner_baguette(b.g, b), LONGUEUR };

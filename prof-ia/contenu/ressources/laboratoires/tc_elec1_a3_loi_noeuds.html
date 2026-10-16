@@ -2372,6 +2372,17 @@ Utilisé par : les postes des simulations d'électricité.
     c.borne(comp, bornes[1], x + L_SUPPORT - 14, y + 33, couleurs[1]);
   }
 
+  function symbole_del(g, cx, cy) {
+    // Symbole normalisé de la DEL : triangle (sens passant de + vers −), barre, deux flèches de lumière qui sortent.
+    const trait = { stroke: "#222", "stroke-width": 1.3, fill: "none" };
+    L.svg("path", { d: `M${cx - 21} ${cy} H${cx - 6} M${cx + 6} ${cy} H${cx + 21} M${cx + 6} ${cy - 7} V${cy + 7}`, ...trait }, g);
+    L.svg("path", { d: `M${cx - 6} ${cy - 7} V${cy + 7} L${cx + 6} ${cy} Z`, fill: "#222" }, g);
+    for (const dx of [-2, 4]) {
+      L.svg("path", { d: `M${cx + dx} ${cy - 9} l6 -7`, ...trait, "stroke-width": 1 }, g);
+      L.svg("path", { d: `M${cx + dx + 6} ${cy - 16} l-4.2 1.2 l2.6 2.2 Z`, fill: "#222" }, g);
+    }
+  }
+
   L.lampe = function (c, { id = "lampe", x, y, U_n = 6, I_n = 0.1, etiquette = "" }) {
     // Lampe sur douille : verre, filament, halo dont l'éclat suit la puissance reçue (P / P nominale).
     const comp = { id, i: 0, eclat: 0, g: L.svg("g", { class: `lampe lampe-${id}` }, c.calque_composants) };
@@ -2400,10 +2411,10 @@ Utilisé par : les postes des simulations d'électricité.
     support(c, comp, x, y, "DEL + 100 Ω", ["+", "−"], [L.ROUGE_BORNE, L.NOIR_BORNE]);
     const cx = x + L_SUPPORT / 2;
     L.texte(comp.g, x + 14, y + 13, "+", { "font-size": 12, "font-weight": 700, fill: L.ROUGE_BORNE });
-    L.svg("path", { d: `M${cx - 22} ${y + 33} h12 m0 -6 v12 l10 -6 Z m10 -6 v12 m0 -6 h12`, fill: "#333", stroke: "#333", "stroke-width": 1.2 }, comp.g);
-    const halo = L.svg("circle", { cx, cy: y + 12, r: 26, fill: "#ff3b30", opacity: 0, filter: "url(#flou)" }, comp.g);
-    const dome = L.svg("circle", { cx, cy: y + 12, r: 7, fill: "#8e1b14", stroke: "#5a0f0a" }, comp.g);
-    L.svg("circle", { cx: cx - 2, cy: y + 10, r: 2, fill: "#fff", opacity: 0.6 }, comp.g);
+    symbole_del(comp.g, cx, y + 33);
+    const halo = L.svg("circle", { cx, cy: y + 9, r: 24, fill: "#ff3b30", opacity: 0, filter: "url(#flou)" }, comp.g);
+    const dome = L.svg("circle", { cx, cy: y + 9, r: 6, fill: "#8e1b14", stroke: "#5a0f0a" }, comp.g);
+    L.svg("circle", { cx: cx - 2, cy: y + 7, r: 1.8, fill: "#fff", opacity: 0.6 }, comp.g);
     const dipole = { a: "+", b: "−", g: 1e-9, j: 0, passante: false };
     dipole.ajuster = (u, i) => {
       // Passante au-delà du seuil ; bloquée si le courant voudrait la traverser à l'envers.

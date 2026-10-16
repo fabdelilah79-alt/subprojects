@@ -325,3 +325,13 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : facilité à tirer les fils sur tablette (zone de prise des bornes : 13 px),
   vitesse de migration des ions (temps accéléré × 60), seuil d'attraction des petits papiers.
+
+## 2026-10-16 — Corrections signalées par l'enseignant (électricité)
+
+- Symbole de la DEL : triangle, barre et deux flèches de lumière qui sortent (symbole normalisé).
+- Électrisation : les petits papiers faisaient des allers-retours sans fin. Cause : la baguette frottée les attirait
+  de trop loin (137 px), même posée à sa place. Corrections : attraction à courte distance (5 cm au plus), seule une
+  baguette tenue attire ; au contact, un papier prend la charge de la baguette, il est repoussé et n'est plus attiré
+  pendant 20 s (ou jusqu'à un nouveau frottement) ; en lâchant la baguette, les papiers collés retombent dans la
+  coupelle ; la baguette glisse jusqu'à sa place au lieu de sauter.
+- Vérifié : parcours complets des 3 simulations du chapitre ; papiers immobiles une fois retombés.

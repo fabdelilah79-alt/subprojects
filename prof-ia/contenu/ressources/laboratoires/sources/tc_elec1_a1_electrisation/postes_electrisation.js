@@ -11,8 +11,13 @@ Utilisé par : simulation.js.
   L.poste_papier = function (g) {
     // Une baguette de PVC, une de verre, les chiffons, la coupelle de papiers.
     const baguettes = L.svg("g", {}, g);
-    const f = L.frottement(baguettes, { chiffons: CHIFFONS(), baguettes: [{ id: "pvc", matiere: "pvc", repos: { x: 330, y: 448 } }, { id: "verre", matiere: "verre", repos: { x: 330, y: 500 } }] });
-    L.papiers(g, { x: 520, y: 548 }, f.baguettes);
+    let papiers = null;
+    const f = L.frottement(baguettes, {
+      chiffons: CHIFFONS(),
+      baguettes: [{ id: "pvc", matiere: "pvc", repos: { x: 330, y: 448 } }, { id: "verre", matiere: "verre", repos: { x: 330, y: 500 } }],
+      sur_deplacement: (b, lache) => { if (lache) papiers.lacher(b); },
+    });
+    papiers = L.papiers(g, { x: 520, y: 548 }, f.baguettes);
     return { pense_bete: L.decor.pense_bete(g, 24, 52, 230) };
   };
 

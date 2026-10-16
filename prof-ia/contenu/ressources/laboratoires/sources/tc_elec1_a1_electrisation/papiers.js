@@ -1,13 +1,14 @@
 /*
-Rôle : petits morceaux de papier dans une coupelle : une baguette électrisée approchée les attire (ils sautent et se collent à
-       elle), puis certains retombent ; une baguette neutre ne fait rien.
+Rôle : petits morceaux de papier dans une coupelle : une baguette électrisée approchée à quelques centimètres les attire
+       (ils sautent et se collent à elle) ; au contact, ils se chargent comme elle, sont repoussés et retombent ; chargés,
+       ils ne sont plus attirés pendant 20 s (ou jusqu'à un nouveau frottement). Une baguette neutre ne fait rien.
 Reçoit : le groupe SVG ; la position de la coupelle ; la liste des baguettes (état de frottement.js).
-Produit : Labo.papiers(groupe, coupelle, baguettes) -> { verifier() (à appeler quand une baguette bouge) } ; faits notés :
+Produit : Labo.papiers(groupe, coupelle, baguettes) -> { lacher(baguette) } (seule une baguette tenue attire) ; faits notés :
           « papiers_attires » = { <id de baguette> : oui }, « papiers_neutre » = id d'une baguette neutre approchée.
 Utilisé par : poste_papier.js.
 */
 (function (L) {
-  const N = 14, DEMI = 100;
+  const N = 14, DEMI = 100, DECHARGE_S = 20;
 
   function distance_baguette(b, p) {
     // Distance d'un point au segment de la baguette (tenue horizontalement).
@@ -23,7 +24,8 @@ Utilisé par : poste_papier.js.
   }
 
   function avancer(b, dt, chercher, attires) {
-    // Au repos → attiré (vol) → collé à la baguette un moment → retombe dans la coupelle.
+    // Au repos → attiré (vol) → collé un moment → repoussé, il retombe chargé (il ne revient pas tant qu'il est chargé).
+    b.decharge = Math.max(0, (b.decharge || 0) - dt);
     if (b.etat === "repos") { const bg = chercher(b); if (bg) Object.assign(b, { etat: "vole", bg, duree: 1.5 + ((b.a % 7) / 7) * 2 }); }
     else if (b.etat === "vole") {
       if (vers(b, distance_baguette(b.bg, b.p).point, 500, dt) < 4) {
@@ -34,7 +36,7 @@ Utilisé par : poste_papier.js.
     } else if (b.etat === "colle") {
       b.p = { x: b.bg.pos.x + b.decalage.x, y: b.bg.pos.y + b.decalage.y };
       b.duree -= dt;
-      if (b.duree < 0) b.etat = "tombe";
+      if (b.duree < 0) Object.assign(b, { etat: "tombe", charge_par: b.bg.id, q_contact: Math.abs(b.bg.q), decharge: DECHARGE_S });
     } else if (vers(b, b.repos, 300, dt) < 1) b.etat = "repos";
   }
 
@@ -52,7 +54,9 @@ Utilisé par : poste_papier.js.
       // Une baguette chargée assez proche attire le morceau ; une baguette neutre est notée sans effet.
       for (const bg of baguettes) {
         const { d } = distance_baguette(bg, b.p), q = Math.abs(bg.q);
-        if (q > 0.3 && d < 30 + 22 * q) return bg;
+        const charge = b.decharge > 0 && b.charge_par === bg.id && q < b.q_contact + 0.5;
+        if (!bg.tenue) continue;
+        if (q > 0.3 && !charge && d < 12 + 9 * q) return bg;
         if (q <= 0.3 && d < 40) L.missions.noter("papiers_neutre", bg.id);
       }
       return null;
@@ -69,5 +73,11 @@ Utilisé par : poste_papier.js.
       requestAnimationFrame(image);
     };
     requestAnimationFrame(image);
+    return {
+      lacher(bg) {
+        // La baguette est reposée : les papiers encore collés s'en détachent et retombent dans la coupelle.
+        for (const b of bouts) if ((b.etat === "colle" || b.etat === "vole") && b.bg === bg) Object.assign(b, { etat: "tombe", charge_par: bg.id, q_contact: Math.abs(bg.q), decharge: DECHARGE_S });
+      },
+    };
   };
 })(window.Labo);
