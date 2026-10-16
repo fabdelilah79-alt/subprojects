@@ -984,6 +984,38 @@
         "Une Zener ne conduit jamais en sens inverse.",
         "La résistance d'une CTN augmente avec la température."
       ]
+    },
+    {
+      "id": "tc_elec3_a2_dipoles_actifs",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec3_a2_dipoles_actifs.html",
+      "description": "Laboratoire virtuel : pile plate 4,5 V (r = 2 Ω) débitant dans un rhéostat 100 Ω à curseur et une résistance de protection ; électrolyseur à solution de soude (E' = 1,7 V, r' = 8 Ω, bulles de gaz deux fois plus abondantes à la cathode) alimenté par une alimentation réglable ; ampèremètre et voltmètre ; tableur et courbes sur la tablette.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec3_montages_electriques",
+      "activite": "Caractéristiques : lampe, diode, Zener, thermistance, photorésistance, DEL ; pile ; électrolyseur.",
+      "objectifs": [
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Caractéristique d'une pile",
+          "ce_que_fait_l_eleve": "Fait varier le courant débité par la pile avec le rhéostat, relève U et I (dont I = 0), trace U = f(I) : droite décroissante U = E − r·I, E = 4,5 V, r = 2 Ω, Icc = E/r.",
+          "conclusion": "La caractéristique d'une pile est une droite décroissante : U = E − r·I (loi d'Ohm pour un générateur). E est sa force électromotrice (tension à vide), r sa résistance interne. Le courant de court-circuit vaut Icc = E/r : il ne faut jamais court-circuiter une pile."
+        },
+        {
+          "titre": "Caractéristique d'un électrolyseur",
+          "ce_que_fait_l_eleve": "Fait varier la tension appliquée à l'électrolyseur, relève U et I : pas de courant ni de bulles sous E' ; au-delà U = E' + r'·I (E' ≈ 1,7 V, r' ≈ 8 Ω).",
+          "conclusion": "Un électrolyseur est un récepteur : aucun courant ne passe tant que U < E' ; au-delà, U = E' + r'·I (loi d'Ohm pour un récepteur). E' est sa force contre-électromotrice, r' sa résistance interne."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Une pile délivre toujours la même tension, quel que soit le courant.",
+        "La tension d'une pile est la même que le courant soit débité ou non.",
+        "Un électrolyseur conduit dès qu'on lui applique une tension.",
+        "Un court-circuit est sans danger pour une pile."
+      ]
     }
   ]
 }
