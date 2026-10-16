@@ -4,21 +4,10 @@ Rôle : bain-marie déjà chaud : plaque chauffante allumée (voyant rouge), bé
 Reçoit : la paillasse de chimie (avec ses places de tubes) et { x, bas, T }.
 Produit : Labo.bain_marie(ctx, reglage) -> { T, places } ; les contenus des tubes sont chauffés toutes les 0,2 s
           (melange.chauffer) et la paillasse est prévenue quand un précipité progresse.
-Utilisé par : les simulations de chimie (test de la liqueur de Fehling).
+Utilisé par : les simulations de chimie (test de la liqueur de Fehling) ; dessin de la plaque : chimie_plaque.js.
 */
 (function (L) {
   const DT = 0.2;
-
-  function plaque(g, x, bas) {
-    // Plaque chauffante : boîtier blanc, plateau en fonte, bouton de réglage, voyant allumé.
-    L.svg("ellipse", { cx: x + 4, cy: bas + 2, rx: 70, ry: 6, fill: "#000", opacity: 0.3 }, g);
-    L.svg("rect", { x: x - 66, y: bas - 30, width: 132, height: 30, rx: 4, fill: "#e8eaea", stroke: "#a7adb0" }, g);
-    L.svg("rect", { x: x - 60, y: bas - 36, width: 120, height: 8, rx: 2, fill: "#3b3f43" }, g);
-    L.svg("circle", { cx: x + 44, cy: bas - 15, r: 7, fill: "#30353a" }, g);
-    L.svg("line", { x1: x + 44, y1: bas - 15, x2: x + 48, y2: bas - 20, stroke: "#fff", "stroke-width": 1.4 }, g);
-    L.svg("circle", { cx: x + 26, cy: bas - 15, r: 2.6, fill: "#ff3b2f" }, g);
-    L.texte(g, x - 30, bas - 14, "PLAQUE CHAUFFANTE", { "font-size": 5.5, "font-weight": 700, fill: "#566066" });
-  }
 
   function becher(fond, devant, x, bas) {
     // Bécher de 250 mL : arrière et eau dans le fond ; devant, une fine couche d'eau et la paroi avant (les tubes sont dedans).
@@ -46,7 +35,7 @@ Utilisé par : les simulations de chimie (test de la liqueur de Fehling).
 
   L.bain_marie = function (ctx, { x, bas, T = 80 }) {
     // Construit le bain-marie, ses trois places de tubes et le chauffage des tubes.
-    plaque(L.svg("g", { class: "plaque-chauffante" }, ctx.fond), x, bas);
+    L.dessin_plaque(L.svg("g", { class: "plaque-chauffante" }, ctx.fond), x, bas, true);
     const fond_eau = bas - 36;
     const g_thermo = L.svg("g", { class: "thermometre" }, ctx.devant);
     becher(L.svg("g", {}, ctx.fond), L.svg("g", {}, ctx.devant), x, fond_eau);

@@ -1254,6 +1254,85 @@
         "La vanilline de synthèse est une autre espèce que la vanilline naturelle.",
         "Les engrais se trouvent tels quels dans la nature."
       ]
+    },
+    {
+      "id": "tc_chim2_a1_traditionnelles",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim2_a1_traditionnelles.html",
+      "description": "Laboratoire virtuel : documents historiques (enfleurage, macération, infusion et décoction, distillation chez les savants arabes, eau de rose de Kelâa M'Gouna) ; macération, infusion et décoction de feuilles de thé comparées par l'observation (chronomètre à temps accéléré) ; classement de préparations.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim2_extraction",
+      "activite": "Documents historiques : enfleurage, macération, décoction.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Des techniques très anciennes",
+          "ce_que_fait_l_eleve": "Lis les quatre documents historiques.",
+          "conclusion": "Enfleurage : une graisse froide se charge du parfum des fleurs. Macération : la plante trempe longtemps dans un liquide froid. Infusion : on verse de l'eau bouillante sur la plante. Décoction : on fait bouillir la plante dans l'eau. Les savants arabes ont perfectionné la distillation (alambic, de l'arabe al-inbiq)."
+        },
+        {
+          "titre": "Macération, infusion, décoction",
+          "ce_que_fait_l_eleve": "Compare macération, infusion et décoction pendant 10 minutes.",
+          "conclusion": "Après 10 minutes, la décoction (C) est la plus colorée, puis l'infusion (B) ; la macération à froid (A) est à peine colorée. L'eau a extrait des espèces chimiques des feuilles, d'autant plus vite qu'elle est chaude. La macération demande des heures."
+        },
+        {
+          "titre": "Quelle technique choisir ?",
+          "ce_que_fait_l_eleve": "Associe chaque préparation à sa technique.",
+          "conclusion": "Les fleurs fragiles (jasmin) : enfleurage. Le henné : macération dans l'eau. Les feuilles (thé, verveine) : infusion. Les parties dures (cannelle, racines de gingembre) : décoction."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "L'infusion et la décoction sont la même chose.",
+        "La température ne change rien à l'extraction.",
+        "Les techniques d'extraction sont toutes récentes."
+      ]
+    },
+    {
+      "id": "tc_chim2_a2_extraction",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim2_a2_extraction.html",
+      "description": "Laboratoire virtuel : hydrodistillation de la lavande (pierre ponce, eau du réfrigérant entrant par le bas, huile essentielle au-dessus du distillat) ; extraction du diiode par le cyclohexane choisi grâce à un tableau de données, à l'ampoule à décanter (boucher, agiter, dégazer, décanter, recueillir la phase inférieure) ; filtration sous vide (Büchner, trompe à eau, retour d'eau) ; verrerie du chauffage à reflux.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim2_extraction",
+      "activite": "Extraction par infusion, hydrodistillation, solvant ; décantation ; filtration sous vide.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "L'hydrodistillation de la lavande",
+          "ce_que_fait_l_eleve": "Réalise l'hydrodistillation de la lavande et observe le distillat.",
+          "conclusion": "Hydrodistillation : les fleurs bouillent dans l'eau ; la vapeur entraîne l'huile essentielle, se condense dans le réfrigérant (l'eau froide y entre par le bas) et le distillat est recueilli. L'huile essentielle, moins dense que l'eau et non miscible, forme une fine couche au-dessus. La pierre ponce régularise l'ébullition."
+        },
+        {
+          "titre": "Extraire le diiode avec un solvant",
+          "ce_que_fait_l_eleve": "Choisis le solvant d'après le tableau, prévois la phase supérieure, réalise l'extraction à l'ampoule à décanter.",
+          "conclusion": "Le solvant d'extraction ne doit pas se mélanger à l'eau et doit bien dissoudre l'espèce à extraire ; on préfère le moins dangereux : le cyclohexane. Il est moins dense que l'eau (0,78) : il forme la phase supérieure, violette, qui contient le diiode. Dans l'ampoule à décanter : robinet fermé, on verse, on bouche, on agite, on dégaze, on laisse décanter, on ôte le bouchon et on recueille la phase inférieure."
+        },
+        {
+          "titre": "La filtration sous vide",
+          "ce_que_fait_l_eleve": "Filtre sous vide en respectant l'ordre d'arrêt.",
+          "conclusion": "Dans la filtration sous vide, la trompe à eau aspire l'air de la fiole : le liquide traverse le papier filtre du Büchner beaucoup plus vite. Pour arrêter, on débranche d'abord le tuyau, puis on ferme le robinet ; sinon l'eau de la trompe remonte dans la fiole."
+        },
+        {
+          "titre": "Le montage à reflux",
+          "ce_que_fait_l_eleve": "Nomme les éléments d'un montage à reflux.",
+          "conclusion": "Chauffage à reflux : chauffe-ballon, ballon, réfrigérant à boules vertical (l'eau entre en bas, sort en haut). Les vapeurs se condensent et retombent dans le ballon : on peut chauffer longtemps sans perdre de matière. En hydrodistillation, au contraire, le distillat est recueilli hors du ballon."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Le liquide le plus coloré est toujours en bas.",
+        "N'importe quel solvant convient pour une extraction.",
+        "Le sens de circulation de l'eau du réfrigérant n'a pas d'importance."
+      ]
     }
   ]
 }

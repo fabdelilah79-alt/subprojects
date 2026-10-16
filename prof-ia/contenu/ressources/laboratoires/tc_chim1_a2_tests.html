@@ -2105,7 +2105,7 @@ Utilisé par : chimie_objets.js, chimie_gouttes.js, chimie_chauffage.js.
       if (c.poudre) L.svg("path", { d: `M${x - 12} ${y + 3} Q${x} ${y - 9} ${x + 12} ${y + 3} Z`, fill: c.poudre, stroke: "#00000022" }, g);
     },
     flacon(g, x, bas, texte, { verre = "#6b3a12", liquide = null, ouvert = false, bouchon = false } = {}) {
-      // Flacon compte-gouttes en verre teinté avec son étiquette ; ouvert : sa pipette a été retirée ; bouchon : on dessine sa poire.
+      // Flacon compte-gouttes en verre teinté avec son étiquette ; ouvert : sa pipette a été retirée ; bouchon : on dessine sa poire (« capsule » : bouchon vissé d'un flacon de solvant).
       g.replaceChildren();
       L.svg("ellipse", { cx: x + 4, cy: bas + 1, rx: 17, ry: 3.5, fill: "#000", opacity: 0.28 }, g);
       L.svg("path", { d: `M${x - 15} ${bas - 2} V${bas - 36} Q${x - 15} ${bas - 44} ${x - 6} ${bas - 46} V${bas - 52} H${x + 6} V${bas - 46} Q${x + 15} ${bas - 44} ${x + 15} ${bas - 36} V${bas - 2} Q${x + 15} ${bas} ${x + 12} ${bas} H${x - 12} Q${x - 15} ${bas} ${x - 15} ${bas - 2} Z`, fill: verre, opacity: 0.88, stroke: "#2b1606" }, g);
@@ -2113,6 +2113,7 @@ Utilisé par : chimie_objets.js, chimie_gouttes.js, chimie_chauffage.js.
       L.svg("rect", { x: x - 12, y: bas - 32, width: 24, height: 18, fill: "#f7f3e6", stroke: "#bdb59c", "stroke-width": 0.5 }, g);
       String(texte).split("\n").forEach((t, i, tout) => L.texte(g, x, bas - 23 - 3 * (tout.length - 1) + i * 6, t, { "font-size": 4.6, "font-weight": 700, fill: "#222" }));
       if (ouvert) L.svg("ellipse", { cx: x, cy: bas - 52, rx: 6, ry: 1.8, fill: "#1a0d04" }, g);
+      if (bouchon === "capsule") return void L.svg("rect", { x: x - 8, y: bas - 62, width: 16, height: 11, rx: 2, fill: "#1d1d1f" }, g);
       if (bouchon) {
         L.svg("rect", { x: x - 6, y: bas - 60, width: 12, height: 8, rx: 1.5, fill: "#2a2a2c" }, g);
         L.svg("path", { d: `M${x - 5} ${bas - 60} V${bas - 72} Q${x - 5} ${bas - 83} ${x} ${bas - 83} Q${x + 5} ${bas - 83} ${x + 5} ${bas - 72} V${bas - 60} Z`, fill: "#1d1d1f" }, g);
@@ -2346,26 +2347,46 @@ Utilisé par : les simulations de chimie (test de l'eau).
 </script>
   <script>
 /*
+Rôle : plaque chauffante de chimie : boîtier blanc, plateau en fonte, bouton de réglage, voyant rouge allumé quand elle
+       chauffe ; version interactive avec une touche Marche/Arrêt.
+Reçoit : le groupe SVG, la position { x (milieu), bas } et, pour la version interactive, une fonction appelée à chaque
+         changement (allumée ou non).
+Produit : Labo.dessin_plaque(g, x, bas, allumee) ; Labo.plaque_chauffante(g, { x, bas, changer }) -> { allumee }.
+Utilisé par : chimie_chauffage.js et les simulations de chimie (décoction, hydrodistillation).
+*/
+(function (L) {
+  L.dessin_plaque = function (g, x, bas, allumee) {
+    // Plaque chauffante vue de face ; le plateau rougeoie un peu quand elle chauffe.
+    g.replaceChildren();
+    L.svg("ellipse", { cx: x + 4, cy: bas + 2, rx: 70, ry: 6, fill: "#000", opacity: 0.3 }, g);
+    L.svg("rect", { x: x - 66, y: bas - 30, width: 132, height: 30, rx: 4, fill: "#e8eaea", stroke: "#a7adb0" }, g);
+    L.svg("rect", { x: x - 60, y: bas - 36, width: 120, height: 8, rx: 2, fill: allumee ? "#5a3a30" : "#3b3f43" }, g);
+    L.svg("circle", { cx: x + 44, cy: bas - 15, r: 7, fill: "#30353a" }, g);
+    L.svg("line", { x1: x + 44, y1: bas - 15, x2: x + 48, y2: bas - 20, stroke: "#fff", "stroke-width": 1.4 }, g);
+    L.svg("circle", { cx: x + 26, cy: bas - 15, r: 2.6, fill: allumee ? "#ff3b2f" : "#5b2420" }, g);
+    L.texte(g, x - 34, bas - 14, "PLAQUE CHAUFFANTE", { "font-size": 4.8, "font-weight": 700, fill: "#566066" });
+  };
+
+  L.plaque_chauffante = function (g, { x, bas, changer = () => {} }) {
+    // Plaque avec touche Marche/Arrêt (à gauche du voyant).
+    const p = { allumee: false }, dessin = L.svg("g", {}, g);
+    L.dessin_plaque(dessin, x, bas, false);
+    L.bouton_rond(g, x + 8, bas - 15, "I/O", () => { p.allumee = !p.allumee; L.dessin_plaque(dessin, x, bas, p.allumee); changer(p.allumee); }, 7);
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : bain-marie déjà chaud : plaque chauffante allumée (voyant rouge), bécher de 250 mL d'eau à 80 °C, thermomètre.
        Trois places pour des tubes à essai ; un tube plongé prend peu à peu la température de l'eau, un tube sorti refroidit.
 Reçoit : la paillasse de chimie (avec ses places de tubes) et { x, bas, T }.
 Produit : Labo.bain_marie(ctx, reglage) -> { T, places } ; les contenus des tubes sont chauffés toutes les 0,2 s
           (melange.chauffer) et la paillasse est prévenue quand un précipité progresse.
-Utilisé par : les simulations de chimie (test de la liqueur de Fehling).
+Utilisé par : les simulations de chimie (test de la liqueur de Fehling) ; dessin de la plaque : chimie_plaque.js.
 */
 (function (L) {
   const DT = 0.2;
-
-  function plaque(g, x, bas) {
-    // Plaque chauffante : boîtier blanc, plateau en fonte, bouton de réglage, voyant allumé.
-    L.svg("ellipse", { cx: x + 4, cy: bas + 2, rx: 70, ry: 6, fill: "#000", opacity: 0.3 }, g);
-    L.svg("rect", { x: x - 66, y: bas - 30, width: 132, height: 30, rx: 4, fill: "#e8eaea", stroke: "#a7adb0" }, g);
-    L.svg("rect", { x: x - 60, y: bas - 36, width: 120, height: 8, rx: 2, fill: "#3b3f43" }, g);
-    L.svg("circle", { cx: x + 44, cy: bas - 15, r: 7, fill: "#30353a" }, g);
-    L.svg("line", { x1: x + 44, y1: bas - 15, x2: x + 48, y2: bas - 20, stroke: "#fff", "stroke-width": 1.4 }, g);
-    L.svg("circle", { cx: x + 26, cy: bas - 15, r: 2.6, fill: "#ff3b2f" }, g);
-    L.texte(g, x - 30, bas - 14, "PLAQUE CHAUFFANTE", { "font-size": 5.5, "font-weight": 700, fill: "#566066" });
-  }
 
   function becher(fond, devant, x, bas) {
     // Bécher de 250 mL : arrière et eau dans le fond ; devant, une fine couche d'eau et la paroi avant (les tubes sont dedans).
@@ -2393,7 +2414,7 @@ Utilisé par : les simulations de chimie (test de la liqueur de Fehling).
 
   L.bain_marie = function (ctx, { x, bas, T = 80 }) {
     // Construit le bain-marie, ses trois places de tubes et le chauffage des tubes.
-    plaque(L.svg("g", { class: "plaque-chauffante" }, ctx.fond), x, bas);
+    L.dessin_plaque(L.svg("g", { class: "plaque-chauffante" }, ctx.fond), x, bas, true);
     const fond_eau = bas - 36;
     const g_thermo = L.svg("g", { class: "thermometre" }, ctx.devant);
     becher(L.svg("g", {}, ctx.fond), L.svg("g", {}, ctx.devant), x, fond_eau);
