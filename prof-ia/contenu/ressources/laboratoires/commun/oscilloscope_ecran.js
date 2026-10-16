@@ -2,9 +2,9 @@
 Rôle : écran de l'oscilloscope : quadrillage de 10 divisions sur 8 (1 division = 20 px), graduations de 0,2 division
        sur les axes centraux, repère de la masse (niveau 0 V) et trace verte de la tension, déclenchée sur un front
        montant (la courbe commence par un passage à zéro en montant, elle est donc immobile).
-Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé : tension continue, onde (tensions à des instants régulièrement
-         répartis sur une période, ou null), fréquence f (Hz), sensibilité Sv (V/div) et balayage b (ms/div).
-Produit : Labo.ecran_oscillo(groupe, x, y) -> tracer({ u_dc, onde, f, Sv, b }).
+Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé, pour chaque voie : tension continue, onde (tensions à des
+         instants régulièrement répartis sur une période, ou null) et sensibilité Sv (V/div) ; fréquence f (Hz), balayage b (ms/div).
+Produit : Labo.ecran_oscillo(groupe, x, y, deux_voies) -> tracer({ traces: [{ u_dc, onde, Sv, couleur }], f, b }).
 Utilisé par : oscilloscope.js.
 */
 (function (L) {
@@ -38,23 +38,33 @@ Utilisé par : oscilloscope.js.
     return 0;
   }
 
-  L.ecran_oscillo = function (g, x, y) {
-    // Dessine l'écran ; renvoie la fonction qui trace la tension et le repère de masse.
+  L.ecran_oscillo = function (g, x, y, deux = false) {
+    // Dessine l'écran ; renvoie la fonction qui trace les tensions (déclenchement sur la voie 1) et les repères de masse.
     quadrillage(g, x, y);
     const id = `ecran-oscillo-${Math.round(x)}-${Math.round(y)}`, clip = L.svg("clipPath", { id }, g);
     L.svg("rect", { x, y, width: NX * DIV, height: NY * DIV }, clip);
     const calque = L.svg("g", { "clip-path": `url(#${id})` }, g), cy = y + (NY * DIV) / 2;
-    L.svg("path", { d: `M${x - 7} ${cy - 4} l6 4 l-6 4 Z`, fill: "#ffcc4d" }, g);
-    L.texte(g, x - 12, cy, "1", { "font-size": 7, "font-weight": 700, fill: "#ffcc4d" });
-    return ({ u_dc, onde, f, Sv, b }) => {
+    L.svg("path", { d: `M${x - 7} ${cy - 4} l6 4 l-6 4 Z`, fill: "#7cff9a" }, g);
+    L.texte(g, x - 12, cy, "1", { "font-size": 7, "font-weight": 700, fill: "#7cff9a" });
+    if (deux) {
+      L.svg("path", { d: `M${x + NX * DIV + 7} ${cy - 4} l-6 4 l6 4 Z`, fill: "#ffe27a" }, g);
+      L.texte(g, x + NX * DIV + 12, cy, "2", { "font-size": 7, "font-weight": 700, fill: "#ffe27a" });
+    }
+    return ({ traces, f, b }) => {
       calque.replaceChildren();
-      const duree = (NX * b) / 1000, depart = onde ? declenchement(onde) : 0, points = [];
-      for (let k = 0; k <= N; k++) {
-        const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
-        points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
-      }
-      L.svg("polyline", { points: points.join(" "), fill: "none", stroke: "#7cff9a", "stroke-width": 3, opacity: 0.25 }, calque);
-      L.svg("polyline", { points: points.join(" "), fill: "none", stroke: "#b8ffc8", "stroke-width": 1.3 }, calque);
+      const ref = traces.find((t) => t.onde && Math.max(...t.onde) - Math.min(...t.onde) > 1e-3), depart = ref ? declenchement(ref.onde) : 0;
+      for (const t of traces) tracer_voie(calque, x, cy, t, depart, f, (NX * b) / 1000);
     };
   };
+
+  function tracer_voie(calque, x, cy, { u_dc, onde, Sv, couleur }, depart, f, duree) {
+    // Trace une voie sur toute la largeur de l'écran.
+    const points = [];
+    for (let k = 0; k <= N; k++) {
+      const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
+      points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
+    }
+    L.svg("polyline", { points: points.join(" "), fill: "none", stroke: couleur, "stroke-width": 3, opacity: 0.25 }, calque);
+    L.svg("polyline", { points: points.join(" "), fill: "none", stroke: couleur, "stroke-width": 1.3 }, calque);
+  }
 })(window.Labo);

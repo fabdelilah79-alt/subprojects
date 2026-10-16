@@ -1989,8 +1989,9 @@ Rôle : calcule les potentiels et les courants d'un circuit en courant continu (
        vu comme une conductance g en parallèle avec une source de courant j : i(a→b) = g·(Va − Vb) + j.
        Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Un dipôle non linéaire
        (DEL, lampe, diode) est remplacé par sa tangente au point de fonctionnement : on recalcule jusqu'à stabilité.
-Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ajuster(u, i) (facultatif :
-         renvoie vrai si le dipôle change d'état et met à jour g et j) }.
+Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ctrl (facultatif : sources
+         commandées [{ c, d, g }] qui ajoutent g·(Vc − Vd) au courant de a vers b), ajuster(u, i, V) (facultatif : renvoie
+         vrai si le dipôle change d'état et met à jour g, j et ctrl) }.
 Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) } ;
           Labo.dipole_non_lineaire(a, b, courant(u), pas_max) -> dipôle à caractéristique quelconque.
 Utilisé par : circuit.js.
@@ -2030,9 +2031,11 @@ Utilisé par : circuit.js.
       A[d.a][d.a] += d.g; A[d.b][d.b] += d.g;
       A[d.a][d.b] -= d.g; A[d.b][d.a] -= d.g;
       B[d.a] -= d.j || 0; B[d.b] += d.j || 0;
+      for (const k of d.ctrl || []) { A[d.a][k.c] += k.g; A[d.a][k.d] -= k.g; A[d.b][k.c] -= k.g; A[d.b][k.d] += k.g; }
     }
     const V = eliminer(A, B);
-    return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0)) };
+    const commande = (d) => (d.ctrl || []).reduce((s, k) => s + k.g * (V[k.c] - V[k.d]), 0);
+    return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0) + commande(d)) };
   }
 
   L.dipole_non_lineaire = function (a, b, courant, pas_max) {
@@ -2058,7 +2061,7 @@ Utilisé par : circuit.js.
     let r = une_fois(n, dipoles);
     for (let t = 0; t < TOURS; t++) {
       let change = false;
-      dipoles.forEach((d, k) => { if (d.ajuster && d.ajuster(r.potentiels[d.a] - r.potentiels[d.b], r.courants[k])) change = true; });
+      dipoles.forEach((d, k) => { if (d.ajuster && d.ajuster(r.potentiels[d.a] - r.potentiels[d.b], r.courants[k], r.potentiels)) change = true; });
       if (!change) break;
       r = une_fois(n, dipoles);
     }
@@ -2070,7 +2073,7 @@ Utilisé par : circuit.js.
 /*
 Rôle : le circuit électrique d'une paillasse : il réunit les composants, leurs bornes et les fils posés par l'élève,
        calcule les courants et les tensions à chaque changement et les donne aux composants.
-Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ajuster }],
+Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ctrl, ajuster }],
          mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
          un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
          donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
@@ -2106,16 +2109,25 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
     c.fils.forEach((f) => { f.i = r.courants[k++]; });
   }
 
+  function reajuster(d, u, i, V) {
+    // Le dipôle non linéaire se réajuste (il reçoit aussi les tensions qui le commandent) ; on recopie g, j et ctrl.
+    const ch = d.source.ajuster(u, i, d.ctrl ? d.ctrl.map((k) => V[k.c] - V[k.d]) : null);
+    Object.assign(d, { g: d.source.g, j: d.source.j });
+    if (d.ctrl) d.ctrl.forEach((k, n) => { k.g = d.source.ctrl[n].g; });
+    return ch;
+  }
+
   function assembler(c, cles, mode) {
     // Dipôles des composants (mode « continu », ou « instant » : GBF à sa valeur c.instant) et des fils.
     const dipoles = [], pris = {};
     for (const comp of c.composants) {
       const liste = comp.dipoles ? comp.dipoles(mode) : [];
       pris[comp.id] = liste.length;
-      for (const d of liste) dipoles.push({ ...d, a: cles[`${comp.id}.${d.a}`], b: cles[`${comp.id}.${d.b}`], source: d, ajuster: undefined });
+      const cle = (x) => cles[`${comp.id}.${x}`];
+      for (const d of liste) dipoles.push({ ...d, a: cle(d.a), b: cle(d.b), ctrl: d.ctrl ? d.ctrl.map((k) => ({ c: cle(k.c), d: cle(k.d), g: k.g })) : null, source: d, ajuster: undefined });
     }
     for (const f of c.fils) dipoles.push({ a: cles[f.a], b: cles[f.b], g: G_FIL, j: 0 });
-    for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i) => { const ch = d.source.ajuster(u, i); Object.assign(d, { g: d.source.g, j: d.source.j }); return ch; };
+    for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i, V) => reajuster(d, u, i, V);
     return { dipoles, pris };
   }
 
@@ -2471,9 +2483,9 @@ Utilisé par : les postes des simulations de tensions variables ; circuit.js et 
 Rôle : écran de l'oscilloscope : quadrillage de 10 divisions sur 8 (1 division = 20 px), graduations de 0,2 division
        sur les axes centraux, repère de la masse (niveau 0 V) et trace verte de la tension, déclenchée sur un front
        montant (la courbe commence par un passage à zéro en montant, elle est donc immobile).
-Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé : tension continue, onde (tensions à des instants régulièrement
-         répartis sur une période, ou null), fréquence f (Hz), sensibilité Sv (V/div) et balayage b (ms/div).
-Produit : Labo.ecran_oscillo(groupe, x, y) -> tracer({ u_dc, onde, f, Sv, b }).
+Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé, pour chaque voie : tension continue, onde (tensions à des
+         instants régulièrement répartis sur une période, ou null) et sensibilité Sv (V/div) ; fréquence f (Hz), balayage b (ms/div).
+Produit : Labo.ecran_oscillo(groupe, x, y, deux_voies) -> tracer({ traces: [{ u_dc, onde, Sv, couleur }], f, b }).
 Utilisé par : oscilloscope.js.
 */
 (function (L) {
@@ -2507,90 +2519,118 @@ Utilisé par : oscilloscope.js.
     return 0;
   }
 
-  L.ecran_oscillo = function (g, x, y) {
-    // Dessine l'écran ; renvoie la fonction qui trace la tension et le repère de masse.
+  L.ecran_oscillo = function (g, x, y, deux = false) {
+    // Dessine l'écran ; renvoie la fonction qui trace les tensions (déclenchement sur la voie 1) et les repères de masse.
     quadrillage(g, x, y);
     const id = `ecran-oscillo-${Math.round(x)}-${Math.round(y)}`, clip = L.svg("clipPath", { id }, g);
     L.svg("rect", { x, y, width: NX * DIV, height: NY * DIV }, clip);
     const calque = L.svg("g", { "clip-path": `url(#${id})` }, g), cy = y + (NY * DIV) / 2;
-    L.svg("path", { d: `M${x - 7} ${cy - 4} l6 4 l-6 4 Z`, fill: "#ffcc4d" }, g);
-    L.texte(g, x - 12, cy, "1", { "font-size": 7, "font-weight": 700, fill: "#ffcc4d" });
-    return ({ u_dc, onde, f, Sv, b }) => {
+    L.svg("path", { d: `M${x - 7} ${cy - 4} l6 4 l-6 4 Z`, fill: "#7cff9a" }, g);
+    L.texte(g, x - 12, cy, "1", { "font-size": 7, "font-weight": 700, fill: "#7cff9a" });
+    if (deux) {
+      L.svg("path", { d: `M${x + NX * DIV + 7} ${cy - 4} l-6 4 l6 4 Z`, fill: "#ffe27a" }, g);
+      L.texte(g, x + NX * DIV + 12, cy, "2", { "font-size": 7, "font-weight": 700, fill: "#ffe27a" });
+    }
+    return ({ traces, f, b }) => {
       calque.replaceChildren();
-      const duree = (NX * b) / 1000, depart = onde ? declenchement(onde) : 0, points = [];
-      for (let k = 0; k <= N; k++) {
-        const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
-        points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
-      }
-      L.svg("polyline", { points: points.join(" "), fill: "none", stroke: "#7cff9a", "stroke-width": 3, opacity: 0.25 }, calque);
-      L.svg("polyline", { points: points.join(" "), fill: "none", stroke: "#b8ffc8", "stroke-width": 1.3 }, calque);
+      const ref = traces.find((t) => t.onde && Math.max(...t.onde) - Math.min(...t.onde) > 1e-3), depart = ref ? declenchement(ref.onde) : 0;
+      for (const t of traces) tracer_voie(calque, x, cy, t, depart, f, (NX * b) / 1000);
     };
   };
+
+  function tracer_voie(calque, x, cy, { u_dc, onde, Sv, couleur }, depart, f, duree) {
+    // Trace une voie sur toute la largeur de l'écran.
+    const points = [];
+    for (let k = 0; k <= N; k++) {
+      const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
+      points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
+    }
+    L.svg("polyline", { points: points.join(" "), fill: "none", stroke: couleur, "stroke-width": 3, opacity: 0.25 }, calque);
+    L.svg("polyline", { points: points.join(" "), fill: "none", stroke: couleur, "stroke-width": 1.3 }, calque);
+  }
 })(window.Labo);
 </script>
   <script>
 /*
-Rôle : oscilloscope à une voie : écran 10 × 8 divisions, sensibilité verticale Sv (V/div) et balayage b (ms/div) réglés
-       par des touches −/+, entrée CH1 par un adaptateur BNC-bananes (borne Y1 rouge, masse noire). Résistance d'entrée
-       1 MΩ. On lit U = Sv·y (y en divisions verticales) et t = b·x (x en divisions horizontales).
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, Sv, b }.
-Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, b, u_dc, onde } ;
-          fait noté « oscillo » = { Sv, b, u_dc (moyenne), u_max, u_min, gbf }.
+Rôle : oscilloscope à une ou deux voies : écran 10 × 8 divisions, sensibilités verticales Sv (V/div) et balayage b (ms/div)
+       réglés par des touches −/+, entrées par un adaptateur BNC-bananes (Y1 rouge, Y2 jaune, masse noire commune aux deux
+       voies). Résistance d'entrée 1 MΩ. On lit U = Sv·y (y en divisions verticales) et t = b·x (x en divisions horizontales).
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, Sv, Sv2, b, voies (1 ou 2) }.
+Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, Sv2, b, u_dc, onde } ; fait noté « <id> » (« oscillo » par défaut)
+          = { Sv, b, u_dc (moyenne), u_max, u_min, gbf, ch2 : { Sv, u_dc, u_max, u_min } ou null }.
 Utilisé par : les postes des simulations de tensions variables.
 */
 (function (L) {
   const SV = [0.1, 0.2, 0.5, 1, 2, 5, 10], B = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10];
   const ecrire = (v, unite) => `${String(v).replace(".", ",")} ${unite}/div`;
 
-  function corps(g, x, y) {
+  function corps(g, x, y, cadres) {
     // Boîtier gris clair, nom de l'appareil, cadres des réglages.
     L.boitier(g, x, y, 350, 236, 34, { dessus: "#dfe3e6", face: "#8d979e" });
     L.texte(g, x + 18, y + 14, "OSCILLOSCOPE", { "text-anchor": "start", "font-size": 9, "font-weight": 700, fill: "#37474f", "letter-spacing": 1.2 });
-    for (const [dy, t] of [[24, "VOLTS/DIV  CH1"], [86, "TIME/DIV"]]) {
-      L.svg("rect", { x: x + 238, y: y + dy, width: 102, height: 54, rx: 4, fill: "none", stroke: "#9aa5ad" }, g);
-      L.texte(g, x + 289, y + dy + 9, t, { "font-size": 6.5, "font-weight": 700, fill: "#37474f" });
+    for (const [dy, t] of cadres) {
+      L.svg("rect", { x: x + 238, y: y + dy, width: 102, height: 48, rx: 4, fill: "none", stroke: "#9aa5ad" }, g);
+      L.texte(g, x + 289, y + dy + 8, t, { "font-size": 6.5, "font-weight": 700, fill: "#37474f" });
     }
   }
 
   function reglage(g, x, y, liste, valeur, unite, changer) {
-    // Afficheur d'un réglage et ses deux touches ; renvoie la fonction qui met l'afficheur à jour.
-    L.svg("rect", { x: x + 246, y: y + 16, width: 86, height: 15, rx: 2, fill: "#0b1f17" }, g);
-    const t = L.texte(g, x + 289, y + 24, ecrire(valeur(), unite), { "font-size": 8.5, "font-family": "monospace", "font-weight": 700, fill: "#7cff9a" });
+    // Afficheur d'un réglage (cadre commençant en y) et ses deux touches.
+    L.svg("rect", { x: x + 246, y: y + 13, width: 86, height: 14, rx: 2, fill: "#0b1f17" }, g);
+    const t = L.texte(g, x + 289, y + 20.5, ecrire(valeur(), unite), { "font-size": 8.5, "font-family": "monospace", "font-weight": 700, fill: "#7cff9a" });
     const pas = (s) => { const v = liste[Math.max(0, Math.min(liste.length - 1, liste.indexOf(valeur()) + s))]; changer(v); t.textContent = ecrire(v, unite); };
-    L.bouton_rond(g, x + 268, y + 42, "−", () => pas(-1));
-    L.bouton_rond(g, x + 310, y + 42, "+", () => pas(1));
+    L.bouton_rond(g, x + 268, y + 37, "−", () => pas(-1));
+    L.bouton_rond(g, x + 310, y + 37, "+", () => pas(1));
   }
 
-  function entree(c, comp, x, y) {
-    // Prise BNC de la voie CH1 et adaptateur à deux bornes de 4 mm (Y1 et masse).
-    L.svg("circle", { cx: x + 289, cy: y + 166, r: 9, fill: "url(#metal)", stroke: "#444" }, comp.g);
-    L.svg("rect", { x: x + 252, y: y + 176, width: 74, height: 44, rx: 4, fill: "#2b2f33" }, comp.g);
-    L.texte(comp.g, x + 289, y + 154, "CH1", { "font-size": 7, "font-weight": 700, fill: "#37474f" });
-    L.texte(comp.g, x + 270, y + 213, "Y1", { "font-size": 7, "font-weight": 700, fill: "#e8e8e2" });
-    L.texte(comp.g, x + 308, y + 213, "⏚", { "font-size": 9, "font-weight": 700, fill: "#e8e8e2" });
-    c.borne(comp, "Y1", x + 270, y + 196, L.ROUGE_BORNE);
-    c.borne(comp, "masse", x + 308, y + 196, L.NOIR_BORNE);
+  function entree(c, comp, x, y, voies) {
+    // Prises BNC (CH1, et CH2 s'il y a deux voies) et adaptateur à bornes de 4 mm ; la masse est commune aux deux voies.
+    const prises = voies === 1 ? [["CH1", 289]] : [["CH1", 266], ["CH2", 312]];
+    for (const [t, dx] of prises) {
+      L.svg("circle", { cx: x + dx, cy: y + 168, r: 8, fill: "url(#metal)", stroke: "#444" }, comp.g);
+      L.texte(comp.g, x + dx, y + 156, t, { "font-size": 7, "font-weight": 700, fill: "#37474f" });
+    }
+    const bornes = voies === 1 ? [["Y1", 270, L.ROUGE_BORNE], ["masse", 308, L.NOIR_BORNE]] : [["Y1", 258, L.ROUGE_BORNE], ["Y2", 290, "#e0a800"], ["masse", 322, L.NOIR_BORNE]];
+    L.svg("rect", { x: x + 244, y: y + 180, width: 96, height: 42, rx: 4, fill: "#2b2f33" }, comp.g);
+    for (const [nom, dx, couleur] of bornes) {
+      L.texte(comp.g, x + dx, y + 215, nom === "masse" ? "⏚" : nom, { "font-size": nom === "masse" ? 9 : 7, "font-weight": 700, fill: "#e8e8e2" });
+      c.borne(comp, nom, x + dx, y + 198, couleur);
+    }
   }
 
-  L.oscilloscope = function (c, { id = "oscillo", x, y, Sv = 1, b = 0.5 }) {
-    // Construit l'oscilloscope ; à chaque calcul du circuit, il retrace la tension entre Y1 et la masse.
-    const comp = { id, Sv, b, u_dc: 0, onde: null, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
+  function voie(comp, onde, u, nom) {
+    // Tension d'une voie : onde (s'il y a un GBF) et valeur moyenne.
+    const o = onde(nom, "masse");
+    return { onde: o, u_dc: o ? o.reduce((s, v) => s + v, 0) / o.length : u(nom, "masse") };
+  }
+
+  function resume(v, Sv) {
+    // Ce que l'élève peut lire sur une voie : moyenne, maximum, minimum (arrondis au mV) et sensibilité.
+    const a = (x) => Math.round(x * 1000) / 1000, o = v.onde || [v.u_dc];
+    return { Sv, u_dc: a(v.u_dc), u_max: a(Math.max(...o)), u_min: a(Math.min(...o)) };
+  }
+
+  L.oscilloscope = function (c, { id = "oscillo", x, y, Sv = 1, Sv2 = 1, b = 0.5, voies = 1 }) {
+    // Construit l'oscilloscope ; à chaque calcul du circuit, il retrace les tensions entre Y1 (et Y2) et la masse.
+    const comp = { id, Sv, Sv2, b, voies, v1: { onde: null, u_dc: 0 }, v2: { onde: null, u_dc: 0 }, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 330, y: y + 24 }, c.prise());
-    corps(comp.g, x, y);
-    const tracer = L.ecran_oscillo(comp.g, x + 18, y + 34);
-    const arrondi = (v) => Math.round(v * 1000) / 1000;
+    const deux = voies === 2, rangs = deux ? [20, 70, 120] : [24, 86];
+    corps(comp.g, x, y, deux ? [[20, "VOLTS/DIV  CH1"], [70, "VOLTS/DIV  CH2"], [120, "TIME/DIV"]] : [[24, "VOLTS/DIV  CH1"], [86, "TIME/DIV"]]);
+    const tracer = L.ecran_oscillo(comp.g, x + 18, y + 34, deux);
     const retracer = () => {
-      tracer({ u_dc: comp.u_dc, onde: comp.onde, f: c.alternatif ? c.alternatif.f : 0, Sv: comp.Sv, b: comp.b });
-      const o = comp.onde || [comp.u_dc];
-      L.missions.noter("oscillo", { Sv: comp.Sv, b: comp.b, u_dc: arrondi(comp.u_dc), u_max: arrondi(Math.max(...o)), u_min: arrondi(Math.min(...o)), gbf: c.alternatif ? { ...c.alternatif } : null });
+      const traces = [{ ...comp.v1, Sv: comp.Sv, couleur: "#b8ffc8" }, ...(deux ? [{ ...comp.v2, Sv: comp.Sv2, couleur: "#ffe27a" }] : [])];
+      tracer({ traces, f: c.alternatif ? c.alternatif.f : 0, b: comp.b });
+      L.missions.noter(id, { ...resume(comp.v1, comp.Sv), b: comp.b, gbf: c.alternatif ? { ...c.alternatif } : null, ch2: deux ? resume(comp.v2, comp.Sv2) : null });
     };
-    reglage(comp.g, x, y + 24, SV, () => comp.Sv, "V", (v) => { comp.Sv = v; retracer(); });
-    reglage(comp.g, x, y + 86, B, () => comp.b, "ms", (v) => { comp.b = v; retracer(); });
-    entree(c, comp, x, y);
-    comp.dipoles = () => [{ a: "Y1", b: "masse", g: 1e-6, j: 0 }];
+    reglage(comp.g, x, y + rangs[0], SV, () => comp.Sv, "V", (v) => { comp.Sv = v; retracer(); });
+    if (deux) reglage(comp.g, x, y + rangs[1], SV, () => comp.Sv2, "V", (v) => { comp.Sv2 = v; retracer(); });
+    reglage(comp.g, x, y + rangs[rangs.length - 1], B, () => comp.b, "ms", (v) => { comp.b = v; retracer(); });
+    entree(c, comp, x, y, voies);
+    comp.dipoles = () => [{ a: "Y1", b: "masse", g: 1e-6, j: 0 }, ...(deux ? [{ a: "Y2", b: "masse", g: 1e-6, j: 0 }] : [])];
     comp.mettre_a_jour = ({ u, onde }) => {
-      comp.onde = onde("Y1", "masse");
-      comp.u_dc = comp.onde ? comp.onde.reduce((s, v) => s + v, 0) / comp.onde.length : u("Y1", "masse");
+      comp.v1 = voie(comp, onde, u, "Y1");
+      if (deux) comp.v2 = voie(comp, onde, u, "Y2");
+      Object.assign(comp, { u_dc: comp.v1.u_dc, onde: comp.v1.onde });
       retracer();
     };
     return c.ajouter(comp);
@@ -2600,7 +2640,7 @@ Utilisé par : les postes des simulations de tensions variables.
   <script>
 /*
 Rôle : ce que mesure le multimètre selon la position de son commutateur : tension continue (V⎓), tension alternative
-       (V~, valeur efficace vraie « TRMS »), intensité continue (A⎓), résistance (Ω : l'appareil envoie un petit courant
+       (V~, valeur efficace vraie « TRMS »), intensité continue (A⎓, de 2 mA à 10 A), résistance (Ω : l'appareil envoie un petit courant
        de test et mesure la tension). Calibres, résolution et précision d'un appareil réel à 2000 points ; au-delà du
        calibre (ou circuit ouvert en ohmmètre), l'afficheur montre « 1 ».
 Reçoit : l'état du multimètre (mode, tension continue, onde de tension s'il y a un GBF, courants reçus du circuit).
@@ -2610,21 +2650,23 @@ Utilisé par : multimetre.js.
 */
 (function (L) {
   // precision : [part de la lecture, nombre d'unités du dernier chiffre] (notice de l'appareil).
+  const PAS = 360 / 13;
   L.MULTIMETRE_MODES = [
-    { nom: "OFF", angle: 0, texte: "OFF" },
-    { nom: "2V", angle: 30, texte: "2", type: "V", calibre: 2, unite: "V", facteur: 1, decimales: 3, precision: [0.005, 2] },
-    { nom: "20V", angle: 60, texte: "20", type: "V", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.005, 2] },
-    { nom: "200V", angle: 90, texte: "200", type: "V", calibre: 200, unite: "V", facteur: 1, decimales: 1, precision: [0.005, 2] },
-    { nom: "20V~", angle: 120, texte: "20", type: "VAC", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.01, 3] },
-    { nom: "10A", angle: 150, texte: "10A", type: "A", borne: "10A", calibre: 10, unite: "A", facteur: 1, decimales: 2, precision: [0.02, 3] },
-    { nom: "200mA", angle: 180, texte: "200m", type: "A", borne: "mA", calibre: 0.2, unite: "mA", facteur: 1000, decimales: 1, precision: [0.01, 2] },
-    { nom: "20mA", angle: 210, texte: "20m", type: "A", borne: "mA", calibre: 0.02, unite: "mA", facteur: 1000, decimales: 2, precision: [0.01, 2] },
-    { nom: "200Ω", angle: 240, texte: "200", type: "R", calibre: 200, test: 1e-3, unite: "Ω", facteur: 1, decimales: 1, precision: [0.008, 3] },
-    { nom: "2kΩ", angle: 270, texte: "2k", type: "R", calibre: 2000, test: 1e-3, unite: "kΩ", facteur: 1e-3, decimales: 3, precision: [0.008, 3] },
-    { nom: "20kΩ", angle: 300, texte: "20k", type: "R", calibre: 20000, test: 1e-4, unite: "kΩ", facteur: 1e-3, decimales: 2, precision: [0.008, 3] },
-    { nom: "200kΩ", angle: 330, texte: "200k", type: "R", calibre: 200000, test: 1e-5, unite: "kΩ", facteur: 1e-3, decimales: 1, precision: [0.008, 3] },
-  ];
-  L.MULTIMETRE_GROUPES = [{ type: "V", texte: "V⎓", angle: 60, couleur: "#f4f4ee" }, { type: "VAC", texte: "V~", angle: 120, couleur: "#ffb74d" }, { type: "A", texte: "A⎓", angle: 180, couleur: "#80deea" }, { type: "R", texte: "Ω", angle: 285, couleur: "#c5e1a5" }];
+    { nom: "OFF", texte: "OFF" },
+    { nom: "2V", texte: "2", type: "V", calibre: 2, unite: "V", facteur: 1, decimales: 3, precision: [0.005, 2] },
+    { nom: "20V", texte: "20", type: "V", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.005, 2] },
+    { nom: "200V", texte: "200", type: "V", calibre: 200, unite: "V", facteur: 1, decimales: 1, precision: [0.005, 2] },
+    { nom: "20V~", texte: "20", type: "VAC", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.01, 3] },
+    { nom: "10A", texte: "10A", type: "A", borne: "10A", calibre: 10, unite: "A", facteur: 1, decimales: 2, precision: [0.02, 3] },
+    { nom: "200mA", texte: "200m", type: "A", borne: "mA", calibre: 0.2, unite: "mA", facteur: 1000, decimales: 1, precision: [0.01, 2] },
+    { nom: "20mA", texte: "20m", type: "A", borne: "mA", calibre: 0.02, unite: "mA", facteur: 1000, decimales: 2, precision: [0.01, 2] },
+    { nom: "2mA", texte: "2m", type: "A", borne: "mA", calibre: 0.002, unite: "mA", facteur: 1000, decimales: 3, precision: [0.01, 2] },
+    { nom: "200Ω", texte: "200", type: "R", calibre: 200, test: 1e-3, unite: "Ω", facteur: 1, decimales: 1, precision: [0.008, 3] },
+    { nom: "2kΩ", texte: "2k", type: "R", calibre: 2000, test: 1e-3, unite: "kΩ", facteur: 1e-3, decimales: 3, precision: [0.008, 3] },
+    { nom: "20kΩ", texte: "20k", type: "R", calibre: 20000, test: 1e-4, unite: "kΩ", facteur: 1e-3, decimales: 2, precision: [0.008, 3] },
+    { nom: "200kΩ", texte: "200k", type: "R", calibre: 200000, test: 1e-5, unite: "kΩ", facteur: 1e-3, decimales: 1, precision: [0.008, 3] },
+  ].map((m, k) => ({ ...m, angle: k * PAS }));
+  L.MULTIMETRE_GROUPES = [{ type: "V", texte: "V⎓", angle: 2 * PAS, couleur: "#f4f4ee" }, { type: "VAC", texte: "V~", angle: 4 * PAS, couleur: "#ffb74d" }, { type: "A", texte: "A⎓", angle: 6.5 * PAS, couleur: "#80deea" }, { type: "R", texte: "Ω", angle: 10.5 * PAS, couleur: "#c5e1a5" }];
   const COMPLIANCE_V = 2.8;
   const moyenne = (t) => t.reduce((s, v) => s + v, 0) / t.length;
 

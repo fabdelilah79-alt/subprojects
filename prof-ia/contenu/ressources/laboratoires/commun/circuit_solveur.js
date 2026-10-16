@@ -3,8 +3,9 @@ Rôle : calcule les potentiels et les courants d'un circuit en courant continu (
        vu comme une conductance g en parallèle avec une source de courant j : i(a→b) = g·(Va − Vb) + j.
        Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Un dipôle non linéaire
        (DEL, lampe, diode) est remplacé par sa tangente au point de fonctionnement : on recalcule jusqu'à stabilité.
-Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ajuster(u, i) (facultatif :
-         renvoie vrai si le dipôle change d'état et met à jour g et j) }.
+Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ctrl (facultatif : sources
+         commandées [{ c, d, g }] qui ajoutent g·(Vc − Vd) au courant de a vers b), ajuster(u, i, V) (facultatif : renvoie
+         vrai si le dipôle change d'état et met à jour g, j et ctrl) }.
 Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) } ;
           Labo.dipole_non_lineaire(a, b, courant(u), pas_max) -> dipôle à caractéristique quelconque.
 Utilisé par : circuit.js.
@@ -44,9 +45,11 @@ Utilisé par : circuit.js.
       A[d.a][d.a] += d.g; A[d.b][d.b] += d.g;
       A[d.a][d.b] -= d.g; A[d.b][d.a] -= d.g;
       B[d.a] -= d.j || 0; B[d.b] += d.j || 0;
+      for (const k of d.ctrl || []) { A[d.a][k.c] += k.g; A[d.a][k.d] -= k.g; A[d.b][k.c] -= k.g; A[d.b][k.d] += k.g; }
     }
     const V = eliminer(A, B);
-    return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0)) };
+    const commande = (d) => (d.ctrl || []).reduce((s, k) => s + k.g * (V[k.c] - V[k.d]), 0);
+    return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0) + commande(d)) };
   }
 
   L.dipole_non_lineaire = function (a, b, courant, pas_max) {
@@ -72,7 +75,7 @@ Utilisé par : circuit.js.
     let r = une_fois(n, dipoles);
     for (let t = 0; t < TOURS; t++) {
       let change = false;
-      dipoles.forEach((d, k) => { if (d.ajuster && d.ajuster(r.potentiels[d.a] - r.potentiels[d.b], r.courants[k])) change = true; });
+      dipoles.forEach((d, k) => { if (d.ajuster && d.ajuster(r.potentiels[d.a] - r.potentiels[d.b], r.courants[k], r.potentiels)) change = true; });
       if (!change) break;
       r = une_fois(n, dipoles);
     }

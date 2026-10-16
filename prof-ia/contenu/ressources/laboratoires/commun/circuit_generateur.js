@@ -3,7 +3,7 @@ Rôle : générateur de tension continue (alimentation de laboratoire) : tension
        il limite son courant (voyant « LIMIT ») en cas de court-circuit. Son afficheur montre la tension à ses bornes.
        Un bouton Marche/Arrêt (en marche au départ) ; son cordon secteur est branché dans la prise du mur par une fiche.
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), I_max (A), lettres (noms des bornes − et +, ex. ["N", "P"]),
-         reglable (touches de réglage de la tension, 0 à 12 V) }.
+         reglable (touches de réglage de la tension, 0 à 12 V), nom (« G1 », « G2 »… écrit sur l'appareil) }.
 Produit : Labo.generateur(circuit, reglage) -> composant { id, E, i (courant débité, A) } ; bornes « + » (rouge) et « − » (noire) ;
           fait noté « court_circuit » quand le courant est limité.
 Utilisé par : les postes des simulations d'électricité.
@@ -47,7 +47,7 @@ Utilisé par : les postes des simulations d'électricité.
     [[-1, "−1", 18], [1, "+1", 44], [-0.1, "−0,1", 82], [0.1, "+0,1", 108]].forEach(([d, t, dx]) => L.bouton_rond(g, x + dx, y + 97, t, () => changer(d), 9));
   }
 
-  L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null, reglable = false }) {
+  L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null, reglable = false, nom = "" }) {
     // Construit le générateur, ses deux bornes et son modèle électrique (E, r, limitation de courant).
     const comp = { id, E, i: 0, limite: false, marche: true, g: L.svg("g", { class: "generateur" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 168, y: y + 24 }, c.prise());
@@ -56,6 +56,7 @@ Utilisé par : les postes des simulations d'électricité.
     if (reglable) reglage(comp.g, x, y, (d) => { comp.E = Math.max(0, Math.min(12, Math.round((comp.E + d) * 10) / 10)); Object.assign(dipole, { j: comp.limite ? I_max : comp.E / r }); c.calculer(); });
     c.borne(comp, "−", x + 40, y + 58, L.NOIR_BORNE);
     c.borne(comp, "+", x + 150, y + 58, L.ROUGE_BORNE);
+    if (nom) L.texte(comp.g, x + 95, y + 36, nom, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" });
     if (lettres) [[18, lettres[0]], [172, lettres[1]]].forEach(([dx, t]) => L.texte(comp.g, x + dx, y + 58, t, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" }));
     const dipole = { a: "−", b: "+", g: 1 / r, j: E / r };
     dipole.ajuster = (u, i) => {

@@ -1,7 +1,7 @@
 /*
 Rôle : le circuit électrique d'une paillasse : il réunit les composants, leurs bornes et les fils posés par l'élève,
        calcule les courants et les tensions à chaque changement et les donne aux composants.
-Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ajuster }],
+Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ctrl, ajuster }],
          mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
          un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
          donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
@@ -37,16 +37,25 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
     c.fils.forEach((f) => { f.i = r.courants[k++]; });
   }
 
+  function reajuster(d, u, i, V) {
+    // Le dipôle non linéaire se réajuste (il reçoit aussi les tensions qui le commandent) ; on recopie g, j et ctrl.
+    const ch = d.source.ajuster(u, i, d.ctrl ? d.ctrl.map((k) => V[k.c] - V[k.d]) : null);
+    Object.assign(d, { g: d.source.g, j: d.source.j });
+    if (d.ctrl) d.ctrl.forEach((k, n) => { k.g = d.source.ctrl[n].g; });
+    return ch;
+  }
+
   function assembler(c, cles, mode) {
     // Dipôles des composants (mode « continu », ou « instant » : GBF à sa valeur c.instant) et des fils.
     const dipoles = [], pris = {};
     for (const comp of c.composants) {
       const liste = comp.dipoles ? comp.dipoles(mode) : [];
       pris[comp.id] = liste.length;
-      for (const d of liste) dipoles.push({ ...d, a: cles[`${comp.id}.${d.a}`], b: cles[`${comp.id}.${d.b}`], source: d, ajuster: undefined });
+      const cle = (x) => cles[`${comp.id}.${x}`];
+      for (const d of liste) dipoles.push({ ...d, a: cle(d.a), b: cle(d.b), ctrl: d.ctrl ? d.ctrl.map((k) => ({ c: cle(k.c), d: cle(k.d), g: k.g })) : null, source: d, ajuster: undefined });
     }
     for (const f of c.fils) dipoles.push({ a: cles[f.a], b: cles[f.b], g: G_FIL, j: 0 });
-    for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i) => { const ch = d.source.ajuster(u, i); Object.assign(d, { g: d.source.g, j: d.source.j }); return ch; };
+    for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i, V) => reajuster(d, u, i, V);
     return { dipoles, pris };
   }
 
