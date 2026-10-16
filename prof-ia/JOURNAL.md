@@ -359,3 +359,24 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : lecture des divisions de l'oscilloscope (graduations de 0,2 div, zoom), tolérances des
   lectures (0,15 à 0,2 div), notation U_{PN} dans le carnet et UPN dans le tableur (les cellules n'ont pas d'indice).
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « Montages électriques »
+
+Fait :
+- Quatre simulations : A1 associations, résistivité, diviseur de tension (O1, O2, O3) ; A2 caractéristiques de dipôles
+  passifs, Zener à l'oscilloscope, CTN et photorésistance (O4, O5) ; A2 suite, pile et électrolyseur (O6) ; A3 point de
+  fonctionnement, loi de Pouillet, piles en série et adaptation (O7). Inscrites au manifeste (40 ressources).
+- Calcul des circuits : dipôles non linéaires (Newton amorti), lampe à filament réaliste (sa caractéristique n'est
+  plus une droite, ce qui aurait donné une fausse idée), diode et Zener exponentielles, électrolyseur ; GBF calculé
+  instant par instant (remplace la superposition, qui ne permettait pas l'écrêtage de la Zener).
+- Multimètre : fonction ohmmètre (courant de test, « 1 » si circuit ouvert, pas d'indication DC) ; commutateur
+  réorganisé en 12 positions. Alimentation réglable (grossier ±1 V, fin ±0,1 V). Graphique de la tablette : deuxième
+  courbe facultative (en orange) pour lire une intersection ; barre d'outils sur deux lignes.
+- Détails corrigés après captures : bulles deux fois plus nombreuses à la cathode (dihydrogène), étiquettes
+  raccourcies, nom des béchers, conclusion ajustée aux valeurs mesurées.
+- Le script d'inscription au manifeste lit maintenant les missions réparties dans plusieurs fichiers.
+- Vérifié : parcours complets des 10 simulations d'électricité ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : durée de stabilisation de la CTN (constante de temps 4 s), précision demandée pour r et r'
+  (12 et 15 %), lecture de l'intersection (tolérance 7 mA).

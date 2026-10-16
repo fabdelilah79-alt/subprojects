@@ -117,6 +117,22 @@ fusible de la borne mA), `mesure_tension.js` (quelle tension mesure le voltmètr
 `circuit_pile.js`, `gbf.js`, `oscilloscope.js` et `oscilloscope_ecran.js`. Les appareils branchés sur le secteur (générateur,
 GBF, oscilloscope) ont chacun leur cordon et leur fiche dans une prise du bloc mural.
 
+## Chapitre tronc commun « Montages électriques » (fiche tronc_commun/elec3_montages_electriques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec3_a1_associations.html | A1 : associations série/dérivation (ohmmètre), diviseur de tension | O1, O2, O3 | Ohmmètre et choix du calibre ; code des couleurs et tolérance (valeurs réelles légèrement différentes) ; Req en série (R1 + R2) et en parallèle (G = G1 + G2) ; fils résistants : R = ρ·l/S, ρ du constantan ; diviseur de tension U = R2/(R1 + R2)·U0. |
+| tc_elec3_a2_caracteristiques.html | A2 : caractéristiques de dipôles passifs | O4, O5 | Alimentation réglable ; caractéristiques d'une résistance (droite, U = R·I), d'une lampe (U/I croît : le filament chauffe), d'une diode (seuil vers 0,6 V, bloquée en inverse) ; Zener 5,1 V à l'oscilloscope (écrêtage) ; CTN dans trois béchers et photorésistance (lampe de poche, cache) à l'ohmmètre. |
+| tc_elec3_a2_dipoles_actifs.html | A2 (suite) : pile et électrolyseur, dans la même séance | O6 | Pile 4,5 V débitant dans un rhéostat : U = E − r·I, Icc = E/r ; électrolyseur : pas de courant sous E', puis U = E' + r'·I (bulles deux fois plus abondantes à la cathode). Conventions générateur et récepteur, sans algébriser I. |
+| tc_elec3_a3_point_fonctionnement.html | A3 : point de fonctionnement | O7 | Problème d'adaptation lampe 6 V – 0,1 A / pile 4,5 V : point mesuré, puis intersection des deux caractéristiques (deux courbes sur la tablette) ; loi de Pouillet (avec R, puis R et électrolyseur) ; deux piles en série, résistance d'adaptation de 27 Ω. |
+
+Calcul des circuits renforcé pour ce chapitre : dipôles non linéaires (méthode de Newton amortie) — lampe à filament
+de tungstène (résistance à froid ≈ 12 % de la résistance à chaud), diode 1N4007, Zener 5,1 V, électrolyseur ; circuit
+alimenté par un GBF calculé instant par instant (72 instants par période), ce qui permet de voir l'écrêtage de la Zener.
+Nouveau matériel commun : `circuit_semiconducteurs.js`, `thermistance.js`, `photoresistance.js`, `rheostat.js`,
+`electrolyseur.js`, `caracteristique.js` (relevé des points I, U) ; ohmmètre dans le multimètre ; alimentation réglable ;
+deuxième courbe facultative sur le graphique de la tablette.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

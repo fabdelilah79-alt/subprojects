@@ -289,11 +289,17 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur (V⎓, V~, A⎓), quatre bornes, afficheur, fusible de la borne mA. |
 | contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS. |
 | contenu/ressources/laboratoires/commun/mesure_tension.js | Reconnaît la tension U_XY mesurée par un voltmètre entre deux points nommés. |
-| contenu/ressources/laboratoires/commun/circuit_resistances.js | Résistances au vrai code des couleurs ; plaquette de résistances en série entre des bornes nommées. |
+| contenu/ressources/laboratoires/commun/circuit_resistances.js | Résistances au vrai code des couleurs (support, plaquette), planche de fils résistants. |
 | contenu/ressources/laboratoires/commun/circuit_pile.js | Pile plate de 4,5 V dans un boîtier à bornes. |
 | contenu/ressources/laboratoires/commun/gbf.js | Générateur basse fréquence : formes sinus, triangle, carré ; fréquence affichée ; amplitude réglable. |
 | contenu/ressources/laboratoires/commun/oscilloscope.js | Oscilloscope à une voie : réglages Sv et b, entrée Y1 et masse, cordon secteur. |
 | contenu/ressources/laboratoires/commun/oscilloscope_ecran.js | Écran de l'oscilloscope : quadrillage 10 × 8, repère de masse, trace déclenchée sur front montant. |
+| contenu/ressources/laboratoires/commun/circuit_semiconducteurs.js | Diode 1N4007 et diode Zener 5,1 V sur support (caractéristiques exponentielles, symbole, bague de cathode). |
+| contenu/ressources/laboratoires/commun/thermistance.js | Thermistance CTN : sonde à plonger dans des béchers, température qui évolue, R(T). |
+| contenu/ressources/laboratoires/commun/photoresistance.js | Photorésistance : éclairement par une lampe de poche déplaçable, cache noir, R(E). |
+| contenu/ressources/laboratoires/commun/rheostat.js | Rhéostat à curseur (bornes A, B, C), résistance variable. |
+| contenu/ressources/laboratoires/commun/electrolyseur.js | Électrolyseur : récepteur E', r' (coude arrondi), bulles plus abondantes à la cathode. |
+| contenu/ressources/laboratoires/commun/caracteristique.js | Relevé des points (I, U) d'un dipôle quand les appareils sont bien branchés ; vérification du tableur. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -270,8 +270,9 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur-barre,
 .courbe-barre {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px 8px;
   margin-bottom: 6px;
   font-size: 15px;
 }
@@ -339,6 +340,10 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur input:focus {
   outline: 2px solid #1f6f4a;
   outline-offset: -2px;
+}
+
+.courbe-barre .tablette-bouton {
+  white-space: nowrap;
 }
 
 .courbe-barre select {
@@ -1392,9 +1397,10 @@ Utilisé par : tablette.js (une feuille par mission), courbe.js, missions.js.
   <script>
 /*
 Rôle : application « Graphique » de la tablette : l'élève choisit l'abscisse et l'ordonnée parmi les colonnes
-       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b).
+       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b) ;
+       une deuxième ordonnée (facultative) superpose une seconde courbe, en orange (pour lire une intersection).
 Reçoit : le conteneur HTML et une fonction qui donne la feuille de calcul de la mission en cours.
-Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, n, modele, a, b }.
+Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, y2, n, n2, modele, a, b }.
 Utilisé par : tablette.js, missions.js (vérification des étapes).
 */
 (function (L) {
@@ -1415,11 +1421,13 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
   L.Courbe = function (conteneur, feuille) {
     // Construit les choix d'axes, les boutons de modélisation et la zone de tracé.
     this.feuille = feuille;
-    this.etat = { x: "A", y: "B", modele: "aucun", n: 0, a: null, b: null };
+    this.etat = { x: "A", y: "B", y2: "", modele: "aucun", n: 0, n2: 0, a: null, b: null };
     const barre = L.html("div", { class: "courbe-barre" }, conteneur);
     this.choix_y = this.selecteur(barre, "Ordonnée", "y");
     L.html("span", { class: "courbe-en-fonction" }, barre, "en fonction de");
     this.choix_x = this.selecteur(barre, "Abscisse", "x");
+    L.html("span", { class: "courbe-en-fonction" }, barre, "et");
+    this.choix_y2 = this.selecteur(barre, "Ordonnée 2", "y2");
     L.html("span", { class: "courbe-en-fonction" }, barre, "Modéliser :");
     for (const [modele, texte] of [["lineaire", "y = a·x"], ["affine", "y = a·x + b"]]) {
       const bouton = L.html("button", { type: "button", class: "tablette-bouton" }, barre, texte);
@@ -1446,6 +1454,10 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
       for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, choix, this.feuille().entete(lettre));
       choix.value = this.etat[axe];
     }
+    this.choix_y2.replaceChildren();
+    L.html("option", { value: "" }, this.choix_y2, "(2e courbe : aucune)");
+    for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, this.choix_y2, this.feuille().entete(lettre));
+    this.choix_y2.value = this.etat.y2;
   };
 
   C.modeliser = function (points) {
@@ -1489,8 +1501,11 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     this.equation.textContent = points.length ? "" : "Remplissez d'abord le tableur : les points apparaîtront ici.";
     Object.assign(this.etat, { n: points.length, a: null, b: null });
     if (!points.length) return L.annoncer("courbe", { ...this.etat });
-    const max_x = Math.max(...points.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...points.map((p) => p.y), 1e-9) * 1.1;
+    const points2 = this.etat.y2 ? feuille.lignes([this.etat.x, this.etat.y2]).map((l) => ({ x: l[this.etat.x], y: l[this.etat.y2] })) : [];
+    this.etat.n2 = points2.length;
+    const tous = [...points, ...points2], max_x = Math.max(...tous.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...tous.map((p) => p.y), 1e-9) * 1.1;
     const { px, py } = this.axes(this.dessin, max_x, max_y, feuille);
+    this.seconde_serie(points2, px, py, feuille);
     points.forEach((p, i) => {
       const x = ZONE.g + p.x * px, y = ZONE.b - p.y * py;
       const croix = L.svg("path", { d: `M${x - 6} ${y}h12M${x} ${y - 6}v12`, class: "courbe-point" }, this.dessin);
@@ -1498,6 +1513,15 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     });
     if (this.etat.modele !== "aucun") this.tracer_modele(points, px, py, feuille, anime);
     L.annoncer("courbe", { ...this.etat });
+  };
+
+  C.seconde_serie = function (points, px, py, feuille) {
+    // Deuxième courbe (même abscisse) : ronds orange reliés, et son nom en légende.
+    if (!points.length) return;
+    const xy = points.map((p) => [ZONE.g + p.x * px, ZONE.b - p.y * py]).sort((a, b) => a[0] - b[0]);
+    L.svg("polyline", { points: xy.map((q) => q.join(",")).join(" "), fill: "none", stroke: "#e07b00", "stroke-width": 1.2, opacity: 0.7 }, this.dessin);
+    for (const [x, y] of xy) L.svg("circle", { cx: x, cy: y, r: 3.5, fill: "none", stroke: "#e07b00", "stroke-width": 1.6 }, this.dessin);
+    L.texte(this.dessin, ZONE.d, ZONE.h + 4, `○ ${feuille.entete(this.etat.y2)}`, { class: "courbe-nom", "text-anchor": "end", fill: "#e07b00" });
   };
 
   C.tracer_modele = function (points, px, py, feuille, anime) {
@@ -2273,7 +2297,7 @@ Rôle : décor d'une paillasse d'électricité vue de plus haut : un bandeau de 
        travail où l'on pose les appareils et les fils, le bord avant et les placards.
 Reçoit : le groupe SVG de la paillasse et son numéro.
 Produit : Labo.decor_circuit(groupe, numero) -> { pense_bete } ; Labo.PLAN_CIRCUIT : hauteurs (fond, avant, placard) ;
-          Labo.PRISES_MUR : centres des prises du mur ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
+          Labo.PRISES_MUR : centres des prises du mur ; Labo.bouton_rond(g, x, y, texte, action, rayon) : touche ronde ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
           Labo.boitier(groupe, x, y, largeur, profondeur, hauteur, { dessus, face }) : boîtier d'appareil vu d'en haut.
 Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer), les composants circuit_*.js.
 */
@@ -2325,6 +2349,16 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
     L.svg("rect", { x: x + 3, y: y + 1.5, width: l - 6, height: 2, rx: 1, fill: "#fff", opacity: 0.35 }, g);
   };
 
+  L.bouton_rond = function (g, x, y, texte, action, rayon = 9) {
+    // Petit bouton poussoir rond, touchable.
+    const b = L.svg("g", { class: "bouton-rond", role: "button", "aria-label": texte }, g);
+    L.svg("circle", { cx: x + 0.8, cy: y + 1.5, r: rayon, fill: "#000", opacity: 0.3 }, b);
+    L.svg("circle", { cx: x, cy: y, r: rayon, fill: "url(#acier)", stroke: "#111" }, b);
+    L.texte(b, x, y + 0.5, texte, { "font-size": texte.length > 2 ? 7 : 10, "font-weight": 700, fill: "#eef" });
+    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: action });
+    return b;
+  };
+
   L.decor_circuit = function (g, numero) {
     // Dessine le décor ; le pense-bête est collé sur le mur, en haut à gauche.
     mur(g);
@@ -2338,17 +2372,16 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
   <script>
 /*
 Rôle : pile plate de 4,5 V dans un boîtier à bornes (borne + rouge, borne − noire) : source de tension continue
-       (résistance interne 1 Ω).
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V) }.
-Produit : Labo.pile(c, reglage) -> composant ; bornes « + » et « − ».
+       de force électromotrice E et de résistance interne r (1 Ω par défaut).
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, E (V), r (Ω), lettres (noms des bornes − et +) }.
+Produit : Labo.pile(c, reglage) -> composant { i (A, courant débité) } ; bornes « + » et « − ».
 Utilisé par : les postes des simulations de tension.
 */
 (function (L) {
-  const R_INTERNE = 1;
 
-  L.pile = function (c, { id = "pile", x, y, E = 4.5 }) {
+  L.pile = function (c, { id = "pile", x, y, E = 4.5, r = 1, lettres = null }) {
     // Boîtier noir, pile plate rouge et jaune visible par la fenêtre, inscription, deux bornes.
-    const comp = { id, E, g: L.svg("g", { class: "pile" }, c.calque_composants) };
+    const comp = { id, E, i: 0, g: L.svg("g", { class: "pile" }, c.calque_composants) };
     L.boitier(comp.g, x, y, 130, 60, 14, { dessus: "#3a3f45", face: "#24282c" });
     L.svg("rect", { x: x + 34, y: y + 8, width: 62, height: 22, rx: 2, fill: "#c62828", stroke: "#7a1515" }, comp.g);
     L.svg("rect", { x: x + 34, y: y + 22, width: 62, height: 8, fill: "#f2c230" }, comp.g);
@@ -2357,7 +2390,9 @@ Utilisé par : les postes des simulations de tension.
     L.texte(comp.g, x + 112, y + 18, "+", { "font-size": 13, "font-weight": 700, fill: "#ff6b5b" });
     c.borne(comp, "−", x + 18, y + 42, L.NOIR_BORNE);
     c.borne(comp, "+", x + 112, y + 42, L.ROUGE_BORNE);
-    comp.dipoles = () => [{ a: "−", b: "+", g: 1 / R_INTERNE, j: E / R_INTERNE }];
+    if (lettres) [[6, lettres[0]], [124, lettres[1]]].forEach(([dx, t]) => L.texte(comp.g, x + dx, y + 30, t, { "font-size": 11, "font-weight": 700, fill: "#9ec5ff" }));
+    comp.dipoles = () => [{ a: "−", b: "+", g: 1 / r, j: E / r }];
+    comp.mettre_a_jour = ({ i }) => { comp.i = i[0]; };
     return c.ajouter(comp);
   };
 })(window.Labo);
@@ -2369,8 +2404,8 @@ Rôle : générateur basse fréquence (GBF) : tension alternative sinusoïdale, 
        en vrai. Résistance de sortie 50 Ω ; bornes SORTIE (rouge) et masse (noire).
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, forme, f (Hz), Umax (V) }.
 Produit : Labo.gbf(c, reglage) -> composant { forme, f, Umax } ; il tient à jour c.alternatif = { forme, f, Umax } ;
-          Labo.forme_tension(forme, phase) -> valeur entre −1 et 1 ; Labo.bouton_rond(g, x, y, texte, action).
-Utilisé par : les postes des simulations de tensions variables ; oscilloscope.js (bouton_rond, forme_tension).
+          Labo.forme_tension(forme, phase) -> valeur entre −1 et 1.
+Utilisé par : les postes des simulations de tensions variables ; circuit.js et oscilloscope_ecran.js (forme_tension).
 */
 (function (L) {
   const FREQUENCES = [50, 100, 200, 250, 500, 1000, 2000], R_SORTIE = 50;
@@ -2381,16 +2416,6 @@ Utilisé par : les postes des simulations de tensions variables ; oscilloscope.j
     if (forme === "triangle") return (2 / Math.PI) * Math.asin(s);
     if (forme === "carre") return s >= 0 ? 1 : -1;
     return s;
-  };
-
-  L.bouton_rond = function (g, x, y, texte, action, rayon = 9) {
-    // Petit bouton poussoir rond, touchable.
-    const b = L.svg("g", { class: "bouton-rond", role: "button", "aria-label": texte }, g);
-    L.svg("circle", { cx: x + 0.8, cy: y + 1.5, r: rayon, fill: "#000", opacity: 0.3 }, b);
-    L.svg("circle", { cx: x, cy: y, r: rayon, fill: "url(#acier)", stroke: "#111" }, b);
-    L.texte(b, x, y + 0.5, texte, { "font-size": 10, "font-weight": 700, fill: "#eef" });
-    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: action });
-    return b;
   };
 
   function symbole(g, x, y, forme) {

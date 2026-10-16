@@ -1016,6 +1016,48 @@
         "Un électrolyseur conduit dès qu'on lui applique une tension.",
         "Un court-circuit est sans danger pour une pile."
       ]
+    },
+    {
+      "id": "tc_elec3_a3_point_fonctionnement",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_elec3_a3_point_fonctionnement.html",
+      "description": "Laboratoire virtuel à partir d'un problème d'adaptation : une lampe 6 V – 0,1 A sur une pile 4,5 V (r = 2 Ω) ; point de fonctionnement mesuré, puis lu à l'intersection des caractéristiques de la pile et de la lampe (deux courbes superposées sur la tablette) ; loi de Pouillet avec une résistance et un électrolyseur ; deux piles en série, lampe sur-alimentée puis adaptée par une résistance de 27 Ω.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/elec3_montages_electriques",
+      "activite": "Point de fonctionnement.",
+      "objectifs": [
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Une lampe branchée sur une pile",
+          "ce_que_fait_l_eleve": "Branche la lampe 6 V – 0,1 A sur la pile, mesure I et U : la lampe est sous-alimentée.",
+          "conclusion": "Le point de fonctionnement (I, U) d'un circuit est imposé à la fois par le générateur et par le récepteur : ici, I ≈ 82 mA et U ≈ 4,25 V. La lampe, prévue pour 6 V, est sous-alimentée et brille faiblement."
+        },
+        {
+          "titre": "Méthode graphique",
+          "ce_que_fait_l_eleve": "Relève la caractéristique de la lampe, calcule celle de la pile U = 4,5 − 2·I dans le tableur, superpose les deux courbes et lit le point d'intersection.",
+          "conclusion": "Le point de fonctionnement est le point d'intersection de la caractéristique du générateur et de celle du récepteur : c'est le seul point (I, U) qui convient aux deux à la fois."
+        },
+        {
+          "titre": "La loi de Pouillet",
+          "ce_que_fait_l_eleve": "Calcule I par la loi de Pouillet (avec R, puis avec R et l'électrolyseur) et vérifie par la mesure ; rôle de la résistance de l'ampèremètre.",
+          "conclusion": "Loi de Pouillet : dans un circuit série, I = (ΣE − ΣE')/ΣR, où ΣE est la somme des f.é.m. des générateurs, ΣE' celle des f.c.é.m. des récepteurs et ΣR la somme de toutes les résistances (internes comprises)."
+        },
+        {
+          "titre": "Associer deux piles en série",
+          "ce_que_fait_l_eleve": "Associe deux piles en série (E = 9 V, r = 4 Ω), constate la sur-alimentation de la lampe, calcule et ajoute la résistance d'adaptation de 27 Ω ; piles en opposition.",
+          "conclusion": "Des générateurs associés en série (borne + de l'un reliée à la borne − de l'autre) équivalent à un générateur de f.é.m. E = E1 + E2 et de résistance interne r = r1 + r2. Pour adapter la lampe, on ajoute une résistance en série : R = (E − U)/I − r."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Un générateur impose toujours la même intensité.",
+        "Le point de fonctionnement ne dépend que du générateur.",
+        "Deux piles en série donnent la même tension qu'une seule.",
+        "Plus de piles, c'est toujours mieux pour une lampe."
+      ]
     }
   ]
 }

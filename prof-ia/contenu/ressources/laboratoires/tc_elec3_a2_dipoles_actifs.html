@@ -270,8 +270,9 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur-barre,
 .courbe-barre {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px 8px;
   margin-bottom: 6px;
   font-size: 15px;
 }
@@ -339,6 +340,10 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur input:focus {
   outline: 2px solid #1f6f4a;
   outline-offset: -2px;
+}
+
+.courbe-barre .tablette-bouton {
+  white-space: nowrap;
 }
 
 .courbe-barre select {
@@ -1392,9 +1397,10 @@ Utilisé par : tablette.js (une feuille par mission), courbe.js, missions.js.
   <script>
 /*
 Rôle : application « Graphique » de la tablette : l'élève choisit l'abscisse et l'ordonnée parmi les colonnes
-       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b).
+       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b) ;
+       une deuxième ordonnée (facultative) superpose une seconde courbe, en orange (pour lire une intersection).
 Reçoit : le conteneur HTML et une fonction qui donne la feuille de calcul de la mission en cours.
-Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, n, modele, a, b }.
+Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, y2, n, n2, modele, a, b }.
 Utilisé par : tablette.js, missions.js (vérification des étapes).
 */
 (function (L) {
@@ -1415,11 +1421,13 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
   L.Courbe = function (conteneur, feuille) {
     // Construit les choix d'axes, les boutons de modélisation et la zone de tracé.
     this.feuille = feuille;
-    this.etat = { x: "A", y: "B", modele: "aucun", n: 0, a: null, b: null };
+    this.etat = { x: "A", y: "B", y2: "", modele: "aucun", n: 0, n2: 0, a: null, b: null };
     const barre = L.html("div", { class: "courbe-barre" }, conteneur);
     this.choix_y = this.selecteur(barre, "Ordonnée", "y");
     L.html("span", { class: "courbe-en-fonction" }, barre, "en fonction de");
     this.choix_x = this.selecteur(barre, "Abscisse", "x");
+    L.html("span", { class: "courbe-en-fonction" }, barre, "et");
+    this.choix_y2 = this.selecteur(barre, "Ordonnée 2", "y2");
     L.html("span", { class: "courbe-en-fonction" }, barre, "Modéliser :");
     for (const [modele, texte] of [["lineaire", "y = a·x"], ["affine", "y = a·x + b"]]) {
       const bouton = L.html("button", { type: "button", class: "tablette-bouton" }, barre, texte);
@@ -1446,6 +1454,10 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
       for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, choix, this.feuille().entete(lettre));
       choix.value = this.etat[axe];
     }
+    this.choix_y2.replaceChildren();
+    L.html("option", { value: "" }, this.choix_y2, "(2e courbe : aucune)");
+    for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, this.choix_y2, this.feuille().entete(lettre));
+    this.choix_y2.value = this.etat.y2;
   };
 
   C.modeliser = function (points) {
@@ -1489,8 +1501,11 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     this.equation.textContent = points.length ? "" : "Remplissez d'abord le tableur : les points apparaîtront ici.";
     Object.assign(this.etat, { n: points.length, a: null, b: null });
     if (!points.length) return L.annoncer("courbe", { ...this.etat });
-    const max_x = Math.max(...points.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...points.map((p) => p.y), 1e-9) * 1.1;
+    const points2 = this.etat.y2 ? feuille.lignes([this.etat.x, this.etat.y2]).map((l) => ({ x: l[this.etat.x], y: l[this.etat.y2] })) : [];
+    this.etat.n2 = points2.length;
+    const tous = [...points, ...points2], max_x = Math.max(...tous.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...tous.map((p) => p.y), 1e-9) * 1.1;
     const { px, py } = this.axes(this.dessin, max_x, max_y, feuille);
+    this.seconde_serie(points2, px, py, feuille);
     points.forEach((p, i) => {
       const x = ZONE.g + p.x * px, y = ZONE.b - p.y * py;
       const croix = L.svg("path", { d: `M${x - 6} ${y}h12M${x} ${y - 6}v12`, class: "courbe-point" }, this.dessin);
@@ -1498,6 +1513,15 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     });
     if (this.etat.modele !== "aucun") this.tracer_modele(points, px, py, feuille, anime);
     L.annoncer("courbe", { ...this.etat });
+  };
+
+  C.seconde_serie = function (points, px, py, feuille) {
+    // Deuxième courbe (même abscisse) : ronds orange reliés, et son nom en légende.
+    if (!points.length) return;
+    const xy = points.map((p) => [ZONE.g + p.x * px, ZONE.b - p.y * py]).sort((a, b) => a[0] - b[0]);
+    L.svg("polyline", { points: xy.map((q) => q.join(",")).join(" "), fill: "none", stroke: "#e07b00", "stroke-width": 1.2, opacity: 0.7 }, this.dessin);
+    for (const [x, y] of xy) L.svg("circle", { cx: x, cy: y, r: 3.5, fill: "none", stroke: "#e07b00", "stroke-width": 1.6 }, this.dessin);
+    L.texte(this.dessin, ZONE.d, ZONE.h + 4, `○ ${feuille.entete(this.etat.y2)}`, { class: "courbe-nom", "text-anchor": "end", fill: "#e07b00" });
   };
 
   C.tracer_modele = function (points, px, py, feuille, anime) {
