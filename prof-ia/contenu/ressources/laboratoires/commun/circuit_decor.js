@@ -3,25 +3,36 @@ Rôle : décor d'une paillasse d'électricité vue de plus haut : un bandeau de 
        travail où l'on pose les appareils et les fils, le bord avant et les placards.
 Reçoit : le groupe SVG de la paillasse et son numéro.
 Produit : Labo.decor_circuit(groupe, numero) -> { pense_bete } ; Labo.PLAN_CIRCUIT : hauteurs (fond, avant, placard) ;
-          Labo.PRISE_MUR : centre de la prise murale ;
+          Labo.PRISES_MUR : centres des prises du mur ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
           Labo.boitier(groupe, x, y, largeur, profondeur, hauteur, { dessus, face }) : boîtier d'appareil vu d'en haut.
 Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer), les composants circuit_*.js.
 */
 (function (L) {
   L.PLAN_CIRCUIT = { fond: 168, avant: 585, placard: 598 };
-  L.PRISE_MUR = { x: 960, y: 130 };
+  L.PRISES_MUR = [{ x: 860, y: 130 }, { x: 905, y: 130 }, { x: 950, y: 130 }];
   const P = L.PLAN_CIRCUIT;
 
   function mur(g) {
-    // Mur peint, carrelage, prise électrique (à droite, pour le cordon du générateur).
+    // Mur peint, carrelage, bloc de trois prises électriques (à droite, pour les appareils branchés sur le secteur).
     L.svg("rect", { x: 0, y: 0, width: L.LARGEUR, height: P.fond, fill: "url(#mur)" }, g);
     L.svg("rect", { x: 0, y: 96, width: L.LARGEUR, height: P.fond - 96, fill: "url(#carrelage)" }, g);
     L.svg("rect", { x: 0, y: 92, width: L.LARGEUR, height: 5, fill: "#b9bdb5" }, g);
-    const prise = L.svg("g", { transform: `translate(${L.PRISE_MUR.x - 20} ${L.PRISE_MUR.y - 20})` }, g);
-    L.svg("rect", { width: 40, height: 40, rx: 4, fill: "#f7f7f4", stroke: "#b8bbb4" }, prise);
-    L.svg("circle", { cx: 20, cy: 20, r: 12, fill: "#e6e7e2", stroke: "#c4c7c0" }, prise);
-    for (const dx of [15, 25]) L.svg("circle", { cx: dx, cy: 20, r: 2, fill: "#555" }, prise);
+    L.svg("rect", { x: 834, y: 106, width: 142, height: 48, rx: 5, fill: "#f7f7f4", stroke: "#b8bbb4" }, g);
+    for (const p of L.PRISES_MUR) {
+      L.svg("circle", { cx: p.x, cy: p.y, r: 15, fill: "#e6e7e2", stroke: "#c4c7c0" }, g);
+      for (const dx of [-5, 5]) L.svg("circle", { cx: p.x + dx, cy: p.y, r: 2, fill: "#555" }, g);
+    }
   }
+
+  L.cordon_secteur = function (g, depart, P) {
+    // Cordon secteur : il part de l'arrière de l'appareil (caché sous lui) et finit par une fiche enfoncée dans la prise P.
+    L.svg("path", { d: `M${depart.x} ${depart.y} C${depart.x + 30} ${depart.y - 50} ${P.x - 40} ${P.y + 70} ${P.x} ${P.y + 22}`, fill: "none", stroke: "#2a2d30", "stroke-width": 5, "stroke-linecap": "round" }, g);
+    L.svg("rect", { x: P.x - 4, y: P.y + 8, width: 8, height: 16, rx: 3, fill: "#34373a" }, g);
+    L.svg("circle", { cx: P.x + 1, cy: P.y + 2, r: 13, fill: "#000", opacity: 0.25 }, g);
+    L.svg("circle", { cx: P.x, cy: P.y, r: 12, fill: "#3a3d41", stroke: "#1c1e20" }, g);
+    for (const dy of [-6, 0, 6]) L.svg("rect", { x: P.x - 8, y: P.y + dy - 1, width: 16, height: 2, rx: 1, fill: "#4c5055" }, g);
+    L.svg("circle", { cx: P.x - 4, cy: P.y - 5, r: 3, fill: "#fff", opacity: 0.12 }, g);
+  };
 
   function plan(g) {
     // Plan de travail sombre vu d'en haut, avec un reflet doux ; bord avant et placards.
@@ -48,6 +59,7 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
     // Dessine le décor ; le pense-bête est collé sur le mur, en haut à gauche.
     mur(g);
     plan(g);
+    g.prises_libres = L.PRISES_MUR.map((p) => ({ ...p }));
     L.svg("text", { x: 1000, y: 30, "text-anchor": "end", class: "numero-paillasse" }, g).textContent = `Paillasse ${numero + 1}`;
     return { pense_bete: L.decor.pense_bete(g, 24, 12, 300, 126) };
   };

@@ -339,3 +339,23 @@ Problèmes restants, à faire par l'enseignant :
   sa place de départ). Nouveau fichier papiers_mouvement.js : chaque morceau a un point au sol et une hauteur ;
   attiré, il part de l'arrêt et accélère vers la baguette ; détaché, il tombe sous son poids, freiné par l'air
   (vitesse limite faible), se balance, tournoie et se pose juste en dessous ; son ombre au sol suit sa hauteur.
+
+## 2026-10-16 — Laboratoires virtuels : chapitre tronc commun « Tension électrique »
+
+Fait :
+- Une simulation par activité de la fiche : A1 mesures de tensions continues (O1, O3, O4), A2 différence de potentiel
+  (O2), A3 tensions variables à l'oscilloscope (O1, O5, O6). Inscrites au manifeste (36 ressources).
+- Multimètre complet, comme un appareil réel : V⎓ (200 mV à 200 V), V~ TRMS, A⎓, quatre bornes (10A, mA, COM, VΩ),
+  résolution et dépassement d'un appareil à 2000 points, notice de précision, fusible de la borne mA (il grille si
+  l'on branche l'ampèremètre en dérivation). Les simulations du chapitre « Courant électrique continu » et leurs tests
+  sont mis à jour pour ce multimètre.
+- Nouveau matériel : résistances au vrai code des couleurs, pile 4,5 V, GBF, oscilloscope (trace déclenchée, repère de
+  masse), lettres des bornes (P, N, A, B...). Calcul du circuit en alternatif par superposition (GBF).
+- Détails corrigés après captures : bloc de trois prises au mur, chaque appareil secteur a sa fiche ; trace de la pile
+  hors de l'écran avec 1 V/div (réglage de départ 2 V/div, vérification que le trait est visible) ; touches du GBF
+  masquées par leur symbole ; lettres des bornes cachées par les fiches.
+- Vérifié : parcours complets des 6 simulations d'électricité, sans erreur ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Essayer avec des élèves : lecture des divisions de l'oscilloscope (graduations de 0,2 div, zoom), tolérances des
+  lectures (0,15 à 0,2 div), notation U_{PN} dans le carnet et UPN dans le tableur (les cellules n'ont pas d'indice).

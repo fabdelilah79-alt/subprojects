@@ -104,6 +104,19 @@ depuis une borne et on le lâche sur une autre ; on tire un fil posé pour le d�
 borne (c'est alors un nœud). Les courants sont calculés à chaque changement (méthode des nœuds). Le générateur limite
 son courant en cas de court-circuit (voyant LIMIT) ; il a un bouton Marche/Arrêt et son cordon est branché dans la prise.
 
+## Chapitre tronc commun « Tension électrique » (fiche tronc_commun/elec2_tension)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec2_a1_tensions_continues.html | A1 : mesures de tensions continues | O1, O3, O4 | Voltmètre en dérivation aux bornes du générateur (P, N) ; U_NP = −U_PN ; flèche de U_PN vers P ; dépassement du calibre 2 V ; incertitude de la notice : U_PN = (6,00 ± 0,05) V. Deux lampes en série : U_PN = U_AB + U_CD (tableur) ; interrupteur ouvert : U_EF = U_PN sans courant. En dérivation : U_AB = U_CD = U_PN. |
+| tc_elec2_a2_potentiel.html | A2 : différence de potentiel | O2 | Plaquette de trois résistances au code des couleurs (A, B, C, D) ; masse en D : potentiels V_A, V_B, V_C ; U_AB mesurée = V_A − V_B ; masse en C : les potentiels changent, les tensions non. |
+| tc_elec2_a3_oscilloscope.html | A3 : tensions variables à l'oscilloscope | O1, O5, O6 | Pile sur l'oscilloscope : U = Sv·y. GBF sinusoïdal : réglage de Sv et b, T = b·x, f = 1/T, Umax = Sv·y ; voltmètre TRMS en V~ : U = Umax/√2. Triangle et carré : même période ; en carré U = Umax, donc U = Umax/√2 seulement en sinusoïdal. |
+
+Matériel ajouté dans `commun/` : multimètre complet (`multimetre.js`, `multimetre_mesure.js` : V⎓, V~ TRMS, A⎓, quatre bornes,
+fusible de la borne mA), `mesure_tension.js` (quelle tension mesure le voltmètre), `circuit_resistances.js` (code des couleurs),
+`circuit_pile.js`, `gbf.js`, `oscilloscope.js` et `oscilloscope_ecran.js`. Les appareils branchés sur le secteur (générateur,
+GBF, oscilloscope) ont chacun leur cordon et leur fiche dans une prise du bloc mural.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

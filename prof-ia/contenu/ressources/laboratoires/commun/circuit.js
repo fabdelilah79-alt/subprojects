@@ -5,7 +5,8 @@ Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> 
          mettre_a_jour({ u(a, b), ua(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « alternatif » (s'il y a un
          GBF, c.alternatif = { forme, f, Umax } : ua donne la tension alternative pour 1 V d'amplitude du GBF).
 Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), sur_calcul(f),
-          fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2) } ;
+          fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
+          prise() (prise murale libre pour un appareil branché sur le secteur) } ;
           Labo.ROUGE_BORNE, Labo.NOIR_BORNE (couleurs des bornes + et −).
 Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fils), circuit_*.js (composants).
 */
@@ -54,6 +55,7 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
     c.calque_fils = L.svg("g", { class: "fils" }, parent);
     c.calque_bornes = L.svg("g", { class: "bornes" }, parent);
     c.ajouter = (comp) => { c.composants.push(comp); return comp; };
+    c.prise = () => (parent.prises_libres || []).shift() || L.PRISES_MUR[L.PRISES_MUR.length - 1];
     c.borne = (comp, nom, x, y, couleur) => {
       // Dessine une borne du composant et la rend « tirable » (un fil part de là).
       const b = { cle: `${comp.id}.${nom}`, comp, nom, x, y, couleur };

@@ -8,17 +8,6 @@ Produit : Labo.generateur(circuit, reglage) -> composant { id, E, i (courant dé
 Utilisé par : les postes des simulations d'électricité.
 */
 (function (L) {
-  function cordon(g, x, y) {
-    // Cordon secteur : il sort de l'arrière du boîtier et finit par une fiche enfoncée dans la prise du mur.
-    const P = L.PRISE_MUR;
-    L.svg("path", { d: `M${x + 168} ${y + 24} C${x + 200} ${y - 30} ${P.x - 40} ${P.y + 70} ${P.x} ${P.y + 22}`, fill: "none", stroke: "#2a2d30", "stroke-width": 5, "stroke-linecap": "round" }, g);
-    L.svg("rect", { x: P.x - 4, y: P.y + 8, width: 8, height: 16, rx: 3, fill: "#34373a" }, g);
-    L.svg("circle", { cx: P.x + 1, cy: P.y + 2, r: 13, fill: "#000", opacity: 0.25 }, g);
-    L.svg("circle", { cx: P.x, cy: P.y, r: 12, fill: "#3a3d41", stroke: "#1c1e20" }, g);
-    for (const dy of [-6, 0, 6]) L.svg("rect", { x: P.x - 8, y: P.y + dy - 1, width: 16, height: 2, rx: 1, fill: "#4c5055" }, g);
-    L.svg("circle", { cx: P.x - 4, cy: P.y - 5, r: 3, fill: "#fff", opacity: 0.12 }, g);
-  }
-
   function interrupteur_secteur(g, x, y, comp, basculer) {
     // Bouton Marche/Arrêt à bascule sur la face avant, avec son voyant vert ; un toucher le bascule.
     const b = L.svg("g", { class: "marche-arret", role: "button", "aria-label": "Marche / Arrêt" }, g);
@@ -53,7 +42,7 @@ Utilisé par : les postes des simulations d'électricité.
   L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null }) {
     // Construit le générateur, ses deux bornes et son modèle électrique (E, r, limitation de courant).
     const comp = { id, E, i: 0, limite: false, marche: true, g: L.svg("g", { class: "generateur" }, c.calque_composants) };
-    cordon(comp.g, x, y);
+    L.cordon_secteur(comp.g, { x: x + 168, y: y + 24 }, c.prise());
     const vue = dessiner(comp.g, x, y);
     interrupteur_secteur(comp.g, x, y, comp, () => { comp.marche = !comp.marche; c.calculer(); });
     c.borne(comp, "−", x + 40, y + 58, L.NOIR_BORNE);

@@ -283,10 +283,17 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/circuit_solveur.js | Calcul des potentiels et des courants d'un circuit continu (méthode des nœuds, DEL et limitation itérées). |
 | contenu/ressources/laboratoires/commun/circuit.js | Circuit d'une paillasse : composants, bornes, fils ; recalcul et distribution des courants à chaque changement. |
 | contenu/ressources/laboratoires/commun/circuit_fils.js | Fils de connexion : tirer d'une borne à l'autre, débrancher, fiches banane empilées, câble souple. |
-| contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, prise, grand plan de travail) et dessin des boîtiers. |
+| contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, bloc de prises, plan de travail), boîtiers, cordons secteur. |
 | contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur. |
 | contenu/ressources/laboratoires/commun/circuit_recepteurs.js | Lampe (éclat selon la puissance), DEL avec résistance de protection, interrupteur à couteau. |
-| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre en ampèremètre : calibres 10 A, 200 mA, 20 mA, signe de la mesure, dépassement « 1 ». |
+| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur (V⎓, V~, A⎓), quatre bornes, afficheur, fusible de la borne mA. |
+| contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS. |
+| contenu/ressources/laboratoires/commun/mesure_tension.js | Reconnaît la tension U_XY mesurée par un voltmètre entre deux points nommés. |
+| contenu/ressources/laboratoires/commun/circuit_resistances.js | Résistances au vrai code des couleurs ; plaquette de résistances en série entre des bornes nommées. |
+| contenu/ressources/laboratoires/commun/circuit_pile.js | Pile plate de 4,5 V dans un boîtier à bornes. |
+| contenu/ressources/laboratoires/commun/gbf.js | Générateur basse fréquence : formes sinus, triangle, carré ; fréquence affichée ; amplitude réglable. |
+| contenu/ressources/laboratoires/commun/oscilloscope.js | Oscilloscope à une voie : réglages Sv et b, entrée Y1 et masse, cordon secteur. |
+| contenu/ressources/laboratoires/commun/oscilloscope_ecran.js | Écran de l'oscilloscope : quadrillage 10 × 8, repère de masse, trace déclenchée sur front montant. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
