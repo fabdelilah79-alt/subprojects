@@ -309,6 +309,22 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/chimie_poudre.js | Pot de sulfate de cuivre anhydre (pictogrammes) et spatule. |
 | contenu/ressources/laboratoires/commun/chimie_chauffage.js | Bain-marie à 80 °C (plaque chauffante, bécher, thermomètre) ; les tubes plongés chauffent. |
 | contenu/ressources/laboratoires/commun/chimie_decor.js | Affiche de sécurité du laboratoire de chimie (lunettes, blouse, ne jamais goûter). |
+| contenu/ressources/laboratoires/commun/chimie_plaque.js | Plaque chauffante (dessin, et version avec touche Marche/Arrêt). |
+| contenu/ressources/laboratoires/commun/documents_mur.js | Documents affichés au mur, qui s'agrandissent quand on les touche. |
+| contenu/ressources/laboratoires/commun/chronometre.js | Chronomètre de paillasse (temps accéléré) pour les extractions. |
+| contenu/ressources/laboratoires/commun/liquide_geometrie.js | Géométrie des liquides : aire d'un polygone, découpe par une droite, niveau d'une surface libre. |
+| contenu/ressources/laboratoires/commun/liquide_contenu.js | Contenu liquide en phases (miscibles ou non, rangées par densité), espèces dissoutes, émulsion, partage, couleurs. |
+| contenu/ressources/laboratoires/commun/chimie_reactions.js | Réactifs et échantillons des tests (jus, vinaigre, Fehling...), pH d'une phase, phénolphtaléine, réaction de Fehling quand on chauffe. |
+| contenu/ressources/laboratoires/commun/verrerie_profils.js | Verrerie aux vraies dimensions (mm) : béchers 50 à 600 mL, tube, éprouvette, erlenmeyer, ampoule, ballon ; volume ↔ hauteur. |
+| contenu/ressources/laboratoires/commun/verrerie_rendu.js | Dessin réaliste d'une pièce de verrerie et de son liquide (phases, surface, graduations, reflets). |
+| contenu/ressources/laboratoires/commun/verrerie_accessoires.js | Robinet, bouchon, tige, pied, étiquette, col rodé dessinés avec la verrerie. |
+| contenu/ressources/laboratoires/commun/recipient_physique.js | Récipient qui respecte la physique : surface horizontale, ballottement, débordement, robinet (Torricelli). |
+| contenu/ressources/laboratoires/commun/ecoulement.js | Chute libre du liquide qui sort d'un récipient : il entre dans un récipient ou une cible, ou fait une flaque. |
+| contenu/ressources/laboratoires/commun/recipient_gestes.js | Prendre, secouer, poser un récipient, le mettre sur un support, verser en l'inclinant. |
+| contenu/ressources/laboratoires/commun/pipette_physique.js | Flacon compte-gouttes et pipette Pasteur : gouttes de 0,05 mL qui tombent là où on tient la pipette. |
+| contenu/ressources/laboratoires/commun/verre_montre.js | Verre de montre (60 ou 80 mm) : échantillon solide, papier pH, sulfate de cuivre ; taches des gouttes. |
+| contenu/ressources/laboratoires/commun/porte_tubes.js | Porte-tubes en plastique (plateau percé devant les tubes) et ses places. |
+| contenu/ressources/laboratoires/commun/bain_marie_physique.js | Bain-marie à taille réelle (plaque, bécher de 600 mL, thermomètre) ; les tubes plongés chauffent. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

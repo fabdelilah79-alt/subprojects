@@ -1,7 +1,7 @@
 /*
 Rôle : pot de sulfate de cuivre anhydre (poudre blanche, pictogrammes de danger) et spatule : on prend une pointe de
        spatule de poudre dans le pot, puis on la dépose dans un verre de montre.
-Reçoit : la paillasse de chimie et { x, bas } (pot), { repos } (spatule posée sur la paillasse).
+Reçoit : la paillasse de chimie et { x, bas } (pot), { repos } (spatule posée sur la paillasse), echelle (agrandissement).
 Produit : Labo.poudre_sulfate(ctx, reglage) -> { spatule : { chargee } } ; appelle recevoir_poudre() du verre de montre visé.
 Utilisé par : les simulations de chimie (test de l'eau).
 */
@@ -31,20 +31,21 @@ Utilisé par : les simulations de chimie (test de l'eau).
     if (chargee) L.svg("path", { d: "M-5 0 Q0 -5 5 0 Z", fill: "#f1f1ea", stroke: "#00000022" }, g);
   }
 
-  L.poudre_sulfate = function (ctx, { x, bas, repos }) {
-    // Construit le pot et la spatule ; gestes : pot -> spatule chargée ; verre de montre -> poudre déposée.
-    pot(L.svg("g", { class: "pot-sulfate" }, ctx.fond), x, bas);
+  L.poudre_sulfate = function (ctx, { x, bas, repos, echelle = 1 }) {
+    // Construit le pot et la spatule (agrandis d'un facteur echelle) ; pot -> spatule chargée ; verre de montre -> poudre déposée.
+    const k = echelle, g_pot = L.svg("g", { class: "pot-sulfate", transform: `translate(${x} ${bas}) scale(${k}) translate(${-x} ${-bas})` }, ctx.fond);
+    pot(g_pot, x, bas);
     const s = { chargee: false, g: L.svg("g", { class: "spatule", role: "button", "aria-label": "Spatule" }, ctx.objets) };
-    const ranger = () => { ctx.objets.append(s.g); L.placer(s.g, repos.x, repos.y); spatule(s.g, s.chargee); };
+    const ranger = () => { ctx.objets.append(s.g); L.placer(s.g, repos.x, repos.y, k); spatule(s.g, s.chargee); };
     ranger();
     L.glissable(s.g, {
       debut: () => ({ ...repos }),
       saisir: () => ctx.haut.append(s.g),
-      deplacer: (p) => L.placer(s.g, p.x, p.y),
+      deplacer: (p) => L.placer(s.g, p.x, p.y, k),
       lacher: (p) => {
-        if (Math.abs(p.x - x) < 20 && Math.abs(p.y - (bas - 50)) < 30) s.chargee = true;
-        const c = s.chargee && ctx.cibles.find((k) => k.recevoir_poudre && Math.abs(k.bouche().x - p.x) < 30 && Math.abs(k.bouche().y - p.y) < 28);
-        if (c) { s.chargee = false; c.recevoir_poudre(); ctx.signaler(); }
+        if (Math.abs(p.x - x) < 20 * k && Math.abs(p.y - (bas - 50 * k)) < 30 * k) s.chargee = true;
+        const c = s.chargee && (ctx.cibles || []).find((v) => v.recevoir_poudre && Math.abs(v.bouche().x - p.x) < 30 * k && Math.abs(v.bouche().y - p.y) < 28 * k);
+        if (c) { s.chargee = false; c.recevoir_poudre(); ctx.signaler?.(); }
         ranger();
       },
     });

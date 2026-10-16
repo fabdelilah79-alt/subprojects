@@ -4,7 +4,7 @@ Rôle : contenu liquide d'un récipient, en phases : les liquides miscibles (eau
        rangent par densité (la moins dense au-dessus). Une agitation crée une émulsion qui se sépare peu à peu (décantation).
        Des espèces dissoutes (diiode...) colorent la phase qui les contient.
 Reçoit : les liquides versés (nom, volume en mL) et les espèces dissoutes ajoutées.
-Produit : Labo.LIQUIDES (catalogue) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
+Produit : Labo.LIQUIDES (catalogue, complété par chimie_reactions.js) ; Labo.REGLES_COULEUR (règles des tests, facultatives) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
           volume(), couleur(phase), agiter(force), decanter(dt) }.
 Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie.
 */
@@ -66,13 +66,18 @@ Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie
       if (ph) for (const [s, q] of Object.entries(part.dissous)) ph.dissous[s] = (ph.dissous[s] || 0) + q;
     };
     c.couleur = (ph) => {
-      // Couleur et opacité d'une phase : liquides mélangés, puis teinte des espèces dissoutes (concentration = quantité / volume).
-      let rgb = [0, 0, 0], alpha = 0;
-      for (const [n, v] of Object.entries(ph.liquides)) { const l = LIQUIDES[n]; rgb = rgb.map((x, i) => x + (l.rgb[i] * v) / ph.V); alpha += (l.alpha * v) / ph.V; }
+      // Couleur et opacité d'une phase : un liquide très coloré garde sa teinte quand on le dilue (comme une solution réelle :
+      // poids de chaque liquide = volume × opacité³) ; puis teinte des espèces dissoutes (concentration = quantité / volume).
+      let rgb = [0, 0, 0], alpha = 0, poids = 0;
+      const L_ph = Object.entries(ph.liquides).filter(([, v]) => v > 0);
+      for (const [n, v] of L_ph) poids += v * LIQUIDES[n].alpha ** 3;
+      for (const [n, v] of L_ph) { const l = LIQUIDES[n], k = (v * l.alpha ** 3) / poids; rgb = rgb.map((x, i) => x + l.rgb[i] * k); alpha = Math.max(alpha, l.alpha * Math.pow(v / ph.V, 0.3)); }
       for (const [s, q] of Object.entries(ph.dissous)) {
+        if (!TEINTES[s]) continue;
         const k = Math.min(0.95, (12 * q) / Math.max(ph.V, 0.1)), t = TEINTES[s][ph.classe];
         rgb = rgb.map((x, i) => x + (t[i] - x) * k); alpha = Math.min(0.9, alpha + 0.55 * k);
       }
+      for (const regle of L.REGLES_COULEUR || []) ({ rgb, alpha } = regle(ph, rgb, alpha, c));
       return { rgb, alpha };
     };
     c.agiter = (force) => {

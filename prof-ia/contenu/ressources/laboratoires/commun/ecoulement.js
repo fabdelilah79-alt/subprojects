@@ -3,7 +3,8 @@ Rôle : écoulement des liquides sur une paillasse de chimie : le liquide qui so
        tombe en chute libre (pesanteur réelle, 9,81 m/s² à l'échelle de la scène) sous forme d'un filet ; il entre dans
        le récipient ouvert qu'il rencontre, ou se renverse sur la paillasse (flaque). Boucle d'animation de la paillasse.
 Reçoit : le contexte de la paillasse { objets, haut } et { sol (y de la paillasse, px), e (px/mm) }.
-Produit : Labo.ecoulement(ctx, reglage) -> { ajouter(r), emettre(source, p, v, parts, V), renverse (mL), sur_pas(f) } ;
+Produit : Labo.dans_polygone(poly, p) ; Labo.ecoulement(ctx, reglage) -> { ajouter(r), ajouter_cible({ contient(p), recevoir(goutte) }) (surface qui reçoit des
+          gouttes : verre de montre, papier), emettre(source, p, v, parts, V), renverse (mL), sur_pas(f) } ;
           ctx.ecoulement est créé.
 Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de chimie.
 */
@@ -18,11 +19,14 @@ Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de 
     return ok;
   }
 
+  L.dans_polygone = dedans;
+
   L.ecoulement = function (ctx, { sol, e = 1.6 }) {
     // Particules de liquide, flaques, boucle d'animation (dessin des récipients qui bougent ou qui coulent).
-    const E = { recipients: [], gouttes: [], flaques: [], renverse: 0, ecouteurs: [], g: 9810 * e };
+    const E = { recipients: [], cibles: [], gouttes: [], flaques: [], renverse: 0, ecouteurs: [], g: 9810 * e };
     const calque = L.svg("g", { class: "ecoulement", "pointer-events": "none" }, ctx.haut), sol_g = L.svg("g", { class: "flaques", "pointer-events": "none" }, ctx.fond);
     E.ajouter = (r) => E.recipients.push(r);
+    E.ajouter_cible = (c) => E.cibles.push(c);
     E.sur_pas = (f) => E.ecouteurs.push(f);
     E.emettre = (source, p, v, parts, V) => {
       // Une portion de liquide quitte un récipient en p (px), à la vitesse v (px/s).
@@ -35,6 +39,8 @@ Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de 
       // Chute libre de chaque portion ; entrée dans un récipient, ou flaque sur la paillasse.
       for (const gt of E.gouttes) {
         gt.vy += E.g * dt; gt.x += gt.vx * dt; gt.y += gt.vy * dt;
+        const cb = E.cibles.find((c) => c.contient(gt));
+        if (cb) { gt.fini = true; cb.recevoir(gt); continue; }
         const r = recevoir(gt);
         if (r) { gt.fini = true; gt.parts.forEach((p) => r.c.verser(p)); r.sale = true; continue; }
         if (gt.y >= sol && !dedans(gt.source.interieur_monde(), gt)) {
@@ -63,8 +69,13 @@ Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de 
       if (dt > 0) {
         // Pas fins (4 ms) pour une chute et un ballottement stables.
         for (let k = 0, n = Math.ceil(dt / 0.004); k < n; k++) { for (const r of E.recipients) r.pas(dt / n); deplacer(dt / n); }
-        for (const r of E.recipients) r.dessiner();
-        dessiner();
+        for (const r of E.recipients) {
+          // On ne redessine que les récipients dont l'aspect a changé.
+          const sig = `${r.pose.x} ${r.pose.y} ${r.pose.angle} ${r.phi.toFixed(3)} ${r.c.volume().toFixed(3)} ${r.c.phases.length} ${r.c.emulsion.toFixed(2)} ${(r.c.avance || 0).toFixed(3)} ${r.bouchon} ${r.robinet?.ouvert} ${r.coule}`;
+          if (sig !== r.sig) { r.sig = sig; r.dessiner(); }
+        }
+        if (E.gouttes.length || E.trace) dessiner();
+        E.trace = E.gouttes.length > 0;
         E.ecouteurs.forEach((f) => f(dt));
       }
       requestAnimationFrame(image);

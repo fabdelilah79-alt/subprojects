@@ -3,7 +3,9 @@ Rôle : gestes de la main sur un récipient : le prendre et le déplacer (ses ac
        secoué trop fort, il déborde), le poser sur la paillasse, ou le tenir au-dessus d'un autre récipient pour verser :
        une poignée apparaît, on l'incline soi-même (le débit dépend de l'inclinaison) ; un toucher le redresse et le repose.
 Reçoit : le contexte de la paillasse (ctx.obstacles : bandes [x1, x2] de la paillasse déjà occupées, comme un socle), le récipient (recipient_physique.js) et { sol (y de pose, px), fixe (non déplaçable),
-         support : { x, y } (place sur un support, comme l'anneau d'une ampoule : lâché près d'elle, il s'y remet) }.
+         support : { x, y } ou supports : [{ x, y, ... }] (places sur un support : anneau, porte-tubes, bain-marie ; lâché près
+         d'une place libre, il s'y met, et r.place la désigne), pose_libre (faux pour un tube : il ne tient pas debout sur la
+         paillasse et retourne à la place libre la plus proche) }.
 Produit : Labo.manipuler(ctx, r, reglage) ; r.tenu, r.versement (vrai pendant que l'on verse).
 Utilisé par : les simulations de chimie.
 */
@@ -58,7 +60,8 @@ Utilisé par : les simulations de chimie.
     return r.pose.x;
   }
 
-  L.manipuler = function (ctx, r, { sol, fixe = false, support = null }) {
+  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true }) {
+    const places = supports || (support ? [support] : []);
     // Rend le récipient déplaçable (s'il n'est pas fixe) ; gère la pose et le versement.
     let pg = null;
     const reposer = () => {
@@ -76,7 +79,10 @@ Utilisé par : les simulations de chimie.
       lacher: () => {
         if (r.versement) return;
         r.acc = { x: 0, y: 0 };
-        if (support && Math.hypot(r.pose.x - support.x, r.pose.y - support.y) < 80) { reposer(); Object.assign(r.pose, support); return; }
+        const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
+        const sup = places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
+        if (sup && (!pose_libre || Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80)) { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; return; }
+        r.place = null;
         const c = cible_de_versement(ctx, r);
         if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else reposer();
       },

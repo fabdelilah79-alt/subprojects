@@ -73,7 +73,10 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
     r.sortie = (p, v, parts, V) => ctx.ecoulement.emettre(r, r.monde(p), v, parts, V);
     r.pas = (dt) => {
       // Ballottement (oscillateur amorti vers l'angle de la pesanteur apparente), puis débordement et robinet.
-      const cible = Math.atan2(r.acc.x, g_mm * r.pose.e);
+      const cible = Math.atan2(r.acc.x, g_mm * r.pose.e), cle = `${r.c.volume().toFixed(4)} ${r.pose.angle} ${r.bouchon} ${r.robinet?.ouvert}`;
+      // Liquide au repos dans un récipient immobile : rien ne change (on évite de recalculer la surface).
+      if (!r.tenu && Math.abs(r.w) < 1e-3 && Math.abs(r.phi - cible) < 1e-4 && cle === r.cle && !r.c.emulsion) return;
+      r.cle = cle;
       r.w += (-RAIDEUR * (r.phi - cible) - AMORTI * r.w) * dt; r.phi = Math.max(-1.2, Math.min(1.2, r.phi + r.w * dt));
       if (r.bouchon && Math.hypot(r.acc.x, r.acc.y) > 2500) r.c.agiter(dt * 2); else r.c.decanter(dt);
       const k = Math.exp(-dt / 0.06); r.acc.x *= k; r.acc.y *= k; r.vitesse.x *= k; r.vitesse.y *= k;

@@ -25,7 +25,7 @@ Utilisé par : verrerie_rendu.js.
 
   function etiquette(g, pr, texte) {
     // Étiquette blanche collée sur le verre, à mi-hauteur.
-    const h = pr.H * 0.42, r = Math.min(pr.r(h) * 0.8, 16);
+    const h = pr.H * (pr.extras.etiquette_h || 0.42), r = Math.min(pr.r(h) * 0.8, 16);
     L.svg("rect", { x: -r, y: -h - 4, width: 2 * r, height: 8, rx: 0.8, fill: "#fbfaf3", stroke: "#cfcab8", "stroke-width": 0.3 }, g);
     L.svg("text", { x: 0, y: -h + 1.2, "font-size": Math.min(3.6, (3.4 * r) / Math.max(4, texte.length * 0.95)), "text-anchor": "middle", "font-weight": 700, fill: "#23315a", "font-family": "sans-serif" }, g).textContent = texte;
   }

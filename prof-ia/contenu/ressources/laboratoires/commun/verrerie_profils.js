@@ -3,7 +3,7 @@ Rôle : verrerie aux vraies dimensions (en mm) : profil intérieur (demi-largeur
        épaisseur du verre, bec, graduations. Pour chaque pièce : polygones intérieur et extérieur (repère du récipient :
        origine au milieu du fond, x vers la droite, y vers le bas, en mm), lèvres de l'ouverture, et tables qui relient le
        volume (mL) à l'aire de liquide vue en coupe (mm²) : un récipient droit est rempli exactement à la bonne hauteur.
-Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250).
+Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250).
 Produit : Labo.profil(nom) -> { nom, H, h0 (fond intérieur : 0, sauf l'ampoule dont la tige est sous le robinet), t, interieur, exterieur, levres, aire_de(V), volume_de(A), hauteur_de(V), r(h), graduations, extras }.
 Utilisé par : verrerie_rendu.js, recipient_physique.js.
 */
@@ -16,7 +16,8 @@ Utilisé par : verrerie_rendu.js, recipient_physique.js.
     becher_50: becher(20, 54, [10, 20, 30, 40, 50]),
     becher_100: becher(25, 68, [20, 40, 60, 80, 100]),
     becher_250: becher(33.5, 92, [50, 100, 150, 200, 250]),
-    tube: { profil: [...sphere(7.5, 0, 7.5, 0.75), [150, 7.5]], t: 1, bourrelet: true },
+    becher_600: becher(45, 125, [100, 200, 300, 400, 500, 600]),
+    tube: { profil: [...sphere(7.5, 0, 7.5, 0.75), [150, 7.5]], t: 1, bourrelet: true, etiquette_h: 0.72 },
     eprouvette_50: { profil: [[0, 10.5], [175, 10.5]], t: 1.3, bec: true, pied: true, grad: [10, 20, 30, 40, 50] },
     erlenmeyer_250: { profil: [[0, 37], [2, 39.5], [80, 16], [92, 14], [118, 14]], t: 1.4, grad: [50, 100, 150, 200] },
     ampoule_125: { profil: [[54, 1.6], [62, 1.6], ...poire(64, 186, 3, 32, 11), [204, 10.5]], t: 1.5, robinet: 52, tige: true, rode: true },
