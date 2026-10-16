@@ -144,6 +144,18 @@ Nouveau matériel commun : `transistor.js` (BC547, brochage C-B-E du boîtier TO
 (alimentation symétrique et AO avec une tension de décalage de 1 mV, comme un vrai 741) ; sources commandées dans le
 calcul des circuits ; oscilloscope à deux voies (Y1, Y2, masse commune) ; calibre 2 mA du multimètre (13 positions).
 
+## Chapitre tronc commun « Espèces chimiques » (fiche tronc_commun/chim1_especes_chimiques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim1_a1_sens.html | A1 : les cinq sens sur un fruit et sur du papier | O1 | Cartes des sens et loupe sur une orange (entière, coupée, pressée) et une feuille de papier ; la carte du goût est refusée (on ne goûte jamais au laboratoire) ; les sens donnent des indices, pas des preuves ; définition d'une espèce chimique. |
+| tc_chim1_a2_tests.html | A2 : tests de détection | O1 | Sulfate de cuivre anhydre (eau), papier pH et phénolphtaléine (pH au tableur), eau iodée (amidon), liqueur de Fehling au bain-marie (glucose), toujours avec un témoin ; l'élève propose le test qui vérifie une hypothèse. |
+| tc_chim1_a3_classement.html | A3 : inventaire, classement, documents sur l'industrie chimique | O1 | Inventaire des espèces trouvées ; étiquettes de six produits ; classement en naturelle, synthétique identique à une espèce naturelle, synthétique artificielle (synthétique ≠ artificiel) ; documents : phosphates du Maroc, vanilline de synthèse. |
+
+Nouveau matériel commun de chimie : `chimie_melange.js` (contenus et couleurs des tests), `chimie_verrerie.js`,
+`chimie_gouttes.js` (pipettes compte-gouttes, une par produit), `chimie_objets.js`, `chimie_poudre.js`,
+`chimie_chauffage.js` (bain-marie), `chimie_decor.js` (affiche de sécurité).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

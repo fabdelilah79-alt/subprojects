@@ -302,6 +302,13 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/caracteristique.js | Relevé des points (I, U) d'un dipôle quand les appareils sont bien branchés ; vérification du tableur. |
 | contenu/ressources/laboratoires/commun/transistor.js | Transistor NPN BC547 sur support (modèle d'Ebers-Moll) : régimes bloqué, linéaire, saturé ; courants I_B, I_C, I_E. |
 | contenu/ressources/laboratoires/commun/amplificateur_operationnel.js | Alimentation symétrique ±15 V et AO 741 sur plaquette : régime linéaire ou saturé (±13,5 V), choisi de façon cohérente. |
+| contenu/ressources/laboratoires/commun/chimie_melange.js | Contenu d'un récipient de chimie (produits, réactifs, solides) et règles des tests : pH, phénolphtaléine, eau iodée, Fehling, sulfate de cuivre anhydre. |
+| contenu/ressources/laboratoires/commun/chimie_verrerie.js | Dessin de la verrerie : tube à essai, bécher, verre de montre, flacon compte-gouttes, pipette, porte-tubes. |
+| contenu/ressources/laboratoires/commun/chimie_gouttes.js | Paillasse de chimie (plans de dessin, cibles) et pipette compte-gouttes : les gouttes tombent une à une. |
+| contenu/ressources/laboratoires/commun/chimie_objets.js | Tube à essai déplaçable, verre de montre, bécher d'échantillon avec sa pipette, flacon de réactif. |
+| contenu/ressources/laboratoires/commun/chimie_poudre.js | Pot de sulfate de cuivre anhydre (pictogrammes) et spatule. |
+| contenu/ressources/laboratoires/commun/chimie_chauffage.js | Bain-marie à 80 °C (plaque chauffante, bécher, thermomètre) ; les tubes plongés chauffent. |
+| contenu/ressources/laboratoires/commun/chimie_decor.js | Affiche de sécurité du laboratoire de chimie (lunettes, blouse, ne jamais goûter). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

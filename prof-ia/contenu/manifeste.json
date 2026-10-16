@@ -1143,6 +1143,117 @@
         "L'écrêtage vient d'un mauvais réglage de l'oscilloscope.",
         "L'AO fournit de l'énergie sans en recevoir."
       ]
+    },
+    {
+      "id": "tc_chim1_a1_sens",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim1_a1_sens.html",
+      "description": "Laboratoire virtuel : observer une orange (entière, coupée, pressée) et une feuille de papier avec les cartes des sens et une loupe (vésicules de jus, pores de la peau, fibres de cellulose) ; la carte du goût est refusée : on ne goûte jamais au laboratoire. Les sens donnent des indices d'espèces chimiques (eau, sucres, huile odorante, cellulose), pas des preuves.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim1_especes_chimiques",
+      "activite": "Utiliser les cinq sens pour identifier des espèces dans un produit naturel (fruit) ou fabriqué (papier).",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Une orange et nos sens",
+          "ce_que_fait_l_eleve": "Observe l'orange entière, coupe-la, observe pulpe et peau (sens et loupe), presse une moitié et observe le jus ; propose les espèces que contient l'orange.",
+          "conclusion": "Les sens donnent des indices : l'orange contient probablement de l'eau (pulpe humide, jus), des sucres (le jus colle en séchant), une huile odorante (dans les pores de la peau) et des colorants. Ce sont des espèces chimiques naturelles. Les sens ne suffisent pas pour conclure : il faut des tests. Au laboratoire, on ne goûte jamais."
+        },
+        {
+          "titre": "Une feuille de papier et nos sens",
+          "ce_que_fait_l_eleve": "Observe une feuille de papier avec les sens et à la loupe : des fibres de cellulose ; définis une espèce chimique.",
+          "conclusion": "À la loupe, le papier est un enchevêtrement de fibres de cellulose, une espèce chimique naturelle tirée du bois. Le papier est un produit fabriqué par l'homme à partir d'espèces naturelles, auxquelles on ajoute d'autres espèces (amidon, craie...). Une espèce chimique est un ensemble d'entités identiques (molécules, ions...) : l'eau, le glucose, la cellulose sont des espèces chimiques."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "Un produit naturel ne contient pas d'espèces chimiques.",
+        "On peut goûter un aliment au laboratoire.",
+        "Les sens suffisent pour affirmer qu'une espèce est présente.",
+        "Le papier est un produit entièrement artificiel."
+      ]
+    },
+    {
+      "id": "tc_chim1_a2_tests",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim1_a2_tests.html",
+      "description": "Laboratoire virtuel des tests de détection, avec témoins : sulfate de cuivre anhydre (eau) sur le jus d'orange, le papier sec, l'huile et l'eau distillée ; papier pH et phénolphtaléine sur cinq liquides (pH relevés au tableur) ; eau iodée (amidon) sur papier, papier filtre, pomme de terre et pulpe d'orange ; liqueur de Fehling au bain-marie (glucose) sur le jus d'orange. L'élève propose le test qui vérifie une hypothèse.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim1_especes_chimiques",
+      "activite": "Tests de détection ; inventaire et classement (naturelles/synthétiques).",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Le test de l'eau",
+          "ce_que_fait_l_eleve": "Teste la présence d'eau au sulfate de cuivre anhydre, avec l'eau distillée comme témoin.",
+          "conclusion": "Le sulfate de cuivre anhydre (blanc) bleuit en présence d'eau. Il bleuit avec l'eau distillée (témoin) et avec le jus d'orange : le jus contient de l'eau. Il reste blanc avec l'huile et le papier sec, qui n'en contiennent pas (ou presque pas)."
+        },
+        {
+          "titre": "Acide, neutre ou basique ?",
+          "ce_que_fait_l_eleve": "Mesure le pH de cinq liquides au papier pH, classe-les (acide, neutre, basique) ; constate que la phénolphtaléine ne rosit qu'en milieu basique.",
+          "conclusion": "Le papier pH donne le pH : pH < 7 acide (jus d'orange, vinaigre), pH = 7 neutre (eau distillée), pH > 7 basique (eau savonneuse, eau de chaux). La phénolphtaléine reste incolore en dessous de pH 8,2 et devient rose au-delà : elle détecte une solution basique, mais ne distingue pas un acide d'une solution neutre."
+        },
+        {
+          "titre": "Le test de l'amidon",
+          "ce_que_fait_l_eleve": "Propose puis réalise le test de l'amidon à l'eau iodée, avec la pomme de terre comme témoin.",
+          "conclusion": "L'eau iodée (jaune-brun) devient bleu-noir en présence d'amidon. Témoin : la pomme de terre, riche en amidon. Le papier ordinaire contient de l'amidon (on en ajoute pendant sa fabrication) ; le papier filtre (cellulose presque pure) et la pulpe d'orange n'en contiennent pas."
+        },
+        {
+          "titre": "Le test du glucose",
+          "ce_que_fait_l_eleve": "Propose puis réalise le test du glucose à la liqueur de Fehling au bain-marie, avec une solution de glucose comme témoin.",
+          "conclusion": "Chauffée avec du glucose, la liqueur de Fehling (bleue) donne un précipité rouge brique. Le tube de glucose (témoin) et le tube de jus d'orange donnent ce précipité ; le tube d'eau distillée reste bleu. Le jus d'orange contient du glucose, une espèce naturelle fabriquée par l'oranger."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Un test positif montre que le produit est pur.",
+        "La phénolphtaléine devient rose avec les acides.",
+        "Si le jus est sucré au goût, il contient du glucose.",
+        "Un témoin ne sert à rien."
+      ]
+    },
+    {
+      "id": "tc_chim1_a3_classement",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim1_a3_classement.html",
+      "description": "Laboratoire virtuel : inventaire des espèces trouvées dans l'orange et le papier ; lecture des étiquettes de six produits (gousse de vanille, sucre vanilliné, citron, vitamine C, fil de nylon, aspirine) et classement des espèces en naturelles, synthétiques identiques à une espèce naturelle, synthétiques artificielles ; documents sur l'industrie chimique (phosphates du Maroc, vanilline de synthèse).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim1_especes_chimiques",
+      "activite": "Documents sur l'industrie chimique.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Inventaire des espèces",
+          "ce_que_fait_l_eleve": "Classe les espèces trouvées selon le produit qui les contient.",
+          "conclusion": "L'orange contient de l'eau, du glucose, une espèce acide et une huile odorante ; le papier contient de la cellulose et de l'amidon. Chaque espèce a été mise en évidence par un test (comparé à un témoin) ou une observation. Les espèces de l'orange sont naturelles : elles sont fabriquées par l'oranger."
+        },
+        {
+          "titre": "Naturelle, synthétique ou artificielle ?",
+          "ce_que_fait_l_eleve": "Lis les étiquettes et classe chaque espèce : naturelle, synthétique identique à une espèce naturelle, synthétique artificielle.",
+          "conclusion": "Une espèce naturelle est extraite d'un produit de la nature. Une espèce synthétique est fabriquée par l'homme grâce à des transformations chimiques : elle peut être identique à une espèce naturelle (vanilline du sucre vanilliné, acide ascorbique des comprimés) ou n'exister nulle part dans la nature, on dit alors qu'elle est artificielle (nylon, acide acétylsalicylique). Synthétique ne veut donc pas dire artificiel."
+        },
+        {
+          "titre": "L'industrie chimique",
+          "ce_que_fait_l_eleve": "Lis deux documents sur l'industrie chimique et réponds aux questions.",
+          "conclusion": "L'industrie chimique transforme des matières premières naturelles (phosphates, pétrole, bois) : elle fabrique en grande quantité des espèces qui existent dans la nature (vanilline, vitamine C) et des espèces nouvelles (engrais, matières plastiques, médicaments). Au Maroc, l'industrie des phosphates en est un exemple majeur."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Synthétique veut dire artificiel.",
+        "Une espèce synthétique est de moins bonne qualité qu'une espèce naturelle.",
+        "La vanilline de synthèse est une autre espèce que la vanilline naturelle.",
+        "Les engrais se trouvent tels quels dans la nature."
+      ]
     }
   ]
 }

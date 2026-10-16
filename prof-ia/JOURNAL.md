@@ -401,3 +401,25 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Essayer avec des élèves : tolérance des lectures à l'oscilloscope (0,15 V + 3 %), nombre de couples (ε, Us) demandés
   (8), place de la pile qui fixe V− à 4,5 V (à expliquer avant la manipulation).
+
+## 2026-10-16 — Laboratoires virtuels : chapitre tronc commun « Espèces chimiques »
+
+Fait :
+- Trois simulations : A1 les cinq sens (orange, papier, loupe ; on ne goûte jamais) ; A2 tests de détection avec
+  témoins (sulfate de cuivre anhydre, papier pH, phénolphtaléine, eau iodée, liqueur de Fehling au bain-marie) ;
+  A3 inventaire, classement naturelle / synthétique / artificielle, documents sur l'industrie chimique. Objectif O1.
+  Inscrites au manifeste (45 ressources).
+- Nouveau matériel commun de chimie (7 fichiers) : contenus et règles de couleur des tests, verrerie, pipettes
+  compte-gouttes (une par produit, pour ne rien mélanger), tubes déplaçables, verres de montre, poudre et spatule,
+  bain-marie, affiche de sécurité.
+- Détails corrigés après captures : verres de montre trop petits (8 cm, plus larges qu'un bécher de 50 mL) ;
+  gouttes déposées sur la poudre et non à côté ; pipettes Pasteur à tétine (sans bague) dans les béchers ; bleu de
+  la liqueur de Fehling trop pâle ; thermomètre plongé dans l'eau ; écorce vidée après pressage ; loupe et couteau
+  qui se chevauchaient ; pictogramme « environnement » du sulfate de cuivre ; flacons sans bouchon ; documents
+  trop petits pour être lus.
+- Vérifié : parcours complets des 3 simulations ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le temps est accéléré au bain-marie (précipité de Fehling en une trentaine de secondes au lieu de quelques minutes).
+- Valider les textes des documents (70 % des réserves de phosphates, moins de 1 % de vanilline naturelle) et les
+  étiquettes des produits.
