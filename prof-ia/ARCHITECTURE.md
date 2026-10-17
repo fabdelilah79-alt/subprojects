@@ -325,6 +325,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/verre_montre.js | Verre de montre (60 ou 80 mm) : échantillon solide, papier pH, sulfate de cuivre ; taches des gouttes. |
 | contenu/ressources/laboratoires/commun/porte_tubes.js | Porte-tubes en plastique (plateau percé devant les tubes) et ses places. |
 | contenu/ressources/laboratoires/commun/bain_marie_physique.js | Bain-marie à taille réelle (plaque, bécher de 600 mL, thermomètre) ; les tubes plongés chauffent. |
+| contenu/ressources/laboratoires/commun/plaque_ccm.js | Plaque de chromatographie (5 × 10 cm) : ligne, dépôts, montée du front, taches selon Rf, révélation UV et diiode. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

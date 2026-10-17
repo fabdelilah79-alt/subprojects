@@ -423,3 +423,27 @@ Problèmes restants, à faire par l'enseignant :
 - Le temps est accéléré au bain-marie (précipité de Fehling en une trentaine de secondes au lieu de quelques minutes).
 - Valider les textes des documents (70 % des réserves de phosphates, moins de 1 % de vanilline naturelle) et les
   étiquettes des produits.
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « Extraction, séparation et identification » et matériel physique de chimie
+
+Fait :
+- Demande de l'enseignant : matériel plus réaliste, à sa vraie taille, et physique respectée (« si on vibre beaucoup, le
+  liquide sort »). Nouveau matériel commun : verrerie aux vraies dimensions (1,6 px par mm), liquides en phases rangées
+  par densité, surface horizontale, ballottement, débordement, filet en chute libre, flaques, robinet (Torricelli),
+  émulsion et décantation, partage du diiode, température des mélanges ; pipettes à gouttes réelles, verres de montre,
+  porte-tubes, bain-marie, plaque de chromatographie.
+- Trois simulations : A1 techniques traditionnelles (documents ; macération, infusion avec une bouilloire qui verse,
+  décoction sur la plaque) ; A2 hydrodistillation, extraction à l'ampoule à décanter, filtration sous vide, montage à
+  reflux ; A3 chromatographie sur couche mince (colorants d'un sirop de menthe, Rf ; espèces incolores révélées sous UV
+  et au diiode). Inscrites au manifeste (48 ressources).
+- Refaites avec ce matériel : chim1 A2 (tests de détection). Mises à la taille réelle : chim1 A1 et A3.
+- Corrigé après captures : tuyaux qui semblaient fuir (enfilés sur l'olive, dans l'axe de l'embout) ; robinet trop près
+  de la prise ; objets qui se chevauchaient quand on les repose ; bouilloire qui touchait le bécher en versant ;
+  chronomètre qui cachait la poignée de versement ; filet d'eau invisible ; teinte des solutions diluées.
+- Vérifié : parcours complets des 6 simulations de chimie ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Valider les Rf choisis (E102 0,72 ; E124 0,55 ; E131 0,38 dans l'eau salée ; paracétamol 0,45 ; caféine 0,25) et
+  l'éluant du médicament (nommé « mélange de solvants préparé par le professeur »).
+- Le temps est accéléré (1 s = 1 min) pour l'extraction du thé, l'hydrodistillation, la montée de l'éluant et le diiode.
+- Verser exactement 100 mL demande de l'adresse (bécher incliné à la main) : la tolérance est de 70 mL au moins.

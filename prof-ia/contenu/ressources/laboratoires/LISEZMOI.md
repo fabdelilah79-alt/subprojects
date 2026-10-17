@@ -156,6 +156,23 @@ Nouveau matériel commun de chimie : `chimie_melange.js` (contenus et couleurs d
 `chimie_gouttes.js` (pipettes compte-gouttes, une par produit), `chimie_objets.js`, `chimie_poudre.js`,
 `chimie_chauffage.js` (bain-marie), `chimie_decor.js` (affiche de sécurité).
 
+Matériel physique (depuis le chapitre « Extraction ») : la verrerie est dessinée à ses vraies dimensions (1,6 px par mm)
+et les liquides respectent la physique : surface horizontale, ballottement quand on bouge le récipient (secoué trop
+fort, il déborde), filet qui tombe en chute libre là où l'on verse, flaques, robinet de l'ampoule (loi de Torricelli),
+phases non miscibles rangées par densité, émulsion puis décantation, partage du diiode, température des mélanges.
+Fichiers : `liquide_geometrie.js`, `liquide_contenu.js`, `chimie_reactions.js`, `verrerie_profils.js`,
+`verrerie_rendu.js`, `verrerie_accessoires.js`, `recipient_physique.js`, `ecoulement.js`, `recipient_gestes.js`,
+`pipette_physique.js`, `verre_montre.js`, `porte_tubes.js`, `bain_marie_physique.js`, `plaque_ccm.js`.
+Les quatre simulations de chimie (chim1 A2, chim2 A1, A2, A3) l'utilisent ; chim1 A1 et A3 ont été mises à la taille réelle.
+
+## Chapitre tronc commun « Extraction, séparation et identification » (fiche tronc_commun/chim2_extraction)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim2_a1_traditionnelles.html | A1 : documents historiques ; macération, infusion, décoction | O1 | Quatre documents (enfleurage, macération, infusion et décoction, distillation et eau de rose) ; feuilles de thé dans l'eau froide, l'eau de la bouilloire, l'eau qui bout sur la plaque (temps accéléré) ; classement de préparations. |
+| tc_chim2_a2_extraction.html | A2 : hydrodistillation, extraction par solvant, filtration sous vide, verrerie | O1, O2, O3 | Hydrodistillation de la lavande (pierre ponce, eau du réfrigérant par le bas) ; choix du solvant au tableau de données, ampoule à décanter (verser, boucher, secouer, dégazer, décanter, recueillir) ; filtration sous vide (arrêt dans le bon ordre) ; montage à reflux numéroté. |
+| tc_chim2_a3_ccm.html | A3 : chromatographie sur couche mince, révélation | O4 | Ligne au crayon, dépôts au capillaire, éluant sous la ligne, cuve fermée, front marqué ; colorants d'un sirop de menthe comparés à des références, Rf au tableur ; espèces incolores d'un médicament révélées sous UV et au diiode. |
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

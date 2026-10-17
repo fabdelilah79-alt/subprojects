@@ -1333,6 +1333,37 @@
         "N'importe quel solvant convient pour une extraction.",
         "Le sens de circulation de l'eau du réfrigérant n'a pas d'importance."
       ]
+    },
+    {
+      "id": "tc_chim2_a3_ccm",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim2_a3_ccm.html",
+      "description": "Laboratoire virtuel de chromatographie sur couche mince, à taille réelle : ligne de dépôt au crayon, dépôts au capillaire, éluant versé sous la ligne, cuve fermée, montée du front, front marqué, mesure de d et D à la règle et calcul de Rf au tableur ; colorants d'un sirop de menthe identifiés par comparaison avec des références ; espèces incolores d'un médicament révélées sous UV puis au diiode.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim2_extraction",
+      "activite": "CCM (encre, colorants alimentaires, extraits de plantes) ; révélation des espèces incolores (UV, révélateur).",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Les colorants d'un sirop de menthe",
+          "ce_que_fait_l_eleve": "Réalise la chromatographie des colorants du sirop de menthe, compare aux références et calcule les Rf.",
+          "conclusion": "La chromatographie sépare les espèces d'un mélange : chacune monte plus ou moins vite avec l'éluant. Dans les mêmes conditions, une espèce donne toujours le même rapport frontal Rf = d / D. Le sirop de menthe donne deux taches, à la hauteur de E102 (jaune) et de E131 (bleu) : il contient ces deux colorants, et pas E124."
+        },
+        {
+          "titre": "Des espèces incolores",
+          "ce_que_fait_l_eleve": "Réalise la chromatographie d'un médicament et révèle les taches sous UV puis au diiode.",
+          "conclusion": "Les taches des espèces incolores ne se voient pas : on les révèle. Sous la lumière UV, la plaque (qui contient un indicateur fluorescent) brille, et les taches apparaissent sombres : on les entoure au crayon. Le diiode, lui, colore les taches en brun. Le médicament donne deux taches, à la hauteur du paracétamol et de la caféine : il contient ces deux espèces."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Une tache verte correspond à un seul colorant vert.",
+        "On peut tracer la ligne de dépôt au stylo.",
+        "Si l'on ne voit pas de tache, la plaque ne contient rien."
+      ]
     }
   ]
 }
