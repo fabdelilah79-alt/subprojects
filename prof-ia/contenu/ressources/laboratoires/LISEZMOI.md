@@ -173,6 +173,20 @@ Les quatre simulations de chimie (chim1 A2, chim2 A1, A2, A3) l'utilisent ; chim
 | tc_chim2_a2_extraction.html | A2 : hydrodistillation, extraction par solvant, filtration sous vide, verrerie | O1, O2, O3 | Hydrodistillation de la lavande (pierre ponce, eau du réfrigérant par le bas) ; choix du solvant au tableau de données, ampoule à décanter (verser, boucher, secouer, dégazer, décanter, recueillir) ; filtration sous vide (arrêt dans le bon ordre) ; montage à reflux numéroté. |
 | tc_chim2_a3_ccm.html | A3 : chromatographie sur couche mince, révélation | O4 | Ligne au crayon, dépôts au capillaire, éluant sous la ligne, cuve fermée, front marqué ; colorants d'un sirop de menthe comparés à des références, Rf au tableur ; espèces incolores d'un médicament révélées sous UV et au diiode. |
 
+## Chapitre tronc commun « Synthèse d'espèces chimiques » (fiche tronc_commun/chim3_synthese)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim3_a1_savon.html | A1 : synthétiser une espèce (reflux, filtration, séparation) | O1, O2, O3 | Fiches de sécurité et pictogrammes ; lunettes et gants exigés pour la soude ; huile, soude, éthanol par l'entonnoir, pierre ponce, réfrigérant à boules, reflux de 30 min ; relargage dans l'eau salée ; filtration sous vide ; mousse comparée à un savon du commerce et à un témoin. |
+| tc_chim3_a2_arome.html | A2 : synthétiser une espèce naturelle et vérifier qu'elle est identique | O1, O2, O3 | Acétate d'isoamyle (arôme de banane) au reflux avec un catalyseur ; lavage à l'eau salée à l'ampoule (ester en phase supérieure, odeur par déplacement d'air) ; chromatographie du produit, de l'arôme naturel et de la référence, révélée sous UV. |
+
+Matériel commun ajouté : `pictogrammes.js` (SGH), `equipement.js` (lunettes, gants), `chauffe_ballon.js`,
+`pierre_ponce.js`, `refrigerant_boules.js`, `montage_reflux.js` et `reflux_gestes.js` (montage à reflux que l'on
+assemble), `poste_synthese.js` (paillasse de synthèse), `buchner.js` et `buchner_poste.js` (filtration sous vide),
+`ampoule_support.js` (ampoule à décanter), `ccm_materiel.js`, `ccm_gestes.js`, `ccm_poste.js`, `ccm_missions.js`
+(chromatographie). Plusieurs de ces fichiers étaient avant dans les dossiers de chim2 : ils ont été déplacés sans changer
+leur rôle.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

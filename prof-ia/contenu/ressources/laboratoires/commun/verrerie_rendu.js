@@ -50,7 +50,7 @@ Utilisé par : recipient_physique.js.
 
   function liquide(g, etat) {
     // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
-    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), opacity: ph.alpha }, g);
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), "fill-opacity": ph.alpha, stroke: "rgba(110,135,148,0.55)", "stroke-width": 0.35 }, g);
     const s = etat.surface;
     if (!s) return;
     const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;

@@ -447,3 +447,26 @@ Problèmes restants, à faire par l'enseignant :
   l'éluant du médicament (nommé « mélange de solvants préparé par le professeur »).
 - Le temps est accéléré (1 s = 1 min) pour l'extraction du thé, l'hydrodistillation, la montée de l'éluant et le diiode.
 - Verser exactement 100 mL demande de l'adresse (bécher incliné à la main) : la tolérance est de 70 mL au moins.
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « Synthèse d'espèces chimiques »
+
+Fait :
+- Deux simulations à taille réelle : A1 synthèse d'un savon (fiches de sécurité et pictogrammes, lunettes et gants
+  exigés pour la soude, reflux de l'huile avec la soude et l'éthanol, relargage, filtration sous vide, mousse comparée
+  à un savon du commerce) ; A2 arôme de banane (estérification au reflux avec catalyseur, lavage à l'eau salée à
+  l'ampoule, odeur par déplacement d'air, comparaison par CCM avec l'arôme naturel et la référence). Objectifs O1 à O3.
+  Inscrites au manifeste (50 ressources).
+- Matériel commun : montage à reflux que l'élève assemble (entonnoir, réfrigérant à poser sur le col, eau, chauffe ;
+  sans réfrigérant, les vapeurs s'échappent), pictogrammes SGH, équipement de protection, paillasse de synthèse.
+- Rangement : Büchner, ampoule, chauffe-ballon, pierre ponce et chromatographie déplacés de chim2 vers commun ; chim2
+  vérifié après le déplacement.
+- Corrigé après essais : le ballon revenait sur le chauffe-ballon au lieu de verser ; un ballon à fond rond ne se pose
+  plus sur la paillasse ; béchers reposés derrière le chauffe-ballon ou sur le flacon de pierre ponce ; limite entre
+  deux phases incolores peu visible.
+- Vérifié : parcours complets des 8 simulations de chimie ; tests (54) et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Valider les Rf de la CCM de l'arôme (ester 0,62 ; alcool isoamylique 0,36 ; autre espèce de la banane 0,18) et le
+  rendement choisi (14 mL d'ester pour 15 mL d'alcool).
+- Temps accéléré (1 s = 1 min) pour le reflux de 30 min et le refroidissement.
+- Pour vider un ballon il faut l'incliner beaucoup (comme en vrai) : à expliquer aux élèves.

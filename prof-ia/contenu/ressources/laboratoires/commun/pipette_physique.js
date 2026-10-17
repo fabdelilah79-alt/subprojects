@@ -4,7 +4,7 @@ Rôle : pipette compte-gouttes aux vraies dimensions, rangée dans son flacon (3
        lâche au-dessus d'un récipient ou d'un verre de montre où elle reste tenue ; tant qu'on appuie sur la poire, une goutte
        de 0,05 mL se forme toutes les 0,3 s et tombe (chute libre, ecoulement.js) là où elle tombe vraiment. Remise dans son
        flacon ou son bécher, elle se remplit de nouveau.
-Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte } (flacon) ou
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte, autoriser() } (flacon) ou
          { id, becher (récipient fixe de recipient_physique.js), e } (pipette Pasteur dans un bécher : elle est dessinée
          derrière la paroi avant et le liquide du bécher).
 Produit : Labo.flacon_gouttes(ctx, reglage) -> { pipette : { charge (mL), tenue } }.
@@ -48,7 +48,7 @@ Utilisé par : les simulations de chimie.
     return false;
   }
 
-  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null }) {
+  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null, autoriser = () => true }) {
     // Flacon fixe (ou bécher) ; pipette déplaçable ; gouttes tant qu'on appuie sur la poire.
     const g_f = becher ? null : L.svg("g", { class: `flacon flacon-${id}` }, ctx.fond), g_p = L.svg("g", { class: `pipette pipette-${id}`, role: "button" }, ctx.objets);
     const nom = () => liquide || Object.entries(becher.c.phases[0]?.liquides || { eau: 1 }).sort((a, b) => b[1] - a[1])[0][0];
@@ -75,7 +75,7 @@ Utilisé par : les simulations de chimie.
       ctx.ecoulement.emettre(source, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 20 }, source.c.retirer(v), v); dessiner();
     };
     L.glissable(g_p, {
-      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } return { ...p.pos }; },
+      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } if (!p.tenue && !autoriser()) return null; return { ...p.pos }; },
       saisir: () => { p.tenue = true; ctx.haut.append(g_p); dessiner(); },
       deplacer: (q) => { p.pos = q; dessiner(); },
       lacher: (q) => { if (Math.hypot(q.x - repos.x, q.y - repos.y) < 16 || !cible_sous(ctx, q)) return ranger(); p.pos = q; dessiner(); },

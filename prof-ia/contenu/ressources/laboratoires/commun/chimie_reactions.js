@@ -4,7 +4,7 @@ Rôle : réactifs et échantillons des tests de chimie, ajoutés au catalogue de
        glucose, elle donne un précipité qui passe du jaune-orangé au rouge brique, et la solution perd son bleu).
 Reçoit : le contenu d'un récipient (liquide_contenu.js) ; pour le chauffage, la température du bain et la durée.
 Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.REGLES_COULEUR ; Labo.pH_phase(phase) ; Labo.pH_liquide(nom) ;
-          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance).
+          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance) ; Labo.convertir_liquide(contenu, de, vers, V).
 Utilisé par : les simulations de chimie (tests de détection).
 */
 (function (L) {
@@ -18,6 +18,7 @@ Utilisé par : les simulations de chimie (tests de détection).
     phenolphtaleine: aq("phénolphtaléine", [240, 245, 248], 0.3, null),
     fehling: aq("liqueur de Fehling", [22, 82, 200], 0.85, 13, { d: 1.1 }),
     oxyde_cuivre: { nom: "précipité", d: 6, rgb: [168, 48, 26], alpha: 0.95, classe: "precipite" },
+    eau_salee: { nom: "eau salée", d: 1.2, rgb: [230, 240, 246], alpha: 0.32, classe: "aqueuse", pH: 7 },
   });
   L.LIQUIDES.eau.pH = 7;
   L.LIQUIDES.eau_iodee.pH = 7;
@@ -46,6 +47,17 @@ Utilisé par : les simulations de chimie (tests de détection).
       return { rgb: vers(rgb, [222, 146, 92], 0.9 * c.avance), alpha };
     },
   ];
+
+  L.convertir_liquide = function (c, de, vers, V) {
+    // Une transformation : remplace V mL du liquide « de » par V mL du liquide « vers » ; renvoie le volume transformé.
+    const ph = c.phases.find((p) => p.liquides[de] > 0);
+    if (!ph) return 0;
+    const v = Math.min(V, ph.liquides[de]);
+    ph.liquides[de] -= v; ph.V -= v;
+    if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+    c.ajouter(vers, v);
+    return v;
+  };
 
   L.chauffer_contenu = function (c, T_bain, dt) {
     // Le contenu prend la température du bain (constante de temps 6 s) ; au-dessus de 60 °C, le glucose réduit la liqueur de Fehling.

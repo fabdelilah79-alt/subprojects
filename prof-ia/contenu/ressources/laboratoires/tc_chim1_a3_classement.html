@@ -2389,7 +2389,7 @@ Rôle : réactifs et échantillons des tests de chimie, ajoutés au catalogue de
        glucose, elle donne un précipité qui passe du jaune-orangé au rouge brique, et la solution perd son bleu).
 Reçoit : le contenu d'un récipient (liquide_contenu.js) ; pour le chauffage, la température du bain et la durée.
 Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.REGLES_COULEUR ; Labo.pH_phase(phase) ; Labo.pH_liquide(nom) ;
-          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance).
+          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance) ; Labo.convertir_liquide(contenu, de, vers, V).
 Utilisé par : les simulations de chimie (tests de détection).
 */
 (function (L) {
@@ -2403,6 +2403,7 @@ Utilisé par : les simulations de chimie (tests de détection).
     phenolphtaleine: aq("phénolphtaléine", [240, 245, 248], 0.3, null),
     fehling: aq("liqueur de Fehling", [22, 82, 200], 0.85, 13, { d: 1.1 }),
     oxyde_cuivre: { nom: "précipité", d: 6, rgb: [168, 48, 26], alpha: 0.95, classe: "precipite" },
+    eau_salee: { nom: "eau salée", d: 1.2, rgb: [230, 240, 246], alpha: 0.32, classe: "aqueuse", pH: 7 },
   });
   L.LIQUIDES.eau.pH = 7;
   L.LIQUIDES.eau_iodee.pH = 7;
@@ -2431,6 +2432,17 @@ Utilisé par : les simulations de chimie (tests de détection).
       return { rgb: vers(rgb, [222, 146, 92], 0.9 * c.avance), alpha };
     },
   ];
+
+  L.convertir_liquide = function (c, de, vers, V) {
+    // Une transformation : remplace V mL du liquide « de » par V mL du liquide « vers » ; renvoie le volume transformé.
+    const ph = c.phases.find((p) => p.liquides[de] > 0);
+    if (!ph) return 0;
+    const v = Math.min(V, ph.liquides[de]);
+    ph.liquides[de] -= v; ph.V -= v;
+    if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+    c.ajouter(vers, v);
+    return v;
+  };
 
   L.chauffer_contenu = function (c, T_bain, dt) {
     // Le contenu prend la température du bain (constante de temps 6 s) ; au-dessus de 60 °C, le glucose réduit la liqueur de Fehling.
@@ -2556,7 +2568,7 @@ Utilisé par : recipient_physique.js.
 
   function liquide(g, etat) {
     // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
-    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), opacity: ph.alpha }, g);
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), "fill-opacity": ph.alpha, stroke: "rgba(110,135,148,0.55)", "stroke-width": 0.35 }, g);
     const s = etat.surface;
     if (!s) return;
     const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;
@@ -2584,7 +2596,7 @@ Utilisé par : recipient_physique.js.
 /*
 Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
        PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
-       étiquette collée.
+       étiquette collée (et ses pictogrammes de danger).
 Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
 Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
 Utilisé par : verrerie_rendu.js.
@@ -2630,6 +2642,7 @@ Utilisé par : verrerie_rendu.js.
     if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
     if (etat.bouchon) bouchon(g, pr);
     if (etat.etiquette) etiquette(g, pr, etat.etiquette);
+    (etat.pictos || []).forEach((c, i, t) => L.pictogramme?.(g, (i - (t.length - 1) / 2) * 11, -pr.H * (pr.extras.etiquette_h || 0.42) - 11, 5, c));
   };
 })(window.Labo);
 </script>
@@ -2639,7 +2652,7 @@ Rôle : récipient de liquide qui respecte la physique : la surface reste perpen
        penche quand on accélère le récipient et oscille ensuite, comme un vrai liquide qui ballotte) ; le liquide qui
        dépasse la lèvre la plus basse déborde (débit d'un déversoir) ; un robinet ouvert laisse couler le liquide du bas
        (loi de Torricelli, v = √(2gh)), sauf si le récipient est bouché (l'air ne peut pas entrer).
-Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet }.
+Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet, etiquette, pictos (codes SGH collés au-dessus de l'étiquette) }.
 Produit : Labo.recipient(ctx, reglage) -> { id, pr, pose, c, bouchon, robinet, pas(dt), etat(), monde(p) (p dans le repère du
           récipient, y vers le bas, mm), interieur_monde(), dessiner() }.
 Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
@@ -2699,10 +2712,10 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
     r.sortie(pointe, { x: r.vitesse.x, y: v * r.pose.e * 0.5 + r.vitesse.y }, r.c.retirer(V, "bas"), V);
   }
 
-  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "" }) {
+  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "", pictos = [] }) {
     // Construit le récipient et l'inscrit dans l'écoulement de la paillasse.
     const pr = L.profil(profil);
-    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
+    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, pictos, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
     r.normale = () => { const a = r.phi - rad(r.pose.angle); return { x: Math.sin(a), y: -Math.cos(a) }; };
     r.monde = (p) => G.transformer([{ x: p.x, y: -p.y }], r.pose)[0];
     r.interieur_monde = () => G.transformer(pr.interieur.map((p) => ({ x: p.x, y: -p.y })), r.pose);
@@ -2720,7 +2733,7 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
       r.coule = null;
       deborder(r, dt, u, s); vidanger(r, dt, u, s);
     };
-    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, coule: r.coule }; };
+    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, pictos: r.pictos, coule: r.coule }; };
     r.dessiner = () => L.dessiner_verrerie(r.g, pr, r.pose, r.etat());
     ctx.ecoulement.ajouter(r);
     r.dessiner();
@@ -2828,7 +2841,7 @@ Rôle : pipette compte-gouttes aux vraies dimensions, rangée dans son flacon (3
        lâche au-dessus d'un récipient ou d'un verre de montre où elle reste tenue ; tant qu'on appuie sur la poire, une goutte
        de 0,05 mL se forme toutes les 0,3 s et tombe (chute libre, ecoulement.js) là où elle tombe vraiment. Remise dans son
        flacon ou son bécher, elle se remplit de nouveau.
-Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte } (flacon) ou
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte, autoriser() } (flacon) ou
          { id, becher (récipient fixe de recipient_physique.js), e } (pipette Pasteur dans un bécher : elle est dessinée
          derrière la paroi avant et le liquide du bécher).
 Produit : Labo.flacon_gouttes(ctx, reglage) -> { pipette : { charge (mL), tenue } }.
@@ -2872,7 +2885,7 @@ Utilisé par : les simulations de chimie.
     return false;
   }
 
-  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null }) {
+  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null, autoriser = () => true }) {
     // Flacon fixe (ou bécher) ; pipette déplaçable ; gouttes tant qu'on appuie sur la poire.
     const g_f = becher ? null : L.svg("g", { class: `flacon flacon-${id}` }, ctx.fond), g_p = L.svg("g", { class: `pipette pipette-${id}`, role: "button" }, ctx.objets);
     const nom = () => liquide || Object.entries(becher.c.phases[0]?.liquides || { eau: 1 }).sort((a, b) => b[1] - a[1])[0][0];
@@ -2899,7 +2912,7 @@ Utilisé par : les simulations de chimie.
       ctx.ecoulement.emettre(source, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 20 }, source.c.retirer(v), v); dessiner();
     };
     L.glissable(g_p, {
-      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } return { ...p.pos }; },
+      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } if (!p.tenue && !autoriser()) return null; return { ...p.pos }; },
       saisir: () => { p.tenue = true; ctx.haut.append(g_p); dessiner(); },
       deplacer: (q) => { p.pos = q; dessiner(); },
       lacher: (q) => { if (Math.hypot(q.x - repos.x, q.y - repos.y) < 16 || !cible_sous(ctx, q)) return ranger(); p.pos = q; dessiner(); },

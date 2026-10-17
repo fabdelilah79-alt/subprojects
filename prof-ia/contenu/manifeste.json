@@ -1364,6 +1364,87 @@
         "On peut tracer la ligne de dépôt au stylo.",
         "Si l'on ne voit pas de tache, la plaque ne contient rien."
       ]
+    },
+    {
+      "id": "tc_chim3_a1_savon",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim3_a1_savon.html",
+      "description": "Laboratoire virtuel de synthèse d'un savon, à taille réelle : fiches de sécurité et pictogrammes ; lunettes et gants obligatoires pour la soude ; huile, soude et éthanol versés par l'entonnoir, pierre ponce, réfrigérant à boules, chauffage à reflux (vapeurs qui s'échappent sans réfrigérant) ; relargage dans l'eau salée ; filtration sous vide ; test de la mousse comparé à un savon du commerce et à un témoin.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim3_synthese",
+      "activite": "Synthétiser une espèce (chauffage à reflux, filtration, séparation).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "La sécurité d'abord",
+          "ce_que_fait_l_eleve": "Lis les fiches de sécurité et réponds aux questions sur les dangers et les déchets.",
+          "conclusion": "Les pictogrammes de danger renseignent sur les risques : corrosif (soude), inflammable (éthanol). On porte blouse, lunettes et gants ; on chauffe sans flamme (chauffe-ballon) dans un montage à reflux qui ne laisse pas sortir les vapeurs ; les restes vont dans le bidon de récupération, jamais dans l'évier."
+        },
+        {
+          "titre": "Le chauffage à reflux",
+          "ce_que_fait_l_eleve": "Réalise le chauffage à reflux de l'huile avec la soude, puis le relargage.",
+          "conclusion": "Huile + soude → savon + glycérol. Le chauffage accélère la transformation ; le réfrigérant à boules condense les vapeurs, qui retombent dans le ballon : on chauffe longtemps sans perte de matière et sans laisser sortir les vapeurs inflammables. Dans l'eau salée, le savon, peu soluble, se rassemble en grains : c'est le relargage."
+        },
+        {
+          "titre": "Récupérer le savon",
+          "ce_que_fait_l_eleve": "Filtre sous vide les grains de savon.",
+          "conclusion": "La filtration sous vide sépare le savon (solide, retenu par le papier) de l'eau salée qui contient l'éthanol, le glycérol et le reste de soude (filtrat). Pour arrêter : on débranche le tuyau, puis on ferme le robinet."
+        },
+        {
+          "titre": "Est-ce bien du savon ?",
+          "ce_que_fait_l_eleve": "Compare la mousse du savon obtenu à celle d'un savon du commerce.",
+          "conclusion": "Secoués, les tubes 1 (savon obtenu) et 2 (savon du commerce) se remplissent de mousse ; le tube 3 (eau seule, témoin) n'en donne pas. Le produit synthétisé a la même propriété que le savon du commerce : on a bien fabriqué un savon."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Le réfrigérant sert à refroidir le ballon.",
+        "Chauffer plus longtemps fait toujours perdre de la matière.",
+        "Un produit fabriqué au laboratoire n'est pas un vrai savon."
+      ]
+    },
+    {
+      "id": "tc_chim3_a2_arome",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim3_a2_arome.html",
+      "description": "Laboratoire virtuel de synthèse de l'acétate d'isoamyle (arôme de banane) : réactifs corrosifs et inflammables, catalyseur au compte-gouttes, chauffage à reflux ; lavage à l'eau salée dans l'ampoule à décanter (ester en phase supérieure, odeur par déplacement d'air) ; comparaison par chromatographie du produit obtenu, de l'arôme naturel de banane et de l'espèce pure, révélée sous UV.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim3_synthese",
+      "activite": "Synthétiser une espèce existant dans la nature et vérifier qu'elle est identique à l'espèce naturelle.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Synthétiser un arôme de banane",
+          "ce_que_fait_l_eleve": "Réalise la synthèse de l'arôme au chauffage à reflux.",
+          "conclusion": "Alcool isoamylique + acide acétique → acétate d'isoamyle + eau. La transformation est lente : on chauffe à reflux pendant 30 minutes, et quelques gouttes d'acide sulfurique (catalyseur) l'accélèrent. Les réactifs sont inflammables et corrosifs : lunettes, gants, pas de flamme."
+        },
+        {
+          "titre": "Laver et séparer l'ester",
+          "ce_que_fait_l_eleve": "Lave le mélange à l'eau salée et sépare l'ester à l'ampoule à décanter.",
+          "conclusion": "L'ester est peu soluble dans l'eau salée et moins dense qu'elle (0,87) : il forme la phase supérieure, qui sent la banane. La phase aqueuse (en bas) contient l'acide restant ; on l'élimine par le robinet. On sent une espèce par déplacement d'air, jamais en mettant le nez au-dessus."
+        },
+        {
+          "titre": "Est-ce le même arôme ?",
+          "ce_que_fait_l_eleve": "Compare par chromatographie le produit obtenu à l'arôme naturel et à la référence.",
+          "conclusion": "Les trois dépôts donnent une tache à la même hauteur que la référence : le produit obtenu contient de l'acétate d'isoamyle, la même espèce que celle de la banane. Une espèce synthétique peut être identique à une espèce naturelle. Le produit obtenu donne aussi une petite tache d'alcool isoamylique : il n'est pas tout à fait pur ; l'arôme naturel contient d'autres espèces."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Une espèce synthétique est différente de la même espèce naturelle.",
+        "Le catalyseur donne l'odeur.",
+        "La phase la plus colorée ou la plus abondante est en bas."
+      ]
     }
   ]
 }

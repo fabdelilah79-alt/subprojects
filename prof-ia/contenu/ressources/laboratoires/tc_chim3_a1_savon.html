@@ -2379,7 +2379,7 @@ Rôle : réactifs et échantillons des tests de chimie, ajoutés au catalogue de
        glucose, elle donne un précipité qui passe du jaune-orangé au rouge brique, et la solution perd son bleu).
 Reçoit : le contenu d'un récipient (liquide_contenu.js) ; pour le chauffage, la température du bain et la durée.
 Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.REGLES_COULEUR ; Labo.pH_phase(phase) ; Labo.pH_liquide(nom) ;
-          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance).
+          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance) ; Labo.convertir_liquide(contenu, de, vers, V).
 Utilisé par : les simulations de chimie (tests de détection).
 */
 (function (L) {
@@ -2393,6 +2393,7 @@ Utilisé par : les simulations de chimie (tests de détection).
     phenolphtaleine: aq("phénolphtaléine", [240, 245, 248], 0.3, null),
     fehling: aq("liqueur de Fehling", [22, 82, 200], 0.85, 13, { d: 1.1 }),
     oxyde_cuivre: { nom: "précipité", d: 6, rgb: [168, 48, 26], alpha: 0.95, classe: "precipite" },
+    eau_salee: { nom: "eau salée", d: 1.2, rgb: [230, 240, 246], alpha: 0.32, classe: "aqueuse", pH: 7 },
   });
   L.LIQUIDES.eau.pH = 7;
   L.LIQUIDES.eau_iodee.pH = 7;
@@ -2421,6 +2422,17 @@ Utilisé par : les simulations de chimie (tests de détection).
       return { rgb: vers(rgb, [222, 146, 92], 0.9 * c.avance), alpha };
     },
   ];
+
+  L.convertir_liquide = function (c, de, vers, V) {
+    // Une transformation : remplace V mL du liquide « de » par V mL du liquide « vers » ; renvoie le volume transformé.
+    const ph = c.phases.find((p) => p.liquides[de] > 0);
+    if (!ph) return 0;
+    const v = Math.min(V, ph.liquides[de]);
+    ph.liquides[de] -= v; ph.V -= v;
+    if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+    c.ajouter(vers, v);
+    return v;
+  };
 
   L.chauffer_contenu = function (c, T_bain, dt) {
     // Le contenu prend la température du bain (constante de temps 6 s) ; au-dessus de 60 °C, le glucose réduit la liqueur de Fehling.
@@ -2546,7 +2558,7 @@ Utilisé par : recipient_physique.js.
 
   function liquide(g, etat) {
     // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
-    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), opacity: ph.alpha }, g);
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), "fill-opacity": ph.alpha, stroke: "rgba(110,135,148,0.55)", "stroke-width": 0.35 }, g);
     const s = etat.surface;
     if (!s) return;
     const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;
@@ -3172,7 +3184,7 @@ Rôle : montage de chauffage à reflux aux vraies dimensions, que l'élève asse
        (reflux) ; sinon elles s'échappent (perte de matière, vapeurs souvent inflammables). Pendant la chauffe, la
        réaction avance (cfg.reagir) ; arrêté, le ballon refroidit.
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { T_eb (°C), duree (min de reflux), reagir(contenu, d_avance),
-         dire(texte), autoriser_ballon() }.
+         dire(texte), autoriser_ballon(), ponce_x (place du flacon de pierre ponce) }.
 Produit : Labo.montage_reflux(ctx, cfg) -> s { ballon, avance, T, ebullition, perte, ponce, entonnoir, refrigerant, eau,
           chauffe, tic(dt_min), etat() } (le temps est donné par le chronomètre de la paillasse).
 Utilisé par : les simulations de synthèse (savon, arôme).
@@ -3217,7 +3229,7 @@ Utilisé par : les simulations de synthèse (savon, arôme).
 
   L.montage_reflux = function (ctx, cfg) {
     // Construit le montage ; les gestes sont dans reflux_gestes.js.
-    const s = { ...S0, avance: 0, perte: 0, ponce: false, entonnoir: "col", refrigerant: "repos", ref_pos: { ...S0.REPOS }, eau: false, chauffe: false, dire: cfg.dire };
+    const s = { ...S0, PONCE_X: cfg.ponce_x, avance: 0, perte: 0, ponce: false, entonnoir: "col", refrigerant: "repos", ref_pos: { ...S0.REPOS }, eau: false, chauffe: false, dire: cfg.dire };
     support(ctx.fond); ctx.obstacles = (ctx.obstacles || []).concat([[130, 450]]);
     s.g_tuyaux = L.svg("g", { "pointer-events": "none" }, ctx.fond);
     const chauffe = L.chauffe_ballon(ctx.fond, ctx.devant, S0.CH);
@@ -3229,6 +3241,156 @@ Utilisé par : les simulations de synthèse (savon, arôme).
     s.etat = () => ({ entonnoir: s.entonnoir, refrigerant: s.refrigerant, eau: s.eau, chauffe: s.chauffe, T: Math.round(s.ballon.c.T ?? 20), ebullition: s.ebullition, fuite: !!s.fuite, perte: Math.round(s.perte), soubresauts: !!s.soubresauts, ponce: s.ponce, avance: Math.round(s.avance * 100) / 100, V: Math.round(s.ballon.c.volume()) });
     s.maj();
     return s;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pipette compte-gouttes aux vraies dimensions, rangée dans son flacon (30 mL, verre teinté, étiquette) ou dans un
+       bécher d'échantillon (pipette Pasteur à tétine rouge) : on la sort (elle contient 1 mL, pris dans le bécher), on la
+       lâche au-dessus d'un récipient ou d'un verre de montre où elle reste tenue ; tant qu'on appuie sur la poire, une goutte
+       de 0,05 mL se forme toutes les 0,3 s et tombe (chute libre, ecoulement.js) là où elle tombe vraiment. Remise dans son
+       flacon ou son bécher, elle se remplit de nouveau.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte, autoriser() } (flacon) ou
+         { id, becher (récipient fixe de recipient_physique.js), e } (pipette Pasteur dans un bécher : elle est dessinée
+         derrière la paroi avant et le liquide du bécher).
+Produit : Labo.flacon_gouttes(ctx, reglage) -> { pipette : { charge (mL), tenue } }.
+Utilisé par : les simulations de chimie.
+*/
+(function (L) {
+  const GOUTTE = 0.05;
+
+  function flacon(g, ouvert, texte, rgb) {
+    // Flacon de 30 mL (repère en mm, fond en (0, 0)) : verre brun, épaule, col ; étiquette.
+    g.replaceChildren();
+    L.svg("ellipse", { cx: 2, cy: 1, rx: 19, ry: 3.5, fill: "#000", opacity: 0.3 }, g);
+    L.svg("path", { d: "M-17 -2 V-52 Q-17 -62 -7 -64 V-72 H7 V-64 Q17 -62 17 -52 V-2 Q17 0 15 0 H-15 Q-17 0 -17 -2 Z", fill: "#6b3a12", opacity: 0.9, stroke: "#2b1606", "stroke-width": 0.5 }, g);
+    L.svg("rect", { x: -15, y: -40, width: 30, height: 36, fill: L.rgb(rgb), opacity: 0.25 }, g);
+    L.svg("rect", { x: -12, y: -14 - 40, width: 3, height: 46, rx: 1.5, fill: "#fff", opacity: 0.18 }, g);
+    L.svg("rect", { x: -14, y: -46, width: 28, height: 22, fill: "#f7f3e6", stroke: "#bdb59c", "stroke-width": 0.4 }, g);
+    String(texte).split("\n").forEach((t, i, tout) => L.svg("text", { x: 0, y: -36 + i * 5 - 2.5 * (tout.length - 1), "font-size": 4, "font-weight": 700, "text-anchor": "middle", fill: "#222", "font-family": "sans-serif" }, g).textContent = t);
+    if (ouvert) L.svg("ellipse", { cx: 0, cy: -72, rx: 6, ry: 1.6, fill: "#1a0d04" }, g);
+  }
+
+  function pipette(g, entiere, charge, rgb, pasteur) {
+    // Pipette, pointe en (0, 0) : tube de verre effilé (60 mm), bague, poire en caoutchouc (22 mm).
+    g.replaceChildren();
+    if (entiere) {
+      L.svg("path", { d: "M-0.8 0 L-3 -24 V-60 H3 V-24 L0.8 0 Z", fill: "rgba(214,233,240,0.55)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+      if (charge > 0) L.svg("path", { d: `M-0.6 -1 L-2.2 -18 V${-18 - 30 * charge} H2.2 V-18 L0.6 -1 Z`, fill: L.rgb(rgb), opacity: 0.85 }, g);
+      L.svg("rect", { x: -1.6, y: -58, width: 1.2, height: 50, fill: "#fff", opacity: 0.4 }, g);
+    }
+    if (!pasteur) L.svg("rect", { x: -7, y: -68, width: 14, height: 8, rx: 1.5, fill: "#2a2a2c" }, g);
+    L.svg("path", { d: `M-6 ${pasteur ? -60 : -68} V-80 Q-6 -92 0 -92 Q6 -92 6 -80 V${pasteur ? -60 : -68} Z`, fill: pasteur ? "#c4472b" : "#1d1d1f" }, g);
+    L.svg("path", { d: "M-3 -88 V-72", stroke: "#fff", "stroke-width": 1, opacity: 0.25 }, g);
+  }
+
+  function cible_sous(ctx, p) {
+    // Y a-t-il, sous la pointe, un récipient ouvert ou une surface qui peut recevoir des gouttes ?
+    const E = ctx.ecoulement;
+    for (let y = p.y; y < p.y + 260; y += 6) {
+      const q = { x: p.x, y };
+      if (E.cibles.some((c) => c.contient(q)) || E.recipients.some((r) => !r.bouchon && L.dans_polygone(r.interieur_monde(), q))) return true;
+    }
+    return false;
+  }
+
+  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null, autoriser = () => true }) {
+    // Flacon fixe (ou bécher) ; pipette déplaçable ; gouttes tant qu'on appuie sur la poire.
+    const g_f = becher ? null : L.svg("g", { class: `flacon flacon-${id}` }, ctx.fond), g_p = L.svg("g", { class: `pipette pipette-${id}`, role: "button" }, ctx.objets);
+    const nom = () => liquide || Object.entries(becher.c.phases[0]?.liquides || { eau: 1 }).sort((a, b) => b[1] - a[1])[0][0];
+    if (becher) becher.g.setAttribute("pointer-events", "none");
+    const repos = becher ? { x: becher.pose.x + 8 * e, y: becher.pose.y - 6 * e } : { x, y: sol - 12 * e };
+    const p = { charge: 0, tenue: false, pos: { ...repos } }, source = { c: L.contenu({}), interieur_monde: () => [] };
+    const dessiner = () => {
+      const rgb = L.LIQUIDES[nom()].rgb;
+      if (g_f) { flacon(g_f, p.tenue, texte, rgb); L.placer(g_f, x, sol, e); }
+      pipette(g_p, p.tenue || !!becher, p.charge, rgb, !!becher); L.placer(g_p, p.pos.x, p.pos.y, e);
+    };
+    const remplir = () => {
+      // Aspiration : 1 mL (pris dans le bécher, s'il y en a un).
+      const parts = becher ? becher.c.retirer(Math.min(1, becher.c.volume()), "bas") : [{ liquides: { [liquide]: 1 }, dissous: { ...(L.LIQUIDES[liquide].dissous || {}) }, classe: L.LIQUIDES[liquide].classe }];
+      source.c = L.contenu({}); parts.forEach((q) => source.c.verser(q)); p.charge = source.c.volume();
+    };
+    const ranger = () => { Object.assign(p, { tenue: false, pos: { ...repos } }); remplir(); if (becher) ctx.objets.insertBefore(g_p, becher.g); else ctx.objets.append(g_p); dessiner(); };
+    let goutteur = null;
+    const arreter = () => { clearInterval(goutteur); goutteur = null; };
+    const goutte = () => {
+      // Une goutte quitte la pointe (vitesse initiale presque nulle).
+      if (p.charge < 0.02) return arreter();
+      const v = Math.min(GOUTTE, p.charge); p.charge -= v;
+      ctx.ecoulement.emettre(source, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 20 }, source.c.retirer(v), v); dessiner();
+    };
+    L.glissable(g_p, {
+      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } if (!p.tenue && !autoriser()) return null; return { ...p.pos }; },
+      saisir: () => { p.tenue = true; ctx.haut.append(g_p); dessiner(); },
+      deplacer: (q) => { p.pos = q; dessiner(); },
+      lacher: (q) => { if (Math.hypot(q.x - repos.x, q.y - repos.y) < 16 || !cible_sous(ctx, q)) return ranger(); p.pos = q; dessiner(); },
+    });
+    ranger();
+    return { pipette: p };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : paillasse de synthèse au chauffage à reflux : lunettes et gants à mettre, béchers de réactifs (un réactif
+       corrosif ne se prend pas sans gants ni lunettes) à verser par l'entonnoir, flacon compte-gouttes éventuel
+       (catalyseur), pierre ponce, montage à reflux, chronomètre, et un bécher récepteur où l'on verse ensuite le
+       contenu refroidi du ballon (on y suit une transformation : relargage, lavage...).
+Reçoit : { fait, T_eb, duree, reagir(contenu, d), reactifs : [{ id, x, contenu, texte, pictos }], gouttes : { liquide, texte }
+         ou null, recepteur : { profil, contenu, etiquette }, evoluer_recepteur(contenu, dt), mesure(recepteur) -> nombre }.
+Produit : Labo.poste_synthese(reglage) -> fabrique(groupe) -> { pense_bete } ; fait « <fait> » = { epi, <réactifs> (mL dans
+          le ballon), état du montage (montage_reflux.js), recu (mesure du récepteur) }.
+Utilisé par : les simulations de synthèse (savon, arôme de banane).
+*/
+(function (L) {
+  const SOL = 576, E = 1.6;
+
+  function message(calque, t) {
+    // Bulle d'avertissement au-dessus de la paillasse.
+    calque.replaceChildren();
+    if (!t) return;
+    L.svg("rect", { x: 420, y: 236, width: 300, height: 28, rx: 5, fill: "#fff6e0", stroke: "#d08a1a" }, calque);
+    L.texte(calque, 570, 250, t, { "font-size": 7.4, "font-weight": 700, fill: "#6b3d00" });
+  }
+
+  function reactifs(ctx, cfg, epi, dire) {
+    // Béchers de 50 mL ; un réactif corrosif (SGH05) exige gants et lunettes ; récepteur à droite.
+    for (const { id, x, contenu, texte, pictos } of cfg.reactifs) {
+      const r = L.recipient(ctx, { id, profil: "becher_50", x, y: SOL - 2.2, contenu, etiquette: texte, pictos });
+      const autoriser = () => { if (pictos.includes("SGH05") && !epi.protege()) { dire(`Mettez vos lunettes et vos gants : ${texte} est corrosif.`); return false; } dire(""); return true; };
+      L.manipuler(ctx, r, { sol: SOL - 2.2, autoriser });
+    }
+    if (cfg.gouttes) L.flacon_gouttes(ctx, { id: "catalyseur", x: 690, sol: SOL, e: E, liquide: cfg.gouttes.liquide, texte: cfg.gouttes.texte, autoriser: () => { if (!epi.protege()) { dire("Mettez vos lunettes et vos gants : ce flacon contient un acide corrosif."); return false; } dire(""); return true; } });
+    return L.recipient(ctx, { id: "recepteur", profil: cfg.recepteur.profil, x: 782, y: SOL - 2.2, contenu: cfg.recepteur.contenu, etiquette: cfg.recepteur.etiquette });
+  }
+
+  L.poste_synthese = (cfg) => function (g) {
+    // Montage à reflux ; le temps du chronomètre fait avancer la transformation ; le récepteur évolue à chaque pas.
+    L.affiche_securite(g, 780, 56);
+    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), ctx = L.paillasse_chimie(g), calque = L.svg("g", { "pointer-events": "none" }, g);
+    L.ecoulement(ctx, { sol: SOL, e: E });
+    const dire = (t) => message(calque, t);
+    let m = null;
+    const epi = L.equipement(g, { x: 300, y: 70, changer: () => m?.maj() });
+    const autoriser_ballon = () => {
+      const r = !m ? "" : m.refrigerant === "monte" ? "Ôtez d'abord le réfrigérant." : m.entonnoir === "col" ? "Ôtez d'abord l'entonnoir." : m.chauffe ? "Arrêtez d'abord le chauffage." : (m.ballon.c.T ?? 20) > 45 ? "Laissez refroidir le ballon : il est encore chaud." : "";
+      if (r) dire(r); return !r;
+    };
+    m = L.montage_reflux(ctx, { T_eb: cfg.T_eb, duree: cfg.duree, reagir: cfg.reagir, dire, autoriser_ballon, ponce_x: cfg.gouttes ? 620 : 700 });
+    const px = cfg.gouttes ? 620 : 700;
+    ctx.obstacles.push([px - 24, px + 24]); if (cfg.gouttes) ctx.obstacles.push([660, 720]);
+    const rec = reactifs(ctx, cfg, epi, dire);
+    const noter = () => {
+      const tous = (n) => Math.round(m.ballon.c.phases.reduce((s, p) => s + (p.liquides[n] || 0), 0) * 10) / 10;
+      const v = { epi: epi.protege(), ...Object.fromEntries(cfg.suivis.map((n) => [n, tous(n)])), ...m.etat(), recu: Math.round(cfg.mesure(rec)) };
+      if (JSON.stringify(v) !== noter.avant) { noter.avant = JSON.stringify(v); L.missions.noter(cfg.fait, v); }
+    };
+    m.sur_maj = noter;
+    ctx.ecoulement.sur_pas((dt) => { cfg.evoluer_recepteur(rec.c, dt); if (rec.c.phases.length > 1) rec.sig = null; noter(); });
+    L.chronometre(g, { x: 560, y: 150 }).tic((dt) => m.tic(dt));
+    return { pense_bete };
   };
 })(window.Labo);
 </script>
@@ -3540,29 +3702,20 @@ Rôle : espèces et transformations de la synthèse d'un savon : huile + soude �
        dans l'éthanol qui aide l'huile et la soude à se rencontrer) ; dans l'eau salée, le savon est peu soluble : il se
        rassemble en grains qui flottent (relargage).
 Reçoit : le contenu d'un récipient (liquide_contenu.js) et l'avancement.
-Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.SAVON = { convertir(c, de, vers, V), saponifier(c, d), relarguer(c, dt) }.
+Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.SAVON = { convertir(c, de, vers, V), saponifier(c, d), relarguer(c, dt) }
+          (convertir : chimie_reactions.js).
 Utilisé par : postes_reflux_savon.js, postes_savon_test.js.
 */
 (function (L) {
   Object.assign(L.LIQUIDES, {
     soude: { nom: "solution de soude", d: 1.3, rgb: [236, 242, 244], alpha: 0.32, classe: "aqueuse", pH: 14 },
-    eau_salee: { nom: "eau salée", d: 1.2, rgb: [230, 240, 246], alpha: 0.32, classe: "aqueuse", pH: 7 },
     savon_solution: { nom: "savon dissous", d: 1.0, rgb: [238, 222, 176], alpha: 0.7, classe: "aqueuse", pH: 10 },
     savon_grains: { nom: "grains de savon", d: 0.93, rgb: [246, 240, 222], alpha: 0.96, classe: "solide" },
     eau_savon_obtenu: { nom: "eau + savon obtenu", d: 1.0, rgb: [240, 238, 226], alpha: 0.5, classe: "aqueuse", mousse: true },
     eau_savon_commerce: { nom: "eau + savon du commerce", d: 1.0, rgb: [240, 238, 228], alpha: 0.5, classe: "aqueuse", mousse: true },
   });
 
-  function convertir(c, de, vers, V) {
-    // Remplace V mL du liquide « de » par V mL du liquide « vers » (dans la phase qui le contient).
-    const ph = c.phases.find((p) => p.liquides[de] > 0);
-    if (!ph) return 0;
-    const v = Math.min(V, ph.liquides[de]);
-    ph.liquides[de] -= v; ph.V -= v;
-    if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
-    c.ajouter(vers, v);
-    return v;
-  }
+  const convertir = L.convertir_liquide;
 
   L.SAVON = {
     convertir,
@@ -3631,61 +3784,26 @@ Utilisé par : simulation.js.
 </script>
   <script>
 /*
-Rôle : paillasse « chauffage à reflux » de la synthèse du savon : lunettes et gants à mettre, béchers d'huile, de soude
-       (on ne peut pas la prendre sans gants ni lunettes) et d'éthanol à verser par l'entonnoir, pierre ponce, montage à
-       reflux, chronomètre ; après refroidissement, on verse le contenu du ballon dans le bécher d'eau salée (relargage).
+Rôle : paillasse « chauffage à reflux » de la synthèse du savon (matériel : poste_synthese.js) : huile, soude (corrosive)
+       et éthanol dans le ballon ; après le reflux, le contenu refroidi est versé dans le bécher d'eau salée (relargage).
 Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_reflux_savon(groupe) -> { pense_bete } ; fait « reflux_savon » = { epi, huile, soude, ethanol (mL dans
-          le ballon), etat du montage (montage_reflux.js), grains (mL de savon en grains dans l'eau salée) }.
+Produit : Labo.poste_reflux_savon(groupe) -> { pense_bete } ; fait « reflux_savon » = { epi, huile, soude, ethanol, état du
+          montage, recu (mL de savon en grains dans l'eau salée) }.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const SOL = 576, E = 1.6, S = L.SAVON;
-
-  function message(calque, t) {
-    // Bulle d'avertissement au-dessus de la paillasse.
-    calque.replaceChildren();
-    if (!t) return;
-    L.svg("rect", { x: 420, y: 236, width: 300, height: 28, rx: 5, fill: "#fff6e0", stroke: "#d08a1a" }, calque);
-    L.texte(calque, 570, 250, t, { "font-size": 7.4, "font-weight": 700, fill: "#6b3d00" });
-  }
-
-  function reactifs(ctx, epi, dire) {
-    // Béchers de 50 mL (20 mL chacun) et leurs fiches posées devant ; la soude exige gants et lunettes.
-    const liste = [["huile", 500, { huile: 20 }, "huile", []], ["soude", 570, { soude: 20 }, "soude 30 %", ["SGH05"]], ["ethanol", 640, { ethanol: 20 }, "éthanol", ["SGH02"]]];
-    for (const [id, x, contenu, texte, pictos] of liste) {
-      const r = L.recipient(ctx, { id, profil: "becher_50", x, y: SOL - 2.2, contenu, etiquette: texte, pictos });
-      const autoriser = () => { if (pictos.includes("SGH05") && !epi.protege()) { dire("Mettez vos lunettes et vos gants : la soude est corrosive."); return false; } dire(""); return true; };
-      L.manipuler(ctx, r, { sol: SOL - 2.2, autoriser });
-    }
-    return L.recipient(ctx, { id: "eau_salee", profil: "becher_250", x: 782, y: SOL - 2.2, contenu: { eau_salee: 150 }, etiquette: "eau salée" });
-  }
-
-  L.poste_reflux_savon = function (g) {
-    // Montage à reflux (82 °C, 30 min) ; le temps du chronomètre fait avancer la saponification et le relargage.
-    L.affiche_securite(g, 780, 56);
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), ctx = L.paillasse_chimie(g), calque = L.svg("g", { "pointer-events": "none" }, g);
-    L.ecoulement(ctx, { sol: SOL, e: E });
-    const dire = (t) => message(calque, t);
-    let m = null;
-    const epi = L.equipement(g, { x: 300, y: 70, changer: () => m?.maj() });
-    const autoriser_ballon = () => {
-      const r = !m ? "" : m.refrigerant === "monte" ? "Ôtez d'abord le réfrigérant." : m.entonnoir === "col" ? "Ôtez d'abord l'entonnoir." : m.chauffe ? "Arrêtez d'abord le chauffage." : (m.ballon.c.T ?? 20) > 45 ? "Laissez refroidir le ballon : il est encore chaud." : "";
-      if (r) dire(r); return !r;
-    };
-    m = L.montage_reflux(ctx, { T_eb: 82, duree: 30, reagir: S.saponifier, dire, autoriser_ballon });
-    const bain = reactifs(ctx, epi, dire);
-    const noter = () => {
-      const tous = (n) => Math.round(m.ballon.c.phases.reduce((s, p) => s + (p.liquides[n] || 0), 0));
-      const grains = bain.c.phases.reduce((s, p) => s + (p.liquides.savon_grains || 0), 0);
-      const v = { epi: epi.protege(), huile: tous("huile"), soude: tous("soude"), ethanol: tous("ethanol"), ...m.etat(), grains: Math.round(grains) };
-      if (JSON.stringify(v) !== noter.avant) { noter.avant = JSON.stringify(v); L.missions.noter("reflux_savon", v); }
-    };
-    m.sur_maj = noter;
-    ctx.ecoulement.sur_pas((dt) => { S.relarguer(bain.c, dt); if (bain.c.phases.length > 1) bain.sig = null; noter(); });
-    L.chronometre(g, { x: 560, y: 150 }).tic((dt) => m.tic(dt));
-    return { pense_bete };
-  };
+  const S = L.SAVON;
+  L.poste_reflux_savon = L.poste_synthese({
+    fait: "reflux_savon", T_eb: 82, duree: 30, reagir: S.saponifier, suivis: ["huile", "soude", "ethanol"],
+    reactifs: [
+      { id: "huile", x: 500, contenu: { huile: 20 }, texte: "huile", pictos: [] },
+      { id: "soude", x: 570, contenu: { soude: 20 }, texte: "soude 30 %", pictos: ["SGH05"] },
+      { id: "ethanol", x: 640, contenu: { ethanol: 20 }, texte: "éthanol", pictos: ["SGH02"] },
+    ],
+    recepteur: { profil: "becher_250", contenu: { eau_salee: 150 }, etiquette: "eau salée" },
+    evoluer_recepteur: S.relarguer,
+    mesure: (r) => r.c.phases.reduce((s, p) => s + (p.liquides.savon_grains || 0), 0),
+  });
 })(window.Labo);
 </script>
   <script>
@@ -3790,7 +3908,7 @@ Utilisé par : simulation.js.
       { consigne: "Rangez l'entonnoir dans son anneau, posez le réfrigérant sur le col du ballon, puis ouvrez l'eau (elle entre par le bas).", court: "Réfrigérant posé, eau ouverte.", verifier: ({ faits }) => (R(faits).refrigerant === "monte" && R(faits).eau) || false },
       { consigne: "Allumez le chauffe-ballon (touche I/O) et chauffez à reflux pendant 30 minutes (lisez le chronomètre).", court: "Reflux pendant 30 min.", verifier: ({ faits }) => { const r = R(faits); if (r.fuite) return "Des vapeurs s'échappent : le réfrigérant doit être posé et l'eau ouverte."; return r.avance >= 1 || false; } },
       { consigne: "Le réfrigérant à boules sert à…", court: "Répondez dans le carnet.", question: choix(["condenser les vapeurs, qui retombent dans le ballon : on chauffe longtemps sans perdre de matière", "refroidir le ballon", "faire entrer de l'air"], "Regardez les gouttes dans le réfrigérant.", "Exact.") },
-      { consigne: "Arrêtez le chauffage, laissez refroidir, ôtez le réfrigérant, puis versez le contenu du ballon dans le bécher d'eau salée.", court: "Versez dans l'eau salée.", verifier: ({ faits }) => R(faits).grains >= 10 || false, aide_geste: "Prenez le ballon par son col et inclinez-le au-dessus du bécher." },
+      { consigne: "Arrêtez le chauffage, laissez refroidir, ôtez le réfrigérant, puis versez le contenu du ballon dans le bécher d'eau salée.", court: "Versez dans l'eau salée.", verifier: ({ faits }) => R(faits).recu >= 10 || false, aide_geste: "Prenez le ballon par son col et inclinez-le au-dessus du bécher." },
       { consigne: "Dans l'eau salée, le savon…", court: "Répondez dans le carnet.", question: choix(["est peu soluble : il se rassemble en grains qui flottent (relargage)", "se dissout complètement", "se transforme en huile"], "Que voyez-vous à la surface ?", "Exact.") },
       { consigne: "L'écriture de la transformation est…", court: "Répondez dans le carnet.", question: choix(["huile + soude → savon + glycérol", "savon → huile + soude", "huile + eau → savon"], "Quels produits avez-vous mis dans le ballon ?", "Exact.") },
     ],

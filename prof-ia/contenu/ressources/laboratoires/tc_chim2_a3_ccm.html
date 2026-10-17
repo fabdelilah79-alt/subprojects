@@ -2485,7 +2485,7 @@ Utilisé par : recipient_physique.js.
 
   function liquide(g, etat) {
     // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
-    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), opacity: ph.alpha }, g);
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), "fill-opacity": ph.alpha, stroke: "rgba(110,135,148,0.55)", "stroke-width": 0.35 }, g);
     const s = etat.surface;
     if (!s) return;
     const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;
@@ -2513,7 +2513,7 @@ Utilisé par : recipient_physique.js.
 /*
 Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
        PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
-       étiquette collée.
+       étiquette collée (et ses pictogrammes de danger).
 Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
 Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
 Utilisé par : verrerie_rendu.js.
@@ -2559,6 +2559,7 @@ Utilisé par : verrerie_rendu.js.
     if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
     if (etat.bouchon) bouchon(g, pr);
     if (etat.etiquette) etiquette(g, pr, etat.etiquette);
+    (etat.pictos || []).forEach((c, i, t) => L.pictogramme?.(g, (i - (t.length - 1) / 2) * 11, -pr.H * (pr.extras.etiquette_h || 0.42) - 11, 5, c));
   };
 })(window.Labo);
 </script>
@@ -2568,7 +2569,7 @@ Rôle : récipient de liquide qui respecte la physique : la surface reste perpen
        penche quand on accélère le récipient et oscille ensuite, comme un vrai liquide qui ballotte) ; le liquide qui
        dépasse la lèvre la plus basse déborde (débit d'un déversoir) ; un robinet ouvert laisse couler le liquide du bas
        (loi de Torricelli, v = √(2gh)), sauf si le récipient est bouché (l'air ne peut pas entrer).
-Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet }.
+Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet, etiquette, pictos (codes SGH collés au-dessus de l'étiquette) }.
 Produit : Labo.recipient(ctx, reglage) -> { id, pr, pose, c, bouchon, robinet, pas(dt), etat(), monde(p) (p dans le repère du
           récipient, y vers le bas, mm), interieur_monde(), dessiner() }.
 Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
@@ -2628,10 +2629,10 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
     r.sortie(pointe, { x: r.vitesse.x, y: v * r.pose.e * 0.5 + r.vitesse.y }, r.c.retirer(V, "bas"), V);
   }
 
-  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "" }) {
+  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "", pictos = [] }) {
     // Construit le récipient et l'inscrit dans l'écoulement de la paillasse.
     const pr = L.profil(profil);
-    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
+    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, pictos, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
     r.normale = () => { const a = r.phi - rad(r.pose.angle); return { x: Math.sin(a), y: -Math.cos(a) }; };
     r.monde = (p) => G.transformer([{ x: p.x, y: -p.y }], r.pose)[0];
     r.interieur_monde = () => G.transformer(pr.interieur.map((p) => ({ x: p.x, y: -p.y })), r.pose);
@@ -2649,7 +2650,7 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
       r.coule = null;
       deborder(r, dt, u, s); vidanger(r, dt, u, s);
     };
-    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, coule: r.coule }; };
+    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, pictos: r.pictos, coule: r.coule }; };
     r.dessiner = () => L.dessiner_verrerie(r.g, pr, r.pose, r.etat());
     ctx.ecoulement.ajouter(r);
     r.dessiner();
@@ -2758,7 +2759,8 @@ Rôle : gestes de la main sur un récipient : le prendre et le déplacer (ses ac
 Reçoit : le contexte de la paillasse (ctx.obstacles : bandes [x1, x2] de la paillasse déjà occupées, comme un socle), le récipient (recipient_physique.js) et { sol (y de pose, px), fixe (non déplaçable),
          support : { x, y } ou supports : [{ x, y, ... }] (places sur un support : anneau, porte-tubes, bain-marie ; lâché près
          d'une place libre, il s'y met, et r.place la désigne), pose_libre (faux pour un tube : il ne tient pas debout sur la
-         paillasse et retourne à la place libre la plus proche) }.
+         paillasse et retourne à la place libre la plus proche), autoriser() (faux : on ne peut pas le prendre, par exemple
+         sans gants ; la fonction peut afficher pourquoi) } ; on verse aussi dans une cible qui a une ouverture (bouche()).
 Produit : Labo.manipuler(ctx, r, reglage) ; r.tenu, r.versement (vrai pendant que l'on verse).
 Utilisé par : les simulations de chimie.
 */
@@ -2781,6 +2783,12 @@ Utilisé par : les simulations de chimie.
       const bouche = q.monde({ x: 0, y: -q.pr.H }), sens = Math.sign(bouche.x - r.pose.x) || 1;
       const levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), larg = (q.pr.r(q.pr.H) + 12) * q.pose.e, d = Math.abs(levre.x - bouche.x);
       if (d < larg + 20 && levre.y < bouche.y - 4 && levre.y > bouche.y - 120 && (!choix || d < choix.d)) choix = { q, sens, d };
+    }
+    for (const c of ctx.ecoulement.cibles) {
+      // Cible qui a une ouverture (entonnoir) : on peut aussi verser dedans.
+      if (!c.bouche) continue;
+      const b = c.bouche(), sens = Math.sign(b.x - r.pose.x) || 1, levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), d = Math.abs(levre.x - b.x);
+      if (d < b.r + 20 && levre.y < b.y - 4 && levre.y > b.y - 120 && (!choix || d < choix.d)) choix = { q: c, sens, d };
     }
     return choix;
   }
@@ -2815,7 +2823,7 @@ Utilisé par : les simulations de chimie.
     return r.pose.x;
   }
 
-  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true }) {
+  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true, autoriser = () => true }) {
     const places = supports || (support ? [support] : []);
     // Rend le récipient déplaçable (s'il n'est pas fixe) ; gère la pose et le versement.
     let pg = null;
@@ -2825,23 +2833,27 @@ Utilisé par : les simulations de chimie.
       r.pose.angle = 0; r.pose.y = sol; r.pose.x = place_libre(ctx, r, sol); r.acc = { x: 0, y: 0 }; r.vitesse = { x: 0, y: 0 }; r.mvt = null; r.w += 0.8;
       ctx.objets.append(r.g);
     };
+    const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
+    const place_proche = () => places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
+    const sur_support = (sup = place_proche()) => { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; };
     if (fixe) return;
     L.glissable(r.g, {
       soulever: false,
-      debut: () => ({ x: r.pose.x, y: r.pose.y }),
+      debut: () => (autoriser() ? { x: r.pose.x, y: r.pose.y } : null),
       saisir: () => { r.tenu = true; ctx.haut.append(r.g); },
       deplacer: (p) => { if (r.versement) return; r.pose.x = p.x; r.pose.y = Math.min(sol, p.y); suivre_mouvement(r, p); },
       lacher: () => {
         if (r.versement) return;
         r.acc = { x: 0, y: 0 };
-        const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
-        const sup = places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
-        if (sup && (!pose_libre || Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80)) { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; return; }
+        const sup = place_proche();
+        // Près d'une place libre : on l'y pose ; au-dessus d'un récipient : on verse ; sinon on le pose (ou, s'il ne tient
+        // pas debout, il retourne à la place libre la plus proche).
+        if (sup && Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80) return sur_support(sup);
         r.place = null;
         const c = cible_de_versement(ctx, r);
-        if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else reposer();
+        if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else if (sup && !pose_libre) sur_support(sup); else reposer();
       },
-      toucher: () => { if (r.versement) reposer(); },
+      toucher: () => { if (!r.versement) return; if (!pose_libre && place_proche()) sur_support(); else reposer(); },
     });
   };
 })(window.Labo);
