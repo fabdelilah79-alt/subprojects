@@ -470,3 +470,29 @@ Problèmes restants, à faire par l'enseignant :
   rendement choisi (14 mL d'ester pour 15 mL d'alcool).
 - Temps accéléré (1 s = 1 min) pour le reflux de 30 min et le refroidissement.
 - Pour vider un ballon il faut l'incliner beaucoup (comme en vrai) : à expliquer aux élèves.
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « Modèle de l'atome »
+
+Fait :
+- Quatre simulations à taille réelle, inscrites au manifeste (54 ressources) : A1 histoire du modèle de l'atome
+  (documents illustrés, classement par époque) et expérience de Rutherford (chambre de diffusion, vide, comptages N(θ)
+  qui suivent la loi K / sin⁴(θ/2), tableur et courbe, ordres de grandeur) ; A2 tableau magnétique de l'atome (symbole
+  ᴬ_ZX, ion Na⁺, isotope, couches K L M), masse des atomes au tableur, pesée d'un cylindre de cuivre ; A3 cycle du
+  cuivre sous la hotte (Cu, Cu²⁺, Cu(OH)₂, CuO, Cu²⁺, Cu) ; A4 combustion du carbone dans le dioxygène, eau de chaux,
+  documents sur le cycle du carbone, l'abondance des éléments et le Soleil. Objectifs O1 à O5.
+- Matériel commun : balance électronique, cylindres de métal, pot de poudre et spatule, bec Bunsen ; petits ajouts à
+  documents_mur.js (illustration), verrerie_profils.js (flacon à gaz), verrerie_accessoires.js (plaque de verre),
+  recipient_gestes.js (pas de versement dans un récipient fermé par un objet).
+- Corrigé après essais : bouche des récipients mal calculée (la poudre et le gaz roux partaient du fond du tube) ;
+  spatule invisible sur la paillasse (elle est maintenant plantée dans le pot) ; on pouvait verser l'eau de chaux dans
+  le flacon fermé par le têt ; charbon chauffé « à blanc » dans la flamme (limité à 950 °C) ; pompe cachée par la
+  tablette ; schéma du cycle du carbone illisible.
+- Vérifié : parcours complets des 4 nouvelles simulations ; les 10 simulations de chimie reconstruites sans erreur ;
+  tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Rutherford : nombres choisis pour l'enseignement (1,2 million de particules par minute à 0°, K = 3 par minute) ;
+  la vraie source d'une salle de classe donne beaucoup moins de coups (comptages de plusieurs minutes).
+- Cycle du cuivre : quantités en « unités de cuivre », réactions accélérées (quelques secondes) ; l'attaque nitrique se
+  fait sous la hotte, à valider selon les consignes de sécurité de l'établissement.
+- Têt à combustion : il faut garder le doigt appuyé pour le tenir dans la flamme (environ 5 s).

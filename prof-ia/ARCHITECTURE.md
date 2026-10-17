@@ -341,6 +341,14 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/ccm_gestes.js | Gestes de la CCM : ligne, dépôts, plaque dans la cuve, front, cercles sous UV. |
 | contenu/ressources/laboratoires/commun/ccm_poste.js | Paillasse de chromatographie (cuve, éluant, plaque, chronomètre, faits notés). |
 | contenu/ressources/laboratoires/commun/ccm_missions.js | Étapes communes des missions de CCM et vérification des Rf au tableur. |
+| contenu/ressources/laboratoires/commun/balance_electronique.js | Balance électronique au centième (200 g) : plateau, afficheur qui se stabilise, Marche/Arrêt, tare. |
+| contenu/ressources/laboratoires/commun/echantillons_metal.js | Cylindres de métal de même volume (cuivre, aluminium, fer, zinc) à poser sur la balance. |
+| contenu/ressources/laboratoires/commun/spatule_physique.js | Pot de poudre et microspatule plantée dedans : une pointe de poudre versée dans un récipient. |
+| contenu/ressources/laboratoires/commun/bec_bunsen.js | Bec Bunsen : robinet de gaz, allume-gaz, virole (flamme bleue ou jaune), température de la flamme. |
+| contenu/ressources/laboratoires/sources/tc_chim4_a1_rutherford/ | Histoire du modèle de l'atome et expérience de Rutherford (chambre de diffusion, pompe, compteur). |
+| contenu/ressources/laboratoires/sources/tc_chim4_a2_masse/ | Tableau magnétique de l'atome (Z, A, ions, couches K L M), masse des atomes, pesée du cuivre. |
+| contenu/ressources/laboratoires/sources/tc_chim4_a3_cuivre/ | Cycle du cuivre dans un tube, sous la hotte : conservation de l'élément cuivre. |
+| contenu/ressources/laboratoires/sources/tc_chim4_a4_carbone/ | Combustion du carbone dans le dioxygène, eau de chaux ; cycle du carbone, abondance des éléments. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

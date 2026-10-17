@@ -17,8 +17,9 @@ Utilisé par : verrerie_rendu.js.
   }
 
   function bouchon(g, pr) {
-    // Bouchon rodé en PTFE, enfoncé dans le col.
+    // Bouchon rodé en PTFE, enfoncé dans le col ; pour un flacon à gaz, plaque de verre posée sur le bord.
     const H = pr.H, r = pr.r(H);
+    if (pr.extras.plaque) return void L.svg("rect", { x: -r - 9, y: -H - 4.5, width: 2 * r + 18, height: 3.4, rx: 0.6, fill: "rgba(200,230,236,0.75)", stroke: "rgba(110,150,160,0.9)", "stroke-width": 0.4 }, g);
     L.svg("path", { d: `M${-r + 0.6} ${-H + 9} L${-r - 1.5} ${-H - 3} H${r + 1.5} L${r - 0.6} ${-H + 9} Z`, fill: "#3b7cc4", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
     L.svg("rect", { x: -r - 3, y: -H - 7, width: 2 * r + 6, height: 5, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
   }

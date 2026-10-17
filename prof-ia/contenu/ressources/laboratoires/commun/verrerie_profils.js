@@ -3,7 +3,7 @@ Rôle : verrerie aux vraies dimensions (en mm) : profil intérieur (demi-largeur
        épaisseur du verre, bec, graduations. Pour chaque pièce : polygones intérieur et extérieur (repère du récipient :
        origine au milieu du fond, x vers la droite, y vers le bas, en mm), lèvres de l'ouverture, et tables qui relient le
        volume (mL) à l'aire de liquide vue en coupe (mm²) : un récipient droit est rempli exactement à la bonne hauteur.
-Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), buchner_70 (cuvette d'un entonnoir Büchner)).
+Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), flacon_gaz (flacon de 600 mL fermé par une plaque de verre), buchner_70 (cuvette d'un entonnoir Büchner)).
 Produit : Labo.profil(nom) -> { nom, H, h0 (fond intérieur : 0, sauf l'ampoule dont la tige est sous le robinet), t, interieur, exterieur, levres, aire_de(V), volume_de(A), hauteur_de(V), r(h), graduations, extras }.
 Utilisé par : verrerie_rendu.js, recipient_physique.js.
 */
@@ -23,6 +23,7 @@ Utilisé par : verrerie_rendu.js, recipient_physique.js.
     ampoule_125: { profil: [[54, 1.6], [62, 1.6], ...poire(64, 186, 3, 32, 11), [204, 10.5]], t: 1.5, robinet: 52, tige: true, rode: true },
     ballon_250: { profil: [...sphere(39.5, 0, 74), [80, 12.5], [118, 12.5]], t: 1.5, rode: true },
     fiole_500: { profil: [[0, 49], [3, 51], [110, 16], [140, 13], [180, 13]], t: 2.4, tubulure: 155, grad: [100, 200, 300, 400] },
+    flacon_gaz: { profil: [[0, 32], [2, 35], [160, 35]], t: 2.2, bourrelet: true, plaque: true },
     buchner_70: { profil: [[0, 33], [4, 35], [40, 35]], t: 3, sans_ombre: true },
   };
   const cache = {};

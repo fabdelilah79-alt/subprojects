@@ -1445,6 +1445,147 @@
         "Le catalyseur donne l'odeur.",
         "La phase la plus colorée ou la plus abondante est en bas."
       ]
+    },
+    {
+      "id": "tc_chim4_a1_rutherford",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim4_a1_rutherford.html",
+      "description": "Recherche historique (Démocrite, Dalton, Thomson, Rutherford, Bohr, Chadwick) avec documents illustrés et classement des découvertes, puis expérience de Rutherford reconstituée avec le matériel d'un laboratoire d'enseignement : chambre de diffusion (source alpha d'américium 241, feuille d'or de 2 µm, détecteur tournant), pompe à vide et manomètre, compteur d'impulsions ; comptages N(θ) au tableur et en courbe ; structure lacunaire, noyau, ordres de grandeur (10⁻¹⁰ m et 10⁻¹⁵ m).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim4_atome",
+      "activite": "Recherche historique.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "L'expérience de Rutherford",
+          "ce_que_fait_l_eleve": "Fait le vide, puis compte les particules alpha reçues à différents angles, avec et sans feuille d'or.",
+          "conclusion": "Presque toutes les particules alpha traversent la feuille sans être déviées : l'atome est presque vide (structure lacunaire). Quelques-unes sont fortement déviées, certaines repartent en arrière : elles ont été repoussées par un noyau minuscule, chargé positivement, qui contient presque toute la masse de l'atome."
+        },
+        {
+          "titre": "Les premiers modèles de l'atome",
+          "ce_que_fait_l_eleve": "Lit les documents sur les premiers modèles de l'atome et prévoit le résultat de l'expérience.",
+          "conclusion": "Pour Dalton (1808), l'atome est une sphère pleine et indivisible. La découverte de l'électron (Thomson, 1897) montre que l'atome a des constituants : Thomson imagine une sphère positive où sont dispersés les électrons."
+        },
+        {
+          "titre": "Le modèle de l'atome",
+          "ce_que_fait_l_eleve": "Calcule des ordres de grandeur et range les découvertes par époque.",
+          "conclusion": "L'atome est formé d'un noyau (protons de charge +e et neutrons sans charge, les nucléons) et d'électrons de charge −e. Il a autant d'électrons que de protons : il est électriquement neutre. Son diamètre (10⁻¹⁰ m) est 100 000 fois celui du noyau (10⁻¹⁵ m) : l'atome est presque vide, et sa masse est concentrée dans le noyau."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "L'atome est une boule pleine.",
+        "Les particules alpha traversent la feuille parce qu'elle est trouée.",
+        "La masse de l'atome est répartie dans tout son volume."
+      ]
+    },
+    {
+      "id": "tc_chim4_a2_masse",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim4_a2_masse.html",
+      "description": "Tableau magnétique de l'atome : construire ¹²₆C, ²³₁₁Na, l'ion Na⁺, ¹⁶₈O et ³⁵₁₇Cl (protons et neutrons dans le noyau, électrons sur les couches K, L, M), symbole ᴬ_ZX avec A nombre de nucléons, isotopes, couche externe ; calcul au tableur de la masse de quatre atomes et du rapport masse du noyau / masse de l'atome ; pesée d'un cylindre de cuivre sur une balance au centième et nombre d'atomes qu'il contient.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim4_atome",
+      "activite": "Calcul de la masse d'atomes.",
+      "objectifs": [
+        "O2",
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Constituants de l'atome",
+          "ce_que_fait_l_eleve": "Construit des atomes et un ion sur le tableau magnétique à partir de leur symbole.",
+          "conclusion": "Dans le symbole ᴬ_ZX, Z est le numéro atomique (nombre de protons) et A le nombre de nucléons (protons + neutrons) ; le noyau contient N = A − Z neutrons. L'atome a Z électrons : il est neutre. Un ion monoatomique a gagné ou perdu des électrons ; des isotopes ont le même Z et des A différents. Z caractérise l'élément chimique."
+        },
+        {
+          "titre": "La masse d'un atome",
+          "ce_que_fait_l_eleve": "Calcule la masse d'atomes au tableur et compte les atomes d'un cylindre de cuivre pesé.",
+          "conclusion": "La masse d'un atome vaut m = Z·m_p + (A − Z)·m_n + Z·m_e ; celle de ses électrons est négligeable : la masse de l'atome est concentrée dans son noyau. Un objet de quelques dizaines de grammes contient environ 10²³ atomes."
+        },
+        {
+          "titre": "Répartition des électrons",
+          "ce_que_fait_l_eleve": "Répartit les électrons sur les couches K, L, M et repère la couche externe.",
+          "conclusion": "Les électrons se répartissent sur des couches, dans l'ordre K, L, M (au plus 2 sur K, 8 sur L, 8 sur M pour Z ≤ 18). Formule électronique : (K)²(L)⁸(M)⁷ pour le chlore. La dernière couche occupée est la couche externe ; les autres sont des couches internes. Les électrons de la couche externe sont les moins liés au noyau."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Les électrons sont dans le noyau.",
+        "A est le nombre de neutrons.",
+        "Les électrons représentent une part importante de la masse de l'atome.",
+        "Les électrons se placent sur n'importe quelle couche."
+      ]
+    },
+    {
+      "id": "tc_chim4_a3_cuivre",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim4_a3_cuivre.html",
+      "description": "Conservation de l'élément cuivre, sous la hotte, avec lunettes et gants : tournure de cuivre et acide nitrique (gaz roux, solution bleue d'ions Cu²⁺), soude (précipité bleu d'hydroxyde de cuivre), bain-marie à 90 °C (oxyde de cuivre noir), acide sulfurique (ions Cu²⁺), poudre de fer (dépôt rouge de cuivre métal) ; l'élément cuivre (Z = 29) se conserve.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim4_atome",
+      "activite": "Conservation de l'élément (cuivre, carbone, soufre…).",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le cuivre change de forme",
+          "ce_que_fait_l_eleve": "Attaque le cuivre par l'acide nitrique, puis précipite les ions Cu²⁺ par la soude.",
+          "conclusion": "L'acide nitrique attaque le cuivre : le métal disparaît, la solution devient bleue (ions cuivre Cu²⁺) et un gaz roux se dégage. La soude donne avec les ions Cu²⁺ un précipité bleu d'hydroxyde de cuivre Cu(OH)₂."
+        },
+        {
+          "titre": "Retrouver le cuivre métal",
+          "ce_que_fait_l_eleve": "Chauffe le précipité, le dissout dans l'acide sulfurique et retrouve le cuivre métal avec la poudre de fer.",
+          "conclusion": "Chauffé, l'hydroxyde de cuivre devient de l'oxyde de cuivre CuO, noir. L'acide sulfurique le dissout : on retrouve les ions Cu²⁺ bleus. La poudre de fer transforme ces ions en cuivre métal, rouge. Sous toutes ces formes (Cu, Cu²⁺, Cu(OH)₂, CuO), c'est le même élément cuivre, de numéro atomique Z = 29 : l'élément chimique se conserve au cours des transformations chimiques."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Le cuivre disparaît quand il est attaqué par l'acide.",
+        "Le fer se transforme en cuivre.",
+        "Une transformation chimique peut créer ou détruire un élément."
+      ]
+    },
+    {
+      "id": "tc_chim4_a4_carbone",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim4_a4_carbone.html",
+      "description": "Combustion du charbon de bois dans un flacon de dioxygène (bec Bunsen et allume-gaz, têt à combustion, plaque de verre), test du dioxyde de carbone à l'eau de chaux (on agite le flacon fermé) ; documents illustrés sur le cycle naturel du carbone, l'abondance des éléments et les réactions nucléaires du Soleil, et classement des phénomènes qui retirent du CO₂ de l'air ou en rejettent.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim4_atome",
+      "activite": "Cycle naturel du carbone ; abondance des éléments.",
+      "objectifs": [
+        "O1",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Que devient le carbone qui brûle ?",
+          "ce_que_fait_l_eleve": "Fait brûler du carbone dans le dioxygène et recherche le gaz formé avec l'eau de chaux.",
+          "conclusion": "Le charbon de bois (carbone) brûle vivement dans le dioxygène et disparaît. Le gaz formé trouble l'eau de chaux : c'est du dioxyde de carbone. C + O₂ → CO₂ : l'élément carbone n'a pas disparu, il est dans le dioxyde de carbone, puis dans le carbonate de calcium qui trouble l'eau de chaux."
+        },
+        {
+          "titre": "Le cycle du carbone ; l'abondance des éléments",
+          "ce_que_fait_l_eleve": "Lit les documents sur le cycle du carbone et l'abondance des éléments, et classe les phénomènes.",
+          "conclusion": "Dans la nature, l'élément carbone passe de l'air (CO₂) aux êtres vivants, aux océans et aux roches, puis revient dans l'air : il se conserve au cours de ces transformations. L'hydrogène et l'hélium forment presque tout l'Univers ; l'oxygène est l'élément le plus abondant de la croûte terrestre et du corps humain. Seules les réactions nucléaires (dans les étoiles) changent un élément en un autre."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Le carbone qui brûle disparaît.",
+        "Les plantes créent du carbone.",
+        "Une réaction chimique peut changer un élément en un autre."
+      ]
     }
   ]
 }

@@ -187,6 +187,24 @@ assemble), `poste_synthese.js` (paillasse de synthèse), `buchner.js` et `buchne
 (chromatographie). Plusieurs de ces fichiers étaient avant dans les dossiers de chim2 : ils ont été déplacés sans changer
 leur rôle.
 
+## Chapitre tronc commun « Modèle de l'atome » (fiche tronc_commun/chim4_atome)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim4_a1_rutherford.html | A1 : recherche historique ; expérience de Rutherford | O1, O2, O3 | Cinq documents illustrés (Démocrite et Dalton, Thomson, Rutherford, Bohr, Chadwick) ; prévision avec le modèle de Thomson ; chambre de diffusion (source alpha, feuille d'or de 2 µm, détecteur tournant), vide à la pompe, comptages N(θ) avec et sans feuille, tableur et courbe ; ordres de grandeur ; classement des découvertes par époque. |
+| tc_chim4_a2_masse.html | A2 : calcul de la masse d'atomes | O2, O3, O4, O5 | Tableau magnétique : construire ¹²₆C, ²³₁₁Na, l'ion Na⁺, ¹⁶₈O, ³⁵₁₇Cl (couches K, L, M remplies dans l'ordre), isotopes ; masse de quatre atomes et rapport noyau / atome au tableur ; pesée d'un cylindre de cuivre et nombre d'atomes. |
+| tc_chim4_a3_cuivre.html | A3 : conservation de l'élément cuivre | O4 | Sous la hotte, lunettes et gants : cuivre + acide nitrique (gaz roux, ions Cu²⁺ bleus), soude (Cu(OH)₂ bleu), bain-marie (CuO noir), acide sulfurique (Cu²⁺), poudre de fer (cuivre métal rouge), dans le même tube. |
+| tc_chim4_a4_carbone.html | A4 : conservation du carbone ; cycle du carbone ; abondance des éléments | O1, O4 | Bec Bunsen, têt à combustion : charbon chauffé au rouge puis plongé dans le dioxygène ; eau de chaux versée, flacon fermé et agité (trouble) ; documents (cycle du carbone, abondance, Soleil) et classement des phénomènes qui retirent ou rejettent du CO₂. |
+
+On dit « nombre de nucléons » A, jamais « nombre de masse » (orientation de la fiche). Les réactions nucléaires du
+Soleil sont seulement évoquées dans un document.
+
+Matériel commun ajouté : `balance_electronique.js` (balance au centième, tare), `echantillons_metal.js` (cylindres de
+cuivre, aluminium, fer, zinc), `spatule_physique.js` (pot de poudre et microspatule), `bec_bunsen.js` (robinet de gaz,
+allume-gaz, virole, chaleur de la flamme). Petits ajouts signalés : `documents_mur.js` accepte une illustration,
+`verrerie_profils.js` a un flacon à gaz de 600 mL fermé par une plaque de verre (`verrerie_accessoires.js`), et
+`recipient_gestes.js` ne verse pas dans un récipient fermé par un objet (`q.ferme`).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
