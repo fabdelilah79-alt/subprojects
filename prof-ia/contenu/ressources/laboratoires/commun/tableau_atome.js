@@ -5,7 +5,7 @@ Rôle : tableau magnétique « modèle de l'atome » accroché au mur : un noyau
        réserve si on le lâche hors de l'atome. Une couche pleine refuse un électron de plus (K : 2, L : 8, M : 8 pour Z ≤ 18).
 Reçoit : le groupe SVG de la paillasse et le nom du fait à noter.
 Produit : Labo.tableau_atome(g, fait) -> { etat : { p, n, K, L, M } } ; fait « <fait> » = { p, n, e, K, L, M }.
-Utilisé par : poste_atome.js.
+Utilisé par : poste_atome.js (tc_chim4_a2_masse), les ions de tc_chim5_a1_lewis.
 */
 (function (L) {
   const O = { x: 600, y: 214 }, RN = 44, COUCHES = { K: [66, 2, 90], L: [104, 8, 90], M: [142, 8, 112.5] };
