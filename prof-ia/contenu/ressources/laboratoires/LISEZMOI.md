@@ -205,6 +205,22 @@ allume-gaz, virole, chaleur de la flamme). Petits ajouts signalés : `documents_
 `verrerie_profils.js` a un flacon à gaz de 600 mL fermé par une plaque de verre (`verrerie_accessoires.js`), et
 `recipient_gestes.js` ne verse pas dans un récipient fermé par un objet (`q.ferme`).
 
+## Chapitre tronc commun « Géométrie de quelques molécules » (fiche tronc_commun/chim5_molecules)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim5_a1_lewis.html | A1 : formules développées, semi-développées, brutes | O1, O2, O3 | Tableau de l'atome : former Na⁺ et Cl⁻ (duet, octet ; affiche des gaz nobles) ; tableau magnétique de Lewis : H₂O, NH₃, CH₄, CO₂, N₂, C₂H₄ (doublets liants et non liants ; message quand une règle n'est pas respectée) ; deux isomères de C₂H₆O, une molécule C₄H₁₀ ; formules semi-développées ; limites du modèle (NO₂). |
+| tc_chim5_a2_cram.html | A2 : modèles moléculaires ; représentation de Cram | O4 | Boîte de modèles moléculaires et modèle en 3D que l'on tourne : CH₄ (109,5°), NH₃ (107°), H₂O (104,5°), C₂H₄ plane, CO₂ linéaire ; méthane tourné (deux liaisons dans le plan) puis dessiné en Cram au tableau (trait, triangle plein, triangle hachuré). |
+
+La géométrie des modèles vient de la répulsion des doublets (liaisons, trous libres, doublets non liants) autour de
+chaque atome ; une liaison double compte pour une seule direction. Le modèle de démonstration est 1,8 fois plus grand
+qu'un modèle de boîte d'élève, pour qu'on le manipule facilement.
+
+Matériel commun ajouté : `lewis_regles.js`, `lewis_dessin.js`, `tableau_lewis.js` (tableau de Lewis), `molecule_3d.js`
+(géométrie), `modele_dessin.js` (rendu 3D), `modele_atelier.js` (assemblage, rotation, liaisons doubles),
+`boite_modeles.js` (boîte de modèles). `tableau_atome.js` a été déplacé de tc_chim4_a2_masse vers commun (il sert aussi
+aux ions de chim5).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

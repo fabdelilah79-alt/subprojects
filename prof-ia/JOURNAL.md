@@ -506,3 +506,24 @@ Fait :
 - recipient_gestes.js : un toucher après un versement remet le récipient à sa place de départ (ou à la place libre la
   plus proche de celle-ci) ; s'il n'y a aucune place libre, il revient à sa place de départ, jamais derrière un appareil.
 - Les 8 simulations de chimie qui utilisent ce fichier ont été reconstruites et leurs parcours complets relancés.
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « Géométrie de quelques molécules »
+
+Fait :
+- Deux simulations, inscrites au manifeste (56 ressources) : A1 ions monoatomiques (Na⁺, Cl⁻ sur le tableau de l'atome,
+  règles du duet et de l'octet), tableau magnétique de Lewis (H₂O, NH₃, CH₄, CO₂, N₂, C₂H₄ ; le tableau dit quelle
+  règle n'est pas respectée), isomères de C₂H₆O et C₄H₁₀, formules semi-développées, limites du modèle (NO₂) ; A2 boîte
+  de modèles moléculaires et modèle en 3D que l'on tourne (CH₄ 109,5°, NH₃ 107°, H₂O 104,5°, C₂H₄ plane, CO₂ linéaire),
+  représentation de Cram du méthane. Objectifs O1 à O4.
+- Matériel commun : tableau de Lewis (règles, dessin, gestes), géométrie et rendu 3D des modèles moléculaires, atelier
+  d'assemblage, boîte de modèles. tableau_atome.js déplacé de chim4 vers commun (chim4 A2 vérifié après le déplacement).
+- Corrigé après essais : NH₃ refusé parce que la formule brute était écrite « H₃N » (les formules sont maintenant
+  comparées atome par atome) ; dernière rangée du quadrillage sous le bouton « Tout ranger » ; modèle trop petit et vu
+  dans l'axe ; bâtonnets dessinés par-dessus les boules.
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le modèle 3D est 1,8 fois plus grand qu'un modèle d'élève (comme un modèle de démonstration).
+- Les doublets non liants ne sont pas montrés sur les modèles (comme dans les boîtes du commerce) : ils sont seulement
+  évoqués dans les questions.
+- Le tableau de Lewis n'accepte que des liaisons entre points voisins du quadrillage (horizontales ou verticales).

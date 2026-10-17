@@ -1586,6 +1586,76 @@
         "Les plantes créent du carbone.",
         "Une réaction chimique peut changer un élément en un autre."
       ]
+    },
+    {
+      "id": "tc_chim5_a1_lewis",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim5_a1_lewis.html",
+      "description": "Tableau magnétique de l'atome pour former les ions Na⁺ et Cl⁻ (règles du duet et de l'octet, affiche des gaz nobles) ; tableau magnétique de Lewis : aimants d'atomes (H, C, N, O, Cl) et doublets liants ou non liants pour représenter H₂O, NH₃, CH₄, CO₂, N₂, C₂H₄, avec un message qui dit quelle règle n'est pas respectée ; formules développées de deux isomères de C₂H₆O et d'une molécule C₄H₁₀ ; formules semi-développées et limites du modèle de Lewis (NO₂).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim5_molecules",
+      "activite": "Formules développées, semi-développées, brutes.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Les ions monoatomiques stables",
+          "ce_que_fait_l_eleve": "Forme les ions Na⁺ et Cl⁻ sur le tableau de l'atome et prévoit d'autres ions avec les règles du duet et de l'octet.",
+          "conclusion": "Les gaz nobles ont une couche externe pleine (2 électrons pour He, 8 pour Ne et Ar) : ils restent isolés. Les autres atomes gagnent ou perdent des électrons pour avoir la même structure que le gaz noble le plus proche : 2 électrons externes (règle du duet) ou 8 (règle de l'octet). Na → Na⁺, Mg → Mg²⁺, Cl → Cl⁻, O → O²⁻."
+        },
+        {
+          "titre": "La représentation de Lewis",
+          "ce_que_fait_l_eleve": "Représente des molécules en Lewis sur le tableau magnétique.",
+          "conclusion": "Dans une molécule, les atomes mettent en commun des électrons : un doublet liant est une liaison covalente. Chaque atome est entouré de 2 électrons (H) ou de 8 électrons (C, N, O, Cl), en comptant les doublets liants et non liants. H forme 1 liaison, C 4, N 3, O 2, Cl 1. Il existe des liaisons doubles (O=C=O) et triples (N≡N). Le modèle de Lewis a des limites : il n'explique pas certaines molécules, comme NO₂."
+        },
+        {
+          "titre": "Formules développées, semi-développées, brutes",
+          "ce_que_fait_l_eleve": "Construit des isomères et écrit leurs formules semi-développées.",
+          "conclusion": "La formule brute (C₂H₆O) donne les atomes ; la formule développée montre toutes les liaisons ; la formule semi-développée n'écrit pas les liaisons avec H (CH₃–CH₂–OH). Des molécules de même formule brute mais de formules développées différentes sont des isomères : éthanol et méthoxyméthane (C₂H₆O), butane et méthylpropane (C₄H₁₀), éthylamine et diméthylamine (C₂H₇N)."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Les atomes sont isolés dans la matière.",
+        "Un doublet non liant ne compte pas dans l'octet.",
+        "Deux molécules de même formule brute sont la même molécule.",
+        "Le chlore donne l'ion Cl⁺."
+      ]
+    },
+    {
+      "id": "tc_chim5_a2_cram",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim5_a2_cram.html",
+      "description": "Boîte de modèles moléculaires (boules à trous, bâtonnets, ressorts pour les liaisons doubles) et modèle en 3D que l'on tourne au doigt : CH₄ tétraédrique (109,5°), NH₃ pyramidale (107°), H₂O coudée (104,5°) par répulsion des doublets liants et non liants ; C₂H₄ plane et CO₂ linéaire ; représentation de Cram du méthane dessinée au tableau à partir du modèle tourné (deux liaisons dans le plan, une vers l'avant, une vers l'arrière).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim5_molecules",
+      "activite": "Modèles moléculaires et logiciels ; représentation de Cram.",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "La géométrie des molécules",
+          "ce_que_fait_l_eleve": "Construit les modèles de CH₄, NH₃ et H₂O et explique leur forme par la répulsion des doublets.",
+          "conclusion": "Autour d'un atome, les doublets d'électrons (liants et non liants) se repoussent et s'écartent le plus possible : quatre doublets sont dirigés vers les sommets d'un tétraèdre. CH₄ est tétraédrique (109,5°) ; NH₃ est pyramidale (107°) et H₂O coudée (104,5°), car leurs doublets non liants repoussent un peu plus les liaisons."
+        },
+        {
+          "titre": "La représentation de Cram",
+          "ce_que_fait_l_eleve": "Tourne le modèle du méthane pour dessiner sa représentation de Cram, puis construit C₂H₄ et CO₂.",
+          "conclusion": "Dans la représentation de Cram, un trait simple est une liaison dans le plan de la feuille, un triangle plein une liaison vers l'avant, un triangle hachuré une liaison vers l'arrière. Le méthane se dessine avec deux traits, un triangle plein et un triangle hachuré. Avec une liaison double, la molécule d'éthylène C₂H₄ est plane (120°) ; avec deux liaisons doubles, CO₂ est linéaire (180°)."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "La molécule d'eau est droite (H–O–H).",
+        "Le méthane est plat, en croix, comme sur le papier.",
+        "Les doublets non liants ne jouent aucun rôle dans la forme de la molécule."
+      ]
     }
   ]
 }
