@@ -62,7 +62,7 @@ Utilisé par : recipient_physique.js.
   L.dessiner_verrerie = function (g, pr, pose, etat) {
     // Dessine la pièce complète ; tout est dessiné dans le repère du récipient (mm).
     g.replaceChildren();
-    if (Math.abs(pose.angle || 0) < 2 && etat.ombre !== false && !pr.extras.tige) L.svg("ellipse", { cx: pose.x + 4, cy: pose.y + 2, rx: (pr.r(0) + pr.t) * pose.e * 1.05, ry: (pr.r(0) + pr.t) * pose.e * 0.16, fill: "#000", opacity: 0.28 }, g);
+    if (Math.abs(pose.angle || 0) < 2 && etat.ombre !== false && !pr.extras.tige && !pr.extras.sans_ombre) L.svg("ellipse", { cx: pose.x + 4, cy: pose.y + 2, rx: (pr.r(0) + pr.t) * pose.e * 1.05, ry: (pr.r(0) + pr.t) * pose.e * 0.16, fill: "#000", opacity: 0.28 }, g);
     const l = L.svg("g", { transform: `translate(${pose.x} ${pose.y}) rotate(${pose.angle || 0}) scale(${pose.e})` }, g);
     verre(l, pr);
     liquide(l, etat);

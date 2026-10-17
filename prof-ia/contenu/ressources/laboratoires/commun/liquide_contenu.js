@@ -4,7 +4,7 @@ Rôle : contenu liquide d'un récipient, en phases : les liquides miscibles (eau
        rangent par densité (la moins dense au-dessus). Une agitation crée une émulsion qui se sépare peu à peu (décantation).
        Des espèces dissoutes (diiode...) colorent la phase qui les contient.
 Reçoit : les liquides versés (nom, volume en mL) et les espèces dissoutes ajoutées.
-Produit : Labo.LIQUIDES (catalogue, complété par chimie_reactions.js) ; Labo.REGLES_COULEUR (règles des tests, facultatives) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
+Produit : Labo.LIQUIDES (catalogue, complété par chimie_reactions.js) ; Labo.TEINTES (teinte des espèces dissoutes, que l'on peut compléter) ; Labo.REGLES_COULEUR (règles des tests, facultatives) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
           volume(), couleur(phase), agiter(force), decanter(dt) }.
 Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie.
 */
@@ -22,6 +22,7 @@ Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie
   // Coefficient de partage (concentration dans le solvant organique / concentration dans l'eau) à l'équilibre.
   const PARTAGE = { I2: 90 };
   L.LIQUIDES = LIQUIDES;
+  L.TEINTES = TEINTES;
   L.rgb = L.rgb || ((c) => `rgb(${c.map((v) => Math.round(v)).join(",")})`);
 
   function densite(ph) {
@@ -51,7 +52,7 @@ Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie
       const sortie = [];
       while (V > 1e-9 && c.phases.length) {
         const ph = ou === "haut" ? c.phases[c.phases.length - 1] : c.phases[0], v = Math.min(V, ph.V), k = v / ph.V;
-        const part = { classe: ph.classe, liquides: {}, dissous: {} };
+        const part = { classe: ph.classe, liquides: {}, dissous: {}, T: c.T ?? 20 };
         for (const n of Object.keys(ph.liquides)) { part.liquides[n] = ph.liquides[n] * k; ph.liquides[n] -= part.liquides[n]; }
         for (const s of Object.keys(ph.dissous)) { part.dissous[s] = ph.dissous[s] * k; ph.dissous[s] -= part.dissous[s]; }
         ph.V -= v; V -= v; sortie.push(part);
@@ -60,7 +61,9 @@ Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie
       return sortie;
     };
     c.verser = (part) => {
-      // Reçoit une portion venue d'un autre récipient (liquides et espèces dissoutes).
+      // Reçoit une portion venue d'un autre récipient (liquides, espèces dissoutes, température du mélange).
+      const V0 = c.volume(), Vp = Object.values(part.liquides).reduce((s, v) => s + v, 0);
+      if (part.T !== undefined && V0 + Vp > 0) c.T = ((c.T ?? 20) * V0 + part.T * Vp) / (V0 + Vp);
       for (const [n, V] of Object.entries(part.liquides)) if (V > 0) c.ajouter(n, V, {});
       const ph = c.phases.find((p) => p.classe === part.classe) || c.phases[0];
       if (ph) for (const [s, q] of Object.entries(part.dissous)) ph.dissous[s] = (ph.dissous[s] || 0) + q;

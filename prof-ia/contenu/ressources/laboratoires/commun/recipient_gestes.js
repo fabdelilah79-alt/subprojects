@@ -54,7 +54,7 @@ Utilisé par : les simulations de chimie.
 
   function place_libre(ctx, r, sol) {
     // Abscisse libre la plus proche sur la paillasse : deux objets ne peuvent pas occuper la même place.
-    const R = (q) => (q.pr.r(q.pr.h0) + q.pr.t) * q.pose.e + 3;
+    const R = (q) => (Math.max(q.pr.r(q.pr.h0), q.pr.r(q.pr.H)) + q.pr.t) * q.pose.e + 3;
     const occupe = (x) => ctx.ecoulement.recipients.some((q) => q !== r && Math.abs(q.pose.y - sol) < 2 && !q.tenu && Math.abs(q.pose.x - x) < R(q) + R(r)) || (ctx.obstacles || []).some(([a, b]) => x + R(r) > a && x - R(r) < b);
     for (let d = 0; d < 600; d += 4) for (const x of [r.pose.x + d, r.pose.x - d]) if (x > 200 && x < 830 && !occupe(x)) return x;
     return r.pose.x;

@@ -2255,6 +2255,681 @@ Utilisé par : les simulations de chimie.
 </script>
   <script>
 /*
+Rôle : paillasse de chimie (plans de dessin et récipients qui peuvent recevoir des gouttes) et pipette compte-gouttes :
+       on la sort de son flacon ou de son bécher, on la tient au-dessus d'un tube ou d'un verre de montre, les gouttes
+       tombent une à une, puis la pipette retourne dans son flacon (une pipette par produit : on ne mélange rien).
+Reçoit : le groupe SVG de la paillasse ; pour une pipette : sa place de repos, le produit, la dose (mL) et le nombre de gouttes.
+Produit : Labo.paillasse_chimie(g) -> ctx { fond, objets, devant, haut, cibles, ajouter_cible(c), signaler(), sur_changement(f) } ;
+          Labo.compte_gouttes(ctx, reglage) -> pipette ; une cible est { bouche() -> { x, y }, surface() -> y, recevoir(nom, mL) }.
+Utilisé par : chimie_objets.js et les simulations de chimie.
+*/
+(function (L) {
+  L.paillasse_chimie = function (g) {
+    // Quatre plans : fond (supports), objets (récipients), devant (bord des supports), haut (objet tenu, gouttes).
+    const ctx = { cibles: [], ecouteurs: [] };
+    for (const nom of ["fond", "objets", "devant", "haut"]) ctx[nom] = L.svg("g", { class: `chimie-${nom}` }, g);
+    ctx.ajouter_cible = (c) => { ctx.cibles.push(c); return c; };
+    ctx.sur_changement = (f) => ctx.ecouteurs.push(f);
+    ctx.signaler = () => ctx.ecouteurs.forEach((f) => f());
+    return ctx;
+  };
+
+  function gouttes(ctx, de, cible, n, couleur, fin) {
+    // Fait tomber n gouttes, l'une après l'autre, de la pointe de la pipette jusqu'à la surface du contenu.
+    const y_fin = cible.surface();
+    let k = 0;
+    const suivante = () => {
+      if (k++ >= n) return fin();
+      const goutte = L.svg("ellipse", { cx: de.x, cy: de.y, rx: 2.2, ry: 2.8, fill: couleur, opacity: 0.9, stroke: "#ffffff88", "stroke-width": 0.5 }, ctx.haut);
+      L.animer(Math.sqrt(Math.max(4, y_fin - de.y)) * 0.022, (t) => goutte.setAttribute("cy", de.y + (y_fin - de.y) * t * t), () => { goutte.remove(); suivante(); });
+    };
+    suivante();
+  }
+
+  L.compte_gouttes = function (ctx, { repos, produit, rgb, poire = "#1d1d1f", bague = true, dose = 0.05, n = 3, source = null, cachee = false, quand_rangee = null }) {
+    // Pipette déplaçable ; repos = { x, y } : pointe quand elle est rangée ; cachee : seule la poire dépasse du flacon.
+    const p = { produit, rgb, g: L.svg("g", { class: "pipette", role: "button", "aria-label": `Pipette : ${produit}` }, ctx.objets), sortie: false };
+    const dessiner = (entiere) => { L.verrerie.pipette(p.g, 0, 0, { rgb, poire, bague }); if (!entiere) [...p.g.children].slice(0, rgb ? 2 : 1).forEach((e) => e.remove()); };
+    const ranger = () => { ctx.objets.append(p.g); L.placer(p.g, repos.x, repos.y); dessiner(!cachee); p.sortie = false; quand_rangee?.(false); };
+    const viser = (pos) => ctx.cibles.find((c) => { const b = c.bouche(); return c !== source && Math.abs(pos.x - b.x) < 22 && pos.y > b.y - 70 && pos.y < b.y + 12; });
+    ranger();
+    L.glissable(p.g, {
+      debut: () => ({ ...repos }),
+      saisir: () => { ctx.haut.append(p.g); dessiner(true); p.sortie = true; quand_rangee?.(true); },
+      deplacer: (pos) => L.placer(p.g, pos.x, pos.y),
+      lacher: (pos) => {
+        const c = viser(pos);
+        if (!c) return ranger();
+        const b = c.bouche(), tenue = { x: b.x, y: Math.min(pos.y, b.y - 6) };
+        L.placer(p.g, tenue.x, tenue.y);
+        gouttes(ctx, tenue, c, n, L.rgb(rgb), () => { c.recevoir(produit, dose); ctx.signaler(); ranger(); });
+      },
+    });
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : géométrie des liquides dans un récipient vu en coupe : aire d'un polygone, découpe par la surface libre (un demi-plan),
+       recherche du niveau de la surface pour une aire donnée (par dichotomie). La surface libre est une droite de normale
+       u (vers le haut, hors du liquide) ; le liquide occupe les points p tels que u·p ≤ s.
+Reçoit : des polygones [{ x, y }] en coordonnées de la scène (y vers le bas), une normale u et une aire.
+Produit : Labo.geometrie = { aire(poly), couper(poly, u, s), niveau(poly, u, aire) -> { s, region }, transformer(poly, pose) }.
+Utilisé par : recipient_physique.js, verrerie_rendu.js.
+*/
+(function (L) {
+  const pv = (u, p) => u.x * p.x + u.y * p.y;
+
+  function aire(poly) {
+    // Aire d'un polygone (formule du lacet), toujours positive.
+    let a = 0;
+    for (let i = 0; i < poly.length; i++) { const p = poly[i], q = poly[(i + 1) % poly.length]; a += p.x * q.y - q.x * p.y; }
+    return Math.abs(a) / 2;
+  }
+
+  function couper(poly, u, s) {
+    // Partie du polygone sous la surface (u·p ≤ s) : algorithme de Sutherland-Hodgman pour un demi-plan.
+    const r = [];
+    for (let i = 0; i < poly.length; i++) {
+      const p = poly[i], q = poly[(i + 1) % poly.length], dp = pv(u, p) - s, dq = pv(u, q) - s;
+      if (dp <= 0) r.push(p);
+      if ((dp < 0 && dq > 0) || (dp > 0 && dq < 0)) { const t = dp / (dp - dq); r.push({ x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t }); }
+    }
+    return r;
+  }
+
+  function niveau(poly, u, a) {
+    // Position s de la surface telle que l'aire du liquide vaille a (dichotomie sur l'intervalle des projections).
+    let lo = Infinity, hi = -Infinity;
+    for (const p of poly) { const v = pv(u, p); lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    if (a <= 0) return { s: lo, region: [] };
+    if (a >= aire(poly)) return { s: hi, region: poly };
+    for (let k = 0; k < 40; k++) { const m = (lo + hi) / 2; if (aire(couper(poly, u, m)) < a) lo = m; else hi = m; }
+    return { s: hi, region: couper(poly, u, hi) };
+  }
+
+  function transformer(poly, { x, y, angle = 0, e = 1 }) {
+    // Passe des coordonnées du récipient (mm, origine au bas, y vers le haut) à la scène (px), avec rotation (degrés).
+    const c = Math.cos((angle * Math.PI) / 180), s = Math.sin((angle * Math.PI) / 180);
+    return poly.map((p) => ({ x: x + e * (p.x * c + p.y * s), y: y + e * (p.x * s - p.y * c) }));
+  }
+
+  L.geometrie = { aire, couper, niveau, transformer, pv };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : contenu liquide d'un récipient, en phases : les liquides miscibles (eau, éthanol, solutions aqueuses) forment une
+       même phase ; un liquide non miscible (cyclohexane, huile, dichlorométhane) forme une autre phase. Les phases se
+       rangent par densité (la moins dense au-dessus). Une agitation crée une émulsion qui se sépare peu à peu (décantation).
+       Des espèces dissoutes (diiode...) colorent la phase qui les contient.
+Reçoit : les liquides versés (nom, volume en mL) et les espèces dissoutes ajoutées.
+Produit : Labo.LIQUIDES (catalogue, complété par chimie_reactions.js) ; Labo.TEINTES (teinte des espèces dissoutes, que l'on peut compléter) ; Labo.REGLES_COULEUR (règles des tests, facultatives) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
+          volume(), couleur(phase), agiter(force), decanter(dt) }.
+Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie.
+*/
+(function (L) {
+  const LIQUIDES = {
+    eau: { nom: "eau", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse" },
+    eau_iodee: { nom: "eau iodée", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse", dissous: { I2: 0.06 } },
+    ethanol: { nom: "éthanol", d: 0.79, rgb: [232, 241, 246], alpha: 0.3, classe: "aqueuse" },
+    cyclohexane: { nom: "cyclohexane", d: 0.78, rgb: [238, 242, 244], alpha: 0.3, classe: "organique" },
+    dichloromethane: { nom: "dichlorométhane", d: 1.33, rgb: [236, 240, 242], alpha: 0.3, classe: "organique" },
+    huile: { nom: "huile", d: 0.92, rgb: [226, 186, 60], alpha: 0.75, classe: "organique" },
+  };
+  // Teinte d'une espèce dissoute selon la phase : le diiode est jaune-brun dans l'eau, violet dans un solvant organique.
+  const TEINTES = { I2: { aqueuse: [150, 68, 8], organique: [156, 44, 150] } };
+  // Coefficient de partage (concentration dans le solvant organique / concentration dans l'eau) à l'équilibre.
+  const PARTAGE = { I2: 90 };
+  L.LIQUIDES = LIQUIDES;
+  L.TEINTES = TEINTES;
+  L.rgb = L.rgb || ((c) => `rgb(${c.map((v) => Math.round(v)).join(",")})`);
+
+  function densite(ph) {
+    // Densité moyenne d'une phase (pondérée par les volumes).
+    let V = 0, m = 0;
+    for (const [n, v] of Object.entries(ph.liquides)) { V += v; m += v * LIQUIDES[n].d; }
+    return V ? m / V : 1;
+  }
+
+  L.contenu = function (volumes = {}) {
+    // Contenu vide, puis remplissage avec les volumes donnés.
+    const c = { phases: [], emulsion: 0 };
+    c.volume = () => c.phases.reduce((s, p) => s + p.V, 0);
+    c.ranger = () => c.phases.sort((a, b) => densite(b) - densite(a));
+    c.ajouter = (nom, V, dissous = null) => {
+      // Ajoute V mL d'un liquide (et ses espèces dissoutes, en quantité proportionnelle au volume).
+      if (V <= 0) return;
+      const classe = LIQUIDES[nom].classe;
+      let ph = c.phases.find((p) => p.classe === classe);
+      if (!ph) { ph = { classe, liquides: {}, dissous: {}, V: 0 }; c.phases.push(ph); }
+      ph.liquides[nom] = (ph.liquides[nom] || 0) + V; ph.V += V;
+      for (const [s, q] of Object.entries(dissous || LIQUIDES[nom].dissous || {})) ph.dissous[s] = (ph.dissous[s] || 0) + q * (dissous ? 1 : V);
+      c.ranger();
+    };
+    c.retirer = (V, ou = "haut") => {
+      // Retire V mL de la phase du haut (débordement) ou du bas (robinet) ; renvoie ce qui est retiré, phase par phase.
+      const sortie = [];
+      while (V > 1e-9 && c.phases.length) {
+        const ph = ou === "haut" ? c.phases[c.phases.length - 1] : c.phases[0], v = Math.min(V, ph.V), k = v / ph.V;
+        const part = { classe: ph.classe, liquides: {}, dissous: {}, T: c.T ?? 20 };
+        for (const n of Object.keys(ph.liquides)) { part.liquides[n] = ph.liquides[n] * k; ph.liquides[n] -= part.liquides[n]; }
+        for (const s of Object.keys(ph.dissous)) { part.dissous[s] = ph.dissous[s] * k; ph.dissous[s] -= part.dissous[s]; }
+        ph.V -= v; V -= v; sortie.push(part);
+        if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+      }
+      return sortie;
+    };
+    c.verser = (part) => {
+      // Reçoit une portion venue d'un autre récipient (liquides, espèces dissoutes, température du mélange).
+      const V0 = c.volume(), Vp = Object.values(part.liquides).reduce((s, v) => s + v, 0);
+      if (part.T !== undefined && V0 + Vp > 0) c.T = ((c.T ?? 20) * V0 + part.T * Vp) / (V0 + Vp);
+      for (const [n, V] of Object.entries(part.liquides)) if (V > 0) c.ajouter(n, V, {});
+      const ph = c.phases.find((p) => p.classe === part.classe) || c.phases[0];
+      if (ph) for (const [s, q] of Object.entries(part.dissous)) ph.dissous[s] = (ph.dissous[s] || 0) + q;
+    };
+    c.couleur = (ph) => {
+      // Couleur et opacité d'une phase : un liquide très coloré garde sa teinte quand on le dilue (comme une solution réelle :
+      // poids de chaque liquide = volume × opacité³) ; puis teinte des espèces dissoutes (concentration = quantité / volume).
+      let rgb = [0, 0, 0], alpha = 0, poids = 0;
+      const L_ph = Object.entries(ph.liquides).filter(([, v]) => v > 0);
+      for (const [n, v] of L_ph) poids += v * LIQUIDES[n].alpha ** 3;
+      for (const [n, v] of L_ph) { const l = LIQUIDES[n], k = (v * l.alpha ** 3) / poids; rgb = rgb.map((x, i) => x + l.rgb[i] * k); alpha = Math.max(alpha, l.alpha * Math.pow(v / ph.V, 0.3)); }
+      for (const [s, q] of Object.entries(ph.dissous)) {
+        if (!TEINTES[s]) continue;
+        const k = Math.min(0.95, (12 * q) / Math.max(ph.V, 0.1)), t = TEINTES[s][ph.classe];
+        rgb = rgb.map((x, i) => x + (t[i] - x) * k); alpha = Math.min(0.9, alpha + 0.55 * k);
+      }
+      for (const regle of L.REGLES_COULEUR || []) ({ rgb, alpha } = regle(ph, rgb, alpha, c));
+      return { rgb, alpha };
+    };
+    c.agiter = (force) => {
+      // Émulsion ; les espèces dissoutes passent d'une phase à l'autre vers l'équilibre de partage, d'autant plus vite qu'on agite.
+      const aq = c.phases.find((p) => p.classe === "aqueuse"), org = c.phases.find((p) => p.classe === "organique");
+      if (!aq || !org) return;
+      c.emulsion = Math.min(1, c.emulsion + force);
+      for (const [s, K] of Object.entries(PARTAGE)) {
+        const n = (aq.dissous[s] || 0) + (org.dissous[s] || 0), n_org = (n * K * org.V) / (K * org.V + aq.V), k = Math.min(1, force * 3);
+        org.dissous[s] = (org.dissous[s] || 0) + (n_org - (org.dissous[s] || 0)) * k; aq.dissous[s] = n - org.dissous[s];
+      }
+    };
+    c.decanter = (dt) => { c.emulsion = Math.max(0, c.emulsion - dt / 5); };
+    for (const [n, v] of Object.entries(volumes)) c.ajouter(n, v);
+    return c;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : verrerie aux vraies dimensions (en mm) : profil intérieur (demi-largeur r selon la hauteur h depuis le fond),
+       épaisseur du verre, bec, graduations. Pour chaque pièce : polygones intérieur et extérieur (repère du récipient :
+       origine au milieu du fond, x vers la droite, y vers le bas, en mm), lèvres de l'ouverture, et tables qui relient le
+       volume (mL) à l'aire de liquide vue en coupe (mm²) : un récipient droit est rempli exactement à la bonne hauteur.
+Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), buchner_70 (cuvette d'un entonnoir Büchner)).
+Produit : Labo.profil(nom) -> { nom, H, h0 (fond intérieur : 0, sauf l'ampoule dont la tige est sous le robinet), t, interieur, exterieur, levres, aire_de(V), volume_de(A), hauteur_de(V), r(h), graduations, extras }.
+Utilisé par : verrerie_rendu.js, recipient_physique.js.
+*/
+(function (L) {
+  const sphere = (R, h0, h1, pas = 2) => { const p = []; for (let h = h0; h <= h1; h += pas) p.push([h, Math.sqrt(Math.max(0, R * R - (R - h) ** 2))]); return p; };
+  // Corps d'ampoule en poire : cône qui s'évase vers le haut, épaule arrondie, puis col (points tous les 2 mm).
+  const poire = (h0, h1, r0, rmax, r1) => { const p = []; for (let h = h0; h <= h1; h += 2) { const u = (h - h0) / (h1 - h0), w = u < 0.78 ? r0 + (rmax - r0) * Math.sin((Math.PI / 2) * Math.pow(u / 0.78, 0.85)) : r1 + (rmax - r1) * Math.cos((Math.PI / 2) * ((u - 0.78) / 0.22)); p.push([h, w]); } return p; };
+  const becher = (r, H, grad) => ({ profil: [[0, r - 3], [1, r - 1.2], [3, r], [H, r]], t: 1.4, bec: true, grad });
+  const DEFS = {
+    becher_50: becher(20, 54, [10, 20, 30, 40, 50]),
+    becher_100: becher(25, 68, [20, 40, 60, 80, 100]),
+    becher_250: becher(33.5, 92, [50, 100, 150, 200, 250]),
+    becher_600: becher(45, 125, [100, 200, 300, 400, 500, 600]),
+    tube: { profil: [...sphere(7.5, 0, 7.5, 0.75), [150, 7.5]], t: 1, bourrelet: true, etiquette_h: 0.72 },
+    eprouvette_50: { profil: [[0, 10.5], [175, 10.5]], t: 1.3, bec: true, pied: true, grad: [10, 20, 30, 40, 50] },
+    erlenmeyer_250: { profil: [[0, 37], [2, 39.5], [80, 16], [92, 14], [118, 14]], t: 1.4, grad: [50, 100, 150, 200] },
+    ampoule_125: { profil: [[54, 1.6], [62, 1.6], ...poire(64, 186, 3, 32, 11), [204, 10.5]], t: 1.5, robinet: 52, tige: true, rode: true },
+    ballon_250: { profil: [...sphere(39.5, 0, 74), [80, 12.5], [118, 12.5]], t: 1.5, rode: true },
+    fiole_500: { profil: [[0, 49], [3, 51], [110, 16], [140, 13], [180, 13]], t: 2.4, tubulure: 155, grad: [100, 200, 300, 400] },
+    buchner_70: { profil: [[0, 33], [4, 35], [40, 35]], t: 3, sans_ombre: true },
+  };
+  const cache = {};
+
+  function polygones(def) {
+    // Polygones intérieur (le liquide) et extérieur (le verre), et lèvres de l'ouverture (bec à droite s'il y en a un).
+    const p = def.profil, H = p[p.length - 1][0], t = def.t;
+    const interieur = [...p.slice().reverse().map(([h, r]) => ({ x: -r, y: -h })), ...p.map(([h, r]) => ({ x: r, y: -h }))];
+    const b = -p[0][0] + t;
+    const exterieur = [...p.slice().reverse().map(([h, r]) => ({ x: -r - t, y: -h })), { x: -p[0][1] - t, y: b }, { x: p[0][1] + t, y: b }, ...p.map(([h, r]) => ({ x: r + t, y: -h }))];
+    const rH = p[p.length - 1][1], levres = { g: { x: -rH, y: -H }, d: def.bec ? { x: rH + 3, y: -H - 1.5 } : { x: rH, y: -H } };
+    return { H, interieur, exterieur, levres };
+  }
+
+  function tables(def, r) {
+    // Volume (mL) et aire en coupe (mm²) jusqu'à chaque demi-millimètre de hauteur.
+    const H = def.profil[def.profil.length - 1][0], h0 = def.profil[0][0], V = [0], A = [0];
+    for (let h = h0 + 0.5; h <= H + 1e-9; h += 0.5) { const m = r(h - 0.25); V.push(V[V.length - 1] + (Math.PI * m * m * 0.5) / 1000); A.push(A[A.length - 1] + 2 * m * 0.5); }
+    const chercher = (T, x) => { let i = 1; while (i < T.length - 1 && T[i] < x) i++; return Math.max(0, i - 1 + (x - T[i - 1]) / Math.max(1e-9, T[i] - T[i - 1])); };
+    const lire = (T, k) => { const i = Math.min(T.length - 2, Math.floor(k)); return T[i] + (T[i + 1] - T[i]) * (k - i); };
+    return { aire_de: (v) => lire(A, chercher(V, v)), volume_de: (a) => lire(V, chercher(A, a)), hauteur_de: (v) => h0 + chercher(V, v) * 0.5 };
+  }
+
+  L.profil = function (nom) {
+    // Construit (une seule fois) la pièce demandée.
+    if (cache[nom]) return cache[nom];
+    const def = DEFS[nom], p = def.profil;
+    const r = (h) => { for (let i = 1; i < p.length; i++) if (h <= p[i][0]) return p[i - 1][1] + ((p[i][1] - p[i - 1][1]) * (h - p[i - 1][0])) / (p[i][0] - p[i - 1][0]); return p[p.length - 1][1]; };
+    const pr = { nom, t: def.t, h0: p[0][0], r, extras: def, ...polygones(def), ...tables(def, r) };
+    pr.graduations = (def.grad || []).map((v) => ({ v, h: pr.hauteur_de(v) }));
+    return (cache[nom] = pr);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : dessin réaliste d'une pièce de verrerie (profil de verrerie_profils.js) dans sa position : ombre portée, verre
+       épais et transparent (bords plus sombres, reflets verticaux), bord supérieur ovale, fond en perspective, liquide en
+       phases avec sa surface (ovale clair si le récipient est droit, ménisque), graduations émaillées blanches, bec,
+       pied d'éprouvette, bourrelet de tube, robinet et col rodé d'ampoule, bouchon.
+Reçoit : le groupe SVG, le profil, la pose { x, y (milieu du fond, px), angle (degrés), e (px par mm) } et l'état
+         { regions : [{ poly (repère du récipient), rgb, alpha }], surface : [p1, p2] ou null, bouchon, robinet, etiquette }.
+Produit : Labo.dessiner_verrerie(g, profil, pose, etat).
+Utilisé par : recipient_physique.js.
+*/
+(function (L) {
+  const chemin = (poly) => (poly.length ? "M" + poly.map((p) => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(" L") + " Z" : "");
+  const VERRE_FOND = "rgba(214,233,240,0.20)", BORD = "rgba(120,150,160,0.85)";
+
+  function verre(g, pr) {
+    // Corps du verre : paroi (entre contour extérieur et intérieur) légèrement teintée, contours, fond épais en perspective.
+    const R = pr.r(pr.h0) + pr.t, ry = 0.12 * R, yb = -pr.h0;
+    L.svg("path", { d: chemin(pr.exterieur) + " " + chemin(pr.interieur), fill: "rgba(200,225,233,0.45)", "fill-rule": "evenodd" }, g);
+    L.svg("path", { d: chemin(pr.interieur), fill: VERRE_FOND }, g);
+    L.svg("path", { d: chemin(pr.exterieur), fill: "none", stroke: BORD, "stroke-width": 0.45 }, g);
+    if (!pr.extras.tige) L.svg("path", { d: `M${-R} ${yb} A${R} ${ry} 0 0 0 ${R} ${yb}`, fill: "none", stroke: "rgba(255,255,255,0.55)", "stroke-width": 0.5 }, g);
+  }
+
+  function reflets(g, pr) {
+    // Deux reflets verticaux sur la gauche, un mince sur la droite (lumière venant de la gauche).
+    const H = pr.H, r = pr.r(H * 0.5);
+    L.svg("rect", { x: -r * 0.78, y: -H * 0.9, width: r * 0.14, height: H * 0.78, rx: r * 0.07, fill: "#fff", opacity: 0.28 }, g);
+    L.svg("rect", { x: -r * 0.55, y: -H * 0.86, width: r * 0.05, height: H * 0.7, fill: "#fff", opacity: 0.2 }, g);
+    L.svg("rect", { x: r * 0.78, y: -H * 0.8, width: r * 0.05, height: H * 0.6, fill: "#fff", opacity: 0.18 }, g);
+  }
+
+  function bord(g, pr) {
+    // Bord supérieur vu un peu d'en haut : anneau ovale (épaisseur du verre), bec éventuel.
+    const H = pr.H, r = pr.r(H), t = pr.t, ry = 0.12 * (r + t);
+    L.svg("ellipse", { cx: 0, cy: -H, rx: r + t / 2, ry, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": t }, g);
+    L.svg("ellipse", { cx: 0, cy: -H, rx: r + t, ry: ry + t / 2, fill: "none", stroke: BORD, "stroke-width": 0.35 }, g);
+    if (pr.extras.bec) L.svg("path", { d: `M${r} ${-H - 0.5} q2.5 -0.5 3.8 -2.2 q-1 2.8 -3.8 3.4`, fill: "rgba(225,240,245,0.9)", stroke: BORD, "stroke-width": 0.35 }, g);
+    if (pr.extras.bourrelet) L.svg("ellipse", { cx: 0, cy: -H, rx: r + t * 1.6, ry: ry + t, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": t * 0.9 }, g);
+  }
+
+  function graduations(g, pr) {
+    // Traits et nombres émaillés en blanc, sur la droite, et la capacité.
+    for (const { v, h } of pr.graduations) {
+      const r = pr.r(h);
+      L.svg("path", { d: `M${r * 0.35} ${-h} H${r * 0.9}`, stroke: "#fff", "stroke-width": 0.5, opacity: 0.9 }, g);
+      L.svg("text", { x: r * 0.3, y: -h + 0.9, "font-size": 2.6, "text-anchor": "end", fill: "#fff", opacity: 0.9, "font-family": "sans-serif" }, g).textContent = String(v);
+    }
+    if (pr.graduations.length) L.svg("text", { x: -pr.r(pr.H * 0.2) * 0.5, y: -pr.H * 0.12, "font-size": 2.8, fill: "#fff", opacity: 0.85, "font-family": "sans-serif" }, g).textContent = `${pr.graduations[pr.graduations.length - 1].v} mL`;
+  }
+
+  function liquide(g, etat) {
+    // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), opacity: ph.alpha }, g);
+    const s = etat.surface;
+    if (!s) return;
+    const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;
+    const haut = etat.regions[0];
+    if (etat.droit) L.svg("ellipse", { cx: mx, cy: my, rx: l, ry: l * 0.12, transform: `rotate(${a} ${mx} ${my})`, fill: L.rgb(haut.rgb.map((v) => Math.min(255, v + 25))), opacity: Math.min(0.9, haut.alpha + 0.15) }, g);
+    L.svg("path", { d: `M${s[0].x} ${s[0].y} L${s[1].x} ${s[1].y}`, stroke: "rgba(255,255,255,0.7)", "stroke-width": 0.4 }, g);
+  }
+
+  L.dessiner_verrerie = function (g, pr, pose, etat) {
+    // Dessine la pièce complète ; tout est dessiné dans le repère du récipient (mm).
+    g.replaceChildren();
+    if (Math.abs(pose.angle || 0) < 2 && etat.ombre !== false && !pr.extras.tige && !pr.extras.sans_ombre) L.svg("ellipse", { cx: pose.x + 4, cy: pose.y + 2, rx: (pr.r(0) + pr.t) * pose.e * 1.05, ry: (pr.r(0) + pr.t) * pose.e * 0.16, fill: "#000", opacity: 0.28 }, g);
+    const l = L.svg("g", { transform: `translate(${pose.x} ${pose.y}) rotate(${pose.angle || 0}) scale(${pose.e})` }, g);
+    verre(l, pr);
+    liquide(l, etat);
+    L.dessin_accessoires?.(l, pr, etat);
+    reflets(l, pr);
+    graduations(l, pr);
+    bord(l, pr);
+    return l;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
+       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
+       étiquette collée.
+Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
+Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
+Utilisé par : verrerie_rendu.js.
+*/
+(function (L) {
+  function robinet(g, pr, ouvert) {
+    // Boisseau du robinet (verre épais), clé en PTFE ; la poignée est dans l'axe quand le robinet est ouvert.
+    const h = pr.extras.robinet;
+    L.svg("rect", { x: -5, y: -h - 5, width: 10, height: 10, rx: 2, fill: "rgba(210,232,240,0.8)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -9, y: -h - 2.2, width: 18, height: 4.4, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    if (ouvert) L.svg("rect", { x: 9, y: -h - 1, width: 2, height: 2, fill: "#1d3f6b" }, g);
+    L.svg("rect", ouvert ? { x: 10, y: -h - 6, width: 3.4, height: 12, rx: 1.2, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 } : { x: 10, y: -h - 1.7, width: 12, height: 3.4, rx: 1.2, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+  }
+
+  function bouchon(g, pr) {
+    // Bouchon rodé en PTFE, enfoncé dans le col.
+    const H = pr.H, r = pr.r(H);
+    L.svg("path", { d: `M${-r + 0.6} ${-H + 9} L${-r - 1.5} ${-H - 3} H${r + 1.5} L${r - 0.6} ${-H + 9} Z`, fill: "#3b7cc4", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -r - 3, y: -H - 7, width: 2 * r + 6, height: 5, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+  }
+
+  function etiquette(g, pr, texte) {
+    // Étiquette blanche collée sur le verre, à mi-hauteur.
+    const h = pr.H * (pr.extras.etiquette_h || 0.42), r = Math.min(pr.r(h) * 0.8, 16);
+    L.svg("rect", { x: -r, y: -h - 4, width: 2 * r, height: 8, rx: 0.8, fill: "#fbfaf3", stroke: "#cfcab8", "stroke-width": 0.3 }, g);
+    L.svg("text", { x: 0, y: -h + 1.2, "font-size": Math.min(3.6, (3.4 * r) / Math.max(4, texte.length * 0.95)), "text-anchor": "middle", "font-weight": 700, fill: "#23315a", "font-family": "sans-serif" }, g).textContent = texte;
+  }
+
+  function tige(g, pr, etat) {
+    // Tige de l'ampoule sous le robinet : vide, sauf quand le liquide s'écoule.
+    const h = pr.extras.robinet;
+    if (etat.coule) L.svg("rect", { x: -1.4, y: -h, width: 2.8, height: h, fill: L.rgb(etat.coule), opacity: 0.85 }, g);
+    L.svg("path", { d: `M-2.8 ${-h} V-1 L-1.6 0 H1.6 L2.8 -1 V${-h}`, fill: "rgba(200,225,233,0.35)", stroke: "rgba(120,150,160,0.85)", "stroke-width": 0.4 }, g);
+  }
+
+  L.dessin_accessoires = function (g, pr, etat) {
+    // Ajoute ce qui va avec la pièce.
+    const x = pr.extras;
+    if (x.rode) L.svg("rect", { x: -pr.r(pr.H) - pr.t, y: -pr.H, width: 2 * (pr.r(pr.H) + pr.t), height: 12, fill: "#ffffff", opacity: 0.35 }, g);
+    if (x.tige) tige(g, pr, etat);
+    if (x.robinet) robinet(g, pr, etat.robinet && etat.robinet.ouvert);
+    if (x.tubulure) L.svg("path", { d: `M${pr.r(x.tubulure) + pr.t - 0.5} ${-x.tubulure - 3.5} H${pr.r(x.tubulure) + 24} V${-x.tubulure + 3.5} H${pr.r(x.tubulure) + pr.t - 0.5}`, fill: "rgba(205,228,236,0.6)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.5 }, g);
+    if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    if (etat.bouchon) bouchon(g, pr);
+    if (etat.etiquette) etiquette(g, pr, etat.etiquette);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : récipient de liquide qui respecte la physique : la surface reste perpendiculaire à la pesanteur apparente (elle
+       penche quand on accélère le récipient et oscille ensuite, comme un vrai liquide qui ballotte) ; le liquide qui
+       dépasse la lèvre la plus basse déborde (débit d'un déversoir) ; un robinet ouvert laisse couler le liquide du bas
+       (loi de Torricelli, v = √(2gh)), sauf si le récipient est bouché (l'air ne peut pas entrer).
+Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet }.
+Produit : Labo.recipient(ctx, reglage) -> { id, pr, pose, c, bouchon, robinet, pas(dt), etat(), monde(p) (p dans le repère du
+          récipient, y vers le bas, mm), interieur_monde(), dessiner() }.
+Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
+*/
+(function (L) {
+  const G = L.geometrie, g_mm = 9810, RAIDEUR = 300, AMORTI = 5;
+  const rad = (a) => (a * Math.PI) / 180;
+
+  function regions(r) {
+    // Région de chaque phase dans le repère du récipient (du bas vers le haut), et la corde de la surface.
+    // Chaque phase occupe la tranche comprise entre deux niveaux (elles ne se recouvrent pas).
+    const u = r.normale(), out = [], bas = { x: -u.x, y: -u.y };
+    let V = 0, s = null;
+    const phases = r.c.emulsion > 0.5 ? [{ ...r.c.phases[0], V: r.c.volume(), melange: true }] : r.c.phases;
+    for (const ph of phases) {
+      V += ph.V;
+      const n = G.niveau(r.pr.interieur, u, r.pr.aire_de(V)), poly = s === null ? n.region : G.couper(n.region, bas, -s);
+      out.push({ poly, ...(ph.melange ? melange(r.c) : r.c.couleur(ph)) }); s = n.s;
+    }
+    return { regions: out.reverse(), s, u };
+  }
+
+  function melange(c) {
+    // Couleur d'une émulsion : moyenne des phases, trouble.
+    const cs = c.phases.map((p) => ({ ...c.couleur(p), V: p.V })), V = c.volume();
+    return { rgb: [0, 1, 2].map((i) => cs.reduce((s, p) => s + (p.rgb[i] * p.V) / V, 0)), alpha: Math.min(0.92, cs.reduce((s, p) => s + (p.alpha * p.V) / V, 0) + 0.25) };
+  }
+
+  function corde(region, u, s) {
+    // Les deux extrémités de la surface libre (points de la région situés sur la droite u·p = s).
+    const sur = region.filter((p) => Math.abs(G.pv(u, p) - s) < 0.05);
+    if (sur.length < 2) return null;
+    const t = { x: -u.y, y: u.x };
+    sur.sort((a, b) => G.pv(t, a) - G.pv(t, b));
+    return [sur[0], sur[sur.length - 1]];
+  }
+
+  function deborder(r, dt, u, s) {
+    // Liquide au-dessus de la lèvre la plus basse : il s'écoule (débit d'un déversoir de 15 mm de large).
+    if (r.bouchon || !r.c.volume()) return;
+    const lev = [r.pr.levres.g, r.pr.levres.d].sort((a, b) => G.pv(u, a) - G.pv(u, b))[0], h = s - G.pv(u, lev);
+    if (h <= 0.05) return;
+    const q = 0.6 * 15 * Math.pow(h, 1.5) * Math.sqrt(2 * g_mm) / 1000, V = Math.min(r.c.volume(), q * dt);
+    const sens = Math.sign(lev.x) || 1, v = Math.sqrt(2 * g_mm * h) * r.pose.e, a = rad(r.pose.angle);
+    r.sortie(lev, { x: sens * Math.cos(a) * v * 0.22 + r.vitesse.x, y: Math.abs(Math.sin(a)) * v * 0.22 + r.vitesse.y }, r.c.retirer(V, "haut"), V);
+  }
+
+  function vidanger(r, dt, u, s) {
+    // Robinet ouvert : vidange par la pointe (orifice de 2 mm) ; bouché, le flacon ne laisse couler que quelques gouttes.
+    if (!r.robinet || !r.robinet.ouvert || !r.c.volume()) return;
+    if (r.bouchon && r.robinet.air <= 0) return;
+    const pointe = { x: 0, y: 0 }, h = Math.max(0, s - G.pv(u, pointe)), v = Math.sqrt(2 * g_mm * h);
+    const V = Math.min(r.c.volume(), (0.6 * Math.PI * 1 * v * dt) / 1000);
+    if (r.bouchon) r.robinet.air -= V;
+    if (V > 0) r.coule = r.c.couleur(r.c.phases[0]).rgb;
+    if (V <= 0) return;
+    r.sortie(pointe, { x: r.vitesse.x, y: v * r.pose.e * 0.5 + r.vitesse.y }, r.c.retirer(V, "bas"), V);
+  }
+
+  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "" }) {
+    // Construit le récipient et l'inscrit dans l'écoulement de la paillasse.
+    const pr = L.profil(profil);
+    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
+    r.normale = () => { const a = r.phi - rad(r.pose.angle); return { x: Math.sin(a), y: -Math.cos(a) }; };
+    r.monde = (p) => G.transformer([{ x: p.x, y: -p.y }], r.pose)[0];
+    r.interieur_monde = () => G.transformer(pr.interieur.map((p) => ({ x: p.x, y: -p.y })), r.pose);
+    r.sortie = (p, v, parts, V) => ctx.ecoulement.emettre(r, r.monde(p), v, parts, V);
+    r.pas = (dt) => {
+      // Ballottement (oscillateur amorti vers l'angle de la pesanteur apparente), puis débordement et robinet.
+      const cible = Math.atan2(r.acc.x, g_mm * r.pose.e), cle = `${r.c.volume().toFixed(4)} ${r.pose.angle} ${r.bouchon} ${r.robinet?.ouvert}`;
+      // Liquide au repos dans un récipient immobile : rien ne change (on évite de recalculer la surface).
+      if (!r.tenu && Math.abs(r.w) < 1e-3 && Math.abs(r.phi - cible) < 1e-4 && cle === r.cle && !r.c.emulsion) return;
+      r.cle = cle;
+      r.w += (-RAIDEUR * (r.phi - cible) - AMORTI * r.w) * dt; r.phi = Math.max(-1.2, Math.min(1.2, r.phi + r.w * dt));
+      if (r.bouchon && Math.hypot(r.acc.x, r.acc.y) > 2500) r.c.agiter(dt * 2); else r.c.decanter(dt);
+      const k = Math.exp(-dt / 0.06); r.acc.x *= k; r.acc.y *= k; r.vitesse.x *= k; r.vitesse.y *= k;
+      const { s, u } = regions(r);
+      r.coule = null;
+      deborder(r, dt, u, s); vidanger(r, dt, u, s);
+    };
+    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, coule: r.coule }; };
+    r.dessiner = () => L.dessiner_verrerie(r.g, pr, r.pose, r.etat());
+    ctx.ecoulement.ajouter(r);
+    r.dessiner();
+    return r;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : écoulement des liquides sur une paillasse de chimie : le liquide qui sort d'un récipient (débordement, robinet)
+       tombe en chute libre (pesanteur réelle, 9,81 m/s² à l'échelle de la scène) sous forme d'un filet ; il entre dans
+       le récipient ouvert qu'il rencontre, ou se renverse sur la paillasse (flaque). Boucle d'animation de la paillasse.
+Reçoit : le contexte de la paillasse { objets, haut } et { sol (y de la paillasse, px), e (px/mm) }.
+Produit : Labo.dans_polygone(poly, p) ; Labo.ecoulement(ctx, reglage) -> { ajouter(r), ajouter_cible({ contient(p), recevoir(goutte) }) (surface qui reçoit des
+          gouttes : verre de montre, papier), emettre(source, p, v, parts, V), renverse (mL), sur_pas(f) } ;
+          ctx.ecoulement est créé.
+Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de chimie.
+*/
+(function (L) {
+  function dedans(poly, p) {
+    // Le point est-il dans le polygone (méthode du rayon) ?
+    let ok = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const a = poly[i], b = poly[j];
+      if (a.y > p.y !== b.y > p.y && p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x) ok = !ok;
+    }
+    return ok;
+  }
+
+  L.dans_polygone = dedans;
+
+  L.ecoulement = function (ctx, { sol, e = 1.6 }) {
+    // Particules de liquide, flaques, boucle d'animation (dessin des récipients qui bougent ou qui coulent).
+    const E = { recipients: [], cibles: [], gouttes: [], flaques: [], renverse: 0, ecouteurs: [], g: 9810 * e };
+    const calque = L.svg("g", { class: "ecoulement", "pointer-events": "none" }, ctx.haut), sol_g = L.svg("g", { class: "flaques", "pointer-events": "none" }, ctx.fond);
+    E.ajouter = (r) => E.recipients.push(r);
+    E.ajouter_cible = (c) => E.cibles.push(c);
+    E.sur_pas = (f) => E.ecouteurs.push(f);
+    E.emettre = (source, p, v, parts, V) => {
+      // Une portion de liquide quitte un récipient en p (px), à la vitesse v (px/s).
+      if (V <= 0) return;
+      const c = source.c.phases.length ? source.c.couleur(source.c.phases[source.c.phases.length - 1]) : { rgb: [220, 235, 245], alpha: 0.5 };
+      E.gouttes.push({ x: p.x, y: p.y, vx: v.x, vy: v.y, parts, V, rgb: c.rgb, source, t: performance.now() });
+    };
+    const recevoir = (gt) => E.recipients.find((r) => r !== gt.source && !r.bouchon && dedans(r.interieur_monde(), gt));
+    function deplacer(dt) {
+      // Chute libre de chaque portion ; entrée dans un récipient, ou flaque sur la paillasse.
+      for (const gt of E.gouttes) {
+        gt.vy += E.g * dt; gt.x += gt.vx * dt; gt.y += gt.vy * dt;
+        const cb = E.cibles.find((c) => c.contient(gt));
+        if (cb) { gt.fini = true; cb.recevoir(gt); continue; }
+        const r = recevoir(gt);
+        if (r) { gt.fini = true; gt.parts.forEach((p) => r.c.verser(p)); r.sale = true; continue; }
+        if (gt.y >= sol && !dedans(gt.source.interieur_monde(), gt)) {
+          gt.fini = true; E.renverse += gt.V;
+          const f = E.flaques.find((q) => Math.abs(q.x - gt.x) < 30) || (E.flaques.push({ x: gt.x, V: 0, rgb: gt.rgb }), E.flaques[E.flaques.length - 1]);
+          f.V += gt.V;
+        }
+      }
+      E.gouttes = E.gouttes.filter((gt) => !gt.fini);
+    }
+    function dessiner() {
+      // Filet : les portions successives d'un même récipient sont reliées ; flaques : ovales qui s'étalent.
+      calque.replaceChildren();
+      let prec = null;
+      for (const gt of E.gouttes) {
+        if (prec && prec.source === gt.source && Math.hypot(prec.x - gt.x, prec.y - gt.y) < 40) L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: L.rgb(gt.rgb), "stroke-width": 2.4, "stroke-linecap": "round", opacity: 0.85 }, calque);
+        else L.svg("circle", { cx: gt.x, cy: gt.y, r: 1.6, fill: L.rgb(gt.rgb), opacity: 0.85 }, calque);
+        prec = gt;
+      }
+      sol_g.replaceChildren();
+      for (const f of E.flaques) L.svg("ellipse", { cx: f.x, cy: sol + 3, rx: 6 + 7 * Math.sqrt(f.V), ry: 1.5 + 1.6 * Math.sqrt(f.V), fill: L.rgb(f.rgb), opacity: 0.55 }, sol_g);
+    }
+    let avant = null;
+    const image = (t) => {
+      const dt = avant === null ? 0 : Math.min(0.033, (t - avant) / 1000); avant = t;
+      if (dt > 0) {
+        // Pas fins (4 ms) pour une chute et un ballottement stables.
+        for (let k = 0, n = Math.ceil(dt / 0.004); k < n; k++) { for (const r of E.recipients) r.pas(dt / n); deplacer(dt / n); }
+        for (const r of E.recipients) {
+          // On ne redessine que les récipients dont l'aspect a changé.
+          const sig = `${r.pose.x} ${r.pose.y} ${r.pose.angle} ${r.phi.toFixed(3)} ${r.c.volume().toFixed(3)} ${r.c.phases.length} ${r.c.emulsion.toFixed(2)} ${(r.c.avance || 0).toFixed(3)} ${r.bouchon} ${r.robinet?.ouvert} ${r.coule}`;
+          if (sig !== r.sig) { r.sig = sig; r.dessiner(); }
+        }
+        if (E.gouttes.length || E.trace) dessiner();
+        E.trace = E.gouttes.length > 0;
+        E.ecouteurs.forEach((f) => f(dt));
+      }
+      requestAnimationFrame(image);
+    };
+    requestAnimationFrame(image);
+    ctx.ecoulement = E;
+    return E;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : gestes de la main sur un récipient : le prendre et le déplacer (ses accélérations font ballotter le liquide ;
+       secoué trop fort, il déborde), le poser sur la paillasse, ou le tenir au-dessus d'un autre récipient pour verser :
+       une poignée apparaît, on l'incline soi-même (le débit dépend de l'inclinaison) ; un toucher le redresse et le repose.
+Reçoit : le contexte de la paillasse (ctx.obstacles : bandes [x1, x2] de la paillasse déjà occupées, comme un socle), le récipient (recipient_physique.js) et { sol (y de pose, px), fixe (non déplaçable),
+         support : { x, y } ou supports : [{ x, y, ... }] (places sur un support : anneau, porte-tubes, bain-marie ; lâché près
+         d'une place libre, il s'y met, et r.place la désigne), pose_libre (faux pour un tube : il ne tient pas debout sur la
+         paillasse et retourne à la place libre la plus proche) }.
+Produit : Labo.manipuler(ctx, r, reglage) ; r.tenu, r.versement (vrai pendant que l'on verse).
+Utilisé par : les simulations de chimie.
+*/
+(function (L) {
+  function suivre_mouvement(r, p) {
+    // Vitesse et accélération du récipient tenu (moyennées), qui font ballotter le liquide.
+    const t = performance.now() / 1000, m = r.mvt || { t, x: p.x, y: p.y, vx: 0, vy: 0 }, dt = Math.max(0.008, t - m.t);
+    const vx = (p.x - m.x) / dt, vy = (p.y - m.y) / dt;
+    r.acc = { x: 0.6 * r.acc.x + 0.4 * ((vx - m.vx) / dt), y: 0.6 * r.acc.y + 0.4 * ((vy - m.vy) / dt) };
+    r.vitesse = { x: vx, y: vy };
+    r.mvt = { t, x: p.x, y: p.y, vx, vy };
+  }
+
+  function cible_de_versement(ctx, r) {
+    // Récipient ouvert dont l'ouverture est juste sous la lèvre de celui qu'on tient (et plus bas que son bord).
+    for (const q of ctx.ecoulement.recipients) {
+      if (q === r || q.bouchon) continue;
+      const bouche = q.monde({ x: 0, y: -q.pr.H }), sens = Math.sign(bouche.x - r.pose.x) || 1;
+      const levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), larg = (q.pr.r(q.pr.H) + 12) * q.pose.e;
+      if (Math.abs(levre.x - bouche.x) < larg + 20 && levre.y < bouche.y - 4 && levre.y > bouche.y - 120) return { q, sens };
+    }
+    return null;
+  }
+
+  function poignee(ctx, r, sens) {
+    // Poignée ronde au-dessus du récipient : on la fait tourner autour de la lèvre (le bec reste au-dessus de l'autre récipient).
+    const lev = sens > 0 ? r.pr.levres.d : r.pr.levres.g, pivot = r.monde(lev);
+    const g = L.svg("g", { class: "poignee", role: "button", "aria-label": "Incliner" }, ctx.haut);
+    const placer = () => { const p = r.monde({ x: -sens * r.pr.r(r.pr.H) * 0.6, y: -r.pr.H - 16 }); g.replaceChildren(); L.svg("circle", { cx: p.x, cy: p.y, r: 12, fill: "#fff7d6", stroke: "#c08a16", "stroke-width": 2 }, g); L.svg("path", { d: `M${p.x - 5} ${p.y + 2} a6 6 0 1 1 8 -6 m0 0 l1 -4 m-1 4 l-4 -1`, fill: "none", stroke: "#8a5a00", "stroke-width": 1.6 }, g); };
+    const orienter = (a) => {
+      // Nouvelle inclinaison, la lèvre restant fixe.
+      r.pose.angle = a;
+      const c = Math.cos((a * Math.PI) / 180), s = Math.sin((a * Math.PI) / 180), lx = lev.x, ly = lev.y;
+      r.pose.x = pivot.x - r.pose.e * (lx * c - ly * s); r.pose.y = pivot.y - r.pose.e * (lx * s + ly * c);
+    };
+    let depart = null;
+    placer();
+    L.glissable(g, { soulever: false, debut: () => { depart = null; return { x: 0, y: 0 }; }, deplacer: (d, ev) => {
+      const q = L.scene.vers_scene(ev), ang = (Math.atan2(q.y - pivot.y, q.x - pivot.x) * 180) / Math.PI;
+      if (depart === null) depart = { ang, a: r.pose.angle };
+      let delta = ang - depart.ang; if (delta > 180) delta -= 360; if (delta < -180) delta += 360;
+      orienter(sens > 0 ? Math.max(0, Math.min(135, depart.a + delta)) : Math.min(0, Math.max(-135, depart.a + delta))); placer();
+    } });
+    return { placer, retirer: () => g.remove() };
+  }
+
+  function place_libre(ctx, r, sol) {
+    // Abscisse libre la plus proche sur la paillasse : deux objets ne peuvent pas occuper la même place.
+    const R = (q) => (Math.max(q.pr.r(q.pr.h0), q.pr.r(q.pr.H)) + q.pr.t) * q.pose.e + 3;
+    const occupe = (x) => ctx.ecoulement.recipients.some((q) => q !== r && Math.abs(q.pose.y - sol) < 2 && !q.tenu && Math.abs(q.pose.x - x) < R(q) + R(r)) || (ctx.obstacles || []).some(([a, b]) => x + R(r) > a && x - R(r) < b);
+    for (let d = 0; d < 600; d += 4) for (const x of [r.pose.x + d, r.pose.x - d]) if (x > 200 && x < 830 && !occupe(x)) return x;
+    return r.pose.x;
+  }
+
+  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true }) {
+    const places = supports || (support ? [support] : []);
+    // Rend le récipient déplaçable (s'il n'est pas fixe) ; gère la pose et le versement.
+    let pg = null;
+    const reposer = () => {
+      // Redresse le récipient et le pose sur la paillasse, à l'aplomb de l'endroit où on le lâche.
+      pg?.retirer(); pg = null; r.versement = false; r.tenu = false;
+      r.pose.angle = 0; r.pose.y = sol; r.pose.x = place_libre(ctx, r, sol); r.acc = { x: 0, y: 0 }; r.vitesse = { x: 0, y: 0 }; r.mvt = null; r.w += 0.8;
+      ctx.objets.append(r.g);
+    };
+    if (fixe) return;
+    L.glissable(r.g, {
+      soulever: false,
+      debut: () => ({ x: r.pose.x, y: r.pose.y }),
+      saisir: () => { r.tenu = true; ctx.haut.append(r.g); },
+      deplacer: (p) => { if (r.versement) return; r.pose.x = p.x; r.pose.y = Math.min(sol, p.y); suivre_mouvement(r, p); },
+      lacher: () => {
+        if (r.versement) return;
+        r.acc = { x: 0, y: 0 };
+        const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
+        const sup = places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
+        if (sup && (!pose_libre || Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80)) { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; return; }
+        r.place = null;
+        const c = cible_de_versement(ctx, r);
+        if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else reposer();
+      },
+      toucher: () => { if (r.versement) reposer(); },
+    });
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : tableau blanc magnétique accroché au mur : des étiquettes aimantées à ranger dans des colonnes
        (classer des forces, des espèces, des transformations...). On les fait glisser ; elles se rangent d'elles-mêmes.
 Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait }.
@@ -2336,118 +3011,170 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
 </script>
   <script>
 /*
-Rôle : dessin du montage d'hydrodistillation : support et pinces, chauffe-ballon, ballon de 250 mL (eau, fleurs de lavande,
-       grains de pierre ponce), col de cygne, réfrigérant droit incliné (deux embouts : entrée en bas, sortie en haut),
-       allonge, éprouvette graduée qui recueille le distillat (eau en bas, huile essentielle en couche fine au-dessus),
-       robinet d'eau au mur et évier.
-Reçoit : le groupe SVG et l'état { ponce, tuyau (« bas », « haut » ou null), eau, chauffe, T, bulles, volume (mL), essence (mL) }.
-Produit : Labo.hydro = { fixe(g), variable(g, etat), REFRI, EMBOUTS, BALLON, EPROUVETTE, ROBINET } (positions utiles aux gestes).
+Rôle : dessin, aux vraies dimensions (1,6 px par mm), du montage d'hydrodistillation : deux supports et leurs pinces,
+       support élévateur, chauffe-ballon (le ballon de 250 mL y est enfoncé jusqu'à mi-hauteur), col de cygne,
+       réfrigérant droit incliné de 24 cm (deux embouts : entrée en bas, sortie en haut), allonge qui plonge dans
+       l'éprouvette graduée de 50 mL, robinet d'eau au mur et évier.
+Reçoit : les plans de la paillasse (ctx) ; pour l'eau du manchon : le groupe et l'état { eau, tuyau }.
+Produit : Labo.hydro = { fixe(ctx), eau_manchon(g, etat), chauffe_ballon(fond, devant, { x, haut, bas }), REFRI, EMBOUTS, BALLON, POINTE, EPROUVETTE, ROBINET, EVIER, CHAUFFE }.
 Utilisé par : poste_hydro.js.
 */
 (function (L) {
-  const BALLON = { x: 330, y: 498, r: 34 }, REFRI = { x1: 366, y1: 420, x2: 590, y2: 470 }, EPROUVETTE = { x: 614, bas: 562, h: 82 };
-  const ROBINET = { x: 790, y: 330 }, EVIER = { x: 830, y: 446 };
-  const le_long = (s) => ({ x: REFRI.x1 + (REFRI.x2 - REFRI.x1) * s, y: REFRI.y1 + (REFRI.y2 - REFRI.y1) * s });
-  const ANGLE = Math.atan2(REFRI.y2 - REFRI.y1, REFRI.x2 - REFRI.x1), NORMALE = { x: Math.sin(ANGLE), y: -Math.cos(ANGLE) };
-  const embout = (s, cote) => { const p = le_long(s), u = { x: NORMALE.x * cote, y: NORMALE.y * cote }; return { x: p.x + 21 * u.x, y: p.y + 21 * u.y, ux: u.x, uy: u.y }; };
+  const E = 1.6, VERRE = { fill: "rgba(205,228,236,0.45)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.8 };
+  const BALLON = { x: 340, y: 400 }, CHAUFFE = { x: 340, haut: 336, bas: 480 }, A = { x: 400, y: 178 }, LONG = 380, ANG = 12;
+  const COS = Math.cos((ANG * Math.PI) / 180), SIN = Math.sin((ANG * Math.PI) / 180);
+  const le_long = (s) => ({ x: A.x + LONG * s * COS, y: A.y + LONG * s * SIN });
+  const B = le_long(1), POINTE = { x: 790, y: 306 }, EPROUVETTE = { x: 790, sol: 576 }, ROBINET = { x: 870, y: 330 }, EVIER = { x: 894, y: 446 };
+  const embout = (s, cote) => { const p = le_long(s), u = { x: -SIN * cote, y: COS * cote }; return { x: p.x + 34 * u.x, y: p.y + 34 * u.y, ux: u.x, uy: u.y }; };
   // Embouts du manchon, perpendiculaires au réfrigérant : extrémité (x, y) et direction vers l'extérieur (ux, uy).
-  const EMBOUTS = { bas: embout(0.86, -1), haut: embout(0.16, 1) };
-  const VERRE = { fill: "url(#verre)", stroke: "#9fb6be" };
+  const EMBOUTS = { bas: embout(0.86, 1), haut: embout(0.16, -1) };
 
-  function support(g) {
-    // Potence : socle, tige, deux noix et pinces (col du ballon, réfrigérant).
-    L.svg("rect", { x: 196, y: 552, width: 110, height: 10, rx: 2, fill: "#3a3f44" }, g);
-    L.tige(g, "M250 552 V290", 5);
-    for (const [y, x2] of [[446, 318], [432, 420]]) { L.svg("rect", { x: 244, y: y - 6, width: 14, height: 12, rx: 2, fill: "#5d646a" }, g); L.tige(g, `M256 ${y} H${x2}`, 3); L.svg("rect", { x: x2 - 4, y: y - 7, width: 10, height: 14, rx: 3, fill: "#c0392b" }, g); }
+  function supports(g) {
+    // Deux supports (tige sur socle) : pince du col du ballon, pince du réfrigérant ; noix grises, mâchoires liège.
+    for (const [x, y_haut, pince] of [[220, 160, { y: 240, x2: 322 }], [592, 196, { y: le_long(0.55).y, x2: le_long(0.55).x - 6 }]]) {
+      L.svg("rect", { x: x - 62, y: 542, width: 124, height: 9, rx: 2, fill: "#3a3f44" }, g);
+      L.tige(g, `M${x} 544 V${y_haut}`, 6);
+      L.svg("rect", { x: x - 8, y: pince.y - 8, width: 16, height: 16, rx: 2, fill: "#5d646a" }, g);
+      L.tige(g, `M${x} ${pince.y} H${pince.x2}`, 4);
+      L.svg("rect", { x: pince.x2 - 3, y: pince.y - 12, width: 14, height: 24, rx: 4, fill: "#b9894f", stroke: "#7a5730" }, g);
+    }
+  }
+
+  function elevateur(g) {
+    // Support élévateur à croisillons sous le chauffe-ballon.
+    const x = CHAUFFE.x, h = CHAUFFE.bas;
+    L.svg("ellipse", { cx: x + 6, cy: 577, rx: 120, ry: 5, fill: "#000", opacity: 0.3 }, g);
+    for (const y of [h, 568]) L.svg("rect", { x: x - 112, y, width: 224, height: 8, rx: 1.5, fill: "url(#metal)", stroke: "#7d868c" }, g);
+    L.svg("path", { d: `M${x - 90} ${h + 8} L${x + 90} 568 M${x + 90} ${h + 8} L${x - 90} 568`, stroke: "#8c949a", "stroke-width": 5 }, g);
+    L.svg("circle", { cx: x, cy: (h + 576) / 2, r: 5, fill: "#5d646a" }, g);
+    L.svg("rect", { x: x + 100, y: (h + 568) / 2 - 4, width: 22, height: 8, rx: 3, fill: "#30353a" }, g);
+  }
+
+  function chauffe_ballon(fond, devant, C = CHAUFFE) {
+    // Chauffe-ballon : coque grise, cuvette (arrière derrière le ballon, paroi avant devant lui), plaque des commandes.
+    const x = C.x, h = C.haut, b = C.bas;
+    L.svg("ellipse", { cx: x, cy: h, rx: 112, ry: 16, fill: "#2c3135" }, fond);
+    L.svg("path", { d: `M${x - 112} ${h} Q${x - 108} ${b} ${x - 96} ${b} H${x + 96} Q${x + 108} ${b} ${x + 112} ${h} A112 16 0 0 1 ${x - 112} ${h} Z`, fill: "#7b868d", stroke: "#4f585e", "pointer-events": "none" }, devant);
+    L.svg("path", { d: `M${x - 104} ${h + 2} A104 13 0 0 0 ${x + 104} ${h + 2}`, fill: "none", stroke: "#a9b3b9", "stroke-width": 3, "pointer-events": "none" }, devant);
+    L.svg("rect", { x: x - 70, y: h + 70, width: 140, height: 46, rx: 4, fill: "#e8eaea", stroke: "#a7adb0", "pointer-events": "none" }, devant);
+    L.texte(devant, x - 22, h + 84, "CHAUFFE-BALLON 250 mL", { "font-size": 6, "font-weight": 700, fill: "#566066" });
+    L.svg("circle", { cx: x + 46, cy: h + 98, r: 9, fill: "#30353a", "pointer-events": "none" }, devant);
+    L.svg("line", { x1: x + 46, y1: h + 98, x2: x + 51, y2: h + 91, stroke: "#fff", "stroke-width": 1.6 }, devant);
   }
 
   function refrigerant(g) {
-    // Réfrigérant droit : manchon extérieur, tube intérieur, deux embouts.
-    const a = (Math.atan2(REFRI.y2 - REFRI.y1, REFRI.x2 - REFRI.x1) * 180) / Math.PI, l = Math.hypot(REFRI.x2 - REFRI.x1, REFRI.y2 - REFRI.y1);
-    const r = L.svg("g", { transform: `translate(${REFRI.x1} ${REFRI.y1}) rotate(${a})` }, g);
-    L.svg("rect", { x: 0, y: -3, width: l, height: 6, ...VERRE }, r);
-    L.svg("rect", { x: l * 0.1, y: -11, width: l * 0.8, height: 22, rx: 8, ...VERRE }, r);
-    for (const [s, dy] of [[0.16, -1], [0.86, 1]]) {
-      L.svg("rect", { x: l * s - 3, y: dy < 0 ? -21 : 11, width: 6, height: 10, ...VERRE }, r);
-      L.svg("rect", { x: l * s - 4, y: dy < 0 ? -20 : 16, width: 8, height: 4, rx: 1.5, ...VERRE }, r);
+    // Col de cygne, réfrigérant droit (tube intérieur, manchon, embouts à olive), allonge.
+    const col = BALLON.y - 118 * E;
+    L.svg("path", { d: `M${BALLON.x} ${col + 4} V${A.y + 14} Q${BALLON.x} ${A.y - 12} ${A.x} ${A.y}`, fill: "none", stroke: "rgba(120,150,160,0.9)", "stroke-width": 22, "stroke-linecap": "butt" }, g);
+    L.svg("path", { d: `M${BALLON.x} ${col + 4} V${A.y + 14} Q${BALLON.x} ${A.y - 12} ${A.x} ${A.y}`, fill: "none", stroke: "rgba(225,240,245,0.92)", "stroke-width": 20, "stroke-linecap": "butt" }, g);
+    const r = L.svg("g", { transform: `translate(${A.x} ${A.y}) rotate(${ANG})` }, g);
+    L.svg("rect", { x: -6, y: -7, width: LONG + 6, height: 14, ...VERRE }, r);
+    for (const [s, c] of [[0.16, -1], [0.86, 1]]) {
+      L.svg("rect", { x: LONG * s - 5, y: c < 0 ? -34 : 20, width: 10, height: 14, ...VERRE }, r);
+      L.svg("rect", { x: LONG * s - 6.5, y: c < 0 ? -32 : 26, width: 13, height: 5, rx: 2, ...VERRE }, r);
     }
-    return { a, l };
+    L.svg("rect", { x: LONG * 0.1, y: -20, width: LONG * 0.8, height: 40, rx: 12, ...VERRE }, r);
+    L.svg("rect", { x: LONG * 0.12, y: -16, width: LONG * 0.76, height: 3, rx: 1.5, fill: "#fff", opacity: 0.45 }, r);
+    L.svg("path", { d: `M${B.x - 4} ${B.y - 7} Q${POINTE.x + 6} ${B.y - 4} ${POINTE.x + 5} ${B.y + 24} V${POINTE.y} H${POINTE.x - 5} V${B.y + 26} Q${POINTE.x - 6} ${B.y + 8} ${B.x - 4} ${B.y + 7} Z`, ...VERRE }, g);
   }
 
-  function fixe(g) {
-    // Tout ce qui ne bouge pas : robinet, évier, support, chauffe-ballon, ballon vide, col de cygne, réfrigérant, allonge, éprouvette.
-    L.svg("rect", { x: EVIER.x - 70, y: EVIER.y - 22, width: 140, height: 40, rx: 6, fill: "#c9d0d4", stroke: "#8f989e" }, g);
-    L.svg("rect", { x: EVIER.x - 62, y: EVIER.y - 16, width: 124, height: 28, rx: 5, fill: "#7f8a90" }, g);
-    L.svg("circle", { cx: EVIER.x + 40, cy: EVIER.y, r: 4, fill: "#3a3f44" }, g);
+  function fixe(ctx) {
+    // Tout ce qui ne bouge pas : robinet, évier, supports, élévateur, chauffe-ballon, verrerie fixe.
+    const g = ctx.fond;
+    L.svg("rect", { x: EVIER.x - 60, y: EVIER.y - 22, width: 120, height: 44, rx: 6, fill: "#c9d0d4", stroke: "#8f989e" }, g);
+    L.svg("rect", { x: EVIER.x - 52, y: EVIER.y - 16, width: 104, height: 32, rx: 5, fill: "#7f8a90" }, g);
+    L.svg("circle", { cx: EVIER.x + 30, cy: EVIER.y, r: 4, fill: "#3a3f44" }, g);
     L.svg("rect", { x: ROBINET.x - 8, y: ROBINET.y - 18, width: 16, height: 12, rx: 2, fill: "url(#metal)" }, g);
     L.svg("path", { d: `M${ROBINET.x - 4} ${ROBINET.y - 6} V${ROBINET.y + 10} h8 V${ROBINET.y - 6}`, fill: "url(#metal)", stroke: "#7d868c" }, g);
-    support(g);
-    L.svg("rect", { x: 284, y: 520, width: 92, height: 42, rx: 6, fill: "#5e6b74" }, g);
-    L.svg("ellipse", { cx: 330, cy: 521, rx: 44, ry: 9, fill: "#3b4247" }, g);
-    L.texte(g, 330, 548, "CHAUFFE-BALLON", { "font-size": 5.5, "font-weight": 700, fill: "#dfe6ea" });
-    L.svg("path", { d: `M322 470 V420 Q322 410 334 410 H350 Q362 411 ${REFRI.x1} ${REFRI.y1 - 3} L${REFRI.x1} ${REFRI.y1 + 3} Q360 418 350 418 H338 V470 Z`, ...VERRE }, g);
-    refrigerant(g);
-    L.svg("path", { d: `M${REFRI.x2 - 2} ${REFRI.y2 - 3} Q612 474 616 490 L610 492 Q606 480 ${REFRI.x2 - 2} ${REFRI.y2 + 3} Z`, ...VERRE }, g);
+    supports(g); elevateur(g); chauffe_ballon(g, ctx.devant);
+    refrigerant(L.svg("g", { class: "refrigerant", "pointer-events": "none" }, ctx.objets));
   }
 
-  function variable(g, e) {
-    // Ce qui change : contenu du ballon, eau du réfrigérant, tuyaux, distillat, vapeurs perdues.
+  function eau_manchon(g, e) {
+    // Eau froide dans le manchon : plein si elle entre par le bas, presque vide si elle entre par le haut.
     g.replaceChildren();
-    const b = BALLON;
-    L.svg("circle", { cx: b.x, cy: b.y, r: b.r, ...VERRE }, g);
-    L.svg("path", { d: `M${b.x - b.r + 3} ${b.y + 2} A${b.r - 3} ${b.r - 3} 0 0 0 ${b.x + b.r - 3} ${b.y + 2} Z`, fill: "#bcd9e6", opacity: 0.7 }, g);
-    for (let i = 0; i < 12; i++) L.svg("ellipse", { cx: b.x - 22 + ((i * 11) % 44), cy: b.y + 4 + ((i * 7) % 20), rx: 2.6, ry: 1.4, fill: "#7b5aa6", opacity: 0.9 }, g);
-    if (e.ponce) for (let i = 0; i < 4; i++) L.svg("circle", { cx: b.x - 8 + i * 5, cy: b.y + b.r - 6, r: 1.8, fill: "#9a968c" }, g);
-    for (const p of e.bulles || []) L.svg("circle", { cx: b.x + p.dx, cy: b.y + p.dy, r: p.r, fill: "none", stroke: "#fff", opacity: 0.8 }, g);
-    L.svg("path", { d: "M286 521 A44 9 0 0 0 374 521 L376 562 H284 Z", fill: "#5e6b74" }, g);
-    L.texte(g, 330, 548, "CHAUFFE-BALLON", { "font-size": 5.5, "font-weight": 700, fill: "#dfe6ea" });
-    const ep = EPROUVETTE, haut_eau = ep.bas - 4 - e.volume * 1.4, haut_ess = haut_eau - e.essence * 6;
-    if (e.volume > 0) L.svg("rect", { x: ep.x - 8, y: haut_eau, width: 16, height: ep.bas - 4 - haut_eau, fill: e.volume < 6 ? "#e9eef0" : "#dfeaf0", opacity: 0.8 }, g);
-    if (e.essence > 0) L.svg("rect", { x: ep.x - 8, y: haut_ess, width: 16, height: haut_eau - haut_ess, fill: "#f2dc7a", opacity: 0.95 }, g);
-    L.svg("path", { d: `M${ep.x - 10} ${ep.bas - ep.h} V${ep.bas - 2} H${ep.x + 10} V${ep.bas - ep.h}`, ...VERRE }, g);
-    L.svg("rect", { x: ep.x - 16, y: ep.bas - 3, width: 32, height: 4, rx: 1, fill: "url(#verre)", stroke: "#9fb6be" }, g);
-    for (let k = 1; k <= 5; k++) L.svg("line", { x1: ep.x - 10, x2: ep.x - 5, y1: ep.bas - 4 - k * 14, y2: ep.bas - 4 - k * 14, stroke: "#fff", opacity: 0.8 }, g);
-    if (e.eau && e.tuyau) {
-      // Eau froide dans le manchon : plein si elle entre par le bas, presque vide si elle entre par le haut.
-      const a = (Math.atan2(REFRI.y2 - REFRI.y1, REFRI.x2 - REFRI.x1) * 180) / Math.PI, l = Math.hypot(REFRI.x2 - REFRI.x1, REFRI.y2 - REFRI.y1);
-      const r = L.svg("g", { transform: `translate(${REFRI.x1} ${REFRI.y1}) rotate(${a})` }, g), k = e.tuyau === "bas" ? 1 : 0.25;
-      L.svg("rect", { x: l * 0.1 + 2, y: 9 - 18 * k, width: l * 0.8 - 4, height: 18 * k, rx: 6, fill: "#5fb3dc", opacity: 0.35 }, r);
-    }
-    if (e.perte) for (let i = 0; i < 3; i++) L.svg("path", { d: `M${612 + i * 6} 470 q-4 -10 2 -20 q6 -10 0 -20`, stroke: "#fff", "stroke-width": 3, opacity: 0.4, fill: "none" }, g);
+    if (!e.eau || !e.tuyau) return;
+    const r = L.svg("g", { transform: `translate(${A.x} ${A.y}) rotate(${ANG})`, "pointer-events": "none" }, g), k = e.tuyau === "bas" ? 1 : 0.25;
+    L.svg("rect", { x: LONG * 0.1 + 3, y: 17 - 34 * k, width: LONG * 0.8 - 6, height: 34 * k, rx: 10, fill: "#5fb3dc", opacity: 0.45 }, r);
   }
 
-  L.hydro = { fixe, variable, REFRI, EMBOUTS, BALLON, EPROUVETTE, ROBINET, EVIER, le_long };
+  L.hydro = { fixe, eau_manchon, chauffe_ballon, EMBOUTS, BALLON, POINTE, EPROUVETTE, ROBINET, EVIER, CHAUFFE, le_long, E };
 })(window.Labo);
 </script>
   <script>
 /*
-Rôle : paillasse de l'hydrodistillation de la lavande : on ajoute de la pierre ponce, on branche l'arrivée d'eau sur un
-       embout du réfrigérant (l'eau doit entrer par le bas), on ouvre le robinet, on allume le chauffe-ballon. L'eau bout,
-       les vapeurs se condensent et le distillat tombe dans l'éprouvette (huile essentielle au-dessus de l'eau). Sans eau
-       dans le réfrigérant, des vapeurs s'échappent ; sans pierre ponce, l'ébullition se fait par soubresauts.
+Rôle : gestes de la paillasse d'hydrodistillation : pincée de pierre ponce à glisser jusqu'au col du ballon, bout du
+       tuyau d'arrivée d'eau à enfiler sur un embout du réfrigérant (ou à tirer pour le débrancher), bouton du robinet
+       d'eau, touche Marche/Arrêt du chauffe-ballon.
+Reçoit : le contexte de la paillasse, l'état de l'hydrodistillation et { redessiner(), noter(), tuyaux(bout) }.
+Produit : Labo.gestes_hydro(ctx, etat, fonctions).
+Utilisé par : poste_hydro.js.
+*/
+(function (L) {
+  const H = L.hydro;
+
+  function pincee(ctx, e, f) {
+    // Quelques grains pris dans le flacon ; lâchés au-dessus du col du ballon, ils tombent dedans.
+    const g = L.svg("g", { class: "pincee", role: "button", "aria-label": "Pierre ponce" }, ctx.objets), col = { x: H.BALLON.x, y: H.BALLON.y - 118 * H.E };
+    L.svg("rect", { x: 500, y: 516, width: 40, height: 60, fill: "#000", opacity: 0 }, g);
+    for (const dx of [-4, 1, 5]) L.svg("circle", { cx: 520 + dx, cy: 522 + Math.abs(dx), r: 2.6, fill: "#9a968c" }, g);
+    L.glissable(g, { debut: () => ({ x: 0, y: 0 }), deplacer: (p) => L.placer(g, p.x, p.y), lacher: (p) => {
+      L.placer(g, 0, 0);
+      if (Math.hypot(520 + p.x - col.x, 522 + p.y - col.y) < 40) { e.ponce = true; f.redessiner(); f.noter(); }
+    } });
+  }
+
+  function bout_tuyau(ctx, e, f) {
+    // Bout libre du tuyau d'arrivée d'eau : on le tire jusqu'à un embout ; tiré depuis un embout, il se débranche.
+    const g = L.svg("circle", { cx: 0, cy: 0, r: 11, fill: "#000", opacity: 0, class: "bout-tuyau" }, ctx.haut);
+    L.placer(g, e.bout_libre.x, e.bout_libre.y);
+    const detacher = () => { const b = H.EMBOUTS[e.tuyau]; e.tuyau = null; return { x: b.x, y: b.y }; };
+    L.glissable(g, { debut: () => (e.tuyau ? detacher() : { ...e.bout_libre }), deplacer: (p) => { L.placer(g, p.x, p.y); f.tuyaux(p); }, lacher: (p) => {
+      const n = ["bas", "haut"].find((k) => Math.hypot(p.x - H.EMBOUTS[k].x, p.y - H.EMBOUTS[k].y) < 24);
+      if (n) { e.tuyau = n; L.placer(g, H.EMBOUTS[n].x, H.EMBOUTS[n].y); } else L.placer(g, e.bout_libre.x, e.bout_libre.y);
+      f.redessiner(); f.noter();
+    } });
+  }
+
+  L.gestes_hydro = function (ctx, e, f) {
+    // Branche tous les gestes de la paillasse.
+    pincee(ctx, e, f);
+    bout_tuyau(ctx, e, f);
+    L.bouton_rond(ctx.haut, H.ROBINET.x + 16, H.ROBINET.y - 12, "", () => { e.eau = !e.eau; f.noter(); }, 6);
+    L.bouton_rond(ctx.haut, H.CHAUFFE.x + 18, H.CHAUFFE.haut + 98, "I/O", () => { e.chauffe = !e.chauffe; f.noter(); }, 8);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : paillasse de l'hydrodistillation de la lavande, aux vraies dimensions : on ajoute de la pierre ponce, on branche
+       l'arrivée d'eau sur un embout du réfrigérant (l'eau doit entrer par le bas), on ouvre le robinet, on allume le
+       chauffe-ballon. L'eau bout, les vapeurs se condensent et le distillat tombe goutte à goutte dans l'éprouvette, où
+       l'huile essentielle (moins dense, non miscible) forme une couche au-dessus de l'eau. Sans eau dans le réfrigérant,
+       des vapeurs s'échappent ; sans pierre ponce, l'ébullition se fait par soubresauts (grosses bulles).
 Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_hydro(groupe) -> { pense_bete } ; fait « hydro » = { ponce, tuyau, eau, chauffe, ebullition, volume, essence,
-          perte, soubresauts, noms } ;
-          on peut débrancher le tuyau (le tirer) pour le rebrancher ailleurs.
+Produit : Labo.poste_hydro(groupe) -> { pense_bete } ; fait « hydro » = { ponce, tuyau, eau, chauffe, T, ebullition, volume, essence,
+          perte, soubresauts, noms } ; on peut débrancher le tuyau (le tirer) pour le rebrancher ailleurs.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const H = L.hydro, NOMS = [["ballon", 296, 466, 68, 66], ["chauffe-ballon", 284, 520, 92, 42], ["réfrigérant droit", 400, 418, 150, 40], ["allonge", 588, 460, 22, 16], ["éprouvette graduée", 602, 486, 24, 76], ["support (potence)", 236, 290, 28, 260]];
+  const H = L.hydro, SOL = 576, E = H.E;
+  L.LIQUIDES.huile_lavande = { nom: "huile essentielle de lavande", d: 0.88, rgb: [238, 206, 96], alpha: 0.8, classe: "organique" };
+  const NOMS = [["ballon", 300, 214, 80, 120], ["chauffe-ballon", 228, 360, 224, 110], ["support élévateur", 228, 482, 224, 90], ["réfrigérant droit", 470, 180, 220, 70], ["allonge", 772, 252, 30, 40], ["éprouvette graduée", 772, 320, 36, 250], ["support (potence)", 206, 160, 28, 380]];
 
   function pierre_ponce(g, x, bas) {
-    // Petit flacon de grains de pierre ponce.
-    L.svg("rect", { x: x - 14, y: bas - 34, width: 28, height: 34, rx: 4, fill: "url(#verre)", stroke: "#9fb6be" }, g);
-    for (let i = 0; i < 14; i++) L.svg("circle", { cx: x - 10 + ((i * 5) % 20), cy: bas - 4 - Math.floor(i / 4) * 4, r: 2, fill: "#9a968c" }, g);
-    L.svg("rect", { x: x - 12, y: bas - 30, width: 24, height: 10, fill: "#fbfaf3" }, g);
-    L.texte(g, x, bas - 25, "pierre ponce", { "font-size": 4.2, "font-weight": 700, fill: "#23315a" });
+    // Petit flacon de grains de pierre ponce (40 mm).
+    L.svg("rect", { x: x - 20, y: bas - 56, width: 40, height: 56, rx: 5, fill: "rgba(205,228,236,0.5)", stroke: "#9fb6be" }, g);
+    for (let i = 0; i < 24; i++) L.svg("circle", { cx: x - 15 + ((i * 7) % 30), cy: bas - 5 - Math.floor(i / 5) * 5, r: 2.6, fill: "#9a968c" }, g);
+    L.svg("rect", { x: x - 17, y: bas - 48, width: 34, height: 14, fill: "#fbfaf3" }, g);
+    L.texte(g, x, bas - 41, "pierre ponce", { "font-size": 5.4, "font-weight": 700, fill: "#23315a" });
   }
 
   function tuyau(g, de, vers, u) {
-    // Tuyau souple de « de » jusqu'à un embout (extrémité vers, direction u) : il arrive dans l'axe de l'embout et
-    // s'enfile dessus sur 8 px (le bout du tuyau recouvre l'olive : pas de fuite).
-    const style = { stroke: "#c9a96b", "stroke-width": 7, fill: "none", "stroke-linecap": "round" };
-    const dedans = { x: vers.x - 8 * u.x, y: vers.y - 8 * u.y }, avant = { x: vers.x + 40 * u.x, y: vers.y + 40 * u.y };
-    L.svg("path", { d: `M${de.x} ${de.y} C${de.x} ${de.y + 70} ${avant.x} ${avant.y} ${vers.x + 4 * u.x} ${vers.y + 4 * u.y}`, ...style }, g);
+    // Tuyau souple jusqu'à un embout : il arrive dans l'axe et s'enfile sur l'olive sur 10 px (pas de fuite).
+    const style = { stroke: "#c9a96b", "stroke-width": 9, fill: "none", "stroke-linecap": "round" };
+    const dedans = { x: vers.x - 10 * u.x, y: vers.y - 10 * u.y }, avant = { x: vers.x + 50 * u.x, y: vers.y + 50 * u.y };
+    L.svg("path", { d: `M${de.x} ${de.y} C${de.x} ${de.y + 80} ${avant.x} ${avant.y} ${vers.x + 4 * u.x} ${vers.y + 4 * u.y}`, ...style }, g);
     L.svg("path", { d: `M${vers.x + 4 * u.x} ${vers.y + 4 * u.y} L${dedans.x} ${dedans.y}`, ...style, stroke: "#b8955a", "stroke-linecap": "butt" }, g);
   }
 
@@ -2457,12 +3184,12 @@ Utilisé par : simulation.js.
     const R = H.ROBINET, depart = { x: R.x, y: R.y + 8 };
     if (!e.tuyau) {
       const f = e.bout_libre;
-      L.svg("path", { d: `M${depart.x} ${depart.y} C${depart.x} ${depart.y + 70} ${f.x} ${f.y + 40} ${f.x} ${f.y}`, stroke: "#c9a96b", "stroke-width": 7, fill: "none", "stroke-linecap": "round" }, g);
-      return void L.svg("circle", { cx: f.x, cy: f.y, r: 2.5, fill: "#3a2c14" }, g);
+      L.svg("path", { d: `M${depart.x} ${depart.y} C${depart.x} ${depart.y + 70} ${f.x} ${f.y + 40} ${f.x} ${f.y}`, stroke: "#c9a96b", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }, g);
+      return void L.svg("circle", { cx: f.x, cy: f.y, r: 3, fill: "#3a2c14" }, g);
     }
     const n = H.EMBOUTS[e.tuyau], autre = H.EMBOUTS[e.tuyau === "bas" ? "haut" : "bas"];
     tuyau(g, depart, n, { x: n.ux, y: n.uy });
-    tuyau(g, { x: H.EVIER.x - 20, y: H.EVIER.y - 4 }, autre, { x: autre.ux, y: autre.uy });
+    tuyau(g, { x: H.EVIER.x - 24, y: H.EVIER.y - 4 }, autre, { x: autre.ux, y: autre.uy });
   }
 
   function noms(g, etat, noter) {
@@ -2472,53 +3199,56 @@ Utilisé par : simulation.js.
       const z = L.svg("rect", { x, y, width: l, height: h, fill: "#000", opacity: 0 }, g);
       L.glissable(z, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => {
         bulle.replaceChildren();
-        L.svg("rect", { x: x + l / 2 - 55, y: y - 24, width: 110, height: 18, rx: 4, fill: "#fff", stroke: "#8a96a0" }, bulle);
+        L.svg("rect", { x: x + l / 2 - 60, y: y - 24, width: 120, height: 18, rx: 4, fill: "#fff", stroke: "#8a96a0" }, bulle);
         L.texte(bulle, x + l / 2, y - 15, nom, { "font-size": 8.5, "font-weight": 700, fill: "#23315a" });
         etat.noms.add(nom); noter();
       } });
     }
-    return bulle;
   }
 
-  function evoluer(e) {
-    // Un pas de 0,2 s : température, ébullition, condensation dans le réfrigérant.
+  function evoluer(e, ctx, ballon, source) {
+    // Un pas de 0,2 s : température, ébullition, condensation ; le distillat tombe de l'allonge (2 % d'huile essentielle).
     e.T = e.chauffe ? Math.min(100, e.T + 4) : Math.max(20, e.T - 1);
     e.ebullition = e.T >= 100;
     e.soubresauts = e.ebullition && !e.ponce;
-    e.bulles = e.ebullition ? Array.from({ length: e.ponce ? 8 : 2 }, () => ({ dx: Math.random() * 40 - 20, dy: Math.random() * 22 + 2, r: e.ponce ? 1.5 : 4 + Math.random() * 4 })) : [];
-    if (!e.ebullition || e.volume >= 45) return void (e.perte = false);
-    const refroidi = e.eau && e.tuyau === "bas" ? 1 : e.eau && e.tuyau ? 0.35 : 0.1;
+    if (!e.ebullition || e.volume >= 45 || ballon.c.volume() < 40) return void (e.perte = false);
+    const refroidi = e.eau && e.tuyau === "bas" ? 1 : e.eau && e.tuyau ? 0.35 : 0.1, V = 0.25 * refroidi;
     e.perte = refroidi < 1;
-    e.volume = Math.min(45, e.volume + 0.25 * refroidi);
-    e.essence = Math.round(e.volume * 0.02 * 100) / 100;
+    ballon.c.retirer(0.25, "haut");
+    ctx.ecoulement.emettre(source, { x: H.POINTE.x, y: H.POINTE.y + 2 }, { x: 0, y: 30 }, [{ classe: "aqueuse", liquides: { eau: V * 0.98 }, dissous: {} }, { classe: "organique", liquides: { huile_lavande: V * 0.02 }, dissous: {} }], V);
+  }
+
+  function bulles(g, e, ballon) {
+    // Bulles dans l'eau qui bout (petites et nombreuses avec la pierre ponce, grosses sans), vapeurs perdues, fleurs.
+    g.replaceChildren();
+    const y_eau = ballon.pose.y - ballon.pr.hauteur_de(ballon.c.volume()) * E, x = H.BALLON.x;
+    for (let i = 0; i < 14; i++) L.svg("ellipse", { cx: x - 36 + ((i * 13) % 72), cy: y_eau + 4 + ((i * 5) % 9), rx: 3.4, ry: 1.8, fill: "#7b5aa6", opacity: 0.9 }, g);
+    if (e.ponce) for (let i = 0; i < 5; i++) L.svg("circle", { cx: x - 10 + i * 5, cy: y_eau + 14, r: 2.4, fill: "#9a968c" }, g);
+    if (e.ebullition) for (let i = 0; i < (e.ponce ? 10 : 2); i++) L.svg("circle", { cx: x + Math.random() * 60 - 30, cy: y_eau + 2 + Math.random() * 10, r: e.ponce ? 1.8 : 5 + Math.random() * 5, fill: "none", stroke: "#fff", opacity: 0.85 }, g);
+    if (e.perte) for (let i = 0; i < 3; i++) L.svg("path", { d: `M${H.POINTE.x - 8 + i * 8} 292 q-5 -12 2 -24 q7 -12 0 -24`, stroke: "#fff", "stroke-width": 4, opacity: 0.4, fill: "none" }, g);
   }
 
   L.poste_hydro = function (g) {
     // Construit la paillasse et ses gestes.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
+    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), ctx = L.paillasse_chimie(g);
     L.affiche_securite(g, 780, 56);
-    const e = { ponce: false, tuyau: null, eau: false, chauffe: false, T: 20, ebullition: false, volume: 0, essence: 0, perte: false, soubresauts: false, bulles: [], noms: new Set(), bout_libre: { x: 760, y: 420 } };
-    const g_fixe = L.svg("g", {}, g), g_tuyaux = L.svg("g", {}, g), g_var = L.svg("g", {}, g);
-    H.fixe(g_fixe);
-    const noter = () => L.missions.noter("hydro", { ...e, bulles: undefined, bout_libre: undefined, noms: [...e.noms] });
-    noms(g, e, noter);
-    const redessiner = () => { H.variable(g_var, e); tuyaux(g_tuyaux, e); };
-    pierre_ponce(L.svg("g", { class: "pierre-ponce", role: "button", "aria-label": "Pierre ponce" }, g), 460, 562);
-    const pincee = L.svg("g", { class: "pincee" }, g);
-    L.svg("rect", { x: 446, y: 520, width: 28, height: 42, fill: "#000", opacity: 0 }, pincee);
-    for (const dx of [-3, 1, 4]) L.svg("circle", { cx: 460 + dx, cy: 524 + Math.abs(dx), r: 1.8, fill: "#9a968c" }, pincee);
-    L.glissable(pincee, { debut: () => ({ x: 0, y: 0 }), deplacer: (p) => L.placer(pincee, p.x, p.y), lacher: (p) => { L.placer(pincee, 0, 0); if (Math.hypot(460 + p.x - 330, 541 + p.y - 420) < 35) { e.ponce = true; redessiner(); noter(); } } });
-    const extremite = L.svg("circle", { cx: 0, cy: 0, r: 9, fill: "#000", opacity: 0, class: "bout-tuyau" }, g);
-    L.placer(extremite, e.bout_libre.x, e.bout_libre.y);
-    const detacher = () => { const b = H.EMBOUTS[e.tuyau]; e.tuyau = null; return { x: b.x, y: b.y }; };
-    L.glissable(extremite, { debut: () => (e.tuyau ? detacher() : { ...e.bout_libre }), deplacer: (p) => { L.placer(extremite, p.x, p.y); tuyaux(g_tuyaux, { ...e, bout_libre: p }); }, lacher: (p) => {
-      const n = ["bas", "haut"].find((k) => Math.hypot(p.x - H.EMBOUTS[k].x, p.y - H.EMBOUTS[k].y) < 22);
-      if (n) { e.tuyau = n; L.placer(extremite, H.EMBOUTS[n].x, H.EMBOUTS[n].y); } else L.placer(extremite, e.bout_libre.x, e.bout_libre.y);
-      redessiner(); noter();
-    } });
-    L.bouton_rond(g, H.ROBINET.x + 16, H.ROBINET.y - 12, "", () => { e.eau = !e.eau; noter(); }, 6);
-    L.bouton_rond(g, 362, 535, "I/O", () => { e.chauffe = !e.chauffe; noter(); }, 7);
-    setInterval(() => { evoluer(e); redessiner(); noter(); }, 200);
+    L.ecoulement(ctx, { sol: SOL, e: E });
+    const e = { ponce: false, tuyau: null, eau: false, chauffe: false, T: 20, ebullition: false, volume: 0, essence: 0, perte: false, soubresauts: false, noms: new Set(), bout_libre: { x: 836, y: 420 } };
+    const g_tuyaux = L.svg("g", { "pointer-events": "none" }, ctx.fond), g_eau = L.svg("g", {}, ctx.objets);
+    H.fixe(ctx);
+    const ballon = L.recipient(ctx, { id: "ballon", profil: "ballon_250", x: H.BALLON.x, y: H.BALLON.y, contenu: { eau: 150 } });
+    const ep = L.recipient(ctx, { id: "eprouvette", profil: "eprouvette_50", x: H.EPROUVETTE.x, y: H.EPROUVETTE.sol - 6 * E });
+    const g_var = L.svg("g", { "pointer-events": "none" }, ctx.objets), source = { c: L.contenu({ eau: 1 }), interieur_monde: () => [] };
+    const noter = () => {
+      const org = ep.c.phases.find((p) => p.classe === "organique");
+      Object.assign(e, { volume: Math.round(ep.c.volume() * 100) / 100, essence: Math.round((org?.V || 0) * 100) / 100 });
+      L.missions.noter("hydro", { ...e, bout_libre: undefined, noms: [...e.noms] });
+    };
+    noms(ctx.devant, e, noter);
+    const redessiner = () => { bulles(g_var, e, ballon); tuyaux(g_tuyaux, e); H.eau_manchon(g_eau, e); };
+    pierre_ponce(ctx.fond, 520, SOL);
+    L.gestes_hydro(ctx, e, { redessiner, noter, tuyaux: (f) => tuyaux(g_tuyaux, { ...e, bout_libre: f }) });
+    setInterval(() => { evoluer(e, ctx, ballon, source); redessiner(); noter(); }, 200);
     redessiner(); noter();
     return { pense_bete };
   };
@@ -2526,63 +3256,89 @@ Utilisé par : simulation.js.
 </script>
   <script>
 /*
-Rôle : ampoule à décanter de 125 mL : forme en poire, bouchon, robinet ; contenu en deux phases (aqueuse en bas, solvant
-       au-dessus s'il est moins dense que l'eau et non miscible) ou une seule phase (solvant miscible) ; émulsion après
-       agitation, qui se sépare peu à peu (décantation). Le diiode passe de l'eau dans le cyclohexane quand on agite.
-Reçoit : le groupe SVG, le centre x, le haut du col y et l'état { aq, org (mL), miscible, I2_aq, I2_org (0 à 1), melange (0 à 1),
-         bouchon, robinet, angle }.
-Produit : Labo.ampoule = { dessiner(g, x, y, e), niveau(V) -> y (bas du liquide = y + 120), COULEURS }.
+Rôle : ampoule à décanter de 125 mL (matériel physique) posée sur l'anneau de son support, et ses gestes : toucher le
+       robinet (l'ouvrir, le fermer ; bouchée et sous pression, on la retourne et on dégaze), toucher le haut (ôter le
+       bouchon), toucher le bouchon posé sur la paillasse (boucher). On la prend pour l'agiter : bouchée, le mélange
+       devient une émulsion et le diiode passe dans le solvant ; sans bouchon, le liquide ballotte et peut déborder.
+       Après agitation d'un solvant volatil, la pression monte dans l'ampoule bouchée.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement), { x, y (pointe de la tige, px), sol, e } et dire(texte).
+Produit : Labo.ampoule_support(ctx, reglage, dire) -> { r (récipient), pression, agitee, degaze }.
 Utilisé par : poste_solvant.js.
 */
 (function (L) {
-  const VERRE = { fill: "url(#verre)", stroke: "#9fb6be" };
-  // Demi-largeur intérieure à la hauteur s (0 : haut du corps, 1 : pointe) : poire large en haut, cône vers le robinet.
-  const largeur = (s) => 4 + 30 * Math.sin(Math.PI * Math.pow(Math.max(0, Math.min(1, (s - 0.03) / 0.97)), 0.575));
-  const HAUT_CORPS = 15, H = 105;
-  const CUMUL = (() => { const c = [0]; for (let j = 1; j <= H; j++) c.push(c[j - 1] + largeur(1 - j / H) ** 2); return c.map((v) => (v / c[H]) * 125); })();
-  const niveau = (V) => { let i = 0; while (i < H && CUMUL[i] < V) i++; return HAUT_CORPS + H - i; };
-  const COULEURS = { iode: [176, 96, 18], aq_pale: [238, 220, 170], org: [168, 58, 160], solvant: [240, 244, 246], ethanol_iode: [150, 70, 20] };
-  const mix = (a, b, k) => a.map((v, i) => Math.round(v + (b[i] - v) * k));
+  const ANNEAU = 128;
 
-  function contour(x, y) {
-    // Contour intérieur de l'ampoule (du haut du col à la pointe), pour remplir et découper.
-    let d = `M${x - 5} ${y}`;
-    for (let i = 0; i <= H; i++) d += ` L${x - largeur(i / H)} ${y + HAUT_CORPS + i}`;
-    for (let i = H; i >= 0; i--) d += ` L${x + largeur(i / H)} ${y + HAUT_CORPS + i}`;
-    return d + ` L${x + 5} ${y} Z`;
+  function support(ctx, A, sol, e) {
+    // Tige et socle, noix et anneau (moitié arrière derrière l'ampoule, moitié avant devant).
+    const xt = A.x - 110, ya = A.y - e * ANNEAU;
+    L.tige(ctx.fond, `M${xt} ${sol - 4} V${A.y - 260}`, 6); L.svg("rect", { x: xt - 60, y: sol - 8, width: 120, height: 10, rx: 2, fill: "#3a3f44" }, ctx.fond);
+    L.tige(ctx.fond, `M${xt} ${ya} H${A.x - 46}`, 4);
+    L.svg("rect", { x: xt - 7, y: ya - 7, width: 14, height: 14, rx: 2, fill: "#5d646a" }, ctx.fond);
+    L.svg("path", { d: `M${A.x - 44} ${ya} A44 6 0 0 1 ${A.x + 44} ${ya}`, fill: "none", stroke: "#4d545a", "stroke-width": 4 }, ctx.fond);
+    L.svg("path", { d: `M${A.x - 44} ${ya} A44 6 0 0 0 ${A.x + 44} ${ya}`, fill: "none", stroke: "#6d757b", "stroke-width": 4, "pointer-events": "none" }, ctx.devant);
+    ctx.obstacles = [[xt - 60, xt + 60]];
   }
 
-  function couleurs(e) {
-    // Couleur de chaque phase selon le diiode qu'elle contient, et de l'émulsion.
-    if (e.miscible) return { bas: COULEURS.ethanol_iode, haut: null };
-    const bas = mix(COULEURS.aq_pale, COULEURS.iode, e.I2_aq), haut = mix(COULEURS.solvant, COULEURS.org, e.I2_org);
-    return { bas, haut, emulsion: mix(bas, haut, 0.5) };
+  function bouchon_pose(ctx, x, sol, quand) {
+    // Bouchon en PTFE posé sur la paillasse (on le touche pour boucher l'ampoule).
+    const g = L.svg("g", { class: "bouchon-pose", role: "button", "aria-label": "Bouchon" }, ctx.objets);
+    L.svg("ellipse", { cx: x + 2, cy: sol, rx: 11, ry: 2.5, fill: "#000", opacity: 0.3 }, g);
+    L.svg("path", { d: `M${x - 9} ${sol - 1} V${sol - 9} H${x + 9} V${sol - 1} Z`, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.6 }, g);
+    L.svg("path", { d: `M${x - 6} ${sol - 9} L${x - 5} ${sol - 24} H${x + 5} L${x + 6} ${sol - 9} Z`, fill: "#3b7cc4", stroke: "#1d3f6b", "stroke-width": 0.6 }, g);
+    L.glissable(g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: quand });
+    ctx.obstacles.push([x - 12, x + 12]);
+    return g;
   }
 
-  function dessiner(g, x, y, e) {
-    // Ampoule complète, éventuellement inclinée (angle en degrés, autour de son centre).
-    g.replaceChildren();
-    const a = L.svg("g", { transform: `rotate(${e.angle || 0} ${x} ${y + 70})` }, g), id = `clip-ampoule-${Math.round(x)}`;
-    const clip = L.svg("clipPath", { id }, a);
-    L.svg("path", { d: contour(x, y) }, clip);
-    const c = couleurs(e), z = L.svg("g", { "clip-path": `url(#${id})` }, a), V = e.aq + e.org;
-    const bas = y + HAUT_CORPS + H, y_aq = y + niveau(e.aq), y_tout = y + niveau(V);
-    if (V > 0 && (e.miscible || e.melange > 0.02)) L.svg("rect", { x: x - 40, y: y_tout, width: 80, height: bas - y_tout, fill: L.rgb(e.miscible ? c.bas : c.emulsion), opacity: 0.85 }, z);
-    if (V > 0 && !e.miscible) {
-      const k = 1 - (e.melange || 0);
-      if (e.aq > 0) L.svg("rect", { x: x - 40, y: y_aq, width: 80, height: bas - y_aq, fill: L.rgb(c.bas), opacity: 0.85 * k }, z);
-      if (e.org > 0) L.svg("rect", { x: x - 40, y: y_tout, width: 80, height: y_aq - y_tout, fill: L.rgb(c.haut), opacity: 0.85 * k }, z);
-      if (e.aq > 0 && e.org > 0 && k > 0.6) L.svg("line", { x1: x - 40, x2: x + 40, y1: y_aq, y2: y_aq, stroke: "#ffffff", opacity: 0.6 }, z);
-    }
-    L.svg("path", { d: contour(x, y), ...VERRE, "stroke-width": 1.2 }, a);
-    L.svg("path", { d: `M${x - 18} ${y + 40} Q${x - 22} ${y + 70} ${x - 10} ${y + 100}`, stroke: "#fff", "stroke-width": 2, opacity: 0.5, fill: "none" }, a);
-    L.svg("rect", { x: x - 3, y: bas, width: 6, height: 26, ...VERRE }, a);
-    L.svg("rect", { x: x - 10, y: bas + 6, width: 20, height: 7, rx: 3, fill: "#2f6fb8" }, a);
-    L.svg("rect", { x: e.robinet ? x - 2 : x - 9, y: e.robinet ? bas + 2 : bas + 8, width: e.robinet ? 4 : 18, height: e.robinet ? 15 : 3, rx: 1, fill: "#1d3f6b" }, a);
-    if (e.bouchon) L.svg("path", { d: `M${x - 6} ${y - 8} H${x + 6} L${x + 5} ${y + 4} H${x - 5} Z`, fill: "#2f6fb8", stroke: "#1d3f6b" }, a);
+  function zone(ctx, position, toucher) {
+    // Zone invisible qui suit l'ampoule (robinet, haut du col).
+    const z = L.svg("circle", { r: 15, fill: "#000", opacity: 0 }, ctx.haut);
+    ctx.ecoulement.sur_pas(() => { const q = position(); z.setAttribute("cx", q.x); z.setAttribute("cy", q.y); });
+    L.glissable(z, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher });
   }
 
-  L.ampoule = { dessiner, niveau, COULEURS, BAS: HAUT_CORPS + H };
+  function degazer(ctx, a, dire) {
+    // L'ampoule bouchée est soulevée, retournée (robinet vers le haut), on ouvre le robinet un instant : le gaz s'échappe.
+    const r = a.r, e = r.pose.e, C0 = r.monde({ x: 0, y: -120 }), depart = { ...r.pose };
+    r.tenu = true; ctx.haut.append(r.g);
+    const placer = (lev, ang) => {
+      const s = Math.sin((ang * Math.PI) / 180), c = Math.cos((ang * Math.PI) / 180);
+      Object.assign(r.pose, { angle: ang, x: C0.x - 120 * e * s, y: C0.y - lev + 120 * e * c });
+    };
+    L.animer(1.6, (t) => {
+      const k = t < 0.3 ? t / 0.3 : t > 0.7 ? (1 - t) / 0.3 : 1, ang = 180 * Math.min(1, Math.max(0, (t < 0.5 ? t - 0.1 : 0.9 - t) / 0.25));
+      placer(110 * k, ang);
+      if (t >= 0.5 && !a.degaze_vu) { a.degaze_vu = true; dire("Pschitt : le gaz s'échappe par le robinet, loin du visage."); }
+    }, () => { Object.assign(r.pose, depart); r.tenu = false; ctx.objets.append(r.g); Object.assign(a, { pression: false, degaze: true, degaze_vu: false }); });
+  }
+
+  L.ampoule_support = function (ctx, { x, y, sol, e }, dire) {
+    // Construit le support, l'ampoule (robinet ouvert au départ : il faut penser à le fermer) et ses gestes.
+    support(ctx, { x, y }, sol, e);
+    const r = L.recipient(ctx, { id: "ampoule", profil: "ampoule_125", x, y, robinet: true });
+    r.robinet.ouvert = true;
+    const a = { r, pression: false, agitee: false, degaze: false };
+    L.manipuler(ctx, r, { sol, supports: [{ x, y, anneau: true }], pose_libre: false });
+    const g_b = bouchon_pose(ctx, x + 70, sol, () => { if (r.tenu) return; r.bouchon = true; dire(""); });
+    zone(ctx, () => r.monde({ x: 16, y: -r.pr.extras.robinet }), () => {
+      if (r.tenu) return;
+      if (r.bouchon && a.pression) return degazer(ctx, a, dire);
+      r.robinet.ouvert = !r.robinet.ouvert; r.robinet.air = 0.4;
+    });
+    zone(ctx, () => r.monde({ x: 0, y: -r.pr.H - 4 }), () => {
+      if (!r.bouchon || r.tenu) return;
+      if (a.pression) return dire("Dégazez d'abord : le bouchon pourrait sauter et projeter du liquide !");
+      r.bouchon = false; dire("");
+    });
+    ctx.ecoulement.sur_pas(() => {
+      // Agitation bouchée : émulsion, et la vapeur du solvant fait monter la pression.
+      g_b.style.display = r.bouchon ? "none" : "";
+      if (r.bouchon && r.c.emulsion > (a.emulsion ?? 0) + 1e-4 && r.c.phases.some((p) => p.classe === "organique")) a.pression = true;
+      if (r.c.emulsion > 0.9) a.agitee = true;
+      a.emulsion = r.c.emulsion;
+    });
+    return a;
+  };
 })(window.Labo);
 </script>
   <script>
@@ -2623,221 +3379,236 @@ Utilisé par : poste_solvant.js, simulation.js.
 </script>
   <script>
 /*
-Rôle : paillasse de l'extraction du diiode par un solvant : eau iodée, flacons de cyclohexane et d'éthanol, ampoule à
-       décanter sur son support, bouchon, bécher récepteur, bidon de récupération. Gestes : fermer le robinet, verser,
-       boucher, agiter (aller-retour), dégazer (toucher le robinet : l'ampoule est retournée), reposer, ôter le bouchon,
-       ouvrir puis fermer le robinet pour recueillir la phase inférieure.
+Rôle : paillasse de l'extraction du diiode par un solvant, avec le matériel physique à taille réelle : affiche des
+       données, béchers d'eau iodée, de cyclohexane et d'éthanol (on les prend et on les incline au-dessus de l'ampoule
+       pour verser), ampoule à décanter sur son support, bécher récepteur sous le robinet, bidon de récupération des
+       solvants (le toucher vide l'ampoule et le bécher récepteur).
 Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_solvant(groupe) -> { pense_bete } ; fait « ampoule » (voir noter()).
+Produit : Labo.poste_solvant(groupe) -> { pense_bete } ; fait « ampoule » = { aq, org (mL), miscible, solvant, I2_org (part du
+          diiode dans le solvant), robinet, bouchon, pression, agitee, degaze, decante, recu_aq, recu_org (mL), renverse }.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const A = { x: 520, y: 300 }, BAS = A.y + L.ampoule.BAS, REC = { x: 520, bas: 562 }, BIDON = { x: 820, bas: 562 };
-
-  function etat_initial() {
-    // Ampoule vide, robinet ouvert (l'élève doit penser à le fermer), bouchon posé sur la paillasse.
-    return { aq: 0, org: 0, miscible: false, I2_aq: 0, I2_org: 0, melange: 0, bouchon: false, robinet: true, angle: 0, pression: false, agitee: 0, degaze: false, solvant: null, recu_aq: 0, recu_org: 0 };
-  }
+  const SOL = 576, E = 1.6, A = { x: 400, y: 452 }, BIDON = { x: 800, sol: SOL };
 
   function message(calque, texte) {
     // Bulle d'avertissement à côté de l'ampoule (disparaît au message suivant).
     calque.replaceChildren();
     if (!texte) return;
-    L.svg("rect", { x: 580, y: 312, width: 190, height: 30, rx: 5, fill: "#fff6e0", stroke: "#d08a1a" }, calque);
-    L.texte(calque, 675, 327, texte, { "font-size": 8, fill: "#6b3d00", "font-weight": 700 });
+    L.svg("rect", { x: 450, y: 196, width: 250, height: 30, rx: 5, fill: "#fff6e0", stroke: "#d08a1a" }, calque);
+    L.texte(calque, 575, 211, texte, { "font-size": 7.4, fill: "#6b3d00", "font-weight": 700 });
   }
 
-  function verser(e, quoi, dire) {
-    // Verse 20 mL d'eau iodée ou 10 mL de solvant ; refusé si le robinet est ouvert.
-    if (e.robinet) return dire("Fermez d'abord le robinet !"), false;
-    if (e.bouchon) return dire("Ôtez le bouchon pour verser."), false;
-    if (quoi === "eau_iodee") Object.assign(e, { aq: e.aq + 20, I2_aq: 1 });
-    else { e.org += 10; e.solvant = quoi; e.miscible = quoi === "ethanol"; }
-    return dire(""), true;
+  function bidon(ctx, vider) {
+    // Bidon jaune de récupération des solvants, avec son bouchon et son étiquette.
+    const g = L.svg("g", { class: "bidon", role: "button", "aria-label": "Bidon de récupération" }, ctx.fond), x = BIDON.x, b = BIDON.sol;
+    L.svg("ellipse", { cx: x + 4, cy: b + 1, rx: 32, ry: 4, fill: "#000", opacity: 0.3 }, g);
+    L.svg("path", { d: `M${x - 28} ${b} V${b - 82} Q${x - 28} ${b - 92} ${x - 18} ${b - 92} H${x + 4} V${b - 100} H${x + 18} V${b - 92} Q${x + 28} ${b - 92} ${x + 28} ${b - 82} V${b} Z`, fill: "#e7c22a", stroke: "#a3850f" }, g);
+    L.svg("rect", { x: x - 20, y: b - 70, width: 40, height: 30, fill: "#fff", stroke: "#a3850f", "stroke-width": 0.5 }, g);
+    L.texte(g, x, b - 60, "Récupération", { "font-size": 5.6, "font-weight": 700, fill: "#3b2f00" });
+    L.texte(g, x, b - 52, "des solvants", { "font-size": 5.6, "font-weight": 700, fill: "#3b2f00" });
+    L.svg("rect", { x: x - 6, y: b - 49, width: 12, height: 6, fill: "#fff", stroke: "#d01c1c", "stroke-width": 0.8, transform: `rotate(45 ${x} ${b - 46})` }, g);
+    L.glissable(g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: vider });
   }
 
-  function agiter(e, dire) {
-    // Un aller-retour de l'ampoule bouchée : émulsion, le diiode passe dans le cyclohexane, la pression monte.
-    if (!e.bouchon) return dire("Bouchez l'ampoule avant d'agiter !");
-    if (e.aq + e.org === 0) return;
-    e.agitee++; e.melange = 1; e.pression = true;
-    if (!e.miscible && e.org > 0) { e.I2_org = Math.min(1, e.I2_org + 0.3); e.I2_aq = Math.max(0.03, 1 - e.I2_org * 0.97); }
+  function phase(r, classe) {
+    // Phase d'un récipient (aqueuse ou organique), ou une phase vide.
+    return r.c.phases.find((p) => p.classe === classe) || { V: 0, liquides: {}, dissous: {} };
   }
 
-  function couler(e, dire) {
-    // Robinet ouvert, ampoule sur l'anneau : la phase inférieure s'écoule (1 mL par pas) dans le bécher.
-    if (!e.robinet || e.angle || e.aq + e.org === 0 || e.melange > 0.1) return;
-    if (e.bouchon) return dire("Ça ne coule plus : ôtez le bouchon.");
-    if (e.aq > 0) { const v = Math.min(1, e.aq); e.aq -= v; e.recu_aq += v; }
-    else { const v = Math.min(1, e.org); e.org -= v; e.recu_org += v; }
-  }
-
-  function sources(g, e, dire, maj) {
-    // Bécher d'eau iodée et flacons de solvant : on les porte au-dessus de l'ampoule pour verser.
-    const iodee = L.melange({ eau_iodee: 40 });
-    const items = [["eau_iodee", 300, (s) => L.verrerie.becher(s, 300, 562, iodee, "eau iodée", { l: 50, h: 62, capacite: 50 })],
-      ["cyclohexane", 650, (s) => L.verrerie.flacon(s, 650, 562, "Cyclo-\nhexane", { verre: "#d7e2e6", bouchon: "capsule" })],
-      ["ethanol", 715, (s) => L.verrerie.flacon(s, 715, 562, "Éthanol", { verre: "#d7e2e6", bouchon: "capsule" })]];
-    for (const [quoi, x, dessin] of items) {
-      const s = L.svg("g", { class: `source source-${quoi}`, role: "button" }, g);
-      dessin(s);
-      L.glissable(s, { debut: () => ({ x: 0, y: 0 }), deplacer: (p) => L.placer(s, p.x, p.y), lacher: (p) => {
-        L.placer(s, 0, 0);
-        if (Math.hypot(x + p.x - A.x, 500 + p.y - A.y) > 60) return;
-        if (quoi === "eau_iodee" && iodee.volumes.eau_iodee < 20) return dire("Le bécher d'eau iodée est vide.");
-        if (verser(e, quoi, dire) && quoi === "eau_iodee") { iodee.volumes.eau_iodee -= 20; dessin(s); }
-        maj();
-      } });
-    }
-  }
-
-  function decor(g) {
-    // Affiche des données, support avec anneau, bidon de récupération des solvants.
-    L.affiche_solvants(g, 270, 30);
-    L.tige(g, "M450 556 V280", 5); L.svg("rect", { x: 400, y: 552, width: 110, height: 10, rx: 2, fill: "#3a3f44" }, g);
-    L.tige(g, `M450 378 H${A.x - 24}`, 3); L.svg("ellipse", { cx: A.x, cy: 378, rx: 24, ry: 5, fill: "none", stroke: "#5d646a", "stroke-width": 3 }, g);
-    L.svg("rect", { x: BIDON.x - 26, y: BIDON.bas - 66, width: 52, height: 66, rx: 6, fill: "#e7c22a", stroke: "#a3850f" }, g);
-    L.texte(g, BIDON.x, BIDON.bas - 40, "Récupération", { "font-size": 6.5, "font-weight": 700, fill: "#3b2f00" });
-    L.texte(g, BIDON.x, BIDON.bas - 31, "des solvants", { "font-size": 6.5, "font-weight": 700, fill: "#3b2f00" });
-  }
-
-  function recu(e) {
-    // Contenu du bécher récepteur : phase aqueuse pâle, et phase organique violette si l'on a trop ouvert.
-    const C = L.ampoule.COULEURS, V = e.recu_aq + e.recu_org, k = V ? e.recu_org / V : 0;
-    const aq = C.aq_pale.map((v, i) => v + (C.iode[i] - v) * e.I2_aq), org = C.solvant.map((v, i) => v + (C.org[i] - v) * e.I2_org);
-    return { volume: () => V, aspect: () => ({ rgb: aq.map((v, i) => v + (org[i] - v) * k), alpha: 0.75 }) };
-  }
-
-  function zone(g, x, y, l, h, toucher) {
-    // Petite zone invisible que l'on touche (robinet, bouchon de l'ampoule).
-    const z = L.svg("rect", { x, y, width: l, height: h, fill: "#000", opacity: 0 }, g);
-    L.glissable(z, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher });
-  }
-
-  function gestes_ampoule(g_amp, e, dire, maj) {
-    // Agiter (aller-retour de l'ampoule tenue), la vider dans le bidon ; elle revient toujours sur l'anneau.
-    let sens = 0, avant = null;
-    L.glissable(g_amp, {
-      debut: () => ({ x: 0, y: 0 }),
-      deplacer: (p) => { L.placer(g_amp, p.x, p.y); const s = Math.sign(p.x - (avant ?? p.x)); if (s && s !== sens) { sens = s; agiter(e, dire); maj(); } avant = p.x; },
-      lacher: (p) => {
-        L.placer(g_amp, 0, 0); avant = null;
-        g_amp.parentNode.insertBefore(g_amp, g_amp.parentNode.querySelector(".bouchon"));
-        if (Math.hypot(A.x + p.x - BIDON.x, A.y + 100 + p.y - (BIDON.bas - 60)) < 60) { Object.assign(e, etat_initial()); dire("Ampoule vidée dans le bidon de récupération."); }
-        maj();
-      },
-    });
-  }
-
-  function degazer(e, dire, maj) {
-    // L'ampoule bouchée est retournée, on ouvre le robinet un instant : le gaz s'échappe.
-    e.angle = 180; maj();
-    setTimeout(() => { Object.assign(e, { angle: 0, pression: false, degaze: true }); dire("Pschitt : le gaz s'échappe par le robinet."); maj(); }, 700);
+  function etat(a, rec, ctx) {
+    // Ce que l'on sait de l'ampoule et du bécher récepteur.
+    const r = a.r, aq = phase(r, "aqueuse"), org = phase(r, "organique"), I2 = (aq.dissous.I2 || 0) + (org.dissous.I2 || 0);
+    const miscible = (aq.liquides.ethanol || 0) > 0.5, solvant = miscible ? "ethanol" : (org.liquides.cyclohexane || 0) > 0.5 ? "cyclohexane" : null;
+    const arrondi = (v) => Math.round(v * 10) / 10;
+    return {
+      aq: arrondi(aq.V), org: arrondi(org.V), miscible, solvant, I2_org: I2 ? arrondi((org.dissous.I2 || 0) / I2) : 0,
+      robinet: r.robinet.ouvert, bouchon: r.bouchon, pression: a.pression, agitee: a.agitee, degaze: a.degaze,
+      decante: r.c.emulsion < 0.05, recu_aq: arrondi(phase(rec, "aqueuse").V), recu_org: arrondi(phase(rec, "organique").V), renverse: arrondi(ctx.ecoulement.renverse),
+    };
   }
 
   L.poste_solvant = function (g) {
-    // Construit la paillasse, les gestes et l'évolution (décantation, écoulement) toutes les 0,2 s.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), e = etat_initial(), calque = L.svg("g", { "pointer-events": "none" }, g);
-    decor(g);
-    const g_rec = L.svg("g", {}, g), g_amp = L.svg("g", { class: "ampoule", role: "button", "aria-label": "Ampoule à décanter" }, g), g_bouchon = L.svg("g", { class: "bouchon", role: "button" }, g);
-    const dire = (t) => message(calque, t);
-    const maj = () => {
-      L.ampoule.dessiner(g_amp, A.x, A.y, e);
-      L.verrerie.becher(g_rec, REC.x, REC.bas, recu(e), "", { l: 50, h: 62, capacite: 100 });
-      g_bouchon.replaceChildren(); if (!e.bouchon) L.svg("path", { d: "M594 552 H606 L605 564 H595 Z", fill: "#2f6fb8", stroke: "#1d3f6b" }, g_bouchon);
-      L.missions.noter("ampoule", { ...e, decante: e.melange < 0.05, recu_aq: Math.round(e.recu_aq), recu_org: Math.round(e.recu_org) });
-    };
-    sources(g, e, dire, maj);
-    gestes_ampoule(g_amp, e, dire, maj);
-    L.glissable(g_bouchon, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { e.bouchon = true; dire(""); maj(); } });
-    zone(g, A.x - 12, A.y - 12, 24, 16, () => { if (!e.bouchon) return; if (e.pression) return dire("Dégazez d'abord (projections) !"); e.bouchon = false; maj(); });
-    zone(g, A.x - 14, BAS + 2, 28, 18, () => { if (e.pression && e.bouchon) return degazer(e, dire, maj); e.robinet = !e.robinet; maj(); });
-    setInterval(() => { if (e.melange > 0 && !e.angle) e.melange = Math.max(0, e.melange - 0.04); couler(e, dire); maj(); }, 200);
-    maj();
+    // Construit la paillasse, l'ampoule et ses gestes ; note l'état à chaque changement.
+    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), ctx = L.paillasse_chimie(g);
+    L.affiche_solvants(ctx.fond, 500, 24);
+    L.ecoulement(ctx, { sol: SOL, e: E });
+    const calque = L.svg("g", { "pointer-events": "none" }, g), dire = (t) => message(calque, t);
+    const rec = L.recipient(ctx, { id: "recepteur", profil: "becher_100", x: A.x, y: SOL });
+    const a = L.ampoule_support(ctx, { x: A.x, y: A.y, sol: SOL, e: E }, dire);
+    for (const [id, x, contenu, texte] of [["iodee", 545, { eau_iodee: 30 }, "eau iodée"], ["cyclo", 625, { cyclohexane: 15 }, "cyclohexane"], ["ethanol", 705, { ethanol: 15 }, "éthanol"]]) {
+      L.manipuler(ctx, L.recipient(ctx, { id, profil: "becher_50", x, y: SOL, contenu, etiquette: texte }), { sol: SOL });
+    }
+    bidon(ctx, () => {
+      if (a.r.tenu) return;
+      a.r.c = L.contenu({}); rec.c = L.contenu({}); Object.assign(a, { pression: false, agitee: false, degaze: false });
+      dire("Ampoule et bécher vidés dans le bidon de récupération.");
+    });
+    let avant = "";
+    ctx.ecoulement.sur_pas(() => { const v = etat(a, rec, ctx), s = JSON.stringify(v); if (s !== avant) { avant = s; L.missions.noter("ampoule", v); } });
     return { pense_bete };
   };
 })(window.Labo);
 </script>
   <script>
 /*
-Rôle : paillasse de la filtration sous vide : fiole à vide, entonnoir Büchner, papier filtre, pissette, trompe à eau sur le
-       robinet, mélange (fleurs de lavande et eau, résidu du ballon). Avec le vide, le liquide traverse vite le papier ;
-       sans vide, il coule lentement. Il faut débrancher le tuyau AVANT de fermer le robinet, sinon l'eau de la trompe
-       remonte dans la fiole (retour d'eau).
-Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_buchner(groupe) -> { pense_bete } ; fait « buchner » = { papier, mouille, vide, branche, verse, filtrat, retour, trouble }.
-Utilisé par : simulation.js.
+Rôle : dessins de la paillasse de filtration sous vide, aux vraies dimensions (1,6 px par mm) : entonnoir Büchner en
+       porcelaine (corps, plaque perforée vue par l'ouverture, papier, liquide, résidu ; tige dans le col de la fiole, cône
+       en caoutchouc), trompe à eau sur le robinet, tuyau à vide épais (enfilé sur les deux olives, ou débranché), évier,
+       boîte de papiers filtres, pissette.
+Reçoit : les plans de la paillasse et l'état { papier, residu, liquide (rgb ou null), filet (y de la surface du filtrat, quand il coule), vide, branche }.
+Produit : Labo.buchner = { F, B, T, BRAS, fixe(ctx, fiole), dessus(g, etat), trompe(g, etat), pissette(g, presse) }.
+Utilisé par : poste_buchner.js.
 */
 (function (L) {
-  const F = { x: 520, bas: 560 }, B = { x: 520, haut: 396 }, T = { x: 720, y: 330 }, BRAS = { x: 552, y: 452 };
-  const VERRE = { fill: "url(#verre)", stroke: "#9fb6be" };
+  const E = 1.6, F = { x: 520, y: 576 - 2.4 * E }, B = { x: 520, y: 258, haut: 258 - 40 * E }, T = { x: 760, y: 300 };
+  const BRAS = { x: F.x + 37 * E, y: F.y - 155 * E }, R = 38 * E, PORCELAINE = { fill: "#f4f2ec", stroke: "#bdb8ab" };
 
-  function fiole(g, e) {
-    // Fiole à vide (verre épais, tubulure latérale), filtrat, Büchner en porcelaine et son joint, papier, contenu.
-    const h_f = Math.min(70, e.filtrat * 0.5);
-    if (e.filtrat > 0) L.svg("path", { d: `M${F.x - 42 + h_f * 0.38} ${F.bas - 3 - h_f} L${F.x - 42} ${F.bas - 3} H${F.x + 42} L${F.x + 42 - h_f * 0.38} ${F.bas - 3 - h_f} Z`, fill: e.retour ? "#b9d8e6" : e.trouble ? "#c9b48a" : "#efe2b8", opacity: 0.85 }, g);
-    L.svg("path", { d: `M${F.x - 12} ${F.bas - 120} V${F.bas - 98} L${F.x - 46} ${F.bas - 4} Q${F.x - 46} ${F.bas} ${F.x - 40} ${F.bas} H${F.x + 40} Q${F.x + 46} ${F.bas} ${F.x + 46} ${F.bas - 4} L${F.x + 12} ${F.bas - 98} V${F.bas - 120}`, ...VERRE, "stroke-width": 2 }, g);
-    L.svg("path", { d: `M${F.x + 12} ${BRAS.y - 3} H${BRAS.x + 8} V${BRAS.y + 3} H${F.x + 12}`, ...VERRE, "stroke-width": 1.6 }, g);
-    L.svg("path", { d: `M${F.x - 14} ${B.haut + 30} L${F.x - 10} ${B.haut + 52} H${F.x + 10} L${F.x + 14} ${B.haut + 30} Z`, fill: "#55595d" }, g);
-    L.svg("path", { d: `M${F.x - 4} ${B.haut + 30} V${B.haut + 76} H${F.x + 4} V${B.haut + 30}`, fill: "#f4f2ec", stroke: "#bdb8ab" }, g);
-    L.svg("path", { d: `M${B.x - 34} ${B.haut} V${B.haut + 22} Q${B.x - 32} ${B.haut + 32} ${B.x - 6} ${B.haut + 32} H${B.x + 6} Q${B.x + 32} ${B.haut + 32} ${B.x + 34} ${B.haut + 22} V${B.haut} Z`, fill: "#f4f2ec", stroke: "#bdb8ab" }, g);
-    L.svg("ellipse", { cx: B.x, cy: B.haut, rx: 34, ry: 7, fill: e.papier ? "#ffffff" : "#e3dfd4", stroke: "#bdb8ab" }, g);
-    if (!e.papier) for (let i = 0; i < 14; i++) L.svg("circle", { cx: B.x - 24 + (i % 7) * 8, cy: B.haut - 2 + Math.floor(i / 7) * 4, r: 0.9, fill: "#8d897e" }, g);
-    if (e.verse > 0) L.svg("ellipse", { cx: B.x, cy: B.haut, rx: 30, ry: 5.5, fill: "#d9c99a", opacity: 0.85 }, g);
-    if (e.residu) for (let i = 0; i < 16; i++) L.svg("ellipse", { cx: B.x - 24 + ((i * 13) % 48), cy: B.haut - 3 + ((i * 7) % 6), rx: 2.4, ry: 1.3, fill: "#7b5aa6" }, g);
+  function fixe(ctx, fiole) {
+    // Évier, robinet ; tige du Büchner dans le col (derrière le verre de la fiole) ; corps du Büchner et cône en caoutchouc.
+    L.svg("rect", { x: T.x - 60, y: 424, width: 120, height: 44, rx: 6, fill: "#c9d0d4", stroke: "#8f989e" }, ctx.fond);
+    L.svg("rect", { x: T.x - 52, y: 430, width: 104, height: 32, rx: 5, fill: "#7f8a90" }, ctx.fond);
+    L.svg("rect", { x: T.x - 9, y: T.y - 20, width: 18, height: 14, rx: 2, fill: "url(#metal)" }, ctx.fond);
+    const tige = L.svg("path", { d: `M${B.x - 9} ${B.y + 12} V${F.y - 150 * E} L${B.x - 5} ${F.y - 146 * E} H${B.x + 5} L${B.x + 9} ${F.y - 150 * E} V${B.y + 12} Z`, ...PORCELAINE, "pointer-events": "none" }, ctx.objets);
+    ctx.objets.insertBefore(tige, fiole.g);
+    const d = L.svg("g", { class: "buchner", "pointer-events": "none" }, ctx.devant), col = F.y - 180 * E;
+    L.svg("path", { d: `M${B.x - 21} ${col - 22} L${B.x - 16} ${col + 8} H${B.x + 16} L${B.x + 21} ${col - 22} Z`, fill: "#4c5155" }, d);
+    L.svg("path", { d: `M${B.x - R} ${B.haut} V${B.y - 6} Q${B.x - R + 2} ${B.y + 6} ${B.x - 20} ${B.y + 10} L${B.x - 10} ${B.y + 18} H${B.x + 10} L${B.x + 20} ${B.y + 10} Q${B.x + R - 2} ${B.y + 6} ${B.x + R} ${B.y - 6} V${B.haut} A${R} ${0.12 * R} 0 0 1 ${B.x - R} ${B.haut} Z`, ...PORCELAINE }, d);
+    L.svg("rect", { x: B.x - R + 8, y: B.haut + 8, width: 8, height: 50, rx: 4, fill: "#fff", opacity: 0.6 }, d);
+  }
+
+  function dessus(g, e) {
+    // Ce que l'on voit par l'ouverture : plaque perforée, papier filtre, liquide, résidu de fleurs ; puis le bord.
+    g.replaceChildren();
+    const rx = R - 4, ry = 0.12 * rx;
+    L.svg("ellipse", { cx: B.x, cy: B.haut + 1, rx, ry, fill: e.papier ? "#ffffff" : "#e3dfd4", stroke: "#bdb8ab", "stroke-width": 0.6 }, g);
+    if (!e.papier) for (let i = 0; i < 16; i++) L.svg("circle", { cx: B.x - 42 + (i % 8) * 12, cy: B.haut - 1 + Math.floor(i / 8) * 4, r: 1.1, fill: "#8d897e" }, g);
+    if (e.liquide) L.svg("ellipse", { cx: B.x, cy: B.haut + 1, rx: rx - 2, ry: ry - 0.5, fill: L.rgb(e.liquide), opacity: 0.85 }, g);
+    if (e.residu) for (let i = 0; i < 22; i++) L.svg("ellipse", { cx: B.x - 40 + ((i * 17) % 80), cy: B.haut - 3 + ((i * 7) % 7), rx: 3.4, ry: 1.7, fill: "#7b5aa6" }, g);
+    L.svg("ellipse", { cx: B.x, cy: B.haut, rx: R, ry: 0.12 * R, fill: "none", stroke: "#d8d4c8", "stroke-width": 3 }, g);
+    if (e.filet) L.svg("line", { x1: B.x, y1: F.y - 146 * E, x2: B.x, y2: e.filet, stroke: "rgb(226,200,140)", "stroke-width": 2.4, opacity: 0.8 }, g);
   }
 
   function trompe(g, e) {
-    // Robinet, trompe à eau et tuyau à vide (branché sur la tubulure, ou pendant à côté).
-    L.svg("rect", { x: T.x - 8, y: T.y - 18, width: 16, height: 12, rx: 2, fill: "url(#metal)" }, g);
-    L.svg("rect", { x: T.x - 4, y: T.y - 6, width: 8, height: 46, rx: 2, fill: "url(#metal)", stroke: "#7d868c" }, g);
-    L.svg("rect", { x: T.x + 4, y: T.y + 12, width: 10, height: 5, fill: "url(#metal)" }, g);
-    if (e.vide) L.svg("rect", { x: T.x - 2, y: T.y + 40, width: 4, height: 70, fill: "#8fd0ee", opacity: 0.7 }, g);
-    // Tuyau à vide enfilé sur l'embout de la trompe et sur la tubulure de la fiole (il les recouvre de 8 px) ; débranché, il pend.
-    const style = { stroke: "#2b2b2b", "stroke-width": 8, fill: "none" };
-    if (!e.branche) return void L.svg("path", { d: `M${T.x + 6} ${T.y + 15} H${T.x + 20} C${T.x + 60} ${T.y + 15} ${BRAS.x + 70} ${BRAS.y} ${BRAS.x + 34} ${BRAS.y + 44}`, ...style, "stroke-linecap": "round" }, g);
-    L.svg("path", { d: `M${T.x + 6} ${T.y + 15} H${T.x + 20} C${T.x + 60} ${T.y + 15} ${BRAS.x + 60} ${BRAS.y} ${BRAS.x + 20} ${BRAS.y} H${BRAS.x}`, ...style }, g);
+    // Trompe à eau sous le robinet (jet d'eau dans l'évier quand il est ouvert) et tuyau à vide à paroi épaisse.
+    g.replaceChildren();
+    L.svg("rect", { x: T.x - 7, y: T.y - 6, width: 14, height: 120, rx: 3, fill: "url(#metal)", stroke: "#7d868c" }, g);
+    L.svg("rect", { x: T.x - 24, y: T.y + 36, width: 18, height: 8, rx: 2, fill: "url(#metal)", stroke: "#7d868c" }, g);
+    if (e.vide) L.svg("rect", { x: T.x - 3, y: T.y + 114, width: 6, height: 26, fill: "#8fd0ee", opacity: 0.75 }, g);
+    const style = { stroke: "#232323", "stroke-width": 12, fill: "none" }, de = { x: T.x - 20, y: T.y + 40 };
+    if (!e.branche) return void L.svg("path", { d: `M${de.x} ${de.y} H${de.x - 14} C${de.x - 70} ${de.y} ${BRAS.x + 40} ${BRAS.y + 30} ${BRAS.x + 30} ${BRAS.y + 90}`, ...style, "stroke-linecap": "round" }, g);
+    L.svg("path", { d: `M${de.x} ${de.y} H${de.x - 14} C${de.x - 80} ${de.y} ${BRAS.x + 70} ${BRAS.y} ${BRAS.x + 26} ${BRAS.y} H${BRAS.x - 10}`, ...style }, g);
   }
 
-  function papiers(g) {
-    // Boîte de papiers filtres ronds.
-    L.svg("rect", { x: 236, y: 540, width: 56, height: 20, rx: 2, fill: "#3f6fb0" }, g);
-    L.svg("ellipse", { cx: 264, cy: 540, rx: 26, ry: 6, fill: "#fff", stroke: "#c8c8c0" }, g);
-    L.texte(g, 264, 553, "papier filtre", { "font-size": 5.5, "font-weight": 700, fill: "#fff" });
+  function pissette(g, presse) {
+    // Pissette de 250 mL (repère en mm, fond en (0, 0)) : flacon souple, bouchon, tube coudé ; pointe en (34, -150).
+    g.replaceChildren();
+    L.svg("ellipse", { cx: 2, cy: 1, rx: 30, ry: 4, fill: "#000", opacity: 0.25 }, g);
+    L.svg("path", { d: `M-28 -2 V-96 Q-28 ${presse ? -104 : -110} -12 -112 V-120 H12 V-112 Q28 ${presse ? -104 : -110} 28 -96 V-2 Q28 0 25 0 H-25 Q-28 0 -28 -2 Z`, fill: "rgba(236,244,246,0.85)", stroke: "#9fb6be", "stroke-width": 0.8 }, g);
+    L.svg("rect", { x: -25, y: -60, width: 50, height: 56, fill: "rgba(196,226,238,0.45)" }, g);
+    L.svg("rect", { x: -14, y: -128, width: 28, height: 10, rx: 2, fill: "#e8e8e2", stroke: "#a9a9a0", "stroke-width": 0.6 }, g);
+    L.svg("path", { d: "M0 -128 V-150 Q0 -158 8 -156 L34 -150", fill: "none", stroke: "#e2e6e8", "stroke-width": 3.4, "stroke-linecap": "round" }, g);
+    L.svg("text", { x: 0, y: -40, "font-size": 9, "font-weight": 700, "text-anchor": "middle", fill: "#23315a", "font-family": "sans-serif" }, g).textContent = "eau";
   }
 
-  function deplacable(g, dessin, cible, action) {
-    // Objet que l'on porte au-dessus du Büchner ; action() si on le lâche assez près.
-    const o = L.svg("g", { role: "button" }, g); dessin(o);
-    L.glissable(o, { debut: () => ({ x: 0, y: 0 }), deplacer: (p) => L.placer(o, p.x, p.y), lacher: (p) => { L.placer(o, 0, 0); if (Math.hypot(cible.x + p.x - B.x, cible.y + p.y - B.haut) < 45) action(o); } });
-    return o;
+  function boite_papiers(g, x, sol) {
+    // Boîte de papiers filtres ronds de 70 mm.
+    L.svg("ellipse", { cx: x + 3, cy: sol + 1, rx: 64, ry: 5, fill: "#000", opacity: 0.25 }, g);
+    L.svg("rect", { x: x - 62, y: sol - 22, width: 124, height: 22, rx: 3, fill: "#3f6fb0" }, g);
+    L.svg("ellipse", { cx: x, cy: sol - 22, rx: 62, ry: 8, fill: "#fff", stroke: "#c8c8c0" }, g);
+    L.texte(g, x, sol - 9, "papier filtre Ø 70 mm", { "font-size": 6.5, "font-weight": 700, fill: "#fff" });
   }
 
-  function evoluer(e) {
-    // Le liquide du Büchner passe dans la fiole : vite avec le vide, lentement sans.
-    if (e.verse > 0) { const v = Math.min(e.verse, e.vide && e.branche ? 3 : 0.3); e.verse -= v; e.filtrat += v; }
+  L.buchner = { F, B, T, BRAS, E, fixe, dessus, trompe, pissette, boite_papiers };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : paillasse de la filtration sous vide, avec le matériel physique : fiole à vide de 500 mL, entonnoir Büchner,
+       papier filtre, pissette, trompe à eau sur le robinet, bécher du mélange (fleurs de lavande et eau, reste du ballon)
+       que l'on incline soi-même au-dessus du Büchner. Avec le vide, le liquide traverse vite le papier (15 mL/s) ; sans
+       vide, lentement (1,5 mL/s) ; sans papier, les fleurs passent (filtrat trouble). Il faut débrancher le tuyau AVANT
+       de fermer le robinet, sinon l'eau de la trompe remonte dans la fiole (retour d'eau).
+Reçoit : le groupe SVG de la paillasse.
+Produit : Labo.poste_buchner(groupe) -> { pense_bete } ; fait « buchner » = { papier, mouille, vide, branche, verse, filtrat, residu, retour, trouble }.
+Utilisé par : simulation.js.
+*/
+(function (L) {
+  const SOL = 576, Bu = L.buchner, E = Bu.E;
+  Object.assign(L.LIQUIDES, {
+    eau_lavande: { nom: "eau et fleurs de lavande", d: 1.0, rgb: [128, 96, 120], alpha: 0.82, classe: "aqueuse" },
+    filtrat_lavande: { nom: "filtrat", d: 1.0, rgb: [226, 200, 140], alpha: 0.55, classe: "aqueuse" },
+  });
+
+  function filtrer(e, buchner, fiole, dt) {
+    // Le liquide du Büchner passe dans la fiole ; les fleurs restent sur le papier (sinon, elles passent : trouble).
+    const V = Math.min(buchner.c.volume(), (e.vide && e.branche ? 15 : 1.5) * dt);
+    e.filet = V > 0 ? fiole.pose.y - fiole.pr.hauteur_de(fiole.c.volume()) * E : null;
+    if (V <= 0) return;
+    for (const part of buchner.c.retirer(V, "bas")) for (const [n, v] of Object.entries(part.liquides)) {
+      if (n === "eau_lavande" && e.papier) { e.residu = true; fiole.c.ajouter("filtrat_lavande", v); } else fiole.c.ajouter(n, v);
+    }
+  }
+
+  function pissette(ctx, e, buchner) {
+    // Pissette : lâchée la pointe au-dessus du Büchner, on la presse : un jet d'eau de 4 mL mouille le papier.
+    const g = L.svg("g", { class: "pissette", role: "button", "aria-label": "Pissette" }, ctx.objets), repos = { x: 360, y: SOL };
+    const placer = (p, presse) => { Bu.pissette(g, presse); L.placer(g, p.x, p.y, E); };
+    placer(repos, false);
+    L.glissable(g, { debut: () => ({ ...repos }), saisir: () => ctx.haut.append(g), deplacer: (p) => placer(p, false), lacher: (p) => {
+      const pointe = { x: p.x + 34 * E, y: p.y - 150 * E };
+      if (Math.abs(pointe.x - Bu.B.x) > 70 || pointe.y > Bu.B.haut - 4 || pointe.y < Bu.B.haut - 160) { ctx.objets.append(g); return placer(repos, false); }
+      let k = 0;
+      placer(p, true);
+      const jet = setInterval(() => {
+        ctx.ecoulement.emettre({ c: L.contenu({ eau: 1 }), interieur_monde: () => [] }, pointe, { x: 60, y: -20 }, [{ classe: "aqueuse", liquides: { eau: 0.4 }, dissous: {} }], 0.4);
+        if (++k >= 10) { clearInterval(jet); setTimeout(() => { ctx.objets.append(g); placer(repos, false); }, 400); }
+      }, 50);
+    } });
+  }
+
+  function papier(ctx, e, maj) {
+    // Un papier filtre pris dans la boîte ; lâché sur le Büchner, il s'y pose.
+    const g = L.svg("g", { class: "papier-filtre", role: "button", "aria-label": "Papier filtre" }, ctx.objets);
+    L.svg("ellipse", { cx: 250, cy: SOL - 23, rx: 54, ry: 7, fill: "#fff", stroke: "#c8c8c0" }, g);
+    L.glissable(g, { debut: () => ({ x: 0, y: 0 }), deplacer: (p) => L.placer(g, p.x, p.y), lacher: (p) => {
+      L.placer(g, 0, 0);
+      if (!e.papier && Math.hypot(250 + p.x - Bu.B.x, SOL - 23 + p.y - Bu.B.haut) < 50) { e.papier = true; maj(); }
+    } });
   }
 
   L.poste_buchner = function (g) {
-    // Construit la paillasse et ses gestes.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
+    // Construit la paillasse, ses gestes, et la filtration à chaque pas.
+    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), ctx = L.paillasse_chimie(g);
+    L.ecoulement(ctx, { sol: SOL, e: E });
     const e = { papier: false, mouille: false, vide: false, branche: true, verse: 0, filtrat: 0, residu: false, retour: false, trouble: false };
-    L.svg("rect", { x: T.x - 40, y: T.y + 104, width: 110, height: 34, rx: 6, fill: "#7f8a90", stroke: "#8f989e" }, g);
-    const g_trompe = L.svg("g", {}, g), g_fiole = L.svg("g", {}, g);
-    const maj = () => { g_trompe.replaceChildren(); trompe(g_trompe, e); g_fiole.replaceChildren(); fiole(g_fiole, e); L.missions.noter("buchner", { ...e, verse: Math.round(e.verse), filtrat: Math.round(e.filtrat) }); };
-    papiers(g);
-    deplacable(g, (o) => L.svg("ellipse", { cx: 264, cy: 536, rx: 22, ry: 5, fill: "#fff", stroke: "#c8c8c0" }, o), { x: 264, y: 536 }, () => { e.papier = true; maj(); });
-    deplacable(g, (o) => { L.svg("path", { d: "M386 560 V516 Q386 506 400 506 Q414 506 414 516 V560 Z", fill: "#e6f3f8", stroke: "#9fb6be" }, o); L.svg("path", { d: "M400 506 V496 L428 480", stroke: "#e0e6e8", "stroke-width": 3, fill: "none" }, o); L.texte(o, 400, 540, "eau", { "font-size": 6, fill: "#23315a" }); }, { x: 428, y: 480 }, () => { if (e.papier) { e.mouille = true; maj(); } });
-    const melange = L.melange({ eau: 100 });
-    deplacable(g, (o) => { L.verrerie.becher(o, 340, 560, melange, "fleurs + eau", { l: 56, h: 72, capacite: 150 }); for (let i = 0; i < 10; i++) L.svg("ellipse", { cx: 322 + ((i * 7) % 36), cy: 540 - ((i * 5) % 30), rx: 2.4, ry: 1.3, fill: "#7b5aa6" }, o); }, { x: 340, y: 488 }, (o) => {
-      if (e.verse || e.residu) return;
-      Object.assign(e, { verse: 100, residu: e.papier, trouble: !e.papier || !e.mouille }); o.style.display = "none"; maj();
-    });
-    const robinet = L.svg("circle", { cx: T.x + 16, cy: T.y - 12, r: 6, fill: "url(#acier)", stroke: "#111", role: "button" }, g);
-    L.glissable(robinet, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { if (e.vide && e.branche) { e.retour = true; e.filtrat += 30; } e.vide = !e.vide; maj(); } });
-    const raccord = L.svg("circle", { cx: BRAS.x + 14, cy: BRAS.y + 8, r: 12, fill: "#000", opacity: 0 }, g);
+    const g_trompe = L.svg("g", { "pointer-events": "none" }, ctx.fond);
+    const fiole = L.recipient(ctx, { id: "fiole", profil: "fiole_500", x: Bu.F.x, y: Bu.F.y });
+    const buchner = L.recipient(ctx, { id: "buchner", profil: "buchner_70", x: Bu.B.x, y: Bu.B.y });
+    fiole.g.setAttribute("pointer-events", "none"); buchner.g.setAttribute("pointer-events", "none");
+    Bu.fixe(ctx, fiole);
+    const g_dessus = L.svg("g", { "pointer-events": "none" }, ctx.devant);
+    Bu.boite_papiers(ctx.fond, 250, SOL);
+    const melange = L.recipient(ctx, { id: "melange", profil: "becher_250", x: 660, y: SOL, contenu: { eau_lavande: 100 }, etiquette: "fleurs + eau" });
+    L.manipuler(ctx, melange, { sol: SOL });
+    const maj = () => {
+      const ph = buchner.c.phases[0];
+      Bu.dessus(g_dessus, { ...e, liquide: ph ? buchner.c.couleur(ph).rgb : null }); Bu.trompe(g_trompe, e);
+      const v = { ...e, filet: undefined, verse: Math.round(buchner.c.volume()), filtrat: Math.round(fiole.c.volume()) };
+      if (JSON.stringify(v) !== maj.avant) { maj.avant = JSON.stringify(v); L.missions.noter("buchner", v); }
+    };
+    papier(ctx, e, maj); pissette(ctx, e, buchner);
+    const robinet = L.svg("circle", { cx: Bu.T.x + 16, cy: Bu.T.y - 13, r: 7, fill: "url(#acier)", stroke: "#111", role: "button", "aria-label": "Robinet" }, ctx.haut);
+    L.glissable(robinet, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { if (e.vide && e.branche) { e.retour = true; fiole.c.ajouter("eau", 30); } e.vide = !e.vide; maj(); } });
+    const raccord = L.svg("circle", { cx: Bu.BRAS.x + 4, cy: Bu.BRAS.y, r: 16, fill: "#000", opacity: 0, role: "button", "aria-label": "Tuyau à vide" }, ctx.haut);
     L.glissable(raccord, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { e.branche = !e.branche; maj(); } });
-    setInterval(() => { evoluer(e); maj(); }, 200);
+    ctx.ecoulement.sur_pas((dt) => {
+      // Ce qui arrive dans le Büchner : l'eau mouille le papier ; le mélange versé sur un papier sec ou absent trouble le filtrat.
+      const ph = buchner.c.phases[0];
+      if (ph && e.papier && ph.liquides.eau > 0) e.mouille = true;
+      if (ph && ph.liquides.eau_lavande > 0 && (!e.papier || !e.mouille)) e.trouble = true;
+      filtrer(e, buchner, fiole, dt); maj();
+    });
     maj();
     return { pense_bete };
   };
@@ -2845,44 +3616,59 @@ Utilisé par : simulation.js.
 </script>
   <script>
 /*
-Rôle : paillasse « reconnaître la verrerie » : un montage de chauffage à reflux (chauffe-ballon, ballon, réfrigérant à
-       boules vertical, entrée et sortie de l'eau) dont les éléments sont numérotés, et un tableau pour associer chaque
-       nom à son numéro.
+Rôle : paillasse « reconnaître la verrerie » : un montage de chauffage à reflux aux vraies dimensions (chauffe-ballon,
+       ballon de 250 mL, réfrigérant à boules vertical de 18 cm tenu par une pince, entrée de l'eau en bas et sortie en
+       haut) dont les éléments sont numérotés, et un tableau pour associer chaque nom à son numéro.
 Reçoit : le groupe SVG de la paillasse.
 Produit : Labo.poste_reflux(groupe) -> { pense_bete } ; Labo.ETIQUETTES_REFLUX ; fait « tri_reflux ».
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const VERRE = { fill: "url(#verre)", stroke: "#9fb6be" }, X = 340;
+  const E = 1.6, X = 330, VERRE = { fill: "rgba(205,228,236,0.45)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.8 };
+  const BAS = 290, HAUT = 40, ENTREE = { x: X + 54, y: 275 }, SORTIE = { x: X + 54, y: 55 }, ROBINET = { x: 548, y: 388 };
+  L.LIQUIDES.melange_reflux = { nom: "mélange", d: 1.0, rgb: [233, 215, 176], alpha: 0.7, classe: "aqueuse" };
   L.ETIQUETTES_REFLUX = [
     { id: "refrigerant", texte: ["réfrigérant", "à boules"], colonne: 0 }, { id: "ballon", texte: ["ballon", "(fond rond)"], colonne: 1 },
     { id: "chauffe", texte: ["chauffe-ballon", ""], colonne: 2 }, { id: "entree", texte: ["entrée de", "l'eau froide"], colonne: 3 },
     { id: "sortie", texte: ["sortie de", "l'eau"], colonne: 4 },
   ];
 
-  function montage(g) {
-    // Chauffe-ballon, ballon, réfrigérant à boules vertical tenu par une pince, deux embouts, tuyaux.
-    L.svg("rect", { x: 236, y: 552, width: 110, height: 10, rx: 2, fill: "#3a3f44" }, g);
-    L.tige(g, "M262 552 V200", 5);
-    for (const y of [300, 446]) { L.tige(g, `M262 ${y} H${X - 12}`, 3); L.svg("rect", { x: X - 16, y: y - 7, width: 10, height: 14, rx: 3, fill: "#c0392b" }, g); }
-    L.svg("circle", { cx: X, cy: 498, r: 34, ...VERRE }, g);
-    L.svg("path", { d: `M${X - 31} 504 A31 31 0 0 0 ${X + 31} 504 Z`, fill: "#e9d7b0", opacity: 0.7 }, g);
-    L.svg("path", { d: `M${X - 46} 521 A46 9 0 0 0 ${X + 46} 521 L${X + 46} 562 H${X - 46} Z`, fill: "#5e6b74" }, g);
-    L.texte(g, X, 548, "CHAUFFE-BALLON", { "font-size": 5.5, "font-weight": 700, fill: "#dfe6ea" });
-    L.svg("rect", { x: X - 8, y: 430, width: 16, height: 40, ...VERRE }, g);
-    L.svg("rect", { x: X - 14, y: 250, width: 28, height: 182, rx: 8, ...VERRE }, g);
-    for (let k = 0; k < 5; k++) L.svg("ellipse", { cx: X, cy: 272 + k * 34, rx: 9, ry: 13, ...VERRE }, g);
-    L.svg("rect", { x: X - 4, y: 240, width: 8, height: 14, ...VERRE }, g);
-    L.svg("rect", { x: X - 12, y: 254, width: 24, height: 174, fill: "#5fb3dc", opacity: 0.25 }, g);
-    for (const y of [412, 266]) { L.svg("rect", { x: X + 14, y: y - 3, width: 12, height: 6, ...VERRE }, g); L.svg("rect", { x: X + 20, y: y - 4, width: 4, height: 8, rx: 1.5, ...VERRE }, g); }
-    // Tuyaux enfilés sur les embouts (ils recouvrent l'olive de 8 px et partent dans l'axe de l'embout).
-    L.svg("path", { d: `M${X + 18} 412 H${X + 34} C${X + 80} 412 ${X + 90} 470 ${X + 120} 470`, stroke: "#c9a96b", "stroke-width": 7, fill: "none" }, g);
-    L.svg("path", { d: `M${X + 18} 266 H${X + 34} C${X + 80} 266 ${X + 110} 300 ${X + 130} 330`, stroke: "#c9a96b", "stroke-width": 7, fill: "none" }, g);
+  function refrigerant(g) {
+    // Réfrigérant à boules : col rodé, manchon plein d'eau, cinq boules, tube supérieur ouvert, deux embouts à olive.
+    L.svg("rect", { x: X - 14, y: BAS, width: 28, height: 22, ...VERRE }, g);
+    L.svg("rect", { x: X - 8, y: 19, width: 16, height: HAUT - 17, ...VERRE }, g);
+    L.svg("rect", { x: X - 32, y: HAUT, width: 64, height: BAS - HAUT, rx: 14, ...VERRE }, g);
+    L.svg("rect", { x: X - 28, y: HAUT + 6, width: 56, height: BAS - HAUT - 12, rx: 11, fill: "#5fb3dc", opacity: 0.3 }, g);
+    for (let k = 0; k < 5; k++) L.svg("ellipse", { cx: X, cy: HAUT + 28 + k * 48, rx: 15, ry: 21, ...VERRE }, g);
+    for (let k = 0; k < 4; k++) L.svg("rect", { x: X - 6, y: HAUT + 48 + k * 48, width: 12, height: 10, ...VERRE }, g);
+    L.svg("rect", { x: X - 26, y: HAUT + 8, width: 4, height: BAS - HAUT - 16, rx: 2, fill: "#fff", opacity: 0.45 }, g);
+    for (const p of [ENTREE, SORTIE]) {
+      L.svg("rect", { x: X + 31, y: p.y - 5, width: p.x - X - 31, height: 10, ...VERRE }, g);
+      L.svg("rect", { x: p.x - 9, y: p.y - 6.5, width: 5, height: 13, rx: 2, ...VERRE }, g);
+    }
+  }
+
+  function montage(ctx) {
+    // Support et pinces, chauffe-ballon, ballon, réfrigérant, robinet et évier, tuyaux enfilés sur les olives.
+    const g = ctx.fond;
+    L.svg("rect", { x: 168, y: 542, width: 124, height: 9, rx: 2, fill: "#3a3f44" }, g);
+    L.tige(g, "M230 544 V24", 6);
+    for (const [y, x2] of [[330, X - 18], [170, X - 36]]) { L.svg("rect", { x: 222, y: y - 8, width: 16, height: 16, rx: 2, fill: "#5d646a" }, g); L.tige(g, `M230 ${y} H${x2}`, 4); L.svg("rect", { x: x2 - 3, y: y - 12, width: 14, height: 24, rx: 4, fill: "#b9894f", stroke: "#7a5730" }, g); }
+    L.svg("rect", { x: ROBINET.x - 60, y: 424, width: 120, height: 44, rx: 6, fill: "#c9d0d4", stroke: "#8f989e" }, g);
+    L.svg("rect", { x: ROBINET.x - 52, y: 430, width: 104, height: 32, rx: 5, fill: "#7f8a90" }, g);
+    L.svg("rect", { x: ROBINET.x - 8, y: ROBINET.y - 18, width: 16, height: 12, rx: 2, fill: "url(#metal)" }, g);
+    L.svg("path", { d: `M${ROBINET.x - 4} ${ROBINET.y - 6} V${ROBINET.y + 10} h8 V${ROBINET.y - 6}`, fill: "url(#metal)", stroke: "#7d868c" }, g);
+    const tuyau = { stroke: "#c9a96b", "stroke-width": 9, fill: "none", "stroke-linecap": "round" };
+    L.svg("path", { d: `M${ROBINET.x} ${ROBINET.y + 8} C${ROBINET.x - 70} ${ROBINET.y + 8} ${ENTREE.x + 70} ${ENTREE.y} ${ENTREE.x + 4} ${ENTREE.y} H${ENTREE.x - 8}`, ...tuyau }, g);
+    L.svg("path", { d: `M${SORTIE.x - 8} ${SORTIE.y} H${SORTIE.x + 16} C${SORTIE.x + 80} ${SORTIE.y} 470 200 470 300 S${ROBINET.x - 30} 420 ${ROBINET.x - 22} 440`, ...tuyau }, g);
+    L.hydro.chauffe_ballon(g, ctx.devant, { x: X, haut: 432, bas: 576 });
+    L.recipient(ctx, { id: "ballon", profil: "ballon_250", x: X, y: 496, contenu: { melange_reflux: 110 } }).g.setAttribute("pointer-events", "none");
+    refrigerant(L.svg("g", { "pointer-events": "none" }, ctx.objets));
   }
 
   function numeros(g) {
     // Pastilles numérotées reliées à chaque élément.
-    for (const [n, x, y, cx, cy] of [[1, 380, 200, X + 10, 330], [2, 196, 470, X - 30, 498], [3, 200, 556, X - 46, 545], [4, 430, 440, X + 26, 412], [5, 430, 240, X + 26, 266]]) {
+    for (const [n, x, y, cx, cy] of [[1, 440, 150, X + 32, 150], [2, 196, 404, X - 34, 412], [3, 196, 476, 228, 482], [4, 420, 322, ENTREE.x, ENTREE.y + 4], [5, 430, 26, SORTIE.x, SORTIE.y - 4]]) {
       L.svg("line", { x1: x, y1: y, x2: cx, y2: cy, stroke: "#23315a", "stroke-width": 1 }, g);
       L.svg("circle", { cx: x, cy: y, r: 10, fill: "#fbe98a", stroke: "#23315a" }, g);
       L.texte(g, x, y + 0.5, String(n), { "font-size": 10, "font-weight": 700, fill: "#23315a" });
@@ -2891,9 +3677,10 @@ Utilisé par : simulation.js.
 
   L.poste_reflux = function (g) {
     // Montage numéroté et tableau des noms.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 160, 140);
-    montage(g); numeros(g);
-    L.tableau_tri(g, { x: 480, y: 48, largeur: 520, hauteur: 300, titre: "Montage de chauffage à reflux", colonnes: ["1", "2", "3", "4", "5"], etiquettes: [3, 0, 4, 1, 2].map((k) => ({ ...L.ETIQUETTES_REFLUX[k] })), fait: "tri_reflux" });
+    const pense_bete = L.decor.pense_bete(g, 24, 52, 160, 140), ctx = L.paillasse_chimie(g);
+    L.ecoulement(ctx, { sol: 576, e: E });
+    montage(ctx); numeros(ctx.haut);
+    L.tableau_tri(g, { x: 490, y: 48, largeur: 510, hauteur: 300, titre: "Montage de chauffage à reflux", colonnes: ["1", "2", "3", "4", "5"], etiquettes: [3, 0, 4, 1, 2].map((k) => ({ ...L.ETIQUETTES_REFLUX[k] })), fait: "tri_reflux" });
     return { pense_bete };
   };
 })(window.Labo);
@@ -2921,14 +3708,14 @@ Utilisé par : simulation.js.
     // Eau iodée et cyclohexane dans l'ampoule (l'éthanol donne une seule phase : il faut recommencer).
     const a = A(faits);
     if (a.miscible) return "L'éthanol se mélange à l'eau : une seule phase ! Videz l'ampoule dans le bidon de récupération et recommencez avec le cyclohexane.";
-    return (a.aq >= 20 && a.org >= 10 && a.solvant === "cyclohexane") || false;
+    return (a.aq >= 15 && a.org >= 8 && a.solvant === "cyclohexane") || false;
   }
 
   function vidange({ faits }) {
     // Toute la phase aqueuse dans le bécher, robinet refermé avant la phase violette.
     const a = A(faits);
-    if (a.recu_org > 1) return "Trop loin : de la phase violette est passée dans le bécher. Videz l'ampoule dans le bidon et recommencez.";
-    return (a.aq < 0.5 && a.recu_aq >= 19 && !a.robinet && a.org >= 9) || false;
+    if (a.recu_org > 1.5) return "Trop loin : de la phase violette est passée dans le bécher. Videz l'ampoule dans le bidon et recommencez.";
+    return (a.aq < 1 && a.recu_aq >= 14 && !a.robinet && a.org >= 8) || false;
   }
 
   const HYDRO = {
@@ -2957,9 +3744,9 @@ Utilisé par : simulation.js.
     etapes: [
       { consigne: "D'après le tableau, à 20 °C, le cyclohexane (fusion 6,5 °C, ébullition 81 °C) est…", court: "Répondez dans le carnet.", question: choix(["liquide", "solide", "gazeux"], "20 °C est entre 6,5 °C et 81 °C.", "Exact.") },
       { consigne: "Pour extraire le diiode de l'eau, on choisit…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane : non miscible à l'eau, le diiode y est très soluble, et il est moins dangereux que le dichlorométhane", "l'éthanol", "le dichlorométhane"], "Lisez les colonnes « miscible » et « dangers ».", "Exact.") },
-      { consigne: "Fermez le robinet de l'ampoule (touchez-le), puis versez l'eau iodée et le cyclohexane.", court: "Robinet fermé ; eau iodée, cyclohexane.", verifier: solvant_verse },
+      { consigne: "Fermez le robinet de l'ampoule (touchez-le), puis versez toute l'eau iodée et tout le cyclohexane.", court: "Robinet fermé ; eau iodée, cyclohexane.", verifier: solvant_verse, aide_geste: "Portez le bécher au-dessus de l'ampoule, puis tournez la poignée pour l'incliner." },
       { consigne: "Prévoyez : la phase supérieure sera…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane, moins dense que l'eau (0,78 < 1)", "l'eau, plus lourde", "on ne peut pas prévoir"], "Comparez les densités.", "Exact.") },
-      { consigne: "Bouchez l'ampoule (touchez le bouchon), agitez-la par des allers-retours, puis dégazez (touchez le robinet).", court: "Bouchez, agitez, dégazez.", verifier: ({ faits }) => (A(faits).agitee >= 4 && A(faits).degaze) || false, aide_geste: "Pendant le dégazage, l'ampoule est retournée, robinet vers le haut, loin du visage." },
+      { consigne: "Bouchez l'ampoule (touchez le bouchon posé sur la paillasse), prenez-la et secouez-la vivement, reposez-la sur l'anneau, puis dégazez (touchez le robinet).", court: "Bouchez, agitez, dégazez.", verifier: ({ faits }) => (A(faits).agitee && A(faits).degaze) || false, aide_geste: "Pendant le dégazage, l'ampoule est retournée, robinet vers le haut, loin du visage." },
       { consigne: "Laissez l'ampoule sur l'anneau jusqu'à ce que les deux phases soient bien séparées.", court: "Laissez décanter.", verifier: ({ faits }) => (A(faits).decante && A(faits).I2_org > 0.8) || false },
       { consigne: "Après agitation, le diiode se trouve…", court: "Répondez dans le carnet.", question: choix(["dans la phase supérieure (cyclohexane), devenue violette ; la phase aqueuse s'est presque décolorée", "toujours dans l'eau", "il a disparu"], "Observez la couleur de chaque phase.", "Exact.") },
       { consigne: "Ôtez le bouchon (touchez le haut de l'ampoule), ouvrez le robinet et recueillez la phase aqueuse ; fermez le robinet juste avant la phase violette.", court: "Recueillez la phase aqueuse.", verifier: vidange, aide_geste: "Sans ôter le bouchon, le liquide ne coule pas." },
@@ -2990,9 +3777,9 @@ Utilisé par : page.html (dernier script).
     conclusion: "Dans la filtration sous vide, la trompe à eau aspire l'air de la fiole : le liquide traverse le papier filtre du Büchner beaucoup plus vite. Pour arrêter, on débranche d'abord le tuyau, puis on ferme le robinet ; sinon l'eau de la trompe remonte dans la fiole.",
     conclusion_courte: "Débrancher le tuyau, puis fermer le robinet.",
     etapes: [
-      { consigne: "Posez un papier filtre dans le Büchner, puis mouillez-le avec la pissette pour qu'il colle bien.", court: "Papier filtre posé et mouillé.", verifier: ({ faits }) => (B(faits).papier && B(faits).mouille) || false },
+      { consigne: "Posez un papier filtre dans le Büchner, puis mouillez-le avec la pissette pour qu'il colle bien.", court: "Papier filtre posé et mouillé.", verifier: ({ faits }) => (B(faits).papier && B(faits).mouille) || false, aide_geste: "Lâchez la pissette, sa pointe au-dessus du Büchner : elle est pressée." },
       { consigne: "Ouvrez le robinet de la trompe à eau : elle aspire l'air de la fiole à vide.", court: "Ouvrez le robinet.", verifier: ({ faits }) => (B(faits).vide && B(faits).branche) || false },
-      { consigne: "Versez le mélange (fleurs et eau) dans le Büchner.", court: "Versez le mélange.", verifier: ({ faits }) => B(faits).filtrat >= 95 || false },
+      { consigne: "Versez tout le mélange (fleurs et eau) dans le Büchner.", court: "Versez le mélange.", verifier: ({ faits }) => B(faits).filtrat >= 80 || false, aide_geste: "Portez le bécher au-dessus du Büchner, puis tournez la poignée pour l'incliner." },
       { consigne: "Avec le vide, le liquide traverse le papier…", court: "Répondez dans le carnet.", question: choix(["beaucoup plus vite que dans un simple entonnoir", "plus lentement", "à la même vitesse"], "Combien de temps a duré la filtration ?", "Exact.") },
       { consigne: "Arrêtez : débranchez d'abord le tuyau de la fiole (touchez la tubulure), puis fermez le robinet.", court: "Tuyau débranché, robinet fermé.", verifier: ({ faits }) => { const b = B(faits); if (b.retour) return "Retour d'eau : l'eau de la trompe est montée dans la fiole. Il fallait débrancher le tuyau avant de fermer le robinet."; return (!b.vide && !b.branche) || false; } },
       { consigne: "Pourquoi débranche-t-on le tuyau avant de fermer le robinet ?", court: "Répondez dans le carnet.", question: choix(["pour que l'eau de la trompe ne remonte pas dans la fiole (retour d'eau)", "pour économiser l'eau", "pour sécher le papier"], "Que se passe-t-il dans la trompe quand l'eau s'arrête ?", "Exact.") },

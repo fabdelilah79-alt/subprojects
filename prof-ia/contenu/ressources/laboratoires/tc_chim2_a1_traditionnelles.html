@@ -2183,7 +2183,7 @@ Utilisé par : chimie_objets.js, chimie_gouttes.js, chimie_chauffage.js.
       if (c.poudre) L.svg("path", { d: `M${x - 12} ${y + 3} Q${x} ${y - 9} ${x + 12} ${y + 3} Z`, fill: c.poudre, stroke: "#00000022" }, g);
     },
     flacon(g, x, bas, texte, { verre = "#6b3a12", liquide = null, ouvert = false, bouchon = false } = {}) {
-      // Flacon compte-gouttes en verre teinté avec son étiquette ; ouvert : sa pipette a été retirée ; bouchon : on dessine sa poire.
+      // Flacon compte-gouttes en verre teinté avec son étiquette ; ouvert : sa pipette a été retirée ; bouchon : on dessine sa poire (« capsule » : bouchon vissé d'un flacon de solvant).
       g.replaceChildren();
       L.svg("ellipse", { cx: x + 4, cy: bas + 1, rx: 17, ry: 3.5, fill: "#000", opacity: 0.28 }, g);
       L.svg("path", { d: `M${x - 15} ${bas - 2} V${bas - 36} Q${x - 15} ${bas - 44} ${x - 6} ${bas - 46} V${bas - 52} H${x + 6} V${bas - 46} Q${x + 15} ${bas - 44} ${x + 15} ${bas - 36} V${bas - 2} Q${x + 15} ${bas} ${x + 12} ${bas} H${x - 12} Q${x - 15} ${bas} ${x - 15} ${bas - 2} Z`, fill: verre, opacity: 0.88, stroke: "#2b1606" }, g);
@@ -2191,6 +2191,7 @@ Utilisé par : chimie_objets.js, chimie_gouttes.js, chimie_chauffage.js.
       L.svg("rect", { x: x - 12, y: bas - 32, width: 24, height: 18, fill: "#f7f3e6", stroke: "#bdb59c", "stroke-width": 0.5 }, g);
       String(texte).split("\n").forEach((t, i, tout) => L.texte(g, x, bas - 23 - 3 * (tout.length - 1) + i * 6, t, { "font-size": 4.6, "font-weight": 700, fill: "#222" }));
       if (ouvert) L.svg("ellipse", { cx: x, cy: bas - 52, rx: 6, ry: 1.8, fill: "#1a0d04" }, g);
+      if (bouchon === "capsule") return void L.svg("rect", { x: x - 8, y: bas - 62, width: 16, height: 11, rx: 2, fill: "#1d1d1f" }, g);
       if (bouchon) {
         L.svg("rect", { x: x - 6, y: bas - 60, width: 12, height: 8, rx: 1.5, fill: "#2a2a2c" }, g);
         L.svg("path", { d: `M${x - 5} ${bas - 60} V${bas - 72} Q${x - 5} ${bas - 83} ${x} ${bas - 83} Q${x + 5} ${bas - 83} ${x + 5} ${bas - 72} V${bas - 60} Z`, fill: "#1d1d1f" }, g);

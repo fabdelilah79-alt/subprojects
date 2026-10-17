@@ -20,14 +20,14 @@ Utilisé par : simulation.js.
     // Eau iodée et cyclohexane dans l'ampoule (l'éthanol donne une seule phase : il faut recommencer).
     const a = A(faits);
     if (a.miscible) return "L'éthanol se mélange à l'eau : une seule phase ! Videz l'ampoule dans le bidon de récupération et recommencez avec le cyclohexane.";
-    return (a.aq >= 20 && a.org >= 10 && a.solvant === "cyclohexane") || false;
+    return (a.aq >= 15 && a.org >= 8 && a.solvant === "cyclohexane") || false;
   }
 
   function vidange({ faits }) {
     // Toute la phase aqueuse dans le bécher, robinet refermé avant la phase violette.
     const a = A(faits);
-    if (a.recu_org > 1) return "Trop loin : de la phase violette est passée dans le bécher. Videz l'ampoule dans le bidon et recommencez.";
-    return (a.aq < 0.5 && a.recu_aq >= 19 && !a.robinet && a.org >= 9) || false;
+    if (a.recu_org > 1.5) return "Trop loin : de la phase violette est passée dans le bécher. Videz l'ampoule dans le bidon et recommencez.";
+    return (a.aq < 1 && a.recu_aq >= 14 && !a.robinet && a.org >= 8) || false;
   }
 
   const HYDRO = {
@@ -56,9 +56,9 @@ Utilisé par : simulation.js.
     etapes: [
       { consigne: "D'après le tableau, à 20 °C, le cyclohexane (fusion 6,5 °C, ébullition 81 °C) est…", court: "Répondez dans le carnet.", question: choix(["liquide", "solide", "gazeux"], "20 °C est entre 6,5 °C et 81 °C.", "Exact.") },
       { consigne: "Pour extraire le diiode de l'eau, on choisit…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane : non miscible à l'eau, le diiode y est très soluble, et il est moins dangereux que le dichlorométhane", "l'éthanol", "le dichlorométhane"], "Lisez les colonnes « miscible » et « dangers ».", "Exact.") },
-      { consigne: "Fermez le robinet de l'ampoule (touchez-le), puis versez l'eau iodée et le cyclohexane.", court: "Robinet fermé ; eau iodée, cyclohexane.", verifier: solvant_verse },
+      { consigne: "Fermez le robinet de l'ampoule (touchez-le), puis versez toute l'eau iodée et tout le cyclohexane.", court: "Robinet fermé ; eau iodée, cyclohexane.", verifier: solvant_verse, aide_geste: "Portez le bécher au-dessus de l'ampoule, puis tournez la poignée pour l'incliner." },
       { consigne: "Prévoyez : la phase supérieure sera…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane, moins dense que l'eau (0,78 < 1)", "l'eau, plus lourde", "on ne peut pas prévoir"], "Comparez les densités.", "Exact.") },
-      { consigne: "Bouchez l'ampoule (touchez le bouchon), agitez-la par des allers-retours, puis dégazez (touchez le robinet).", court: "Bouchez, agitez, dégazez.", verifier: ({ faits }) => (A(faits).agitee >= 4 && A(faits).degaze) || false, aide_geste: "Pendant le dégazage, l'ampoule est retournée, robinet vers le haut, loin du visage." },
+      { consigne: "Bouchez l'ampoule (touchez le bouchon posé sur la paillasse), prenez-la et secouez-la vivement, reposez-la sur l'anneau, puis dégazez (touchez le robinet).", court: "Bouchez, agitez, dégazez.", verifier: ({ faits }) => (A(faits).agitee && A(faits).degaze) || false, aide_geste: "Pendant le dégazage, l'ampoule est retournée, robinet vers le haut, loin du visage." },
       { consigne: "Laissez l'ampoule sur l'anneau jusqu'à ce que les deux phases soient bien séparées.", court: "Laissez décanter.", verifier: ({ faits }) => (A(faits).decante && A(faits).I2_org > 0.8) || false },
       { consigne: "Après agitation, le diiode se trouve…", court: "Répondez dans le carnet.", question: choix(["dans la phase supérieure (cyclohexane), devenue violette ; la phase aqueuse s'est presque décolorée", "toujours dans l'eau", "il a disparu"], "Observez la couleur de chaque phase.", "Exact.") },
       { consigne: "Ôtez le bouchon (touchez le haut de l'ampoule), ouvrez le robinet et recueillez la phase aqueuse ; fermez le robinet juste avant la phase violette.", court: "Recueillez la phase aqueuse.", verifier: vidange, aide_geste: "Sans ôter le bouchon, le liquide ne coule pas." },
