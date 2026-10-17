@@ -2845,7 +2845,7 @@ Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de 
 /*
 Rôle : gestes de la main sur un récipient : le prendre et le déplacer (ses accélérations font ballotter le liquide ;
        secoué trop fort, il déborde), le poser sur la paillasse, ou le tenir au-dessus d'un autre récipient pour verser :
-       une poignée apparaît, on l'incline soi-même (le débit dépend de l'inclinaison) ; un toucher le redresse et le repose.
+       une poignée apparaît, on l'incline soi-même (le débit dépend de l'inclinaison) ; un toucher le redresse et le remet à sa place.
 Reçoit : le contexte de la paillasse (ctx.obstacles : bandes [x1, x2] de la paillasse déjà occupées, comme un socle), le récipient (recipient_physique.js) et { sol (y de pose, px), fixe (non déplaçable),
          support : { x, y } ou supports : [{ x, y, ... }] (places sur un support : anneau, porte-tubes, bain-marie ; lâché près
          d'une place libre, il s'y met, et r.place la désigne), pose_libre (faux pour un tube : il ne tient pas debout sur la
@@ -2905,22 +2905,25 @@ Utilisé par : les simulations de chimie.
     return { placer, retirer: () => g.remove() };
   }
 
-  function place_libre(ctx, r, sol) {
-    // Abscisse libre la plus proche sur la paillasse : deux objets ne peuvent pas occuper la même place.
+  function place_libre(ctx, r, sol, depart, marge = 0) {
+    // Abscisse libre la plus proche de depart sur la paillasse (deux objets ne peuvent pas occuper la même place) ; null s'il n'y en a pas.
     const R = (q) => (Math.max(q.pr.r(q.pr.h0), q.pr.r(q.pr.H)) + q.pr.t) * q.pose.e + 3;
-    const occupe = (x) => ctx.ecoulement.recipients.some((q) => q !== r && Math.abs(q.pose.y - sol) < 2 && !q.tenu && Math.abs(q.pose.x - x) < R(q) + R(r)) || (ctx.obstacles || []).some(([a, b]) => x + R(r) > a && x - R(r) < b);
-    for (let d = 0; d < 600; d += 4) for (const x of [r.pose.x + d, r.pose.x - d]) if (x > 200 && x < 830 && !occupe(x)) return x;
-    return r.pose.x;
+    const occupe = (x) => ctx.ecoulement.recipients.some((q) => q !== r && Math.abs(q.pose.y - sol) < 2 && !q.tenu && Math.abs(q.pose.x - x) < R(q) + R(r) - marge) || (ctx.obstacles || []).some(([a, b]) => x + R(r) > a && x - R(r) < b);
+    for (let d = 0; d < 700; d += 4) for (const x of [depart + d, depart - d]) if (x > 200 && x < 830 && !occupe(x)) return x;
+    return null;
   }
 
   L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true, autoriser = () => true }) {
     const places = supports || (support ? [support] : []);
     // Rend le récipient déplaçable (s'il n'est pas fixe) ; gère la pose et le versement.
     let pg = null;
-    const reposer = () => {
-      // Redresse le récipient et le pose sur la paillasse, à l'aplomb de l'endroit où on le lâche.
+    const origine = r.pose.x;
+    const reposer = (a_sa_place = false) => {
+      // Redresse le récipient et le pose : à sa place de départ (si elle est libre) quand on le rend, sinon à la place libre
+      // la plus proche de l'endroit où on le lâche ; jamais caché derrière un appareil.
       pg?.retirer(); pg = null; r.versement = false; r.tenu = false;
-      r.pose.angle = 0; r.pose.y = sol; r.pose.x = place_libre(ctx, r, sol); r.acc = { x: 0, y: 0 }; r.vitesse = { x: 0, y: 0 }; r.mvt = null; r.w += 0.8;
+      const x = a_sa_place ? place_libre(ctx, r, sol, origine, 12) : place_libre(ctx, r, sol, r.pose.x);
+      r.pose.angle = 0; r.pose.y = sol; r.pose.x = x ?? place_libre(ctx, r, sol, origine, 12) ?? origine; r.acc = { x: 0, y: 0 }; r.vitesse = { x: 0, y: 0 }; r.mvt = null; r.w += 0.8;
       ctx.objets.append(r.g);
     };
     const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
@@ -2943,7 +2946,7 @@ Utilisé par : les simulations de chimie.
         const c = cible_de_versement(ctx, r);
         if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else if (sup && !pose_libre) sur_support(sup); else reposer();
       },
-      toucher: () => { if (!r.versement) return; if (!pose_libre && place_proche()) sur_support(); else reposer(); },
+      toucher: () => { if (!r.versement) return; if (!pose_libre && place_proche()) sur_support(); else reposer(true); },
     });
   };
 })(window.Labo);

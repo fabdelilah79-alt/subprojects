@@ -496,3 +496,13 @@ Problèmes restants, à faire par l'enseignant :
 - Cycle du cuivre : quantités en « unités de cuivre », réactions accélérées (quelques secondes) ; l'attaque nitrique se
   fait sous la hotte, à valider selon les consignes de sécurité de l'établissement.
 - Têt à combustion : il faut garder le doigt appuyé pour le tenir dans la flamme (environ 5 s).
+
+## 2026-10-17 — Correction : bécher qui disparaît après un versement (paillasses à chauffe-ballon)
+
+Fait :
+- Problème signalé : sur les paillasses de synthèse (savon, arôme), un bécher que l'on touche après avoir versé dans
+  l'entonnoir disparaissait. Cause : aucune place libre n'était trouvée près de l'endroit où il était tenu, et il était
+  reposé à l'aplomb du ballon, caché derrière le chauffe-ballon.
+- recipient_gestes.js : un toucher après un versement remet le récipient à sa place de départ (ou à la place libre la
+  plus proche de celle-ci) ; s'il n'y a aucune place libre, il revient à sa place de départ, jamais derrière un appareil.
+- Les 8 simulations de chimie qui utilisent ce fichier ont été reconstruites et leurs parcours complets relancés.
