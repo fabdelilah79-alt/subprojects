@@ -2,7 +2,8 @@
 Rôle : pipette graduée de 10 mL (graduations tous les 0,1 mL, lues de 0 en haut à 10 en bas) surmontée d'un pipeteur à
        molette. On la pose, pointe dans un récipient ; la molette tournée vers le haut aspire le liquide (si la pointe est
        sous la surface ; sinon de l'air), tournée vers le bas elle le fait couler : le volume délivré est la différence de
-       deux lectures. Le liquide qui sort tombe dans le récipient où est la pointe. Rangée sur son support quand on la
+       deux lectures. Le liquide qui sort tombe dans le récipient où est la pointe (lâchée juste au-dessus d'un col étroit,
+       la pointe y entre). Rangée sur son support quand on la
        lâche ailleurs (elle garde son liquide).
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement), { support { x, y } (place de la pointe au repos), e (px/mm), dire }.
 Produit : Labo.pipette_graduee(ctx, reglage) -> p { c (contenu), V (mL dans la pipette), lecture(), dans (récipient où est la pointe) }.
@@ -47,9 +48,16 @@ Utilisé par : les simulations de chimie (prélever un volume, préparer et dilu
     p.lecture = () => Math.round((10 - (p.V - V10)) * 100) / 100;
     const surface = (r) => r.pose.y - r.pr.hauteur_de(r.c.volume()) * r.pose.e;
     const recipient = (q) => ctx.ecoulement.recipients.find((r) => L.dans_polygone(r.interieur_monde(), q));
+    const col = (q) => ctx.ecoulement.recipients.find((r) => { const b = r.monde({ x: 0, y: -r.pr.H }); return !r.bouchon && Math.abs(q.x - b.x) < r.pr.r(r.pr.H) * r.pose.e + 10 && q.y > b.y - 12 && q.y < r.pose.y; });
     L.glissable(prise, {
       soulever: false, debut: () => ({ ...p.pos }), saisir: () => { p.dans = null; dire(""); ctx.haut.append(g); }, deplacer: (q) => { p.pos = q; maj(); },
-      lacher: (q) => { const r = recipient(q); ctx.objets.append(g); if (r) { p.dans = r; p.pos = { x: q.x, y: Math.min(q.y, r.pose.y - 4) }; } else { p.dans = null; p.pos = { ...support }; } maj(); },
+      lacher: (q) => {
+        // Dans un récipient (ou juste au-dessus d'un col étroit : la pointe y entre, au milieu) ; ailleurs, retour au support.
+        const r = recipient(q), c = !r && col(q), b = c && c.monde({ x: 0, y: -c.pr.H });
+        ctx.objets.append(g);
+        if (r) { p.dans = r; p.pos = { x: q.x, y: Math.min(q.y, r.pose.y - 4) }; } else if (c) { p.dans = c; p.pos = { x: b.x, y: Math.max(q.y, b.y + 8) }; } else { p.dans = null; p.pos = { ...support }; }
+        maj();
+      },
     });
     let y0 = null;
     L.glissable(molette, {

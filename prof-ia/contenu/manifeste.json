@@ -1727,6 +1727,77 @@
         "Le soufre forme 6 liaisons parce qu'il a 6 électrons externes.",
         "Le chlorure de magnésium a pour formule MgCl."
       ]
+    },
+    {
+      "id": "tc_chim7_a1_mole",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim7_a1_mole.html",
+      "description": "Masses molaires moléculaires calculées au tableur (C₁₂H₂₂O₁₁, NaCl, S, Fe), puis pesée de 0,010 mol de chaque solide sur une balance au centième (coupelle, tare, spatule) : même quantité de matière, masses différentes ; volume d'éthanol contenant 0,10 mol (V = n·M/ρ) prélevé à la pipette graduée et vérifié à la balance ; volume molaire des gaz (n = V/Vm, Vm dépend de T et P).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim7_quantite_matiere",
+      "activite": "Comment mesurer une même quantité (mole) d'espèces différentes ?",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Peser une même quantité de matière",
+          "ce_que_fait_l_eleve": "Calcule des masses molaires et pèse 0,010 mol de quatre solides.",
+          "conclusion": "Une mole est la quantité de matière d'un système qui contient N_A = 6,02 × 10²³ entités. La masse molaire M d'une espèce (g/mol) est la masse d'une mole ; celle d'une molécule est la somme des masses molaires de ses atomes. La masse à peser est m = n × M : la même quantité de matière correspond à des masses différentes."
+        },
+        {
+          "titre": "Prélever une quantité de matière de liquide ; les gaz",
+          "ce_que_fait_l_eleve": "Prélève 0,10 mol d'éthanol à la pipette graduée, vérifie sa masse et utilise le volume molaire.",
+          "conclusion": "Pour un liquide, on prélève un volume : V = m / ρ = n × M / ρ (0,10 mol d'éthanol : 5,8 mL). Pour un gaz, la quantité de matière se calcule avec le volume molaire : n = V / Vm (Vm ≈ 24 L/mol à 20 °C sous 1 013 hPa) ; Vm dépend de la température et de la pression."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Une mole de deux espèces différentes a la même masse.",
+        "La masse molaire d'une molécule est celle de son atome le plus lourd.",
+        "Le volume molaire des gaz vaut toujours 22,4 L/mol."
+      ]
+    },
+    {
+      "id": "tc_chim7_a2_solutions",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim7_a2_solutions.html",
+      "description": "Dissolution du saccharose (lente sans agitation, rapide avec l'agitateur), du diiode dans l'eau (très peu soluble) et dans l'éthanol (très soluble), mélange éthanol-eau (miscibles) ; solutions moléculaires et ioniques. Préparation de 100,0 mL de solution de glucose à 0,100 mol/L : pesée de 1,80 g, transfert par l'entonnoir, rinçage à la pissette, dissolution, ajustement au trait de jauge (loupe sur le ménisque), bouchage et homogénéisation. Dilution dix fois d'une eau iodée : 5,0 mL prélevés à la pipette graduée dans une fiole de 50,0 mL ; C₀V₀ = C₁V₁, facteur de dilution.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim7_quantite_matiere",
+      "activite": "Dissolution d'espèces moléculaires (sucre, diiode, alcool).",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Dissoudre des espèces moléculaires",
+          "ce_que_fait_l_eleve": "Dissout le saccharose et le diiode dans l'eau et dans l'éthanol, et mélange l'éthanol et l'eau.",
+          "conclusion": "Une solution est obtenue en dissolvant une espèce chimique, le soluté, dans un solvant ; si le solvant est l'eau, c'est une solution aqueuse. Agiter accélère la dissolution. La solubilité dépend du solvant : le diiode est très peu soluble dans l'eau, très soluble dans l'éthanol. L'éthanol et l'eau sont miscibles. Un soluté formé de molécules (saccharose, diiode) donne une solution moléculaire ; un solide ionique comme NaCl donne une solution ionique."
+        },
+        {
+          "titre": "Préparer une solution par dissolution",
+          "ce_que_fait_l_eleve": "Prépare 100,0 mL de solution de glucose à 0,100 mol/L en fiole jaugée.",
+          "conclusion": "La concentration molaire d'une espèce dissoute est C = n / V (mol/L). Pour préparer par dissolution un volume V de solution de concentration C : m = C × V × M ; on pèse m, on l'introduit dans une fiole jaugée (en rinçant la coupelle et l'entonnoir), on dissout dans de l'eau distillée (fiole aux deux tiers), on complète jusqu'au trait de jauge, puis on bouche et on homogénéise."
+        },
+        {
+          "titre": "Diluer une solution",
+          "ce_que_fait_l_eleve": "Dilue dix fois une eau iodée à la pipette graduée et en fiole jaugée.",
+          "conclusion": "Diluer, c'est ajouter du solvant : la quantité de soluté ne change pas, donc C₀ × V₀ = C₁ × V₁. Le facteur de dilution est F = C₀ / C₁ = V₁ / V₀. On prélève V₀ de solution mère à la pipette, on l'introduit dans une fiole jaugée de volume V₁, on complète au trait avec de l'eau distillée et on homogénéise."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Un solide qui disparaît dans l'eau a disparu (la matière n'est plus là).",
+        "On peut verser l'eau jusqu'à 100 mL puis ajouter le soluté.",
+        "Diluer une solution diminue la quantité de soluté."
+      ]
     }
   ]
 }

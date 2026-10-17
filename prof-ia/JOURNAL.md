@@ -545,3 +545,24 @@ Problèmes restants, à faire par l'enseignant :
 - La réaction des alcalins avec l'eau est normalement faite par le professeur : la simulation la montre derrière un
   écran de protection, lunettes exigées.
 - Les masses des cartes de Mendeleïev sont arrondies (valeurs connues en 1869).
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « La mole et la concentration »
+
+Fait :
+- Deux simulations, inscrites au manifeste (60 ressources) : A1 masses molaires au tableur, pesée de 0,010 mol de quatre
+  solides, 0,10 mol d'éthanol prélevé à la pipette graduée et vérifié à la balance, volume molaire des gaz ; A2
+  dissolution du saccharose (avec et sans agitation), du diiode dans l'eau et dans l'éthanol, mélange éthanol-eau,
+  solutions moléculaires et ioniques ; préparation de 100,0 mL de glucose à 0,100 mol/L en fiole jaugée ; dilution dix
+  fois d'une eau iodée. Objectifs O1 à O5.
+- Matériel commun : pesée de poudre, pipette graduée à molette, versement et rinçage d'une coupelle, dissolution,
+  agitateur, pissette, fioles jaugées de 100 et 50 mL (entonnoir, bouchon, loupe sur le trait, homogénéisation) ;
+  ménisque dessiné dans les cols étroits.
+- Corrigé après essais : entonnoir qui ne recevait pas la poudre ; cristaux trop petits pour être vus (ils forment
+  maintenant un petit tas) ; trait de jauge invisible dans la loupe ; volume de la fiole noté trop tard.
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La vitesse de dissolution est accélérée par rapport à la réalité (pour que l'élève n'attende pas des minutes).
+- Le volume ne change pas quand un solide se dissout (on néglige la contraction).
+- Les fioles se secouent d'un mouvement de va-et-vient : on ne peut pas les retourner.
+

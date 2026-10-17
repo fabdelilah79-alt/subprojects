@@ -1,6 +1,6 @@
 /*
 Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
-       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
+       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, trait de jauge d'une fiole jaugée, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
        étiquette collée (et ses pictogrammes de danger).
 Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
 Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
@@ -46,6 +46,13 @@ Utilisé par : verrerie_rendu.js.
     if (x.robinet) robinet(g, pr, etat.robinet && etat.robinet.ouvert);
     if (x.tubulure) L.svg("path", { d: `M${pr.r(x.tubulure) + pr.t - 0.5} ${-x.tubulure - 3.5} H${pr.r(x.tubulure) + 24} V${-x.tubulure + 3.5} H${pr.r(x.tubulure) + pr.t - 0.5}`, fill: "rgba(205,228,236,0.6)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.5 }, g);
     if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    if (x.jauge) {
+      // Trait de jauge : anneau gravé sur le col (moitié arrière vue à travers le verre), à la hauteur du volume exact ; volume et précision écrits sur le corps.
+      const h = pr.hauteur_de(x.jauge), r = pr.r(h) + pr.t;
+      L.svg("path", { d: `M${-r} ${-h} A${r} 1.1 0 0 1 ${r} ${-h}`, fill: "none", stroke: "#1f2a44", "stroke-width": 0.35, opacity: 0.4 }, g);
+      L.svg("path", { d: `M${-r} ${-h} A${r} 1.1 0 0 0 ${r} ${-h}`, fill: "none", stroke: "#1f2a44", "stroke-width": 0.45 }, g);
+      L.svg("text", { x: 0, y: -pr.r(0) * 0.5, "font-size": 3.6, "text-anchor": "middle", fill: "#ffffff", "font-family": "sans-serif", "font-weight": 700 }, g).textContent = `${x.jauge} mL ± ${x.jauge >= 100 ? "0,1" : "0,06"}`;
+    }
     if (etat.bouchon) bouchon(g, pr);
     if (etat.etiquette) etiquette(g, pr, etat.etiquette);
     (etat.pictos || []).forEach((c, i, t) => L.pictogramme?.(g, (i - (t.length - 1) / 2) * 11, -pr.H * (pr.extras.etiquette_h || 0.42) - 11, 5, c));

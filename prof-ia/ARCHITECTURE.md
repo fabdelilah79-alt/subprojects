@@ -363,6 +363,16 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/lewis_verif.js | Vérifications des missions sur les molécules : ions, molécule de Lewis, isomères. |
 | contenu/ressources/laboratoires/sources/tc_chim6_a1_familles/ | Méthode de Mendeleïev (cartes, documents), alcalins dans l'eau, halogénures et ions argent. |
 | contenu/ressources/laboratoires/sources/tc_chim6_a2_tableau/ | Tableau périodique à remplir, liaisons et ions selon la colonne, formules de Lewis. |
+| contenu/ressources/laboratoires/commun/pesee_poudre.js | Pesée d'une poudre : pots et spatules, coupelles de pesée, poudre qui coule de la spatule sur la balance. |
+| contenu/ressources/laboratoires/commun/coupelle_versement.js | Verser la poudre d'une coupelle dans un récipient ou un entonnoir ; rinçage de la coupelle à la pissette. |
+| contenu/ressources/laboratoires/commun/pipette_graduee.js | Pipette graduée de 10 mL et pipeteur à molette : aspirer, lire, délivrer un volume. |
+| contenu/ressources/laboratoires/commun/dissolution.js | Dissolution des solides moléculaires (saccharose, glucose, diiode) : vitesse, agitation, solubilité selon le solvant, cristaux. |
+| contenu/ressources/laboratoires/commun/agitateur.js | Agitateur en verre : remuer un liquide (agitation, ballottement). |
+| contenu/ressources/laboratoires/commun/pissette.js | Pissette d'eau distillée : tenue, bec vers le bas, jet tant qu'on appuie. |
+| contenu/ressources/laboratoires/commun/fiole_accessoires.js | Entonnoir à solide et bouchon d'une fiole jaugée. |
+| contenu/ressources/laboratoires/commun/fiole_jaugee.js | Fiole jaugée avec accessoires, loupe sur le trait de jauge, suivi de l'homogénéisation. |
+| contenu/ressources/laboratoires/sources/tc_chim7_a1_mole/ | Masses molaires au tableur, pesée de 0,010 mol de solides, éthanol à la pipette graduée, volume molaire. |
+| contenu/ressources/laboratoires/sources/tc_chim7_a2_solutions/ | Dissolution (saccharose, diiode, éthanol), solution de glucose en fiole jaugée, dilution d'une eau iodée. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

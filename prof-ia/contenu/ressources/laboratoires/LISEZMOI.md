@@ -233,6 +233,25 @@ Matériel commun ajouté : `tableau_cartes.js` (tableau magnétique quadrillé e
 `tableau_lewis.js` : liste d'éléments au choix) ; `lewis_verif.js` (vérifications des molécules) a été déplacé de
 tc_chim5_a1_lewis vers commun.
 
+## Chapitre tronc commun « La mole et la concentration » (fiche tronc_commun/chim7_quantite_matiere)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim7_a1_mole.html | A1 : comment mesurer une même quantité (mole) d'espèces différentes ? | O1, O2, O3 | Masses molaires de C₁₂H₂₂O₁₁, NaCl, S, Fe au tableur ; pesée de 0,010 mol de chaque solide (coupelle, tare, spatule) ; volume de 0,10 mol d'éthanol prélevé à la pipette graduée et vérifié à la balance ; volume molaire des gaz. |
+| tc_chim7_a2_solutions.html | A2 : dissolution d'espèces moléculaires (sucre, diiode, alcool) | O3, O4, O5 | Saccharose dans l'eau, avec et sans agitateur ; diiode dans l'eau (très peu soluble) et dans l'éthanol ; éthanol et eau miscibles ; solutions moléculaires et ioniques ; 100,0 mL de glucose à 0,100 mol/L en fiole jaugée (pesée, entonnoir, rinçage, dissolution, trait de jauge, homogénéisation) ; dilution dix fois d'une eau iodée. |
+
+Les solides dissous suivent la loi de Noyes-Whitney : la vitesse dépend de la surface des cristaux, de l'agitation et de
+l'écart entre la solubilité et la concentration ; une solution saturée ne dissout plus. Le trait de jauge se lit sur une
+loupe (×4) : le bas du ménisque doit être sur le trait (± 0,2 mL pour la fiole de 100 mL, ± 0,12 mL pour celle de 50 mL).
+Après le dernier ajout d'eau, il faut boucher la fiole et la secouer pour que la solution soit homogène. Si le trait est
+dépassé, le bouton « Nouvelle fiole » vide la fiole : il faut tout recommencer, comme au laboratoire.
+
+Matériel commun ajouté : `pesee_poudre.js`, `pipette_graduee.js` (A1), `coupelle_versement.js`, `dissolution.js`,
+`agitateur.js`, `pissette.js`, `fiole_accessoires.js`, `fiole_jaugee.js` (A2), profils `fiole_jaugee_100` et
+`fiole_jaugee_50` (`verrerie_profils.js`) et leur trait de jauge (`verrerie_accessoires.js`). Le ménisque est dessiné
+dans les cols étroits (`verrerie_rendu.js`) ; la pointe de la pipette graduée entre dans un col étroit lâchée juste
+au-dessus (`pipette_graduee.js`).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

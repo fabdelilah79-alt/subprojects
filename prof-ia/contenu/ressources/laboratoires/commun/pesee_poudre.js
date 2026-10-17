@@ -3,8 +3,9 @@ Rôle : pesée d'un solide en poudre : pots de produits (chacun avec sa spatule 
        plastique posées sur un plateau. On pose une coupelle sur la balance, on tare, puis on tient la spatule chargée
        au-dessus de la coupelle : la poudre y tombe peu à peu (environ 0,1 g par seconde) tant qu'on la tient là ; on
        retourne au pot pour recharger la spatule. Une coupelle ne reçoit qu'un seul produit ; touchée hors de la balance,
-       elle est vidée.
-Reçoit : le contexte de la paillasse, la balance (balance_electronique.js) et { pots [{ id, nom, x, rgb }], coupelles [x], sol, sol_pots
+       elle est vidée. Si le pot donne le nom du solide, la coupelle lâchée au-dessus d'une ouverture y verse sa poudre
+       (coupelle_versement.js) ; touchée, elle revient sur le plateau.
+Reçoit : le contexte de la paillasse, la balance (balance_electronique.js) et { pots [{ id, nom, x, rgb, solide }], coupelles [x], sol, sol_pots
          (pots au fond de la paillasse, facultatif), e, dire }.
 Produit : Labo.pesee_poudre(ctx, balance, reglage) -> { coupelles [{ produit, poudre (g), sur_balance }] }.
 Utilisé par : les simulations de chimie (quantité de matière, préparation de solutions).
@@ -30,24 +31,25 @@ Utilisé par : les simulations de chimie (quantité de matière, préparation de
 
   L.pesee_poudre = function (ctx, balance, { pots, coupelles: xs, sol, sol_pots = sol, e = 1.6, dire = () => {} }) {
     // Pots et spatules ; coupelles déplaçables (plateau ou balance) ; la poudre coule à chaque pas si la spatule est au-dessus.
-    const couleurs = Object.fromEntries(pots.map((p) => [p.id, p.rgb]));
+    const couleurs = Object.fromEntries(pots.map((p) => [p.id, p.rgb])), solides = Object.fromEntries(pots.map((p) => [p.id, p.solide]));
     const C = xs.map((x) => ({ produit: null, poudre: 0, sur_balance: false, repos: { x, y: sol - 6 }, pos: { x, y: sol - 6 }, masse: TARE }));
     L.svg("rect", { x: Math.min(...xs) - 34, y: sol - 6, width: Math.max(...xs) - Math.min(...xs) + 68, height: 6, rx: 2, fill: "#d9dcde", stroke: "#a9b0b4" }, ctx.fond);
     const pan = { x: balance.plateau.x, y: balance.plateau.y - 1 };
     C.forEach((c) => {
       c.g = L.svg("g", { class: "coupelle", role: "button", "aria-label": "Coupelle de pesée" }, ctx.objets);
-      const dessiner = () => { coupelle(c.g, c, couleurs[c.produit] || [255, 255, 255]); L.placer(c.g, c.pos.x, c.pos.y); };
+      const dessiner = () => { coupelle(c.g, c, couleurs[c.produit] || [255, 255, 255]); if (L.coupelle_placer) L.coupelle_placer(c); else L.placer(c.g, c.pos.x, c.pos.y); };
       c.dessiner = dessiner;
       L.glissable(c.g, {
-        debut: () => ({ ...c.pos }), saisir: () => { if (c.sur_balance) { balance.retirer(c); c.sur_balance = false; } ctx.haut.append(c.g); },
+        debut: () => ({ ...c.pos }), saisir: () => { c.versant = null; if (c.sur_balance) { balance.retirer(c); c.sur_balance = false; } ctx.haut.append(c.g); },
         deplacer: (p) => { c.pos = p; dessiner(); },
         lacher: (p) => {
           ctx.objets.append(c.g);
+          if (solides[c.produit] && L.coupelle_verser?.(ctx, c, p, solides[c.produit])) return ctx.signaler?.();
           const libre = !C.some((o) => o !== c && o.sur_balance);
           if (libre && Math.abs(p.x - pan.x) < balance.plateau.r && Math.abs(p.y - pan.y) < 50) { c.pos = { ...pan }; c.sur_balance = true; balance.ajouter(c); } else c.pos = { ...c.repos };
           dessiner(); ctx.signaler?.();
         },
-        toucher: () => { if (!c.sur_balance && c.poudre > 0) { c.poudre = 0; c.produit = null; c.masse = TARE; dire("Coupelle vidée dans le récipient à déchets."); dessiner(); ctx.signaler?.(); } },
+        toucher: () => { if (c.versant) { c.versant = null; c.pos = { ...c.repos }; dessiner(); return ctx.signaler?.(); } if (!c.sur_balance && c.poudre > 0) { c.poudre = 0; c.produit = null; c.masse = TARE; dire("Coupelle vidée dans le récipient à déchets."); dessiner(); ctx.signaler?.(); } },
       });
       dessiner();
     });

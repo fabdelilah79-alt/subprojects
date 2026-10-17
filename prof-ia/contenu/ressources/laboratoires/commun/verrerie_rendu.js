@@ -1,7 +1,7 @@
 /*
 Rôle : dessin réaliste d'une pièce de verrerie (profil de verrerie_profils.js) dans sa position : ombre portée, verre
        épais et transparent (bords plus sombres, reflets verticaux), bord supérieur ovale, fond en perspective, liquide en
-       phases avec sa surface (ovale clair si le récipient est droit, ménisque), graduations émaillées blanches, bec,
+       phases avec sa surface (ovale clair si le récipient est droit, ménisque sombre dans un col étroit), graduations émaillées blanches, bec,
        pied d'éprouvette, bourrelet de tube, robinet et col rodé d'ampoule, bouchon.
 Reçoit : le groupe SVG, le profil, la pose { x, y (milieu du fond, px), angle (degrés), e (px par mm) } et l'état
          { regions : [{ poly (repère du récipient), rgb, alpha }], surface : [p1, p2] ou null, bouchon, robinet, etiquette }.
@@ -57,6 +57,9 @@ Utilisé par : recipient_physique.js.
     const haut = etat.regions[0];
     if (etat.droit) L.svg("ellipse", { cx: mx, cy: my, rx: l, ry: l * 0.12, transform: `rotate(${a} ${mx} ${my})`, fill: L.rgb(haut.rgb.map((v) => Math.min(255, v + 25))), opacity: Math.min(0.9, haut.alpha + 0.15) }, g);
     L.svg("path", { d: `M${s[0].x} ${s[0].y} L${s[1].x} ${s[1].y}`, stroke: "rgba(255,255,255,0.7)", "stroke-width": 0.4 }, g);
+    // Dans un col étroit, le ménisque (surface creusée, qui remonte le long du verre) se voit comme une ligne sombre ;
+    // son point le plus bas est au niveau calculé (c'est lui que l'on amène sur un trait de jauge).
+    if (etat.droit && l < 9) L.svg("path", { d: `M${s[0].x} ${s[0].y - 0.25 * l} Q${mx} ${my + 0.25 * l} ${s[1].x} ${s[1].y - 0.25 * l}`, fill: "none", stroke: "#24435e", "stroke-width": 0.35, opacity: 0.85 }, g);
   }
 
   L.dessiner_verrerie = function (g, pr, pose, etat) {

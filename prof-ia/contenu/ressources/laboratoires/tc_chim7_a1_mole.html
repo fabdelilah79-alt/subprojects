@@ -2301,7 +2301,7 @@ Rôle : verrerie aux vraies dimensions (en mm) : profil intérieur (demi-largeur
        épaisseur du verre, bec, graduations. Pour chaque pièce : polygones intérieur et extérieur (repère du récipient :
        origine au milieu du fond, x vers la droite, y vers le bas, en mm), lèvres de l'ouverture, et tables qui relient le
        volume (mL) à l'aire de liquide vue en coupe (mm²) : un récipient droit est rempli exactement à la bonne hauteur.
-Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), flacon_gaz (flacon de 600 mL fermé par une plaque de verre), cristallisoir_90 (90 mm × 45 mm), buchner_70 (cuvette d'un entonnoir Büchner)).
+Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), flacon_gaz (flacon de 600 mL fermé par une plaque de verre), cristallisoir_90 (90 mm × 45 mm), fiole_jaugee_100, fiole_jaugee_50 (trait de jauge au volume exact), buchner_70 (cuvette d'un entonnoir Büchner)).
 Produit : Labo.profil(nom) -> { nom, H, h0 (fond intérieur : 0, sauf l'ampoule dont la tige est sous le robinet), t, interieur, exterieur, levres, aire_de(V), volume_de(A), hauteur_de(V), r(h), graduations, extras }.
 Utilisé par : verrerie_rendu.js, recipient_physique.js.
 */
@@ -2321,6 +2321,8 @@ Utilisé par : verrerie_rendu.js, recipient_physique.js.
     ampoule_125: { profil: [[54, 1.6], [62, 1.6], ...poire(64, 186, 3, 32, 11), [204, 10.5]], t: 1.5, robinet: 52, tige: true, rode: true },
     ballon_250: { profil: [...sphere(39.5, 0, 74), [80, 12.5], [118, 12.5]], t: 1.5, rode: true },
     fiole_500: { profil: [[0, 49], [3, 51], [110, 16], [140, 13], [180, 13]], t: 2.4, tubulure: 155, grad: [100, 200, 300, 400] },
+    fiole_jaugee_100: { profil: [[0, 23.6], [2, 26.3], [6, 27.1], [20, 27.1], [32, 24.5], [42, 19.3], [50, 11.4], [56, 8], [60, 6], [170, 6]], t: 1.3, jauge: 100 },
+    fiole_jaugee_50: { profil: [[0, 18.4], [2, 20.1], [6, 21], [16, 21], [26, 18.8], [34, 14.9], [40, 8.75], [45, 6], [48, 5], [140, 5]], t: 1.2, jauge: 50 },
     cristallisoir_90: { profil: [[0, 42], [1, 44], [3, 45], [45, 45]], t: 2 },
     flacon_gaz: { profil: [[0, 32], [2, 35], [160, 35]], t: 2.2, bourrelet: true, plaque: true },
     buchner_70: { profil: [[0, 33], [4, 35], [40, 35]], t: 3, sans_ombre: true },
@@ -2361,7 +2363,7 @@ Utilisé par : verrerie_rendu.js, recipient_physique.js.
 /*
 Rôle : dessin réaliste d'une pièce de verrerie (profil de verrerie_profils.js) dans sa position : ombre portée, verre
        épais et transparent (bords plus sombres, reflets verticaux), bord supérieur ovale, fond en perspective, liquide en
-       phases avec sa surface (ovale clair si le récipient est droit, ménisque), graduations émaillées blanches, bec,
+       phases avec sa surface (ovale clair si le récipient est droit, ménisque sombre dans un col étroit), graduations émaillées blanches, bec,
        pied d'éprouvette, bourrelet de tube, robinet et col rodé d'ampoule, bouchon.
 Reçoit : le groupe SVG, le profil, la pose { x, y (milieu du fond, px), angle (degrés), e (px par mm) } et l'état
          { regions : [{ poly (repère du récipient), rgb, alpha }], surface : [p1, p2] ou null, bouchon, robinet, etiquette }.
@@ -2417,6 +2419,9 @@ Utilisé par : recipient_physique.js.
     const haut = etat.regions[0];
     if (etat.droit) L.svg("ellipse", { cx: mx, cy: my, rx: l, ry: l * 0.12, transform: `rotate(${a} ${mx} ${my})`, fill: L.rgb(haut.rgb.map((v) => Math.min(255, v + 25))), opacity: Math.min(0.9, haut.alpha + 0.15) }, g);
     L.svg("path", { d: `M${s[0].x} ${s[0].y} L${s[1].x} ${s[1].y}`, stroke: "rgba(255,255,255,0.7)", "stroke-width": 0.4 }, g);
+    // Dans un col étroit, le ménisque (surface creusée, qui remonte le long du verre) se voit comme une ligne sombre ;
+    // son point le plus bas est au niveau calculé (c'est lui que l'on amène sur un trait de jauge).
+    if (etat.droit && l < 9) L.svg("path", { d: `M${s[0].x} ${s[0].y - 0.25 * l} Q${mx} ${my + 0.25 * l} ${s[1].x} ${s[1].y - 0.25 * l}`, fill: "none", stroke: "#24435e", "stroke-width": 0.35, opacity: 0.85 }, g);
   }
 
   L.dessiner_verrerie = function (g, pr, pose, etat) {
@@ -2437,7 +2442,7 @@ Utilisé par : recipient_physique.js.
   <script>
 /*
 Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
-       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
+       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, trait de jauge d'une fiole jaugée, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
        étiquette collée (et ses pictogrammes de danger).
 Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
 Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
@@ -2483,6 +2488,13 @@ Utilisé par : verrerie_rendu.js.
     if (x.robinet) robinet(g, pr, etat.robinet && etat.robinet.ouvert);
     if (x.tubulure) L.svg("path", { d: `M${pr.r(x.tubulure) + pr.t - 0.5} ${-x.tubulure - 3.5} H${pr.r(x.tubulure) + 24} V${-x.tubulure + 3.5} H${pr.r(x.tubulure) + pr.t - 0.5}`, fill: "rgba(205,228,236,0.6)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.5 }, g);
     if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    if (x.jauge) {
+      // Trait de jauge : anneau gravé sur le col (moitié arrière vue à travers le verre), à la hauteur du volume exact ; volume et précision écrits sur le corps.
+      const h = pr.hauteur_de(x.jauge), r = pr.r(h) + pr.t;
+      L.svg("path", { d: `M${-r} ${-h} A${r} 1.1 0 0 1 ${r} ${-h}`, fill: "none", stroke: "#1f2a44", "stroke-width": 0.35, opacity: 0.4 }, g);
+      L.svg("path", { d: `M${-r} ${-h} A${r} 1.1 0 0 0 ${r} ${-h}`, fill: "none", stroke: "#1f2a44", "stroke-width": 0.45 }, g);
+      L.svg("text", { x: 0, y: -pr.r(0) * 0.5, "font-size": 3.6, "text-anchor": "middle", fill: "#ffffff", "font-family": "sans-serif", "font-weight": 700 }, g).textContent = `${x.jauge} mL ± ${x.jauge >= 100 ? "0,1" : "0,06"}`;
+    }
     if (etat.bouchon) bouchon(g, pr);
     if (etat.etiquette) etiquette(g, pr, etat.etiquette);
     (etat.pictos || []).forEach((c, i, t) => L.pictogramme?.(g, (i - (t.length - 1) / 2) * 11, -pr.H * (pr.extras.etiquette_h || 0.42) - 11, 5, c));
@@ -3140,8 +3152,9 @@ Rôle : pesée d'un solide en poudre : pots de produits (chacun avec sa spatule 
        plastique posées sur un plateau. On pose une coupelle sur la balance, on tare, puis on tient la spatule chargée
        au-dessus de la coupelle : la poudre y tombe peu à peu (environ 0,1 g par seconde) tant qu'on la tient là ; on
        retourne au pot pour recharger la spatule. Une coupelle ne reçoit qu'un seul produit ; touchée hors de la balance,
-       elle est vidée.
-Reçoit : le contexte de la paillasse, la balance (balance_electronique.js) et { pots [{ id, nom, x, rgb }], coupelles [x], sol, sol_pots
+       elle est vidée. Si le pot donne le nom du solide, la coupelle lâchée au-dessus d'une ouverture y verse sa poudre
+       (coupelle_versement.js) ; touchée, elle revient sur le plateau.
+Reçoit : le contexte de la paillasse, la balance (balance_electronique.js) et { pots [{ id, nom, x, rgb, solide }], coupelles [x], sol, sol_pots
          (pots au fond de la paillasse, facultatif), e, dire }.
 Produit : Labo.pesee_poudre(ctx, balance, reglage) -> { coupelles [{ produit, poudre (g), sur_balance }] }.
 Utilisé par : les simulations de chimie (quantité de matière, préparation de solutions).
@@ -3167,24 +3180,25 @@ Utilisé par : les simulations de chimie (quantité de matière, préparation de
 
   L.pesee_poudre = function (ctx, balance, { pots, coupelles: xs, sol, sol_pots = sol, e = 1.6, dire = () => {} }) {
     // Pots et spatules ; coupelles déplaçables (plateau ou balance) ; la poudre coule à chaque pas si la spatule est au-dessus.
-    const couleurs = Object.fromEntries(pots.map((p) => [p.id, p.rgb]));
+    const couleurs = Object.fromEntries(pots.map((p) => [p.id, p.rgb])), solides = Object.fromEntries(pots.map((p) => [p.id, p.solide]));
     const C = xs.map((x) => ({ produit: null, poudre: 0, sur_balance: false, repos: { x, y: sol - 6 }, pos: { x, y: sol - 6 }, masse: TARE }));
     L.svg("rect", { x: Math.min(...xs) - 34, y: sol - 6, width: Math.max(...xs) - Math.min(...xs) + 68, height: 6, rx: 2, fill: "#d9dcde", stroke: "#a9b0b4" }, ctx.fond);
     const pan = { x: balance.plateau.x, y: balance.plateau.y - 1 };
     C.forEach((c) => {
       c.g = L.svg("g", { class: "coupelle", role: "button", "aria-label": "Coupelle de pesée" }, ctx.objets);
-      const dessiner = () => { coupelle(c.g, c, couleurs[c.produit] || [255, 255, 255]); L.placer(c.g, c.pos.x, c.pos.y); };
+      const dessiner = () => { coupelle(c.g, c, couleurs[c.produit] || [255, 255, 255]); if (L.coupelle_placer) L.coupelle_placer(c); else L.placer(c.g, c.pos.x, c.pos.y); };
       c.dessiner = dessiner;
       L.glissable(c.g, {
-        debut: () => ({ ...c.pos }), saisir: () => { if (c.sur_balance) { balance.retirer(c); c.sur_balance = false; } ctx.haut.append(c.g); },
+        debut: () => ({ ...c.pos }), saisir: () => { c.versant = null; if (c.sur_balance) { balance.retirer(c); c.sur_balance = false; } ctx.haut.append(c.g); },
         deplacer: (p) => { c.pos = p; dessiner(); },
         lacher: (p) => {
           ctx.objets.append(c.g);
+          if (solides[c.produit] && L.coupelle_verser?.(ctx, c, p, solides[c.produit])) return ctx.signaler?.();
           const libre = !C.some((o) => o !== c && o.sur_balance);
           if (libre && Math.abs(p.x - pan.x) < balance.plateau.r && Math.abs(p.y - pan.y) < 50) { c.pos = { ...pan }; c.sur_balance = true; balance.ajouter(c); } else c.pos = { ...c.repos };
           dessiner(); ctx.signaler?.();
         },
-        toucher: () => { if (!c.sur_balance && c.poudre > 0) { c.poudre = 0; c.produit = null; c.masse = TARE; dire("Coupelle vidée dans le récipient à déchets."); dessiner(); ctx.signaler?.(); } },
+        toucher: () => { if (c.versant) { c.versant = null; c.pos = { ...c.repos }; dessiner(); return ctx.signaler?.(); } if (!c.sur_balance && c.poudre > 0) { c.poudre = 0; c.produit = null; c.masse = TARE; dire("Coupelle vidée dans le récipient à déchets."); dessiner(); ctx.signaler?.(); } },
       });
       dessiner();
     });
@@ -3217,7 +3231,8 @@ Utilisé par : les simulations de chimie (quantité de matière, préparation de
 Rôle : pipette graduée de 10 mL (graduations tous les 0,1 mL, lues de 0 en haut à 10 en bas) surmontée d'un pipeteur à
        molette. On la pose, pointe dans un récipient ; la molette tournée vers le haut aspire le liquide (si la pointe est
        sous la surface ; sinon de l'air), tournée vers le bas elle le fait couler : le volume délivré est la différence de
-       deux lectures. Le liquide qui sort tombe dans le récipient où est la pointe. Rangée sur son support quand on la
+       deux lectures. Le liquide qui sort tombe dans le récipient où est la pointe (lâchée juste au-dessus d'un col étroit,
+       la pointe y entre). Rangée sur son support quand on la
        lâche ailleurs (elle garde son liquide).
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement), { support { x, y } (place de la pointe au repos), e (px/mm), dire }.
 Produit : Labo.pipette_graduee(ctx, reglage) -> p { c (contenu), V (mL dans la pipette), lecture(), dans (récipient où est la pointe) }.
@@ -3262,9 +3277,16 @@ Utilisé par : les simulations de chimie (prélever un volume, préparer et dilu
     p.lecture = () => Math.round((10 - (p.V - V10)) * 100) / 100;
     const surface = (r) => r.pose.y - r.pr.hauteur_de(r.c.volume()) * r.pose.e;
     const recipient = (q) => ctx.ecoulement.recipients.find((r) => L.dans_polygone(r.interieur_monde(), q));
+    const col = (q) => ctx.ecoulement.recipients.find((r) => { const b = r.monde({ x: 0, y: -r.pr.H }); return !r.bouchon && Math.abs(q.x - b.x) < r.pr.r(r.pr.H) * r.pose.e + 10 && q.y > b.y - 12 && q.y < r.pose.y; });
     L.glissable(prise, {
       soulever: false, debut: () => ({ ...p.pos }), saisir: () => { p.dans = null; dire(""); ctx.haut.append(g); }, deplacer: (q) => { p.pos = q; maj(); },
-      lacher: (q) => { const r = recipient(q); ctx.objets.append(g); if (r) { p.dans = r; p.pos = { x: q.x, y: Math.min(q.y, r.pose.y - 4) }; } else { p.dans = null; p.pos = { ...support }; } maj(); },
+      lacher: (q) => {
+        // Dans un récipient (ou juste au-dessus d'un col étroit : la pointe y entre, au milieu) ; ailleurs, retour au support.
+        const r = recipient(q), c = !r && col(q), b = c && c.monde({ x: 0, y: -c.pr.H });
+        ctx.objets.append(g);
+        if (r) { p.dans = r; p.pos = { x: q.x, y: Math.min(q.y, r.pose.y - 4) }; } else if (c) { p.dans = c; p.pos = { x: b.x, y: Math.max(q.y, b.y + 8) }; } else { p.dans = null; p.pos = { ...support }; }
+        maj();
+      },
     });
     let y0 = null;
     L.glissable(molette, {
