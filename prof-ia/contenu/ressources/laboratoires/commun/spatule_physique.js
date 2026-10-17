@@ -4,7 +4,7 @@ Rôle : pot de poudre à large col (étiquette, pictogrammes) et microspatule en
        au-dessus de l'ouverture d'un récipient : la poudre tombe dedans. Ensuite, ou lâchée ailleurs, elle retourne dans le pot.
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { x, sol, e (px/mm), solide (nom dans Labo.LIQUIDES), dose (mL),
          texte (étiquette), rgb (couleur de la poudre), pictos, autoriser() }.
-Produit : Labo.spatule_poudre(ctx, reglage) -> { versees (nombre de pointes versées) }.
+Produit : Labo.spatule_poudre(ctx, reglage) -> { versees (nombre de pointes versées) } ; Labo.pot_poudre(g, x, sol, e, texte, rgb, pictos).
 Utilisé par : les simulations de chimie (poudre de fer, de zinc...).
 */
 (function (L) {
@@ -27,6 +27,8 @@ Utilisé par : les simulations de chimie (poudre de fer, de zinc...).
     L.svg("path", { d: `M-2 -2 Q-6 0 -2 2 H${10 * e} L${12 * e} 0.8 H${120 * e} V-0.8 H${12 * e} L${10 * e} -2 Z`, fill: "url(#metal)", stroke: "#6d767c", "stroke-width": 0.4 }, g);
     if (chargee) L.svg("path", { d: `M-2 -1.5 Q${5 * e} -7 ${10 * e} -1.5 Z`, fill: L.rgb(rgb) }, g);
   }
+
+  L.pot_poudre = pot;
 
   L.spatule_poudre = function (ctx, { x, sol, e = 1.6, solide, dose, texte, rgb, pictos = [], autoriser = () => true }) {
     // Spatule plantée dans le pot (derrière sa paroi), inclinée ; sortie, elle porte une pointe de poudre.
