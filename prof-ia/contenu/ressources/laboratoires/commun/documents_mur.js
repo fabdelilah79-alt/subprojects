@@ -2,7 +2,7 @@
 Rôle : documents affichés au mur du laboratoire (titre, petite chaîne de trois cases reliées par des flèches, texte) :
        un toucher ouvre le document en grand au centre de la scène ; un second toucher le referme.
 Reçoit : le groupe SVG de la paillasse, la liste des documents { x, y, l, h, titre, chaine (4 textes, facultatif), texte }
-         et le nom du fait à noter.
+         et le nom du fait à noter ; un document peut avoir un dessin(g, x, y, k) (illustration à droite du texte, échelle k).
 Produit : Labo.documents_mur(g, documents, fait) ; fait « <fait> » = [numéros des documents lus].
 Utilisé par : les simulations de chimie (industrie chimique, techniques traditionnelles d'extraction).
 */
@@ -31,8 +31,9 @@ Utilisé par : les simulations de chimie (industrie chimique, techniques traditi
     L.svg("rect", { x, y, width: l, height: h, fill: "#fdfdf8", stroke: "#c9c4b0" }, g);
     L.texte(g, x + l / 2, y + taille * 1.6, d.titre, { "font-size": taille * 1.25, "font-weight": 700, fill: "#23315a" });
     if (d.chaine) chaine(g, d, x, y + taille * 4, l, taille);
-    const debut = y + taille * (d.chaine ? 7.2 : 3.6);
-    lignes(d.texte, Math.floor(l / (taille * 0.52))).forEach((t, i) => L.texte(g, x + 10, debut + i * taille * 1.35, t, { "text-anchor": "start", "font-size": taille, fill: "#222" }));
+    const debut = y + taille * (d.chaine ? 7.2 : 3.6), place = d.dessin ? 0.6 : 1;
+    if (d.dessin) d.dessin(g, x + l * 0.8, y + h * 0.5, taille / 6.2);
+    lignes(d.texte, Math.floor((l * place) / (taille * 0.52))).forEach((t, i) => L.texte(g, x + 10, debut + i * taille * 1.35, t, { "text-anchor": "start", "font-size": taille, fill: "#222" }));
   }
 
   L.documents_mur = function (g, documents, fait) {
