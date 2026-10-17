@@ -8,7 +8,8 @@ Produit : Labo.cadre_lewis(g, G), Labo.aimant_atome(g, el), Labo.dessin_lewis(g,
 Utilisé par : tableau_lewis.js.
 */
 (function (L) {
-  const COULEUR = { H: ["#f4f4f2", "#222"], C: ["#2b2b2b", "#fff"], N: ["#2f5fc4", "#fff"], O: ["#d0312d", "#fff"], Cl: ["#2f9a3c", "#fff"] };
+  const COULEUR = { H: ["#f4f4f2", "#222"], C: ["#2b2b2b", "#fff"], N: ["#2f5fc4", "#fff"], O: ["#d0312d", "#fff"], Cl: ["#2f9a3c", "#fff"], F: ["#9ad46a", "#222"], Si: ["#d8c49a", "#222"], P: ["#f08a24", "#fff"], S: ["#f2d22e", "#222"] };
+  const NOMS = { H: "hydrogène", C: "carbone", N: "azote", O: "oxygène", Cl: "chlore", F: "fluor", Si: "silicium", P: "phosphore", S: "soufre" };
   const COTES = { h: [0, -1], b: [0, 1], g: [-1, 0], d: [1, 0] };
 
   L.cadre_lewis = function (g, G) {
@@ -55,9 +56,9 @@ Utilisé par : tableau_lewis.js.
     const repere = L.svg("circle", { r: 20, fill: "none", stroke: "#f2b705", "stroke-width": 3, "pointer-events": "none" }, g);
     repere.style.display = "none";
     elements.forEach((el, k) => {
-      const p = { x: 292, y: 82 + k * 58 }, a = L.aimant_atome(g, el);
+      const pas = Math.min(58, 300 / elements.length), p = { x: 292, y: 82 + k * pas }, a = L.aimant_atome(g, el);
       L.placer(a, p.x, p.y);
-      L.texte(g, p.x, p.y + 26, el === "Cl" ? "chlore" : { H: "hydrogène", C: "carbone", N: "azote", O: "oxygène" }[el], { "font-size": 7.5, fill: "#33414b" });
+      if (pas > 50) L.texte(g, p.x, p.y + 26, NOMS[el], { "font-size": 7.5, fill: "#33414b" });
       L.glissable(a, { debut: () => ({ ...p }), deplacer: (q) => L.placer(a, q.x, q.y), lacher: (q) => { L.placer(a, p.x, p.y); poser(el, q); },
         toucher: () => { choix.choisi = el; repere.style.display = ""; L.placer(repere, p.x, p.y); dire(`Atome ${el} choisi : touchez un point du quadrillage.`); } });
     });

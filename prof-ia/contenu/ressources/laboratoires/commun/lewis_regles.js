@@ -1,5 +1,5 @@
 /*
-Rôle : règles de la représentation de Lewis pour les molécules faites de H, C, N, O, Cl : chaque doublet (liant ou non liant)
+Rôle : règles de la représentation de Lewis pour les molécules faites de H, C, N, O, F, Si, P, S, Cl : chaque doublet (liant ou non liant)
        compte 2 électrons ; l'hydrogène doit en avoir 2 autour de lui (règle du duet), les autres atomes 8 (règle de l'octet) ;
        chaque atome forme autant de liaisons qu'il lui manque d'électrons sur sa couche externe (H : 1, C : 4, N : 3, O : 2,
        Cl : 1). Calcule aussi la formule brute (C, puis H, puis les autres) et une signature qui distingue les isomères.
@@ -10,8 +10,8 @@ Produit : Labo.LEWIS = { analyser(etat) -> { brute, n, connexe, lewis (règles r
 Utilisé par : tableau_lewis.js et les missions des simulations de chimie (molécules).
 */
 (function (L) {
-  const EXTERNES = { H: 1, C: 4, N: 5, O: 6, Cl: 7 }, LIAISONS = { H: 1, C: 4, N: 3, O: 2, Cl: 1 };
-  const NOM = { H: "d'hydrogène", C: "de carbone", N: "d'azote", O: "d'oxygène", Cl: "de chlore" };
+  const EXTERNES = { H: 1, C: 4, N: 5, O: 6, F: 7, Si: 4, P: 5, S: 6, Cl: 7 }, LIAISONS = { H: 1, C: 4, N: 3, O: 2, F: 1, Si: 4, P: 3, S: 2, Cl: 1 };
+  const NOM = { H: "d'hydrogène", C: "de carbone", N: "d'azote", O: "d'oxygène", F: "de fluor", Si: "de silicium", P: "de phosphore", S: "de soufre", Cl: "de chlore" };
 
   function decrire(etat) {
     // Pour chaque atome : élément, somme des ordres de ses liaisons, doublets non liants, voisins (avec l'ordre de liaison).

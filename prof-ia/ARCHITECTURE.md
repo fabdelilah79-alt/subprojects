@@ -359,6 +359,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/boite_modeles.js | Boîte de modèles moléculaires (casiers C, H, O, N) reliée à l'atelier. |
 | contenu/ressources/laboratoires/sources/tc_chim5_a1_lewis/ | Ions stables (duet, octet), représentation de Lewis, formules et isomères. |
 | contenu/ressources/laboratoires/sources/tc_chim5_a2_cram/ | Modèles moléculaires en 3D, géométrie des molécules, représentation de Cram du méthane. |
+| contenu/ressources/laboratoires/commun/tableau_cartes.js | Tableau magnétique quadrillé et cartes aimantées à ranger (classification des éléments). |
+| contenu/ressources/laboratoires/commun/lewis_verif.js | Vérifications des missions sur les molécules : ions, molécule de Lewis, isomères. |
+| contenu/ressources/laboratoires/sources/tc_chim6_a1_familles/ | Méthode de Mendeleïev (cartes, documents), alcalins dans l'eau, halogénures et ions argent. |
+| contenu/ressources/laboratoires/sources/tc_chim6_a2_tableau/ | Tableau périodique à remplir, liaisons et ions selon la colonne, formules de Lewis. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

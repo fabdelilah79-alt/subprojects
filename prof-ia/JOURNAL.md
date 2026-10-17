@@ -527,3 +527,21 @@ Problèmes restants, à faire par l'enseignant :
 - Les doublets non liants ne sont pas montrés sur les modèles (comme dans les boîtes du commerce) : ils sont seulement
   évoqués dans les questions.
 - Le tableau de Lewis n'accepte que des liaisons entre points voisins du quadrillage (horizontales ou verticales).
+
+## 2026-10-17 — Laboratoires virtuels : chapitre tronc commun « Classification périodique des éléments »
+
+Fait :
+- Deux simulations, inscrites au manifeste (58 ressources) : A1 documents historiques et cartes à ranger comme
+  Mendeleïev ; lithium, sodium, potassium dans l'eau (derrière un écran, phénolphtaléine, flamme lilas du potassium) ;
+  halogénures et nitrate d'argent (trois précipités) ; A2 tableau périodique magnétique à remplir (Z ≤ 18), liaisons et
+  ions d'après la colonne, Lewis de H₂S, PH₃, SiH₄, CCl₄, formule de MgCl₂. Objectifs O1 à O4.
+- Matériel commun : tableau à cartes, cristallisoir de 90 mm ; tableau de Lewis étendu à F, Si, P, S ; lewis_verif.js
+  déplacé dans commun (chim5 A1 revérifié).
+- Corrigé après essais : grain de métal invisible (surface de l'eau mal calculée) ; pinces flottantes au-dessus des
+  flacons (elles sont maintenant dans les flacons) ; pictogrammes sur le nom du métal.
+- Vérifié : parcours complets des deux simulations, et de chim5 A1 ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La réaction des alcalins avec l'eau est normalement faite par le professeur : la simulation la montre derrière un
+  écran de protection, lunettes exigées.
+- Les masses des cartes de Mendeleïev sont arrondies (valeurs connues en 1869).

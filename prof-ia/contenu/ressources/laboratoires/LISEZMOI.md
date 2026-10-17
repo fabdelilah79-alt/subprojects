@@ -221,6 +221,18 @@ Matériel commun ajouté : `lewis_regles.js`, `lewis_dessin.js`, `tableau_lewis.
 `boite_modeles.js` (boîte de modèles). `tableau_atome.js` a été déplacé de tc_chim4_a2_masse vers commun (il sert aussi
 aux ions de chim5).
 
+## Chapitre tronc commun « Classification périodique des éléments » (fiche tronc_commun/chim6_classification)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim6_a1_familles.html | A1 : documents sur l'histoire de la découverte des éléments et la méthode de Mendeleïev | O1, O3 | Trois documents (de l'Antiquité à Lavoisier, Mendeleïev et l'éka-silicium, la classification par Z) ; 16 cartes à ranger comme Mendeleïev (masse, formules des composés) ; Li, Na, K dans l'eau avec phénolphtaléine, derrière un écran ; NaCl, KBr, KI et nitrate d'argent (précipités). |
+| tc_chim6_a2_tableau.html | A2 : nombre de liaisons d'un élément à partir de sa position | O1 à O4 | Tableau périodique magnétique (18 cartes : symbole, Z, formule électronique) ; liaisons et ions d'après la colonne ; Lewis de H₂S, PH₃, SiH₄, CCl₄ ; formule de MgCl₂. |
+
+Matériel commun ajouté : `tableau_cartes.js` (tableau magnétique quadrillé et cartes), profil `cristallisoir_90`
+(`verrerie_profils.js`). Le tableau de Lewis accepte maintenant F, Si, P, S (`lewis_regles.js`, `lewis_dessin.js`,
+`tableau_lewis.js` : liste d'éléments au choix) ; `lewis_verif.js` (vérifications des molécules) a été déplacé de
+tc_chim5_a1_lewis vers commun.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

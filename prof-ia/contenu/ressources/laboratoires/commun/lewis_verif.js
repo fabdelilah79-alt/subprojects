@@ -4,7 +4,7 @@ Rôle : vérifications des missions « ions et représentation de Lewis » : ion
        règles du duet et de l'octet, ou seulement les liaisons pour une formule développée), deux isomères différents.
 Reçoit : les faits « atome » et « lewis ».
 Produit : Labo.VERIF_LEWIS = { ion(Z, A, e), molecule(brute, avec_doublets), isomere(brute, cle) } ; Labo.indice(texte) (chiffres en indice).
-Utilisé par : simulation.js.
+Utilisé par : les simulations sur les molécules (tc_chim5_a1_lewis, tc_chim6_a2_tableau).
 */
 (function (L) {
   const signatures = {};

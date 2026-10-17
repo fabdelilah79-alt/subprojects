@@ -1656,6 +1656,77 @@
         "Le méthane est plat, en croix, comme sur le papier.",
         "Les doublets non liants ne jouent aucun rôle dans la forme de la molécule."
       ]
+    },
+    {
+      "id": "tc_chim6_a1_familles",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim6_a1_familles.html",
+      "description": "Documents sur l'histoire de la classification (de l'Antiquité à Lavoisier, Mendeleïev et l'éka-silicium, la classification par Z) ; 16 cartes d'éléments à ranger comme Mendeleïev, par masse et par formule des composés ; derrière un écran, lithium, sodium et potassium dans l'eau additionnée de phénolphtaléine (dihydrogène, solution basique, réaction de plus en plus vive) ; ions chlorure, bromure, iodure avec le nitrate d'argent (précipités blanc, blanc jaunâtre, jaune) : familles des alcalins et des halogènes.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim6_classification",
+      "activite": "Documents et multimédia sur l'histoire de la découverte des éléments et la méthode de Mendeleïev.",
+      "objectifs": [
+        "O1",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "La méthode de Mendeleïev",
+          "ce_que_fait_l_eleve": "Lit les documents historiques et range des cartes d'éléments comme Mendeleïev.",
+          "conclusion": "Mendeleïev a rangé les éléments par masse atomique croissante en plaçant dans une même colonne ceux qui ont les mêmes propriétés chimiques ; il a laissé des cases vides et prévu des éléments inconnus (le germanium). Aujourd'hui, on range les éléments par numéro atomique Z croissant : une ligne correspond au remplissage d'une couche, une colonne rassemble les éléments qui ont le même nombre d'électrons externes (une famille)."
+        },
+        {
+          "titre": "Une famille : les métaux alcalins",
+          "ce_que_fait_l_eleve": "Compare les réactions du lithium, du sodium et du potassium avec l'eau.",
+          "conclusion": "Le lithium, le sodium et le potassium réagissent tous avec l'eau : il se forme du dihydrogène et une solution basique (la phénolphtaléine rosit), qui contient les ions Li⁺, Na⁺, K⁺. Ces métaux de la première colonne forment la famille des alcalins ; leur réaction est de plus en plus vive en descendant la colonne."
+        },
+        {
+          "titre": "Une famille : les halogènes",
+          "ce_que_fait_l_eleve": "Compare les réactions des ions chlorure, bromure et iodure avec les ions argent.",
+          "conclusion": "Les ions chlorure Cl⁻, bromure Br⁻ et iodure I⁻ donnent tous un précipité avec les ions argent Ag⁺ (blanc, blanc jaunâtre, jaune). Le chlore, le brome et l'iode ont 7 électrons externes : ils forment la famille des halogènes (avant-dernière colonne) et donnent des ions X⁻."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Mendeleïev a rangé les éléments par numéro atomique.",
+        "Les éléments d'une même colonne n'ont rien en commun.",
+        "Le sodium et le potassium réagissent de la même façon, avec la même vivacité."
+      ]
+    },
+    {
+      "id": "tc_chim6_a2_tableau",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim6_a2_tableau.html",
+      "description": "Tableau périodique magnétique à remplir avec 18 cartes (symbole, Z, formule électronique) : période = couches occupées, colonne = électrons externes, familles ; nombre de liaisons (colonnes 14 à 17) et charges des ions (colonnes 1, 2, 13, 16, 17) déduites de la position ; représentations de Lewis de H₂S, PH₃, SiH₄ et CCl₄ à partir des éléments de la même colonne ; formule du chlorure de magnésium.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim6_classification",
+      "activite": "Problème : nombre de liaisons d'un élément à partir de sa position.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "La classification actuelle",
+          "ce_que_fait_l_eleve": "Range les 18 premiers éléments dans la classification d'après leur formule électronique.",
+          "conclusion": "Les éléments sont rangés par numéro atomique Z croissant. Une ligne (période) correspond à une couche électronique : les éléments de la 3e période ont des électrons sur K, L et M. Les éléments d'une même colonne ont le même nombre d'électrons sur leur couche externe (sauf l'hélium) : ils forment une famille. Colonne 1 : les alcalins (sauf H) ; colonne 17 : les halogènes ; colonne 18 : les gaz nobles."
+        },
+        {
+          "titre": "Prévoir les liaisons et les ions",
+          "ce_que_fait_l_eleve": "Prévoit liaisons et ions d'après la colonne, et représente des molécules en Lewis.",
+          "conclusion": "Un atome forme autant de liaisons qu'il lui manque d'électrons pour avoir l'octet (le duet pour H) : 4 pour les colonnes 14 (C, Si), 3 pour la colonne 15 (N, P), 2 pour la colonne 16 (O, S), 1 pour la colonne 17 (F, Cl). Les éléments des colonnes 1, 2, 13 donnent les ions M⁺, M²⁺, M³⁺ ; ceux des colonnes 16 et 17 donnent X²⁻ et X⁻. Deux éléments d'une même colonne forment des molécules de même formule : H₂O et H₂S, NH₃ et PH₃, CH₄ et SiH₄."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Le numéro de la période est le nombre d'électrons externes.",
+        "Le soufre forme 6 liaisons parce qu'il a 6 électrons externes.",
+        "Le chlorure de magnésium a pour formule MgCl."
+      ]
     }
   ]
 }

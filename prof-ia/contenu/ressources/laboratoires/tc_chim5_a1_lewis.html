@@ -2196,7 +2196,7 @@ Utilisé par : poste_atome.js (tc_chim4_a2_masse), les ions de tc_chim5_a1_lewis
 </script>
   <script>
 /*
-Rôle : règles de la représentation de Lewis pour les molécules faites de H, C, N, O, Cl : chaque doublet (liant ou non liant)
+Rôle : règles de la représentation de Lewis pour les molécules faites de H, C, N, O, F, Si, P, S, Cl : chaque doublet (liant ou non liant)
        compte 2 électrons ; l'hydrogène doit en avoir 2 autour de lui (règle du duet), les autres atomes 8 (règle de l'octet) ;
        chaque atome forme autant de liaisons qu'il lui manque d'électrons sur sa couche externe (H : 1, C : 4, N : 3, O : 2,
        Cl : 1). Calcule aussi la formule brute (C, puis H, puis les autres) et une signature qui distingue les isomères.
@@ -2207,8 +2207,8 @@ Produit : Labo.LEWIS = { analyser(etat) -> { brute, n, connexe, lewis (règles r
 Utilisé par : tableau_lewis.js et les missions des simulations de chimie (molécules).
 */
 (function (L) {
-  const EXTERNES = { H: 1, C: 4, N: 5, O: 6, Cl: 7 }, LIAISONS = { H: 1, C: 4, N: 3, O: 2, Cl: 1 };
-  const NOM = { H: "d'hydrogène", C: "de carbone", N: "d'azote", O: "d'oxygène", Cl: "de chlore" };
+  const EXTERNES = { H: 1, C: 4, N: 5, O: 6, F: 7, Si: 4, P: 5, S: 6, Cl: 7 }, LIAISONS = { H: 1, C: 4, N: 3, O: 2, F: 1, Si: 4, P: 3, S: 2, Cl: 1 };
+  const NOM = { H: "d'hydrogène", C: "de carbone", N: "d'azote", O: "d'oxygène", F: "de fluor", Si: "de silicium", P: "de phosphore", S: "de soufre", Cl: "de chlore" };
 
   function decrire(etat) {
     // Pour chaque atome : élément, somme des ordres de ses liaisons, doublets non liants, voisins (avec l'ordre de liaison).
@@ -2271,7 +2271,8 @@ Produit : Labo.cadre_lewis(g, G), Labo.aimant_atome(g, el), Labo.dessin_lewis(g,
 Utilisé par : tableau_lewis.js.
 */
 (function (L) {
-  const COULEUR = { H: ["#f4f4f2", "#222"], C: ["#2b2b2b", "#fff"], N: ["#2f5fc4", "#fff"], O: ["#d0312d", "#fff"], Cl: ["#2f9a3c", "#fff"] };
+  const COULEUR = { H: ["#f4f4f2", "#222"], C: ["#2b2b2b", "#fff"], N: ["#2f5fc4", "#fff"], O: ["#d0312d", "#fff"], Cl: ["#2f9a3c", "#fff"], F: ["#9ad46a", "#222"], Si: ["#d8c49a", "#222"], P: ["#f08a24", "#fff"], S: ["#f2d22e", "#222"] };
+  const NOMS = { H: "hydrogène", C: "carbone", N: "azote", O: "oxygène", Cl: "chlore", F: "fluor", Si: "silicium", P: "phosphore", S: "soufre" };
   const COTES = { h: [0, -1], b: [0, 1], g: [-1, 0], d: [1, 0] };
 
   L.cadre_lewis = function (g, G) {
@@ -2318,9 +2319,9 @@ Utilisé par : tableau_lewis.js.
     const repere = L.svg("circle", { r: 20, fill: "none", stroke: "#f2b705", "stroke-width": 3, "pointer-events": "none" }, g);
     repere.style.display = "none";
     elements.forEach((el, k) => {
-      const p = { x: 292, y: 82 + k * 58 }, a = L.aimant_atome(g, el);
+      const pas = Math.min(58, 300 / elements.length), p = { x: 292, y: 82 + k * pas }, a = L.aimant_atome(g, el);
       L.placer(a, p.x, p.y);
-      L.texte(g, p.x, p.y + 26, el === "Cl" ? "chlore" : { H: "hydrogène", C: "carbone", N: "azote", O: "oxygène" }[el], { "font-size": 7.5, fill: "#33414b" });
+      if (pas > 50) L.texte(g, p.x, p.y + 26, NOMS[el], { "font-size": 7.5, fill: "#33414b" });
       L.glissable(a, { debut: () => ({ ...p }), deplacer: (q) => L.placer(a, q.x, q.y), lacher: (q) => { L.placer(a, p.x, p.y); poser(el, q); },
         toucher: () => { choix.choisi = el; repere.style.display = ""; L.placer(repere, p.x, p.y); dire(`Atome ${el} choisi : touchez un point du quadrillage.`); } });
     });
@@ -2343,7 +2344,7 @@ Rôle : tableau magnétique « représentation de Lewis » : des aimants d'atome
        choisir, puis un point du quadrillage pour y poser l'atome (ou on le fait glisser) ; un toucher entre deux atomes
        voisins ajoute un doublet liant (simple, double, triple, puis rien) ; un toucher à côté d'un atome, là où il n'y a
        pas de liaison, pose ou ôte un doublet non liant. Un atome glissé hors du quadrillage retourne dans la réserve.
-Reçoit : le groupe SVG de la paillasse et le nom du fait à noter.
+Reçoit : le groupe SVG de la paillasse, le nom du fait à noter et, si besoin, les éléments de la réserve (H, C, N, O, Cl par défaut).
 Produit : Labo.tableau_lewis(g, fait) -> { etat, vider() } ; fait « <fait> » = bilan de Labo.LEWIS.analyser (lewis_regles.js).
 Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js.
 */
@@ -2364,7 +2365,7 @@ Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js
     return { type: "cote", cle: `${i},${j}`, cote, voisin: `${i + u},${j + v}` };
   }
 
-  L.tableau_lewis = function (g, fait) {
+  L.tableau_lewis = function (g, fait, elements = ELEMENTS) {
     // Construit le tableau ; chaque geste change l'état, puis on redessine et on note le bilan.
     const etat = { atomes: {}, liaisons: {}, paires: {} }, s = { choisi: null };
     const fond = L.svg("g", {}, g);
@@ -2379,7 +2380,7 @@ Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js
       // Toucher le tableau : poser l'atome choisi, changer une liaison, poser ou ôter un doublet non liant.
       const l = lieu(q); dire("");
       if (!l) return;
-      if (l.type === "noeud" && !etat.atomes[l.cle]) return s.choisi ? poser(s.choisi, q) : dire("Touchez d'abord un aimant de la réserve (H, C, N, O ou Cl).");
+      if (l.type === "noeud" && !etat.atomes[l.cle]) return s.choisi ? poser(s.choisi, q) : dire("Touchez d'abord un aimant de la réserve.");
       if (l.type === "milieu" && etat.atomes[l.a] && etat.atomes[l.b]) { const k = cle_l(l.a, l.b); etat.liaisons[k] = ((etat.liaisons[k] || 0) + 1) % 4; if (!etat.liaisons[k]) delete etat.liaisons[k]; return; }
       if (l.type === "cote" && etat.atomes[l.cle]) {
         if (etat.liaisons[cle_l(l.cle, l.voisin)]) return dire("Ce côté porte déjà une liaison.");
@@ -2395,7 +2396,7 @@ Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js
       L.glissable(el_svg, { debut: () => ({ ...depart }), deplacer: (q) => L.placer(el_svg, q.x, q.y), toucher: () => { toucher(depart); maj(); },
         lacher: (q) => { const el = etat.atomes[cle], l = lieu(q); oter(cle); if (l?.type === "noeud" && !etat.atomes[l.cle]) etat.atomes[l.cle] = el; maj(); } });
     }
-    L.reserve_lewis(g, ELEMENTS, s, (el, q) => { poser(el, q); maj(); }, dire);
+    L.reserve_lewis(g, elements, s, (el, q) => { poser(el, q); maj(); }, dire);
     L.bouton_texte(g, 754, 381, "Tout ranger", () => { etat.atomes = {}; etat.liaisons = {}; etat.paires = {}; dire(""); maj(); });
     g.append(bulle);
     maj();
@@ -2448,7 +2449,7 @@ Rôle : vérifications des missions « ions et représentation de Lewis » : ion
        règles du duet et de l'octet, ou seulement les liaisons pour une formule développée), deux isomères différents.
 Reçoit : les faits « atome » et « lewis ».
 Produit : Labo.VERIF_LEWIS = { ion(Z, A, e), molecule(brute, avec_doublets), isomere(brute, cle) } ; Labo.indice(texte) (chiffres en indice).
-Utilisé par : simulation.js.
+Utilisé par : les simulations sur les molécules (tc_chim5_a1_lewis, tc_chim6_a2_tableau).
 */
 (function (L) {
   const signatures = {};

@@ -4,7 +4,7 @@ Rôle : tableau magnétique « représentation de Lewis » : des aimants d'atome
        choisir, puis un point du quadrillage pour y poser l'atome (ou on le fait glisser) ; un toucher entre deux atomes
        voisins ajoute un doublet liant (simple, double, triple, puis rien) ; un toucher à côté d'un atome, là où il n'y a
        pas de liaison, pose ou ôte un doublet non liant. Un atome glissé hors du quadrillage retourne dans la réserve.
-Reçoit : le groupe SVG de la paillasse et le nom du fait à noter.
+Reçoit : le groupe SVG de la paillasse, le nom du fait à noter et, si besoin, les éléments de la réserve (H, C, N, O, Cl par défaut).
 Produit : Labo.tableau_lewis(g, fait) -> { etat, vider() } ; fait « <fait> » = bilan de Labo.LEWIS.analyser (lewis_regles.js).
 Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js.
 */
@@ -25,7 +25,7 @@ Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js
     return { type: "cote", cle: `${i},${j}`, cote, voisin: `${i + u},${j + v}` };
   }
 
-  L.tableau_lewis = function (g, fait) {
+  L.tableau_lewis = function (g, fait, elements = ELEMENTS) {
     // Construit le tableau ; chaque geste change l'état, puis on redessine et on note le bilan.
     const etat = { atomes: {}, liaisons: {}, paires: {} }, s = { choisi: null };
     const fond = L.svg("g", {}, g);
@@ -40,7 +40,7 @@ Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js
       // Toucher le tableau : poser l'atome choisi, changer une liaison, poser ou ôter un doublet non liant.
       const l = lieu(q); dire("");
       if (!l) return;
-      if (l.type === "noeud" && !etat.atomes[l.cle]) return s.choisi ? poser(s.choisi, q) : dire("Touchez d'abord un aimant de la réserve (H, C, N, O ou Cl).");
+      if (l.type === "noeud" && !etat.atomes[l.cle]) return s.choisi ? poser(s.choisi, q) : dire("Touchez d'abord un aimant de la réserve.");
       if (l.type === "milieu" && etat.atomes[l.a] && etat.atomes[l.b]) { const k = cle_l(l.a, l.b); etat.liaisons[k] = ((etat.liaisons[k] || 0) + 1) % 4; if (!etat.liaisons[k]) delete etat.liaisons[k]; return; }
       if (l.type === "cote" && etat.atomes[l.cle]) {
         if (etat.liaisons[cle_l(l.cle, l.voisin)]) return dire("Ce côté porte déjà une liaison.");
@@ -56,7 +56,7 @@ Utilisé par : les simulations de chimie (molécules) ; dessin : lewis_dessin.js
       L.glissable(el_svg, { debut: () => ({ ...depart }), deplacer: (q) => L.placer(el_svg, q.x, q.y), toucher: () => { toucher(depart); maj(); },
         lacher: (q) => { const el = etat.atomes[cle], l = lieu(q); oter(cle); if (l?.type === "noeud" && !etat.atomes[l.cle]) etat.atomes[l.cle] = el; maj(); } });
     }
-    L.reserve_lewis(g, ELEMENTS, s, (el, q) => { poser(el, q); maj(); }, dire);
+    L.reserve_lewis(g, elements, s, (el, q) => { poser(el, q); maj(); }, dire);
     L.bouton_texte(g, 754, 381, "Tout ranger", () => { etat.atomes = {}; etat.liaisons = {}; etat.paires = {}; dire(""); maj(); });
     g.append(bulle);
     maj();
