@@ -56,7 +56,11 @@ Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de 
       calque.replaceChildren();
       let prec = null;
       for (const gt of E.gouttes) {
-        if (prec && prec.source === gt.source && Math.hypot(prec.x - gt.x, prec.y - gt.y) < 40) L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: L.rgb(gt.rgb), "stroke-width": 2.4, "stroke-linecap": "round", opacity: 0.85 }, calque);
+        if (prec && prec.source === gt.source && Math.hypot(prec.x - gt.x, prec.y - gt.y) < 40) {
+          // Bord du filet un peu plus sombre (on voit aussi un filet d'eau incolore), puis le liquide.
+          L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: "rgba(110,140,155,0.55)", "stroke-width": 3.6, "stroke-linecap": "round" }, calque);
+          L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: L.rgb(gt.rgb), "stroke-width": 2.2, "stroke-linecap": "round", opacity: 0.9 }, calque);
+        }
         else L.svg("circle", { cx: gt.x, cy: gt.y, r: 1.6, fill: L.rgb(gt.rgb), opacity: 0.85 }, calque);
         prec = gt;
       }

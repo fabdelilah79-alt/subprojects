@@ -20,14 +20,16 @@ Utilisé par : les simulations de chimie.
   }
 
   function cible_de_versement(ctx, r) {
-    // Récipient ouvert dont l'ouverture est juste sous la lèvre de celui qu'on tient (et plus bas que son bord).
+    // Récipient ouvert dont l'ouverture est juste sous la lèvre de celui qu'on tient (et plus bas que son bord) ;
+    // s'il y en a plusieurs, celui dont l'ouverture est la plus proche de la lèvre.
+    let choix = null;
     for (const q of ctx.ecoulement.recipients) {
       if (q === r || q.bouchon) continue;
       const bouche = q.monde({ x: 0, y: -q.pr.H }), sens = Math.sign(bouche.x - r.pose.x) || 1;
-      const levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), larg = (q.pr.r(q.pr.H) + 12) * q.pose.e;
-      if (Math.abs(levre.x - bouche.x) < larg + 20 && levre.y < bouche.y - 4 && levre.y > bouche.y - 120) return { q, sens };
+      const levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), larg = (q.pr.r(q.pr.H) + 12) * q.pose.e, d = Math.abs(levre.x - bouche.x);
+      if (d < larg + 20 && levre.y < bouche.y - 4 && levre.y > bouche.y - 120 && (!choix || d < choix.d)) choix = { q, sens, d };
     }
-    return null;
+    return choix;
   }
 
   function poignee(ctx, r, sens) {
