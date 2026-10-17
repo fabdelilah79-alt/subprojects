@@ -3,7 +3,7 @@ Rôle : récipient de liquide qui respecte la physique : la surface reste perpen
        penche quand on accélère le récipient et oscille ensuite, comme un vrai liquide qui ballotte) ; le liquide qui
        dépasse la lèvre la plus basse déborde (débit d'un déversoir) ; un robinet ouvert laisse couler le liquide du bas
        (loi de Torricelli, v = √(2gh)), sauf si le récipient est bouché (l'air ne peut pas entrer).
-Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet }.
+Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet, etiquette, pictos (codes SGH collés au-dessus de l'étiquette) }.
 Produit : Labo.recipient(ctx, reglage) -> { id, pr, pose, c, bouchon, robinet, pas(dt), etat(), monde(p) (p dans le repère du
           récipient, y vers le bas, mm), interieur_monde(), dessiner() }.
 Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
@@ -63,10 +63,10 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
     r.sortie(pointe, { x: r.vitesse.x, y: v * r.pose.e * 0.5 + r.vitesse.y }, r.c.retirer(V, "bas"), V);
   }
 
-  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "" }) {
+  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "", pictos = [] }) {
     // Construit le récipient et l'inscrit dans l'écoulement de la paillasse.
     const pr = L.profil(profil);
-    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
+    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, pictos, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
     r.normale = () => { const a = r.phi - rad(r.pose.angle); return { x: Math.sin(a), y: -Math.cos(a) }; };
     r.monde = (p) => G.transformer([{ x: p.x, y: -p.y }], r.pose)[0];
     r.interieur_monde = () => G.transformer(pr.interieur.map((p) => ({ x: p.x, y: -p.y })), r.pose);
@@ -84,7 +84,7 @@ Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
       r.coule = null;
       deborder(r, dt, u, s); vidanger(r, dt, u, s);
     };
-    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, coule: r.coule }; };
+    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, pictos: r.pictos, coule: r.coule }; };
     r.dessiner = () => L.dessiner_verrerie(r.g, pr, r.pose, r.etat());
     ctx.ecoulement.ajouter(r);
     r.dessiner();

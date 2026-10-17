@@ -14,14 +14,6 @@ Utilisé par : simulation.js.
   L.LIQUIDES.huile_lavande = { nom: "huile essentielle de lavande", d: 0.88, rgb: [238, 206, 96], alpha: 0.8, classe: "organique" };
   const NOMS = [["ballon", 300, 214, 80, 120], ["chauffe-ballon", 228, 360, 224, 110], ["support élévateur", 228, 482, 224, 90], ["réfrigérant droit", 470, 180, 220, 70], ["allonge", 772, 252, 30, 40], ["éprouvette graduée", 772, 320, 36, 250], ["support (potence)", 206, 160, 28, 380]];
 
-  function pierre_ponce(g, x, bas) {
-    // Petit flacon de grains de pierre ponce (40 mm).
-    L.svg("rect", { x: x - 20, y: bas - 56, width: 40, height: 56, rx: 5, fill: "rgba(205,228,236,0.5)", stroke: "#9fb6be" }, g);
-    for (let i = 0; i < 24; i++) L.svg("circle", { cx: x - 15 + ((i * 7) % 30), cy: bas - 5 - Math.floor(i / 5) * 5, r: 2.6, fill: "#9a968c" }, g);
-    L.svg("rect", { x: x - 17, y: bas - 48, width: 34, height: 14, fill: "#fbfaf3" }, g);
-    L.texte(g, x, bas - 41, "pierre ponce", { "font-size": 5.4, "font-weight": 700, fill: "#23315a" });
-  }
-
   function tuyau(g, de, vers, u) {
     // Tuyau souple jusqu'à un embout : il arrive dans l'axe et s'enfile sur l'olive sur 10 px (pas de fuite).
     const style = { stroke: "#c9a96b", "stroke-width": 9, fill: "none", "stroke-linecap": "round" };
@@ -87,7 +79,8 @@ Utilisé par : simulation.js.
     L.ecoulement(ctx, { sol: SOL, e: E });
     const e = { ponce: false, tuyau: null, eau: false, chauffe: false, T: 20, ebullition: false, volume: 0, essence: 0, perte: false, soubresauts: false, noms: new Set(), bout_libre: { x: 836, y: 420 } };
     const g_tuyaux = L.svg("g", { "pointer-events": "none" }, ctx.fond), g_eau = L.svg("g", {}, ctx.objets);
-    H.fixe(ctx);
+    const chauffe = H.fixe(ctx);
+    H.refrigerant(L.svg("g", { class: "refrigerant", "pointer-events": "none" }, ctx.objets));
     const ballon = L.recipient(ctx, { id: "ballon", profil: "ballon_250", x: H.BALLON.x, y: H.BALLON.y, contenu: { eau: 150 } });
     const ep = L.recipient(ctx, { id: "eprouvette", profil: "eprouvette_50", x: H.EPROUVETTE.x, y: H.EPROUVETTE.sol - 6 * E });
     const g_var = L.svg("g", { "pointer-events": "none" }, ctx.objets), source = { c: L.contenu({ eau: 1 }), interieur_monde: () => [] };
@@ -98,9 +91,8 @@ Utilisé par : simulation.js.
     };
     noms(ctx.devant, e, noter);
     const redessiner = () => { bulles(g_var, e, ballon); tuyaux(g_tuyaux, e); H.eau_manchon(g_eau, e); };
-    pierre_ponce(ctx.fond, 520, SOL);
     L.gestes_hydro(ctx, e, { redessiner, noter, tuyaux: (f) => tuyaux(g_tuyaux, { ...e, bout_libre: f }) });
-    setInterval(() => { evoluer(e, ctx, ballon, source); redessiner(); noter(); }, 200);
+    setInterval(() => { evoluer(e, ctx, ballon, source); chauffe.allumer(e.chauffe); redessiner(); noter(); }, 200);
     redessiner(); noter();
     return { pense_bete };
   };

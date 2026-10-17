@@ -3,7 +3,7 @@ Rôle : étapes communes des missions de chromatographie (ligne, dépôts, élua
        tableur des Rf, pour l'activité 3 du chapitre « Extraction, séparation et identification » (objectif O4).
 Reçoit : le nom du fait de la paillasse et le nombre de dépôts attendus.
 Produit : Labo.MISSIONS_CCM = { choix, preparation(fait, n, eluant), feuille_rf(fait, references) }.
-Utilisé par : simulation.js.
+Utilisé par : les simulations de chromatographie (chim2 A3, chim3 A2).
 */
 (function (L) {
   const choix = (options, aide, bravo) => ({ type: "choix", options, bonne: 0, aide, bravo });

@@ -5,7 +5,7 @@ Rôle : petit matériel de la chromatographie, aux vraies dimensions (1,6 px par
 Reçoit : le contexte de la paillasse et les réglages de chaque objet.
 Produit : Labo.ccm = { crayon(ctx, repos, lacher), capillaires(ctx, echantillons, lacher), regle(g, x, bas, zero),
           couvercle(g, x, y, ferme), lampe_uv(g, x, y, allumee), bocal_iode(g, x, sol), bidon(g, x, sol) }.
-Utilisé par : poste_ccm.js.
+Utilisé par : ccm_poste.js.
 */
 (function (L) {
   const E = 1.6;

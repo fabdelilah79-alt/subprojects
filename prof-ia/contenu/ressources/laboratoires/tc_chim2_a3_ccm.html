@@ -2927,7 +2927,7 @@ Rôle : petit matériel de la chromatographie, aux vraies dimensions (1,6 px par
 Reçoit : le contexte de la paillasse et les réglages de chaque objet.
 Produit : Labo.ccm = { crayon(ctx, repos, lacher), capillaires(ctx, echantillons, lacher), regle(g, x, bas, zero),
           couvercle(g, x, y, ferme), lampe_uv(g, x, y, allumee), bocal_iode(g, x, sol), bidon(g, x, sol) }.
-Utilisé par : poste_ccm.js.
+Utilisé par : ccm_poste.js.
 */
 (function (L) {
   const E = 1.6;
@@ -3027,7 +3027,7 @@ Rôle : gestes de la paillasse de chromatographie : le crayon trace la ligne de 
        bidon vide la cuve.
 Reçoit : le contexte de la paillasse et l'état partagé de la paillasse (s) construit par poste_ccm.js.
 Produit : Labo.gestes_ccm(ctx, s).
-Utilisé par : poste_ccm.js.
+Utilisé par : ccm_poste.js.
 */
 (function (L) {
   const E = 1.6;
@@ -3093,7 +3093,7 @@ Rôle : paillasse de chromatographie sur couche mince, aux vraies dimensions : p
 Reçoit : le réglage de la paillasse { fait, especes, echantillons : [{ n, x, texte, rgb, especes }], eluant (étiquette),
          revelation (vrai : lampe UV et diiode) }.
 Produit : Labo.poste_ccm(reglage) -> fabrique(groupe) -> { pense_bete } ; fait « <fait> » (voir noter()).
-Utilisé par : simulation.js.
+Utilisé par : les simulations de chromatographie (chim2 A3, chim3 A2).
 */
 (function (L) {
   const SOL = 576, E = 1.6, C = L.ccm;
@@ -3179,7 +3179,7 @@ Rôle : étapes communes des missions de chromatographie (ligne, dépôts, élua
        tableur des Rf, pour l'activité 3 du chapitre « Extraction, séparation et identification » (objectif O4).
 Reçoit : le nom du fait de la paillasse et le nombre de dépôts attendus.
 Produit : Labo.MISSIONS_CCM = { choix, preparation(fait, n, eluant), feuille_rf(fait, references) }.
-Utilisé par : simulation.js.
+Utilisé par : les simulations de chromatographie (chim2 A3, chim3 A2).
 */
 (function (L) {
   const choix = (options, aide, bravo) => ({ type: "choix", options, bonne: 0, aide, bravo });

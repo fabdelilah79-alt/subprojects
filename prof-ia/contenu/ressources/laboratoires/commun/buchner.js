@@ -3,9 +3,9 @@ Rôle : dessins de la paillasse de filtration sous vide, aux vraies dimensions (
        porcelaine (corps, plaque perforée vue par l'ouverture, papier, liquide, résidu ; tige dans le col de la fiole, cône
        en caoutchouc), trompe à eau sur le robinet, tuyau à vide épais (enfilé sur les deux olives, ou débranché), évier,
        boîte de papiers filtres, pissette.
-Reçoit : les plans de la paillasse et l'état { papier, residu, liquide (rgb ou null), filet (y de la surface du filtrat, quand il coule), vide, branche }.
+Reçoit : les plans de la paillasse et l'état { papier, residu, residu_rgb (couleur du solide retenu, violet par défaut), liquide (rgb ou null), filet (y de la surface du filtrat, quand il coule), vide, branche }.
 Produit : Labo.buchner = { F, B, T, BRAS, fixe(ctx, fiole), dessus(g, etat), trompe(g, etat), pissette(g, presse) }.
-Utilisé par : poste_buchner.js.
+Utilisé par : les paillasses de filtration sous vide (poste_buchner.js de chim2 A2, buchner_poste.js).
 */
 (function (L) {
   const E = 1.6, F = { x: 520, y: 576 - 2.4 * E }, B = { x: 520, y: 258, haut: 258 - 40 * E }, T = { x: 760, y: 300 };
@@ -31,7 +31,7 @@ Utilisé par : poste_buchner.js.
     L.svg("ellipse", { cx: B.x, cy: B.haut + 1, rx, ry, fill: e.papier ? "#ffffff" : "#e3dfd4", stroke: "#bdb8ab", "stroke-width": 0.6 }, g);
     if (!e.papier) for (let i = 0; i < 16; i++) L.svg("circle", { cx: B.x - 42 + (i % 8) * 12, cy: B.haut - 1 + Math.floor(i / 8) * 4, r: 1.1, fill: "#8d897e" }, g);
     if (e.liquide) L.svg("ellipse", { cx: B.x, cy: B.haut + 1, rx: rx - 2, ry: ry - 0.5, fill: L.rgb(e.liquide), opacity: 0.85 }, g);
-    if (e.residu) for (let i = 0; i < 22; i++) L.svg("ellipse", { cx: B.x - 40 + ((i * 17) % 80), cy: B.haut - 3 + ((i * 7) % 7), rx: 3.4, ry: 1.7, fill: "#7b5aa6" }, g);
+    if (e.residu) for (let i = 0; i < 22; i++) L.svg("ellipse", { cx: B.x - 40 + ((i * 17) % 80), cy: B.haut - 3 + ((i * 7) % 7), rx: 3.4, ry: 1.7, fill: e.residu_rgb ? L.rgb(e.residu_rgb) : "#7b5aa6", stroke: e.residu_rgb ? "#c9c2a8" : "none", "stroke-width": 0.5 }, g);
     L.svg("ellipse", { cx: B.x, cy: B.haut, rx: R, ry: 0.12 * R, fill: "none", stroke: "#d8d4c8", "stroke-width": 3 }, g);
     if (e.filet) L.svg("line", { x1: B.x, y1: F.y - 146 * E, x2: B.x, y2: e.filet, stroke: "rgb(226,200,140)", "stroke-width": 2.4, opacity: 0.8 }, g);
   }

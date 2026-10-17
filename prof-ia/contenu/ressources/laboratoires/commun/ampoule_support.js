@@ -6,7 +6,7 @@ Rôle : ampoule à décanter de 125 mL (matériel physique) posée sur l'anneau 
        Après agitation d'un solvant volatil, la pression monte dans l'ampoule bouchée.
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement), { x, y (pointe de la tige, px), sol, e } et dire(texte).
 Produit : Labo.ampoule_support(ctx, reglage, dire) -> { r (récipient), pression, agitee, degaze }.
-Utilisé par : poste_solvant.js.
+Utilisé par : les paillasses d'extraction et de lavage à l'ampoule à décanter (chim2 A2, chim3 A2).
 */
 (function (L) {
   const ANNEAU = 128;

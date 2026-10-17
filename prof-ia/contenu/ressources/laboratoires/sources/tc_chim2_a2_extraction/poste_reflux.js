@@ -44,7 +44,7 @@ Utilisé par : simulation.js.
     const tuyau = { stroke: "#c9a96b", "stroke-width": 9, fill: "none", "stroke-linecap": "round" };
     L.svg("path", { d: `M${ROBINET.x} ${ROBINET.y + 8} C${ROBINET.x - 70} ${ROBINET.y + 8} ${ENTREE.x + 70} ${ENTREE.y} ${ENTREE.x + 4} ${ENTREE.y} H${ENTREE.x - 8}`, ...tuyau }, g);
     L.svg("path", { d: `M${SORTIE.x - 8} ${SORTIE.y} H${SORTIE.x + 16} C${SORTIE.x + 80} ${SORTIE.y} 470 200 470 300 S${ROBINET.x - 30} 420 ${ROBINET.x - 22} 440`, ...tuyau }, g);
-    L.hydro.chauffe_ballon(g, ctx.devant, { x: X, haut: 432, bas: 576 });
+    L.chauffe_ballon(g, ctx.devant, { x: X, haut: 432, bas: 576 });
     L.recipient(ctx, { id: "ballon", profil: "ballon_250", x: X, y: 496, contenu: { melange_reflux: 110 } }).g.setAttribute("pointer-events", "none");
     refrigerant(L.svg("g", { "pointer-events": "none" }, ctx.objets));
   }

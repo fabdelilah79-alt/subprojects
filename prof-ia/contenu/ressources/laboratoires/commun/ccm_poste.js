@@ -6,7 +6,7 @@ Rôle : paillasse de chromatographie sur couche mince, aux vraies dimensions : p
 Reçoit : le réglage de la paillasse { fait, especes, echantillons : [{ n, x, texte, rgb, especes }], eluant (étiquette),
          revelation (vrai : lampe UV et diiode) }.
 Produit : Labo.poste_ccm(reglage) -> fabrique(groupe) -> { pense_bete } ; fait « <fait> » (voir noter()).
-Utilisé par : simulation.js.
+Utilisé par : les simulations de chromatographie (chim2 A3, chim3 A2).
 */
 (function (L) {
   const SOL = 576, E = 1.6, C = L.ccm;

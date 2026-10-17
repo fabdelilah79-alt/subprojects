@@ -1,7 +1,7 @@
 /*
 Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
        PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
-       étiquette collée.
+       étiquette collée (et ses pictogrammes de danger).
 Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
 Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
 Utilisé par : verrerie_rendu.js.
@@ -47,5 +47,6 @@ Utilisé par : verrerie_rendu.js.
     if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
     if (etat.bouchon) bouchon(g, pr);
     if (etat.etiquette) etiquette(g, pr, etat.etiquette);
+    (etat.pictos || []).forEach((c, i, t) => L.pictogramme?.(g, (i - (t.length - 1) / 2) * 11, -pr.H * (pr.extras.etiquette_h || 0.42) - 11, 5, c));
   };
 })(window.Labo);

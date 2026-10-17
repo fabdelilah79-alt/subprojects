@@ -5,7 +5,8 @@ Rôle : gestes de la main sur un récipient : le prendre et le déplacer (ses ac
 Reçoit : le contexte de la paillasse (ctx.obstacles : bandes [x1, x2] de la paillasse déjà occupées, comme un socle), le récipient (recipient_physique.js) et { sol (y de pose, px), fixe (non déplaçable),
          support : { x, y } ou supports : [{ x, y, ... }] (places sur un support : anneau, porte-tubes, bain-marie ; lâché près
          d'une place libre, il s'y met, et r.place la désigne), pose_libre (faux pour un tube : il ne tient pas debout sur la
-         paillasse et retourne à la place libre la plus proche) }.
+         paillasse et retourne à la place libre la plus proche), autoriser() (faux : on ne peut pas le prendre, par exemple
+         sans gants ; la fonction peut afficher pourquoi) } ; on verse aussi dans une cible qui a une ouverture (bouche()).
 Produit : Labo.manipuler(ctx, r, reglage) ; r.tenu, r.versement (vrai pendant que l'on verse).
 Utilisé par : les simulations de chimie.
 */
@@ -28,6 +29,12 @@ Utilisé par : les simulations de chimie.
       const bouche = q.monde({ x: 0, y: -q.pr.H }), sens = Math.sign(bouche.x - r.pose.x) || 1;
       const levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), larg = (q.pr.r(q.pr.H) + 12) * q.pose.e, d = Math.abs(levre.x - bouche.x);
       if (d < larg + 20 && levre.y < bouche.y - 4 && levre.y > bouche.y - 120 && (!choix || d < choix.d)) choix = { q, sens, d };
+    }
+    for (const c of ctx.ecoulement.cibles) {
+      // Cible qui a une ouverture (entonnoir) : on peut aussi verser dedans.
+      if (!c.bouche) continue;
+      const b = c.bouche(), sens = Math.sign(b.x - r.pose.x) || 1, levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), d = Math.abs(levre.x - b.x);
+      if (d < b.r + 20 && levre.y < b.y - 4 && levre.y > b.y - 120 && (!choix || d < choix.d)) choix = { q: c, sens, d };
     }
     return choix;
   }
@@ -62,7 +69,7 @@ Utilisé par : les simulations de chimie.
     return r.pose.x;
   }
 
-  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true }) {
+  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true, autoriser = () => true }) {
     const places = supports || (support ? [support] : []);
     // Rend le récipient déplaçable (s'il n'est pas fixe) ; gère la pose et le versement.
     let pg = null;
@@ -72,23 +79,27 @@ Utilisé par : les simulations de chimie.
       r.pose.angle = 0; r.pose.y = sol; r.pose.x = place_libre(ctx, r, sol); r.acc = { x: 0, y: 0 }; r.vitesse = { x: 0, y: 0 }; r.mvt = null; r.w += 0.8;
       ctx.objets.append(r.g);
     };
+    const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
+    const place_proche = () => places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
+    const sur_support = (sup = place_proche()) => { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; };
     if (fixe) return;
     L.glissable(r.g, {
       soulever: false,
-      debut: () => ({ x: r.pose.x, y: r.pose.y }),
+      debut: () => (autoriser() ? { x: r.pose.x, y: r.pose.y } : null),
       saisir: () => { r.tenu = true; ctx.haut.append(r.g); },
       deplacer: (p) => { if (r.versement) return; r.pose.x = p.x; r.pose.y = Math.min(sol, p.y); suivre_mouvement(r, p); },
       lacher: () => {
         if (r.versement) return;
         r.acc = { x: 0, y: 0 };
-        const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
-        const sup = places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
-        if (sup && (!pose_libre || Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80)) { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; return; }
+        const sup = place_proche();
+        // Près d'une place libre : on l'y pose ; au-dessus d'un récipient : on verse ; sinon on le pose (ou, s'il ne tient
+        // pas debout, il retourne à la place libre la plus proche).
+        if (sup && Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80) return sur_support(sup);
         r.place = null;
         const c = cible_de_versement(ctx, r);
-        if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else reposer();
+        if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else if (sup && !pose_libre) sur_support(sup); else reposer();
       },
-      toucher: () => { if (r.versement) reposer(); },
+      toucher: () => { if (!r.versement) return; if (!pose_libre && place_proche()) sur_support(); else reposer(); },
     });
   };
 })(window.Labo);

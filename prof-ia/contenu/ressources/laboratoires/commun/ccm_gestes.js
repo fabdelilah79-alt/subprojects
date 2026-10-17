@@ -6,7 +6,7 @@ Rôle : gestes de la paillasse de chromatographie : le crayon trace la ligne de 
        bidon vide la cuve.
 Reçoit : le contexte de la paillasse et l'état partagé de la paillasse (s) construit par poste_ccm.js.
 Produit : Labo.gestes_ccm(ctx, s).
-Utilisé par : poste_ccm.js.
+Utilisé par : ccm_poste.js.
 */
 (function (L) {
   const E = 1.6;
