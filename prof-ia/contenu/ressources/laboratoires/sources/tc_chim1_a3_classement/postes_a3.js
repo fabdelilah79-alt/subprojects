@@ -2,7 +2,7 @@
 Rôle : paillasses de l'activité 3 : (1) inventaire des espèces trouvées dans l'orange et dans le papier (tableau à
        classer, flacons des tests) ; (2) naturelle, synthétique ou artificielle ? (étiquettes de six produits, tableau à
        trois colonnes) ; (3) documents sur l'industrie chimique.
-Reçoit : le groupe SVG de chaque paillasse.
+Reçoit : le groupe SVG de chaque paillasse (flacons compte-gouttes du matériel physique, aux vraies dimensions).
 Produit : Labo.poste_inventaire, Labo.poste_origine, Labo.poste_documents (groupe) -> { pense_bete } ;
           Labo.ETIQUETTES_A3 = { inventaire, origine } ; faits « tri_inventaire », « tri_origine », « etiquettes_lues », « documents_lus ».
 Utilisé par : simulation.js.
@@ -32,7 +32,9 @@ Utilisé par : simulation.js.
     L.affiche_securite(g, 780, 56);
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
     L.tableau_tri(g, { x: 300, y: 40, largeur: 440, hauteur: 330, titre: "Inventaire des espèces trouvées", colonnes: ["Dans l'orange", "Dans le papier"], etiquettes: melanger(INVENTAIRE), fait: "tri_inventaire" });
-    [["Eau\niodée", 330, "eau_iodee"], ["Liqueur de\nFehling", 400, "fehling"], ["Phénol-\nphtaléine", 470, "phenolphtaleine"]].forEach(([t, x, r]) => L.verrerie.flacon(L.svg("g", {}, g), x, 500, t, { liquide: L.rgb(L.CHIMIE.reactifs[r].rgb), bouchon: true }));
+    const ctx = L.paillasse_chimie(g);
+    L.ecoulement(ctx, { sol: 576, e: 1.6 });
+    [["Eau\niodée", 330, "eau_iodee"], ["Liqueur de\nFehling", 420, "fehling"], ["Phénol-\nphtaléine", 510, "phenolphtaleine"]].forEach(([texte, x, liquide]) => L.flacon_gouttes(ctx, { id: liquide, x, sol: 562, e: 1.6, liquide, texte }));
     return { pense_bete };
   };
 

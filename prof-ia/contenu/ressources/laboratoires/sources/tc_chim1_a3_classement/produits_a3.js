@@ -1,5 +1,5 @@
 /*
-Rôle : six produits posés sur la paillasse, chacun avec son étiquette à lire : gousse de vanille, sachet de sucre vanilliné,
+Rôle : six produits posés sur la paillasse, à leur taille réelle, chacun avec son étiquette à lire : gousse de vanille, sachet de sucre vanilliné,
        citron, tube de comprimés de vitamine C, bobine de fil de nylon, boîte d'aspirine. Un toucher ouvre l'étiquette.
 Reçoit : le groupe SVG de la paillasse et le nom du fait à noter.
 Produit : Labo.produits_etiquettes(g, fait) ; fait « <fait> » = [noms des produits dont l'étiquette a été lue].
@@ -7,12 +7,12 @@ Utilisé par : postes_a3.js.
 */
 (function (L) {
   const PRODUITS = [
-    { nom: "vanille", x: 270, titre: "Gousse de vanille", texte: "Fruit séché du vanillier (une orchidée). Contient de la vanilline, C₈H₈O₃, et d'autres espèces odorantes." },
-    { nom: "sucre", x: 360, titre: "Sucre vanilliné", texte: "Ingrédients : sucre, vanilline. Vanilline obtenue par synthèse : même formule que celle de la gousse, C₈H₈O₃." },
-    { nom: "citron", x: 450, titre: "Citron", texte: "Fruit du citronnier. Contient de l'acide ascorbique (vitamine C), C₆H₈O₆." },
-    { nom: "vitamine", x: 540, titre: "Vitamine C 500 mg", texte: "Comprimés d'acide ascorbique, C₆H₈O₆, fabriqué par l'industrie chimique (synthèse)." },
-    { nom: "nylon", x: 630, titre: "Fil de pêche en nylon", texte: "Nylon (un polyamide) obtenu par synthèse. Le nylon n'existe pas dans la nature." },
-    { nom: "aspirine", x: 720, titre: "Aspirine 500 mg", texte: "Acide acétylsalicylique obtenu par synthèse. Il n'existe pas dans la nature (l'écorce de saule contient une espèce voisine)." },
+    { nom: "vanille", x: 300, k: 3, titre: "Gousse de vanille", texte: "Fruit séché du vanillier (une orchidée). Contient de la vanilline, C₈H₈O₃, et d'autres espèces odorantes." },
+    { nom: "sucre", x: 450, k: 2.6, titre: "Sucre vanilliné", texte: "Ingrédients : sucre, vanilline. Vanilline obtenue par synthèse : même formule que celle de la gousse, C₈H₈O₃." },
+    { nom: "citron", x: 560, k: 2.2, titre: "Citron", texte: "Fruit du citronnier. Contient de l'acide ascorbique (vitamine C), C₆H₈O₆." },
+    { nom: "vitamine", x: 650, k: 2.6, titre: "Vitamine C 500 mg", texte: "Comprimés d'acide ascorbique, C₆H₈O₆, fabriqué par l'industrie chimique (synthèse)." },
+    { nom: "nylon", x: 735, k: 2.2, titre: "Fil de pêche en nylon", texte: "Nylon (un polyamide) obtenu par synthèse. Le nylon n'existe pas dans la nature." },
+    { nom: "aspirine", x: 825, k: 2.4, titre: "Aspirine 500 mg", texte: "Acide acétylsalicylique obtenu par synthèse. Il n'existe pas dans la nature (l'écorce de saule contient une espèce voisine)." },
   ];
 
   const DESSINS = {
@@ -34,9 +34,9 @@ Utilisé par : postes_a3.js.
   function etiquette(calque, p) {
     // Grande étiquette lue, au-dessus du produit.
     calque.replaceChildren();
-    const x = Math.max(160, Math.min(860, p.x)), y = 300, lignes = [""];
+    const x = Math.max(160, Math.min(860, p.x)), y = 250, lignes = [""];
     for (const m of p.texte.split(" ")) { if ((lignes[lignes.length - 1] + " " + m).length > 44) lignes.push(m); else lignes[lignes.length - 1] = (lignes[lignes.length - 1] + " " + m).trim(); }
-    L.svg("line", { x1: p.x, y1: 470, x2: x, y2: y + 24 + lignes.length * 11, stroke: "#55606a", "stroke-dasharray": "3 2" }, calque);
+    L.svg("line", { x1: p.x, y1: 420, x2: x, y2: y + 24 + lignes.length * 11, stroke: "#55606a", "stroke-dasharray": "3 2" }, calque);
     L.svg("rect", { x: x - 130, y, width: 260, height: 28 + lignes.length * 11, rx: 3, fill: "#fffdf4", stroke: "#b9b19a", filter: "url(#ombre)" }, calque);
     L.texte(calque, x, y + 12, `Étiquette : ${p.titre}`, { "font-size": 8.5, "font-weight": 700, fill: "#23315a" });
     lignes.forEach((t, i) => L.texte(calque, x, y + 25 + i * 11, t, { "font-size": 8, fill: "#222" }));
@@ -44,10 +44,12 @@ Utilisé par : postes_a3.js.
 
   L.produits_etiquettes = function (g, fait) {
     // Dessine les produits ; toucher un produit ouvre son étiquette et la note comme lue.
-    const calque = L.svg("g", { "pointer-events": "none" }, g), lus = new Set(), y = 520;
+    const calque = L.svg("g", { "pointer-events": "none" }, g), lus = new Set(), y = 515;
     for (const p of PRODUITS) {
-      const e = L.svg("g", { class: `produit produit-${p.nom}`, role: "button", "aria-label": p.titre, filter: "url(#ombre)" }, g);
-      L.svg("rect", { x: p.x - 40, y: y - 52, width: 80, height: 66, fill: "#000", opacity: 0 }, e);
+      // Chaque dessin (fait à petite échelle) est agrandi autour de sa base pour avoir la taille réelle du produit.
+      const e = L.svg("g", { class: `produit produit-${p.nom}`, role: "button", "aria-label": p.titre, filter: "url(#ombre)", transform: `translate(${p.x} ${y}) scale(${p.k}) translate(${-p.x} ${-y})` }, g);
+      // Zone que l'on touche : 84 × 135 px à l'écran, quel que soit l'agrandissement.
+      L.svg("rect", { x: p.x - 42 / p.k, y: y - 120 / p.k, width: 84 / p.k, height: 135 / p.k, fill: "#000", opacity: 0 }, e);
       DESSINS[p.nom](e, p.x, y);
       L.glissable(e, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { etiquette(calque, p); lus.add(p.nom); L.missions.noter(fait, [...lus]); } });
     }

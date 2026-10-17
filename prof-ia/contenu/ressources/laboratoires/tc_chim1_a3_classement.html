@@ -2105,7 +2105,7 @@ Utilisé par : chimie_objets.js, chimie_gouttes.js, chimie_chauffage.js.
       if (c.poudre) L.svg("path", { d: `M${x - 12} ${y + 3} Q${x} ${y - 9} ${x + 12} ${y + 3} Z`, fill: c.poudre, stroke: "#00000022" }, g);
     },
     flacon(g, x, bas, texte, { verre = "#6b3a12", liquide = null, ouvert = false, bouchon = false } = {}) {
-      // Flacon compte-gouttes en verre teinté avec son étiquette ; ouvert : sa pipette a été retirée ; bouchon : on dessine sa poire.
+      // Flacon compte-gouttes en verre teinté avec son étiquette ; ouvert : sa pipette a été retirée ; bouchon : on dessine sa poire (« capsule » : bouchon vissé d'un flacon de solvant).
       g.replaceChildren();
       L.svg("ellipse", { cx: x + 4, cy: bas + 1, rx: 17, ry: 3.5, fill: "#000", opacity: 0.28 }, g);
       L.svg("path", { d: `M${x - 15} ${bas - 2} V${bas - 36} Q${x - 15} ${bas - 44} ${x - 6} ${bas - 46} V${bas - 52} H${x + 6} V${bas - 46} Q${x + 15} ${bas - 44} ${x + 15} ${bas - 36} V${bas - 2} Q${x + 15} ${bas} ${x + 12} ${bas} H${x - 12} Q${x - 15} ${bas} ${x - 15} ${bas - 2} Z`, fill: verre, opacity: 0.88, stroke: "#2b1606" }, g);
@@ -2113,6 +2113,7 @@ Utilisé par : chimie_objets.js, chimie_gouttes.js, chimie_chauffage.js.
       L.svg("rect", { x: x - 12, y: bas - 32, width: 24, height: 18, fill: "#f7f3e6", stroke: "#bdb59c", "stroke-width": 0.5 }, g);
       String(texte).split("\n").forEach((t, i, tout) => L.texte(g, x, bas - 23 - 3 * (tout.length - 1) + i * 6, t, { "font-size": 4.6, "font-weight": 700, fill: "#222" }));
       if (ouvert) L.svg("ellipse", { cx: x, cy: bas - 52, rx: 6, ry: 1.8, fill: "#1a0d04" }, g);
+      if (bouchon === "capsule") return void L.svg("rect", { x: x - 8, y: bas - 62, width: 16, height: 11, rx: 2, fill: "#1d1d1f" }, g);
       if (bouchon) {
         L.svg("rect", { x: x - 6, y: bas - 60, width: 12, height: 8, rx: 1.5, fill: "#2a2a2c" }, g);
         L.svg("path", { d: `M${x - 5} ${bas - 60} V${bas - 72} Q${x - 5} ${bas - 83} ${x} ${bas - 83} Q${x + 5} ${bas - 83} ${x + 5} ${bas - 72} V${bas - 60} Z`, fill: "#1d1d1f" }, g);
@@ -2171,6 +2172,740 @@ Utilisé par : les simulations de chimie.
     [[30, "Lunettes"], [85, "Blouse"], [140, "Ne jamais goûter"]].forEach(([dx, t]) => L.texte(a, x + dx, y + 72, t, { "font-size": 7, "font-weight": 700, fill: "#23315a" }));
     L.texte(a, x + 85, y + 84, "On ne goûte ni ne mange au laboratoire.", { "font-size": 6, fill: "#444" });
     return a;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : paillasse de chimie (plans de dessin et récipients qui peuvent recevoir des gouttes) et pipette compte-gouttes :
+       on la sort de son flacon ou de son bécher, on la tient au-dessus d'un tube ou d'un verre de montre, les gouttes
+       tombent une à une, puis la pipette retourne dans son flacon (une pipette par produit : on ne mélange rien).
+Reçoit : le groupe SVG de la paillasse ; pour une pipette : sa place de repos, le produit, la dose (mL) et le nombre de gouttes.
+Produit : Labo.paillasse_chimie(g) -> ctx { fond, objets, devant, haut, cibles, ajouter_cible(c), signaler(), sur_changement(f) } ;
+          Labo.compte_gouttes(ctx, reglage) -> pipette ; une cible est { bouche() -> { x, y }, surface() -> y, recevoir(nom, mL) }.
+Utilisé par : chimie_objets.js et les simulations de chimie.
+*/
+(function (L) {
+  L.paillasse_chimie = function (g) {
+    // Quatre plans : fond (supports), objets (récipients), devant (bord des supports), haut (objet tenu, gouttes).
+    const ctx = { cibles: [], ecouteurs: [] };
+    for (const nom of ["fond", "objets", "devant", "haut"]) ctx[nom] = L.svg("g", { class: `chimie-${nom}` }, g);
+    ctx.ajouter_cible = (c) => { ctx.cibles.push(c); return c; };
+    ctx.sur_changement = (f) => ctx.ecouteurs.push(f);
+    ctx.signaler = () => ctx.ecouteurs.forEach((f) => f());
+    return ctx;
+  };
+
+  function gouttes(ctx, de, cible, n, couleur, fin) {
+    // Fait tomber n gouttes, l'une après l'autre, de la pointe de la pipette jusqu'à la surface du contenu.
+    const y_fin = cible.surface();
+    let k = 0;
+    const suivante = () => {
+      if (k++ >= n) return fin();
+      const goutte = L.svg("ellipse", { cx: de.x, cy: de.y, rx: 2.2, ry: 2.8, fill: couleur, opacity: 0.9, stroke: "#ffffff88", "stroke-width": 0.5 }, ctx.haut);
+      L.animer(Math.sqrt(Math.max(4, y_fin - de.y)) * 0.022, (t) => goutte.setAttribute("cy", de.y + (y_fin - de.y) * t * t), () => { goutte.remove(); suivante(); });
+    };
+    suivante();
+  }
+
+  L.compte_gouttes = function (ctx, { repos, produit, rgb, poire = "#1d1d1f", bague = true, dose = 0.05, n = 3, source = null, cachee = false, quand_rangee = null }) {
+    // Pipette déplaçable ; repos = { x, y } : pointe quand elle est rangée ; cachee : seule la poire dépasse du flacon.
+    const p = { produit, rgb, g: L.svg("g", { class: "pipette", role: "button", "aria-label": `Pipette : ${produit}` }, ctx.objets), sortie: false };
+    const dessiner = (entiere) => { L.verrerie.pipette(p.g, 0, 0, { rgb, poire, bague }); if (!entiere) [...p.g.children].slice(0, rgb ? 2 : 1).forEach((e) => e.remove()); };
+    const ranger = () => { ctx.objets.append(p.g); L.placer(p.g, repos.x, repos.y); dessiner(!cachee); p.sortie = false; quand_rangee?.(false); };
+    const viser = (pos) => ctx.cibles.find((c) => { const b = c.bouche(); return c !== source && Math.abs(pos.x - b.x) < 22 && pos.y > b.y - 70 && pos.y < b.y + 12; });
+    ranger();
+    L.glissable(p.g, {
+      debut: () => ({ ...repos }),
+      saisir: () => { ctx.haut.append(p.g); dessiner(true); p.sortie = true; quand_rangee?.(true); },
+      deplacer: (pos) => L.placer(p.g, pos.x, pos.y),
+      lacher: (pos) => {
+        const c = viser(pos);
+        if (!c) return ranger();
+        const b = c.bouche(), tenue = { x: b.x, y: Math.min(pos.y, b.y - 6) };
+        L.placer(p.g, tenue.x, tenue.y);
+        gouttes(ctx, tenue, c, n, L.rgb(rgb), () => { c.recevoir(produit, dose); ctx.signaler(); ranger(); });
+      },
+    });
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : géométrie des liquides dans un récipient vu en coupe : aire d'un polygone, découpe par la surface libre (un demi-plan),
+       recherche du niveau de la surface pour une aire donnée (par dichotomie). La surface libre est une droite de normale
+       u (vers le haut, hors du liquide) ; le liquide occupe les points p tels que u·p ≤ s.
+Reçoit : des polygones [{ x, y }] en coordonnées de la scène (y vers le bas), une normale u et une aire.
+Produit : Labo.geometrie = { aire(poly), couper(poly, u, s), niveau(poly, u, aire) -> { s, region }, transformer(poly, pose) }.
+Utilisé par : recipient_physique.js, verrerie_rendu.js.
+*/
+(function (L) {
+  const pv = (u, p) => u.x * p.x + u.y * p.y;
+
+  function aire(poly) {
+    // Aire d'un polygone (formule du lacet), toujours positive.
+    let a = 0;
+    for (let i = 0; i < poly.length; i++) { const p = poly[i], q = poly[(i + 1) % poly.length]; a += p.x * q.y - q.x * p.y; }
+    return Math.abs(a) / 2;
+  }
+
+  function couper(poly, u, s) {
+    // Partie du polygone sous la surface (u·p ≤ s) : algorithme de Sutherland-Hodgman pour un demi-plan.
+    const r = [];
+    for (let i = 0; i < poly.length; i++) {
+      const p = poly[i], q = poly[(i + 1) % poly.length], dp = pv(u, p) - s, dq = pv(u, q) - s;
+      if (dp <= 0) r.push(p);
+      if ((dp < 0 && dq > 0) || (dp > 0 && dq < 0)) { const t = dp / (dp - dq); r.push({ x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t }); }
+    }
+    return r;
+  }
+
+  function niveau(poly, u, a) {
+    // Position s de la surface telle que l'aire du liquide vaille a (dichotomie sur l'intervalle des projections).
+    let lo = Infinity, hi = -Infinity;
+    for (const p of poly) { const v = pv(u, p); lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    if (a <= 0) return { s: lo, region: [] };
+    if (a >= aire(poly)) return { s: hi, region: poly };
+    for (let k = 0; k < 40; k++) { const m = (lo + hi) / 2; if (aire(couper(poly, u, m)) < a) lo = m; else hi = m; }
+    return { s: hi, region: couper(poly, u, hi) };
+  }
+
+  function transformer(poly, { x, y, angle = 0, e = 1 }) {
+    // Passe des coordonnées du récipient (mm, origine au bas, y vers le haut) à la scène (px), avec rotation (degrés).
+    const c = Math.cos((angle * Math.PI) / 180), s = Math.sin((angle * Math.PI) / 180);
+    return poly.map((p) => ({ x: x + e * (p.x * c + p.y * s), y: y + e * (p.x * s - p.y * c) }));
+  }
+
+  L.geometrie = { aire, couper, niveau, transformer, pv };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : contenu liquide d'un récipient, en phases : les liquides miscibles (eau, éthanol, solutions aqueuses) forment une
+       même phase ; un liquide non miscible (cyclohexane, huile, dichlorométhane) forme une autre phase. Les phases se
+       rangent par densité (la moins dense au-dessus). Une agitation crée une émulsion qui se sépare peu à peu (décantation).
+       Des espèces dissoutes (diiode...) colorent la phase qui les contient.
+Reçoit : les liquides versés (nom, volume en mL) et les espèces dissoutes ajoutées.
+Produit : Labo.LIQUIDES (catalogue, complété par chimie_reactions.js) ; Labo.TEINTES (teinte des espèces dissoutes, que l'on peut compléter) ; Labo.REGLES_COULEUR (règles des tests, facultatives) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
+          volume(), couleur(phase), agiter(force), decanter(dt) }.
+Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie.
+*/
+(function (L) {
+  const LIQUIDES = {
+    eau: { nom: "eau", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse" },
+    eau_iodee: { nom: "eau iodée", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse", dissous: { I2: 0.06 } },
+    ethanol: { nom: "éthanol", d: 0.79, rgb: [232, 241, 246], alpha: 0.3, classe: "aqueuse" },
+    cyclohexane: { nom: "cyclohexane", d: 0.78, rgb: [238, 242, 244], alpha: 0.3, classe: "organique" },
+    dichloromethane: { nom: "dichlorométhane", d: 1.33, rgb: [236, 240, 242], alpha: 0.3, classe: "organique" },
+    huile: { nom: "huile", d: 0.92, rgb: [226, 186, 60], alpha: 0.75, classe: "organique" },
+  };
+  // Teinte d'une espèce dissoute selon la phase : le diiode est jaune-brun dans l'eau, violet dans un solvant organique.
+  const TEINTES = { I2: { aqueuse: [150, 68, 8], organique: [156, 44, 150] } };
+  // Coefficient de partage (concentration dans le solvant organique / concentration dans l'eau) à l'équilibre.
+  const PARTAGE = { I2: 90 };
+  L.LIQUIDES = LIQUIDES;
+  L.TEINTES = TEINTES;
+  L.rgb = L.rgb || ((c) => `rgb(${c.map((v) => Math.round(v)).join(",")})`);
+
+  function densite(ph) {
+    // Densité moyenne d'une phase (pondérée par les volumes).
+    let V = 0, m = 0;
+    for (const [n, v] of Object.entries(ph.liquides)) { V += v; m += v * LIQUIDES[n].d; }
+    return V ? m / V : 1;
+  }
+
+  L.contenu = function (volumes = {}) {
+    // Contenu vide, puis remplissage avec les volumes donnés.
+    const c = { phases: [], emulsion: 0 };
+    c.volume = () => c.phases.reduce((s, p) => s + p.V, 0);
+    c.ranger = () => c.phases.sort((a, b) => densite(b) - densite(a));
+    c.ajouter = (nom, V, dissous = null) => {
+      // Ajoute V mL d'un liquide (et ses espèces dissoutes, en quantité proportionnelle au volume).
+      if (V <= 0) return;
+      const classe = LIQUIDES[nom].classe;
+      let ph = c.phases.find((p) => p.classe === classe);
+      if (!ph) { ph = { classe, liquides: {}, dissous: {}, V: 0 }; c.phases.push(ph); }
+      ph.liquides[nom] = (ph.liquides[nom] || 0) + V; ph.V += V;
+      for (const [s, q] of Object.entries(dissous || LIQUIDES[nom].dissous || {})) ph.dissous[s] = (ph.dissous[s] || 0) + q * (dissous ? 1 : V);
+      c.ranger();
+    };
+    c.retirer = (V, ou = "haut") => {
+      // Retire V mL de la phase du haut (débordement) ou du bas (robinet) ; renvoie ce qui est retiré, phase par phase.
+      const sortie = [];
+      while (V > 1e-9 && c.phases.length) {
+        const ph = ou === "haut" ? c.phases[c.phases.length - 1] : c.phases[0], v = Math.min(V, ph.V), k = v / ph.V;
+        const part = { classe: ph.classe, liquides: {}, dissous: {}, T: c.T ?? 20 };
+        for (const n of Object.keys(ph.liquides)) { part.liquides[n] = ph.liquides[n] * k; ph.liquides[n] -= part.liquides[n]; }
+        for (const s of Object.keys(ph.dissous)) { part.dissous[s] = ph.dissous[s] * k; ph.dissous[s] -= part.dissous[s]; }
+        ph.V -= v; V -= v; sortie.push(part);
+        if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+      }
+      return sortie;
+    };
+    c.verser = (part) => {
+      // Reçoit une portion venue d'un autre récipient (liquides, espèces dissoutes, température du mélange).
+      const V0 = c.volume(), Vp = Object.values(part.liquides).reduce((s, v) => s + v, 0);
+      if (part.T !== undefined && V0 + Vp > 0) c.T = ((c.T ?? 20) * V0 + part.T * Vp) / (V0 + Vp);
+      for (const [n, V] of Object.entries(part.liquides)) if (V > 0) c.ajouter(n, V, {});
+      const ph = c.phases.find((p) => p.classe === part.classe) || c.phases[0];
+      if (ph) for (const [s, q] of Object.entries(part.dissous)) ph.dissous[s] = (ph.dissous[s] || 0) + q;
+    };
+    c.couleur = (ph) => {
+      // Couleur et opacité d'une phase : un liquide très coloré garde sa teinte quand on le dilue (comme une solution réelle :
+      // poids de chaque liquide = volume × opacité³) ; puis teinte des espèces dissoutes (concentration = quantité / volume).
+      let rgb = [0, 0, 0], alpha = 0, poids = 0;
+      const L_ph = Object.entries(ph.liquides).filter(([, v]) => v > 0);
+      for (const [n, v] of L_ph) poids += v * LIQUIDES[n].alpha ** 3;
+      for (const [n, v] of L_ph) { const l = LIQUIDES[n], k = (v * l.alpha ** 3) / poids; rgb = rgb.map((x, i) => x + l.rgb[i] * k); alpha = Math.max(alpha, l.alpha * Math.pow(v / ph.V, 0.3)); }
+      for (const [s, q] of Object.entries(ph.dissous)) {
+        if (!TEINTES[s]) continue;
+        const k = Math.min(0.95, (12 * q) / Math.max(ph.V, 0.1)), t = TEINTES[s][ph.classe];
+        rgb = rgb.map((x, i) => x + (t[i] - x) * k); alpha = Math.min(0.9, alpha + 0.55 * k);
+      }
+      for (const regle of L.REGLES_COULEUR || []) ({ rgb, alpha } = regle(ph, rgb, alpha, c));
+      return { rgb, alpha };
+    };
+    c.agiter = (force) => {
+      // Émulsion ; les espèces dissoutes passent d'une phase à l'autre vers l'équilibre de partage, d'autant plus vite qu'on agite.
+      const aq = c.phases.find((p) => p.classe === "aqueuse"), org = c.phases.find((p) => p.classe === "organique");
+      if (!aq || !org) return;
+      c.emulsion = Math.min(1, c.emulsion + force);
+      for (const [s, K] of Object.entries(PARTAGE)) {
+        const n = (aq.dissous[s] || 0) + (org.dissous[s] || 0), n_org = (n * K * org.V) / (K * org.V + aq.V), k = Math.min(1, force * 3);
+        org.dissous[s] = (org.dissous[s] || 0) + (n_org - (org.dissous[s] || 0)) * k; aq.dissous[s] = n - org.dissous[s];
+      }
+    };
+    c.decanter = (dt) => { c.emulsion = Math.max(0, c.emulsion - dt / 5); };
+    for (const [n, v] of Object.entries(volumes)) c.ajouter(n, v);
+    return c;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : réactifs et échantillons des tests de chimie, ajoutés au catalogue des liquides, et règles des tests : pH d'une phase,
+       phénolphtaléine (incolore sous pH 8,2, rose au-delà), liqueur de Fehling (bleue ; chauffée au-dessus de 60 °C avec du
+       glucose, elle donne un précipité qui passe du jaune-orangé au rouge brique, et la solution perd son bleu).
+Reçoit : le contenu d'un récipient (liquide_contenu.js) ; pour le chauffage, la température du bain et la durée.
+Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.REGLES_COULEUR ; Labo.pH_phase(phase) ; Labo.pH_liquide(nom) ;
+          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance).
+Utilisé par : les simulations de chimie (tests de détection).
+*/
+(function (L) {
+  const aq = (nom, rgb, alpha, pH, autres = {}) => ({ nom, d: 1.0, rgb, alpha, classe: "aqueuse", pH, ...autres });
+  Object.assign(L.LIQUIDES, {
+    jus_orange: aq("jus d'orange", [245, 158, 40], 0.82, 4, { d: 1.04, glucose: true }),
+    vinaigre: aq("vinaigre blanc", [246, 243, 228], 0.3, 3),
+    eau_savonneuse: aq("eau savonneuse", [238, 238, 232], 0.6, 10),
+    eau_chaux: aq("eau de chaux", [234, 242, 246], 0.34, 12),
+    solution_glucose: aq("solution de glucose", [232, 241, 246], 0.3, 7, { glucose: true }),
+    phenolphtaleine: aq("phénolphtaléine", [240, 245, 248], 0.3, null),
+    fehling: aq("liqueur de Fehling", [22, 82, 200], 0.85, 13, { d: 1.1 }),
+    oxyde_cuivre: { nom: "précipité", d: 6, rgb: [168, 48, 26], alpha: 0.95, classe: "precipite" },
+  });
+  L.LIQUIDES.eau.pH = 7;
+  L.LIQUIDES.eau_iodee.pH = 7;
+
+  L.pH_liquide = (nom) => L.LIQUIDES[nom].pH ?? null;
+  L.pH_phase = function (ph) {
+    // pH du liquide majoritaire ; assez de liqueur de Fehling (très basique) l'emporte.
+    if ((ph.liquides.fehling || 0) > 0.15 * ph.V) return 13;
+    const p = Object.entries(ph.liquides).filter(([n]) => L.LIQUIDES[n].pH !== null && L.LIQUIDES[n].pH !== undefined).sort((a, b) => b[1] - a[1])[0];
+    return p ? L.LIQUIDES[p[0]].pH : null;
+  };
+
+  const vers = (a, b, k) => a.map((v, i) => v + (b[i] - v) * Math.max(0, Math.min(1, k)));
+  L.REGLES_COULEUR = [
+    (ph, rgb, alpha) => {
+      // Phénolphtaléine : rose dans une solution basique (pH ≥ 8,2).
+      const pH = L.pH_phase(ph);
+      if (!(ph.liquides.phenolphtaleine > 0) || pH === null || pH < 8.2) return { rgb, alpha };
+      const k = 0.85 * Math.min(1, (pH - 8.2) / 1.5);
+      return { rgb: vers(rgb, [222, 30, 128], k), alpha: Math.max(alpha, 0.35 + 0.45 * k) };
+    },
+    (ph, rgb, alpha, c) => {
+      // Liqueur de Fehling réduite : la solution perd son bleu ; le précipité vire du jaune-orangé au rouge brique.
+      if (ph.classe === "precipite") return { rgb: vers([226, 170, 40], [168, 48, 26], c.avance || 0), alpha };
+      if (!(ph.liquides.fehling > 0) || !c.avance) return { rgb, alpha };
+      return { rgb: vers(rgb, [222, 146, 92], 0.9 * c.avance), alpha };
+    },
+  ];
+
+  L.chauffer_contenu = function (c, T_bain, dt) {
+    // Le contenu prend la température du bain (constante de temps 6 s) ; au-dessus de 60 °C, le glucose réduit la liqueur de Fehling.
+    c.T = (c.T ?? 20) + (T_bain - (c.T ?? 20)) * (1 - Math.exp(-dt / 6));
+    const ph = c.phases.find((p) => p.classe === "aqueuse");
+    if (!ph || !(ph.liquides.fehling > 0) || c.T <= 60 || !Object.keys(ph.liquides).some((n) => L.LIQUIDES[n].glucose)) return;
+    const avant = c.avance || 0;
+    c.avance = Math.min(1, avant + (dt * (c.T - 60)) / 400);
+    c.ajouter("oxyde_cuivre", 0.5 * (c.avance - avant));
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : verrerie aux vraies dimensions (en mm) : profil intérieur (demi-largeur r selon la hauteur h depuis le fond),
+       épaisseur du verre, bec, graduations. Pour chaque pièce : polygones intérieur et extérieur (repère du récipient :
+       origine au milieu du fond, x vers la droite, y vers le bas, en mm), lèvres de l'ouverture, et tables qui relient le
+       volume (mL) à l'aire de liquide vue en coupe (mm²) : un récipient droit est rempli exactement à la bonne hauteur.
+Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), buchner_70 (cuvette d'un entonnoir Büchner)).
+Produit : Labo.profil(nom) -> { nom, H, h0 (fond intérieur : 0, sauf l'ampoule dont la tige est sous le robinet), t, interieur, exterieur, levres, aire_de(V), volume_de(A), hauteur_de(V), r(h), graduations, extras }.
+Utilisé par : verrerie_rendu.js, recipient_physique.js.
+*/
+(function (L) {
+  const sphere = (R, h0, h1, pas = 2) => { const p = []; for (let h = h0; h <= h1; h += pas) p.push([h, Math.sqrt(Math.max(0, R * R - (R - h) ** 2))]); return p; };
+  // Corps d'ampoule en poire : cône qui s'évase vers le haut, épaule arrondie, puis col (points tous les 2 mm).
+  const poire = (h0, h1, r0, rmax, r1) => { const p = []; for (let h = h0; h <= h1; h += 2) { const u = (h - h0) / (h1 - h0), w = u < 0.78 ? r0 + (rmax - r0) * Math.sin((Math.PI / 2) * Math.pow(u / 0.78, 0.85)) : r1 + (rmax - r1) * Math.cos((Math.PI / 2) * ((u - 0.78) / 0.22)); p.push([h, w]); } return p; };
+  const becher = (r, H, grad) => ({ profil: [[0, r - 3], [1, r - 1.2], [3, r], [H, r]], t: 1.4, bec: true, grad });
+  const DEFS = {
+    becher_50: becher(20, 54, [10, 20, 30, 40, 50]),
+    becher_100: becher(25, 68, [20, 40, 60, 80, 100]),
+    becher_250: becher(33.5, 92, [50, 100, 150, 200, 250]),
+    becher_600: becher(45, 125, [100, 200, 300, 400, 500, 600]),
+    tube: { profil: [...sphere(7.5, 0, 7.5, 0.75), [150, 7.5]], t: 1, bourrelet: true, etiquette_h: 0.72 },
+    eprouvette_50: { profil: [[0, 10.5], [175, 10.5]], t: 1.3, bec: true, pied: true, grad: [10, 20, 30, 40, 50] },
+    erlenmeyer_250: { profil: [[0, 37], [2, 39.5], [80, 16], [92, 14], [118, 14]], t: 1.4, grad: [50, 100, 150, 200] },
+    ampoule_125: { profil: [[54, 1.6], [62, 1.6], ...poire(64, 186, 3, 32, 11), [204, 10.5]], t: 1.5, robinet: 52, tige: true, rode: true },
+    ballon_250: { profil: [...sphere(39.5, 0, 74), [80, 12.5], [118, 12.5]], t: 1.5, rode: true },
+    fiole_500: { profil: [[0, 49], [3, 51], [110, 16], [140, 13], [180, 13]], t: 2.4, tubulure: 155, grad: [100, 200, 300, 400] },
+    buchner_70: { profil: [[0, 33], [4, 35], [40, 35]], t: 3, sans_ombre: true },
+  };
+  const cache = {};
+
+  function polygones(def) {
+    // Polygones intérieur (le liquide) et extérieur (le verre), et lèvres de l'ouverture (bec à droite s'il y en a un).
+    const p = def.profil, H = p[p.length - 1][0], t = def.t;
+    const interieur = [...p.slice().reverse().map(([h, r]) => ({ x: -r, y: -h })), ...p.map(([h, r]) => ({ x: r, y: -h }))];
+    const b = -p[0][0] + t;
+    const exterieur = [...p.slice().reverse().map(([h, r]) => ({ x: -r - t, y: -h })), { x: -p[0][1] - t, y: b }, { x: p[0][1] + t, y: b }, ...p.map(([h, r]) => ({ x: r + t, y: -h }))];
+    const rH = p[p.length - 1][1], levres = { g: { x: -rH, y: -H }, d: def.bec ? { x: rH + 3, y: -H - 1.5 } : { x: rH, y: -H } };
+    return { H, interieur, exterieur, levres };
+  }
+
+  function tables(def, r) {
+    // Volume (mL) et aire en coupe (mm²) jusqu'à chaque demi-millimètre de hauteur.
+    const H = def.profil[def.profil.length - 1][0], h0 = def.profil[0][0], V = [0], A = [0];
+    for (let h = h0 + 0.5; h <= H + 1e-9; h += 0.5) { const m = r(h - 0.25); V.push(V[V.length - 1] + (Math.PI * m * m * 0.5) / 1000); A.push(A[A.length - 1] + 2 * m * 0.5); }
+    const chercher = (T, x) => { let i = 1; while (i < T.length - 1 && T[i] < x) i++; return Math.max(0, i - 1 + (x - T[i - 1]) / Math.max(1e-9, T[i] - T[i - 1])); };
+    const lire = (T, k) => { const i = Math.min(T.length - 2, Math.floor(k)); return T[i] + (T[i + 1] - T[i]) * (k - i); };
+    return { aire_de: (v) => lire(A, chercher(V, v)), volume_de: (a) => lire(V, chercher(A, a)), hauteur_de: (v) => h0 + chercher(V, v) * 0.5 };
+  }
+
+  L.profil = function (nom) {
+    // Construit (une seule fois) la pièce demandée.
+    if (cache[nom]) return cache[nom];
+    const def = DEFS[nom], p = def.profil;
+    const r = (h) => { for (let i = 1; i < p.length; i++) if (h <= p[i][0]) return p[i - 1][1] + ((p[i][1] - p[i - 1][1]) * (h - p[i - 1][0])) / (p[i][0] - p[i - 1][0]); return p[p.length - 1][1]; };
+    const pr = { nom, t: def.t, h0: p[0][0], r, extras: def, ...polygones(def), ...tables(def, r) };
+    pr.graduations = (def.grad || []).map((v) => ({ v, h: pr.hauteur_de(v) }));
+    return (cache[nom] = pr);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : dessin réaliste d'une pièce de verrerie (profil de verrerie_profils.js) dans sa position : ombre portée, verre
+       épais et transparent (bords plus sombres, reflets verticaux), bord supérieur ovale, fond en perspective, liquide en
+       phases avec sa surface (ovale clair si le récipient est droit, ménisque), graduations émaillées blanches, bec,
+       pied d'éprouvette, bourrelet de tube, robinet et col rodé d'ampoule, bouchon.
+Reçoit : le groupe SVG, le profil, la pose { x, y (milieu du fond, px), angle (degrés), e (px par mm) } et l'état
+         { regions : [{ poly (repère du récipient), rgb, alpha }], surface : [p1, p2] ou null, bouchon, robinet, etiquette }.
+Produit : Labo.dessiner_verrerie(g, profil, pose, etat).
+Utilisé par : recipient_physique.js.
+*/
+(function (L) {
+  const chemin = (poly) => (poly.length ? "M" + poly.map((p) => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(" L") + " Z" : "");
+  const VERRE_FOND = "rgba(214,233,240,0.20)", BORD = "rgba(120,150,160,0.85)";
+
+  function verre(g, pr) {
+    // Corps du verre : paroi (entre contour extérieur et intérieur) légèrement teintée, contours, fond épais en perspective.
+    const R = pr.r(pr.h0) + pr.t, ry = 0.12 * R, yb = -pr.h0;
+    L.svg("path", { d: chemin(pr.exterieur) + " " + chemin(pr.interieur), fill: "rgba(200,225,233,0.45)", "fill-rule": "evenodd" }, g);
+    L.svg("path", { d: chemin(pr.interieur), fill: VERRE_FOND }, g);
+    L.svg("path", { d: chemin(pr.exterieur), fill: "none", stroke: BORD, "stroke-width": 0.45 }, g);
+    if (!pr.extras.tige) L.svg("path", { d: `M${-R} ${yb} A${R} ${ry} 0 0 0 ${R} ${yb}`, fill: "none", stroke: "rgba(255,255,255,0.55)", "stroke-width": 0.5 }, g);
+  }
+
+  function reflets(g, pr) {
+    // Deux reflets verticaux sur la gauche, un mince sur la droite (lumière venant de la gauche).
+    const H = pr.H, r = pr.r(H * 0.5);
+    L.svg("rect", { x: -r * 0.78, y: -H * 0.9, width: r * 0.14, height: H * 0.78, rx: r * 0.07, fill: "#fff", opacity: 0.28 }, g);
+    L.svg("rect", { x: -r * 0.55, y: -H * 0.86, width: r * 0.05, height: H * 0.7, fill: "#fff", opacity: 0.2 }, g);
+    L.svg("rect", { x: r * 0.78, y: -H * 0.8, width: r * 0.05, height: H * 0.6, fill: "#fff", opacity: 0.18 }, g);
+  }
+
+  function bord(g, pr) {
+    // Bord supérieur vu un peu d'en haut : anneau ovale (épaisseur du verre), bec éventuel.
+    const H = pr.H, r = pr.r(H), t = pr.t, ry = 0.12 * (r + t);
+    L.svg("ellipse", { cx: 0, cy: -H, rx: r + t / 2, ry, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": t }, g);
+    L.svg("ellipse", { cx: 0, cy: -H, rx: r + t, ry: ry + t / 2, fill: "none", stroke: BORD, "stroke-width": 0.35 }, g);
+    if (pr.extras.bec) L.svg("path", { d: `M${r} ${-H - 0.5} q2.5 -0.5 3.8 -2.2 q-1 2.8 -3.8 3.4`, fill: "rgba(225,240,245,0.9)", stroke: BORD, "stroke-width": 0.35 }, g);
+    if (pr.extras.bourrelet) L.svg("ellipse", { cx: 0, cy: -H, rx: r + t * 1.6, ry: ry + t, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": t * 0.9 }, g);
+  }
+
+  function graduations(g, pr) {
+    // Traits et nombres émaillés en blanc, sur la droite, et la capacité.
+    for (const { v, h } of pr.graduations) {
+      const r = pr.r(h);
+      L.svg("path", { d: `M${r * 0.35} ${-h} H${r * 0.9}`, stroke: "#fff", "stroke-width": 0.5, opacity: 0.9 }, g);
+      L.svg("text", { x: r * 0.3, y: -h + 0.9, "font-size": 2.6, "text-anchor": "end", fill: "#fff", opacity: 0.9, "font-family": "sans-serif" }, g).textContent = String(v);
+    }
+    if (pr.graduations.length) L.svg("text", { x: -pr.r(pr.H * 0.2) * 0.5, y: -pr.H * 0.12, "font-size": 2.8, fill: "#fff", opacity: 0.85, "font-family": "sans-serif" }, g).textContent = `${pr.graduations[pr.graduations.length - 1].v} mL`;
+  }
+
+  function liquide(g, etat) {
+    // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), opacity: ph.alpha }, g);
+    const s = etat.surface;
+    if (!s) return;
+    const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;
+    const haut = etat.regions[0];
+    if (etat.droit) L.svg("ellipse", { cx: mx, cy: my, rx: l, ry: l * 0.12, transform: `rotate(${a} ${mx} ${my})`, fill: L.rgb(haut.rgb.map((v) => Math.min(255, v + 25))), opacity: Math.min(0.9, haut.alpha + 0.15) }, g);
+    L.svg("path", { d: `M${s[0].x} ${s[0].y} L${s[1].x} ${s[1].y}`, stroke: "rgba(255,255,255,0.7)", "stroke-width": 0.4 }, g);
+  }
+
+  L.dessiner_verrerie = function (g, pr, pose, etat) {
+    // Dessine la pièce complète ; tout est dessiné dans le repère du récipient (mm).
+    g.replaceChildren();
+    if (Math.abs(pose.angle || 0) < 2 && etat.ombre !== false && !pr.extras.tige && !pr.extras.sans_ombre) L.svg("ellipse", { cx: pose.x + 4, cy: pose.y + 2, rx: (pr.r(0) + pr.t) * pose.e * 1.05, ry: (pr.r(0) + pr.t) * pose.e * 0.16, fill: "#000", opacity: 0.28 }, g);
+    const l = L.svg("g", { transform: `translate(${pose.x} ${pose.y}) rotate(${pose.angle || 0}) scale(${pose.e})` }, g);
+    verre(l, pr);
+    liquide(l, etat);
+    L.dessin_accessoires?.(l, pr, etat);
+    reflets(l, pr);
+    graduations(l, pr);
+    bord(l, pr);
+    return l;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
+       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
+       étiquette collée.
+Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
+Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
+Utilisé par : verrerie_rendu.js.
+*/
+(function (L) {
+  function robinet(g, pr, ouvert) {
+    // Boisseau du robinet (verre épais), clé en PTFE ; la poignée est dans l'axe quand le robinet est ouvert.
+    const h = pr.extras.robinet;
+    L.svg("rect", { x: -5, y: -h - 5, width: 10, height: 10, rx: 2, fill: "rgba(210,232,240,0.8)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -9, y: -h - 2.2, width: 18, height: 4.4, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    if (ouvert) L.svg("rect", { x: 9, y: -h - 1, width: 2, height: 2, fill: "#1d3f6b" }, g);
+    L.svg("rect", ouvert ? { x: 10, y: -h - 6, width: 3.4, height: 12, rx: 1.2, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 } : { x: 10, y: -h - 1.7, width: 12, height: 3.4, rx: 1.2, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+  }
+
+  function bouchon(g, pr) {
+    // Bouchon rodé en PTFE, enfoncé dans le col.
+    const H = pr.H, r = pr.r(H);
+    L.svg("path", { d: `M${-r + 0.6} ${-H + 9} L${-r - 1.5} ${-H - 3} H${r + 1.5} L${r - 0.6} ${-H + 9} Z`, fill: "#3b7cc4", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -r - 3, y: -H - 7, width: 2 * r + 6, height: 5, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+  }
+
+  function etiquette(g, pr, texte) {
+    // Étiquette blanche collée sur le verre, à mi-hauteur.
+    const h = pr.H * (pr.extras.etiquette_h || 0.42), r = Math.min(pr.r(h) * 0.8, 16);
+    L.svg("rect", { x: -r, y: -h - 4, width: 2 * r, height: 8, rx: 0.8, fill: "#fbfaf3", stroke: "#cfcab8", "stroke-width": 0.3 }, g);
+    L.svg("text", { x: 0, y: -h + 1.2, "font-size": Math.min(3.6, (3.4 * r) / Math.max(4, texte.length * 0.95)), "text-anchor": "middle", "font-weight": 700, fill: "#23315a", "font-family": "sans-serif" }, g).textContent = texte;
+  }
+
+  function tige(g, pr, etat) {
+    // Tige de l'ampoule sous le robinet : vide, sauf quand le liquide s'écoule.
+    const h = pr.extras.robinet;
+    if (etat.coule) L.svg("rect", { x: -1.4, y: -h, width: 2.8, height: h, fill: L.rgb(etat.coule), opacity: 0.85 }, g);
+    L.svg("path", { d: `M-2.8 ${-h} V-1 L-1.6 0 H1.6 L2.8 -1 V${-h}`, fill: "rgba(200,225,233,0.35)", stroke: "rgba(120,150,160,0.85)", "stroke-width": 0.4 }, g);
+  }
+
+  L.dessin_accessoires = function (g, pr, etat) {
+    // Ajoute ce qui va avec la pièce.
+    const x = pr.extras;
+    if (x.rode) L.svg("rect", { x: -pr.r(pr.H) - pr.t, y: -pr.H, width: 2 * (pr.r(pr.H) + pr.t), height: 12, fill: "#ffffff", opacity: 0.35 }, g);
+    if (x.tige) tige(g, pr, etat);
+    if (x.robinet) robinet(g, pr, etat.robinet && etat.robinet.ouvert);
+    if (x.tubulure) L.svg("path", { d: `M${pr.r(x.tubulure) + pr.t - 0.5} ${-x.tubulure - 3.5} H${pr.r(x.tubulure) + 24} V${-x.tubulure + 3.5} H${pr.r(x.tubulure) + pr.t - 0.5}`, fill: "rgba(205,228,236,0.6)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.5 }, g);
+    if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    if (etat.bouchon) bouchon(g, pr);
+    if (etat.etiquette) etiquette(g, pr, etat.etiquette);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : récipient de liquide qui respecte la physique : la surface reste perpendiculaire à la pesanteur apparente (elle
+       penche quand on accélère le récipient et oscille ensuite, comme un vrai liquide qui ballotte) ; le liquide qui
+       dépasse la lèvre la plus basse déborde (débit d'un déversoir) ; un robinet ouvert laisse couler le liquide du bas
+       (loi de Torricelli, v = √(2gh)), sauf si le récipient est bouché (l'air ne peut pas entrer).
+Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet }.
+Produit : Labo.recipient(ctx, reglage) -> { id, pr, pose, c, bouchon, robinet, pas(dt), etat(), monde(p) (p dans le repère du
+          récipient, y vers le bas, mm), interieur_monde(), dessiner() }.
+Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
+*/
+(function (L) {
+  const G = L.geometrie, g_mm = 9810, RAIDEUR = 300, AMORTI = 5;
+  const rad = (a) => (a * Math.PI) / 180;
+
+  function regions(r) {
+    // Région de chaque phase dans le repère du récipient (du bas vers le haut), et la corde de la surface.
+    // Chaque phase occupe la tranche comprise entre deux niveaux (elles ne se recouvrent pas).
+    const u = r.normale(), out = [], bas = { x: -u.x, y: -u.y };
+    let V = 0, s = null;
+    const phases = r.c.emulsion > 0.5 ? [{ ...r.c.phases[0], V: r.c.volume(), melange: true }] : r.c.phases;
+    for (const ph of phases) {
+      V += ph.V;
+      const n = G.niveau(r.pr.interieur, u, r.pr.aire_de(V)), poly = s === null ? n.region : G.couper(n.region, bas, -s);
+      out.push({ poly, ...(ph.melange ? melange(r.c) : r.c.couleur(ph)) }); s = n.s;
+    }
+    return { regions: out.reverse(), s, u };
+  }
+
+  function melange(c) {
+    // Couleur d'une émulsion : moyenne des phases, trouble.
+    const cs = c.phases.map((p) => ({ ...c.couleur(p), V: p.V })), V = c.volume();
+    return { rgb: [0, 1, 2].map((i) => cs.reduce((s, p) => s + (p.rgb[i] * p.V) / V, 0)), alpha: Math.min(0.92, cs.reduce((s, p) => s + (p.alpha * p.V) / V, 0) + 0.25) };
+  }
+
+  function corde(region, u, s) {
+    // Les deux extrémités de la surface libre (points de la région situés sur la droite u·p = s).
+    const sur = region.filter((p) => Math.abs(G.pv(u, p) - s) < 0.05);
+    if (sur.length < 2) return null;
+    const t = { x: -u.y, y: u.x };
+    sur.sort((a, b) => G.pv(t, a) - G.pv(t, b));
+    return [sur[0], sur[sur.length - 1]];
+  }
+
+  function deborder(r, dt, u, s) {
+    // Liquide au-dessus de la lèvre la plus basse : il s'écoule (débit d'un déversoir de 15 mm de large).
+    if (r.bouchon || !r.c.volume()) return;
+    const lev = [r.pr.levres.g, r.pr.levres.d].sort((a, b) => G.pv(u, a) - G.pv(u, b))[0], h = s - G.pv(u, lev);
+    if (h <= 0.05) return;
+    const q = 0.6 * 15 * Math.pow(h, 1.5) * Math.sqrt(2 * g_mm) / 1000, V = Math.min(r.c.volume(), q * dt);
+    const sens = Math.sign(lev.x) || 1, v = Math.sqrt(2 * g_mm * h) * r.pose.e, a = rad(r.pose.angle);
+    r.sortie(lev, { x: sens * Math.cos(a) * v * 0.22 + r.vitesse.x, y: Math.abs(Math.sin(a)) * v * 0.22 + r.vitesse.y }, r.c.retirer(V, "haut"), V);
+  }
+
+  function vidanger(r, dt, u, s) {
+    // Robinet ouvert : vidange par la pointe (orifice de 2 mm) ; bouché, le flacon ne laisse couler que quelques gouttes.
+    if (!r.robinet || !r.robinet.ouvert || !r.c.volume()) return;
+    if (r.bouchon && r.robinet.air <= 0) return;
+    const pointe = { x: 0, y: 0 }, h = Math.max(0, s - G.pv(u, pointe)), v = Math.sqrt(2 * g_mm * h);
+    const V = Math.min(r.c.volume(), (0.6 * Math.PI * 1 * v * dt) / 1000);
+    if (r.bouchon) r.robinet.air -= V;
+    if (V > 0) r.coule = r.c.couleur(r.c.phases[0]).rgb;
+    if (V <= 0) return;
+    r.sortie(pointe, { x: r.vitesse.x, y: v * r.pose.e * 0.5 + r.vitesse.y }, r.c.retirer(V, "bas"), V);
+  }
+
+  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "" }) {
+    // Construit le récipient et l'inscrit dans l'écoulement de la paillasse.
+    const pr = L.profil(profil);
+    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
+    r.normale = () => { const a = r.phi - rad(r.pose.angle); return { x: Math.sin(a), y: -Math.cos(a) }; };
+    r.monde = (p) => G.transformer([{ x: p.x, y: -p.y }], r.pose)[0];
+    r.interieur_monde = () => G.transformer(pr.interieur.map((p) => ({ x: p.x, y: -p.y })), r.pose);
+    r.sortie = (p, v, parts, V) => ctx.ecoulement.emettre(r, r.monde(p), v, parts, V);
+    r.pas = (dt) => {
+      // Ballottement (oscillateur amorti vers l'angle de la pesanteur apparente), puis débordement et robinet.
+      const cible = Math.atan2(r.acc.x, g_mm * r.pose.e), cle = `${r.c.volume().toFixed(4)} ${r.pose.angle} ${r.bouchon} ${r.robinet?.ouvert}`;
+      // Liquide au repos dans un récipient immobile : rien ne change (on évite de recalculer la surface).
+      if (!r.tenu && Math.abs(r.w) < 1e-3 && Math.abs(r.phi - cible) < 1e-4 && cle === r.cle && !r.c.emulsion) return;
+      r.cle = cle;
+      r.w += (-RAIDEUR * (r.phi - cible) - AMORTI * r.w) * dt; r.phi = Math.max(-1.2, Math.min(1.2, r.phi + r.w * dt));
+      if (r.bouchon && Math.hypot(r.acc.x, r.acc.y) > 2500) r.c.agiter(dt * 2); else r.c.decanter(dt);
+      const k = Math.exp(-dt / 0.06); r.acc.x *= k; r.acc.y *= k; r.vitesse.x *= k; r.vitesse.y *= k;
+      const { s, u } = regions(r);
+      r.coule = null;
+      deborder(r, dt, u, s); vidanger(r, dt, u, s);
+    };
+    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, coule: r.coule }; };
+    r.dessiner = () => L.dessiner_verrerie(r.g, pr, r.pose, r.etat());
+    ctx.ecoulement.ajouter(r);
+    r.dessiner();
+    return r;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : écoulement des liquides sur une paillasse de chimie : le liquide qui sort d'un récipient (débordement, robinet)
+       tombe en chute libre (pesanteur réelle, 9,81 m/s² à l'échelle de la scène) sous forme d'un filet ; il entre dans
+       le récipient ouvert qu'il rencontre, ou se renverse sur la paillasse (flaque). Boucle d'animation de la paillasse.
+Reçoit : le contexte de la paillasse { objets, haut } et { sol (y de la paillasse, px), e (px/mm) }.
+Produit : Labo.dans_polygone(poly, p) ; Labo.ecoulement(ctx, reglage) -> { ajouter(r), ajouter_cible({ contient(p), recevoir(goutte) }) (surface qui reçoit des
+          gouttes : verre de montre, papier), emettre(source, p, v, parts, V), renverse (mL), sur_pas(f) } ;
+          ctx.ecoulement est créé.
+Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de chimie.
+*/
+(function (L) {
+  function dedans(poly, p) {
+    // Le point est-il dans le polygone (méthode du rayon) ?
+    let ok = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const a = poly[i], b = poly[j];
+      if (a.y > p.y !== b.y > p.y && p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x) ok = !ok;
+    }
+    return ok;
+  }
+
+  L.dans_polygone = dedans;
+
+  L.ecoulement = function (ctx, { sol, e = 1.6 }) {
+    // Particules de liquide, flaques, boucle d'animation (dessin des récipients qui bougent ou qui coulent).
+    const E = { recipients: [], cibles: [], gouttes: [], flaques: [], renverse: 0, ecouteurs: [], g: 9810 * e };
+    const calque = L.svg("g", { class: "ecoulement", "pointer-events": "none" }, ctx.haut), sol_g = L.svg("g", { class: "flaques", "pointer-events": "none" }, ctx.fond);
+    E.ajouter = (r) => E.recipients.push(r);
+    E.ajouter_cible = (c) => E.cibles.push(c);
+    E.sur_pas = (f) => E.ecouteurs.push(f);
+    E.emettre = (source, p, v, parts, V) => {
+      // Une portion de liquide quitte un récipient en p (px), à la vitesse v (px/s).
+      if (V <= 0) return;
+      const c = source.c.phases.length ? source.c.couleur(source.c.phases[source.c.phases.length - 1]) : { rgb: [220, 235, 245], alpha: 0.5 };
+      E.gouttes.push({ x: p.x, y: p.y, vx: v.x, vy: v.y, parts, V, rgb: c.rgb, source, t: performance.now() });
+    };
+    const recevoir = (gt) => E.recipients.find((r) => r !== gt.source && !r.bouchon && dedans(r.interieur_monde(), gt));
+    function deplacer(dt) {
+      // Chute libre de chaque portion ; entrée dans un récipient, ou flaque sur la paillasse.
+      for (const gt of E.gouttes) {
+        gt.vy += E.g * dt; gt.x += gt.vx * dt; gt.y += gt.vy * dt;
+        const cb = E.cibles.find((c) => c.contient(gt));
+        if (cb) { gt.fini = true; cb.recevoir(gt); continue; }
+        const r = recevoir(gt);
+        if (r) { gt.fini = true; gt.parts.forEach((p) => r.c.verser(p)); r.sale = true; continue; }
+        if (gt.y >= sol && !dedans(gt.source.interieur_monde(), gt)) {
+          gt.fini = true; E.renverse += gt.V;
+          const f = E.flaques.find((q) => Math.abs(q.x - gt.x) < 30) || (E.flaques.push({ x: gt.x, V: 0, rgb: gt.rgb }), E.flaques[E.flaques.length - 1]);
+          f.V += gt.V;
+        }
+      }
+      E.gouttes = E.gouttes.filter((gt) => !gt.fini);
+    }
+    function dessiner() {
+      // Filet : les portions successives d'un même récipient sont reliées ; flaques : ovales qui s'étalent.
+      calque.replaceChildren();
+      let prec = null;
+      for (const gt of E.gouttes) {
+        if (prec && prec.source === gt.source && Math.hypot(prec.x - gt.x, prec.y - gt.y) < 40) {
+          // Bord du filet un peu plus sombre (on voit aussi un filet d'eau incolore), puis le liquide.
+          L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: "rgba(110,140,155,0.55)", "stroke-width": 3.6, "stroke-linecap": "round" }, calque);
+          L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: L.rgb(gt.rgb), "stroke-width": 2.2, "stroke-linecap": "round", opacity: 0.9 }, calque);
+        }
+        else L.svg("circle", { cx: gt.x, cy: gt.y, r: 1.6, fill: L.rgb(gt.rgb), opacity: 0.85 }, calque);
+        prec = gt;
+      }
+      sol_g.replaceChildren();
+      for (const f of E.flaques) L.svg("ellipse", { cx: f.x, cy: sol + 3, rx: 6 + 7 * Math.sqrt(f.V), ry: 1.5 + 1.6 * Math.sqrt(f.V), fill: L.rgb(f.rgb), opacity: 0.55 }, sol_g);
+    }
+    let avant = null;
+    const image = (t) => {
+      const dt = avant === null ? 0 : Math.min(0.033, (t - avant) / 1000); avant = t;
+      if (dt > 0) {
+        // Pas fins (4 ms) pour une chute et un ballottement stables.
+        for (let k = 0, n = Math.ceil(dt / 0.004); k < n; k++) { for (const r of E.recipients) r.pas(dt / n); deplacer(dt / n); }
+        for (const r of E.recipients) {
+          // On ne redessine que les récipients dont l'aspect a changé.
+          const sig = `${r.pose.x} ${r.pose.y} ${r.pose.angle} ${r.phi.toFixed(3)} ${r.c.volume().toFixed(3)} ${r.c.phases.length} ${r.c.emulsion.toFixed(2)} ${(r.c.avance || 0).toFixed(3)} ${r.bouchon} ${r.robinet?.ouvert} ${r.coule}`;
+          if (sig !== r.sig) { r.sig = sig; r.dessiner(); }
+        }
+        if (E.gouttes.length || E.trace) dessiner();
+        E.trace = E.gouttes.length > 0;
+        E.ecouteurs.forEach((f) => f(dt));
+      }
+      requestAnimationFrame(image);
+    };
+    requestAnimationFrame(image);
+    ctx.ecoulement = E;
+    return E;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pipette compte-gouttes aux vraies dimensions, rangée dans son flacon (30 mL, verre teinté, étiquette) ou dans un
+       bécher d'échantillon (pipette Pasteur à tétine rouge) : on la sort (elle contient 1 mL, pris dans le bécher), on la
+       lâche au-dessus d'un récipient ou d'un verre de montre où elle reste tenue ; tant qu'on appuie sur la poire, une goutte
+       de 0,05 mL se forme toutes les 0,3 s et tombe (chute libre, ecoulement.js) là où elle tombe vraiment. Remise dans son
+       flacon ou son bécher, elle se remplit de nouveau.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte } (flacon) ou
+         { id, becher (récipient fixe de recipient_physique.js), e } (pipette Pasteur dans un bécher : elle est dessinée
+         derrière la paroi avant et le liquide du bécher).
+Produit : Labo.flacon_gouttes(ctx, reglage) -> { pipette : { charge (mL), tenue } }.
+Utilisé par : les simulations de chimie.
+*/
+(function (L) {
+  const GOUTTE = 0.05;
+
+  function flacon(g, ouvert, texte, rgb) {
+    // Flacon de 30 mL (repère en mm, fond en (0, 0)) : verre brun, épaule, col ; étiquette.
+    g.replaceChildren();
+    L.svg("ellipse", { cx: 2, cy: 1, rx: 19, ry: 3.5, fill: "#000", opacity: 0.3 }, g);
+    L.svg("path", { d: "M-17 -2 V-52 Q-17 -62 -7 -64 V-72 H7 V-64 Q17 -62 17 -52 V-2 Q17 0 15 0 H-15 Q-17 0 -17 -2 Z", fill: "#6b3a12", opacity: 0.9, stroke: "#2b1606", "stroke-width": 0.5 }, g);
+    L.svg("rect", { x: -15, y: -40, width: 30, height: 36, fill: L.rgb(rgb), opacity: 0.25 }, g);
+    L.svg("rect", { x: -12, y: -14 - 40, width: 3, height: 46, rx: 1.5, fill: "#fff", opacity: 0.18 }, g);
+    L.svg("rect", { x: -14, y: -46, width: 28, height: 22, fill: "#f7f3e6", stroke: "#bdb59c", "stroke-width": 0.4 }, g);
+    String(texte).split("\n").forEach((t, i, tout) => L.svg("text", { x: 0, y: -36 + i * 5 - 2.5 * (tout.length - 1), "font-size": 4, "font-weight": 700, "text-anchor": "middle", fill: "#222", "font-family": "sans-serif" }, g).textContent = t);
+    if (ouvert) L.svg("ellipse", { cx: 0, cy: -72, rx: 6, ry: 1.6, fill: "#1a0d04" }, g);
+  }
+
+  function pipette(g, entiere, charge, rgb, pasteur) {
+    // Pipette, pointe en (0, 0) : tube de verre effilé (60 mm), bague, poire en caoutchouc (22 mm).
+    g.replaceChildren();
+    if (entiere) {
+      L.svg("path", { d: "M-0.8 0 L-3 -24 V-60 H3 V-24 L0.8 0 Z", fill: "rgba(214,233,240,0.55)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+      if (charge > 0) L.svg("path", { d: `M-0.6 -1 L-2.2 -18 V${-18 - 30 * charge} H2.2 V-18 L0.6 -1 Z`, fill: L.rgb(rgb), opacity: 0.85 }, g);
+      L.svg("rect", { x: -1.6, y: -58, width: 1.2, height: 50, fill: "#fff", opacity: 0.4 }, g);
+    }
+    if (!pasteur) L.svg("rect", { x: -7, y: -68, width: 14, height: 8, rx: 1.5, fill: "#2a2a2c" }, g);
+    L.svg("path", { d: `M-6 ${pasteur ? -60 : -68} V-80 Q-6 -92 0 -92 Q6 -92 6 -80 V${pasteur ? -60 : -68} Z`, fill: pasteur ? "#c4472b" : "#1d1d1f" }, g);
+    L.svg("path", { d: "M-3 -88 V-72", stroke: "#fff", "stroke-width": 1, opacity: 0.25 }, g);
+  }
+
+  function cible_sous(ctx, p) {
+    // Y a-t-il, sous la pointe, un récipient ouvert ou une surface qui peut recevoir des gouttes ?
+    const E = ctx.ecoulement;
+    for (let y = p.y; y < p.y + 260; y += 6) {
+      const q = { x: p.x, y };
+      if (E.cibles.some((c) => c.contient(q)) || E.recipients.some((r) => !r.bouchon && L.dans_polygone(r.interieur_monde(), q))) return true;
+    }
+    return false;
+  }
+
+  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null }) {
+    // Flacon fixe (ou bécher) ; pipette déplaçable ; gouttes tant qu'on appuie sur la poire.
+    const g_f = becher ? null : L.svg("g", { class: `flacon flacon-${id}` }, ctx.fond), g_p = L.svg("g", { class: `pipette pipette-${id}`, role: "button" }, ctx.objets);
+    const nom = () => liquide || Object.entries(becher.c.phases[0]?.liquides || { eau: 1 }).sort((a, b) => b[1] - a[1])[0][0];
+    if (becher) becher.g.setAttribute("pointer-events", "none");
+    const repos = becher ? { x: becher.pose.x + 8 * e, y: becher.pose.y - 6 * e } : { x, y: sol - 12 * e };
+    const p = { charge: 0, tenue: false, pos: { ...repos } }, source = { c: L.contenu({}), interieur_monde: () => [] };
+    const dessiner = () => {
+      const rgb = L.LIQUIDES[nom()].rgb;
+      if (g_f) { flacon(g_f, p.tenue, texte, rgb); L.placer(g_f, x, sol, e); }
+      pipette(g_p, p.tenue || !!becher, p.charge, rgb, !!becher); L.placer(g_p, p.pos.x, p.pos.y, e);
+    };
+    const remplir = () => {
+      // Aspiration : 1 mL (pris dans le bécher, s'il y en a un).
+      const parts = becher ? becher.c.retirer(Math.min(1, becher.c.volume()), "bas") : [{ liquides: { [liquide]: 1 }, dissous: { ...(L.LIQUIDES[liquide].dissous || {}) }, classe: L.LIQUIDES[liquide].classe }];
+      source.c = L.contenu({}); parts.forEach((q) => source.c.verser(q)); p.charge = source.c.volume();
+    };
+    const ranger = () => { Object.assign(p, { tenue: false, pos: { ...repos } }); remplir(); if (becher) ctx.objets.insertBefore(g_p, becher.g); else ctx.objets.append(g_p); dessiner(); };
+    let goutteur = null;
+    const arreter = () => { clearInterval(goutteur); goutteur = null; };
+    const goutte = () => {
+      // Une goutte quitte la pointe (vitesse initiale presque nulle).
+      if (p.charge < 0.02) return arreter();
+      const v = Math.min(GOUTTE, p.charge); p.charge -= v;
+      ctx.ecoulement.emettre(source, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 20 }, source.c.retirer(v), v); dessiner();
+    };
+    L.glissable(g_p, {
+      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } return { ...p.pos }; },
+      saisir: () => { p.tenue = true; ctx.haut.append(g_p); dessiner(); },
+      deplacer: (q) => { p.pos = q; dessiner(); },
+      lacher: (q) => { if (Math.hypot(q.x - repos.x, q.y - repos.y) < 16 || !cible_sous(ctx, q)) return ranger(); p.pos = q; dessiner(); },
+    });
+    ranger();
+    return { pipette: p };
   };
 })(window.Labo);
 </script>
@@ -2313,7 +3048,7 @@ Utilisé par : les simulations de chimie (industrie chimique, techniques traditi
 </script>
   <script>
 /*
-Rôle : six produits posés sur la paillasse, chacun avec son étiquette à lire : gousse de vanille, sachet de sucre vanilliné,
+Rôle : six produits posés sur la paillasse, à leur taille réelle, chacun avec son étiquette à lire : gousse de vanille, sachet de sucre vanilliné,
        citron, tube de comprimés de vitamine C, bobine de fil de nylon, boîte d'aspirine. Un toucher ouvre l'étiquette.
 Reçoit : le groupe SVG de la paillasse et le nom du fait à noter.
 Produit : Labo.produits_etiquettes(g, fait) ; fait « <fait> » = [noms des produits dont l'étiquette a été lue].
@@ -2321,12 +3056,12 @@ Utilisé par : postes_a3.js.
 */
 (function (L) {
   const PRODUITS = [
-    { nom: "vanille", x: 270, titre: "Gousse de vanille", texte: "Fruit séché du vanillier (une orchidée). Contient de la vanilline, C₈H₈O₃, et d'autres espèces odorantes." },
-    { nom: "sucre", x: 360, titre: "Sucre vanilliné", texte: "Ingrédients : sucre, vanilline. Vanilline obtenue par synthèse : même formule que celle de la gousse, C₈H₈O₃." },
-    { nom: "citron", x: 450, titre: "Citron", texte: "Fruit du citronnier. Contient de l'acide ascorbique (vitamine C), C₆H₈O₆." },
-    { nom: "vitamine", x: 540, titre: "Vitamine C 500 mg", texte: "Comprimés d'acide ascorbique, C₆H₈O₆, fabriqué par l'industrie chimique (synthèse)." },
-    { nom: "nylon", x: 630, titre: "Fil de pêche en nylon", texte: "Nylon (un polyamide) obtenu par synthèse. Le nylon n'existe pas dans la nature." },
-    { nom: "aspirine", x: 720, titre: "Aspirine 500 mg", texte: "Acide acétylsalicylique obtenu par synthèse. Il n'existe pas dans la nature (l'écorce de saule contient une espèce voisine)." },
+    { nom: "vanille", x: 300, k: 3, titre: "Gousse de vanille", texte: "Fruit séché du vanillier (une orchidée). Contient de la vanilline, C₈H₈O₃, et d'autres espèces odorantes." },
+    { nom: "sucre", x: 450, k: 2.6, titre: "Sucre vanilliné", texte: "Ingrédients : sucre, vanilline. Vanilline obtenue par synthèse : même formule que celle de la gousse, C₈H₈O₃." },
+    { nom: "citron", x: 560, k: 2.2, titre: "Citron", texte: "Fruit du citronnier. Contient de l'acide ascorbique (vitamine C), C₆H₈O₆." },
+    { nom: "vitamine", x: 650, k: 2.6, titre: "Vitamine C 500 mg", texte: "Comprimés d'acide ascorbique, C₆H₈O₆, fabriqué par l'industrie chimique (synthèse)." },
+    { nom: "nylon", x: 735, k: 2.2, titre: "Fil de pêche en nylon", texte: "Nylon (un polyamide) obtenu par synthèse. Le nylon n'existe pas dans la nature." },
+    { nom: "aspirine", x: 825, k: 2.4, titre: "Aspirine 500 mg", texte: "Acide acétylsalicylique obtenu par synthèse. Il n'existe pas dans la nature (l'écorce de saule contient une espèce voisine)." },
   ];
 
   const DESSINS = {
@@ -2348,9 +3083,9 @@ Utilisé par : postes_a3.js.
   function etiquette(calque, p) {
     // Grande étiquette lue, au-dessus du produit.
     calque.replaceChildren();
-    const x = Math.max(160, Math.min(860, p.x)), y = 300, lignes = [""];
+    const x = Math.max(160, Math.min(860, p.x)), y = 250, lignes = [""];
     for (const m of p.texte.split(" ")) { if ((lignes[lignes.length - 1] + " " + m).length > 44) lignes.push(m); else lignes[lignes.length - 1] = (lignes[lignes.length - 1] + " " + m).trim(); }
-    L.svg("line", { x1: p.x, y1: 470, x2: x, y2: y + 24 + lignes.length * 11, stroke: "#55606a", "stroke-dasharray": "3 2" }, calque);
+    L.svg("line", { x1: p.x, y1: 420, x2: x, y2: y + 24 + lignes.length * 11, stroke: "#55606a", "stroke-dasharray": "3 2" }, calque);
     L.svg("rect", { x: x - 130, y, width: 260, height: 28 + lignes.length * 11, rx: 3, fill: "#fffdf4", stroke: "#b9b19a", filter: "url(#ombre)" }, calque);
     L.texte(calque, x, y + 12, `Étiquette : ${p.titre}`, { "font-size": 8.5, "font-weight": 700, fill: "#23315a" });
     lignes.forEach((t, i) => L.texte(calque, x, y + 25 + i * 11, t, { "font-size": 8, fill: "#222" }));
@@ -2358,10 +3093,12 @@ Utilisé par : postes_a3.js.
 
   L.produits_etiquettes = function (g, fait) {
     // Dessine les produits ; toucher un produit ouvre son étiquette et la note comme lue.
-    const calque = L.svg("g", { "pointer-events": "none" }, g), lus = new Set(), y = 520;
+    const calque = L.svg("g", { "pointer-events": "none" }, g), lus = new Set(), y = 515;
     for (const p of PRODUITS) {
-      const e = L.svg("g", { class: `produit produit-${p.nom}`, role: "button", "aria-label": p.titre, filter: "url(#ombre)" }, g);
-      L.svg("rect", { x: p.x - 40, y: y - 52, width: 80, height: 66, fill: "#000", opacity: 0 }, e);
+      // Chaque dessin (fait à petite échelle) est agrandi autour de sa base pour avoir la taille réelle du produit.
+      const e = L.svg("g", { class: `produit produit-${p.nom}`, role: "button", "aria-label": p.titre, filter: "url(#ombre)", transform: `translate(${p.x} ${y}) scale(${p.k}) translate(${-p.x} ${-y})` }, g);
+      // Zone que l'on touche : 84 × 135 px à l'écran, quel que soit l'agrandissement.
+      L.svg("rect", { x: p.x - 42 / p.k, y: y - 120 / p.k, width: 84 / p.k, height: 135 / p.k, fill: "#000", opacity: 0 }, e);
       DESSINS[p.nom](e, p.x, y);
       L.glissable(e, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { etiquette(calque, p); lus.add(p.nom); L.missions.noter(fait, [...lus]); } });
     }
@@ -2394,7 +3131,7 @@ Utilisé par : postes_a3.js.
 Rôle : paillasses de l'activité 3 : (1) inventaire des espèces trouvées dans l'orange et dans le papier (tableau à
        classer, flacons des tests) ; (2) naturelle, synthétique ou artificielle ? (étiquettes de six produits, tableau à
        trois colonnes) ; (3) documents sur l'industrie chimique.
-Reçoit : le groupe SVG de chaque paillasse.
+Reçoit : le groupe SVG de chaque paillasse (flacons compte-gouttes du matériel physique, aux vraies dimensions).
 Produit : Labo.poste_inventaire, Labo.poste_origine, Labo.poste_documents (groupe) -> { pense_bete } ;
           Labo.ETIQUETTES_A3 = { inventaire, origine } ; faits « tri_inventaire », « tri_origine », « etiquettes_lues », « documents_lus ».
 Utilisé par : simulation.js.
@@ -2424,7 +3161,9 @@ Utilisé par : simulation.js.
     L.affiche_securite(g, 780, 56);
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
     L.tableau_tri(g, { x: 300, y: 40, largeur: 440, hauteur: 330, titre: "Inventaire des espèces trouvées", colonnes: ["Dans l'orange", "Dans le papier"], etiquettes: melanger(INVENTAIRE), fait: "tri_inventaire" });
-    [["Eau\niodée", 330, "eau_iodee"], ["Liqueur de\nFehling", 400, "fehling"], ["Phénol-\nphtaléine", 470, "phenolphtaleine"]].forEach(([t, x, r]) => L.verrerie.flacon(L.svg("g", {}, g), x, 500, t, { liquide: L.rgb(L.CHIMIE.reactifs[r].rgb), bouchon: true }));
+    const ctx = L.paillasse_chimie(g);
+    L.ecoulement(ctx, { sol: 576, e: 1.6 });
+    [["Eau\niodée", 330, "eau_iodee"], ["Liqueur de\nFehling", 420, "fehling"], ["Phénol-\nphtaléine", 510, "phenolphtaleine"]].forEach(([texte, x, liquide]) => L.flacon_gouttes(ctx, { id: liquide, x, sol: 562, e: 1.6, liquide, texte }));
     return { pense_bete };
   };
 

@@ -20,9 +20,9 @@ Utilisé par : simulation.js.
 
   function couteau(g, etat, couper) {
     // Couteau déplaçable : posé sur l'orange entière, il la coupe en deux.
-    const c = L.svg("g", { class: "couteau", role: "button", "aria-label": "Couteau" }, g), repos = { x: 520, y: 528 };
-    D.couteau(c); L.placer(c, repos.x, repos.y);
-    L.glissable(c, { debut: () => ({ ...repos }), deplacer: (p) => L.placer(c, p.x, p.y), lacher: (p) => { L.placer(c, repos.x, repos.y); if (!etat.coupee && Math.hypot(p.x - 390, p.y - 444) < 45) couper(); } });
+    const c = L.svg("g", { class: "couteau", role: "button", "aria-label": "Couteau" }, g), repos = { x: 570, y: 552 };
+    D.couteau(c); L.placer(c, repos.x, repos.y, 3);
+    L.glissable(c, { debut: () => ({ ...repos }), deplacer: (p) => L.placer(c, p.x, p.y, 3), lacher: (p) => { L.placer(c, repos.x, repos.y, 3); if (!etat.coupee && Math.hypot(p.x - 400, p.y - 428) < 70) couper(); } });
   }
 
   L.poste_orange = function (g) {
@@ -30,29 +30,29 @@ Utilisé par : simulation.js.
     D.degrades(g);
     L.affiche_securite(g, 780, 56);
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), etat = { coupee: false, jus: false };
-    D.planche(g, 280, 470);
+    D.planche(g, 230, 462);
     const g_presse = L.svg("g", {}, g), g_orange = L.svg("g", { class: "orange" }, g), g_peau = L.svg("g", {}, g), g_pulpe = L.svg("g", { class: "demi-orange", role: "button", "aria-label": "Demi-orange" }, g);
     const dessiner = () => {
       [g_presse, g_orange, g_peau, g_pulpe].forEach((e) => e.replaceChildren());
-      D.presse(g_presse, 700, 478, etat.jus ? 1 : 0);
+      D.presse(g_presse, 760, 482, etat.jus ? 1 : 0);
       L.missions.noter("orange", { ...etat });
-      if (!etat.coupee) return D.orange(g_orange, 390, 444);
-      D.demi_peau(g_peau, 440, 466);
-      if (etat.jus) D.ecorce(g_peau, 790, 502); else D.demi_pulpe(g_pulpe, 345, 458);
+      if (!etat.coupee) return D.orange(g_orange, 400, 428);
+      D.demi_peau(g_peau, 500, 484);
+      if (etat.jus) D.ecorce(g_peau, 320, 482); else D.demi_pulpe(g_pulpe, 320, 476);
     };
     couteau(g, etat, () => { etat.coupee = true; dessiner(); });
     L.glissable(g_pulpe, {
       debut: () => (etat.coupee && !etat.jus ? { x: 0, y: 0 } : null), deplacer: (p) => L.placer(g_pulpe, p.x, p.y),
-      lacher: (p) => { L.placer(g_pulpe, 0, 0); if (Math.hypot(345 + p.x - 700, 458 + p.y - 440) < 50) { etat.jus = true; dessiner(); } },
+      lacher: (p) => { L.placer(g_pulpe, 0, 0); if (Math.hypot(320 + p.x - 760, 476 + p.y - 440) < 70) { etat.jus = true; dessiner(); } },
     });
     dessiner();
     L.cartes_sens(g, {
-      fait: "sens_orange", x: 250, y: 557, loupe: { x: 660, y: 545 },
+      fait: "sens_orange", x: 250, y: 557, loupe: { x: 910, y: 430 },
       cibles: [
-        cible("orange", "orange entière", () => (!etat.coupee ? { x: 390, y: 444, r: 30 } : null), "peau"),
-        cible("pulpe", "pulpe", () => (etat.coupee && !etat.jus ? { x: 345, y: 458, r: 28 } : null), "pulpe"),
-        cible("peau", "peau", () => (etat.coupee ? { x: 440, y: 452, r: 28 } : null), "peau"),
-        cible("jus", "jus", () => (etat.jus ? { x: 700, y: 470, r: 40 } : null), "jus"),
+        cible("orange", "orange entière", () => (!etat.coupee ? { x: 400, y: 428, r: 60 } : null), "peau"),
+        cible("pulpe", "pulpe", () => (etat.coupee && !etat.jus ? { x: 320, y: 476, r: 56 } : null), "pulpe"),
+        cible("peau", "peau", () => (etat.coupee ? { x: 500, y: 460, r: 56 } : null), "peau"),
+        cible("jus", "jus", () => (etat.jus ? { x: 760, y: 470, r: 74 } : null), "jus"),
       ],
     });
     return { pense_bete };
@@ -62,11 +62,11 @@ Utilisé par : simulation.js.
     // Paillasse 2 : une feuille de papier ; l'ouïe la froisse.
     L.affiche_securite(g, 780, 56);
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), feuille = L.svg("g", { class: "papier" }, g), etat = { froisse: false };
-    const dessiner = () => { feuille.replaceChildren(); D.papier(feuille, 450, 492, etat.froisse); L.missions.noter("papier", { ...etat }); };
+    const dessiner = () => { feuille.replaceChildren(); D.papier(feuille, 470, 470, etat.froisse); L.missions.noter("papier", { ...etat }); };
     dessiner();
     L.cartes_sens(g, {
-      fait: "sens_papier", x: 250, y: 557, loupe: { x: 660, y: 545 },
-      cibles: [cible("papier", "papier", () => ({ x: 450, y: 492, r: 55 }), "papier", { ouie: () => { etat.froisse = true; dessiner(); } })],
+      fait: "sens_papier", x: 250, y: 557, loupe: { x: 910, y: 430 },
+      cibles: [cible("papier", "papier", () => ({ x: 470, y: 470, r: 120 }), "papier", { ouie: () => { etat.froisse = true; dessiner(); } })],
     });
     return { pense_bete };
   };

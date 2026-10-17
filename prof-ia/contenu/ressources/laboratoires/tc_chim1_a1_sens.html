@@ -1980,6 +1980,8 @@ Utilisé par : postes_sens.js, cartes_sens.js.
 */
 (function (L) {
   const PEAU = { fill: "url(#peau-orange)" }, R = 30;
+  // Les dessins sont faits à la moitié de la taille réelle, puis agrandis autour de leur point d'appui (orange de 75 mm).
+  const agrandi = (g, x, y, k = 2) => L.svg("g", { transform: `translate(${x} ${y}) scale(${k}) translate(${-x} ${-y})` }, g);
 
   function degrades(g) {
     // Dégradés de la peau et de la pulpe (une seule fois par paillasse).
@@ -1997,6 +1999,7 @@ Utilisé par : postes_sens.js, cartes_sens.js.
     degrades,
     orange(g, x, y) {
       // Orange entière posée (centre x, y) : ombre, peau granuleuse, petite cicatrice du pédoncule.
+      g = agrandi(g, x, y);
       L.svg("ellipse", { cx: x + 4, cy: y + R - 2, rx: R, ry: 6, fill: "#000", opacity: 0.3 }, g);
       L.svg("circle", { cx: x, cy: y, r: R, ...PEAU }, g);
       pores(g, x, y, R);
@@ -2004,6 +2007,7 @@ Utilisé par : postes_sens.js, cartes_sens.js.
     },
     demi_pulpe(g, x, y) {
       // Demi-orange posée sur sa peau, face coupée vers le haut : écorce, albédo blanc, quartiers, pépin.
+      g = agrandi(g, x, y);
       L.svg("ellipse", { cx: x + 4, cy: y + R * 0.55, rx: R, ry: 5, fill: "#000", opacity: 0.3 }, g);
       L.svg("path", { d: `M${x - R} ${y} A${R} ${R * 0.42} 0 0 0 ${x + R} ${y} A${R} ${R * 0.9} 0 0 1 ${x - R} ${y} Z`, ...PEAU }, g);
       L.svg("ellipse", { cx: x, cy: y, rx: R, ry: R * 0.42, fill: "#f4d9a8" }, g);
@@ -2014,31 +2018,34 @@ Utilisé par : postes_sens.js, cartes_sens.js.
     },
     demi_peau(g, x, y) {
       // Demi-orange posée sur sa face coupée : un dôme de peau.
+      g = agrandi(g, x, y);
       L.svg("ellipse", { cx: x + 4, cy: y + 2, rx: R, ry: 5, fill: "#000", opacity: 0.3 }, g);
       L.svg("path", { d: `M${x - R} ${y} A${R} ${R * 0.95} 0 0 1 ${x + R} ${y} A${R} ${R * 0.2} 0 0 1 ${x - R} ${y} Z`, ...PEAU }, g);
       pores(L.svg("g", {}, g), x, y - R * 0.45, R * 0.6, 14);
     },
     ecorce(g, x, y) {
       // Écorce vidée après pressage, couchée sur le côté : la pulpe écrasée et la couche blanche se voient dedans.
+      g = agrandi(g, x, y);
       L.svg("ellipse", { cx: x + 4, cy: y + 4, rx: 27, ry: 5, fill: "#000", opacity: 0.3 }, g);
       L.svg("path", { d: `M${x - 26} ${y - 2} Q${x - 22} ${y + 8} ${x} ${y + 7} Q${x + 24} ${y + 6} ${x + 27} ${y - 6} Q${x + 10} ${y - 24} ${x - 14} ${y - 18} Z`, ...PEAU }, g);
       L.svg("path", { d: `M${x - 22} ${y - 4} Q${x - 18} ${y - 16} ${x - 4} ${y - 16} Q${x + 10} ${y - 18} ${x + 16} ${y - 9} Q${x + 2} ${y - 2} ${x - 22} ${y - 4} Z`, fill: "#f4dcae" }, g);
       L.svg("path", { d: `M${x - 16} ${y - 7} Q${x - 4} ${y - 14} ${x + 10} ${y - 10} Q${x - 2} ${y - 5} ${x - 16} ${y - 7} Z`, fill: "#e9a64a", opacity: 0.85 }, g);
     },
-    planche(g, x, y, l = 220) {
-      // Planche à découper en bois posée sur la paillasse (dessus et chant).
-      L.svg("rect", { x: x + 4, y: y + 6, width: l, height: 30, rx: 6, fill: "#000", opacity: 0.25 }, g);
-      L.svg("rect", { x, y, width: l, height: 30, rx: 6, fill: "url(#bois)" }, g);
-      L.svg("rect", { x, y: y + 26, width: l, height: 6, rx: 3, fill: "url(#bois-face)" }, g);
+    planche(g, x, y, l = 400, h = 46) {
+      // Planche à découper en bois (25 cm) posée sur la paillasse (dessus en perspective et chant de 15 mm).
+      L.svg("rect", { x: x + 4, y: y + 8, width: l, height: h, rx: 8, fill: "#000", opacity: 0.25 }, g);
+      L.svg("rect", { x, y, width: l, height: h, rx: 8, fill: "url(#bois)" }, g);
+      L.svg("rect", { x, y: y + h - 6, width: l, height: 10, rx: 4, fill: "url(#bois-face)" }, g);
     },
     couteau(g) {
-      // Couteau d'office, pointe en (0, 0), manche noir à droite.
+      // Couteau d'office (dessiné au tiers de sa taille), pointe en (0, 0), manche noir à droite.
       L.svg("path", { d: "M0 0 Q14 -9 46 -9 L48 0 Z", fill: "url(#metal)", stroke: "#6d757b", "stroke-width": 0.6 }, g);
       L.svg("rect", { x: 48, y: -8, width: 40, height: 9, rx: 3.5, fill: "#1c1d1f" }, g);
       for (const dx of [56, 72]) L.svg("circle", { cx: dx, cy: -3.5, r: 1.2, fill: "#b9bfc3" }, g);
     },
     presse(g, x, y, jus) {
-      // Presse-agrumes en verre : coupelle (avec le jus recueilli, 0 à 1) et cône strié au centre.
+      // Presse-agrumes en verre de 13 cm : coupelle (avec le jus recueilli, 0 à 1) et cône strié au centre.
+      g = agrandi(g, x, y, 1.85);
       L.svg("ellipse", { cx: x + 4, cy: y + 14, rx: 58, ry: 9, fill: "#000", opacity: 0.25 }, g);
       L.svg("path", { d: `M${x - 56} ${y - 6} Q${x - 52} ${y + 12} ${x} ${y + 13} Q${x + 52} ${y + 12} ${x + 56} ${y - 6} Z`, fill: "url(#verre)", stroke: "#9fb6be" }, g);
       if (jus > 0) L.svg("ellipse", { cx: x, cy: y - 3, rx: 30 + 22 * jus, ry: 5 + 4 * jus, fill: "#f39c28", opacity: 0.8 }, g);
@@ -2047,7 +2054,8 @@ Utilisé par : postes_sens.js, cartes_sens.js.
       for (const dx of [-10, -4, 2, 8]) L.svg("path", { d: `M${x + dx} ${y - 6} Q${x + dx * 0.5} ${y - 30} ${x} ${y - 42}`, stroke: "#ffffff", opacity: 0.6, fill: "none" }, g);
     },
     papier(g, x, y, froisse) {
-      // Feuille de papier blanc posée à plat (vue en perspective) ; froissée, elle se plisse.
+      // Feuille A4 de papier blanc posée à plat (vue en perspective) ; froissée, elle se plisse.
+      g = agrandi(g, x, y, 3);
       L.svg("path", { d: `M${x - 70} ${y + 22} L${x - 50} ${y - 20} L${x + 74} ${y - 20} L${x + 60} ${y + 22} Z`, fill: "#000", opacity: 0.18, transform: "translate(4 4)" }, g);
       if (!froisse) return void L.svg("path", { d: `M${x - 70} ${y + 22} L${x - 50} ${y - 20} L${x + 74} ${y - 20} L${x + 60} ${y + 22} Z`, fill: "#fbfbf6", stroke: "#d8d8cf" }, g);
       L.svg("path", { d: `M${x - 40} ${y + 14} L${x - 46} ${y - 4} L${x - 24} ${y - 18} L${x + 6} ${y - 12} L${x + 34} ${y - 20} L${x + 46} ${y} L${x + 30} ${y + 18} L${x - 6} ${y + 12} Z`, fill: "#f3f3ec", stroke: "#cfcfc4" }, g);
@@ -2157,7 +2165,7 @@ Utilisé par : postes_sens.js.
   }
 
   function loupe(g) {
-    // Loupe à main : lentille dans un cerclage noir, manche ; le centre de la lentille est en (0, 0).
+    // Loupe à main (dessinée à mi-taille : lentille de 50 mm) : lentille dans un cerclage noir, manche ; centre en (0, 0).
     L.svg("path", { d: "M14 14 L40 40", stroke: "#1c1d1f", "stroke-width": 7, "stroke-linecap": "round" }, g);
     L.svg("circle", { r: 19, fill: "#dff2fa", opacity: 0.45, stroke: "#1c1d1f", "stroke-width": 4 }, g);
     L.svg("path", { d: "M-10 -8 Q-6 -13 0 -14", stroke: "#fff", "stroke-width": 2, fill: "none", opacity: 0.8 }, g);
@@ -2166,7 +2174,7 @@ Utilisé par : postes_sens.js.
   L.cartes_sens = function (g, { cibles, x, y, loupe: repos_loupe, fait }) {
     // Cartes posées en rangée, loupe ; poser une carte ou la loupe sur un objet donne l'observation.
     const calque = L.svg("g", { class: "bulle-sens", "pointer-events": "none" }, g), vus = {};
-    const viser = (p) => cibles.find((c) => { const z = c.zone && c.zone(); return z && Math.hypot(p.x - z.x, p.y - z.y) < z.r + 18; });
+    const viser = (p) => cibles.find((c) => { const z = c.zone && c.zone(); return z && Math.hypot(p.x - z.x, p.y - z.y) < z.r + 24; });
     const noter = (c, sens) => { (vus[c.nom] = vus[c.nom] || new Set()).add(sens); L.missions.noter(fait, Object.fromEntries(Object.entries(vus).map(([k, v]) => [k, [...v]]))); };
     SENS.forEach(([sens, texte], k) => {
       const depart = { x: x + k * 60, y }, e = L.svg("g", { class: `carte-sens carte-${sens}`, role: "button", "aria-label": `Carte ${texte}`, filter: "url(#ombre)" }, g);
@@ -2184,11 +2192,11 @@ Utilisé par : postes_sens.js.
       });
     });
     const l = L.svg("g", { class: "loupe", role: "button", "aria-label": "Loupe", filter: "url(#ombre)" }, g);
-    loupe(l); L.placer(l, repos_loupe.x, repos_loupe.y);
+    loupe(l); L.placer(l, repos_loupe.x, repos_loupe.y, 2);
     L.glissable(l, {
-      debut: () => ({ ...repos_loupe }), deplacer: (p) => L.placer(l, p.x, p.y),
+      debut: () => ({ ...repos_loupe }), deplacer: (p) => L.placer(l, p.x, p.y, 2),
       lacher: (p) => {
-        L.placer(l, repos_loupe.x, repos_loupe.y);
+        L.placer(l, repos_loupe.x, repos_loupe.y, 2);
         const c = viser(p);
         if (!c || !c.loupe) return;
         calque.replaceChildren();
@@ -2223,9 +2231,9 @@ Utilisé par : simulation.js.
 
   function couteau(g, etat, couper) {
     // Couteau déplaçable : posé sur l'orange entière, il la coupe en deux.
-    const c = L.svg("g", { class: "couteau", role: "button", "aria-label": "Couteau" }, g), repos = { x: 520, y: 528 };
-    D.couteau(c); L.placer(c, repos.x, repos.y);
-    L.glissable(c, { debut: () => ({ ...repos }), deplacer: (p) => L.placer(c, p.x, p.y), lacher: (p) => { L.placer(c, repos.x, repos.y); if (!etat.coupee && Math.hypot(p.x - 390, p.y - 444) < 45) couper(); } });
+    const c = L.svg("g", { class: "couteau", role: "button", "aria-label": "Couteau" }, g), repos = { x: 570, y: 552 };
+    D.couteau(c); L.placer(c, repos.x, repos.y, 3);
+    L.glissable(c, { debut: () => ({ ...repos }), deplacer: (p) => L.placer(c, p.x, p.y, 3), lacher: (p) => { L.placer(c, repos.x, repos.y, 3); if (!etat.coupee && Math.hypot(p.x - 400, p.y - 428) < 70) couper(); } });
   }
 
   L.poste_orange = function (g) {
@@ -2233,29 +2241,29 @@ Utilisé par : simulation.js.
     D.degrades(g);
     L.affiche_securite(g, 780, 56);
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), etat = { coupee: false, jus: false };
-    D.planche(g, 280, 470);
+    D.planche(g, 230, 462);
     const g_presse = L.svg("g", {}, g), g_orange = L.svg("g", { class: "orange" }, g), g_peau = L.svg("g", {}, g), g_pulpe = L.svg("g", { class: "demi-orange", role: "button", "aria-label": "Demi-orange" }, g);
     const dessiner = () => {
       [g_presse, g_orange, g_peau, g_pulpe].forEach((e) => e.replaceChildren());
-      D.presse(g_presse, 700, 478, etat.jus ? 1 : 0);
+      D.presse(g_presse, 760, 482, etat.jus ? 1 : 0);
       L.missions.noter("orange", { ...etat });
-      if (!etat.coupee) return D.orange(g_orange, 390, 444);
-      D.demi_peau(g_peau, 440, 466);
-      if (etat.jus) D.ecorce(g_peau, 790, 502); else D.demi_pulpe(g_pulpe, 345, 458);
+      if (!etat.coupee) return D.orange(g_orange, 400, 428);
+      D.demi_peau(g_peau, 500, 484);
+      if (etat.jus) D.ecorce(g_peau, 320, 482); else D.demi_pulpe(g_pulpe, 320, 476);
     };
     couteau(g, etat, () => { etat.coupee = true; dessiner(); });
     L.glissable(g_pulpe, {
       debut: () => (etat.coupee && !etat.jus ? { x: 0, y: 0 } : null), deplacer: (p) => L.placer(g_pulpe, p.x, p.y),
-      lacher: (p) => { L.placer(g_pulpe, 0, 0); if (Math.hypot(345 + p.x - 700, 458 + p.y - 440) < 50) { etat.jus = true; dessiner(); } },
+      lacher: (p) => { L.placer(g_pulpe, 0, 0); if (Math.hypot(320 + p.x - 760, 476 + p.y - 440) < 70) { etat.jus = true; dessiner(); } },
     });
     dessiner();
     L.cartes_sens(g, {
-      fait: "sens_orange", x: 250, y: 557, loupe: { x: 660, y: 545 },
+      fait: "sens_orange", x: 250, y: 557, loupe: { x: 910, y: 430 },
       cibles: [
-        cible("orange", "orange entière", () => (!etat.coupee ? { x: 390, y: 444, r: 30 } : null), "peau"),
-        cible("pulpe", "pulpe", () => (etat.coupee && !etat.jus ? { x: 345, y: 458, r: 28 } : null), "pulpe"),
-        cible("peau", "peau", () => (etat.coupee ? { x: 440, y: 452, r: 28 } : null), "peau"),
-        cible("jus", "jus", () => (etat.jus ? { x: 700, y: 470, r: 40 } : null), "jus"),
+        cible("orange", "orange entière", () => (!etat.coupee ? { x: 400, y: 428, r: 60 } : null), "peau"),
+        cible("pulpe", "pulpe", () => (etat.coupee && !etat.jus ? { x: 320, y: 476, r: 56 } : null), "pulpe"),
+        cible("peau", "peau", () => (etat.coupee ? { x: 500, y: 460, r: 56 } : null), "peau"),
+        cible("jus", "jus", () => (etat.jus ? { x: 760, y: 470, r: 74 } : null), "jus"),
       ],
     });
     return { pense_bete };
@@ -2265,11 +2273,11 @@ Utilisé par : simulation.js.
     // Paillasse 2 : une feuille de papier ; l'ouïe la froisse.
     L.affiche_securite(g, 780, 56);
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), feuille = L.svg("g", { class: "papier" }, g), etat = { froisse: false };
-    const dessiner = () => { feuille.replaceChildren(); D.papier(feuille, 450, 492, etat.froisse); L.missions.noter("papier", { ...etat }); };
+    const dessiner = () => { feuille.replaceChildren(); D.papier(feuille, 470, 470, etat.froisse); L.missions.noter("papier", { ...etat }); };
     dessiner();
     L.cartes_sens(g, {
-      fait: "sens_papier", x: 250, y: 557, loupe: { x: 660, y: 545 },
-      cibles: [cible("papier", "papier", () => ({ x: 450, y: 492, r: 55 }), "papier", { ouie: () => { etat.froisse = true; dessiner(); } })],
+      fait: "sens_papier", x: 250, y: 557, loupe: { x: 910, y: 430 },
+      cibles: [cible("papier", "papier", () => ({ x: 470, y: 470, r: 120 }), "papier", { ouie: () => { etat.froisse = true; dessiner(); } })],
     });
     return { pense_bete };
   };

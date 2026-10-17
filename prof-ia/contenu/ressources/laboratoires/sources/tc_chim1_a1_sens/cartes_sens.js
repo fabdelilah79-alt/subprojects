@@ -39,7 +39,7 @@ Utilisé par : postes_sens.js.
   }
 
   function loupe(g) {
-    // Loupe à main : lentille dans un cerclage noir, manche ; le centre de la lentille est en (0, 0).
+    // Loupe à main (dessinée à mi-taille : lentille de 50 mm) : lentille dans un cerclage noir, manche ; centre en (0, 0).
     L.svg("path", { d: "M14 14 L40 40", stroke: "#1c1d1f", "stroke-width": 7, "stroke-linecap": "round" }, g);
     L.svg("circle", { r: 19, fill: "#dff2fa", opacity: 0.45, stroke: "#1c1d1f", "stroke-width": 4 }, g);
     L.svg("path", { d: "M-10 -8 Q-6 -13 0 -14", stroke: "#fff", "stroke-width": 2, fill: "none", opacity: 0.8 }, g);
@@ -48,7 +48,7 @@ Utilisé par : postes_sens.js.
   L.cartes_sens = function (g, { cibles, x, y, loupe: repos_loupe, fait }) {
     // Cartes posées en rangée, loupe ; poser une carte ou la loupe sur un objet donne l'observation.
     const calque = L.svg("g", { class: "bulle-sens", "pointer-events": "none" }, g), vus = {};
-    const viser = (p) => cibles.find((c) => { const z = c.zone && c.zone(); return z && Math.hypot(p.x - z.x, p.y - z.y) < z.r + 18; });
+    const viser = (p) => cibles.find((c) => { const z = c.zone && c.zone(); return z && Math.hypot(p.x - z.x, p.y - z.y) < z.r + 24; });
     const noter = (c, sens) => { (vus[c.nom] = vus[c.nom] || new Set()).add(sens); L.missions.noter(fait, Object.fromEntries(Object.entries(vus).map(([k, v]) => [k, [...v]]))); };
     SENS.forEach(([sens, texte], k) => {
       const depart = { x: x + k * 60, y }, e = L.svg("g", { class: `carte-sens carte-${sens}`, role: "button", "aria-label": `Carte ${texte}`, filter: "url(#ombre)" }, g);
@@ -66,11 +66,11 @@ Utilisé par : postes_sens.js.
       });
     });
     const l = L.svg("g", { class: "loupe", role: "button", "aria-label": "Loupe", filter: "url(#ombre)" }, g);
-    loupe(l); L.placer(l, repos_loupe.x, repos_loupe.y);
+    loupe(l); L.placer(l, repos_loupe.x, repos_loupe.y, 2);
     L.glissable(l, {
-      debut: () => ({ ...repos_loupe }), deplacer: (p) => L.placer(l, p.x, p.y),
+      debut: () => ({ ...repos_loupe }), deplacer: (p) => L.placer(l, p.x, p.y, 2),
       lacher: (p) => {
-        L.placer(l, repos_loupe.x, repos_loupe.y);
+        L.placer(l, repos_loupe.x, repos_loupe.y, 2);
         const c = viser(p);
         if (!c || !c.loupe) return;
         calque.replaceChildren();
