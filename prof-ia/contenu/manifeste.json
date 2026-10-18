@@ -1798,6 +1798,75 @@
         "On peut verser l'eau jusqu'à 100 mL puis ajouter le soluté.",
         "Diluer une solution diminue la quantité de soluté."
       ]
+    },
+    {
+      "id": "tc_chim8_a1_transformations",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim8_a1_transformations.html",
+      "description": "Fil de cuivre dans le nitrate d'argent (aiguilles d'argent, solution qui bleuit) et clou en fer dans le sulfate de cuivre (dépôt de cuivre, solution qui se décolore) ; identification des ions formés à la soude (Cu(OH)₂ bleu, Fe(OH)₂ vert), précipitation de l'hydroxyde de cuivre ; combustions du soufre et de la laine de fer dans le dioxygène, du sodium dans le dichlore, sous la hotte ; tableau magnétique pour écrire et ajuster sept équations (conservation des éléments et des charges, ions spectateurs).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim8_transformation",
+      "activite": "Expériences : cuivre et nitrate d'argent, fer et sulfate de cuivre, combustions, sodium et dichlore, précipitation de l'hydroxyde de cuivre.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Métaux et ions en solution",
+          "ce_que_fait_l_eleve": "Observe la réaction du cuivre avec les ions argent et du fer avec les ions cuivre, et identifie les ions formés avec la soude.",
+          "conclusion": "Un système chimique est décrit par les espèces présentes, leurs quantités et leur état. Au cours d'une transformation chimique, des réactifs sont consommés et des produits se forment ; les ions qui ne réagissent pas (NO₃⁻, SO₄²⁻) sont spectateurs. La transformation est modélisée par une réaction, écrite avec une équation : Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag ; Fe + Cu²⁺ → Fe²⁺ + Cu ; Cu²⁺ + 2 HO⁻ → Cu(OH)₂."
+        },
+        {
+          "titre": "Combustions",
+          "ce_que_fait_l_eleve": "Fait brûler le soufre et le fer dans le dioxygène, et le sodium dans le dichlore.",
+          "conclusion": "Une combustion est une transformation chimique : un réactif brûle dans un gaz (le dioxygène, ou ici le dichlore). S + O₂ → SO₂ ; 3 Fe + 2 O₂ → Fe₃O₄ ; 2 Na + Cl₂ → 2 NaCl. À l'état final, il peut rester un réactif (ici le gaz) : l'autre a été entièrement consommé."
+        },
+        {
+          "titre": "Écrire et ajuster les équations",
+          "ce_que_fait_l_eleve": "Écrit et ajuste les équations des réactions observées.",
+          "conclusion": "Une équation chimique s'écrit : réactifs → produits. Les coefficients stœchiométriques, les plus petits entiers possibles, assurent la conservation des éléments et des charges électriques. Les ions spectateurs n'y figurent pas."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Les ions nitrate ou sulfate font partie des réactifs.",
+        "Ajuster une équation, c'est changer les indices des formules.",
+        "Dans une combustion, tous les réactifs disparaissent toujours."
+      ]
+    },
+    {
+      "id": "tc_chim8_a2_avancement",
+      "type": "simulation",
+      "fichier": "laboratoires/tc_chim8_a2_avancement.html",
+      "description": "Vinaigre dilué (10,0 mL à 0,50 mol/L, versé avec une ampoule de coulée isobare) et masses croissantes d'hydrogénocarbonate de sodium pesées à la balance ; le CO₂ est recueilli sur la cuve à eau dans une éprouvette à gaz ; tableur et graphique n(CO₂) = f(n(NaHCO₃)) : l'avancement maximal augmente puis plafonne à 5,0 mmol (réactif limitant) ; tableau d'avancement et bilan de matière au tableur.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "tronc_commun/chim8_transformation",
+      "activite": "Influence des quantités de réactifs sur l'avancement maximal (acide éthanoïque et hydrogénocarbonate de sodium).",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Avancement maximal et quantités de réactifs",
+          "ce_que_fait_l_eleve": "Fait réagir le vinaigre avec quatre masses d'hydrogénocarbonate, mesure le volume de CO₂ et trace n(CO₂) en fonction de n(NaHCO₃).",
+          "conclusion": "Tant que l'hydrogénocarbonate est le réactif limitant, la quantité de CO₂ formée est égale à sa quantité : l'avancement maximal augmente avec la masse introduite. Au-delà de 5,0 mmol (0,42 g), c'est l'acide éthanoïque qui est limitant : l'avancement maximal ne change plus, xmax = 5,0 mmol. L'avancement maximal est fixé par le réactif limitant, celui qui est entièrement consommé."
+        },
+        {
+          "titre": "Tableau d'avancement et bilan de matière",
+          "ce_que_fait_l_eleve": "Dresse le tableau d'avancement de deux essais et fait le bilan de matière.",
+          "conclusion": "Le tableau d'avancement donne les quantités de matière au cours de la transformation en fonction de l'avancement x : chaque réactif diminue de (coefficient × x), chaque produit augmente de (coefficient × x). L'avancement maximal xmax est la plus petite valeur de x qui annule la quantité d'un réactif : c'est le réactif limitant. Le bilan de matière donne les quantités à l'état final."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Plus on met de réactif, plus il se forme de produit, sans limite.",
+        "Le réactif limitant est celui dont la masse est la plus petite.",
+        "L'avancement est une masse."
+      ]
     }
   ]
 }

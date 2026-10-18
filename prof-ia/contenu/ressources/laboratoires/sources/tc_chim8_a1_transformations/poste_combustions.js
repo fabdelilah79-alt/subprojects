@@ -40,8 +40,8 @@ Utilisé par : simulation.js.
     const cl2 = L.flacon_gaz(ctx, { id: "Cl2", x: 895, sol: FOND, e: E, gaz: "Cl2", m0: 1.8, etiquette: "dichlore", dire });
     const o2b = L.flacon_gaz(ctx, { id: "O2b", x: 760, sol: FOND, e: E, gaz: "O2", m0: 0.8, etiquette: "dioxygène 2", contenu: { eau: 20 }, dire });
     support(ctx.fond, 345, SOL);
-    const bec = L.bec_bunsen(ctx, { x: 505, sol: SOL, e: E, dire });
-    const flacons = [L.flacon_gaz(ctx, { id: "O2a", x: 655, sol: SOL, e: E, gaz: "O2", m0: 0.8, etiquette: "dioxygène 1", contenu: { eau: 20 }, dire }), o2b, cl2];
+    const bec = L.bec_bunsen(ctx, { x: 490, sol: SOL, e: E, dire });
+    const flacons = [L.flacon_gaz(ctx, { id: "O2a", x: 668, sol: SOL, e: E, gaz: "O2", m0: 0.8, etiquette: "dioxygène 1", contenu: { eau: 20 }, dire }), o2b, cl2];
     const t = L.cuillere_combustion(ctx, bec, { support: { x: 345, sol: SOL }, carreaux: [{ reactif: "soufre", x: 175 }, { reactif: "fer", x: 228 }, { reactif: "sodium", x: 281 }], sol_carreaux: FOND, flacons, e: E, dire,
       autoriser: () => epi.porte.lunettes || (dire("Mettez vos lunettes : les combustions dans le dioxygène sont très vives."), false) });
     const r3 = (v) => Math.round(v * 1000) / 1000;

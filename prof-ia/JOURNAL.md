@@ -566,3 +566,23 @@ Problèmes restants, à faire par l'enseignant :
 - Le volume ne change pas quand un solide se dissout (on néglige la contraction).
 - Les fioles se secouent d'un mouvement de va-et-vient : on ne peut pas les retourner.
 
+## 2026-10-18 — Laboratoires virtuels : chapitre tronc commun « Transformation chimique d'un système »
+
+Fait :
+- Deux simulations, inscrites au manifeste (62 ressources) : A1 cuivre dans le nitrate d'argent, fer dans le sulfate de
+  cuivre, identification des ions à la soude, précipitation de l'hydroxyde de cuivre ; combustions du soufre et du fer
+  dans le dioxygène, du sodium dans le dichlore (sous la hotte) ; écriture et ajustement de sept équations au tableau
+  magnétique. A2 vinaigre et hydrogénocarbonate de sodium : quatre essais, CO₂ recueilli sur la cuve à eau, avancement
+  maximal et réactif limitant, tableau d'avancement et bilan de matière. Objectifs O1 à O4.
+- Matériel commun : métaux et ions, flacons de gaz, têt à combustion et réactifs, règles et tableau des équations,
+  dégagement gazeux, recueil de gaz sur la cuve à eau.
+- Corrigé après essais : tube à dégagement qui s'arrêtait sous l'éprouvette (il entre maintenant dans l'éprouvette) et
+  tube d'égalisation de l'ampoule dessiné par-dessus la poire (signalés par l'enseignant) ; tuyau du bec Bunsen collé au
+  flacon ; aimants de la réserve qui changeaient de place ; essais non enregistrés (fin de réaction trop lente).
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La combustion du sodium dans le dichlore est une expérience de professeur : la simulation l'impose sous la hotte, lunettes mises.
+- Le dioxyde de carbone un peu soluble dans l'eau de la cuve est négligé.
+- Les réactions sont accélérées (une minute au lieu de plusieurs pour les métaux dans les solutions).
+

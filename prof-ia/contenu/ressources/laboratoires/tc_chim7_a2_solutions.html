@@ -3230,7 +3230,8 @@ Utilisé par : les simulations de chimie (quantité de matière, préparation de
 /*
 Rôle : verser le solide d'une coupelle de pesée dans un récipient (ou dans un entonnoir posé sur une fiole) : lâchée,
        son bord au-dessus de l'ouverture, la coupelle reste tenue, inclinée ; la poudre glisse et tombe (chute libre,
-       ecoulement.js), mais quelques grains restent collés à la coupelle. Un jet de pissette sur la coupelle inclinée
+       ecoulement.js), mais quelques grains restent collés à la coupelle (moins pour une poudre
+       qui ne colle pas : Labo.LIQUIDES[solide].collant, 1 par défaut). Un jet de pissette sur la coupelle inclinée
        la rince : l'eau entraîne les grains restants dans le récipient.
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement), la coupelle (pesee_poudre.js), le point où on la lâche et le
          nom du solide (Labo.LIQUIDES).
@@ -3289,7 +3290,8 @@ Utilisé par : pesee_poudre.js.
     const b = c.poudre > 0 && ouverture(ctx, p);
     if (!b) return false;
     const versantes = ctx.versantes || (ctx.versantes = installer(ctx));
-    c.pos = { x: b.x - LEVRE.x, y: b.y - 22 }; c.versant = { solide, reste: Math.min(c.poudre, Math.max(0.01, c.poudre * RESTE)) };
+    c.pos = { x: b.x - LEVRE.x, y: b.y - 22 }; const k = L.LIQUIDES[solide].collant ?? 1;
+    c.versant = { solide, reste: Math.min(c.poudre, k * Math.max(0.01, c.poudre * RESTE)) };
     versantes.add(c); c.dessiner();
     return true;
   };

@@ -14,13 +14,13 @@ Utilisé par : simulation.js.
     Na: s("Na"), Cl2: s("Cl2"), Cl: s("Cl"), NaCl: s("NaCl"), C3H8: s("C3H8"), CO: s("CO"), CO2: s("CO2"), H2O: s("H2O"),
   };
   const EQUATIONS = [
-    { id: "argent", titre: "Cu + Ag⁺", texte: "Le cuivre Cu réagit avec les ions argent Ag⁺ (solution de nitrate d'argent) :\nil se forme de l'argent Ag et des ions cuivre Cu²⁺.", cartes: ["Ag", "Cu", "NO3-", "Cu2+", "Ag+"], reactifs: ["Cu", "Ag+"], produits: ["Cu2+", "Ag"] },
-    { id: "fer", titre: "Fe + Cu²⁺", texte: "Le fer Fe réagit avec les ions cuivre Cu²⁺ (solution de sulfate de cuivre) :\nil se forme du cuivre Cu et des ions fer II Fe²⁺.", cartes: ["Cu2+", "SO42-", "Fe2+", "Fe", "Cu"], reactifs: ["Fe", "Cu2+"], produits: ["Fe2+", "Cu"] },
-    { id: "hydroxyde", titre: "Cu²⁺ + HO⁻", texte: "Les ions cuivre Cu²⁺ réagissent avec les ions hydroxyde HO⁻ de la soude :\nil se forme un précipité bleu d'hydroxyde de cuivre Cu(OH)₂.", cartes: ["Na+", "CuOH2", "HO-", "SO42-", "Cu2+"], reactifs: ["Cu2+", "HO-"], produits: ["CuOH2"] },
-    { id: "soufre", titre: "S + O₂", texte: "Le soufre S brûle dans le dioxygène O₂ :\nil se forme du dioxyde de soufre SO₂.", cartes: ["SO3", "O2", "S", "SO2"], reactifs: ["S", "O2"], produits: ["SO2"] },
-    { id: "oxyde_fer", titre: "Fe + O₂", texte: "Le fer Fe brûle dans le dioxygène O₂ :\nil se forme de l'oxyde magnétique Fe₃O₄.", cartes: ["FeO", "Fe", "Fe3O4", "O2"], reactifs: ["Fe", "O2"], produits: ["Fe3O4"] },
-    { id: "sodium", titre: "Na + Cl₂", texte: "Le sodium Na brûle dans le dichlore Cl₂ :\nil se forme du chlorure de sodium NaCl.", cartes: ["Cl", "NaCl", "Na", "Cl2"], reactifs: ["Na", "Cl2"], produits: ["NaCl"] },
-    { id: "propane", titre: "C₃H₈ + O₂", texte: "Le propane C₃H₈ (gaz des bouteilles) brûle dans le dioxygène O₂ :\nil se forme du dioxyde de carbone CO₂ et de l'eau H₂O.", cartes: ["CO", "H2O", "C3H8", "CO2", "O2"], reactifs: ["C3H8", "O2"], produits: ["CO2", "H2O"] },
+    { titre: "Cu + Ag⁺", id: "argent", texte: "Le cuivre Cu réagit avec les ions argent Ag⁺ (solution de nitrate d'argent) :\nil se forme de l'argent Ag et des ions cuivre Cu²⁺.", cartes: ["Ag", "Cu", "NO3-", "Cu2+", "Ag+"], reactifs: ["Cu", "Ag+"], produits: ["Cu2+", "Ag"] },
+    { titre: "Fe + Cu²⁺", id: "fer", texte: "Le fer Fe réagit avec les ions cuivre Cu²⁺ (solution de sulfate de cuivre) :\nil se forme du cuivre Cu et des ions fer II Fe²⁺.", cartes: ["Cu2+", "SO42-", "Fe2+", "Fe", "Cu"], reactifs: ["Fe", "Cu2+"], produits: ["Fe2+", "Cu"] },
+    { titre: "Cu²⁺ + HO⁻", id: "hydroxyde", texte: "Les ions cuivre Cu²⁺ réagissent avec les ions hydroxyde HO⁻ de la soude :\nil se forme un précipité bleu d'hydroxyde de cuivre Cu(OH)₂.", cartes: ["Na+", "CuOH2", "HO-", "SO42-", "Cu2+"], reactifs: ["Cu2+", "HO-"], produits: ["CuOH2"] },
+    { titre: "S + O₂", id: "soufre", texte: "Le soufre S brûle dans le dioxygène O₂ :\nil se forme du dioxyde de soufre SO₂.", cartes: ["SO3", "O2", "S", "SO2"], reactifs: ["S", "O2"], produits: ["SO2"] },
+    { titre: "Fe + O₂", id: "oxyde_fer", texte: "Le fer Fe brûle dans le dioxygène O₂ :\nil se forme de l'oxyde magnétique Fe₃O₄.", cartes: ["FeO", "Fe", "Fe3O4", "O2"], reactifs: ["Fe", "O2"], produits: ["Fe3O4"] },
+    { titre: "Na + Cl₂", id: "sodium", texte: "Le sodium Na brûle dans le dichlore Cl₂ :\nil se forme du chlorure de sodium NaCl.", cartes: ["Cl", "NaCl", "Na", "Cl2"], reactifs: ["Na", "Cl2"], produits: ["NaCl"] },
+    { titre: "C₃H₈ + O₂", id: "propane", texte: "Le propane C₃H₈ (gaz des bouteilles) brûle dans le dioxygène O₂ :\nil se forme du dioxyde de carbone CO₂ et de l'eau H₂O.", cartes: ["CO", "H2O", "C3H8", "CO2", "O2"], reactifs: ["C3H8", "O2"], produits: ["CO2", "H2O"] },
   ];
   L.EQUATIONS_CHIM8 = EQUATIONS;
 

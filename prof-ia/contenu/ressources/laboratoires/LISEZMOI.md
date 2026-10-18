@@ -252,6 +252,22 @@ Matériel commun ajouté : `pesee_poudre.js`, `pipette_graduee.js` (A1), `coupel
 dans les cols étroits (`verrerie_rendu.js`) ; la pointe de la pipette graduée entre dans un col étroit lâchée juste
 au-dessus (`pipette_graduee.js`).
 
+## Chapitre tronc commun « Transformation chimique d'un système » (fiche tronc_commun/chim8_transformation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim8_a1_transformations.html | A1 : cuivre et nitrate d'argent, fer et sulfate de cuivre, combustions, sodium et dichlore, précipitation de l'hydroxyde de cuivre | O1, O2 | Fil de cuivre dans le nitrate d'argent, clou dans le sulfate de cuivre ; ions formés identifiés à la soude ; Cu(OH)₂ bleu ; soufre et laine de fer dans le dioxygène, sodium dans le dichlore (sous la hotte) ; sept équations à écrire et ajuster au tableau magnétique. |
+| tc_chim8_a2_avancement.html | A2 : influence des quantités de réactifs sur l'avancement maximal (acide éthanoïque et hydrogénocarbonate de sodium) | O3, O4 | Quatre essais (0,10 à 0,75 g d'hydrogénocarbonate, 10,0 mL de vinaigre à 0,50 mol/L) ; CO₂ recueilli sur la cuve à eau ; graphique n(CO₂) = f(n(NaHCO₃)) ; tableau d'avancement et bilan de matière au tableur. |
+
+Les quantités suivent les équations : par exemple 0,10 g de soufre consomment 0,10 g de dioxygène et donnent 0,20 g de
+SO₂ ; le métal plongé est en excès, les ions sont entièrement consommés. Dans l'activité 2, l'ampoule de coulée est
+isobare (son tube d'égalisation évite que le vinaigre versé chasse de l'air) : le volume lu est celui du CO₂ formé
+(Vm = 24 L/mol). Le volume plafonne à 120 mL (xmax = 5,0 mmol) dès que l'acide est le réactif limitant (m > 0,42 g).
+
+Matériel commun ajouté : `ions_metaux.js`, `metal_tube.js`, `flacon_gaz.js`, `cuillere_combustion.js`,
+`equation_regles.js`, `tableau_equation.js` (A1) ; `degagement_gaz.js`, `recueil_gaz.js` (A2). `coupelle_versement.js`
+accepte une poudre qui colle moins à la coupelle (`collant`).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

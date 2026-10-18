@@ -373,6 +373,16 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/fiole_jaugee.js | Fiole jaugée avec accessoires, loupe sur le trait de jauge, suivi de l'homogénéisation. |
 | contenu/ressources/laboratoires/sources/tc_chim7_a1_mole/ | Masses molaires au tableur, pesée de 0,010 mol de solides, éthanol à la pipette graduée, volume molaire. |
 | contenu/ressources/laboratoires/sources/tc_chim7_a2_solutions/ | Dissolution (saccharose, diiode, éthanol), solution de glucose en fiole jaugée, dilution d'une eau iodée. |
+| contenu/ressources/laboratoires/commun/ions_metaux.js | Métaux et ions en solution (Cu + Ag⁺, Fe + Cu²⁺), précipités à la soude (Cu(OH)₂, Fe(OH)₂, Ag₂O). |
+| contenu/ressources/laboratoires/commun/metal_tube.js | Fil de cuivre et clou en fer à plonger dans un tube ; dépôts d'argent et de cuivre dessinés. |
+| contenu/ressources/laboratoires/commun/flacon_gaz.js | Flacon de dioxygène ou de dichlore à plaque de verre : gaz restant, produits, fumée, dépôts. |
+| contenu/ressources/laboratoires/commun/cuillere_combustion.js | Têt à combustion et réactifs (soufre, laine de fer, sodium) : chauffage, combustion selon le gaz. |
+| contenu/ressources/laboratoires/commun/equation_regles.js | Composition d'une formule, écriture, bilan des éléments et des charges, vérification d'une équation. |
+| contenu/ressources/laboratoires/commun/tableau_equation.js | Tableau magnétique : aimants des espèces, cases réactifs et produits, coefficients, bilan en direct. |
+| contenu/ressources/laboratoires/commun/degagement_gaz.js | Acide éthanoïque et hydrogénocarbonate de sodium : réactif limitant, effervescence. |
+| contenu/ressources/laboratoires/commun/recueil_gaz.js | Cuve à eau et éprouvette à gaz graduée : volume de gaz recueilli, bulles. |
+| contenu/ressources/laboratoires/sources/tc_chim8_a1_transformations/ | Métaux et ions, précipitation, combustions (soufre, fer, sodium), écriture et ajustement des équations. |
+| contenu/ressources/laboratoires/sources/tc_chim8_a2_avancement/ | Vinaigre et hydrogénocarbonate : volume de CO₂, avancement maximal, tableau d'avancement. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
