@@ -620,7 +620,6 @@ Problèmes restants, à faire par l'enseignant :
 - Le rendement du moteur du treuil n'est pas abordé (pas de mesure de puissance électrique).
 - Sur le plan incliné, l'inclinaison va de 18° à 40° (au-dessous, la planche de 90 cm est trop courte).
 
-
 ## 2026-10-23 — Laboratoires virtuels : chapitre 1re année du bac « Le travail, mode de transfert d'énergie »
 
 Fait :
