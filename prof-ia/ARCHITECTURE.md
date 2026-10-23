@@ -391,6 +391,12 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/dynamometre_traction.js | Dynamomètre tenu par son anneau et tiré dans n'importe quelle direction (cordelette, tige, corps gradué). |
 | contenu/ressources/laboratoires/sources/b1_meca2_a1_translation/ | Pavé tiré (W = F·AB·cos α), tri moteur/résistant/nul, plan incliné et niveau laser (travail du poids). |
 | contenu/ressources/laboratoires/sources/b1_meca2_a1_rotation/ | Poulie à deux gorges (W = M·Δθ), treuil électrique : couple moteur, puissance P = W/Δt = M·ω. |
+| contenu/ressources/laboratoires/commun/chute_dessin.js | Dessin de l'appareil de chute libre : potence, électroaimant, règle, cellules, chronomètre à deux voies. |
+| contenu/ressources/laboratoires/commun/chute_libre.js | Chute libre d'une bille lâchée par un électroaimant ; durées d'occultation de deux cellules déplaçables. |
+| contenu/ressources/laboratoires/sources/b1_meca3_a1_cinetique/ | Banc à coussin d'air et curseur à frottement (d ∝ m·v²) ; volant d'inertie freiné (n ∝ J·ω²). |
+| contenu/ressources/laboratoires/sources/b1_meca3_a2_theoreme/ | Table à coussin d'air inclinée : ΔEc = W(P), théorème de l'énergie cinétique. |
+| contenu/ressources/laboratoires/sources/b1_meca3_a3_potentielle/ | Chute libre : ΔEc = −Δ(m·g·z), énergie potentielle de pesanteur, état de référence. |
+| contenu/ressources/laboratoires/sources/b1_meca3_a4_mecanique/ | Chute libre (Em constante) ; rail incliné à débit d'air faible : ΔEm = −Q. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

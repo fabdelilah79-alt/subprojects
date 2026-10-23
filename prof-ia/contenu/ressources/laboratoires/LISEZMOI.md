@@ -299,6 +299,21 @@ incliné et sur la poulie, les frottements sont négligés. Le moteur du treuil 
 Matériel commun ajouté : `dynamometre_traction.js`. Modifié, sans changer les simulations existantes : `formules.js`
 (fonctions COS et SIN du tableur, angle en radians : =COS(A2*PI()/180)).
 
+## Chapitre 1re année du bac « Le travail, mode de transfert d'énergie » (fiche 1bac/meca3_travail_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca3_a1_cinetique.html | A1 : approche de Ec (translation, rotation) | O1 | Lance un mobile (200 à 400 g) sur un banc à coussin d'air avec un ressort ; v mesurée par une cellule ; un curseur à frottement l'arrête sur la distance d : d ∝ m·v². Lance puis freine un volant d'inertie (disques A et B, J donné) : n tours ∝ J·ω². |
+| b1_meca3_a2_theoreme.html | A2 : glissement sans frottement, ΔEc et travaux | O2 | Enregistre la descente du mobile autoporteur (600 g) sur la table inclinée (sin α = 0,050) ; M1Mi et vi à la règle ; ΔEc = f(W(P)) : droite de pente 1 ; généralisation à la rotation. |
+| b1_meca3_a3_potentielle.html | A3 : Epp à partir du travail du poids | O3 | Lâche une bille d'acier (33,0 g) avec un électroaimant ; deux cellules (v = d/Δt) ; ΔEc = f(m·g·z2) : pente −1, Epp = m·g·z + cte ; changement d'état de référence. |
+| b1_meca3_a4_mecanique.html | A4 : conservation de Em, non-conservation avec frottement | O4, O5 | Ec, Epp et Em de la bille à six hauteurs (Em constante) ; rail à coussin d'air incliné (sin α = 0,100) : débit normal, Em se conserve ; débit faible (f = 0,080 N), ΔEm = W(f) = −Q. |
+
+Dans l'activité 1, le ressort du lanceur (k = 40 N/m) donne au mobile l'énergie ½·k·c² : à compression égale, la distance
+de freinage ne dépend pas de la masse (m·v² est le même), ce qui confirme Ec = ½·m·v². Le curseur exerce f = 0,25 N, le
+frein du volant un couple de 0,020 N·m. Les durées des cellules sont exactes à ±0,1 % (frottements de l'air négligés).
+
+Matériel commun ajouté : `chute_dessin.js`, `chute_libre.js` (activités 3 et 4).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

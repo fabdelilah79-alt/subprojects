@@ -619,3 +619,22 @@ Problèmes restants, à faire par l'enseignant :
 - Le pavé démarre et s'arrête sans à-coup : on ne voit pas la différence entre frottement statique et dynamique au dynamomètre.
 - Le rendement du moteur du treuil n'est pas abordé (pas de mesure de puissance électrique).
 - Sur le plan incliné, l'inclinaison va de 18° à 40° (au-dessous, la planche de 90 cm est trop courte).
+
+
+## 2026-10-23 — Laboratoires virtuels : chapitre 1re année du bac « Le travail, mode de transfert d'énergie »
+
+Fait :
+- Quatre simulations, inscrites au manifeste (71 ressources) : A1 banc à coussin d'air et curseur à frottement, volant
+  d'inertie freiné ; A2 table à coussin d'air inclinée (théorème de l'énergie cinétique) ; A3 chute libre et énergie
+  potentielle ; A4 conservation de Em en chute libre, non-conservation sur un rail incliné à débit d'air faible.
+  Objectifs O1 à O5.
+- Matériel commun : appareil de chute libre (électroaimant, deux cellules déplaçables, chronomètre à deux voies).
+- Corrigé après essais : mobile du banc difficile à saisir (zone de prise agrandie), levier du frein qui traversait le
+  disque de rechange, titres illisibles sur le boîtier clair, câbles qui croisaient l'électroaimant ou passaient sur la
+  règle (boîtiers déplacés, câbles derrière la règle).
+- Vérifié : parcours complets des quatre simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le volant se freine avec un couple constant : la fin de la rotation est plus brusque que dans la réalité.
+- La chute de la bille est en temps réel (moins d'une demi-seconde) : on ne la suit presque pas des yeux.
+- Les frottements du débit faible sont modélisés par une force constante.

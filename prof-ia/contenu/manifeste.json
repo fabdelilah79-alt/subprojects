@@ -2033,6 +2033,122 @@
         "La puissance et le travail sont la même grandeur.",
         "Un moteur plus puissant fournit plus de travail pour monter la même charge à la même hauteur."
       ]
+    },
+    {
+      "id": "b1_meca3_a1_cinetique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca3_a1_cinetique.html",
+      "description": "Banc à coussin d'air : mobile de 200 g (surcharges de 100 g) lancé par un ressort, vitesse mesurée par une cellule (drapeau de 5,0 cm), arrêté par un curseur à frottement : d ∝ m·v², d'où Ec = ½·m·v². Volant d'inertie (disques A et B de 1,00 kg, J donné) lancé par un moteur puis freiné par un couple constant : le nombre de tours jusqu'à l'arrêt est proportionnel à J·ω², d'où Ec = ½·J·ω².",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca3_travail_energie",
+      "activite": "Approche de Ec (translation, rotation).",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Énergie cinétique en translation",
+          "ce_que_fait_l_eleve": "Lance le mobile avec différentes compressions et masses, mesure v et la distance d de freinage, trace d = f(m·v²).",
+          "conclusion": "Un solide en mouvement possède une énergie, l'énergie cinétique : elle permet de fournir un travail (ici celui, résistant, du frottement qui arrête le curseur). Pour un solide en translation à la vitesse v, Ec = ½·m·v², en joules (J), avec m en kg et v en m/s."
+        },
+        {
+          "titre": "Énergie cinétique en rotation",
+          "ce_que_fait_l_eleve": "Lance et freine les deux disques à différentes vitesses, compte les tours jusqu'à l'arrêt, trace n = f(J·ω²).",
+          "conclusion": "Un solide en rotation autour d'un axe fixe possède une énergie cinétique Ec = ½·J·ω², où ω est sa vitesse angulaire (rad/s) et J son moment d'inertie par rapport à l'axe (kg·m²). J dépend de la masse du solide et de sa répartition autour de l'axe : pour un disque homogène de masse m et de rayon R, J = ½·m·R²."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "L'énergie cinétique est proportionnelle à la vitesse.",
+        "Un objet plus lourd a toujours plus d'énergie cinétique.",
+        "Un solide qui tourne sur place n'a pas d'énergie cinétique.",
+        "Le moment d'inertie ne dépend que de la masse."
+      ]
+    },
+    {
+      "id": "b1_meca3_a2_theoreme",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca3_a2_theoreme.html",
+      "description": "Table à coussin d'air inclinée (sin α = 0,050) : le mobile autoporteur de 600 g est lâché sans vitesse et enregistré (τ = 40 ms) ; à la règle sur la feuille : M1Mi et vi ; tableur et graphique ΔEc = f(W(P)) : droite de pente 1, théorème de l'énergie cinétique ; généralisation à la rotation.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca3_travail_energie",
+      "activite": "Chute libre ou glissement sans frottement : relation entre variation de Ec et travaux.",
+      "objectifs": [
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Théorème de l'énergie cinétique",
+          "ce_que_fait_l_eleve": "Enregistre la descente du mobile, mesure M1Mi et les vitesses, compare ΔEc et W(P) au tableur et sur un graphique.",
+          "conclusion": "Dans un repère galiléen, la variation de l'énergie cinétique d'un solide entre deux instants est égale à la somme des travaux des forces qui s'exercent sur lui entre ces instants : ΔEc = ΣW. Ici, la réaction de la table (perpendiculaire au déplacement, sans frottement) ne travaille pas : ΔEc = W(P) = m·g·sin α·M1Mi. Le théorème reste valable si les forces ne sont pas constantes, et en rotation autour d'un axe fixe (½·J·ω2² − ½·J·ω1² = ΣW)."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "La variation d'énergie cinétique est égale au travail du poids seulement si la vitesse initiale est nulle.",
+        "La réaction de la table travaille.",
+        "Le théorème ne vaut que pour des forces constantes."
+      ]
+    },
+    {
+      "id": "b1_meca3_a3_potentielle",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca3_a3_potentielle.html",
+      "description": "Appareil de chute libre : bille d'acier (33,0 g, d = 2,00 cm) lâchée par un électroaimant à 1,100 m ; deux cellules déplaçables et un chronomètre à deux voies (v = d/Δt) ; cellule 1 à 90 cm, cellule 2 à cinq hauteurs : ΔEc = f(m·g·z2) est une droite de pente −1 : W(P) = −ΔEpp, Epp = m·g·z + cte ; choix de l'état de référence.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca3_travail_energie",
+      "activite": "Établir Epp à partir du travail du poids.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Énergie potentielle de pesanteur",
+          "ce_que_fait_l_eleve": "Lâche la bille avec la cellule 2 à cinq hauteurs, calcule ΔEc et m·g·z2 au tableur, trace ΔEc = f(m·g·z2) et en déduit Epp.",
+          "conclusion": "Près de la Terre, le travail du poids d'un corps entre deux positions est W(P) = m·g·(z1 − z2) = −Δ(m·g·z). On définit l'énergie potentielle de pesanteur Epp = m·g·z + cte, avec l'axe Oz vers le haut : W(P) = −ΔEpp. La constante dépend de l'état de référence choisi (Epp = 0) ; la variation ΔEpp entre deux positions n'en dépend pas."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "L'énergie potentielle a une valeur absolue, indépendante de la référence.",
+        "Un corps posé sur le sol n'a jamais d'énergie potentielle.",
+        "Le travail du poids est toujours positif."
+      ]
+    },
+    {
+      "id": "b1_meca3_a4_mecanique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca3_a4_mecanique.html",
+      "description": "Chute libre : Ec, Epp et Em de la bille à six hauteurs : Em reste constante. Rail à coussin d'air incliné (sin α = 0,100), mobile de 200 g lâché par un électroaimant, deux cellules à 20 et 80 cm : avec le débit d'air normal Em se conserve ; avec le débit faible, le mobile frotte : ΔEm = W(f) = −Q.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca3_travail_energie",
+      "activite": "Conservation de Em sous le seul poids ; non-conservation avec frottement.",
+      "objectifs": [
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Conservation de l'énergie mécanique",
+          "ce_que_fait_l_eleve": "Calcule Ec, Epp et Em de la bille à six hauteurs et constate que Em se conserve.",
+          "conclusion": "L'énergie mécanique d'un solide est la somme de son énergie cinétique et de son énergie potentielle de pesanteur : Em = Ec + Epp. Quand seul le poids travaille (chute libre, glissement sans frottement), Em se conserve : l'énergie potentielle se transforme en énergie cinétique, et inversement."
+        },
+        {
+          "titre": "Non-conservation de l'énergie mécanique",
+          "ce_que_fait_l_eleve": "Compare Em aux deux cellules du rail incliné sans puis avec frottement, calcule ΔEm et la force de frottement.",
+          "conclusion": "Quand des frottements s'exercent, l'énergie mécanique diminue : ΔEm = W(f) < 0. L'énergie perdue n'a pas disparu : elle est transférée au milieu extérieur (rail, air) sous forme de chaleur Q = −W(f) : ΔEm = −Q."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "L'énergie mécanique se conserve toujours.",
+        "L'énergie perdue par frottement disparaît.",
+        "Pendant une chute, Ec et Epp augmentent ensemble."
+      ]
     }
   ]
 }
