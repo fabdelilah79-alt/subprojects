@@ -2941,7 +2941,8 @@ Utilisé par : les simulations de chimie.
 /*
 Rôle : tableau blanc magnétique accroché au mur : des étiquettes aimantées à ranger dans des colonnes
        (classer des forces, des espèces, des transformations...). On les fait glisser ; elles se rangent d'elles-mêmes.
-Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait }.
+Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait,
+         par_ligne (étiquettes par ligne à classer, 3 par défaut) }.
 Produit : Labo.tableau_tri(parent, reglages) ; note le fait reglages.fait = { id_etiquette: numéro de colonne }.
 Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1_a3_force_pressante).
 */
@@ -2980,7 +2981,7 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
     cadre(g, r);
     const largeur_colonne = r.largeur / r.colonnes.length;
     const place = {};
-    const depart = (i) => ({ x: r.x + 6 + ETIQUETTE.l / 2 + (i % 3) * (ETIQUETTE.l + 6), y: r.bas_colonnes + 24 + Math.floor(i / 3) * (ETIQUETTE.h + 4) + ETIQUETTE.h / 2 });
+    const n = r.par_ligne || 3, depart = (i) => ({ x: r.x + 6 + ETIQUETTE.l / 2 + (i % n) * (ETIQUETTE.l + 6), y: r.bas_colonnes + 24 + Math.floor(i / n) * (ETIQUETTE.h + 4) + ETIQUETTE.h / 2 });
 
     function ranger() {
       // Range les étiquettes : les unes sous les autres dans leur colonne, ou à leur place de départ.

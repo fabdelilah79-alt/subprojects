@@ -268,6 +268,21 @@ Matériel commun ajouté : `ions_metaux.js`, `metal_tube.js`, `flacon_gaz.js`, `
 `equation_regles.js`, `tableau_equation.js` (A1) ; `degagement_gaz.js`, `recueil_gaz.js` (A2). `coupelle_versement.js`
 accepte une poudre qui colle moins à la coupelle (`collant`).
 
+## Chapitre 1re année du bac « Rotation d'un solide autour d'un axe fixe » (fiche 1bac/meca1_rotation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca1_a1_rotation.html | A1 : documents et exemples du vécu | O1 | Fait tourner une maquette de grande roue au doigt ; chronophotographie (10 images) : le rayon [AB] change de direction, la nacelle [CD] garde la sienne ; classe huit mouvements du vécu (rotation, translation circulaire, translation rectiligne). |
+| b1_meca1_a2_enregistrement.html | A2 : enregistrements du mouvement d'un point d'un solide en rotation | O2 à O6 | Solide qui pivote autour du clou de la table à coussin d'air ; points A (6 cm) et B (12 cm) ; θ au rapporteur, s_A et s_B à la règle ; courbe θ(t), ω, s = R·θ, v = R·ω. |
+| b1_meca1_a3_uniforme.html | A3 : caractéristiques de la rotation uniforme | O3 à O6 | Disque entraîné par un moteur (f = 0,8 tr/s par volt) ; stroboscope dans la salle obscure : un trait immobile pour fe = f, deux pour fe = 2f ; capteur à fourche : T et durée de passage de fentes à 4, 6 et 8 cm ; graphique v = f(R). |
+
+Au stroboscope, l'œil garde les images des éclairs pendant au moins un dixième de seconde (et au moins un tour du disque) :
+on voit donc toutes les positions éclairées pendant un tour. Le compteur ajoute un bruit de ±0,1 % aux mesures.
+
+Matériel commun ajouté : `bouton_reglage.js`, `rapporteur.js`. Modifiés, sans changer les simulations existantes :
+`tri.js` (nombre d'étiquettes par ligne réglable, 3 par défaut), `coussin_air.js` (donne la conversion vers la table),
+`feuille_enregistrement.js` (dessine la croix de l'axe quand le mobile tourne autour du clou).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

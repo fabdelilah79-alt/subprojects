@@ -116,6 +116,7 @@ Utilisé par : enregistrement.js et les simulations de mouvement (tronc commun, 
   L.CoussinAir.TABLE = T;
   L.CoussinAir.CLOU = CLOU;
   L.CoussinAir.vers_ecran = vers_ecran;
+  L.CoussinAir.vers_table = vers_table;
 })(window.Labo);
 
 (function (L) {

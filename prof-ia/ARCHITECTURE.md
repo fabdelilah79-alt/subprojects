@@ -264,7 +264,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
 | contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
 | contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
-| contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes. |
+| contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes (nombre d'étiquettes par ligne réglable). |
 | contenu/ressources/laboratoires/commun/bouton.js | Bouton-poussoir lumineux (par exemple « Pause / Lecture » du temps), au doigt, à la souris et au clavier. |
 | contenu/ressources/laboratoires/commun/coussin_air.js | Table à coussin d'air en perspective, clou central, mobile lancé d'un geste, fil à accrocher. |
 | contenu/ressources/laboratoires/commun/coussin_air_mouvement.js | Mouvement du mobile image par image : glissement, pente, rotation autour du clou, rebonds. |
@@ -383,6 +383,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/recueil_gaz.js | Cuve à eau et éprouvette à gaz graduée : volume de gaz recueilli, bulles. |
 | contenu/ressources/laboratoires/sources/tc_chim8_a1_transformations/ | Métaux et ions, précipitation, combustions (soufre, fer, sodium), écriture et ajustement des équations. |
 | contenu/ressources/laboratoires/sources/tc_chim8_a2_avancement/ | Vinaigre et hydrogénocarbonate : volume de CO₂, avancement maximal, tableau d'avancement. |
+| contenu/ressources/laboratoires/commun/bouton_reglage.js | Bouton rotatif d'un appareil avec afficheur et touches + et − (alimentation, stroboscope). |
+| contenu/ressources/laboratoires/commun/rapporteur.js | Rapporteur 360° à poser sur la feuille d'enregistrement, avec fil de visée, centré sur l'axe. |
+| contenu/ressources/laboratoires/sources/b1_meca1_a1_rotation/ | Grande roue et chronophotographie : rotation et translation circulaire ; tri de mouvements du vécu. |
+| contenu/ressources/laboratoires/sources/b1_meca1_a2_enregistrement/ | Solide pivotant sur la table à coussin d'air : θ, s = R·θ, ω, v = R·ω. |
+| contenu/ressources/laboratoires/sources/b1_meca1_a3_uniforme/ | Disque et moteur, stroboscope, capteur à fourche : f, T, ω = 2πf, v = R·ω. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

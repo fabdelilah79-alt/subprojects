@@ -1867,6 +1867,101 @@
         "Le réactif limitant est celui dont la masse est la plus petite.",
         "L'avancement est une masse."
       ]
+    },
+    {
+      "id": "b1_meca1_a1_rotation",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca1_a1_rotation.html",
+      "description": "Maquette de grande roue (8 nacelles) qu'on fait tourner au doigt ; un appareil photo réalise une chronophotographie : le segment [AB] du rayon change de direction (rotation), le segment [CD] d'une nacelle garde sa direction (translation circulaire) ; tri de huit mouvements du vécu (rotation, translation circulaire, translation rectiligne).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca1_rotation",
+      "activite": "Documents et exemples du vécu pour introduire la rotation autour d'un axe fixe.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "La roue et ses nacelles",
+          "ce_que_fait_l_eleve": "Fait tourner la grande roue, photographie son mouvement et compare les directions des segments [AB] (rayon) et [CD] (nacelle).",
+          "conclusion": "Un solide est en rotation autour d'un axe fixe quand ses points (hors de l'axe) décrivent des cercles centrés sur cet axe, et qu'un segment du solide change de direction. Une nacelle est en translation circulaire : ses points décrivent des cercles de même rayon, mais chaque segment de la nacelle reste parallèle à lui-même."
+        },
+        {
+          "titre": "Rotation ou translation ?",
+          "ce_que_fait_l_eleve": "Classe huit mouvements du vécu : rotation autour d'un axe fixe, translation circulaire ou rectiligne.",
+          "conclusion": "Pour reconnaître une rotation autour d'un axe fixe, on regarde un segment du solide : s'il tourne et que les points décrivent des cercles centrés sur un même axe immobile, c'est une rotation (porte, aiguille, barrière, la Lune qui nous montre toujours la même face). S'il reste parallèle à lui-même, c'est une translation (circulaire ou rectiligne)."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "Tout mouvement sur un cercle est une rotation.",
+        "Une nacelle de grande roue tourne autour de l'axe de la roue.",
+        "Dans une rotation, tous les points ont la même vitesse."
+      ]
+    },
+    {
+      "id": "b1_meca1_a2_enregistrement",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca1_a2_enregistrement.html",
+      "description": "Table à coussin d'air : un solide pivote autour d'un clou ; l'éclateur marque les positions de deux points A (60 mm) et B (120 mm) ; sur la feuille, règle et rapporteur pour mesurer θ, s_A et s_B ; tableur et courbe θ(t) : droite, vitesse angulaire ω, s = R·θ et v = R·ω.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca1_rotation",
+      "activite": "Réaliser et exploiter des enregistrements du mouvement d'un point d'un solide en rotation.",
+      "objectifs": [
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Enregistrer et exploiter une rotation",
+          "ce_que_fait_l_eleve": "Enregistre le mouvement de rotation, mesure θ, s_A et s_B sur la feuille, trace θ(t), calcule ω et vérifie v = R·ω.",
+          "conclusion": "Un point M d'un solide en rotation autour d'un axe fixe est repéré par son abscisse angulaire θ (rad) ou par son abscisse curviligne s = R·θ. Tous les points du solide tournent du même angle : ils ont la même vitesse angulaire ω (rad/s). La vitesse d'un point est v = R·ω : elle est d'autant plus grande que le point est loin de l'axe. Ici θ(t) est une droite : la rotation est uniforme, θ = ω·t + θ₀ et s = R·ω·t + s₀."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Le point le plus loin de l'axe tourne plus vite (en tours par seconde).",
+        "L'angle se mesure en degrés seulement.",
+        "La vitesse d'un point en rotation ne dépend pas de sa distance à l'axe."
+      ]
+    },
+    {
+      "id": "b1_meca1_a3_uniforme",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca1_a3_uniforme.html",
+      "description": "Disque de 20 cm entraîné par un moteur réglable : fréquence de rotation mesurée au stroboscope (salle obscure : un trait immobile quand fe = f, deux traits à 2f) ; capteur optique à fourche et compteur-chronomètre : période T et durée de passage de trois fentes (4, 6 et 8 cm) ; tableur et graphique v = f(R) : v = R·ω ; équations horaires.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca1_rotation",
+      "activite": "Mettre en évidence expérimentalement les caractéristiques de la rotation uniforme.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Fréquence de rotation au stroboscope",
+          "ce_que_fait_l_eleve": "Règle le moteur, allume le stroboscope et cherche la fréquence des éclairs qui immobilise le disque ; en déduit f, T et ω.",
+          "conclusion": "La rotation du disque est uniforme : il fait toujours le même nombre de tours par seconde. Sa fréquence f (en Hz, ou tr/s) est le nombre de tours par seconde ; sa période T = 1/f est la durée d'un tour ; sa vitesse angulaire est ω = 2π/T = 2πf (en rad/s). Au stroboscope, le disque paraît immobile quand la fréquence des éclairs est égale à f (ou à f/2, f/3…) : la plus grande de ces fréquences donne f."
+        },
+        {
+          "titre": "Vitesse d'un point : v = R·ω",
+          "ce_que_fait_l_eleve": "Mesure T et les durées de passage de trois fentes au capteur à fourche, calcule leurs vitesses et vérifie v = R·ω.",
+          "conclusion": "En rotation uniforme, tous les points du disque ont la même vitesse angulaire ω, et la vitesse d'un point est v = R·ω : elle est proportionnelle à sa distance R à l'axe. Les équations horaires sont θ(t) = ω·t + θ₀ et s(t) = R·ω·t + s₀."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Au stroboscope, le disque immobile signifie qu'il ne tourne pas.",
+        "Tous les points d'un disque en rotation ont la même vitesse.",
+        "La fréquence et la période sont la même grandeur."
+      ]
     }
   ]
 }

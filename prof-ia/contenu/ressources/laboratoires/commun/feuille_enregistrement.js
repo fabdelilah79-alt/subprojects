@@ -1,7 +1,7 @@
 /*
 Rôle : feuille d'enregistrement de la table à coussin d'air : les étincelles y marquent des points (vus en
        perspective sur la table) ; un toucher sur la feuille la prend en main, à l'échelle (1 mm = 1,2 px, au-dessus des objets posés),
-       points numérotés au crayon M0, M1, M2... ; on y pose les outils de mesure (transparent, règle).
+       points numérotés au crayon M0, M1, M2... (et l'axe O d'un solide en rotation) ; on y pose les outils de mesure (transparent, règle, rapporteur).
 Reçoit : le groupe de la table, le calque du dessus, le mobile ; les annonces « etincelle » et « enregistrement ».
 Produit : new Labo.Feuille(table, dessus, mobile) : ouvrir(), fermer(), points, outils, mobile ; vers_feuille(x, y) (mm -> px) ;
           Labo.Feuille.ECHELLE (px par mm).
@@ -79,6 +79,12 @@ Utilisé par : outils_mesure.js et les simulations de mouvement.
         const e = place_numero(points, i, p, (i / pas) % 2 ? 1 : -1);
         L.texte(this.dessin, e.x, e.y, `${nom}${i}`, { class: "etiquette-carton", "font-size": 7.5, fill: "#666" });
       });
+    }
+    if (this.mobile.axe) {
+      // Solide en rotation : l'axe fixe O est marqué d'une croix (le trou du clou).
+      const o = vers_feuille(this.mobile.axe.x, this.mobile.axe.y);
+      L.svg("path", { d: `M${o.x - 6} ${o.y} H${o.x + 6} M${o.x} ${o.y - 6} V${o.y + 6}`, stroke: "#111", "stroke-width": 1 }, this.dessin);
+      L.texte(this.dessin, o.x - 9, o.y + 12, "O", { class: "etiquette-carton", "font-size": 9, fill: "#333" });
     }
     if (!this.points.length) L.texte(this.dessin, 512, 320, "Pas encore d'enregistrement sur cette feuille.", { class: "etiquette-carton", "font-size": 22 });
     this.vue.style.display = "";

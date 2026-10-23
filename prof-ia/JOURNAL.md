@@ -586,3 +586,20 @@ Problèmes restants, à faire par l'enseignant :
 - Le dioxyde de carbone un peu soluble dans l'eau de la cuve est négligé.
 - Les réactions sont accélérées (une minute au lieu de plusieurs pour les métaux dans les solutions).
 
+## 2026-10-23 — Laboratoires virtuels : chapitre 1re année du bac « Rotation d'un solide autour d'un axe fixe »
+
+Fait :
+- Trois simulations, inscrites au manifeste (65 ressources) : A1 grande roue et chronophotographie, tri de mouvements du
+  vécu ; A2 solide pivotant sur la table à coussin d'air, rapporteur et règle sur la feuille, θ(t), ω et v = R·ω ;
+  A3 disque entraîné par un moteur, stroboscope (salle obscure), capteur optique à fourche et compteur-chronomètre.
+  Objectifs O1 à O6.
+- Matériel commun : bouton de réglage rotatif, rapporteur. Modifiés (ajouts, valeurs par défaut inchangées) : tri.js,
+  coussin_air.js, feuille_enregistrement.js.
+- Corrigé après essais : réserve du tri qui débordait, trépied de l'appareil photo sur la tablette, fiche dessinée
+  par-dessus la feuille, chiffres des afficheurs cachés, stroboscope qui ne montrait qu'un trait à fe = 2f.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La mise en vitesse du moteur est rapide (un tiers de seconde) pour que l'élève n'attende pas.
+- La persistance rétinienne est simplifiée (images gardées un tour, au moins un dixième de seconde).
+- Le solide pivotant de l'activité 2 tourne sans frottement : sa rotation est parfaitement uniforme.
