@@ -637,3 +637,17 @@ Problèmes restants, à faire par l'enseignant :
 - Le volant se freine avec un couple constant : la fin de la rotation est plus brusque que dans la réalité.
 - La chute de la bille est en temps réel (moins d'une demi-seconde) : on ne la suit presque pas des yeux.
 - Les frottements du débit faible sont modélisés par une force constante.
+
+## 2026-10-23 — Laboratoires virtuels : chapitre 1re année du bac « Travail et énergie interne » (SM)
+
+Fait :
+- Une simulation à trois paillasses pour l'activité unique de la fiche, inscrite au manifeste (72 ressources) : tube à
+  grenaille de plomb (énergie mécanique perdue → énergie interne), tableau des effets du travail, seringue à gaz chargée
+  de masses (travail des forces pressantes, premier principe). Objectifs O1 à O4.
+- Corrigé après essais : nombres de la seringue illisibles sur le mur clair (étiquettes blanches), câble de la sonde qui
+  passait devant le cylindre.
+- Vérifié : parcours complet ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- L'échauffement du gaz à la compression est adouci (le calcul adiabatique donnerait des dizaines de degrés).
+- Les 60 retournements du tube prennent environ une minute : on peut réduire le nombre demandé.

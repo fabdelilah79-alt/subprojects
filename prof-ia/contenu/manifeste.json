@@ -2149,6 +2149,46 @@
         "L'énergie perdue par frottement disparaît.",
         "Pendant une chute, Ec et Epp augmentent ensemble."
       ]
+    },
+    {
+      "id": "b1_meca4_a1_energie_interne",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca4_a1_energie_interne.html",
+      "description": "Tube à grenaille de plomb (500 g, chute de 1,00 m) retourné 60 fois : la température du plomb s'élève ; tableur n·m·g·h et m·c·ΔT : l'énergie mécanique perdue devient énergie interne. Tableau magnétique des effets du travail (température, déformation, changement d'état, transformation chimique). Seringue à gaz chargée de masses de 1 kg : manomètre et thermomètre, W = p·(V1 − V2), échauffement puis retour à 20 °C : ΔU = 0, Q = −W ; premier principe ΔU = W + Q.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca4_energie_interne",
+      "activite": "Effets du travail et modes de transfert dans un système mécaniquement isolé (expériences, vécu, documents).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le travail échauffe le plomb",
+          "ce_que_fait_l_eleve": "Retourne le tube à grenaille 60 fois, relève la température et compare n·m·g·h à m·c·ΔT au tableur.",
+          "conclusion": "À chaque chute, l'énergie mécanique de la grenaille (m·g·h) n'est pas conservée : au choc, elle est transférée à l'intérieur du plomb, dont la température s'élève. Cette énergie, stockée à l'échelle microscopique (agitation des particules et interactions entre elles), est l'énergie interne U du système. Ici ΔU = n·m·g·h ≈ m·c·ΔT."
+        },
+        {
+          "titre": "Les effets du travail",
+          "ce_que_fait_l_eleve": "Classe neuf situations du vécu selon l'effet du travail reçu.",
+          "conclusion": "Le travail reçu par un système peut élever sa température, le déformer (déformation élastique), provoquer un changement d'état physique (fusion…) ou une transformation chimique. Dans tous les cas, l'énergie reçue est stockée sous forme d'énergie interne, ou d'énergie potentielle élastique."
+        },
+        {
+          "titre": "Travail des forces pressantes",
+          "ce_que_fait_l_eleve": "Comprime le gaz de la seringue avec 1, 2 puis 3 kg, calcule W = p·(V1 − V2) et la chaleur échangée Q = −W.",
+          "conclusion": "Un gaz comprimé sous une pression extérieure constante p reçoit le travail des forces pressantes W = −p·ΔV = p·(V1 − V2) : W > 0 quand le volume diminue. Premier principe de la thermodynamique : la variation de l'énergie interne d'un système est égale à la somme du travail et de la chaleur qu'il reçoit : ΔU = W + Q. Ici, le gaz revient à sa température initiale : ΔU = 0, donc Q = −W < 0 : il cède de la chaleur à l'extérieur."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "L'énergie perdue par frottement ou par un choc disparaît.",
+        "Température et chaleur sont la même chose.",
+        "Un gaz comprimé reçoit de la chaleur.",
+        "L'énergie interne est l'énergie cinétique du système en mouvement."
+      ]
     }
   ]
 }

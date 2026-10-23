@@ -397,6 +397,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_meca3_a2_theoreme/ | Table à coussin d'air inclinée : ΔEc = W(P), théorème de l'énergie cinétique. |
 | contenu/ressources/laboratoires/sources/b1_meca3_a3_potentielle/ | Chute libre : ΔEc = −Δ(m·g·z), énergie potentielle de pesanteur, état de référence. |
 | contenu/ressources/laboratoires/sources/b1_meca3_a4_mecanique/ | Chute libre (Em constante) ; rail incliné à débit d'air faible : ΔEm = −Q. |
+| contenu/ressources/laboratoires/sources/b1_meca4_a1_energie_interne/ | Tube à grenaille (ΔU = m·c·ΔT), effets du travail, seringue à gaz : W = p·(V1 − V2), ΔU = W + Q. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

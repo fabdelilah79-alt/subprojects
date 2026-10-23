@@ -314,6 +314,16 @@ frein du volant un couple de 0,020 N·m. Les durées des cellules sont exactes �
 
 Matériel commun ajouté : `chute_dessin.js`, `chute_libre.js` (activités 3 et 4).
 
+## Chapitre 1re année du bac « Travail et énergie interne » (fiche 1bac/meca4_energie_interne, filière SM)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca4_a1_energie_interne.html | A1 : effets du travail et modes de transfert | O1 à O4 | Retourne 60 fois un tube contenant 500 g de grenaille de plomb (chute de 1,00 m) : T monte d'environ 4 °C ; n·m·g·h ≈ m·c·ΔT (énergie interne) ; classe neuf situations selon l'effet du travail ; pose 1, 2 puis 3 kg sur le piston d'une seringue à gaz (S = 4,00 cm²) : W = p·(V1 − V2), le gaz s'échauffe puis revient à 20 °C : Q = −W, ΔU = W + Q. |
+
+À chaque chute, la grenaille s'échauffe de g·h/c ≈ 0,076 K ; le plomb se refroidit lentement vers 20 °C (constante de temps
+15 min), d'où un léger écart entre n·m·g·h et m·c·ΔT. Dans la seringue, la compression brusque échauffe le gaz d'environ
+30 K × (p/p_avant − 1) (valeur adoucie, la sonde ne suit pas les pointes), puis le gaz revient à 20 °C en 5 s environ.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
