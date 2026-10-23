@@ -1962,6 +1962,77 @@
         "Tous les points d'un disque en rotation ont la même vitesse.",
         "La fréquence et la période sont la même grandeur."
       ]
+    },
+    {
+      "id": "b1_meca2_a1_translation",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca2_a1_translation.html",
+      "description": "Pavé de bois de 500 g tiré de A à B (40 cm) à vitesse constante avec un dynamomètre, fil horizontal puis incliné (angle lu sur un rapporteur) : tableur W = F·AB·cos α, travail résistant du frottement, travail nul du poids et de la réaction ; tri de situations (travail moteur, résistant, nul) ; plan incliné réglable : chariot de 500 g tiré jusqu'au faisceau d'un niveau laser (20 cm plus haut) par trois chemins : W(F) = F·L = m·g·h, le travail du poids ne dépend pas du chemin suivi.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca2_travail_puissance",
+      "activite": "Documents, logiciels ou expériences simples sur l'effet d'actions mécaniques dont le point d'application se déplace.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Travail d'une force constante",
+          "ce_que_fait_l_eleve": "Tire le pavé de A à B avec trois inclinaisons du fil, calcule W = F·AB·cos α au tableur et le travail du frottement.",
+          "conclusion": "Quand le point d'application d'une force se déplace, la force travaille : elle peut mettre un corps en mouvement, le freiner, le déformer ou l'échauffer. Le travail d'une force constante F pour un déplacement AB est W(F) = F·AB·cos α (en joules, J), où α est l'angle entre F et AB : seule la composante de F parallèle au déplacement travaille. W > 0 : travail moteur ; W < 0 : travail résistant ; W = 0 si la force est perpendiculaire au déplacement."
+        },
+        {
+          "titre": "Travail moteur, résistant ou nul",
+          "ce_que_fait_l_eleve": "Classe neuf situations du vécu selon le signe du travail de la force citée.",
+          "conclusion": "Le travail d'une force est moteur (W > 0) quand l'angle entre la force et le déplacement est inférieur à 90° : la force favorise le mouvement. Il est résistant (W < 0) quand cet angle dépasse 90° : la force s'oppose au mouvement. Il est nul quand la force est perpendiculaire au déplacement, ou quand son point d'application ne se déplace pas."
+        },
+        {
+          "titre": "Travail du poids",
+          "ce_que_fait_l_eleve": "Monte le chariot à la même hauteur par trois chemins inclinés, calcule F·L et le travail du poids.",
+          "conclusion": "Le travail du poids d'un corps qui passe d'une altitude zA à une altitude zB est W(P) = m·g·(zA − zB) : il ne dépend pas du chemin suivi, seulement de la différence d'altitude. Il est résistant quand le corps monte (W(P) = −m·g·h), moteur quand il descend. À vitesse constante, sans frottement, la force de traction compense le poids : W(F) = −W(P) = m·g·h, quel que soit le chemin."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Une force travaille dès qu'elle s'exerce, même si son point d'application ne se déplace pas.",
+        "Le travail d'une force ne dépend que de sa valeur, pas de sa direction.",
+        "Le travail du poids dépend de la longueur du chemin suivi.",
+        "Un travail est toujours positif."
+      ]
+    },
+    {
+      "id": "b1_meca2_a1_rotation",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca2_a1_rotation.html",
+      "description": "Poulie à deux gorges (R = 5,0 cm, r = 1,5 cm) : on tire au dynamomètre le fil de la grande gorge, une masse de 600 g monte ; angle lu sur la poulie graduée, hauteur sur une règle : M = F·R, W(F) = M·Δθ = −W(P). Treuil électrique (tambour de 2,0 cm) : masse de 500 g montée à trois tensions, chronomètre à deux cellules (Δh = 60 cm) et compte-tours : couple moteur M = m·g·r, W = M·Δθ, puissance P = W/Δt = F·v = M·ω.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca2_travail_puissance",
+      "activite": "Documents, logiciels ou expériences simples sur l'effet d'actions mécaniques dont le point d'application se déplace.",
+      "objectifs": [
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Travail d'une force de moment constant",
+          "ce_que_fait_l_eleve": "Fait tourner la poulie à deux gorges au dynamomètre, s'arrête trois fois, calcule M·Δθ et le travail du poids au tableur.",
+          "conclusion": "Une force F de moment constant M = F·R par rapport à l'axe d'un solide en rotation travaille : pour une rotation Δθ (en radians), W = M·Δθ. En effet, son point d'application parcourt l'arc R·Δθ en restant tangent à la trajectoire : W = F·R·Δθ. Quand la rotation est uniforme, la somme des moments est nulle : F·R = m·g·r, et le travail de F compense celui du poids : W(F) = −W(P) = m·g·h, avec h = r·Δθ."
+        },
+        {
+          "titre": "Puissance d'un treuil électrique",
+          "ce_que_fait_l_eleve": "Monte une masse de 500 g avec le treuil électrique à trois tensions, mesure Δt et N, compare m·g·Δh/Δt et M·ω.",
+          "conclusion": "La puissance moyenne d'une force est le travail qu'elle fournit par seconde : P = W / Δt (en watts, 1 W = 1 J/s). Sa puissance instantanée est P = F·v en translation et P = M·ω en rotation. Quand la vitesse est constante, la puissance instantanée est égale à la puissance moyenne. Pour un même travail, plus la durée est courte, plus la puissance est grande."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Le travail en rotation se calcule avec l'angle en degrés.",
+        "La puissance et le travail sont la même grandeur.",
+        "Un moteur plus puissant fournit plus de travail pour monter la même charge à la même hauteur."
+      ]
     }
   ]
 }

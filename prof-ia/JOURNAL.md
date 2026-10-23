@@ -603,3 +603,19 @@ Problèmes restants, à faire par l'enseignant :
 - La mise en vitesse du moteur est rapide (un tiers de seconde) pour que l'élève n'attende pas.
 - La persistance rétinienne est simplifiée (images gardées un tour, au moins un dixième de seconde).
 - Le solide pivotant de l'activité 2 tourne sans frottement : sa rotation est parfaitement uniforme.
+
+## 2026-10-23 — Laboratoires virtuels : chapitre 1re année du bac « Travail et puissance d'une force »
+
+Fait :
+- Deux simulations pour l'activité unique de la fiche, inscrites au manifeste (67 ressources) : translation (pavé tiré
+  avec un angle, tri moteur/résistant/nul, plan incliné et niveau laser) ; rotation (poulie à deux gorges, treuil
+  électrique avec chronomètre à deux cellules et compte-tours). Objectifs O1 à O5.
+- Matériel commun : dynamomètre de traction (tiré dans toutes les directions). Modifié : formules.js (COS et SIN).
+- Corrigé après essais : repère A et charnière du plan cachés par le carnet et la tablette (matériel recentré), rapporteur
+  du plan illisible sur la paillasse sombre, câbles du moteur qui passaient sur le chronomètre (ils passent à droite).
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le pavé démarre et s'arrête sans à-coup : on ne voit pas la différence entre frottement statique et dynamique au dynamomètre.
+- Le rendement du moteur du treuil n'est pas abordé (pas de mesure de puissance électrique).
+- Sur le plan incliné, l'inclinaison va de 18° à 40° (au-dessous, la planche de 90 cm est trop courte).

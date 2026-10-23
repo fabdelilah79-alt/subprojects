@@ -258,7 +258,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/espace.js | Ciel étoilé, Soleil, Terre et Lune réalistes (nuit du côté opposé au Soleil). |
 | contenu/ressources/laboratoires/commun/continents.js | Contours des continents (latitude, longitude) et projection de la Terre vue de l'espace. |
 | contenu/ressources/laboratoires/commun/sonde.js | Sonde spatiale et afficheur de son capteur. |
-| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, recopie). |
+| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, ABS, PI, COS, SIN, recopie). |
 | contenu/ressources/laboratoires/commun/tableur.js | Feuille de calcul de la tablette (une par mission). |
 | contenu/ressources/laboratoires/commun/courbe.js | Application Graphique : points qui se dessinent, modélisation par une droite. |
 | contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
@@ -388,6 +388,9 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_meca1_a1_rotation/ | Grande roue et chronophotographie : rotation et translation circulaire ; tri de mouvements du vécu. |
 | contenu/ressources/laboratoires/sources/b1_meca1_a2_enregistrement/ | Solide pivotant sur la table à coussin d'air : θ, s = R·θ, ω, v = R·ω. |
 | contenu/ressources/laboratoires/sources/b1_meca1_a3_uniforme/ | Disque et moteur, stroboscope, capteur à fourche : f, T, ω = 2πf, v = R·ω. |
+| contenu/ressources/laboratoires/commun/dynamometre_traction.js | Dynamomètre tenu par son anneau et tiré dans n'importe quelle direction (cordelette, tige, corps gradué). |
+| contenu/ressources/laboratoires/sources/b1_meca2_a1_translation/ | Pavé tiré (W = F·AB·cos α), tri moteur/résistant/nul, plan incliné et niveau laser (travail du poids). |
+| contenu/ressources/laboratoires/sources/b1_meca2_a1_rotation/ | Poulie à deux gorges (W = M·Δθ), treuil électrique : couple moteur, puissance P = W/Δt = M·ω. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

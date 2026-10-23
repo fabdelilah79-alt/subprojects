@@ -283,6 +283,22 @@ Matériel commun ajouté : `bouton_reglage.js`, `rapporteur.js`. Modifiés, sans
 `tri.js` (nombre d'étiquettes par ligne réglable, 3 par défaut), `coussin_air.js` (donne la conversion vers la table),
 `feuille_enregistrement.js` (dessine la croix de l'axe quand le mobile tourne autour du clou).
 
+## Chapitre 1re année du bac « Travail et puissance d'une force » (fiche 1bac/meca2_travail_puissance)
+
+La fiche ne propose qu'une activité (documents, logiciels ou expériences simples sur l'effet d'actions mécaniques dont le
+point d'application se déplace) : elle est réalisée par deux simulations, l'une en translation, l'autre en rotation.
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca2_a1_translation.html | A1 (translation) | O1, O2, O3 | Tire un pavé de 500 g de A à B (40 cm) à vitesse constante, fil horizontal puis incliné de 30° et 60° (rapporteur) : W = F·AB·cos α au tableur, travail du frottement, du poids et de la réaction ; classe neuf situations (moteur, résistant, nul) ; monte un chariot de 500 g jusqu'au faisceau d'un niveau laser (h = 20 cm) sur un plan incliné à trois angles : F·L = m·g·h. |
+| b1_meca2_a1_rotation.html | A1 (rotation) | O4, O5 | Tire au dynamomètre le fil de la grande gorge d'une poulie (R = 5 cm, r = 1,5 cm) : une masse de 600 g monte ; θ lu sur la poulie graduée, h sur une règle : W(F) = M·Δθ = −W(P) ; monte une masse de 500 g avec un treuil électrique à 4, 6 et 9 V : chronomètre à deux cellules, compte-tours, P = m·g·Δh/Δt = M·ω. |
+
+Le pavé glisse avec μ = 0,40 (F = μ·m·g / (cos α + μ·sin α)) : la force nécessaire est la plus petite vers 22°. Sur le plan
+incliné et sur la poulie, les frottements sont négligés. Le moteur du treuil suit ω = 3·U − 60·M (rad/s, M en N·m).
+
+Matériel commun ajouté : `dynamometre_traction.js`. Modifié, sans changer les simulations existantes : `formules.js`
+(fonctions COS et SIN du tableur, angle en radians : =COS(A2*PI()/180)).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
