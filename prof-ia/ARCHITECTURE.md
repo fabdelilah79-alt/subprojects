@@ -398,6 +398,12 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_meca3_a3_potentielle/ | Chute libre : ΔEc = −Δ(m·g·z), énergie potentielle de pesanteur, état de référence. |
 | contenu/ressources/laboratoires/sources/b1_meca3_a4_mecanique/ | Chute libre (Em constante) ; rail incliné à débit d'air faible : ΔEm = −Q. |
 | contenu/ressources/laboratoires/sources/b1_meca4_a1_energie_interne/ | Tube à grenaille (ΔU = m·c·ΔT), effets du travail, seringue à gaz : W = p·(V1 − V2), ΔU = W + Q. |
+| contenu/ressources/laboratoires/commun/vase_modele.js | Modèle thermique d'un vase : liquides versés, solide plongé, glace qui fond, chauffage, équilibre (Σ Q = 0). |
+| contenu/ressources/laboratoires/commun/vase_dessin.js | Calorimètre ou gobelet et son contenu, barrette, sonde et afficheur du thermomètre, agitateur. |
+| contenu/ressources/laboratoires/commun/becher_verseur.js | Bécher de liquide de masse et température connues, que l'on vide dans un vase. |
+| contenu/ressources/laboratoires/sources/b1_meca5_a1_parametres/ | Gobelet et thermoplongeur de 100 W : Q = P·t, Q = m·c·Δθ (eau, huile). |
+| contenu/ressources/laboratoires/sources/b1_meca5_a2_calorimetrie/ | Calorimètre : capacité thermique, chaleur massique d'un métal, chaleur latente de fusion de la glace. |
+| contenu/ressources/laboratoires/sources/b1_meca5_a3_rayonnement/ | Lampe et plaques noire et brillante (rayonnement) ; modes de transfert thermique. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

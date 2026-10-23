@@ -2189,6 +2189,104 @@
         "Un gaz comprimé reçoit de la chaleur.",
         "L'énergie interne est l'énergie cinétique du système en mouvement."
       ]
+    },
+    {
+      "id": "b1_meca5_a1_parametres",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca5_a1_parametres.html",
+      "description": "Gobelet en polystyrène, thermoplongeur de 100 W (Q = P·t), béchers de 200 g d'eau et d'huile à 20,0 °C, thermomètre électronique : quatre chauffages (200 g / 60 s, 400 g / 60 s, 200 g / 120 s, huile 200 g / 60 s) ; tableur Q/(m·Δθ) : constant pour l'eau (4,18×10³ J·kg⁻¹·K⁻¹), différent pour l'huile : Q = m·c·Δθ.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca5_thermique",
+      "activite": "Expériences simples : paramètres dont dépend Q.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "De quoi dépend la chaleur reçue ?",
+          "ce_que_fait_l_eleve": "Chauffe différentes masses d'eau pendant différentes durées, puis de l'huile, et calcule Q/(m·Δθ) au tableur.",
+          "conclusion": "La chaleur est un mode de transfert d'énergie. La quantité de chaleur Q reçue par un corps qui ne change pas d'état est proportionnelle à sa masse m et à sa variation de température Δθ, et dépend de sa nature : Q = m·c·Δθ, où c est la chaleur massique (J·kg⁻¹·K⁻¹ ou J·kg⁻¹·°C⁻¹) ; c(eau) ≈ 4,18×10³, c(huile) ≈ 2,0×10³. Q > 0 : le corps reçoit de la chaleur (il s'échauffe) ; Q < 0 : il en cède."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Chaleur et température sont la même chose.",
+        "Deux liquides qui reçoivent la même chaleur s'échauffent de la même façon.",
+        "Plus il y a de liquide, plus il chauffe vite."
+      ]
+    },
+    {
+      "id": "b1_meca5_a2_calorimetrie",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca5_a2_calorimetrie.html",
+      "description": "Calorimètre (vase Dewar) avec thermomètre et agitateur : mélange de 200 g d'eau froide et de 200 g d'eau chaude (capacité thermique du calorimètre, ≈ 150 J/K) ; cylindre de 100,0 g sorti de l'eau bouillante (chaleur massique, identification : aluminium) ; glaçons pesés à la balance fondus dans l'eau tiède (chaleur latente de fusion ≈ 3,34×10⁵ J/kg).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca5_thermique",
+      "activite": "Capacité thermique d'un calorimètre, chaleur massique d'un métal, chaleur latente de fusion de la glace.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Capacité thermique du calorimètre",
+          "ce_que_fait_l_eleve": "Mélange eau froide et eau chaude, écrit l'équation calorimétrique et calcule la capacité thermique du calorimètre.",
+          "conclusion": "Quand des corps à des températures différentes sont mis en contact dans une enceinte isolée, ils échangent de la chaleur jusqu'à l'équilibre thermique : ils ont alors la même température θe, et la somme des chaleurs échangées est nulle : Q1 + Q2 + Qcal = 0. La capacité thermique du calorimètre (C, en J/K) est la chaleur qu'il reçoit quand sa température augmente de 1 °C : Qcal = C·(θe − θ1)."
+        },
+        {
+          "titre": "Chaleur massique d'un métal",
+          "ce_que_fait_l_eleve": "Plonge un cylindre de métal chaud dans le calorimètre, calcule sa chaleur massique et identifie le métal.",
+          "conclusion": "Le métal chaud cède de la chaleur à l'eau et au calorimètre jusqu'à l'équilibre : m·c·(θe − 100) + (m_eau·c_eau + C)·(θe − θ1) = 0. On en déduit la chaleur massique c du métal, qui permet de l'identifier. Le bilan ne dépend que des états initial et final."
+        },
+        {
+          "titre": "Chaleur latente de fusion de la glace",
+          "ce_que_fait_l_eleve": "Fait fondre des glaçons dans l'eau tiède et calcule la chaleur latente de fusion de la glace.",
+          "conclusion": "Un corps pur change d'état à température constante. La chaleur latente de fusion Lf (J/kg) est la chaleur qu'il faut fournir à 1 kg du corps solide, à sa température de fusion, pour le faire fondre : Q = m·Lf. Pour la glace, Lf ≈ 3,34×10⁵ J/kg. Bilan : m_g·Lf + m_g·c_eau·(θe − 0) + (m_eau·c_eau + C)·(θe − θ1) = 0."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "À l'équilibre, chaque corps garde sa température.",
+        "Le calorimètre ne reçoit pas de chaleur.",
+        "La glace qui fond se réchauffe pendant la fusion.",
+        "Le froid passe de la glace à l'eau."
+      ]
+    },
+    {
+      "id": "b1_meca5_a3_rayonnement",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_meca5_a3_rayonnement.html",
+      "description": "Lampe de 100 W au-dessus de deux plaques de cuivre identiques (noire mate et polie brillante), thermomètres et chronomètre : la plaque noire s'échauffe beaucoup plus ; lampe rapprochée de 20 à 15 cm : échauffement plus grand ; tableau des modes de transfert (conduction, convection, rayonnement) ; vase Dewar.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/meca5_thermique",
+      "activite": "Exemples et documents sur le rayonnement.",
+      "objectifs": [
+        "O1",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Le rayonnement",
+          "ce_que_fait_l_eleve": "Suit la température des deux plaques éclairées par la lampe pendant 5 min, puis rapproche la lampe.",
+          "conclusion": "La lampe transfère de l'énergie aux plaques sans contact et sans déplacement de matière : c'est le rayonnement. Ce mode de transfert peut se faire à travers le vide (le rayonnement du Soleil chauffe la Terre). Une surface sombre et mate absorbe mieux le rayonnement qu'une surface claire et brillante, qui le réfléchit. La chaleur est un mode de transfert d'énergie : par conduction, par convection ou par rayonnement."
+        },
+        {
+          "titre": "Les modes de transfert thermique",
+          "ce_que_fait_l_eleve": "Classe des situations selon le mode de transfert thermique principal.",
+          "conclusion": "Trois modes de transfert thermique : la conduction (de proche en proche, sans déplacement de matière, surtout dans les solides), la convection (par le mouvement d'un fluide chaud) et le rayonnement (sans support matériel, même dans le vide). Le vase Dewar d'un calorimètre limite les trois : vide entre les parois (ni conduction ni convection), parois argentées (rayonnement réfléchi)."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "Le rayonnement a besoin de l'air pour se propager.",
+        "Toutes les surfaces absorbent le rayonnement de la même façon.",
+        "La chaleur ne peut passer que par contact."
+      ]
     }
   ]
 }

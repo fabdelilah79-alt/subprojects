@@ -324,6 +324,20 @@ Matériel commun ajouté : `chute_dessin.js`, `chute_libre.js` (activités 3 et 
 15 min), d'où un léger écart entre n·m·g·h et m·c·ΔT. Dans la seringue, la compression brusque échauffe le gaz d'environ
 30 K × (p/p_avant − 1) (valeur adoucie, la sonde ne suit pas les pointes), puis le gaz revient à 20 °C en 5 s environ.
 
+## Chapitre 1re année du bac « Énergie thermique, transfert thermique » (fiche 1bac/meca5_thermique)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca5_a1_parametres.html | A1 : paramètres dont dépend Q | O1, O2 | Chauffe dans un gobelet, avec un thermoplongeur de 100 W, 200 g d'eau 60 s, 400 g 60 s, 200 g 120 s, puis 200 g d'huile : Q/(m·Δθ) est constant pour l'eau (≈ 4180 J·kg⁻¹·K⁻¹) et différent pour l'huile (≈ 2000). |
+| b1_meca5_a2_calorimetrie.html | A2 : capacité d'un calorimètre, chaleur massique d'un métal, chaleur latente de fusion | O3, O4, O5 | Mélange eau froide (18 °C) et eau chaude (60 °C) : C ≈ 150 J/K ; cylindre de 100 g sorti de l'eau bouillante : c ≈ 900 J·kg⁻¹·K⁻¹ (aluminium) ; glaçons (≈ 30 g) dans l'eau à 30 °C : Lf ≈ 3,34×10⁵ J/kg. |
+| b1_meca5_a3_rayonnement.html | A3 : rayonnement | O1, O6 | Lampe de 100 W au-dessus d'une plaque noire et d'une plaque brillante : relevés de 0 à 5 min, la plaque noire s'échauffe beaucoup plus ; lampe rapprochée à 15 cm ; tableau des modes de transfert. |
+
+Le modèle thermique (`vase_modele.js`) est conservatif : chaque corps échange avec le liquide jusqu'à l'équilibre, la somme
+des chaleurs échangées est nulle (pertes vers l'air très lentes). L'agitateur accélère l'équilibre. Les temps sont accélérés
+(× 5 pour le chauffage, × 3 pour la calorimétrie, × 10 pour le rayonnement), c'est écrit sur les appareils.
+
+Matériel commun ajouté : `vase_modele.js`, `vase_dessin.js`, `becher_verseur.js`.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

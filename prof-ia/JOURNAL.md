@@ -651,3 +651,19 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - L'échauffement du gaz à la compression est adouci (le calcul adiabatique donnerait des dizaines de degrés).
 - Les 60 retournements du tube prennent environ une minute : on peut réduire le nombre demandé.
+
+## 2026-10-23 — Laboratoires virtuels : chapitre 1re année du bac « Énergie thermique, transfert thermique »
+
+Fait :
+- Trois simulations, inscrites au manifeste (75 ressources) : A1 gobelet et thermoplongeur (Q = m·c·Δθ) ; A2 calorimétrie
+  (capacité thermique du calorimètre, chaleur massique d'un métal, chaleur latente de fusion de la glace) ; A3 lampe et
+  plaques noire et brillante, modes de transfert. Objectifs O1 à O6.
+- Matériel commun : modèle thermique d'un vase, calorimètre et gobelet dessinés, bécher que l'on vide dans un vase.
+- Corrigé après essais : câble du thermoplongeur sur un bouton, thermoplongeur sans support (potence ajoutée), sonde et
+  agitateur qui flottaient (barrette sur le bord), potence de la lampe qui cachait une plaque, nombres illisibles.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les béchers se remplissent d'eux-mêmes quand on vide le gobelet (le préparateur n'est pas représenté).
+- Le cylindre de métal ne refroidit pas pendant son transport de l'eau bouillante au calorimètre.
+- Le rayonnement reçu suit une loi en 1/d² simplifiée (lampe ponctuelle).
