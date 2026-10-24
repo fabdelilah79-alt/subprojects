@@ -404,6 +404,9 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_meca5_a1_parametres/ | Gobelet et thermoplongeur de 100 W : Q = P·t, Q = m·c·Δθ (eau, huile). |
 | contenu/ressources/laboratoires/sources/b1_meca5_a2_calorimetrie/ | Calorimètre : capacité thermique, chaleur massique d'un métal, chaleur latente de fusion de la glace. |
 | contenu/ressources/laboratoires/sources/b1_meca5_a3_rayonnement/ | Lampe et plaques noire et brillante (rayonnement) ; modes de transfert thermique. |
+| contenu/ressources/laboratoires/sources/b1_elec1_a1_electrisation/ | Pendule électrostatique, électroscope à feuilles d'or, support isolant (baguettes de tc_elec1_a1 réutilisées). |
+| contenu/ressources/laboratoires/sources/b1_elec1_a2_champ/ | Balance de Coulomb (F = k·qA·qB/d²) ; semoule dans l'huile de ricin : lignes de champ. |
+| contenu/ressources/laboratoires/sources/b1_elec1_a3_potentiel/ | Cuve rhéographique : V(x), E = U/d, équipotentielles, W = q·(VA − VB), Epe. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

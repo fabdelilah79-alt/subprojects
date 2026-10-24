@@ -2287,6 +2287,101 @@
         "Toutes les surfaces absorbent le rayonnement de la même façon.",
         "La chaleur ne peut passer que par contact."
       ]
+    },
+    {
+      "id": "b1_elec1_a1_electrisation",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec1_a1_electrisation.html",
+      "description": "Baguettes de PVC et de verre frottées sur la laine et la soie ; pendule électrostatique (boule métallisée) : attraction de la boule neutre, contact puis répulsion, attraction par une charge opposée ; électroscope à feuilles d'or : influence (sans contact), charge par contact, charge par influence avec mise à la Terre par le doigt ; support isolant pour poser une baguette.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec1_energie_electrostatique",
+      "activite": "Électrisation par frottement, contact, influence.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Électrisation par contact",
+          "ce_que_fait_l_eleve": "Électrise une baguette, l'approche du pendule, observe l'attraction, le contact puis la répulsion, et l'attraction par une charge opposée.",
+          "conclusion": "Un corps électrisé attire un corps léger neutre (par influence : les charges du corps neutre se déplacent). Au contact, une partie de la charge passe sur le corps neutre, qui se charge du même signe : ils se repoussent alors. Deux corps chargés de même signe se repoussent ; de signes contraires, ils s'attirent. La force entre deux charges est décrite par la loi de Coulomb : F = k·|q1·q2| / d²."
+        },
+        {
+          "titre": "Électrisation par influence",
+          "ce_que_fait_l_eleve": "Charge un électroscope par contact puis par influence et compare les signes obtenus.",
+          "conclusion": "Un corps chargé approché d'un conducteur isolé (sans contact) y sépare les charges : c'est l'influence. Si l'on relie le conducteur à la Terre pendant l'influence, puis qu'on coupe cette liaison avant d'éloigner le corps chargé, le conducteur reste chargé, de signe opposé au corps inducteur. Par contact, il se charge du même signe."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Un corps neutre ne peut pas être attiré par un corps chargé.",
+        "Un corps chargé par influence prend le signe du corps inducteur.",
+        "Au contact, le corps se charge de signe opposé."
+      ]
+    },
+    {
+      "id": "b1_elec1_a2_champ",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec1_a2_champ.html",
+      "description": "Balance de Coulomb : deux sphères identiques chargées à 5,56 nC par une sonde haute tension, sphère A sur une balance (0,1 mg), sphère B sur un statif gradué (d de 4 à 10 cm) : F·d² constant, k ≈ 9×10⁹ SI ; charge de B divisée par 2 avec une sphère neutre : F divisée par 2. Cuve d'huile de ricin et de semoule : lignes de champ de deux pointes (superposition) et champ uniforme entre deux plaques ; E = F/q.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec1_energie_electrostatique",
+      "activite": "Lignes de champ (huile de ricin et semoule) ; champ uniforme entre deux plaques.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "La loi de Coulomb",
+          "ce_que_fait_l_eleve": "Mesure la force entre deux sphères chargées pour cinq distances, calcule F·d² et k, puis divise une charge par deux.",
+          "conclusion": "Loi de Coulomb : deux charges ponctuelles q1 et q2 séparées par la distance d exercent l'une sur l'autre des forces opposées, portées par la droite qui les joint, de valeur F = k·|q1·q2| / d², avec k = 1/(4πε0) ≈ 9,0×10⁹ N·m²·C⁻². Elles sont répulsives si les charges sont de même signe, attractives sinon."
+        },
+        {
+          "titre": "Lignes de champ électrostatique",
+          "ce_que_fait_l_eleve": "Observe les lignes de champ dessinées par la semoule entre deux pointes, puis entre deux plaques parallèles.",
+          "conclusion": "Une charge q placée en un point où règne un champ électrostatique E subit la force F = q·E (E en N/C, ou V/m). Les lignes de champ sont tangentes en chaque point au vecteur champ et orientées dans son sens : elles partent des charges positives et vont vers les charges négatives. Le champ de deux charges est la somme vectorielle de leurs champs. Entre deux plaques parallèles de charges opposées, les lignes de champ sont parallèles : le champ est uniforme."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La force électrostatique diminue proportionnellement à la distance.",
+        "Les lignes de champ sont les trajectoires des charges.",
+        "Le champ entre deux plaques est plus fort près des plaques."
+      ]
+    },
+    {
+      "id": "b1_elec1_a3_potentiel",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec1_a3_potentiel.html",
+      "description": "Cuve rhéographique : eau entre deux plaques de cuivre à 0 V et 12,0 V (d = 10 cm), pointe de touche et voltmètre : V(x) linéaire, E = U/d = 120 V/m, équipotentielles parallèles aux plaques ; travail W = q·(VA − VB) entre deux points mesurés, Epe = q·V + C, électron accéléré : Ec = e·U.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec1_energie_electrostatique",
+      "activite": "Établir le travail de la force électrostatique et son lien avec la ddp et Epe.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Potentiel et champ uniforme",
+          "ce_que_fait_l_eleve": "Mesure le potentiel en cinq points entre les plaques, trace V = f(x), en déduit E, cherche une équipotentielle.",
+          "conclusion": "Entre deux plaques parallèles soumises à la tension U, le potentiel varie régulièrement de la plaque − à la plaque + : le champ électrostatique est uniforme, perpendiculaire aux plaques, orienté vers les potentiels décroissants, de valeur E = U/d (en V/m, comme en N/C). Les équipotentielles sont des plans parallèles aux plaques, perpendiculaires aux lignes de champ."
+        },
+        {
+          "titre": "Travail et énergie potentielle électrostatique",
+          "ce_que_fait_l_eleve": "Mesure les potentiels de deux points et calcule le travail de la force électrostatique et l'énergie potentielle d'une charge.",
+          "conclusion": "Le travail de la force électrostatique F = q·E qui s'exerce sur une charge q allant de A à B ne dépend pas du chemin suivi : W(A→B) = q·(VA − VB). L'énergie potentielle électrostatique de la charge est Epe = q·V + C (la constante dépend du choix de l'origine des potentiels) : W(A→B) = −ΔEpe. Si seule la force électrostatique travaille, l'énergie totale Ec + Epe se conserve : une charge accélérée gagne en énergie cinétique ce qu'elle perd en énergie potentielle."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Le potentiel est le même partout entre les plaques.",
+        "Le travail de la force électrostatique dépend du chemin suivi.",
+        "Le champ est orienté vers les potentiels croissants."
+      ]
     }
   ]
 }

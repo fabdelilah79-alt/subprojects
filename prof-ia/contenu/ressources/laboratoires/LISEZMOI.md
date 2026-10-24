@@ -338,6 +338,19 @@ des chaleurs échangées est nulle (pertes vers l'air très lentes). L'agitateur
 
 Matériel commun ajouté : `vase_modele.js`, `vase_dessin.js`, `becher_verseur.js`.
 
+## Chapitre 1re année du bac « Énergie potentielle électrostatique » (fiche 1bac/elec1_energie_electrostatique, SM)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_elec1_a1_electrisation.html | A1 : électrisation par frottement, contact, influence | O1 | Pendule électrostatique : boule neutre attirée, contact, répulsion, attraction par la charge opposée ; électroscope : influence sans contact, charge par contact, charge par influence (doigt relié à la Terre). |
+| b1_elec1_a2_champ.html | A2 : lignes de champ, champ uniforme (et loi de Coulomb) | O1, O2 | Balance de Coulomb : F pour cinq distances (F·d² constant, k ≈ 9×10⁹ SI), puis charge de B divisée par 2 ; semoule dans l'huile de ricin : deux pointes, puis deux plaques (champ uniforme) ; E = F/q. |
+| b1_elec1_a3_potentiel.html | A3 : travail de la force électrostatique, ddp, Epe | O3, O4 | Cuve rhéographique (0 V et 12,0 V, d = 10 cm) : V(x) sur une ligne, E = 120 V/m, équipotentielle à 6,00 V ; potentiels de deux points A et B : W = q·(VA − VB), Epe = q·V ; électron accéléré : Ec = e·U. |
+
+Les baguettes et chiffons viennent de la simulation du tronc commun (`sources/tc_elec1_a1_electrisation/frottement.js`, inclus
+tel quel). Une baguette lâchée près du support isolant y reste posée (« Reprendre » la rend) : on peut ainsi garder une
+baguette près de l'électroscope pendant qu'on pose et retire le doigt. Sur la balance de Coulomb, Δm = F/g, avec
+F = k·qA·qB/d² (k = 8,99×10⁹ SI, q = 5,56 nC après la sonde : 11,3 mg à 5 cm).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

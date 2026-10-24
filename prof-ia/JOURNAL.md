@@ -667,3 +667,20 @@ Problèmes restants, à faire par l'enseignant :
 - Les béchers se remplissent d'eux-mêmes quand on vide le gobelet (le préparateur n'est pas représenté).
 - Le cylindre de métal ne refroidit pas pendant son transport de l'eau bouillante au calorimètre.
 - Le rayonnement reçu suit une loi en 1/d² simplifiée (lampe ponctuelle).
+
+## 2026-10-24 — Laboratoires virtuels : chapitre 1re année du bac « Énergie potentielle électrostatique » (SM)
+
+Fait :
+- Trois simulations, inscrites au manifeste (78 ressources) : A1 pendule électrostatique et électroscope (frottement,
+  contact, influence) ; A2 balance de Coulomb et lignes de champ dans la semoule ; A3 cuve rhéographique (potentiel,
+  champ uniforme, travail et énergie potentielle électrostatique). Objectifs O1 à O4.
+- Réutilisé sans modification : frottement.js de la simulation tc_elec1_a1_electrisation (baguettes et chiffons).
+- Corrigé après essais : boule collée à la baguette après le contact (attraction par influence bornée de près), bouton
+  placé sur la trajectoire de la boule, support isolant ajouté (on ne peut pas tenir la baguette et poser le doigt à la
+  fois), câbles de la cuve de semoule cachés sous la cuve, grains éloignés qui ne s'alignaient pas.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les charges ne fuient pas dans l'air (en réalité, elles disparaissent en quelques minutes par temps humide).
+- La cuve rhéographique est idéale : potentiel exactement linéaire entre les plaques, constant au-delà.
+- L'en-tête de frottement.js (tronc commun) ne cite pas encore cette simulation parmi ses utilisateurs.
