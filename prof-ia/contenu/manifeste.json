@@ -2382,6 +2382,133 @@
         "Le travail de la force électrostatique dépend du chemin suivi.",
         "Le champ est orienté vers les potentiels croissants."
       ]
+    },
+    {
+      "id": "b1_elec2_a1_transferts",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec2_a1_transferts.html",
+      "description": "Générateur 6,0 V, interrupteur, lampe, moteur à treuil (masse de 200 g) et électrolyseur branchés tour à tour : la lampe éclaire et chauffe, le moteur monte la masse, l'électrolyseur dégage des gaz ; conservation de l'énergie W reçue = W utile + chaleur ; tableau magnétique : forme principale de l'énergie utile d'appareils de la vie courante.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec2_transfert_energie",
+      "activite": "Lampe et moteur : transfert d'énergie.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Que devient l'énergie électrique ?",
+          "ce_que_fait_l_eleve": "Branche tour à tour une lampe, un moteur et un électrolyseur sur le générateur et décrit les transferts d'énergie.",
+          "conclusion": "Un récepteur reçoit de l'énergie électrique du générateur et la transforme : la lampe en rayonnement (et en chaleur), le moteur en travail mécanique (et en chaleur), l'électrolyseur en énergie chimique (et en chaleur). L'énergie se conserve : l'énergie électrique reçue est égale à la somme des énergies fournies par le récepteur à l'extérieur (W_reçue = W_utile + Q)."
+        },
+        {
+          "titre": "Appareils de la vie courante",
+          "ce_que_fait_l_eleve": "Classe huit appareils selon la forme principale de l'énergie utile (rayonnement, thermique, mécanique, chimique).",
+          "conclusion": "Tous les récepteurs électriques reçoivent de l'énergie électrique ; ils se distinguent par la forme de l'énergie utile qu'ils fournissent : rayonnement (lampes), chaleur (radiateurs, fers à repasser : effet Joule), travail mécanique (moteurs), énergie chimique (électrolyseurs, batteries en charge). Une partie de l'énergie reçue est toujours transférée sous forme de chaleur."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Le courant électrique s'use dans un récepteur.",
+        "Un récepteur fabrique de l'énergie.",
+        "Seules les lampes et les radiateurs chauffent."
+      ]
+    },
+    {
+      "id": "b1_elec2_a2_puissance",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec2_a2_puissance.html",
+      "description": "Moteur à treuil (masse de 200 g, montée chronométrée de 40 cm entre deux cellules), ampèremètre en série, voltmètre aux bornes du moteur, alimentation réglable : W = U·I·Δt, P = U·I (vitesse de transfert), travail utile m·g·Δh, chaleur Q = W − W_u ; rendement pour 4 V, 5 V et 6 V (η ≈ 34 % à 45 %).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec2_transfert_energie",
+      "activite": "Mesures de U et I pendant Δt : énergie et puissance reçues.",
+      "objectifs": [
+        "O2",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Énergie et puissance reçues",
+          "ce_que_fait_l_eleve": "Mesure U, I et la durée d'une montée ; calcule l'énergie et la puissance reçues, le travail utile et la chaleur cédée.",
+          "conclusion": "Un récepteur soumis à la tension U et traversé par le courant I pendant Δt reçoit l'énergie électrique W = U·I·Δt ; la puissance électrique reçue P = U·I = W/Δt est la vitesse du transfert d'énergie (1 W = 1 J/s). Le moteur fournit un travail utile et cède de la chaleur : W = W_u + Q."
+        },
+        {
+          "titre": "Rendement du moteur",
+          "ce_que_fait_l_eleve": "Refait la montée à trois tensions et calcule le rendement du moteur au tableur.",
+          "conclusion": "Le rendement d'un récepteur est le rapport de l'énergie utile à l'énergie électrique reçue : η = W_u / W (toujours inférieur à 1). Ici, il augmente avec la tension : la montée est plus rapide et la chaleur cédée (effet Joule dans le bobinage) est plus petite."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La puissance et l'énergie sont la même chose.",
+        "Le moteur transforme toute l'énergie reçue en travail.",
+        "Plus la tension est grande, plus l'énergie reçue pour un même travail est grande."
+      ]
+    },
+    {
+      "id": "b1_elec2_a3_joule",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec2_a3_joule.html",
+      "description": "Résistance chauffante R = 4,0 Ω dans un calorimètre (C = 150 J/K, 200 g d'eau), ampèremètre en série, chronomètre de chauffe (temps accéléré × 10) : Q = (m·c + C)·Δθ comparée à R·I²·Δt pour trois intensités (loi de Joule) ; tableau magnétique : effet Joule utile ou nuisible ; transport sous haute tension, lampe à incandescence.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec2_transfert_energie",
+      "activite": "Vérifier la loi de Joule (calorimétrie) ; effet Joule dans la vie courante.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "La loi de Joule",
+          "ce_que_fait_l_eleve": "Chauffe l'eau du calorimètre 300 s à trois intensités, compare Q = 986·Δθ et R·I²·Δt au tableur.",
+          "conclusion": "Loi de Joule : un conducteur ohmique de résistance R, traversé par un courant d'intensité I pendant Δt, reçoit l'énergie électrique W = U·I·Δt = R·I²·Δt et la cède entièrement au milieu extérieur sous forme de chaleur : Q = R·I²·Δt ; puissance dissipée P = R·I². La chaleur est multipliée par 4 quand I double."
+        },
+        {
+          "titre": "L'effet Joule dans la vie courante",
+          "ce_que_fait_l_eleve": "Classe huit situations où l'effet Joule est utile ou nuisible et explique le transport sous haute tension.",
+          "conclusion": "L'effet Joule est utile dans les appareils de chauffage, les fusibles et les lampes à incandescence (le filament chauffé émet de la lumière) ; il est nuisible dans les moteurs, les générateurs, les composants électroniques et les lignes électriques (énergie perdue). Pour une même puissance P = U·I, une tension élevée donne un courant faible : les pertes R·I² dans les lignes sont plus petites."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La chaleur dégagée est proportionnelle à I.",
+        "L'effet Joule est toujours une perte.",
+        "On transporte l'électricité sous haute tension pour qu'elle aille plus vite."
+      ]
+    },
+    {
+      "id": "b1_elec2_a4_generateur",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec2_a4_generateur.html",
+      "description": "Deux piles plates 4,5 V (r = 1,5 Ω), résistances 22 Ω et 47 Ω, ampèremètre et voltmètre : E à vide, U_PN et I en charge ; P_g = E·I, P_e = U·I, P_j = r·I², rendement U/E ; I comparée à E/(R + r) pour trois montages résistifs ; deux piles en série (les f.é.m. s'additionnent) ; limites de I = E/Req.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec2_transfert_energie",
+      "activite": "Énergie fournie par le générateur ; influence de E et des résistances.",
+      "objectifs": [
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Bilan de puissance d'une pile",
+          "ce_que_fait_l_eleve": "Mesure E, U_PN et I ; calcule les puissances produite, fournie et perdue, la résistance interne et le rendement de la pile.",
+          "conclusion": "Un générateur transforme une autre forme d'énergie (chimique pour une pile) en énergie électrique : puissance produite P_g = E·I. Il en fournit P_e = U_PN·I au circuit extérieur et en perd P_j = r·I² par effet Joule : E·I = U_PN·I + r·I². Rendement du générateur : η = P_e/P_g = U_PN/E < 1. L'énergie fournie par le générateur est reçue par les récepteurs du circuit."
+        },
+        {
+          "titre": "Influence des résistances et de E",
+          "ce_que_fait_l_eleve": "Mesure I pour trois montages résistifs, compare à E/(R + r) au tableur, puis associe deux piles en série.",
+          "conclusion": "Dans un circuit qui ne contient que des résistances (et un générateur de f.é.m. E constante), I = E/Req, où Req est la résistance totale (résistance interne comprise). L'énergie fournie pendant Δt, W = E·I·Δt = E²·Δt/Req, diminue quand Req augmente et augmente avec E. Deux générateurs en série : les f.é.m. et les résistances internes s'additionnent."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Un générateur fournit toujours le même courant.",
+        "La tension aux bornes d'une pile vaut toujours E.",
+        "I = E/Req s'applique à tous les circuits."
+      ]
     }
   ]
 }

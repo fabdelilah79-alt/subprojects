@@ -41,10 +41,10 @@ Utilisé par : les postes des simulations d'électricité.
   }
 
   function reglage(g, x, y, changer) {
-    // Alimentation réglable (0 à 12 V) : touches de réglage grossier (±1 V) et fin (±0,1 V) sur la face avant.
-    L.svg("rect", { x: x + 6, y: y + 78, width: 128, height: 30, fill: "#5f7383" }, g);
-    L.texte(g, x + 62, y + 84, "TENSION : grossier  ·  fin", { "font-size": 6.5, "font-weight": 700, fill: "#dfe8ee" });
-    [[-1, "−1", 18], [1, "+1", 44], [-0.1, "−0,1", 82], [0.1, "+0,1", 108]].forEach(([d, t, dx]) => L.bouton_rond(g, x + dx, y + 97, t, () => changer(d), 9));
+    // Alimentation réglable (0 à 12 V) : touches de réglage grossier (±1 V) et fin (±0,1 V) sur le dessus, entre l'afficheur
+    // et les bornes (les câbles, qui pendent vers l'avant, ne passent jamais dessus).
+    L.svg("rect", { x: x + 52, y: y + 31, width: 86, height: 18, rx: 3, fill: "#b4c0c8" }, g);
+    [[-1, "−1", 62], [1, "+1", 82], [-0.1, "−0,1", 108], [0.1, "+0,1", 128]].forEach(([d, t, dx]) => L.bouton_rond(g, x + dx, y + 40, t, () => changer(d), 8.5));
   }
 
   L.generateur = function (c, { id = "generateur", x, y, E = 6, r = 0.5, I_max = 1, lettres = null, reglable = false, nom = "" }) {
@@ -56,7 +56,7 @@ Utilisé par : les postes des simulations d'électricité.
     if (reglable) reglage(comp.g, x, y, (d) => { comp.E = Math.max(0, Math.min(12, Math.round((comp.E + d) * 10) / 10)); Object.assign(dipole, { j: comp.limite ? I_max : comp.E / r }); c.calculer(); });
     c.borne(comp, "−", x + 40, y + 58, L.NOIR_BORNE);
     c.borne(comp, "+", x + 150, y + 58, L.ROUGE_BORNE);
-    if (nom) L.texte(comp.g, x + 95, y + 36, nom, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" });
+    if (nom) L.texte(comp.g, reglable ? x + 22 : x + 95, y + 36, nom, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" });
     if (lettres) [[18, lettres[0]], [172, lettres[1]]].forEach(([dx, t]) => L.texte(comp.g, x + dx, y + 58, t, { "font-size": 12, "font-weight": 700, fill: "#1a3d7c" }));
     const dipole = { a: "−", b: "+", g: 1 / r, j: E / r };
     dipole.ajuster = (u, i) => {

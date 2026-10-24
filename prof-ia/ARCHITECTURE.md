@@ -284,7 +284,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/circuit.js | Circuit d'une paillasse : composants, bornes, fils ; recalcul et distribution des courants à chaque changement. |
 | contenu/ressources/laboratoires/commun/circuit_fils.js | Fils de connexion : tirer d'une borne à l'autre, débrancher, fiches banane empilées, câble souple. |
 | contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, bloc de prises, plan de travail), boîtiers, cordons secteur. |
-| contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur. |
+| contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur ; touches de réglage sur le dessus. |
 | contenu/ressources/laboratoires/commun/circuit_recepteurs.js | Lampe (éclat selon la puissance), DEL avec résistance de protection, interrupteur à couteau. |
 | contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur à 13 positions (V⎓, V~, A⎓ jusqu'au calibre 2 mA, Ω), quatre bornes, afficheur, fusible de la borne mA. |
 | contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS. |
@@ -407,6 +407,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_elec1_a1_electrisation/ | Pendule électrostatique, électroscope à feuilles d'or, support isolant (baguettes de tc_elec1_a1 réutilisées). |
 | contenu/ressources/laboratoires/sources/b1_elec1_a2_champ/ | Balance de Coulomb (F = k·qA·qB/d²) ; semoule dans l'huile de ricin : lignes de champ. |
 | contenu/ressources/laboratoires/sources/b1_elec1_a3_potentiel/ | Cuve rhéographique : V(x), E = U/d, équipotentielles, W = q·(VA − VB), Epe. |
+| contenu/ressources/laboratoires/commun/moteur_treuil.js | Moteur à courant continu en treuil (f.c.é.m. k·ω, r' = 25 Ω) qui monte 200 g ; cellules et chronomètre de montée (40 cm). |
+| contenu/ressources/laboratoires/sources/b1_elec2_a1_transferts/ | Lampe, moteur à treuil, électrolyseur sur un générateur ; tri des appareils selon l'énergie utile. |
+| contenu/ressources/laboratoires/sources/b1_elec2_a2_puissance/ | Moteur à treuil, ampèremètre, voltmètre : W = U·I·Δt, P = U·I, W_u, Q, rendement à trois tensions. |
+| contenu/ressources/laboratoires/sources/b1_elec2_a3_joule/ | Résistance chauffante dans un calorimètre : Q = R·I²·Δt ; tri effet Joule utile ou nuisible. |
+| contenu/ressources/laboratoires/sources/b1_elec2_a4_generateur/ | Deux piles, deux résistances : E·I = U·I + r·I², rendement U/E, I = E/(R + r), piles en série. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

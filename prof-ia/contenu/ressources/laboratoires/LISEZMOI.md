@@ -351,6 +351,20 @@ tel quel). Une baguette lâchée près du support isolant y reste posée (« Rep
 baguette près de l'électroscope pendant qu'on pose et retire le doigt. Sur la balance de Coulomb, Δm = F/g, avec
 F = k·qA·qB/d² (k = 8,99×10⁹ SI, q = 5,56 nC après la sonde : 11,3 mg à 5 cm).
 
+## Chapitre 1re année du bac « Transfert d'énergie dans un circuit électrique » (fiche 1bac/elec2_transfert_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_elec2_a1_transferts.html | A1 : lampe et moteur, transfert d'énergie | O1 | Générateur 6 V, interrupteur ; lampe, moteur à treuil (200 g) puis électrolyseur branchés tour à tour : rayonnement, travail mécanique, énergie chimique, et toujours de la chaleur ; tableau magnétique : forme principale de l'énergie utile de huit appareils. |
+| b1_elec2_a2_puissance.html | A2 : mesures de U et I pendant Δt | O2, O4, O5 | Moteur à treuil, ampèremètre en série, voltmètre à ses bornes ; montée chronométrée de 40 cm : W = U·I·Δt, P = U·I, W_u = m·g·Δh = 0,785 J, Q = W − W_u ; rendement à 4, 5 et 6 V au tableur (environ 34 %, 41 %, 45 %). |
+| b1_elec2_a3_joule.html | A3 : loi de Joule (calorimétrie), effet Joule dans la vie courante | O3 | Résistance chauffante R = 4,0 Ω dans un calorimètre (C = 150 J/K, 200 g d'eau), chauffes de 300 s (temps accéléré × 10) à 6, 8 et 10 V : Q = 986·Δθ comparée à R·I²·Δt ; tableau magnétique : effet Joule utile ou nuisible ; haute tension, lampe à incandescence. |
+| b1_elec2_a4_generateur.html | A4 : énergie fournie par le générateur ; influence de E et des résistances | O5, O6 | Pile 4,5 V (r = 1,5 Ω) : E à vide, U_PN et I avec 22 Ω ; P_g = E·I, P_e = U·I, r, rendement U/E ; I pour 22, 47 et 69 Ω comparée à E/(R + r) ; deux piles en série (E = 9 V). |
+
+Le moteur à treuil (`commun/moteur_treuil.js`) est un vrai récepteur : U = k·ω + r'·I (k = 0,30 V·s/rad, r' = 25 Ω) ; au
+démarrage, I = U/r' reste sous le fusible de 0,25 A de la borne mA jusqu'à 6 V. Un contact de fin de course l'arrête en
+haut ; « ↓ » redescend la masse. Les touches de réglage des alimentations (±1 V, ±0,1 V) sont maintenant sur le dessus
+du boîtier : les câbles, qui pendent vers l'avant, ne les cachent plus.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

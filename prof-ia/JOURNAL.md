@@ -684,3 +684,24 @@ Problèmes restants, à faire par l'enseignant :
 - Les charges ne fuient pas dans l'air (en réalité, elles disparaissent en quelques minutes par temps humide).
 - La cuve rhéographique est idéale : potentiel exactement linéaire entre les plaques, constant au-delà.
 - L'en-tête de frottement.js (tronc commun) ne cite pas encore cette simulation parmi ses utilisateurs.
+
+## 2026-10-24 — Laboratoires virtuels : chapitre 1re année du bac « Transfert d'énergie dans un circuit électrique »
+
+Fait :
+- Quatre simulations, inscrites au manifeste (82 ressources) : A1 lampe, moteur et électrolyseur, tri des appareils ;
+  A2 énergie et puissance reçues par un moteur, rendement ; A3 loi de Joule par calorimétrie, effet Joule utile ou
+  nuisible ; A4 bilan de puissance d'une pile, I = E/Req, piles en série. Objectifs O1 à O6.
+- Matériel commun nouveau : moteur à treuil (f.c.é.m., masse de 200 g, cellules, chronomètre, fin de course).
+- Modifié hors de l'étape (signalé) : commun/circuit_generateur.js — touches de réglage déplacées sur le dessus du
+  boîtier (un câble branché sur N ou P passait sur elles et prenait le clic) ; nom G1/G2 décalé à gauche quand
+  l'alimentation est réglable. Les 14 simulations d'électricité ont été réassemblées ; les parcours des 5 simulations
+  qui ont une alimentation réglable (tronc commun elec3 et elec4) passent toujours.
+- Corrigé après essais : cellules et règle du treuil qui flottaient (barres de fixation), afficheur Δt caché par les
+  câbles (chronomètre fixé à la tige), récepteurs placés sous les câbles (lampe et électrolyseur remontés), fusible mA
+  grillé au démarrage du moteur (r' porté à 25 Ω, masse 200 g), câble de la pile 2 qui traversait son boîtier.
+- Vérifié : parcours complets des quatre simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le bilan SM avec transistor ou AO (objectif O7) n'a pas de simulation dans ce chapitre.
+- Dans le calorimètre, la chaleur de la résistance passe tout de suite à l'eau (pas de retard ni de gradient).
+- Le moteur à treuil ne chauffe pas visiblement ; la chaleur Q est seulement calculée.
