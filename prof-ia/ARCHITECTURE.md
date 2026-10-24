@@ -412,6 +412,16 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_elec2_a2_puissance/ | Moteur à treuil, ampèremètre, voltmètre : W = U·I·Δt, P = U·I, W_u, Q, rendement à trois tensions. |
 | contenu/ressources/laboratoires/sources/b1_elec2_a3_joule/ | Résistance chauffante dans un calorimètre : Q = R·I²·Δt ; tri effet Joule utile ou nuisible. |
 | contenu/ressources/laboratoires/sources/b1_elec2_a4_generateur/ | Deux piles, deux résistances : E·I = U·I + r·I², rendement U/E, I = E/(R + r), piles en série. |
+| contenu/ressources/laboratoires/commun/champ_magnetique.js | Champ B par superposition : champ terrestre, pôles d'aimants, segments de courant (Biot et Savart) ; barreau, aimant en U, fil, spire, bobine. |
+| contenu/ressources/laboratoires/commun/plan_magnetique.js | Feuille ou plaque vue un peu d'en haut : passage plan ↔ écran, dessin, rose des vents. |
+| contenu/ressources/laboratoires/commun/aimant_dessin.js | Barreau aimanté sur la feuille (entier ou cassé) et ses sources de champ. |
+| contenu/ressources/laboratoires/commun/boussole.js | Boussole que l'on fait glisser ; aiguille amortie orientée par le champ horizontal. |
+| contenu/ressources/laboratoires/commun/limaille.js | Limaille de fer qui dessine les lignes de champ quand on tapote la feuille. |
+| contenu/ressources/laboratoires/commun/teslametre.js | Teslamètre à sonde de Hall : composante horizontale ou verticale, touche zéro, sonde déplaçable. |
+| contenu/ressources/laboratoires/commun/generateur_courant.js | Générateur de courant réglable : intensité, interrupteur, inverseur, deux bornes. |
+| contenu/ressources/laboratoires/sources/b1_elec3_a1_champ/ | Barreau aimanté (boussole, limaille, teslamètre), aimant brisé, superposition, champ terrestre, Œrsted. |
+| contenu/ressources/laboratoires/sources/b1_elec3_a2_courants/ | Champ d'un fil rectiligne, d'une spire, d'une bobine ; B ∝ I, B = 2×10⁻⁷·I/d, μ0·N·I/2R, μ0·n·I. |
+| contenu/ressources/laboratoires/sources/b1_elec3_a3_laplace/ | Rails et balance de Laplace, courants parallèles, faisceau d'électrons, haut-parleur, moteur, induction. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -365,6 +365,20 @@ démarrage, I = U/r' reste sous le fusible de 0,25 A de la borne mA jusqu'à 6 V
 haut ; « ↓ » redescend la masse. Les touches de réglage des alimentations (±1 V, ±0,1 V) sont maintenant sur le dessus
 du boîtier : les câbles, qui pendent vers l'avant, ne les cachent plus.
 
+## Chapitre 1re année du bac « Magnétisme : champ magnétique et forces électromagnétiques » (fiche 1bac/elec3_magnetisme)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_elec3_a1_champ.html | A1 : document d'Œrsted, aimant brisé, superposition, champ terrestre | O1, O2 | Barreau aimanté sur une feuille : boussole loin de l'aimant puis devant ses pôles, limaille, B à 2 et 4 cm du pôle nord ; aimant cassé en deux ; deux aimants à angle droit : B mesuré ≈ √(B1² + B2²) ; champ terrestre : B_H, B_V, B_T ≈ 0,042 mT, inclinaison ≈ 46° ; fil nord-sud au-dessus d'une boussole (Œrsted), courant inversé. |
+| b1_elec3_a2_courants.html | A2 : champ d'un fil, d'une spire, d'une bobine | O3 | Fil vertical à travers une plaque (20 A pour la limaille) : cercles, sens du champ, B à 2 cm pour 2 à 10 A (B/I = 0,01 mT/A), B à 1, 2, 3, 4 cm (B·d constant) ; spire de 20 tours (≈ 1,0 mT à 4 A) ; bobine de 200 spires sur 16 cm : champ uniforme, faces nord et sud, B ≈ 2,9 mT à 2 A (μ0·n·I = 3,1 mT). |
+| b1_elec3_a3_laplace.html | A3 : force de Laplace ; haut-parleur, moteur | O4, O5, O6 | Rails de Laplace (sens selon I et B, tige immobile à 1 A, W = F·d) ; balance de Laplace : |Δm| pour I = 1 à 5 A, l = 1, 2, 4 cm, α = 90°, 60°, 30°, 0° (F = I·l·B·sin α) ; rubans parallèles (attraction, répulsion) ; faisceau d'électrons et aimant ; haut-parleur en coupe ; moteur avec et sans collecteur ; aimant dans une bobine (courant induit). |
+
+Le champ est calculé par superposition (`commun/champ_magnetique.js`) : champ terrestre (B_H = 2,9×10⁻⁵ T, B_V = 3,0×10⁻⁵ T),
+pôles d'aimants (B = q·r/r³) et courants (loi de Biot et Savart, exacte pour chaque segment). La touche « zéro » du
+teslamètre retranche le champ terrestre ; les mesures de B créé par un courant ne sont notées qu'après un zéro fait circuit
+ouvert. Sur la balance de Laplace, le cadre exerce sur l'aimant une force opposée à la force de Laplace : l'indication varie
+de Δm = F/g (1,63 g pour 5 A, 4 cm, 0,080 T).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

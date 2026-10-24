@@ -2509,6 +2509,137 @@
         "La tension aux bornes d'une pile vaut toujours E.",
         "I = E/Req s'applique à tous les circuits."
       ]
+    },
+    {
+      "id": "b1_elec3_a1_champ",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec3_a1_champ.html",
+      "description": "Feuille sur la paillasse, boussole, limaille de fer, teslamètre à sonde de Hall : barreau aimanté (sens du champ près des pôles, lignes de champ, B à 2 et 4 cm), aimant brisé ; deux aimants à angle droit : B = B1 + B2 ; champ terrestre (B_H, B_V, inclinaison, boussole d'inclinaison) ; document et expérience d'Œrsted (fil nord-sud au-dessus d'une boussole).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec3_magnetisme",
+      "activite": "Document historique (expérience d'Œrsted…) ; aimant brisé ; superposition de champs ; mesure du champ terrestre.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Aiguille aimantée et lignes de champ",
+          "ce_que_fait_l_eleve": "Explore le champ d'un barreau aimanté avec une boussole, la limaille et le teslamètre.",
+          "conclusion": "Un aimant crée autour de lui un champ magnétique. En un point, le vecteur champ B a la direction de l'aiguille aimantée immobile, le sens qui va de son pôle sud à son pôle nord, et une valeur mesurée en teslas (T) au teslamètre. Les lignes de champ, dessinées par la limaille, sont tangentes au champ ; à l'extérieur de l'aimant, elles sortent du pôle nord et entrent par le pôle sud ; B est grand là où elles sont serrées."
+        },
+        {
+          "titre": "L'aimant brisé",
+          "ce_que_fait_l_eleve": "Casse l'aimant et observe les pôles des deux morceaux.",
+          "conclusion": "Chaque morceau d'un aimant brisé est un aimant complet, avec un pôle nord et un pôle sud : on ne peut pas isoler un pôle magnétique."
+        },
+        {
+          "titre": "Superposition de deux champs",
+          "ce_que_fait_l_eleve": "Mesure en O le champ de chaque aimant et des deux ensemble.",
+          "conclusion": "Quand plusieurs sources créent un champ magnétique en un point, le champ total est la somme vectorielle des champs : B = B1 + B2. Ici, B1 et B2 sont perpendiculaires : B = √(B1² + B2²), et l'aiguille prend la direction de la diagonale."
+        },
+        {
+          "titre": "Le champ magnétique terrestre",
+          "ce_que_fait_l_eleve": "Mesure les composantes du champ terrestre et en déduit sa valeur et l'inclinaison.",
+          "conclusion": "En un lieu, le champ magnétique terrestre B_T a une composante horizontale B_H, dirigée vers le nord magnétique (c'est elle qu'indique la boussole), et une composante verticale B_V. B_T = √(B_H² + B_V²) ≈ 4×10⁻⁵ T ; l'inclinaison I (tan I = B_V/B_H) est l'angle entre B_T et l'horizontale (environ 46° au Maroc)."
+        },
+        {
+          "titre": "L'expérience d'Œrsted",
+          "ce_que_fait_l_eleve": "Lit le document d'Œrsted et refait l'expérience en inversant le courant.",
+          "conclusion": "Un courant électrique crée un champ magnétique (Œrsted, 1820) : l'aiguille placée sous le fil dévie quand le courant passe, et dévie dans l'autre sens quand on inverse le courant. Le sens du champ dépend du sens du courant."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Une boussole indique toujours le nord, même près d'un aimant.",
+        "On peut séparer le pôle nord et le pôle sud d'un aimant en le cassant.",
+        "Les valeurs des champs de deux aimants s'additionnent toujours."
+      ]
+    },
+    {
+      "id": "b1_elec3_a2_courants",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec3_a2_courants.html",
+      "description": "Générateur de courant, plaque de plexiglas, limaille, boussole, teslamètre (zéro) : fil rectiligne vertical (cercles, règle de la main droite, B ∝ I à 2 cm, B·d constant : B = 2×10⁻⁷·I/d) ; spire de 20 tours (B au centre = μ0·N·I/2R) ; bobine de 200 spires (champ uniforme, faces nord et sud, B = μ0·n·I).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec3_magnetisme",
+      "activite": "Champ d'un conducteur rectiligne, d'une spire, d'une bobine ; comparaison bobine/barreau aimanté.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Champ d'un conducteur rectiligne",
+          "ce_que_fait_l_eleve": "Observe les lignes de champ d'un fil, trouve le sens du champ, mesure B en fonction de I et de la distance au tableur.",
+          "conclusion": "Autour d'un conducteur rectiligne parcouru par un courant, les lignes de champ sont des cercles centrés sur le fil ; le sens du champ est donné par la règle de la main droite (le pouce dans le sens du courant, les doigts repliés indiquent le sens de B). En l'absence de milieu magnétique, B est proportionnel à I ; il diminue avec la distance d : B = 2×10⁻⁷·I/d (SI)."
+        },
+        {
+          "titre": "Champ d'une spire",
+          "ce_que_fait_l_eleve": "Mesure le champ au centre d'une spire pour trois intensités et le compare à μ0·N·I/2R.",
+          "conclusion": "Au centre d'une spire plate de N tours et de rayon R, le champ est perpendiculaire au plan de la spire et vaut B = μ0·N·I/(2R) : il est proportionnel à I."
+        },
+        {
+          "titre": "Champ d'une bobine",
+          "ce_que_fait_l_eleve": "Observe les lignes de champ d'une bobine, trouve ses faces et compare B à μ0·n·I.",
+          "conclusion": "À l'intérieur d'une bobine longue, les lignes de champ sont parallèles à l'axe : le champ est uniforme et vaut B = μ0·n·I (n : nombre de spires par mètre). À l'extérieur, elles ressemblent à celles d'un barreau aimanté : la face d'où sortent les lignes est la face nord, l'autre la face sud ; elles s'échangent quand on inverse le courant."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Le champ d'un fil est dirigé le long du fil.",
+        "Le champ d'une bobine est nul à l'intérieur.",
+        "B ne dépend pas de l'intensité du courant."
+      ]
+    },
+    {
+      "id": "b1_elec3_a3_laplace",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec3_a3_laplace.html",
+      "description": "Rails de Laplace (sens de la force selon I et B, frottements, travail W = F·d) ; balance de Laplace (aimant en U sur une balance, cadres de 1, 2, 4 cm, plateau tournant : F = I·l·B·sin α au tableur) ; deux rubans parallèles, faisceau d'électrons dévié par un aimant ; haut-parleur en coupe et moteur à collecteur ; observation de l'induction (aimant et bobine, galvanomètre).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec3_magnetisme",
+      "activite": "Force de Laplace : rails de Laplace, interaction de deux courants parallèles, faisceau d'électrons près d'un aimant ; haut-parleur, moteur.",
+      "objectifs": [
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Deux courants, un faisceau d'électrons",
+          "ce_que_fait_l_eleve": "Fait rouler la tige des rails de Laplace, inverse le courant puis le champ, calcule le travail de la force.",
+          "conclusion": "Chaque conducteur est placé dans le champ créé par l'autre : deux courants parallèles de même sens s'attirent, de sens contraires se repoussent. Les électrons en mouvement forment un courant : le faisceau d'un tube est dévié par un aimant (force de Laplace), dans un sens qui dépend du pôle approché."
+        },
+        {
+          "titre": "Haut-parleur et moteur",
+          "ce_que_fait_l_eleve": "Mesure la force de Laplace avec une balance en faisant varier I, l et α.",
+          "conclusion": "Haut-parleur : la bobine mobile, placée dans le champ radial de l'aimant, subit une force de Laplace dirigée selon l'axe ; un courant alternatif la fait avancer et reculer avec la membrane, qui fait vibrer l'air (son). Moteur : les forces de Laplace sur les deux côtés du cadre forment un couple qui le fait tourner ; le collecteur inverse le courant à chaque demi-tour pour que le couple garde le même sens."
+        },
+        {
+          "titre": "Observer l'induction",
+          "ce_que_fait_l_eleve": "Observe deux courants parallèles et un faisceau d'électrons près d'un aimant.",
+          "conclusion": "Quand on déplace un aimant près d'une bobine, un courant induit apparaît dans la bobine fermée, seulement pendant le mouvement ; son sens change avec le sens du mouvement. De l'énergie mécanique est ainsi convertie en énergie électrique (alternateurs, dynamos) : c'est la conversion inverse de celle du moteur."
+        },
+        {
+          "titre": "Les rails de Laplace",
+          "ce_que_fait_l_eleve": "Fait fonctionner un haut-parleur et un moteur, enlève le collecteur.",
+          "conclusion": "Un conducteur parcouru par un courant, placé dans un champ magnétique, subit la force de Laplace : perpendiculaire au conducteur et au champ, de sens donné par la règle de la main droite (ou trièdre direct I·l, B, F), d'intensité F = I·l·B·sin α. Elle change de sens si l'on inverse le courant ou le champ. Son travail convertit de l'énergie électrique en énergie mécanique."
+        },
+        {
+          "titre": "Intensité de la force de Laplace",
+          "ce_que_fait_l_eleve": "Déplace un aimant dans une bobine et observe le courant induit.",
+          "conclusion": "L'intensité de la force de Laplace est F = I·l·B·sin α, où l est la longueur du conducteur dans le champ et α l'angle entre le conducteur et B : F est proportionnelle à I et à l ; elle est maximale quand le conducteur est perpendiculaire à B et nulle quand il lui est parallèle."
+        }
+      ],
+      "duree_min": 75,
+      "conceptions": [
+        "La force de Laplace est dirigée selon le champ.",
+        "Un aimant attire le faisceau d'électrons comme du fer.",
+        "Il y a un courant induit dès que l'aimant est dans la bobine."
+      ]
     }
   ]
 }

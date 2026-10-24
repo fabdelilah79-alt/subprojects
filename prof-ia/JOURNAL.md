@@ -705,3 +705,22 @@ Problèmes restants, à faire par l'enseignant :
 - Le bilan SM avec transistor ou AO (objectif O7) n'a pas de simulation dans ce chapitre.
 - Dans le calorimètre, la chaleur de la résistance passe tout de suite à l'eau (pas de retard ni de gradient).
 - Le moteur à treuil ne chauffe pas visiblement ; la chaleur Q est seulement calculée.
+
+## 2026-10-24 — Laboratoires virtuels : chapitre 1re année du bac « Magnétisme »
+
+Fait :
+- Trois simulations, inscrites au manifeste (85 ressources) : A1 champ d'un aimant (boussole, limaille, teslamètre),
+  aimant brisé, superposition de deux champs, champ terrestre, expérience d'Œrsted ; A2 champ d'un fil, d'une spire, d'une
+  bobine (B ∝ I) ; A3 rails et balance de Laplace, courants parallèles, faisceau d'électrons, haut-parleur, moteur,
+  induction (observation). Objectifs O1 à O6.
+- Matériel commun nouveau : calcul du champ (terre, aimants, Biot et Savart), feuille vue d'en haut, barreau aimanté,
+  boussole, limaille, teslamètre (composantes, zéro), générateur de courant.
+- Corrigé après essais : limaille trop uniforme (désordre qui dépend de B), rose des vents cachée par la limaille, cercles
+  du fil invisibles à 10 A (20 A pour l'observation), plateau tournant trop grand pour la balance, tare détectée au
+  démarrage, rapport du générateur réécrit pour l'expérience d'Œrsted.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La limaille s'aligne aussitôt quand on déplace un aimant (en vrai, il faut tapoter de nouveau).
+- Le haut-parleur, le moteur et l'induction sont des modèles animés simplifiés (pas de mesure).
+- Le teslamètre mesure la valeur de la composante choisie, sans orientation de la sonde.
