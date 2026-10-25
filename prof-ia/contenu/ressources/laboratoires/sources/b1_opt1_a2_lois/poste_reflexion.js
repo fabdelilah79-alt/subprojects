@@ -8,11 +8,9 @@ Utilisé par : simulation.js.
 */
 (function (L) {
   L.poste_reflexion = function (g) {
-    // Décor, socle, disque ; essais notés à chaque lâcher du laser.
-    const { pense_bete } = L.decor_circuit(g, 0), C = { x: 470, y: 340 }, e = { essais: [], retour: false };
-    L.svg("rect", { x: C.x - 70, y: 525, width: 140, height: 14, rx: 3, fill: "#3a3f44" }, g);
-    L.tige(g, `M${C.x} 525 V${C.y + 180}`, 10);
-    const d = L.disque_optique(L.svg("g", {}, g), { C, R: 160, n: null });
+    // Décor, disque sur son pied ; essais notés à chaque lâcher du laser.
+    const { pense_bete } = L.decor_circuit(g, 0), C = { x: 470, y: 318 }, e = { essais: [], retour: false };
+    const d = L.disque_optique(L.svg("g", {}, g), { C, R: 140, n: null });
     let avant = null;
     d.sur_lacher = () => {
       // Essai noté ; retour inverse si le laser est mis à la place du rayon réfléchi de l'essai précédent.

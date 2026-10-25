@@ -9,11 +9,9 @@ Utilisé par : simulation.js.
 */
 (function (L) {
   L.poste_refraction = function (g) {
-    // Décor, socle, disque ; essais notés à chaque lâcher du laser.
-    const { pense_bete } = L.decor_circuit(g, 1), C = { x: 470, y: 340 }, e = { air: [], verre: [], retour: false };
-    L.svg("rect", { x: C.x - 70, y: 525, width: 140, height: 14, rx: 3, fill: "#3a3f44" }, g);
-    L.tige(g, `M${C.x} 525 V${C.y + 180}`, 10);
-    const d = L.disque_optique(L.svg("g", {}, g), { C, R: 160, n: 1.5 }), arrondi = (x) => (x === null ? null : Math.round(x * 100) / 100);
+    // Décor, disque sur son pied ; essais notés à chaque lâcher du laser.
+    const { pense_bete } = L.decor_circuit(g, 1), C = { x: 470, y: 318 }, e = { air: [], verre: [], retour: false };
+    const d = L.disque_optique(L.svg("g", {}, g), { C, R: 140, n: 1.5 }), arrondi = (x) => (x === null ? null : Math.round(x * 100) / 100);
     let cible = null;
     d.sur_lacher = () => {
       // Essai dans l'air ou dans le plexiglas ; retour inverse si le laser est posé sur le rayon réfracté précédent.

@@ -2448,47 +2448,187 @@ Utilisé par : les simulations d'optique.
 </script>
   <script>
 /*
-Rôle : paillasse « peut-on voir la lumière ? » : caisse noire à vitre (vue de face), laser de classe 2 à gauche, écran
-       blanc à droite ; « Fumée » remplit la caisse de fumée d'encens qui se dissipe lentement (environ 30 s) : sans fumée,
-       on ne voit que la tache sur l'écran ; avec la fumée, les particules diffusent un peu de lumière vers l'œil et le trajet
-       rectiligne du faisceau apparaît.
+Rôle : matériel d'optique dessiné en 2,5D (vu de face, un peu d'en haut, avec ombres et reflets) : pied en fonte avec sa
+       tige et une noix de serrage ; lampe à incandescence sur douille (filament, halo quand elle est allumée) ; module
+       laser cylindrique (corps métallique, bague, lentille, voyant) orientable ; écran de carton percé, tenu par une noix
+       sur la tige d'un pied (vu un peu de biais, avec son épaisseur).
+Reçoit : le groupe SVG et les réglages de chaque objet (positions à l'écran).
+Produit : Labo.pied_support(g, x, sol, haut) ; Labo.noix(g, x, y) ; Labo.lampe_douille(g, { x, y, allumee }) ;
+          Labo.laser_module(g, { x, y, angle, allume, longueur }) ; Labo.ecran_perce(g, { x, y, trou }).
+Utilisé par : les simulations d'optique.
+*/
+(function (L) {
+  L.pied_support = function (g, x, sol, haut) {
+    // Pied en fonte (ombre, socle bombé), tige d'acier jusqu'à la hauteur haut.
+    L.ombre_sol(g, x + 4, sol + 2, 46, 8, 0.45);
+    L.svg("ellipse", { cx: x, cy: sol - 2, rx: 40, ry: 9, fill: "#1f2327" }, g);
+    L.svg("ellipse", { cx: x, cy: sol - 6, rx: 38, ry: 8, fill: "url(#acier)", stroke: "#111" }, g);
+    L.svg("ellipse", { cx: x - 8, cy: sol - 8, rx: 16, ry: 2.5, fill: "#fff", opacity: 0.15 }, g);
+    L.tige(g, `M${x} ${sol - 8} V${haut}`, 6);
+  };
+
+  L.noix = function (g, x, y) {
+    // Noix de serrage : bloc d'aluminium et sa vis à tête moletée.
+    L.svg("rect", { x: x - 9, y: y - 8, width: 18, height: 16, rx: 2, fill: "url(#metal)", stroke: "#444" }, g);
+    L.svg("rect", { x: x + 9, y: y - 3, width: 8, height: 6, fill: "#555" }, g);
+    L.svg("circle", { cx: x + 20, cy: y, r: 5, fill: "#2b2f33", stroke: "#000" }, g);
+  };
+
+  L.lampe_douille = function (g, { x, y, allumee }) {
+    // Douille noire tenue par une noix, ampoule de verre, filament (rougeoyant si allumée), halo.
+    if (allumee) { L.svg("circle", { cx: x, cy: y - 20, r: 60, fill: "url(#halo)" }, g); }
+    L.svg("rect", { x: x - 11, y: y - 4, width: 22, height: 26, rx: 3, fill: "#24282c", stroke: "#000" }, g);
+    for (let k = 0; k < 4; k++) L.svg("line", { x1: x - 11, y1: y + 2 + 5 * k, x2: x + 11, y2: y + 2 + 5 * k, stroke: "#3c4248" }, g);
+    L.svg("path", { d: `M${x - 9} ${y - 2} C${x - 22} ${y - 18} ${x - 20} ${y - 46} ${x} ${y - 46} C${x + 20} ${y - 46} ${x + 22} ${y - 18} ${x + 9} ${y - 2} Z`, fill: allumee ? "#fff8d6" : "url(#verre)", stroke: "#9fb6be", "stroke-width": 1.2, opacity: allumee ? 0.95 : 1 }, g);
+    L.svg("path", { d: `M${x - 4} ${y - 4} L${x - 6} ${y - 26} M${x + 4} ${y - 4} L${x + 6} ${y - 26} M${x - 6} ${y - 26} q3 -4 6 0 q3 4 6 0`, fill: "none", stroke: allumee ? "#ff9d2e" : "#6b6b6b", "stroke-width": allumee ? 1.6 : 1 }, g);
+    L.svg("ellipse", { cx: x - 8, cy: y - 32, rx: 3, ry: 7, fill: "#fff", opacity: 0.5 }, g);
+  };
+
+  L.laser_module = function (g, { x, y, angle = 0, allume = true, longueur = 70 }) {
+    // Corps cylindrique (dégradé métallique), bague noire, lentille à l'avant (vers +x avant rotation), voyant.
+    const c = L.svg("g", { transform: `translate(${x} ${y}) rotate(${angle})` }, g);
+    L.svg("rect", { x: -longueur, y: -9, width: longueur, height: 18, rx: 4, fill: "url(#metal-h)", stroke: "#333" }, c);
+    L.svg("rect", { x: -longueur + 6, y: -9, width: 8, height: 18, fill: "#22262a" }, c);
+    L.svg("rect", { x: -6, y: -10, width: 8, height: 20, rx: 2, fill: "#2b2f33" }, c);
+    L.svg("ellipse", { cx: 2, cy: 0, rx: 2, ry: 6, fill: "#9fd6ff", stroke: "#333", "stroke-width": 0.6 }, c);
+    L.svg("circle", { cx: -longueur + 24, cy: -4, r: 2.4, fill: allume ? "#ff3b2a" : "#5a1b16" }, c);
+    L.svg("rect", { x: -longueur + 30, y: -6, width: 22, height: 7, rx: 1, fill: "#ffd54f" }, c);
+    L.texte(c, -longueur + 41, -2.5, "CLASSE 2", { "font-size": 3.6, "font-weight": 700, fill: "#222" });
+    return c;
+  };
+
+  L.ecran_perce = function (g, { x, y, trou = true }) {
+    // Carton de 12 cm vu un peu de biais (face avant, tranche), trou noir au centre ; tenu à sa base par une noix.
+    L.svg("path", { d: `M${x - 6} ${y - 54} L${x + 4} ${y - 60} L${x + 4} ${y + 48} L${x - 6} ${y + 54} Z`, fill: "#7a5a33" }, g);
+    L.svg("path", { d: `M${x - 6} ${y - 54} L${x - 22} ${y - 46} L${x - 22} ${y + 62} L${x - 6} ${y + 54} Z`, fill: "#c39a63", stroke: "#6d4a26", "stroke-width": 0.8 }, g);
+    L.svg("path", { d: `M${x - 6} ${y - 54} L${x - 22} ${y - 46} L${x - 22} ${y + 62} L${x - 6} ${y + 54} Z`, fill: "url(#reflet)" }, g);
+    if (trou) L.svg("ellipse", { cx: x - 13, cy: y + 4, rx: 2.6, ry: 4, fill: "#0b0b0b" }, g);
+    L.noix(g, x - 4, y + 66);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : objets de la vie courante dessinés en 2,5D pour les simulations d'optique : lampe d'architecte (socle lesté, bras
+       articulés à ressorts, abat-jour conique orienté, ampoule, cône de lumière), livre fermé posé à plat (couverture,
+       tranche des pages), élève assis vu de profil, tourné vers la gauche (visage ombré, cheveux, oreille, œil, pull).
+Reçoit : le groupe SVG et les réglages (positions à l'écran).
+Produit : Labo.lampe_bureau(g, { x, sol, coude, tete, cible, allumee }) -> { foyer (point d'où part la lumière) } ;
+          Labo.livre(g, { x, y, l, titre }) -> { dessus (milieu de la couverture) } ; Labo.observateur(g, { x, y }) (x, y : œil).
+Utilisé par : les simulations d'optique.
+*/
+(function (L) {
+  L.lampe_bureau = function (g, { x, sol, coude, tete, cible, allumee }) {
+    // Socle, deux bras doubles et leurs ressorts, articulations, abat-jour tourné vers la cible, lumière.
+    L.ombre_sol(g, x + 6, sol + 2, 44, 8, 0.5);
+    L.svg("ellipse", { cx: x, cy: sol - 3, rx: 36, ry: 9, fill: "#1e2226" }, g);
+    L.svg("ellipse", { cx: x, cy: sol - 7, rx: 34, ry: 8, fill: "url(#acier)", stroke: "#000" }, g);
+    L.svg("rect", { x: x - 6, y: sol - 22, width: 12, height: 16, rx: 2, fill: "#2b3035" }, g);
+    const base = { x, y: sol - 20 };
+    for (const [a, b] of [[base, coude], [coude, tete]]) {
+      L.tige(g, `M${a.x - 3} ${a.y} L${b.x - 3} ${b.y}`, 4); L.tige(g, `M${a.x + 4} ${a.y} L${b.x + 4} ${b.y}`, 3);
+      const n = 9, z = Array.from({ length: n + 1 }, (_, k) => `${a.x + 10 + ((b.x - a.x) * k) / n + (k % 2 ? 3 : -3)} ${a.y + ((b.y - a.y) * k) / n}`).join(" L");
+      L.svg("path", { d: `M${z}`, fill: "none", stroke: "#9aa3a9", "stroke-width": 1 }, g);
+    }
+    for (const p of [base, coude, tete]) { L.svg("circle", { cx: p.x, cy: p.y, r: 6, fill: "#2b3035", stroke: "#000" }, g); L.svg("circle", { cx: p.x, cy: p.y, r: 2.2, fill: "url(#metal)" }, g); }
+    const ang = (Math.atan2(cible.y - tete.y, cible.x - tete.x) * 180) / Math.PI, u = { x: Math.cos((ang * Math.PI) / 180), y: Math.sin((ang * Math.PI) / 180) };
+    if (allumee) L.svg("path", { d: `M${tete.x + 14 * u.x - 26 * u.y} ${tete.y + 14 * u.y + 26 * u.x} L${cible.x - 90} ${cible.y + 4} L${cible.x + 90} ${cible.y + 4} L${tete.x + 14 * u.x + 26 * u.y} ${tete.y + 14 * u.y - 26 * u.x} Z`, fill: "#fff3b0", opacity: 0.12 }, g);
+    const c = L.svg("g", { transform: `translate(${tete.x} ${tete.y}) rotate(${ang})` }, g);
+    L.svg("path", { d: "M-30 -9 L14 -28 A7 28 0 0 1 14 28 L-30 9 Z", fill: "#3a6ea5", stroke: "#123" }, c);
+    L.svg("path", { d: "M-30 -9 L14 -28 L14 -14 L-30 -3 Z", fill: "#fff", opacity: 0.18 }, c);
+    L.svg("ellipse", { cx: 14, cy: 0, rx: 7, ry: 28, fill: allumee ? "#fff6c2" : "#1b2733", stroke: "#123" }, c);
+    L.svg("ellipse", { cx: 12, cy: 0, rx: 4, ry: 12, fill: allumee ? "#ffffff" : "#6b6b60" }, c);
+    if (allumee) L.svg("circle", { cx: tete.x + 16 * u.x, cy: tete.y + 16 * u.y, r: 40, fill: "url(#halo)" }, g);
+    return { foyer: { x: tete.x + 14 * u.x, y: tete.y + 14 * u.y } };
+  };
+
+  L.livre = function (g, { x, y, l = 120, titre = "PHYSIQUE" }) {
+    // Livre fermé à plat : ombre, tranche des pages (face avant et côté), couverture (dessus), titre.
+    const e = 14, d = 34, k = 10, a = x - l / 2, b = x + l / 2;
+    L.ombre_sol(g, x + 6, y + 2, l / 2 + 8, 7, 0.45);
+    L.svg("path", { d: `M${a} ${y - e} H${b} V${y} H${a} Z`, fill: "#f4eedb", stroke: "#a99f7d" }, g);
+    for (let t = 3; t < e; t += 2.5) L.svg("line", { x1: a + 2, y1: y - e + t, x2: b - 2, y2: y - e + t, stroke: "#d8cfb0", "stroke-width": 0.6 }, g);
+    L.svg("path", { d: `M${b} ${y - e} L${b + k} ${y - e - d} V${y - d} L${b} ${y} Z`, fill: "#e2d9bd", stroke: "#a99f7d" }, g);
+    L.svg("path", { d: `M${a} ${y - e} L${a + k} ${y - e - d} H${b + k} L${b} ${y - e} Z`, fill: "#2f8f5b", stroke: "#14502f" }, g);
+    L.svg("path", { d: `M${a} ${y - e} L${a + k} ${y - e - d} H${a + k + 10} L${a + 10} ${y - e} Z`, fill: "#1f6b42" }, g);
+    L.svg("path", { d: `M${a} ${y - e} V${y} M${a} ${y - e} L${a - 2} ${y - e / 2} L${a} ${y}`, fill: "none", stroke: "#1f6b42", "stroke-width": 3 }, g);
+    L.texte(g, x + k / 2 + 5, y - e - d / 2, titre, { "font-size": 9, "font-weight": 700, fill: "#f2f2e6", "letter-spacing": 1 });
+    return { dessus: { x: x + k / 2, y: y - e - d / 2 } };
+  };
+
+  L.observateur = function (g, { x, y }) {
+    // Élève de profil, regard vers la gauche : pull, cou, visage (dégradé), cheveux, oreille, œil, sourcil, lèvres.
+    const P = (dx, dy) => `${x + dx} ${y + dy}`;
+    L.svg("path", { d: `M${P(6, 90)} C${P(-30, 100)} ${P(-48, 120)} ${P(-54, 175)} H${x + 120} C${P(118, 130)} ${P(100, 100)} ${P(56, 86)} Z`, fill: "#3d5f8f", stroke: "#22385a" }, g);
+    L.svg("path", { d: `M${P(14, 60)} L${P(16, 94)} C${P(30, 100)} ${P(46, 98)} ${P(54, 88)} L${P(48, 52)} Z`, fill: "#d9a27a" }, g);
+    L.svg("path", { d: `M${P(30, -62)} C${P(4, -60)} ${P(-6, -44)} ${P(-8, -24)} Q${P(-8, -10)} ${P(-11, -4)} Q${P(-14, 6)} ${P(-26, 20)} Q${P(-22, 26)} ${P(-13, 26)} Q${P(-17, 31)} ${P(-15, 33)} Q${P(-11, 36)} ${P(-15, 40)} Q${P(-14, 52)} ${P(-8, 57)} Q${P(8, 66)} ${P(24, 62)} C${P(52, 56)} ${P(70, 40)} ${P(72, 10)} C${P(74, -30)} ${P(60, -62)} ${P(30, -62)} Z`, fill: "#e6b48d", stroke: "#a4704c", "stroke-width": 0.8 }, g);
+    L.svg("path", { d: `M${P(40, -40)} C${P(70, -30)} ${P(72, 20)} ${P(60, 44)} C${P(70, 20)} ${P(68, -10)} ${P(40, -40)} Z`, fill: "#b37d58", opacity: 0.6 }, g);
+    L.svg("path", { d: `M${P(-6, -36)} C${P(0, -66)} ${P(50, -76)} ${P(72, -40)} C${P(80, -20)} ${P(76, 10)} ${P(66, 26)} C${P(60, 6)} ${P(52, -10)} ${P(46, -24)} C${P(30, -40)} ${P(10, -40)} ${P(-6, -36)} Z`, fill: "#2b1d14" }, g);
+    L.svg("ellipse", { cx: x + 38, cy: y + 10, rx: 7, ry: 12, fill: "#dca47c", stroke: "#a4704c" }, g);
+    L.svg("path", { d: `M${P(-9, -10)} Q${P(-2, -15)} ${P(8, -11)}`, fill: "none", stroke: "#2b1d14", "stroke-width": 2 }, g);
+    L.svg("path", { d: `M${P(-9, 0)} Q${P(-2, -5)} ${P(5, 0)} Q${P(-2, 4)} ${P(-9, 0)} Z`, fill: "#fff", stroke: "#6b4a34", "stroke-width": 0.7 }, g);
+    L.svg("circle", { cx: x - 5, cy: y, r: 2.4, fill: "#3b5a7a" }, g);
+    L.svg("path", { d: `M${P(-16, 34)} Q${P(-12, 36)} ${P(-14, 38)}`, fill: "none", stroke: "#b5534a", "stroke-width": 2 }, g);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : paillasse « peut-on voir la lumière ? » : caisse vitrée posée sur la paillasse (fond noir, vue un peu de biais),
+       laser de classe 2 sur son support, écran blanc sur pied, coupelle avec un bâton d'encens. « Encens » allume le bâton :
+       sa fumée remplit peu à peu la caisse (20 s), puis se dissipe (30 s). Sans fumée, on ne voit que la tache sur l'écran ;
+       dans la fumée, les particules diffusent un peu de lumière vers l'œil et le trajet rectiligne du faisceau apparaît.
 Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_fumee(g) -> { pense_bete } ; fait « fumee » = { sans (laser allumé sans fumée vu), avec (laser allumé dans la fumée vu) }.
+Produit : Labo.poste_fumee(g) -> { pense_bete } ; fait « fumee » = { sans, avec }.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const X0 = 250, X1 = 790, Y0 = 220, Y1 = 470, YL = 350;
+  const X0 = 250, X1 = 770, Y0 = 250, Y1 = 480, P = 34, YL = 360;
 
   function caisse(g) {
-    // Fond noir, laser sur son support, écran blanc ; cadre de la caisse.
-    L.svg("rect", { x: X0, y: Y0, width: X1 - X0, height: Y1 - Y0, rx: 4, fill: "#0d1114", stroke: "#2d3338", "stroke-width": 6 }, g);
-    L.svg("rect", { x: X0 + 30, y: YL - 12, width: 70, height: 24, rx: 3, fill: "#2b3035", stroke: "#000" }, g);
-    L.svg("rect", { x: X0 + 50, y: YL + 12, width: 20, height: Y1 - YL - 15, fill: "#3a3f44" }, g);
-    L.texte(g, X0 + 65, YL, "LASER", { "font-size": 7, "font-weight": 700, fill: "#ffd54f" });
-    L.svg("rect", { x: X1 - 50, y: YL - 80, width: 12, height: 160, fill: "#f4f4ee", stroke: "#999" }, g);
-    L.svg("rect", { x: X1 - 44, y: YL + 80, width: 4, height: Y1 - YL - 83, fill: "#3a3f44" }, g);
+    // Ombre, fond et côtés noirs, dessus, cadre d'aluminium ; supports du laser et de l'écran ; coupelle d'encens.
+    L.ombre_sol(g, (X0 + X1) / 2 + 10, Y1 + 2, (X1 - X0) / 2 + 20, 10, 0.5);
+    L.svg("path", { d: `M${X0} ${Y0} L${X0 + P} ${Y0 - P} H${X1 + P} L${X1} ${Y0} Z`, fill: "#2a2f34", stroke: "#8d969c" }, g);
+    L.svg("path", { d: `M${X1} ${Y0} L${X1 + P} ${Y0 - P} V${Y1 - P} L${X1} ${Y1} Z`, fill: "#15191c", stroke: "#8d969c" }, g);
+    L.svg("rect", { x: X0, y: Y0, width: X1 - X0, height: Y1 - Y0, fill: "#0b0e10" }, g);
+    L.svg("path", { d: `M${X0 + P} ${Y0 - P} V${Y1 - P} H${X1 + P}`, fill: "none", stroke: "#2c3237" }, g);
+    L.svg("rect", { x: X0 + 70, y: YL + 10, width: 10, height: Y1 - YL - 18, fill: "url(#metal)" }, g);
+    L.svg("ellipse", { cx: X0 + 75, cy: Y1 - 8, rx: 28, ry: 6, fill: "url(#acier)" }, g);
+    L.svg("rect", { x: X1 - 70, y: YL - 70, width: 14, height: 140, fill: "#f4f4ee", stroke: "#bbb" }, g);
+    L.svg("rect", { x: X1 - 65, y: YL + 70, width: 4, height: Y1 - YL - 76, fill: "url(#metal)" }, g);
+    L.svg("ellipse", { cx: X1 - 63, cy: Y1 - 6, rx: 18, ry: 4, fill: "url(#acier)" }, g);
+    L.svg("ellipse", { cx: 430, cy: Y1 - 8, rx: 20, ry: 5, fill: "#7a5a33" }, g);
+    L.svg("line", { x1: 428, y1: Y1 - 10, x2: 444, y2: Y1 - 70, stroke: "#5a3a1e", "stroke-width": 2.4 }, g);
+  }
+
+  function vitre(g) {
+    // Vitre avant : reflets obliques, cadre.
+    L.svg("rect", { x: X0, y: Y0, width: X1 - X0, height: Y1 - Y0, fill: "none", stroke: "#a9b2b8", "stroke-width": 5 }, g);
+    for (const x of [X0 + 60, X0 + 300]) L.svg("path", { d: `M${x} ${Y0 + 3} l60 0 l-120 ${Y1 - Y0 - 6} l-60 0 Z`, fill: "#fff", opacity: 0.05 }, g);
   }
 
   L.poste_fumee = function (g) {
-    // Caisse, fumée (particules), faisceau visible selon la fumée, tache ; vitre ; touches ; faits.
-    const { pense_bete } = L.decor_circuit(g, 0), e = { laser: false, fumee: 0, sans: 0, avec: 0 };
+    // Caisse, fumée, faisceau visible selon la fumée, tache, vitre ; touches ; faits.
+    const { pense_bete } = L.decor_circuit(g, 0), e = { laser: false, brule: 0, fumee: 0, sans: 0, avec: 0, t: 0 };
     caisse(L.svg("g", {}, g));
     const dyn = L.svg("g", { "pointer-events": "none" }, g);
-    L.svg("rect", { x: X0 + 3, y: Y0 + 3, width: X1 - X0 - 6, height: 40, fill: "#fff", opacity: 0.05 }, g);
-    L.texte(g, (X0 + X1) / 2, Y1 + 18, "caisse noire à vitre — vous regardez de face, le faisceau passe devant vous", { "font-size": 8, "font-weight": 700, fill: "#e8e2d4" });
+    vitre(L.svg("g", { "pointer-events": "none" }, g));
+    L.texte(g, (X0 + X1) / 2, Y1 + 22, "caisse vitrée à fond noir : vous la regardez de face, le faisceau passe devant vous", { "font-size": 8, "font-weight": 700, fill: "#e8e2d4" });
     L.bouton_texte(g, 420, 548, "Laser", () => { e.laser = !e.laser; });
-    L.bouton_texte(g, 512, 548, "Fumée", () => { e.fumee = 1; });
+    L.bouton_texte(g, 512, 548, "Encens", () => { e.brule = 20; });
     let graine = 5;
-    const hasard = () => ((graine = (graine * 16807) % 2147483647) / 2147483647), grains = Array.from({ length: 260 }, () => ({ x: X0 + 10 + hasard() * (X1 - X0 - 20), y: Y0 + 10 + hasard() * (Y1 - Y0 - 20) }));
+    const hasard = () => ((graine = (graine * 16807) % 2147483647) / 2147483647), grains = Array.from({ length: 320 }, () => ({ x: X0 + 10 + hasard() * (X1 - X0 - 20), y: Y0 + 10 + hasard() * (Y1 - Y0 - 20), v: hasard() }));
     let avant = null;
     const image = (ms) => {
-      const dt = avant === null ? 0 : Math.min(0.05, (ms - avant) / 1000); avant = ms;
-      e.fumee = Math.max(0, e.fumee - dt / 30);
+      const dt = avant === null ? 0 : Math.min(0.05, (ms - avant) / 1000); avant = ms; e.t += dt;
+      if (e.brule > 0) { e.brule -= dt; e.fumee = Math.min(1, e.fumee + dt / 6); } else e.fumee = Math.max(0, e.fumee - dt / 30);
       dyn.replaceChildren();
-      for (const p of grains) L.svg("circle", { cx: p.x, cy: p.y, r: 1.2, fill: "#9aa3ab", opacity: 0.35 * e.fumee }, dyn);
+      for (const p of grains) L.svg("circle", { cx: p.x + 6 * Math.sin(e.t * 0.3 + p.v * 6), cy: p.y - 4 * Math.sin(e.t * 0.2 + p.v * 9), r: 1.3, fill: "#a3acb4", opacity: 0.3 * e.fumee }, dyn);
+      if (e.brule > 0) { L.svg("circle", { cx: 444, cy: Y1 - 71, r: 2.5, fill: "#ff7a2a" }, dyn); L.svg("path", { d: `M444 ${Y1 - 74} c${8 * Math.sin(e.t)} -20 -10 -30 0 -50 c10 -20 -6 -30 4 -60`, fill: "none", stroke: "#c9d0d6", "stroke-width": 4, opacity: 0.35 }, dyn); }
+      L.laser_module(dyn, { x: X0 + 112, y: YL, allume: e.laser, longueur: 76 });
       if (e.laser) {
-        L.rayon_lumineux(dyn, [{ x: X0 + 100, y: YL }, { x: X1 - 50, y: YL }], { opacite: Math.min(1, e.fumee * 1.2), fleches: false });
-        L.svg("circle", { cx: X1 - 51, cy: YL, r: 4, fill: "#ff3b2a" }, dyn); L.svg("circle", { cx: X1 - 51, cy: YL, r: 9, fill: "#ff3b2a", opacity: 0.3 }, dyn);
+        L.rayon_lumineux(dyn, [{ x: X0 + 114, y: YL }, { x: X1 - 70, y: YL }], { opacite: Math.min(1, e.fumee * 1.2), fleches: false });
+        L.svg("circle", { cx: X1 - 71, cy: YL, r: 3.5, fill: "#ff3b2a" }, dyn); L.svg("circle", { cx: X1 - 71, cy: YL, r: 9, fill: "#ff3b2a", opacity: 0.3 }, dyn);
         if (e.fumee < 0.05) e.sans += dt; if (e.fumee > 0.5) e.avec += dt;
       }
       requestAnimationFrame(image);
@@ -2501,59 +2641,60 @@ Utilisé par : simulation.js.
 </script>
   <script>
 /*
-Rôle : paillasse « conditions de vision » (vue de côté, salle dans l'obscurité) : lampe de bureau que l'on allume ou éteint,
-       livre posé sur la paillasse, observateur (œil) à droite, carton opaque que l'on fait glisser. Les rayons tracés vont de
+Rôle : paillasse « conditions de vision » (salle dans l'obscurité) : lampe d'architecte que l'on allume ou éteint, livre
+       posé à plat, élève assis à droite, carton opaque tenu par un pied, que l'on fait glisser. Les rayons tracés vont de
        la lampe au livre et du livre (qui diffuse) à l'œil, sauf si le carton les arrête ; une bulle dit ce que voit l'élève.
 Reçoit : le groupe SVG de la paillasse.
 Produit : Labo.poste_vision(g) -> { pense_bete } ; fait « vision » = { eteinte, vu_livre, cache }.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const LAMPE = { x: 300, y: 250 }, LIVRE = { x: 520, y: 448 }, OEIL = { x: 842, y: 338 };
+  const LIVRE = { x: 500, y: 470 }, OEIL = { x: 872, y: 338 }, SOL = 522;
 
   function coupe(a, b, c) {
-    // Vrai si le segment a-b traverse le carton (rectangle vertical de 16 × 130 px centré en c).
-    if ((a.x - c.x) * (b.x - c.x) > 0 && Math.abs(a.x - c.x) > 8 && Math.abs(b.x - c.x) > 8) return false;
-    const t = (c.x - a.x) / (b.x - a.x || 1e-6), y = a.y + t * (b.y - a.y);
-    return t >= 0 && t <= 1 && Math.abs(y - c.y) < 65;
+    // Vrai si le segment a-b traverse le carton (face de 108 px de haut, à x = c.x − 9).
+    const xc = c.x - 9;
+    if ((a.x - xc) * (b.x - xc) > 0) return false;
+    const y = a.y + ((xc - a.x) / (b.x - a.x)) * (b.y - a.y);
+    return Math.abs(y - (c.y + 4)) < 58;
   }
 
-  function fixe(g) {
-    // Lampe de bureau, livre, tête de l'observateur.
-    L.svg("rect", { x: 230, y: 470, width: 90, height: 10, rx: 3, fill: "#2b3035" }, g);
-    L.tige(g, "M275 470 L250 330 L300 262", 5);
-    L.svg("path", { d: `M282 236 L330 236 L348 268 L268 268 Z`, fill: "#3a6ea5", stroke: "#123" }, g);
-    L.svg("rect", { x: LIVRE.x - 50, y: LIVRE.y - 14, width: 100, height: 26, rx: 2, fill: "#2f8f5b", stroke: "#14502f" }, g);
-    L.svg("rect", { x: LIVRE.x - 50, y: LIVRE.y - 14, width: 100, height: 6, fill: "#f0ead6" }, g);
-    L.svg("path", { d: "M930 470 C930 400 905 380 905 360 C905 340 890 335 878 330 C870 300 880 260 920 250 C980 240 1000 300 990 360 C985 400 980 430 990 470 Z", fill: "#e0b48e", stroke: "#8a5a3a" }, g);
-    L.svg("ellipse", { cx: OEIL.x + 40, cy: OEIL.y, rx: 7, ry: 4, fill: "#fff", stroke: "#333" }, g);
-    L.svg("circle", { cx: OEIL.x + 37, cy: OEIL.y, r: 2.3, fill: "#2b4a6a" }, g);
+  function bulle(g, texte) {
+    // Bulle de pensée de l'élève.
+    g.replaceChildren();
+    L.svg("rect", { x: 800, y: 182, width: 200, height: 48, rx: 12, fill: "#fdfdf8", stroke: "#999" }, g);
+    L.svg("circle", { cx: 880, cy: 240, r: 5, fill: "#fdfdf8", stroke: "#999" }, g); L.svg("circle", { cx: 874, cy: 252, r: 3, fill: "#fdfdf8", stroke: "#999" }, g);
+    L.texte(g, 900, 197, "Ce que je vois :", { "font-size": 8, "font-weight": 700, fill: "#333" });
+    L.texte(g, 900, 215, texte, { "font-size": 10, "font-weight": 700, fill: "#1a3d7c" });
   }
 
   L.poste_vision = function (g) {
-    // Décor sombre, matériel, rayons recalculés à chaque image, bulle ; faits.
-    const { pense_bete } = L.decor_circuit(g, 1), e = { lampe: false, carton: { x: 700, y: 520 }, eteinte: false, vu_livre: false, cache: false };
-    L.svg("rect", { x: 0, y: 160, width: 1024, height: 440, fill: "#000", opacity: 0.45 }, g);
-    fixe(L.svg("g", {}, g));
-    const ampoule = L.svg("ellipse", { cx: 308, cy: 270, rx: 16, ry: 6 }, g), rayons = L.svg("g", { "pointer-events": "none" }, g);
-    const carton = L.svg("g", { class: "carton", role: "button", "aria-label": "Carton opaque" }, g), bulle = L.svg("g", {}, g);
-    L.glissable(carton, { soulever: false, debut: () => ({ ...e.carton }), deplacer: (p) => { e.carton = { x: Math.max(380, Math.min(800, p.x)), y: Math.max(300, Math.min(520, p.y)) }; } });
-    L.bouton_texte(g, 300, 548, "Lampe", () => { e.lampe = !e.lampe; });
-    L.texte(g, 512, 196, "salle dans l'obscurité", { "font-size": 9, "font-weight": 700, fill: "#e8e2d4" });
-    let avant = null;
+    // Décor, livre, élève, pénombre, lampe, carton saisissable, rayons et bulle ; faits.
+    const { pense_bete } = L.decor_circuit(g, 1), e = { lampe: false, carton: { x: 395, y: 410 }, eteinte: false, vu_livre: false, cache: false };
+    const livre = L.livre(L.svg("g", {}, g), { x: LIVRE.x, y: LIVRE.y, titre: "PHYSIQUE" });
+    L.observateur(L.svg("g", {}, g), OEIL);
+    const nuit = L.svg("rect", { x: 0, y: 166, width: 1024, height: 474, fill: "#000", "pointer-events": "none" }, g);
+    const gl = L.svg("g", {}, g), nuit_lampe = L.svg("rect", { x: 0, y: 166, width: 1024, height: 474, fill: "#000", "pointer-events": "none" }, g);
+    const rayons = L.svg("g", { "pointer-events": "none" }, g), carton = L.svg("g", { class: "carton", role: "button", "aria-label": "Carton opaque" }, g), gb = L.svg("g", {}, g);
+    L.glissable(carton, { soulever: false, debut: () => ({ ...e.carton }), deplacer: (p) => { e.carton = { x: Math.max(380, Math.min(800, p.x)), y: Math.max(330, Math.min(410, p.y)) }; } });
+    L.bouton_texte(g, 240, 548, "Lampe", () => { e.lampe = !e.lampe; });
+    L.texte(g, 512, 180, "salle dans l'obscurité", { "font-size": 9, "font-weight": 700, fill: "#e8e2d4" });
+    let vu = null;
     const image = () => {
-      const c = e.carton, oeil = { x: OEIL.x + 30, y: OEIL.y }, livre_vu = e.lampe && !coupe(LIVRE, oeil, c), lampe_vue = e.lampe && !coupe({ x: 308, y: 270 }, oeil, c);
-      ampoule.setAttribute("fill", e.lampe ? "#fff6c2" : "#7d7a6a");
-      rayons.replaceChildren(); carton.replaceChildren(); bulle.replaceChildren();
+      // Lampe et pénombre, rayons (arrêtés par le carton), carton et son pied, bulle.
+      const c = e.carton, oeil = { x: OEIL.x - 6, y: OEIL.y }, cible = livre.dessus;
+      gl.replaceChildren(); rayons.replaceChildren(); carton.replaceChildren();
+      const { foyer } = L.lampe_bureau(gl, { x: 240, sol: 478, coude: { x: 214, y: 345 }, tete: { x: 275, y: 262 }, cible, allumee: e.lampe });
+      nuit.setAttribute("opacity", e.lampe ? 0.32 : 0.62); nuit_lampe.setAttribute("opacity", e.lampe ? 0 : 0.5);
+      const livre_vu = e.lampe && !coupe(cible, oeil, c), lampe_vue = e.lampe && !coupe(foyer, oeil, c);
       if (e.lampe) {
-        for (const dx of [-40, 0, 40]) L.rayon_lumineux(rayons, [{ x: 308, y: 272 }, { x: LIVRE.x + dx, y: LIVRE.y - 14 }], { couleur: "#ffd54f", largeur: 1.4 });
-        for (const dy of [-6, 6]) { const a = { x: LIVRE.x + 30, y: LIVRE.y - 14 }, b = { x: oeil.x, y: oeil.y + dy }, fin = coupe(a, b, c) ? { x: c.x - 8, y: a.y + ((c.x - 8 - a.x) / (b.x - a.x)) * (b.y - a.y) } : b; L.rayon_lumineux(rayons, [a, fin], { couleur: "#9fe3a8", largeur: 1.2 }); }
+        for (const dx of [-45, 0, 45]) L.rayon_lumineux(rayons, [foyer, { x: cible.x + dx, y: cible.y }], { couleur: "#ffd54f", largeur: 1.3 });
+        for (const dx of [-20, 25]) { const a = { x: cible.x + dx, y: cible.y }, b = oeil, f = coupe(a, b, c) ? { x: c.x - 22, y: a.y + ((c.x - 22 - a.x) / (b.x - a.x)) * (b.y - a.y) } : b; L.rayon_lumineux(rayons, [a, f], { couleur: "#9fe3a8", largeur: 1.1 }); }
       }
-      L.svg("rect", { x: c.x - 8, y: c.y - 65, width: 16, height: 130, rx: 2, fill: "#8a6a44", stroke: "#4a351c" }, carton);
-      L.svg("rect", { x: 820, y: 180, width: 180, height: 46, rx: 8, fill: "#fdfdf8", stroke: "#999" }, bulle);
-      L.texte(bulle, 910, 194, "Ce que je vois :", { "font-size": 8, "font-weight": 700, fill: "#333" });
-      L.texte(bulle, 910, 212, [lampe_vue ? "la lampe" : "", livre_vu ? "le livre" : ""].filter(Boolean).join(" et ") || "rien (noir)", { "font-size": 9, "font-weight": 700, fill: "#1a3d7c" });
-      if (!e.lampe) e.eteinte = true; else if (livre_vu) e.vu_livre = true; else if (coupe(LIVRE, oeil, c)) e.cache = true;
+      L.pied_support(carton, c.x - 4, SOL, c.y + 66); L.ecran_perce(carton, { x: c.x, y: c.y, trou: false });
+      const texte = [lampe_vue ? "la lampe" : "", livre_vu ? "le livre" : ""].filter(Boolean).join(" et ") || "rien (noir)";
+      if (texte !== vu) { bulle(gb, texte); vu = texte; }
+      if (!e.lampe) e.eteinte = true; else if (livre_vu) e.vu_livre = true; else if (coupe(cible, oeil, c)) e.cache = true;
       requestAnimationFrame(image);
     };
     requestAnimationFrame(image);
@@ -2564,37 +2705,41 @@ Utilisé par : simulation.js.
 </script>
   <script>
 /*
-Rôle : paillasse « trois écrans percés » (vue de côté) : lampe à gauche, trois écrans de carton percés d'un petit trou, que
-       l'on fait monter ou descendre, et l'œil à droite. La lumière de la lampe n'arrive à l'œil que si les trois trous sont
-       alignés avec la lampe et l'œil : la lumière se propage en ligne droite.
+Rôle : paillasse « trois écrans percés » (vue de face) : lampe sur douille tenue par un pied, trois écrans de carton
+       percés d'un petit trou, chacun tenu par une noix sur la tige d'un pied (on fait glisser la noix vers le haut ou vers
+       le bas), élève assis à droite. La lumière n'arrive à l'œil que si les trois trous sont alignés avec la lampe et l'œil.
 Reçoit : le groupe SVG de la paillasse.
 Produit : Labo.poste_ecrans(g) -> { pense_bete } ; fait « ecrans » = { aligne, desaligne }.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  const Y = 340, XS = [430, 560, 690], LAMPE = 280, OEIL = 860;
+  const Y = 336, XS = [440, 570, 700], LAMPE = 280, OEIL = 884, SOL = 512;
 
   L.poste_ecrans = function (g) {
-    // Lampe, écrans (glisser vertical), œil ; rayon arrêté au premier écran dont le trou n'est pas sur la droite.
+    // Lampe, écrans (glisser vertical), élève ; rayon arrêté au premier écran dont le trou n'est pas sur la droite.
     const { pense_bete } = L.decor_circuit(g, 2), e = { trous: [Y - 40, Y + 30, Y], aligne: false, desaligne: false };
-    L.svg("rect", { x: 0, y: 160, width: 1024, height: 440, fill: "#000", opacity: 0.35 }, g);
-    L.svg("rect", { x: LAMPE - 30, y: Y + 20, width: 60, height: 150, fill: "#3a3f44" }, g);
-    L.svg("circle", { cx: LAMPE, cy: Y, r: 16, fill: "#fff6c2", stroke: "#c9a227", "stroke-width": 2 }, g);
-    L.svg("circle", { cx: LAMPE, cy: Y, r: 30, fill: "#fff6c2", opacity: 0.18 }, g);
-    L.svg("ellipse", { cx: OEIL, cy: Y, rx: 14, ry: 8, fill: "#fff", stroke: "#333" }, g);
-    L.svg("circle", { cx: OEIL - 5, cy: Y, r: 4.5, fill: "#2b4a6a" }, g);
-    L.texte(g, OEIL, Y + 24, "œil", { "font-size": 9, "font-weight": 700, fill: "#e8e2d4" });
-    const rayon = L.svg("g", { "pointer-events": "none" }, g), cartons = XS.map((x, k) => L.svg("g", { class: "ecran-perce", role: "slider", "aria-label": `Écran ${k + 1}` }, g));
+    L.pied_support(g, LAMPE, SOL, Y + 30); L.noix(g, LAMPE, Y + 32); L.lampe_douille(g, { x: LAMPE, y: Y + 24, allumee: true });
+    L.observateur(L.svg("g", {}, g), { x: OEIL, y: Y });
+    const cartons = XS.map((x, k) => L.svg("g", { class: "ecran-perce", role: "slider", "aria-label": `Écran ${k + 1}` }, g)), rayon = L.svg("g", { "pointer-events": "none" }, g), info = L.svg("g", {}, g);
     const dessiner = () => {
-      // Écrans à leur hauteur, rayon jusqu'au premier écran mal placé (ou jusqu'à l'œil), indication.
-      cartons.forEach((c, k) => { c.replaceChildren(); const t = e.trous[k]; L.svg("rect", { x: XS[k] - 6, y: t - 90, width: 12, height: 180, fill: "#b08a5a", stroke: "#5a3f22" }, c); L.svg("rect", { x: XS[k] - 7, y: t - 3, width: 14, height: 6, fill: "#111" }, c); L.texte(c, XS[k], t + 102, `écran ${k + 1}`, { "font-size": 8, "font-weight": 700, fill: "#e8e2d4" }); });
-      rayon.replaceChildren();
-      const k = e.trous.findIndex((t) => Math.abs(t - Y) > 4), fin = k < 0 ? OEIL - 14 : XS[k] - 6;
-      L.rayon_lumineux(rayon, [{ x: LAMPE + 16, y: Y }, { x: fin, y: Y }], { couleur: "#ffd54f" });
-      L.texte(rayon, 560, 210, k < 0 ? "l'œil voit la lampe" : "l'œil ne voit pas la lampe", { "font-size": 11, "font-weight": 700, fill: k < 0 ? "#9fe3a8" : "#ff8a80" });
+      // Écrans à leur hauteur (le trou est à t) ; rayon qui passe par les trous alignés et s'arrête sur le premier écran mal
+      // placé (ou arrive à l'œil) ; indication.
+      cartons.forEach((c, k) => { c.replaceChildren(); L.pied_support(c, XS[k] - 4, SOL, Math.min(e.trous[k] + 62, SOL - 30)); L.ecran_perce(c, { x: XS[k], y: e.trous[k] - 4 }); L.texte(c, XS[k] - 6, SOL + 16, `écran ${k + 1}`, { "font-size": 8, "font-weight": 700, fill: "#e8e2d4" }); });
+      rayon.replaceChildren(); info.replaceChildren();
+      const k = e.trous.findIndex((t) => Math.abs(t - Y) > 4);
+      let x0 = LAMPE + 18;
+      for (let j = 0; j < (k < 0 ? XS.length : k + 1); j++) {
+        // La lumière entre dans le trou (face gauche du carton) et ressort derrière le carton ; sinon, elle s'arrête sur le carton.
+        L.rayon_lumineux(rayon, [{ x: x0, y: Y }, { x: XS[j] - 13, y: Y }], { couleur: "#ffd54f" });
+        if (j === k) { L.svg("ellipse", { cx: XS[j] - 14, cy: Y, rx: 5, ry: 8, fill: "#ffe27a", opacity: 0.85 }, rayon); break; }
+        L.svg("ellipse", { cx: XS[j] - 13, cy: Y, rx: 2.4, ry: 3.8, fill: "#fff4b0" }, rayon);
+        x0 = XS[j] + 5;
+      }
+      if (k < 0) L.rayon_lumineux(rayon, [{ x: x0, y: Y }, { x: OEIL - 8, y: Y }], { couleur: "#ffd54f" });
+      L.texte(info, 570, 200, k < 0 ? "l'élève voit la lampe à travers les trois trous" : "l'élève ne voit pas la lampe", { "font-size": 11, "font-weight": 700, fill: k < 0 ? "#9fe3a8" : "#ff8a80" });
       if (k < 0) e.aligne = true; else e.desaligne = true;
     };
-    cartons.forEach((c, k) => L.glissable(c, { soulever: false, debut: () => ({ x: XS[k], y: e.trous[k] }), deplacer: (p) => { const y = Math.max(Y - 80, Math.min(Y + 80, p.y)); e.trous[k] = Math.abs(y - Y) < 5 ? Y : y; dessiner(); } }));
+    cartons.forEach((c, k) => L.glissable(c, { soulever: false, debut: () => ({ x: XS[k], y: e.trous[k] }), deplacer: (p) => { const y = Math.max(Y - 70, Math.min(Y + 70, p.y)); e.trous[k] = Math.abs(y - Y) < 5 ? Y : y; dessiner(); } }));
     dessiner();
     setInterval(() => L.missions.noter("ecrans", { aligne: e.aligne, desaligne: e.desaligne }), 250);
     return { pense_bete };
@@ -2627,49 +2772,55 @@ Utilisé par : simulation.js.
 </script>
   <script>
 /*
-Rôle : paillasse « l'image se forme dans le cerveau » : affiche au mur avec deux illusions d'optique : (1) deux segments
-       de même longueur terminés par des flèches ouvertes ou fermées (illusion de Müller-Lyer) ; « Mesurer » pose une règle
-       sur chacun ; (2) trois disques entamés : le cerveau « voit » un triangle blanc qui n'est pas dessiné.
+Rôle : paillasse « l'image se forme dans le cerveau » : deux feuilles pincées sur des porte-documents posés sur des
+       chevalets de bois : (1) deux segments de même longueur (10 cm) terminés par des flèches ouvertes ou fermées
+       (illusion de Müller-Lyer) ; (2) trois disques entamés : on « voit » un triangle blanc qui n'est pas dessiné.
+       Une règle graduée transparente, posée sur la paillasse, se fait glisser sur les segments pour les mesurer.
 Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_illusion(g) -> { pense_bete } ; fait « illusion » = { mesure }.
+Produit : Labo.poste_illusion(g) -> { pense_bete } ; fait « illusion » = { mesure (règle posée sur A puis sur B) }.
 Utilisé par : simulation.js.
 */
 (function (L) {
-  function muller(g) {
-    // Deux segments de 200 px ; flèches vers l'extérieur ou vers l'intérieur.
-    const trait = { stroke: "#222", "stroke-width": 3, fill: "none", "stroke-linecap": "round" };
-    L.svg("path", { d: "M300 150 H500 M300 150 l20 -20 M300 150 l20 20 M500 150 l-20 -20 M500 150 l-20 20", ...trait }, g);
-    L.svg("path", { d: "M300 260 H500 M300 260 l-20 -20 M300 260 l-20 20 M500 260 l20 -20 M500 260 l20 20", ...trait }, g);
-    L.texte(g, 280, 150, "A", { "font-size": 14, "font-weight": 700, fill: "#1a3d7c" }); L.texte(g, 262, 290, "B", { "font-size": 14, "font-weight": 700, fill: "#1a3d7c" });
+  const SA = { x: 300, y: 200 }, SB = { x: 300, y: 300 }, CM = 20;
+
+  function chevalet(g, x0, x1, y0, y1) {
+    // Chevalet de bois (pieds), porte-documents, pince, feuille blanche.
+    for (const [a, b] of [[x0 + 20, x0 - 10], [x1 - 20, x1 + 10]]) L.svg("line", { x1: a, y1: y0 + 20, x2: b, y2: 520, stroke: "#8d6337", "stroke-width": 7, "stroke-linecap": "round" }, g);
+    L.ombre_sol(g, (x0 + x1) / 2, 522, (x1 - x0) / 2 + 20, 6, 0.4);
+    L.svg("rect", { x: x0 - 8, y: y0 - 8, width: x1 - x0 + 16, height: y1 - y0 + 16, rx: 4, fill: "url(#bois)", stroke: "#6d4a26" }, g);
+    L.svg("rect", { x: x0, y: y0, width: x1 - x0, height: y1 - y0, fill: "#fdfdf8", stroke: "#ccc" }, g);
+    L.svg("rect", { x: (x0 + x1) / 2 - 30, y: y0 - 14, width: 60, height: 16, rx: 3, fill: "url(#metal)", stroke: "#555" }, g);
+    L.svg("rect", { x: x0 - 12, y: y1 + 8, width: x1 - x0 + 24, height: 10, rx: 2, fill: "#6d4a26" }, g);
   }
 
-  function regles(g) {
-    // Règle graduée posée sous chaque segment.
-    for (const y of [170, 280]) {
-      L.svg("rect", { x: 290, y, width: 220, height: 18, fill: "#f3e7b5", stroke: "#8a7a3a", opacity: 0.95 }, g);
-      for (let k = 0; k <= 20; k++) L.svg("line", { x1: 300 + k * 10, y1: y, x2: 300 + k * 10, y2: y + (k % 5 ? 5 : 9), stroke: "#333" }, g);
-      L.texte(g, 300, y + 14, "0", { "font-size": 7 }); L.texte(g, 500, y + 14, "10 cm", { "font-size": 7 });
-    }
-  }
-
-  function kanizsa(g) {
-    // Trois disques noirs entamés : triangle « vu » mais non dessiné.
-    for (const [x, y, a] of [[690, 140, 90], [610, 280, 330], [770, 280, 210]]) {
-      const r = 34, a1 = ((a - 30) * Math.PI) / 180, a2 = ((a + 30) * Math.PI) / 180;
-      L.svg("path", { d: `M${x} ${y} L${x + r * Math.cos(a2)} ${y + r * Math.sin(a2)} A${r} ${r} 0 1 1 ${x + r * Math.cos(a1)} ${y + r * Math.sin(a1)} Z`, fill: "#222" }, g);
-    }
+  function regle(g, p) {
+    // Double décimètre en plastique transparent (20 px par cm), graduations en mm et en cm.
+    g.replaceChildren();
+    L.svg("rect", { x: p.x - 10, y: p.y, width: 12 * CM + 20, height: 26, rx: 2, fill: "#eaf6fb", opacity: 0.78, stroke: "#7fa9b5" }, g);
+    for (let k = 0; k <= 120; k++) L.svg("line", { x1: p.x + k * 2, y1: p.y, x2: p.x + k * 2, y2: p.y + (k % 10 ? (k % 5 ? 4 : 6) : 9), stroke: "#1a3d7c", "stroke-width": 0.5 }, g);
+    for (let c = 0; c <= 12; c++) L.texte(g, p.x + c * CM, p.y + 16, String(c), { "font-size": 7, fill: "#1a3d7c" });
   }
 
   L.poste_illusion = function (g) {
-    // Affiche, touche « Mesurer » ; fait.
-    L.decor.paillasse(g, 4);
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230), e = { mesure: false };
-    L.svg("rect", { x: 250, y: 90, width: 600, height: 260, rx: 4, fill: "#fdfdf8", stroke: "#bbb" }, g);
-    L.texte(g, 550, 108, "Deux affiches : que voyez-vous ?", { "font-size": 11, "font-weight": 700, fill: "#333" });
-    muller(g); kanizsa(g);
-    const r = L.svg("g", { "pointer-events": "none" }, g);
-    L.bouton_texte(g, 400, 330, "Mesurer", () => { e.mesure = !e.mesure; r.replaceChildren(); if (e.mesure) regles(r); });
-    setInterval(() => L.missions.noter("illusion", { mesure: e.mesure }), 250);
+    // Décor, deux chevalets, figures, règle saisissable ; faits.
+    const { pense_bete } = L.decor_circuit(g, 4), e = { regle: { x: 560, y: 470 }, surA: false, surB: false };
+    chevalet(g, 255, 545, 150, 340); chevalet(g, 610, 880, 150, 340);
+    const trait = { stroke: "#222", "stroke-width": 3, fill: "none", "stroke-linecap": "round" }, l = 10 * CM;
+    L.svg("path", { d: `M${SA.x} ${SA.y} h${l} M${SA.x} ${SA.y} l18 -18 M${SA.x} ${SA.y} l18 18 M${SA.x + l} ${SA.y} l-18 -18 M${SA.x + l} ${SA.y} l-18 18`, ...trait }, g);
+    L.svg("path", { d: `M${SB.x} ${SB.y} h${l} M${SB.x} ${SB.y} l-18 -18 M${SB.x} ${SB.y} l-18 18 M${SB.x + l} ${SB.y} l18 -18 M${SB.x + l} ${SB.y} l18 18`, ...trait }, g);
+    L.texte(g, 270, SA.y, "A", { "font-size": 13, "font-weight": 700, fill: "#1a3d7c" }); L.texte(g, 266, SB.y - 22, "B", { "font-size": 13, "font-weight": 700, fill: "#1a3d7c" });
+    for (const [x, y, a] of [[745, 190, 90], [680, 300, 330], [810, 300, 210]]) {
+      const r = 30, a1 = ((a - 30) * Math.PI) / 180, a2 = ((a + 30) * Math.PI) / 180;
+      L.svg("path", { d: `M${x} ${y} L${x + r * Math.cos(a2)} ${y + r * Math.sin(a2)} A${r} ${r} 0 1 1 ${x + r * Math.cos(a1)} ${y + r * Math.sin(a1)} Z`, fill: "#222" }, g);
+    }
+    const gr = L.svg("g", { class: "regle", role: "button", "aria-label": "Règle graduée" }, g);
+    L.glissable(gr, { soulever: false, debut: () => ({ ...e.regle }), deplacer: (p) => { e.regle = { x: Math.max(200, Math.min(700, p.x)), y: Math.max(160, Math.min(500, p.y)) }; regle(gr, e.regle); } });
+    regle(gr, e.regle);
+    setInterval(() => {
+      // Règle posée juste sous un segment, son zéro au début du segment.
+      for (const [k, s] of [["surA", SA], ["surB", SB]]) if (Math.abs(e.regle.x - s.x) < 6 && e.regle.y - s.y > -4 && e.regle.y - s.y < 14) e[k] = true;
+      L.missions.noter("illusion", { mesure: e.surA && e.surB });
+    }, 250);
     return { pense_bete };
   };
 })(window.Labo);
@@ -2692,7 +2843,7 @@ Utilisé par : page.html (dernier script).
     "La lumière ne se voit pas : on ne voit que les objets qui envoient de la lumière dans nos yeux. Le faisceau laser n'apparaît que si de fines particules (fumée, poussière de craie) en diffusent une partie vers l'œil ; on voit alors que la lumière se propage en ligne droite.", "La lumière ne se voit pas ; on voit les objets.", [
       { consigne: "Allumez le laser (sans fumée). Ne regardez jamais un laser dans l'axe du faisceau.", court: "Laser allumé, sans fumée.", verifier: ({ faits }) => v(faits, "fumee", "sans") },
       { consigne: "Sans fumée, entre le laser et l'écran…", court: "Répondez dans le carnet.", question: choix(["on ne voit pas le faisceau : on voit seulement la tache sur l'écran", "on voit un trait rouge", "on voit le faisceau mais pas la tache"], "Regardez la caisse.", "Exact.") },
-      { consigne: "Remplissez la caisse de fumée (« Fumée »), laser allumé.", court: "Fumée.", verifier: ({ faits }) => v(faits, "fumee", "avec") },
+      { consigne: "Allumez le bâton d'encens (« Encens ») et attendez que la fumée remplisse la caisse, laser allumé.", court: "Encens.", verifier: ({ faits }) => v(faits, "fumee", "avec") },
       { consigne: "Dans la fumée, on voit le trajet du faisceau, parce que…", court: "Répondez dans le carnet.", question: choix(["les particules de fumée diffusent une partie de la lumière dans toutes les directions, donc vers nos yeux", "la fumée colore la lumière", "la fumée produit de la lumière"], "La fumée seule, sans laser, ne brille pas.", "Exact.") },
       { consigne: "Que peut-on conclure ?", court: "Répondez dans le carnet.", question: choix(["la lumière ne se voit pas : on voit les objets qui envoient de la lumière dans nos yeux ; elle se propage en ligne droite", "la lumière se voit toujours", "la lumière ne se propage que dans la fumée"], "Sans fumée, le faisceau est invisible.", "Exact.") },
     ]);
@@ -2722,7 +2873,7 @@ Utilisé par : page.html (dernier script).
   const CERVEAU = M("cerveau", 4, "L'image se forme dans le cerveau", "Observer deux illusions d'optique.",
     "L'œil reçoit la lumière et la rétine envoie des messages nerveux au cerveau : c'est le cerveau qui forme et interprète l'image. Il peut se tromper (illusions d'optique) ou compléter ce qui manque. Cette image n'a rien à voir avec l'image projetée sur un écran.", "Le cerveau forme et interprète l'image.", [
       { consigne: "Affiche de gauche : le segment A paraît-il plus court ou plus long que le segment B ?", court: "Répondez dans le carnet.", question: choix(["plus court", "plus long", "de même longueur"], "Regardez sans mesurer.", "C'est ce que voient presque tous les élèves.") },
-      { consigne: "Mesurez les deux segments (« Mesurer »).", court: "Mesurez.", verifier: ({ faits }) => v(faits, "illusion", "mesure") },
+      { consigne: "Mesurez les deux segments avec la règle : son zéro au début du segment, juste en dessous.", court: "Mesurez A, puis B.", aide_geste: "Faites glisser la règle posée sur la paillasse.", verifier: ({ faits }) => v(faits, "illusion", "mesure") },
       { consigne: "Les deux segments mesurent tous les deux 10 cm. Cette illusion montre que…", court: "Répondez dans le carnet.", question: choix(["c'est le cerveau qui interprète la lumière reçue par l'œil : il peut se tromper", "l'œil mesure mal les longueurs", "les flèches changent la longueur des segments"], "La règle ne se trompe pas, le cerveau si.", "Exact.") },
       { consigne: "Affiche de droite : on « voit » un triangle blanc, alors qu'il n'est pas dessiné. Le cerveau…", court: "Répondez dans le carnet.", question: choix(["complète l'image à partir des formes reçues", "reçoit la lumière d'un triangle", "voit à travers l'affiche"], "Seuls trois disques entamés sont dessinés.", "Exact.") },
     ]);
