@@ -774,3 +774,15 @@ Problèmes restants, à faire par l'enseignant :
 - La lame ne se déplace pas sur la platine : on observe toujours le centre de la préparation.
 - Le grossissement « à vide » et la baisse de lumière aux forts grossissements sont des modèles simples (qualitatifs).
 - Le champ visible quand l'œil s'éloigne du cercle oculaire est un modèle qualitatif (conforme à la fiche : pas d'étude quantitative).
+
+## 2026-10-26 — Laboratoires virtuels : chapitre 1re année du bac « Importance de la mesure des quantités de matière »
+
+Fait :
+- Une simulation (l'unique activité de la fiche), inscrite au manifeste (94 ressources) : documents et tri des mesures
+  par domaine ; bandelettes « nitrates » dans trois eaux (potabilité) ; échelle de teintes du colorant E131 dans une
+  boisson (concentration, dose journalière admissible). Objectif O1.
+- Vérifié : parcours complet ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les teneurs (nitrates, colorant) sont fixées dans le code ; on peut les changer pour varier les exercices.
+- Une bandelette ne se trempe qu'une fois ; on ne peut pas reprendre une bandelette déjà lue.

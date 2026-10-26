@@ -2959,6 +2959,42 @@
         "L'oculaire seul fait le grossissement.",
         "On voit plus de choses avec le plus fort objectif."
       ]
+    },
+    {
+      "id": "b1_chim1_a1_mesure",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim1_a1_mesure.html",
+      "description": "Cinq documents au mur (analyses biologiques, environnement, agroalimentaire, sécurité, techniques de mesure) et tri de huit exemples de mesures par domaine. Bandelettes réactives « nitrates » trempées dans trois eaux (robinet, puits, minérale) : teinte comparée à l'échelle colorée, norme de potabilité de 50 mg/L. Échelle de teintes de colorant E131 (2 à 10 mg/L) dans un porte-tubes devant un carton blanc : le tube de boisson à la menthe se range entre 4 et 6 mg/L ; concentration du sirop, masse absorbée, dose journalière admissible.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim1_importance_mesure",
+      "activite": "Montrer la nécessité de la mesure par des exemples (sécurité, environnement, analyses biologiques, agroalimentaire).",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Pourquoi mesurer ?",
+          "ce_que_fait_l_eleve": "Lit des documents et range des exemples de mesures par domaine de la vie courante.",
+          "conclusion": "On mesure des quantités de matière (masses, concentrations) pour comparer les résultats à des valeurs de référence ou à des normes, et décider : soigner un malade, déclarer une eau potable, autoriser un aliment, éviter un accident. Une mesure n'a de sens qu'avec une technique adaptée et une incertitude connue."
+        },
+        {
+          "titre": "Des nitrates dans l'eau ?",
+          "ce_que_fait_l_eleve": "Mesure les nitrates de trois eaux avec des bandelettes et décide si elles sont potables.",
+          "conclusion": "La bandelette réactive se colore d'autant plus que l'eau contient d'ions nitrate ; on lit la teneur en comparant sa couleur à une échelle colorée. L'eau du puits (environ 100 mg/L) dépasse la norme de 50 mg/L : elle n'est pas potable. C'est une mesure rapide, mais peu précise."
+        },
+        {
+          "titre": "Un colorant dans une boisson",
+          "ce_que_fait_l_eleve": "Encadre la concentration d'un colorant avec une échelle de teintes et la compare à la DJA.",
+          "conclusion": "Une échelle de teintes est une série de solutions étalons de concentrations connues. En comparant, sur fond blanc, la teinte de la boisson à celle des étalons, on encadre sa concentration : entre 4 et 6 mg/L, soit environ 5 mg/L ; le sirop pur en contient environ 50 mg/L. Un enfant de 30 kg qui boit 1 L de boisson absorbe environ 5 mg de E131, bien moins que sa dose journalière admissible (150 mg)."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Une analyse ne sert qu'aux scientifiques.",
+        "Un aliment autorisé ne contient aucune espèce chimique dangereuse.",
+        "On mesure une concentration seulement en pesant."
+      ]
     }
   ]
 }

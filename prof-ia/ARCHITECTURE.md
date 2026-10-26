@@ -436,6 +436,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/instrument_optique.js | Images successives par plusieurs lentilles, grossissement vu par l'œil, marche de rayons, vue « ce que voit l'œil ». |
 | contenu/ressources/laboratoires/sources/b1_opt3_a1_lunette/ | Documents et tri (documents_lunette.js) ; maquette de lunette au banc, Lune, cercle oculaire, faisceau (lunette_banc.js, poste_lunette.js). |
 | contenu/ressources/laboratoires/sources/b1_opt3_a2_microscope/ | Microscope en volume (microscope_dessin.js), lames et vue dans l'oculaire (lames.js), documents, gestes (poste_microscope.js) ; modèle au banc (poste_modele_microscope.js). |
+| contenu/ressources/laboratoires/sources/b1_chim1_a1_mesure/ | Documents et tri des mesures par domaine (documents_mesure.js) ; bandelettes « nitrates » (poste_bandelettes.js) ; échelle de teintes du colorant E131 (poste_echelle_teintes.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

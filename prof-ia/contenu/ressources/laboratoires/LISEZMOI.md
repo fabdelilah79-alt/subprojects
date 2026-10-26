@@ -414,6 +414,14 @@ convergent. Le grossissement affiché est l'angle de l'image finale divisé par 
 Au microscope, le flou de mise au point dépend de la profondeur de champ de chaque objectif ; le flou « à vide »
 au-delà d'un grossissement de 450 environ est un modèle qualitatif.
 
+## Chapitre 1re année du bac « Importance de la mesure des quantités de matière dans la vie courante » (fiche 1bac/chim1_importance_mesure)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim1_a1_mesure.html | Nécessité de la mesure par des exemples | O1 | Cinq documents (santé, environnement, agroalimentaire, sécurité, techniques de mesure), tri de huit exemples par domaine ; glycémie comparée aux valeurs de référence. Bandelettes « nitrates » trempées dans trois eaux : 25, 100 et 0 mg/L lus sur l'échelle colorée ; l'eau du puits dépasse 50 mg/L. Échelle de teintes de E131 (2 à 10 mg/L) : la boisson se range entre 4 et 6 mg/L ; sirop à 50 mg/L ; 5 mg bus pour 1 L, contre une DJA de 150 mg pour un enfant de 30 kg. |
+
+La teinte des tubes vient du moteur de chimie (espèce dissoute E131) : elle fonce avec la concentration.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
