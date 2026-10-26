@@ -2995,6 +2995,38 @@
         "Un aliment autorisé ne contient aucune espèce chimique dangereuse.",
         "On mesure une concentration seulement en pesant."
       ]
+    },
+    {
+      "id": "b1_chim2_a1_gaz",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim2_a1_gaz.html",
+      "description": "Seringue de 60 mL reliée à un pressiomètre par un robinet à trois voies : on enferme 40 mL d'air, on fait glisser le poussoir, P × V reste constant (tableur, courbe P = f(1/V)). Ballon de 250 mL fermé, plongé dans un bain thermostaté (0 à 80 °C), thermomètre électronique : P varie linéairement avec θ ; la droite prolongée coupe P = 0 vers −273 °C (température absolue). PV = nRT : quantité d'air et volume molaire.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim2_grandeurs_quantite_matiere",
+      "activite": "Vérifier PV = cte (expérience et logiciel).",
+      "objectifs": [
+        "O1",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Loi de Boyle-Mariotte",
+          "ce_que_fait_l_eleve": "Comprime et détend une quantité d'air fixée et vérifie P × V = constante.",
+          "conclusion": "À température constante, pour une même quantité de gaz, le produit P × V reste constant : c'est la loi de Boyle-Mariotte. La pression est proportionnelle à 1/V : quand on divise le volume par deux, la pression double."
+        },
+        {
+          "titre": "Pression et température",
+          "ce_que_fait_l_eleve": "Mesure la pression d'un volume d'air fixe à plusieurs températures et trouve le zéro absolu ; calcule n et Vm.",
+          "conclusion": "À volume constant, la pression d'un gaz augmente linéairement avec la température. Prolongée, la droite coupe l'axe P = 0 vers −273 °C : c'est le zéro absolu. La température absolue T (en kelvins) vaut T = θ + 273,15 ; P est proportionnelle à T. Avec la loi de Boyle-Mariotte : PV = nRT (équation d'état du gaz parfait). Le volume molaire vaut Vm = RT/P, soit 24,1 L/mol à 20 °C sous 1 013 hPa."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Quand on comprime un gaz, sa quantité de matière diminue.",
+        "La pression d'un gaz est proportionnelle à sa température en degrés Celsius.",
+        "Le volume molaire est le même quelles que soient la température et la pression."
+      ]
     }
   ]
 }
