@@ -2872,6 +2872,93 @@
         "Le grandissement est toujours positif.",
         "La loupe grossit quelle que soit la distance à l'objet."
       ]
+    },
+    {
+      "id": "b1_opt3_a1_lunette",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt3_a1_lunette.html",
+      "description": "Quatre documents (Galilée, objectif et oculaire, diamètre apparent et grossissement, cercle oculaire) et tri des rôles de l'objectif et de l'oculaire. Maquette au banc d'optique tournée vers la Lune : objectif f'1 = 40 cm, écran (image intermédiaire dans le plan focal), oculaire f'2 = 5 cm à faire glisser (lunette afocale), élève qui regarde ; vues à l'œil nu et dans la lunette (Lune renversée, G = 8), vue rapprochée de l'écran, cercle oculaire (plus petite tache), marche d'un faisceau incliné.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt3_instruments",
+      "activite": "Activités documentaires et expérimentales sur la lunette.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Documents : la lunette astronomique",
+          "ce_que_fait_l_eleve": "Lit les documents et range les rôles de l'objectif et de l'oculaire.",
+          "conclusion": "La lunette astronomique associe deux lentilles convergentes : l'objectif (grande distance focale) donne de l'astre une image réelle A1B1 dans son plan focal image ; l'oculaire (petite distance focale) sert de loupe pour l'observer. Le diamètre apparent α est l'angle sous lequel on voit un objet ; le grossissement est G = α' / α ; pour une lunette afocale, G = f'1 / f'2."
+        },
+        {
+          "titre": "L'objectif",
+          "ce_que_fait_l_eleve": "Recueille l'image de la Lune donnée par l'objectif.",
+          "conclusion": "L'objectif donne de la Lune, très éloignée, une image réelle, petite et renversée, dans son plan focal image (à f'1 = 40 cm de l'objectif). C'est l'image intermédiaire A1B1 ; son diamètre vaut f'1 × α."
+        },
+        {
+          "titre": "L'oculaire et le grossissement",
+          "ce_que_fait_l_eleve": "Règle l'oculaire pour voir la Lune nette et compare les diamètres apparents.",
+          "conclusion": "L'oculaire est une loupe : il donne de A1B1 une image virtuelle, agrandie. Quand A1B1 est au foyer objet F2 de l'oculaire (F'1 et F2 confondus), l'image finale est à l'infini : la lunette est afocale et l'œil observe sans fatigue. La Lune est vue renversée, G = f'1 / f'2 = 8 fois plus grande."
+        },
+        {
+          "titre": "Cercle oculaire et faisceau",
+          "ce_que_fait_l_eleve": "Trouve le cercle oculaire, y place l'œil et suit un faisceau.",
+          "conclusion": "Un faisceau parallèle venu d'un point de la Lune converge en un point de A1B1, puis ressort de l'oculaire parallèle, plus incliné : c'est pourquoi la Lune paraît plus grande. Tous les faisceaux sortants passent par le cercle oculaire : l'œil s'y place pour recevoir toute la lumière et voir tout le champ."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Une lunette rapproche l'objet.",
+        "Le grossissement est le rapport des tailles de l'image et de l'objet.",
+        "On peut placer l'œil n'importe où derrière l'oculaire."
+      ]
+    },
+    {
+      "id": "b1_opt3_a2_microscope",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt3_a2_microscope.html",
+      "description": "Microscope en volume (pied et lampe, potence, platine à crémaillère, revolver à trois objectifs × 4, × 10, × 40, oculaire × 10 ou × 20, vis macrométrique et micrométrique) ; lames d'oignon et micromètre objet ; vue dans l'oculaire (champ, flou de mise au point, profondeur de champ, image plus sombre, grossissement à vide) ; mesure du champ et d'une cellule ; documents sur le grossissement et les limites. Modèle au banc : objet de 5 mm, objectif f'1 = 5 cm, écran (A1B1, γ1 = −2,5), oculaire f'2 = 10 cm, G = |γ1| × 0,25/f'2, faisceau issu de B.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt3_instruments",
+      "activite": "Principe du microscope.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Observer au microscope",
+          "ce_que_fait_l_eleve": "Fait la mise au point avec les trois objectifs et calcule le grossissement commercial.",
+          "conclusion": "La lampe éclaire la préparation posée sur la platine. L'objectif donne une image intermédiaire réelle et agrandie ; l'oculaire, comme une loupe, permet de l'observer. On fait la mise au point avec la vis macrométrique au faible grossissement, puis avec la vis micrométrique au fort grossissement. Plus le grossissement est fort, plus le champ observé est petit et l'image sombre."
+        },
+        {
+          "titre": "Mesurer au microscope",
+          "ce_que_fait_l_eleve": "Mesure le champ avec le micromètre objet, puis la longueur d'une cellule.",
+          "conclusion": "Le micromètre objet permet de mesurer le champ du microscope : à × 40, environ 45 divisions, soit 0,45 mm. En comptant les cellules dans le champ, on trouve qu'une cellule d'épiderme d'oignon mesure environ 0,25 mm de long."
+        },
+        {
+          "titre": "Les limites du microscope",
+          "ce_que_fait_l_eleve": "Constate le grossissement à vide et lit les limites du microscope.",
+          "conclusion": "Le microscope optique ne sépare pas deux points plus proches qu'environ 0,2 µm, à cause de la diffraction de la lumière : au-delà d'un grossissement d'environ 1 000, l'image grossit sans montrer de nouveaux détails. Aux forts grossissements, la profondeur de champ est très faible et il faut beaucoup de lumière."
+        },
+        {
+          "titre": "Modèle du microscope",
+          "ce_que_fait_l_eleve": "Réalise un modèle au banc, mesure γ1 et calcule G.",
+          "conclusion": "L'objectif, placé à une distance de l'objet un peu supérieure à f'1, donne une image intermédiaire A1B1 réelle, renversée et agrandie (γ1 = OA1/OA = −2,5). L'oculaire placé de façon que A1B1 soit dans son plan focal objet donne une image finale à l'infini. Grossissement : G = |γ1| × 0,25/f'2 = 2,5 × 2,5 ≈ 6."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Plus on grossit, plus on voit de détails.",
+        "L'oculaire seul fait le grossissement.",
+        "On voit plus de choses avec le plus fort objectif."
+      ]
     }
   ]
 }

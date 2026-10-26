@@ -402,6 +402,18 @@ Au banc, l'image est calculée par la relation de conjugaison ; son flou vient d
 OA') et d'un flou d'aberration sans diaphragme. Une image est notée quand l'élève lâche un cavalier et qu'elle est nette.
 La loupe calcule l'angle sous lequel l'œil (fixe, à 22 cm de la carte) voit l'image ; l'œil voit net de 25 cm à l'infini.
 
+## Chapitre 1re année du bac « Quelques instruments d'optique » (fiche 1bac/opt3_instruments)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_opt3_a1_lunette.html | A1 : activités documentaires et expérimentales sur la lunette | O1, O2, O3 | Quatre documents au mur et tri des rôles de l'objectif et de l'oculaire ; maquette au banc tournée vers la Lune : image intermédiaire sur l'écran à f'1 = 40 cm, oculaire (f'2 = 5 cm) réglé pour une lunette afocale, Lune vue renversée et 8 fois plus grande (vues à l'œil nu et dans la lunette) ; cercle oculaire (plus petite tache), œil qu'on y place ; marche d'un faisceau incliné. |
+| b1_opt3_a2_microscope.html | A2 : principe du microscope | O1 à O4 | Microscope en volume : lampe, lame d'oignon ou micromètre objet glissée sur la platine, vis macrométrique et micrométrique, revolver × 4, × 10, × 40 ; champ (0,45 mm à × 40), longueur d'une cellule (0,25 mm), grossissement commercial 400 ; oculaire × 20 : grossissement à vide ; documents sur les limites. Modèle au banc : A1B1 sur l'écran (γ1 = −2,5), oculaire, G ≈ 6, faisceau issu de B. |
+
+L'œil voit net de 25 cm à l'infini : la vue est floue si l'image finale est plus près ou si les rayons qui sortent
+convergent. Le grossissement affiché est l'angle de l'image finale divisé par celui de l'objet (à l'œil nu, ou à 25 cm).
+Au microscope, le flou de mise au point dépend de la profondeur de champ de chaque objectif ; le flou « à vide »
+au-delà d'un grossissement de 450 environ est un modèle qualitatif.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

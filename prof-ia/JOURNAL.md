@@ -757,3 +757,20 @@ Problèmes restants, à faire par l'enseignant :
 - La mise au point se fait au millimètre en faisant glisser les cavaliers : sur un petit écran, zoomer à deux doigts aide.
 - Le flou d'aberration sans diaphragme est un modèle simple (valeur fixe), pas un tracé des rayons des bords.
 - À la loupe, l'œil est fixe ; on ne peut pas rapprocher l'œil de la loupe.
+
+## 2026-10-26 — Laboratoires virtuels : chapitre 1re année du bac « Quelques instruments d'optique »
+
+Fait :
+- Deux simulations, inscrites au manifeste (93 ressources) : A1 la lunette astronomique (documents, tri, maquette au
+  banc tournée vers la Lune, lunette afocale, grossissement, cercle oculaire, faisceau) ; A2 le microscope (microscope
+  en volume, mise au point, mesure du champ et d'une cellule, grossissement commercial, limites ; modèle au banc).
+  Objectifs O1 à O4.
+- Matériel commun nouveau : calcul des instruments à plusieurs lentilles et vue « ce que voit l'œil »
+  (instrument_optique.js) ; au banc d'optique : oculaire, taille de l'objet « F » réglable, étiquettes à la bonne largeur.
+  Les simulations de l'activité précédente (opt2) ont été réassemblées et retestées avec ce banc.
+- Vérifié : parcours complets des deux simulations et des simulations d'optique déjà faites ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La lame ne se déplace pas sur la platine : on observe toujours le centre de la préparation.
+- Le grossissement « à vide » et la baisse de lumière aux forts grossissements sont des modèles simples (qualitatifs).
+- Le champ visible quand l'œil s'éloigne du cercle oculaire est un modèle qualitatif (conforme à la fiche : pas d'étude quantitative).

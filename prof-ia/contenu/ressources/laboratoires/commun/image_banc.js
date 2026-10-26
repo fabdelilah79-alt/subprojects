@@ -4,7 +4,7 @@ Rôle : image donnée par une lentille mince convergente sur le banc d'optique :
        sur l'écran de la tache de lumière et de l'image du « F » (renversée, agrandie ou réduite), floue si l'écran n'est pas
        à la place de l'image (cercle de flou : diamètre D·|écart|/OA'), plus floue sans diaphragme (aberrations), plus pâle
        quand elle est grande. Objet à l'infini : petite maison lointaine, image dans le plan focal.
-Reçoit : la position de l'objet, de la lentille, de l'écran, f' (cm), le diamètre utile D (mm).
+Reçoit : la position de l'objet, de la lentille, de l'écran, f' (cm), le diamètre utile D (mm), la taille AB du « F » (mm).
 Produit : Labo.conjuguer({ xO, xL, f, infini }) -> { OA, OAp (null : pas d'image réelle), gamma } ;
           Labo.image_banc(g, T, reglage) -> { nette } (T : transformation de l'écran, banc_optique.js) ;
           Labo.faisceau_banc(g, banc, reglage) : le faisceau visible entre l'objet, la lentille et l'écran.
@@ -28,7 +28,7 @@ Utilisé par : les postes des simulations d'optique (lentilles).
     return L.svg("path", { d, fill: "none", ...attrs }, g);
   }
 
-  L.image_banc = function (g, T, { xE, xL, f, xO, infini = false, D = 40 }) {
+  L.image_banc = function (g, T, { xE, xL, f, xO, infini = false, D = 40, AB = 20 }) {
     // Tache de lumière, puis image floue ou nette ; rien de net si l'image est virtuelle.
     g.replaceChildren();
     const id = `flou_banc_${++n_filtre}`, filtre = L.svg("filter", { id, x: "-50%", y: "-50%", width: "200%", height: "200%" }, g), flou = L.svg("feGaussianBlur", { stdDeviation: 0 }, filtre);
@@ -47,7 +47,7 @@ Utilisé par : les postes des simulations d'optique (lentilles).
       trace(T, [[-8, 0, 8, 0], [8, 0, 8, -12], [8, -12, -8, -12], [-8, -12, -8, 0], [-10, -12, 0, -20], [0, -20, 10, -12], [14, 0, 14, -14]], s, { stroke: "#6b4a10", "stroke-width": Math.max(0.6, 2 * Math.abs(s)) }, gi);
     } else {
       const op = Math.max(0.2, Math.min(1, ((D / 40) ** 2 * 1.4) / Math.max(0.5, c.gamma * c.gamma)));
-      trace(T, [[0, 0, 0, -20], [0, -20, 12, -20], [0, -11, 8, -11]], c.gamma, { stroke: "#ffcf3a", "stroke-width": Math.max(1, 3 * Math.abs(c.gamma)), opacity: op, "stroke-linecap": "square" }, gi);
+      trace(T, [[0, 0, 0, -20], [0, -20, 12, -20], [0, -11, 8, -11]], (c.gamma * AB) / 20, { stroke: "#ffcf3a", "stroke-width": Math.max(1, (3 * Math.abs(c.gamma) * AB) / 20), opacity: op, "stroke-linecap": "square" }, gi);
     }
     return { nette, ...c };
   };

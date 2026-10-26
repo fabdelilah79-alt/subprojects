@@ -428,11 +428,14 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_opt1_a1_vision/ | Laser dans la fumée, conditions de vision, écrans percés, sources et objets diffusants, illusions. |
 | contenu/ressources/laboratoires/sources/b1_opt1_a2_lois/ | Disque optique gradué : réflexion (r = i, retour inverse), réfraction (n = 1,50, angle limite). |
 | contenu/ressources/laboratoires/sources/b1_opt1_a3_lentilles/ | Tableau magnétique, boîte à rayons, lentilles profil (tracé exact), foyer, f' ; loupes. |
-| contenu/ressources/laboratoires/commun/banc_optique.js | Banc d'optique gradué sur pieds, cavaliers, lanterne avec l'objet « F », lentille dans sa bague, écran quadrillé. |
+| contenu/ressources/laboratoires/commun/banc_optique.js | Banc d'optique gradué sur pieds, cavaliers, lanterne avec l'objet « F » (taille réglable), lentille dans sa bague, oculaire, écran quadrillé. |
 | contenu/ressources/laboratoires/commun/image_banc.js | Conjugaison, grandissement, image nette ou floue sur l'écran, faisceau visible du banc. |
 | contenu/ressources/laboratoires/sources/b1_opt2_a1_miroir/ | Deux bougies et vitre (bougie.js, poste_bougies.js), champ de vision d'un miroir vu de dessus (poste_champ.js). |
 | contenu/ressources/laboratoires/sources/b1_opt2_a2_lentille/ | Banc : foyer, f', vergence, diaphragme, images (poste_focale.js) ; planche à dessin et rayons particuliers (construction_rayons.js, poste_construction.js). |
 | contenu/ressources/laboratoires/sources/b1_opt2_a3_conjugaison/ | Banc et vue rapprochée de l'écran : conjugaison, grandissement (poste_conjugaison.js) ; loupe, ce que voit l'œil (vue_loupe.js, poste_observation_loupe.js). |
+| contenu/ressources/laboratoires/commun/instrument_optique.js | Images successives par plusieurs lentilles, grossissement vu par l'œil, marche de rayons, vue « ce que voit l'œil ». |
+| contenu/ressources/laboratoires/sources/b1_opt3_a1_lunette/ | Documents et tri (documents_lunette.js) ; maquette de lunette au banc, Lune, cercle oculaire, faisceau (lunette_banc.js, poste_lunette.js). |
+| contenu/ressources/laboratoires/sources/b1_opt3_a2_microscope/ | Microscope en volume (microscope_dessin.js), lames et vue dans l'oculaire (lames.js), documents, gestes (poste_microscope.js) ; modèle au banc (poste_modele_microscope.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
