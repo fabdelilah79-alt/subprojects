@@ -2640,6 +2640,127 @@
         "Un aimant attire le faisceau d'électrons comme du fer.",
         "Il y a un courant induit dès que l'aimant est dans la bobine."
       ]
+    },
+    {
+      "id": "b1_opt1_a1_vision",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt1_a1_vision.html",
+      "description": "Caisse vitrée à fond noir, laser de classe 2 et bâton d'encens (le faisceau n'est visible que dans la fumée) ; lampe d'architecte, livre et élève assis dans la salle obscure, carton qui arrête la lumière ; trois écrans percés sur pieds alignés avec une lampe (propagation rectiligne) ; tri sources primaires / objets diffusants ; illusions de Müller-Lyer (mesure avec une règle) et de Kanizsa.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt1_visibilite",
+      "activite": "Questions guidées : peut-on voir la lumière ? quelles sont les conditions de vision ?",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Peut-on voir la lumière ?",
+          "ce_que_fait_l_eleve": "Observe un faisceau laser sans puis avec fumée.",
+          "conclusion": "La lumière ne se voit pas : on ne voit que les objets qui envoient de la lumière dans nos yeux. Le faisceau laser n'apparaît que si de fines particules (fumée, poussière de craie) en diffusent une partie vers l'œil ; on voit alors que la lumière se propage en ligne droite."
+        },
+        {
+          "titre": "Conditions de vision d'un objet",
+          "ce_que_fait_l_eleve": "Cherche quand on voit le livre (lampe, carton) et ce que voit l'élève.",
+          "conclusion": "Un objet n'est vu que s'il est lumineux (source primaire) ou éclairé (il diffuse alors une partie de la lumière reçue), et si la lumière qu'il envoie arrive jusqu'à l'œil sans être arrêtée. L'œil reçoit la lumière ; l'image se forme et s'interprète dans le cerveau."
+        },
+        {
+          "titre": "Propagation rectiligne",
+          "ce_que_fait_l_eleve": "Aligne trois trous pour voir la lampe.",
+          "conclusion": "Dans un milieu transparent et homogène, la lumière se propage en ligne droite. On représente son trajet par une droite fléchée dans le sens de propagation : c'est le rayon lumineux ; un faisceau est un ensemble de rayons."
+        },
+        {
+          "titre": "Sources de lumière et objets diffusants",
+          "ce_que_fait_l_eleve": "Classe des sources primaires et des objets diffusants.",
+          "conclusion": "Une source primaire produit sa propre lumière (Soleil, lampe allumée, flamme). Un objet diffusant (source secondaire) renvoie dans toutes les directions une partie de la lumière qu'il reçoit (Lune, livre, mur) : on ne le voit que s'il est éclairé."
+        },
+        {
+          "titre": "L'image se forme dans le cerveau",
+          "ce_que_fait_l_eleve": "Mesure deux segments d'une illusion et observe un triangle qui n'est pas dessiné.",
+          "conclusion": "L'œil reçoit la lumière et la rétine envoie des messages nerveux au cerveau : c'est le cerveau qui forme et interprète l'image. Il peut se tromper (illusions d'optique) ou compléter ce qui manque. Cette image n'a rien à voir avec l'image projetée sur un écran."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "On voit la lumière.",
+        "L'œil envoie quelque chose vers l'objet pour le voir.",
+        "Un objet éclairé ne renvoie pas de lumière.",
+        "L'œil voit exactement ce qui est."
+      ]
+    },
+    {
+      "id": "b1_opt1_a2_lois",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt1_a2_lois.html",
+      "description": "Disque optique gradué sur pied et module laser sur curseur : miroir plan (r = i pour cinq angles, plan d'incidence, retour inverse) ; demi-cylindre de plexiglas (sin i1 = 1,50·sin i2 au tableur, rapprochement de la normale, retour inverse, angle limite ≈ 42°, réflexion totale) ; paille dans l'eau et reflet d'un arbre dans un lac.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt1_visibilite",
+      "activite": "Réflexion et réfraction : expériences et observations courantes.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Lois de la réflexion",
+          "ce_que_fait_l_eleve": "Mesure r pour cinq angles d'incidence et place le laser sur le rayon réfléchi.",
+          "conclusion": "Lois de Descartes de la réflexion : le rayon réfléchi est dans le plan d'incidence (défini par le rayon incident et la normale) ; l'angle de réflexion est égal à l'angle d'incidence : r = i. Principe du retour inverse : si la lumière suit un trajet dans un sens, elle peut le suivre dans l'autre sens."
+        },
+        {
+          "titre": "Lois de la réfraction",
+          "ce_que_fait_l_eleve": "Mesure i1 et i2, calcule le rapport des sinus, cherche l'angle limite.",
+          "conclusion": "Lois de Descartes de la réfraction : le rayon réfracté est dans le plan d'incidence ; n1·sin i1 = n2·sin i2 (n : indice de réfraction du milieu, n = 1 pour l'air, 1,50 pour le plexiglas). Passant dans un milieu plus réfringent, la lumière se rapproche de la normale. Du plexiglas vers l'air, il n'y a plus de rayon réfracté au-delà de l'angle limite (sin i_lim = 1/n, i_lim ≈ 42°) : réflexion totale. Le retour inverse s'applique aussi."
+        },
+        {
+          "titre": "Observations courantes",
+          "ce_que_fait_l_eleve": "Explique la paille brisée et le reflet dans le lac.",
+          "conclusion": "La paille paraît brisée parce que la lumière venant de sa partie immergée est réfractée en sortant de l'eau : le cerveau la « voit » dans le prolongement des rayons reçus. Le lac reflète l'arbre par réflexion : l'image est symétrique par rapport à la surface de l'eau."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "L'angle de réflexion dépend du miroir.",
+        "La lumière ne change pas de direction en entrant dans l'eau.",
+        "La réflexion totale est due à un miroir caché."
+      ]
+    },
+    {
+      "id": "b1_opt1_a3_lentilles",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt1_a3_lentilles.html",
+      "description": "Tableau blanc magnétique quadrillé, boîte à cinq rayons laser parallèles, quatre lentilles profil (L1, L2, L3 convergentes, L4 divergente) tracées face par face par les lois de Descartes : foyer image réel ou virtuel (repère F', prolongements), f' mesurée comparée à R/(2(n − 1)) au tableur (rôle du rayon des faces et de la matière) ; lentilles A et B au-dessus d'un texte (loupe), bords minces ou épais.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt1_visibilite",
+      "activite": "Lentilles convergentes et divergentes face à un faisceau parallèle.",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Lentilles et faisceau parallèle",
+          "ce_que_fait_l_eleve": "Pose une lentille convergente puis divergente devant cinq rayons parallèles et repère le foyer image.",
+          "conclusion": "Une lentille convergente (bords minces) fait converger un faisceau parallèle à son axe en un point de l'axe : le foyer image F'. Une lentille divergente (bords épais) le fait diverger : les rayons sortants semblent venir d'un point de l'axe situé avant la lentille, son foyer image (virtuel). La distance de la lentille à F' est la distance focale f'."
+        },
+        {
+          "titre": "De quoi dépend la distance focale ?",
+          "ce_que_fait_l_eleve": "Mesure f' pour trois lentilles convergentes et la compare à R/(2(n − 1)).",
+          "conclusion": "La distance focale d'une lentille dépend des rayons de courbure de ses faces et de la matière dont elle est faite : plus les faces sont bombées (R petit) et plus l'indice n est grand, plus f' est petite (la lentille est plus convergente). Pour une lentille mince à faces symétriques : f' ≈ R / (2(n − 1))."
+        },
+        {
+          "titre": "Reconnaître une lentille",
+          "ce_que_fait_l_eleve": "Reconnaît une lentille convergente et une divergente avec un texte.",
+          "conclusion": "Une lentille convergente a des bords minces : placée près d'un texte, elle l'agrandit (loupe). Une lentille divergente a des bords épais : elle montre le texte plus petit."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Une lentille divergente n'a pas de foyer.",
+        "La distance focale ne dépend que de la taille de la lentille.",
+        "Toute lentille grossit."
+      ]
     }
   ]
 }
