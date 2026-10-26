@@ -14,12 +14,7 @@ Utilisé par : page.html (dernier script).
   const FLACONS = ORDRE.map(([sol, t]) => ({ id: sol, texte: `${t}\n5 mmol/L`, sol, C: 0.005 }));
   const me = (f) => (f.conductance || {}).mesures || [];
 
-  function poste(g) {
-    // Paillasse unique : cellule de géométrie fixe (L = 1 cm, S = 1 cm²), six flacons à 5,0 mmol/L.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
-    L.cellule_conductance(g, { flacons: FLACONS, L: 1, L_fixe: true, S_fixe: 1 });
-    return { pense_bete };
-  }
+  const poste = (g) => L.poste_conductance(g, { flacons: FLACONS, L: 1, L_fixe: true, S_fixe: 1 });
 
   function tableau({ faits, feuille }) {
     // Une ligne par solution, dans l'ordre NaCl, KCl, NaOH, KOH, HCl, NH₄Cl : G (mS), σ (S/m).
@@ -41,7 +36,8 @@ Utilisé par : page.html (dernier script).
     conclusion: "À même concentration, les conductivités sont différentes : elles dépendent de la nature des ions. La solution d'acide chlorhydrique est de loin la plus conductrice, puis celles d'hydroxyde de sodium et de potassium.",
     conclusion_courte: "σ dépend de la nature des ions.",
     etapes: [
-      { consigne: "Mesurez G pour les six solutions. Une ligne par solution, dans l'ordre NaCl, KCl, NaOH, KOH, HCl, NH₄Cl : en A, G (mS) ; en B, σ (S/m).", court: "Tableur : A, B.", aide_geste: "Touchez un flacon (le bécher est rincé) ; montez le plateau.", verifier: tableau },
+      L.etape_montage_conductance,
+      { consigne: "Mesurez G pour les six solutions. Une ligne par solution, dans l'ordre NaCl, KCl, NaOH, KOH, HCl, NH₄Cl : en A, G (mS) ; en B, σ (S/m).", court: "Tableur : A, B.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: tableau },
       { consigne: "La solution la plus conductrice est…", court: "Répondez dans le carnet.", question: choix(["l'acide chlorhydrique (ions H₃O⁺)", "le chlorure de sodium", "le chlorure d'ammonium"], "Comparez la colonne B.", "Exact.") },
     ],
   };
@@ -62,5 +58,5 @@ Utilisé par : page.html (dernier script).
     ],
   };
 
-  L.demarrer({ id: "b1_chim3_a3_ion_commun", titre: "Laboratoire : conductivités molaires ioniques", paillasses: [poste], missions: [MESURES, LAMBDA] });
+  L.demarrer({ id: "b1_chim3_a3_ion_commun", titre: "Laboratoire : conductivités molaires ioniques", decor: "aucun", paillasses: [poste], missions: [MESURES, LAMBDA] });
 })(window.Labo);

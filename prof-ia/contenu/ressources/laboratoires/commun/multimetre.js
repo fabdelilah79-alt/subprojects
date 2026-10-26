@@ -1,8 +1,8 @@
 /*
-Rôle : multimètre numérique : commutateur rotatif (OFF ; V⎓ 2 à 200 V ; V~ 20 V ; A⎓ 20 mA, 200 mA, 10 A ; Ω 200 Ω à
+Rôle : multimètre numérique : commutateur rotatif (OFF ; V⎓ 2 à 200 V ; V~ 2 et 20 V ; A~ 20 et 200 mA ; A⎓ 2 mA à 10 A ; Ω 200 Ω à
        200 kΩ), quatre bornes (10A, mA, COM, VΩ). En voltmètre, il mesure U = V(VΩ) − V(COM) (résistance d'entrée 10 MΩ) ;
        en ohmmètre, il envoie un courant de test par VΩ (le dipôle mesuré doit être isolé du circuit) ;
-       en ampèremètre, le courant qui entre par 10A ou mA et sort par COM. La borne mA est protégée par un fusible
+       en ampèremètre (A⎓ ou A~), le courant qui entre par 10A ou mA et sort par COM. La borne mA est protégée par un fusible
        (0,25 A) : branché en dérivation sur un générateur, il grille ; un toucher sur l'étiquette le remplace.
 Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (nom d'un mode de multimetre_mesure.js), etiquette }.
 Produit : Labo.multimetre(c, reglage) -> composant { mode, valeur (V ou A, signée), lecture (texte affiché), depasse, fusible } ;
@@ -27,11 +27,11 @@ Utilisé par : les postes des simulations d'électricité.
     const c = { x: x + LARGEUR / 2, y: y + 128 }, aiguille = L.svg("g", {}, g);
     const polaire = (a, r) => ({ x: c.x + r * Math.sin((a * Math.PI) / 180), y: c.y - r * Math.cos((a * Math.PI) / 180) });
     L.svg("circle", { cx: c.x, cy: c.y, r: 24, fill: "url(#acier)", stroke: "#111" }, g);
-    for (const k of L.MULTIMETRE_GROUPES) { const p = polaire(k.angle, 58); L.texte(g, p.x, p.y, k.texte, { "font-size": 8.5, "font-weight": 700, fill: k.couleur }); }
+    for (const k of L.MULTIMETRE_GROUPES) { const p = polaire(k.angle, 61); L.texte(g, p.x, p.y, k.texte, { "font-size": 8.5, "font-weight": 700, fill: k.couleur }); }
     for (const m of L.MULTIMETRE_MODES) {
-      const p = polaire(m.angle, 42);
-      L.texte(g, p.x, p.y, m.texte, { "font-size": 7.5, "font-weight": 700, fill: m.type ? groupe(m.type).couleur : "#cfd2cf" });
-      const zone = L.svg("circle", { cx: p.x, cy: p.y, r: 10, fill: "#000", opacity: 0.001, class: `repere repere-${m.nom}`, role: "button", "aria-label": `Calibre ${m.nom}` }, g);
+      const p = polaire(m.angle, 46);
+      L.texte(g, p.x, p.y, m.texte, { "font-size": 7, "font-weight": 700, fill: m.type ? groupe(m.type).couleur : "#cfd2cf" });
+      const zone = L.svg("circle", { cx: p.x, cy: p.y, r: 8, fill: "#000", opacity: 0.001, class: `repere repere-${m.nom}`, role: "button", "aria-label": `Calibre ${m.nom}` }, g);
       L.glissable(zone, { soulever: false, debut: () => p, toucher: () => choisir(m.nom) });
     }
     g.append(aiguille);
@@ -56,7 +56,7 @@ Utilisé par : les postes des simulations d'électricité.
       ecran.setAttribute("text-anchor", r.depasse ? "start" : "end");
       ecran.textContent = r.lecture;
       unite.textContent = r.unite;
-      type.textContent = { V: "DC", A: "DC", VAC: "AC" }[m.type] || "";
+      type.textContent = { V: "DC", A: "DC", VAC: "AC", AAC: "AC" }[m.type] || "";
     };
   }
 
@@ -67,8 +67,8 @@ Utilisé par : les postes des simulations d'électricité.
     L.texte(g, x + 75, y + 70.5, "fusible mA grillé : toucher", { "font-size": 7, "font-weight": 700, fill: "#fff" });
     L.glissable(g, { soulever: false, debut: () => ({ x, y }), toucher: () => { comp.fusible = true; g.style.display = "none"; c.calculer(); } });
     return () => {
-      // Courant trop fort dans la borne mA : le fusible fond, la borne mA ne conduit plus.
-      if (!comp.fusible || Math.abs(comp.courants.mA) <= FUSIBLE_A) return;
+      // Courant trop fort (continu ou crête) dans la borne mA : le fusible fond, la borne mA ne conduit plus.
+      if (!comp.fusible || Math.max(Math.abs(comp.courants.mA), ...(comp.onde_i.mA || []).map(Math.abs)) <= FUSIBLE_A) return;
       comp.fusible = false;
       g.style.display = "";
       L.missions.noter("fusible_grille", comp.id);
@@ -78,7 +78,7 @@ Utilisé par : les postes des simulations d'électricité.
 
   L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF", etiquette = "" }) {
     // Construit l'appareil : bornes (shunts 0,01 Ω sur 10A, 1 Ω sur mA ; 10 MΩ entre VΩ et COM) et commutateur.
-    const comp = { id, mode, valeur: 0, lecture: "", depasse: false, fusible: true, courants: { "10A": 0, mA: 0 }, u_continue: 0, onde: null, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
+    const comp = { id, mode, valeur: 0, lecture: "", depasse: false, fusible: true, courants: { "10A": 0, mA: 0 }, onde_i: {}, u_continue: 0, onde: null, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
     corps(comp.g, x, y);
     if (etiquette) L.texte(comp.g, x + 118, y + 71, etiquette, { "font-size": 11, "font-weight": 700, fill: "#ffd54f" });
     const ecrire = afficheur(comp.g, x, y);
@@ -87,9 +87,11 @@ Utilisé par : les postes des simulations d'électricité.
     const surveiller = fusible(c, comp, x, y);
     for (const [nom, dx, couleur] of BORNES) c.borne(comp, nom, x + dx, y + 212, couleur);
     const test = () => (L.MULTIMETRE_MODES.find((m) => m.nom === comp.mode).test || 0);
-    comp.dipoles = () => [{ a: "10A", b: "COM", g: 100, j: 0 }, { a: "mA", b: "COM", g: comp.fusible ? 1 : 1e-9, j: 0 }, { a: "COM", b: "VΩ", g: 1e-7, j: test() }];
+    const g_mA = () => (comp.fusible ? 1 : 1e-9), fois = (t, k) => t && t.map((x) => x * k);
+    comp.dipoles = () => [{ a: "10A", b: "COM", g: 100, j: 0 }, { a: "mA", b: "COM", g: g_mA(), j: 0 }, { a: "COM", b: "VΩ", g: 1e-7, j: test() }];
     comp.mettre_a_jour = ({ u, i, onde }) => {
-      Object.assign(comp, { courants: { "10A": i[0], mA: i[1] }, u_continue: u("VΩ", "COM"), onde: onde("VΩ", "COM") });
+      const onde_i = { "10A": fois(onde("10A", "COM"), 100), mA: fois(onde("mA", "COM"), g_mA()) };
+      Object.assign(comp, { courants: { "10A": i[0], mA: i[1] }, onde_i, u_continue: u("VΩ", "COM"), onde: onde("VΩ", "COM") });
       surveiller();
       ecrire(comp);
     };

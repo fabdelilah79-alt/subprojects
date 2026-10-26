@@ -14,12 +14,7 @@ Utilisé par : page.html (dernier script).
   const FLACONS = [...ETALONS.map((c) => ({ id: `n${c}`, texte: `NaCl\n${c} mmol/L`, sol: "NaCl", C: c / 1000 })), { id: "serum", texte: "sérum\ndilué ×20", sol: "NaCl", C: 0.154 / 20 }, { id: "n100", texte: "NaCl\n0,10 mol/L", sol: "NaCl", C: 0.1 }];
   const me = (f) => (f.conductance || {}).mesures || [], a = (f, id) => me(f).some((m) => m.flacon === id);
 
-  function poste(g) {
-    // Paillasse unique : cellule de géométrie fixe (L = 1 cm, S = 1 cm²), huit flacons.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
-    L.cellule_conductance(g, { flacons: FLACONS, L: 1, L_fixe: true, S_fixe: 1 });
-    return { pense_bete };
-  }
+  const poste = (g) => L.poste_conductance(g, { flacons: FLACONS, L: 1, L_fixe: true, S_fixe: 1 });
 
   function tableau({ faits, feuille }) {
     // Les six étalons : C (mmol/L), G (mS) mesurée.
@@ -37,7 +32,8 @@ Utilisé par : page.html (dernier script).
     conclusion: "Pour des solutions diluées (C ≤ 10⁻² mol/L), la conductance est proportionnelle à la concentration : G = k·C. Cette droite d'étalonnage permet de trouver la concentration d'une solution de chlorure de sodium à partir de sa conductance, mesurée dans les mêmes conditions.",
     conclusion_courte: "Solutions diluées : G = k·C.",
     etapes: [
-      { consigne: "Pour chaque étalon : touchez le flacon, montez le bécher, lisez U et I. En A, C (mmol/L) ; en B, G = I/U (mS).", court: "Tableur : A, B.", aide_geste: "Touchez un flacon ; faites glisser le plateau vers le haut.", verifier: tableau },
+      L.etape_montage_conductance,
+      { consigne: "Pour chaque étalon : posez son bécher sur le plateau, montez-le avec la manivelle, lisez U et I. En A, C (mmol/L) ; en B, G = I/U (mS).", court: "Tableur : A, B.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: tableau },
       { consigne: "Tracez G (B) en fonction de C (A) et modélisez.", court: "Courbe G = f(C).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 6 && courbe.modele !== "aucun") || "Abscisse : A (C) ; ordonnée : B (G) ; choisissez un modèle." },
       { consigne: "Pour ces solutions diluées, G est…", court: "Répondez dans le carnet.", question: choix(["proportionnelle à C (droite passant par l'origine)", "indépendante de C", "proportionnelle à 1/C"], "Regardez la courbe.", "Exact.") },
     ],
@@ -70,5 +66,5 @@ Utilisé par : page.html (dernier script).
     ],
   };
 
-  L.demarrer({ id: "b1_chim3_a2_etalonnage", titre: "Laboratoire : courbe d'étalonnage", paillasses: [poste], missions: [ETALONNAGE, SERUM, LIMITE] });
+  L.demarrer({ id: "b1_chim3_a2_etalonnage", titre: "Laboratoire : courbe d'étalonnage", decor: "aucun", paillasses: [poste], missions: [ETALONNAGE, SERUM, LIMITE] });
 })(window.Labo);

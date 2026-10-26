@@ -809,11 +809,27 @@ Fait :
 - Trois simulations, inscrites au manifeste (100 ressources) : A1 mesure de la conductance (ions indispensables,
   G = I/U, facteurs L, S, C, conductivité) ; A2 courbe d'étalonnage au chlorure de sodium et sérum physiologique ;
   A3 solutions de même concentration et conductivités molaires ioniques. Objectifs O1 à O6.
-- Matériel commun nouveau : conductimetrie.js (λ, σ, G, appareils sur étagère) et cellule_conductance.js (cellule à
-  plaques parallèles, support élévateur, flacons).
+- Matériel commun nouveau : conductimetrie.js (λ, σ, G) et cellule_conductance.js (cellule à plaques parallèles,
+  support élévateur, béchers de la verrerie physique).
 - Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
 
 Problèmes restants, à faire par l'enseignant :
-- Le montage est déjà câblé (GBF, ampèremètre, voltmètre) : l'élève ne branche pas les fils dans cette simulation.
 - La température reste à 25 °C (son influence est seulement citée).
 - La gêne entre ions est un modèle simple (1 − 0,5·√C).
+
+## 2026-10-26 — Laboratoires virtuels : conductance avec le vrai matériel d'électricité
+
+Fait (à la demande de l'enseignant : verrerie et appareils réalistes, comme dans les autres simulations) :
+- Les béchers sont ceux de la verrerie physique (on les prend, on les pose sur le plateau, on peut verser).
+- Les appareils simplifiés de l'étagère sont remplacés par le GBF et les deux multimètres des simulations d'électricité.
+  L'élève câble le circuit et choisit les calibres ; une première étape « montage et calibres » est ajoutée aux trois
+  activités. La cellule de conductance devient un composant du circuit (poste_conductance.js, nouveau).
+- Fichiers communs modifiés (signalé) : multimetre_mesure.js et multimetre.js reçoivent les calibres 2 V~, 20 mA~ et
+  200 mA~ (valeur efficace du courant) ; le commutateur passe de 13 à 16 positions (repères un peu plus écartés).
+  conductimetrie.js perd l'étagère d'appareils, devenue inutile.
+- Vérifié : parcours complets des trois simulations de conductance et des quinze simulations d'électricité qui
+  utilisent le multimètre ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les plaques ne se polarisent pas, quelle que soit la fréquence du GBF (la conductance ne dépend pas de f).
+- Pas de calibre 2 mA~ : pour les solutions très diluées, il faut augmenter l'amplitude du GBF.

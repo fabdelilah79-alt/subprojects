@@ -443,7 +443,13 @@ magnésium commence après 3 s (couche d'oxyde) ; le gaz produit avant que l'on 
 | b1_chim3_a3_ion_commun.html | A3 : comparer NaOH, KOH, HCl, NH₄Cl, NaCl, KCl de même concentration | O3, O5, O6 | Six solutions à 5 mmol/L : G et σ ; σ(KCl) − σ(NaCl) = σ(KOH) − σ(NaOH), λ(K⁺) − λ(Na⁺) ≈ 2,3 mS·m²/mol ; HCl et NaOH très conducteurs ; σ(NaCl) calculée avec les tables (0,0632 S/m). |
 
 La conductivité est calculée par σ = Σ λi·[Xi] (λ des tables, à 25 °C), multipliée par (1 − 0,5·√C) pour rendre compte de
-la gêne entre ions (C en mol/L) ; l'eau distillée a σ = 5 × 10⁻⁴ S/m. G = σ·S/L ; I = G·U (GBF à 500 Hz, 0,50 à 2,00 V).
+la gêne entre ions (C en mol/L) ; l'eau distillée a σ = 5 × 10⁻⁴ S/m. G = σ·S/L.
+
+Le matériel est celui des simulations d'électricité : GBF (500 Hz, amplitude réglable, résistance de sortie 50 Ω) et deux
+multimètres. L'élève câble le circuit (sortie du GBF → borne mA de l'ampèremètre, COM → cellule → masse du GBF ; voltmètre
+VΩ et COM aux bornes de la cellule) et choisit les calibres alternatifs (20 mA~ ou 200 mA~, 2 V~ ou 20 V~). Une mesure est
+notée quand le montage est juste : U et I sont ceux des afficheurs, G = I/U. La cellule est un composant du circuit
+(`poste_conductance.js`, `cellule_conductance.js`) ; les béchers sont la verrerie physique commune.
 
 ## Inscription au manifeste
 

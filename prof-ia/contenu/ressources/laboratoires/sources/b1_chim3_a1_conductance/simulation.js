@@ -13,19 +13,14 @@ Utilisé par : page.html (dernier script).
   const distincts = (f, flacon, q, k) => new Set(me(f).filter((m) => m.flacon === flacon && q(m)).map((m) => m[k])).size;
   const FLACONS = [{ id: "eau", texte: "eau\ndistillée", sol: "eau", C: 0 }, { id: "sucre", texte: "eau\nsucrée", sol: "sucre", C: 0 }, { id: "nacl5", texte: "NaCl\n5 mmol/L", sol: "NaCl", C: 0.005 }, { id: "nacl10", texte: "NaCl\n10 mmol/L", sol: "NaCl", C: 0.01 }];
 
-  function poste(g) {
-    // Paillasse unique : décor, cellule de conductance, flacons.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
-    L.cellule_conductance(g, { flacons: FLACONS, L: 1 });
-    return { pense_bete };
-  }
+  const poste = (g) => L.poste_conductance(g, { flacons: FLACONS, L: 1 });
 
   function tableau({ faits, feuille }) {
     // Trois tensions : U (V), I (mA), G = I/U (mS), R = U/I (Ω) ; NaCl 10 mmol/L, L = 1 cm, S = 2 cm².
     const l = feuille.lignes(["A", "B", "C", "D"]);
     if (l.length < 3) return false;
     for (const [k, x] of l.entries()) {
-      if (!me(faits).some((m) => m.flacon === "nacl10" && m.L === 1 && m.S === 2 && Math.abs(m.U - x.A) < 1e-6 && Math.abs(m.I * 1000 - x.B) < 0.01)) return `Ligne ${k + 2} : U (V) et I (mA) lus pour NaCl 10 mmol/L, L = 1,0 cm, S = 2,0 cm².`;
+      if (!me(faits).some((m) => m.flacon === "nacl10" && m.L === 1 && m.S === 2 && Math.abs(m.U - x.A) < 1e-6 && Math.abs(m.I * 1000 - x.B) < 0.006)) return `Ligne ${k + 2} : U (V) et I (mA) lus sur les afficheurs pour NaCl 10 mmol/L, L = 1,0 cm, S = 2,0 cm².`;
       if (Math.abs(x.C - x.B / x.A) > 0.01 * x.C + 1e-4 || Math.abs(x.D - (1000 * x.A) / x.B) > 0.01 * x.D) return `Ligne ${k + 2} : C = B/A (G en mS) et D = 1000 × A/B (R en Ω).`;
     }
     return new Set(l.map((x) => x.A)).size >= 3 || "Trois tensions différentes.";
@@ -35,11 +30,12 @@ Utilisé par : page.html (dernier script).
     id: "ions", paillasse: 0, titre: "Les ions conduisent le courant",
     objectif: "Plonger la cellule dans l'eau distillée, l'eau sucrée et une solution de chlorure de sodium ; comparer l'intensité.",
     entetes: [],
-    donnees: ["GBF : tension alternative de 500 Hz (évite l'électrolyse) ; U efficace lue au voltmètre", "Touchez un flacon : le bécher et la cellule sont rincés, puis le bécher est rempli"],
+    donnees: ["GBF : tension alternative de 500 Hz (évite l'électrolyse) ; multimètres en alternatif : ils affichent les valeurs efficaces U et I", "Entre deux solutions, la cellule est rincée à l'eau distillée et essuyée (c'est fait pour vous)"],
     conclusion: "L'eau distillée et l'eau sucrée (molécules de saccharose) ne laissent passer qu'un courant presque nul ; la solution de chlorure de sodium, qui contient des ions Na⁺ et Cl⁻, laisse passer un courant notable : les ions sont indispensables à la conduction dans une solution.",
     conclusion_courte: "Pas d'ions, pas de courant.",
     etapes: [
-      { consigne: "Pour chaque flacon (eau distillée, eau sucrée, NaCl 10 mmol/L) : remplissez le bécher, montez-le pour immerger les plaques, lisez l'intensité.", court: "Trois liquides.", aide_geste: "Touchez un flacon ; faites glisser le plateau du support élévateur vers le haut.", verifier: ({ faits }) => ["eau", "sucre", "nacl10"].every((k) => a(faits, k)) },
+      L.etape_montage_conductance,
+      { consigne: "Pour chaque bécher (eau distillée, eau sucrée, NaCl 10 mmol/L) : posez-le sur le plateau, montez-le pour immerger les plaques, lisez l'intensité.", court: "Trois liquides.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: ({ faits }) => ["eau", "sucre", "nacl10"].every((k) => a(faits, k)) },
       { consigne: "Le courant passe nettement…", court: "Répondez dans le carnet.", question: choix(["dans la solution de chlorure de sodium seulement : il faut des ions", "dans les trois liquides", "dans l'eau sucrée"], "Comparez les intensités (mA).", "Exact.") },
     ],
   };
@@ -51,7 +47,7 @@ Utilisé par : page.html (dernier script).
     conclusion: "Le rapport I/U ne dépend pas de la tension : c'est la conductance G de la portion de solution entre les plaques (en siemens, S). Sa résistance est R = 1/G. Pour NaCl à 10 mmol/L, L = 1,0 cm et S = 2,0 cm² : G ≈ 2,4 mS, R ≈ 415 Ω.",
     conclusion_courte: "G = I/U = 1/R (en S).",
     etapes: [
-      { consigne: "NaCl 10 mmol/L, L = 1,0 cm, plaques immergées de 2,0 cm (S = 2,0 cm²). Pour trois tensions (touches − et + sous le GBF) : en A, U ; en B, I (mA) ; en C, G = I/U ; en D, R = U/I.", court: "Tableur : A, B, C, D.", aide_geste: "Lisez la profondeur sur la plaque graduée.", verifier: tableau },
+      { consigne: "NaCl 10 mmol/L, L = 1,0 cm, plaques immergées de 2,0 cm (S = 2,0 cm²). Pour trois tensions (touches AMPL. − et + du GBF) : en A, U (V) lue au voltmètre ; en B, I (mA) lue à l'ampèremètre ; en C, G = I/U ; en D, R = U/I.", court: "Tableur : A, B, C, D.", aide_geste: "Lisez la profondeur immergée (cm) sur les graduations de la plaque de gauche ; montez ou descendez avec la manivelle. Si un afficheur montre « 1 », prenez un calibre plus grand.", verifier: tableau },
       { consigne: "Quand U augmente, G…", court: "Répondez dans le carnet.", question: choix(["ne change pas : elle caractérise la portion de solution", "augmente comme U", "diminue"], "Regardez la colonne C.", "Exact.") },
       { consigne: "Conductance mesurée (mS) ?", court: "G (mS) ?", question: nombre("mS", 2.41, 0.1, "G = I / U.", "Exact.") },
     ],
@@ -74,5 +70,5 @@ Utilisé par : page.html (dernier script).
     ],
   };
 
-  L.demarrer({ id: "b1_chim3_a1_conductance", titre: "Laboratoire : la conductance", paillasses: [poste], missions: [IONS, MESURE, FACTEURS] });
+  L.demarrer({ id: "b1_chim3_a1_conductance", titre: "Laboratoire : la conductance", decor: "aucun", paillasses: [poste], missions: [IONS, MESURE, FACTEURS] });
 })(window.Labo);

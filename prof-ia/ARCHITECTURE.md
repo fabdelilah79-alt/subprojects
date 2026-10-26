@@ -286,8 +286,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, bloc de prises, plan de travail), boîtiers, cordons secteur. |
 | contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur ; touches de réglage sur le dessus. |
 | contenu/ressources/laboratoires/commun/circuit_recepteurs.js | Lampe (éclat selon la puissance), DEL avec résistance de protection, interrupteur à couteau. |
-| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur à 13 positions (V⎓, V~, A⎓ jusqu'au calibre 2 mA, Ω), quatre bornes, afficheur, fusible de la borne mA. |
-| contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS. |
+| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur à 16 positions (V⎓, V~ 2 et 20 V, A~ 20 et 200 mA, A⎓ 2 mA à 10 A, Ω), quatre bornes, afficheur, fusible de la borne mA. |
+| contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS (tension et intensité alternatives). |
 | contenu/ressources/laboratoires/commun/mesure_tension.js | Reconnaît la tension U_XY mesurée par un voltmètre entre deux points nommés. |
 | contenu/ressources/laboratoires/commun/circuit_resistances.js | Résistances au vrai code des couleurs (support, plaquette), planche de fils résistants. |
 | contenu/ressources/laboratoires/commun/circuit_pile.js | Pile plate de 4,5 V dans un boîtier à bornes. |
@@ -441,8 +441,9 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim2_a1_gaz/ | Seringue et robinet à trois voies (seringue_gaz.js), loi de Boyle-Mariotte (poste_boyle.js), ballon dans un bain thermostaté (poste_temperature.js). |
 | contenu/ressources/laboratoires/sources/b1_chim2_a2_electrolytes/ | Filet d'eau dévié et cristal ionique (poste_polarite.js), solution de sulfate de cuivre (poste_preparation.js), tests de précipitation (poste_tests_ions.js), migration des ions (poste_migration.js). |
 | contenu/ressources/laboratoires/sources/b1_chim2_a3_gaz_produit/ | Magnésium et acide chlorhydrique en erlenmeyer bouché relié au pressiomètre (poste_pression_gaz.js). |
-| contenu/ressources/laboratoires/commun/conductimetrie.js | Conductivités molaires ioniques, solutions, σ = Σ λ·[X] (corrigée), G = σ·S/L ; étagère du GBF, de l'ampèremètre et du voltmètre. |
-| contenu/ressources/laboratoires/commun/cellule_conductance.js | Cellule à plaques parallèles (L réglable), bécher sur support élévateur (S), flacons, câbles ; mesures de U et I. |
+| contenu/ressources/laboratoires/commun/conductimetrie.js | Conductivités molaires ioniques, solutions, σ = Σ λ·[X] (corrigée), G = σ·S/L. |
+| contenu/ressources/laboratoires/commun/cellule_conductance.js | Cellule à plaques parallèles (L réglable) et son bornier (composant du circuit, conductance G), béchers de 100 mL, support élévateur (S). |
+| contenu/ressources/laboratoires/commun/poste_conductance.js | Paillasse de conductance : GBF, deux multimètres, cellule ; vérification du montage câblé par l'élève, mesures U et I lues ; étape « montage et calibres ». |
 | contenu/ressources/laboratoires/sources/b1_chim3_a1_conductance/ | Ions indispensables, G = I/U, facteurs L, S, C, conductivité (simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim3_a2_etalonnage/ | Courbe d'étalonnage au chlorure de sodium, sérum physiologique, limite (simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim3_a3_ion_commun/ | Six solutions à 5 mmol/L, conductivités molaires ioniques (simulation.js). |

@@ -3117,7 +3117,7 @@
       "id": "b1_chim3_a1_conductance",
       "type": "simulation",
       "fichier": "laboratoires/b1_chim3_a1_conductance.html",
-      "description": "Cellule à deux plaques parallèles (L réglable de 0,5 à 3 cm) au bout d'un pied, bécher sur un support élévateur (surface immergée S réglable), GBF à 500 Hz, ampèremètre et voltmètre sur une étagère, câbles branchés ; flacons d'eau distillée, d'eau sucrée et de chlorure de sodium. Les ions sont indispensables ; G = I/U = 1/R au tableur ; G inversement proportionnelle à L, proportionnelle à S, croissante avec C ; σ = G·L/S.",
+      "description": "Cellule à deux plaques parallèles (L réglable de 0,5 à 3 cm) au bout d'une potence, bécher sur un support élévateur (surface immergée S réglable), GBF à 500 Hz et deux multimètres : l'élève câble le circuit (GBF → ampèremètre → cellule, voltmètre en dérivation) et choisit les calibres alternatifs (A~, V~) ; flacons d'eau distillée, d'eau sucrée et de chlorure de sodium. Les ions sont indispensables ; G = I/U = 1/R au tableur ; G inversement proportionnelle à L, proportionnelle à S, croissante avec C ; σ = G·L/S.",
       "phase_poe": "observation",
       "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
       "chapitre": "1bac/chim3_conductance",
@@ -3130,7 +3130,7 @@
       "missions": [
         {
           "titre": "Les ions conduisent le courant",
-          "ce_que_fait_l_eleve": "Compare le courant dans l'eau distillée, l'eau sucrée et une solution de chlorure de sodium.",
+          "ce_que_fait_l_eleve": "Câble le circuit, choisit les calibres alternatifs, puis compare le courant dans l'eau distillée, l'eau sucrée et une solution de chlorure de sodium.",
           "conclusion": "L'eau distillée et l'eau sucrée (molécules de saccharose) ne laissent passer qu'un courant presque nul ; la solution de chlorure de sodium, qui contient des ions Na⁺ et Cl⁻, laisse passer un courant notable : les ions sont indispensables à la conduction dans une solution."
         },
         {
@@ -3155,7 +3155,7 @@
       "id": "b1_chim3_a2_etalonnage",
       "type": "simulation",
       "fichier": "laboratoires/b1_chim3_a2_etalonnage.html",
-      "description": "Même montage, cellule de géométrie fixe (L = 1 cm, S = 1 cm²) ; six étalons de chlorure de sodium (1 à 10 mmol/L) : courbe d'étalonnage G = f(C) au tableur ; sérum physiologique dilué 20 fois : concentration lue sur la droite (7,7 mmol/L), 154 mmol/L et 9,0 g/L ; solution à 0,10 mol/L hors du domaine de la droite.",
+      "description": "Même montage, câblé par l'élève (GBF, ampèremètre A~, voltmètre V~), cellule de géométrie fixe (L = 1 cm, S = 1 cm²) ; six étalons de chlorure de sodium (1 à 10 mmol/L) : courbe d'étalonnage G = f(C) au tableur ; sérum physiologique dilué 20 fois : concentration lue sur la droite (7,7 mmol/L), 154 mmol/L et 9,0 g/L ; solution à 0,10 mol/L hors du domaine de la droite (calibre 200 mA~ nécessaire).",
       "phase_poe": "observation",
       "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
       "chapitre": "1bac/chim3_conductance",
@@ -3166,7 +3166,7 @@
       "missions": [
         {
           "titre": "Courbe d'étalonnage",
-          "ce_que_fait_l_eleve": "Trace la courbe d'étalonnage G = f(C) avec six solutions étalons.",
+          "ce_que_fait_l_eleve": "Câble le circuit, choisit les calibres alternatifs, puis trace la courbe d'étalonnage G = f(C) avec six solutions étalons.",
           "conclusion": "Pour des solutions diluées (C ≤ 10⁻² mol/L), la conductance est proportionnelle à la concentration : G = k·C. Cette droite d'étalonnage permet de trouver la concentration d'une solution de chlorure de sodium à partir de sa conductance, mesurée dans les mêmes conditions."
         },
         {
@@ -3191,7 +3191,7 @@
       "id": "b1_chim3_a3_ion_commun",
       "type": "simulation",
       "fichier": "laboratoires/b1_chim3_a3_ion_commun.html",
-      "description": "Même montage, cellule fixe ; six solutions à 5,0 mmol/L (NaCl, KCl, NaOH, KOH, HCl, NH₄Cl) : G et σ au tableur ; comparaisons deux à deux (ion commun) : λ(K⁺) − λ(Na⁺), λ(HO⁻) > λ(Cl⁻), H₃O⁺ très conducteur ; σ = Σ λi·[Xi] avec les valeurs des tables.",
+      "description": "Même montage, câblé par l'élève (GBF, ampèremètre A~, voltmètre V~), cellule fixe ; six solutions à 5,0 mmol/L (NaCl, KCl, NaOH, KOH, HCl, NH₄Cl) : G et σ au tableur ; comparaisons deux à deux (ion commun) : λ(K⁺) − λ(Na⁺), λ(HO⁻) > λ(Cl⁻), H₃O⁺ très conducteur ; σ = Σ λi·[Xi] avec les valeurs des tables.",
       "phase_poe": "observation",
       "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
       "chapitre": "1bac/chim3_conductance",
@@ -3204,7 +3204,7 @@
       "missions": [
         {
           "titre": "Six solutions de même concentration",
-          "ce_que_fait_l_eleve": "Mesure G et calcule σ pour six solutions de même concentration.",
+          "ce_que_fait_l_eleve": "Câble le circuit, choisit les calibres alternatifs, puis mesure G et calcule σ pour six solutions de même concentration.",
           "conclusion": "À même concentration, les conductivités sont différentes : elles dépendent de la nature des ions. La solution d'acide chlorhydrique est de loin la plus conductrice, puis celles d'hydroxyde de sodium et de potassium."
         },
         {

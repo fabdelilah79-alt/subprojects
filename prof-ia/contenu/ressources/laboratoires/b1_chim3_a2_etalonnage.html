@@ -1940,33 +1940,1447 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
 </script>
   <script>
 /*
-Rôle : affiche des consignes de sécurité du laboratoire de chimie, collée au mur : port obligatoire des lunettes et de la
-       blouse (pictogrammes ronds bleus), interdiction de goûter, de manger ou de boire (rond rouge barré).
-Reçoit : le groupe SVG et la position { x, y } du coin haut gauche de l'affiche.
-Produit : Labo.affiche_securite(g, x, y).
+Rôle : décor d'une paillasse d'électricité vue de plus haut : un bandeau de mur carrelé avec sa prise, un grand plan de
+       travail où l'on pose les appareils et les fils, le bord avant et les placards.
+Reçoit : le groupe SVG de la paillasse et son numéro.
+Produit : Labo.decor_circuit(groupe, numero) -> { pense_bete } ; Labo.PLAN_CIRCUIT : hauteurs (fond, avant, placard) ;
+          Labo.PRISES_MUR : centres des prises du mur ; Labo.bouton_rond(g, x, y, texte, action, rayon) : touche ronde ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
+          Labo.boitier(groupe, x, y, largeur, profondeur, hauteur, { dessus, face }) : boîtier d'appareil vu d'en haut.
+Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer), les composants circuit_*.js.
+*/
+(function (L) {
+  L.PLAN_CIRCUIT = { fond: 168, avant: 585, placard: 598 };
+  L.PRISES_MUR = [{ x: 860, y: 130 }, { x: 905, y: 130 }, { x: 950, y: 130 }];
+  const P = L.PLAN_CIRCUIT;
+
+  function mur(g) {
+    // Mur peint, carrelage, bloc de trois prises électriques (à droite, pour les appareils branchés sur le secteur).
+    L.svg("rect", { x: 0, y: 0, width: L.LARGEUR, height: P.fond, fill: "url(#mur)" }, g);
+    L.svg("rect", { x: 0, y: 96, width: L.LARGEUR, height: P.fond - 96, fill: "url(#carrelage)" }, g);
+    L.svg("rect", { x: 0, y: 92, width: L.LARGEUR, height: 5, fill: "#b9bdb5" }, g);
+    L.svg("rect", { x: 834, y: 106, width: 142, height: 48, rx: 5, fill: "#f7f7f4", stroke: "#b8bbb4" }, g);
+    for (const p of L.PRISES_MUR) {
+      L.svg("circle", { cx: p.x, cy: p.y, r: 15, fill: "#e6e7e2", stroke: "#c4c7c0" }, g);
+      for (const dx of [-5, 5]) L.svg("circle", { cx: p.x + dx, cy: p.y, r: 2, fill: "#555" }, g);
+    }
+  }
+
+  L.cordon_secteur = function (g, depart, P) {
+    // Cordon secteur : il part de l'arrière de l'appareil (caché sous lui) et finit par une fiche enfoncée dans la prise P.
+    L.svg("path", { d: `M${depart.x} ${depart.y} C${depart.x + 30} ${depart.y - 50} ${P.x - 40} ${P.y + 70} ${P.x} ${P.y + 22}`, fill: "none", stroke: "#2a2d30", "stroke-width": 5, "stroke-linecap": "round" }, g);
+    L.svg("rect", { x: P.x - 4, y: P.y + 8, width: 8, height: 16, rx: 3, fill: "#34373a" }, g);
+    L.svg("circle", { cx: P.x + 1, cy: P.y + 2, r: 13, fill: "#000", opacity: 0.25 }, g);
+    L.svg("circle", { cx: P.x, cy: P.y, r: 12, fill: "#3a3d41", stroke: "#1c1e20" }, g);
+    for (const dy of [-6, 0, 6]) L.svg("rect", { x: P.x - 8, y: P.y + dy - 1, width: 16, height: 2, rx: 1, fill: "#4c5055" }, g);
+    L.svg("circle", { cx: P.x - 4, cy: P.y - 5, r: 3, fill: "#fff", opacity: 0.12 }, g);
+  };
+
+  function plan(g) {
+    // Plan de travail sombre vu d'en haut, avec un reflet doux ; bord avant et placards.
+    L.svg("rect", { x: 0, y: P.fond, width: L.LARGEUR, height: P.avant - P.fond, fill: "url(#paillasse)" }, g);
+    L.svg("rect", { x: 0, y: P.fond, width: L.LARGEUR, height: 8, fill: "#000", opacity: 0.25 }, g);
+    L.svg("rect", { x: 0, y: P.fond + 40, width: L.LARGEUR, height: 200, fill: "url(#reflet)", opacity: 0.7 }, g);
+    L.svg("rect", { x: 0, y: P.avant, width: L.LARGEUR, height: P.placard - P.avant, fill: "url(#bord)" }, g);
+    L.svg("rect", { x: 0, y: P.placard, width: L.LARGEUR, height: L.HAUTEUR - P.placard, fill: "url(#facade)" }, g);
+    for (let x = 0; x < L.LARGEUR; x += 256) {
+      L.svg("rect", { x: x + 6, y: P.placard + 6, width: 244, height: 40, fill: "none", stroke: "#5d6567", "stroke-width": 1.5 }, g);
+      L.svg("rect", { x: x + 108, y: P.placard + 14, width: 40, height: 6, rx: 3, fill: "url(#metal-h)" }, g);
+    }
+  }
+
+  L.boitier = function (g, x, y, l, p, h, { dessus = "#d9dcd8", face = "#9aa2a6" } = {}) {
+    // Boîtier posé sur la paillasse : ombre, dessus (vu d'en haut), face avant (hauteur h), arête claire.
+    L.svg("rect", { x: x + 4, y: y + 6, width: l, height: p + h, rx: 4, fill: "#000", opacity: 0.3, filter: "url(#flou)" }, g);
+    L.svg("rect", { x, y: y + p - 4, width: l, height: h + 4, rx: 3, fill: face, stroke: "#00000050" }, g);
+    L.svg("rect", { x, y, width: l, height: p, rx: 4, fill: dessus, stroke: "#00000040" }, g);
+    L.svg("rect", { x: x + 3, y: y + 1.5, width: l - 6, height: 2, rx: 1, fill: "#fff", opacity: 0.35 }, g);
+  };
+
+  L.bouton_rond = function (g, x, y, texte, action, rayon = 9) {
+    // Petit bouton poussoir rond, touchable.
+    const b = L.svg("g", { class: "bouton-rond", role: "button", "aria-label": texte }, g);
+    L.svg("circle", { cx: x + 0.8, cy: y + 1.5, r: rayon, fill: "#000", opacity: 0.3 }, b);
+    L.svg("circle", { cx: x, cy: y, r: rayon, fill: "url(#acier)", stroke: "#111" }, b);
+    L.texte(b, x, y + 0.5, texte, { "font-size": texte.length > 2 ? 7 : 10, "font-weight": 700, fill: "#eef" });
+    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: action });
+    return b;
+  };
+
+  L.decor_circuit = function (g, numero) {
+    // Dessine le décor ; le pense-bête est collé sur le mur, en haut à gauche.
+    mur(g);
+    plan(g);
+    g.prises_libres = L.PRISES_MUR.map((p) => ({ ...p }));
+    L.svg("text", { x: 1000, y: 30, "text-anchor": "end", class: "numero-paillasse" }, g).textContent = `Paillasse ${numero + 1}`;
+    return { pense_bete: L.decor.pense_bete(g, 24, 12, 300, 126) };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : paillasse de chimie (plans de dessin et récipients qui peuvent recevoir des gouttes) et pipette compte-gouttes :
+       on la sort de son flacon ou de son bécher, on la tient au-dessus d'un tube ou d'un verre de montre, les gouttes
+       tombent une à une, puis la pipette retourne dans son flacon (une pipette par produit : on ne mélange rien).
+Reçoit : le groupe SVG de la paillasse ; pour une pipette : sa place de repos, le produit, la dose (mL) et le nombre de gouttes.
+Produit : Labo.paillasse_chimie(g) -> ctx { fond, objets, devant, haut, cibles, ajouter_cible(c), signaler(), sur_changement(f) } ;
+          Labo.compte_gouttes(ctx, reglage) -> pipette ; une cible est { bouche() -> { x, y }, surface() -> y, recevoir(nom, mL) }.
+Utilisé par : chimie_objets.js et les simulations de chimie.
+*/
+(function (L) {
+  L.paillasse_chimie = function (g) {
+    // Quatre plans : fond (supports), objets (récipients), devant (bord des supports), haut (objet tenu, gouttes).
+    const ctx = { cibles: [], ecouteurs: [] };
+    for (const nom of ["fond", "objets", "devant", "haut"]) ctx[nom] = L.svg("g", { class: `chimie-${nom}` }, g);
+    ctx.ajouter_cible = (c) => { ctx.cibles.push(c); return c; };
+    ctx.sur_changement = (f) => ctx.ecouteurs.push(f);
+    ctx.signaler = () => ctx.ecouteurs.forEach((f) => f());
+    return ctx;
+  };
+
+  function gouttes(ctx, de, cible, n, couleur, fin) {
+    // Fait tomber n gouttes, l'une après l'autre, de la pointe de la pipette jusqu'à la surface du contenu.
+    const y_fin = cible.surface();
+    let k = 0;
+    const suivante = () => {
+      if (k++ >= n) return fin();
+      const goutte = L.svg("ellipse", { cx: de.x, cy: de.y, rx: 2.2, ry: 2.8, fill: couleur, opacity: 0.9, stroke: "#ffffff88", "stroke-width": 0.5 }, ctx.haut);
+      L.animer(Math.sqrt(Math.max(4, y_fin - de.y)) * 0.022, (t) => goutte.setAttribute("cy", de.y + (y_fin - de.y) * t * t), () => { goutte.remove(); suivante(); });
+    };
+    suivante();
+  }
+
+  L.compte_gouttes = function (ctx, { repos, produit, rgb, poire = "#1d1d1f", bague = true, dose = 0.05, n = 3, source = null, cachee = false, quand_rangee = null }) {
+    // Pipette déplaçable ; repos = { x, y } : pointe quand elle est rangée ; cachee : seule la poire dépasse du flacon.
+    const p = { produit, rgb, g: L.svg("g", { class: "pipette", role: "button", "aria-label": `Pipette : ${produit}` }, ctx.objets), sortie: false };
+    const dessiner = (entiere) => { L.verrerie.pipette(p.g, 0, 0, { rgb, poire, bague }); if (!entiere) [...p.g.children].slice(0, rgb ? 2 : 1).forEach((e) => e.remove()); };
+    const ranger = () => { ctx.objets.append(p.g); L.placer(p.g, repos.x, repos.y); dessiner(!cachee); p.sortie = false; quand_rangee?.(false); };
+    const viser = (pos) => ctx.cibles.find((c) => { const b = c.bouche(); return c !== source && Math.abs(pos.x - b.x) < 22 && pos.y > b.y - 70 && pos.y < b.y + 12; });
+    ranger();
+    L.glissable(p.g, {
+      debut: () => ({ ...repos }),
+      saisir: () => { ctx.haut.append(p.g); dessiner(true); p.sortie = true; quand_rangee?.(true); },
+      deplacer: (pos) => L.placer(p.g, pos.x, pos.y),
+      lacher: (pos) => {
+        const c = viser(pos);
+        if (!c) return ranger();
+        const b = c.bouche(), tenue = { x: b.x, y: Math.min(pos.y, b.y - 6) };
+        L.placer(p.g, tenue.x, tenue.y);
+        gouttes(ctx, tenue, c, n, L.rgb(rgb), () => { c.recevoir(produit, dose); ctx.signaler(); ranger(); });
+      },
+    });
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : géométrie des liquides dans un récipient vu en coupe : aire d'un polygone, découpe par la surface libre (un demi-plan),
+       recherche du niveau de la surface pour une aire donnée (par dichotomie). La surface libre est une droite de normale
+       u (vers le haut, hors du liquide) ; le liquide occupe les points p tels que u·p ≤ s.
+Reçoit : des polygones [{ x, y }] en coordonnées de la scène (y vers le bas), une normale u et une aire.
+Produit : Labo.geometrie = { aire(poly), couper(poly, u, s), niveau(poly, u, aire) -> { s, region }, transformer(poly, pose) }.
+Utilisé par : recipient_physique.js, verrerie_rendu.js.
+*/
+(function (L) {
+  const pv = (u, p) => u.x * p.x + u.y * p.y;
+
+  function aire(poly) {
+    // Aire d'un polygone (formule du lacet), toujours positive.
+    let a = 0;
+    for (let i = 0; i < poly.length; i++) { const p = poly[i], q = poly[(i + 1) % poly.length]; a += p.x * q.y - q.x * p.y; }
+    return Math.abs(a) / 2;
+  }
+
+  function couper(poly, u, s) {
+    // Partie du polygone sous la surface (u·p ≤ s) : algorithme de Sutherland-Hodgman pour un demi-plan.
+    const r = [];
+    for (let i = 0; i < poly.length; i++) {
+      const p = poly[i], q = poly[(i + 1) % poly.length], dp = pv(u, p) - s, dq = pv(u, q) - s;
+      if (dp <= 0) r.push(p);
+      if ((dp < 0 && dq > 0) || (dp > 0 && dq < 0)) { const t = dp / (dp - dq); r.push({ x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t }); }
+    }
+    return r;
+  }
+
+  function niveau(poly, u, a) {
+    // Position s de la surface telle que l'aire du liquide vaille a (dichotomie sur l'intervalle des projections).
+    let lo = Infinity, hi = -Infinity;
+    for (const p of poly) { const v = pv(u, p); lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    if (a <= 0) return { s: lo, region: [] };
+    if (a >= aire(poly)) return { s: hi, region: poly };
+    for (let k = 0; k < 40; k++) { const m = (lo + hi) / 2; if (aire(couper(poly, u, m)) < a) lo = m; else hi = m; }
+    return { s: hi, region: couper(poly, u, hi) };
+  }
+
+  function transformer(poly, { x, y, angle = 0, e = 1 }) {
+    // Passe des coordonnées du récipient (mm, origine au bas, y vers le haut) à la scène (px), avec rotation (degrés).
+    const c = Math.cos((angle * Math.PI) / 180), s = Math.sin((angle * Math.PI) / 180);
+    return poly.map((p) => ({ x: x + e * (p.x * c + p.y * s), y: y + e * (p.x * s - p.y * c) }));
+  }
+
+  L.geometrie = { aire, couper, niveau, transformer, pv };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : contenu liquide d'un récipient, en phases : les liquides miscibles (eau, éthanol, solutions aqueuses) forment une
+       même phase ; un liquide non miscible (cyclohexane, huile, dichlorométhane) forme une autre phase. Les phases se
+       rangent par densité (la moins dense au-dessus). Une agitation crée une émulsion qui se sépare peu à peu (décantation).
+       Des espèces dissoutes (diiode...) colorent la phase qui les contient.
+Reçoit : les liquides versés (nom, volume en mL) et les espèces dissoutes ajoutées.
+Produit : Labo.LIQUIDES (catalogue, complété par chimie_reactions.js) ; Labo.TEINTES (teinte des espèces dissoutes, que l'on peut compléter) ; Labo.REGLES_COULEUR (règles des tests, facultatives) ; Labo.contenu(volumes) -> { phases, emulsion, ajouter(nom, V, dissous), retirer(V, ou),
+          volume(), couleur(phase), agiter(force), decanter(dt) }.
+Utilisé par : recipient_physique.js, ecoulement.js et les simulations de chimie.
+*/
+(function (L) {
+  const LIQUIDES = {
+    eau: { nom: "eau", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse" },
+    eau_iodee: { nom: "eau iodée", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse", dissous: { I2: 0.06 } },
+    ethanol: { nom: "éthanol", d: 0.79, rgb: [232, 241, 246], alpha: 0.3, classe: "aqueuse" },
+    cyclohexane: { nom: "cyclohexane", d: 0.78, rgb: [238, 242, 244], alpha: 0.3, classe: "organique" },
+    dichloromethane: { nom: "dichlorométhane", d: 1.33, rgb: [236, 240, 242], alpha: 0.3, classe: "organique" },
+    huile: { nom: "huile", d: 0.92, rgb: [226, 186, 60], alpha: 0.75, classe: "organique" },
+  };
+  // Teinte d'une espèce dissoute selon la phase : le diiode est jaune-brun dans l'eau, violet dans un solvant organique.
+  const TEINTES = { I2: { aqueuse: [150, 68, 8], organique: [156, 44, 150] } };
+  // Coefficient de partage (concentration dans le solvant organique / concentration dans l'eau) à l'équilibre.
+  const PARTAGE = { I2: 90 };
+  L.LIQUIDES = LIQUIDES;
+  L.TEINTES = TEINTES;
+  L.rgb = L.rgb || ((c) => `rgb(${c.map((v) => Math.round(v)).join(",")})`);
+
+  function densite(ph) {
+    // Densité moyenne d'une phase (pondérée par les volumes).
+    let V = 0, m = 0;
+    for (const [n, v] of Object.entries(ph.liquides)) { V += v; m += v * LIQUIDES[n].d; }
+    return V ? m / V : 1;
+  }
+
+  L.contenu = function (volumes = {}) {
+    // Contenu vide, puis remplissage avec les volumes donnés.
+    const c = { phases: [], emulsion: 0 };
+    c.volume = () => c.phases.reduce((s, p) => s + p.V, 0);
+    c.ranger = () => c.phases.sort((a, b) => densite(b) - densite(a));
+    c.ajouter = (nom, V, dissous = null) => {
+      // Ajoute V mL d'un liquide (et ses espèces dissoutes, en quantité proportionnelle au volume).
+      if (V <= 0) return;
+      const classe = LIQUIDES[nom].classe;
+      let ph = c.phases.find((p) => p.classe === classe);
+      if (!ph) { ph = { classe, liquides: {}, dissous: {}, V: 0 }; c.phases.push(ph); }
+      ph.liquides[nom] = (ph.liquides[nom] || 0) + V; ph.V += V;
+      for (const [s, q] of Object.entries(dissous || LIQUIDES[nom].dissous || {})) ph.dissous[s] = (ph.dissous[s] || 0) + q * (dissous ? 1 : V);
+      c.ranger();
+    };
+    c.retirer = (V, ou = "haut") => {
+      // Retire V mL de la phase du haut (débordement) ou du bas (robinet) ; renvoie ce qui est retiré, phase par phase.
+      const sortie = [];
+      while (V > 1e-9 && c.phases.length) {
+        const ph = ou === "haut" ? c.phases[c.phases.length - 1] : c.phases[0], v = Math.min(V, ph.V), k = v / ph.V;
+        const part = { classe: ph.classe, liquides: {}, dissous: {}, T: c.T ?? 20 };
+        for (const n of Object.keys(ph.liquides)) { part.liquides[n] = ph.liquides[n] * k; ph.liquides[n] -= part.liquides[n]; }
+        for (const s of Object.keys(ph.dissous)) { part.dissous[s] = ph.dissous[s] * k; ph.dissous[s] -= part.dissous[s]; }
+        ph.V -= v; V -= v; sortie.push(part);
+        if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+      }
+      return sortie;
+    };
+    c.verser = (part) => {
+      // Reçoit une portion venue d'un autre récipient (liquides, espèces dissoutes, température du mélange).
+      const V0 = c.volume(), Vp = Object.values(part.liquides).reduce((s, v) => s + v, 0);
+      if (part.T !== undefined && V0 + Vp > 0) c.T = ((c.T ?? 20) * V0 + part.T * Vp) / (V0 + Vp);
+      for (const [n, V] of Object.entries(part.liquides)) if (V > 0) c.ajouter(n, V, {});
+      const ph = c.phases.find((p) => p.classe === part.classe) || c.phases[0];
+      if (ph) for (const [s, q] of Object.entries(part.dissous)) ph.dissous[s] = (ph.dissous[s] || 0) + q;
+    };
+    c.couleur = (ph) => {
+      // Couleur et opacité d'une phase : un liquide très coloré garde sa teinte quand on le dilue (comme une solution réelle :
+      // poids de chaque liquide = volume × opacité³) ; puis teinte des espèces dissoutes (concentration = quantité / volume).
+      let rgb = [0, 0, 0], alpha = 0, poids = 0;
+      const L_ph = Object.entries(ph.liquides).filter(([, v]) => v > 0);
+      for (const [n, v] of L_ph) poids += v * LIQUIDES[n].alpha ** 3;
+      for (const [n, v] of L_ph) { const l = LIQUIDES[n], k = (v * l.alpha ** 3) / poids; rgb = rgb.map((x, i) => x + l.rgb[i] * k); alpha = Math.max(alpha, l.alpha * Math.pow(v / ph.V, 0.3)); }
+      for (const [s, q] of Object.entries(ph.dissous)) {
+        if (!TEINTES[s]) continue;
+        const k = Math.min(0.95, (12 * q) / Math.max(ph.V, 0.1)), t = TEINTES[s][ph.classe];
+        rgb = rgb.map((x, i) => x + (t[i] - x) * k); alpha = Math.min(0.9, alpha + 0.55 * k);
+      }
+      for (const regle of L.REGLES_COULEUR || []) ({ rgb, alpha } = regle(ph, rgb, alpha, c));
+      return { rgb, alpha };
+    };
+    c.agiter = (force) => {
+      // Émulsion ; les espèces dissoutes passent d'une phase à l'autre vers l'équilibre de partage, d'autant plus vite qu'on agite.
+      const aq = c.phases.find((p) => p.classe === "aqueuse"), org = c.phases.find((p) => p.classe === "organique");
+      if (!aq || !org) return;
+      c.emulsion = Math.min(1, c.emulsion + force);
+      for (const [s, K] of Object.entries(PARTAGE)) {
+        const n = (aq.dissous[s] || 0) + (org.dissous[s] || 0), n_org = (n * K * org.V) / (K * org.V + aq.V), k = Math.min(1, force * 3);
+        org.dissous[s] = (org.dissous[s] || 0) + (n_org - (org.dissous[s] || 0)) * k; aq.dissous[s] = n - org.dissous[s];
+      }
+    };
+    c.decanter = (dt) => { c.emulsion = Math.max(0, c.emulsion - dt / 5); };
+    for (const [n, v] of Object.entries(volumes)) c.ajouter(n, v);
+    return c;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : réactifs et échantillons des tests de chimie, ajoutés au catalogue des liquides, et règles des tests : pH d'une phase,
+       phénolphtaléine (incolore sous pH 8,2, rose au-delà), liqueur de Fehling (bleue ; chauffée au-dessus de 60 °C avec du
+       glucose, elle donne un précipité qui passe du jaune-orangé au rouge brique, et la solution perd son bleu).
+Reçoit : le contenu d'un récipient (liquide_contenu.js) ; pour le chauffage, la température du bain et la durée.
+Produit : de nouvelles entrées dans Labo.LIQUIDES ; Labo.REGLES_COULEUR ; Labo.pH_phase(phase) ; Labo.pH_liquide(nom) ;
+          Labo.chauffer_contenu(contenu, T_bain, dt) (contenu.T, contenu.avance) ; Labo.convertir_liquide(contenu, de, vers, V).
+Utilisé par : les simulations de chimie (tests de détection).
+*/
+(function (L) {
+  const aq = (nom, rgb, alpha, pH, autres = {}) => ({ nom, d: 1.0, rgb, alpha, classe: "aqueuse", pH, ...autres });
+  Object.assign(L.LIQUIDES, {
+    jus_orange: aq("jus d'orange", [245, 158, 40], 0.82, 4, { d: 1.04, glucose: true }),
+    vinaigre: aq("vinaigre blanc", [246, 243, 228], 0.3, 3),
+    eau_savonneuse: aq("eau savonneuse", [238, 238, 232], 0.6, 10),
+    eau_chaux: aq("eau de chaux", [234, 242, 246], 0.34, 12),
+    solution_glucose: aq("solution de glucose", [232, 241, 246], 0.3, 7, { glucose: true }),
+    phenolphtaleine: aq("phénolphtaléine", [240, 245, 248], 0.3, null),
+    fehling: aq("liqueur de Fehling", [22, 82, 200], 0.85, 13, { d: 1.1 }),
+    oxyde_cuivre: { nom: "précipité", d: 6, rgb: [168, 48, 26], alpha: 0.95, classe: "precipite" },
+    eau_salee: { nom: "eau salée", d: 1.2, rgb: [230, 240, 246], alpha: 0.32, classe: "aqueuse", pH: 7 },
+  });
+  L.LIQUIDES.eau.pH = 7;
+  L.LIQUIDES.eau_iodee.pH = 7;
+
+  L.pH_liquide = (nom) => L.LIQUIDES[nom].pH ?? null;
+  L.pH_phase = function (ph) {
+    // pH du liquide majoritaire ; assez de liqueur de Fehling (très basique) l'emporte.
+    if ((ph.liquides.fehling || 0) > 0.15 * ph.V) return 13;
+    const p = Object.entries(ph.liquides).filter(([n]) => L.LIQUIDES[n].pH !== null && L.LIQUIDES[n].pH !== undefined).sort((a, b) => b[1] - a[1])[0];
+    return p ? L.LIQUIDES[p[0]].pH : null;
+  };
+
+  const vers = (a, b, k) => a.map((v, i) => v + (b[i] - v) * Math.max(0, Math.min(1, k)));
+  L.REGLES_COULEUR = [
+    (ph, rgb, alpha) => {
+      // Phénolphtaléine : rose dans une solution basique (pH ≥ 8,2).
+      const pH = L.pH_phase(ph);
+      if (!(ph.liquides.phenolphtaleine > 0) || pH === null || pH < 8.2) return { rgb, alpha };
+      const k = 0.85 * Math.min(1, (pH - 8.2) / 1.5);
+      return { rgb: vers(rgb, [222, 30, 128], k), alpha: Math.max(alpha, 0.35 + 0.45 * k) };
+    },
+    (ph, rgb, alpha, c) => {
+      // Liqueur de Fehling réduite : la solution perd son bleu ; le précipité vire du jaune-orangé au rouge brique.
+      if (ph.classe === "precipite") return { rgb: vers([226, 170, 40], [168, 48, 26], c.avance || 0), alpha };
+      if (!(ph.liquides.fehling > 0) || !c.avance) return { rgb, alpha };
+      return { rgb: vers(rgb, [222, 146, 92], 0.9 * c.avance), alpha };
+    },
+  ];
+
+  L.convertir_liquide = function (c, de, vers, V) {
+    // Une transformation : remplace V mL du liquide « de » par V mL du liquide « vers » ; renvoie le volume transformé.
+    const ph = c.phases.find((p) => p.liquides[de] > 0);
+    if (!ph) return 0;
+    const v = Math.min(V, ph.liquides[de]);
+    ph.liquides[de] -= v; ph.V -= v;
+    if (ph.V < 1e-6) c.phases.splice(c.phases.indexOf(ph), 1);
+    c.ajouter(vers, v);
+    return v;
+  };
+
+  L.chauffer_contenu = function (c, T_bain, dt) {
+    // Le contenu prend la température du bain (constante de temps 6 s) ; au-dessus de 60 °C, le glucose réduit la liqueur de Fehling.
+    c.T = (c.T ?? 20) + (T_bain - (c.T ?? 20)) * (1 - Math.exp(-dt / 6));
+    const ph = c.phases.find((p) => p.classe === "aqueuse");
+    if (!ph || !(ph.liquides.fehling > 0) || c.T <= 60 || !Object.keys(ph.liquides).some((n) => L.LIQUIDES[n].glucose)) return;
+    const avant = c.avance || 0;
+    c.avance = Math.min(1, avant + (dt * (c.T - 60)) / 400);
+    c.ajouter("oxyde_cuivre", 0.5 * (c.avance - avant));
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : verrerie aux vraies dimensions (en mm) : profil intérieur (demi-largeur r selon la hauteur h depuis le fond),
+       épaisseur du verre, bec, graduations. Pour chaque pièce : polygones intérieur et extérieur (repère du récipient :
+       origine au milieu du fond, x vers la droite, y vers le bas, en mm), lèvres de l'ouverture, et tables qui relient le
+       volume (mL) à l'aire de liquide vue en coupe (mm²) : un récipient droit est rempli exactement à la bonne hauteur.
+Reçoit : le nom d'une pièce (becher_50, becher_100, becher_250, becher_600, tube, eprouvette_50, erlenmeyer_250, ampoule_125, ballon_250, fiole_500 (fiole à vide), flacon_gaz (flacon de 600 mL fermé par une plaque de verre), cristallisoir_90 (90 mm × 45 mm), fiole_jaugee_100, fiole_jaugee_50 (trait de jauge au volume exact), buchner_70 (cuvette d'un entonnoir Büchner)).
+Produit : Labo.profil(nom) -> { nom, H, h0 (fond intérieur : 0, sauf l'ampoule dont la tige est sous le robinet), t, interieur, exterieur, levres, aire_de(V), volume_de(A), hauteur_de(V), r(h), graduations, extras }.
+Utilisé par : verrerie_rendu.js, recipient_physique.js.
+*/
+(function (L) {
+  const sphere = (R, h0, h1, pas = 2) => { const p = []; for (let h = h0; h <= h1; h += pas) p.push([h, Math.sqrt(Math.max(0, R * R - (R - h) ** 2))]); return p; };
+  // Corps d'ampoule en poire : cône qui s'évase vers le haut, épaule arrondie, puis col (points tous les 2 mm).
+  const poire = (h0, h1, r0, rmax, r1) => { const p = []; for (let h = h0; h <= h1; h += 2) { const u = (h - h0) / (h1 - h0), w = u < 0.78 ? r0 + (rmax - r0) * Math.sin((Math.PI / 2) * Math.pow(u / 0.78, 0.85)) : r1 + (rmax - r1) * Math.cos((Math.PI / 2) * ((u - 0.78) / 0.22)); p.push([h, w]); } return p; };
+  const becher = (r, H, grad) => ({ profil: [[0, r - 3], [1, r - 1.2], [3, r], [H, r]], t: 1.4, bec: true, grad });
+  const DEFS = {
+    becher_50: becher(20, 54, [10, 20, 30, 40, 50]),
+    becher_100: becher(25, 68, [20, 40, 60, 80, 100]),
+    becher_250: becher(33.5, 92, [50, 100, 150, 200, 250]),
+    becher_600: becher(45, 125, [100, 200, 300, 400, 500, 600]),
+    tube: { profil: [...sphere(7.5, 0, 7.5, 0.75), [150, 7.5]], t: 1, bourrelet: true, etiquette_h: 0.72 },
+    eprouvette_50: { profil: [[0, 10.5], [175, 10.5]], t: 1.3, bec: true, pied: true, grad: [10, 20, 30, 40, 50] },
+    erlenmeyer_250: { profil: [[0, 37], [2, 39.5], [80, 16], [92, 14], [118, 14]], t: 1.4, grad: [50, 100, 150, 200] },
+    ampoule_125: { profil: [[54, 1.6], [62, 1.6], ...poire(64, 186, 3, 32, 11), [204, 10.5]], t: 1.5, robinet: 52, tige: true, rode: true },
+    ballon_250: { profil: [...sphere(39.5, 0, 74), [80, 12.5], [118, 12.5]], t: 1.5, rode: true },
+    fiole_500: { profil: [[0, 49], [3, 51], [110, 16], [140, 13], [180, 13]], t: 2.4, tubulure: 155, grad: [100, 200, 300, 400] },
+    fiole_jaugee_100: { profil: [[0, 23.6], [2, 26.3], [6, 27.1], [20, 27.1], [32, 24.5], [42, 19.3], [50, 11.4], [56, 8], [60, 6], [170, 6]], t: 1.3, jauge: 100 },
+    fiole_jaugee_50: { profil: [[0, 18.4], [2, 20.1], [6, 21], [16, 21], [26, 18.8], [34, 14.9], [40, 8.75], [45, 6], [48, 5], [140, 5]], t: 1.2, jauge: 50 },
+    cristallisoir_90: { profil: [[0, 42], [1, 44], [3, 45], [45, 45]], t: 2 },
+    flacon_gaz: { profil: [[0, 32], [2, 35], [160, 35]], t: 2.2, bourrelet: true, plaque: true },
+    buchner_70: { profil: [[0, 33], [4, 35], [40, 35]], t: 3, sans_ombre: true },
+  };
+  const cache = {};
+
+  function polygones(def) {
+    // Polygones intérieur (le liquide) et extérieur (le verre), et lèvres de l'ouverture (bec à droite s'il y en a un).
+    const p = def.profil, H = p[p.length - 1][0], t = def.t;
+    const interieur = [...p.slice().reverse().map(([h, r]) => ({ x: -r, y: -h })), ...p.map(([h, r]) => ({ x: r, y: -h }))];
+    const b = -p[0][0] + t;
+    const exterieur = [...p.slice().reverse().map(([h, r]) => ({ x: -r - t, y: -h })), { x: -p[0][1] - t, y: b }, { x: p[0][1] + t, y: b }, ...p.map(([h, r]) => ({ x: r + t, y: -h }))];
+    const rH = p[p.length - 1][1], levres = { g: { x: -rH, y: -H }, d: def.bec ? { x: rH + 3, y: -H - 1.5 } : { x: rH, y: -H } };
+    return { H, interieur, exterieur, levres };
+  }
+
+  function tables(def, r) {
+    // Volume (mL) et aire en coupe (mm²) jusqu'à chaque demi-millimètre de hauteur.
+    const H = def.profil[def.profil.length - 1][0], h0 = def.profil[0][0], V = [0], A = [0];
+    for (let h = h0 + 0.5; h <= H + 1e-9; h += 0.5) { const m = r(h - 0.25); V.push(V[V.length - 1] + (Math.PI * m * m * 0.5) / 1000); A.push(A[A.length - 1] + 2 * m * 0.5); }
+    const chercher = (T, x) => { let i = 1; while (i < T.length - 1 && T[i] < x) i++; return Math.max(0, i - 1 + (x - T[i - 1]) / Math.max(1e-9, T[i] - T[i - 1])); };
+    const lire = (T, k) => { const i = Math.min(T.length - 2, Math.floor(k)); return T[i] + (T[i + 1] - T[i]) * (k - i); };
+    return { aire_de: (v) => lire(A, chercher(V, v)), volume_de: (a) => lire(V, chercher(A, a)), hauteur_de: (v) => h0 + chercher(V, v) * 0.5 };
+  }
+
+  L.profil = function (nom) {
+    // Construit (une seule fois) la pièce demandée.
+    if (cache[nom]) return cache[nom];
+    const def = DEFS[nom], p = def.profil;
+    const r = (h) => { for (let i = 1; i < p.length; i++) if (h <= p[i][0]) return p[i - 1][1] + ((p[i][1] - p[i - 1][1]) * (h - p[i - 1][0])) / (p[i][0] - p[i - 1][0]); return p[p.length - 1][1]; };
+    const pr = { nom, t: def.t, h0: p[0][0], r, extras: def, ...polygones(def), ...tables(def, r) };
+    pr.graduations = (def.grad || []).map((v) => ({ v, h: pr.hauteur_de(v) }));
+    return (cache[nom] = pr);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : dessin réaliste d'une pièce de verrerie (profil de verrerie_profils.js) dans sa position : ombre portée, verre
+       épais et transparent (bords plus sombres, reflets verticaux), bord supérieur ovale, fond en perspective, liquide en
+       phases avec sa surface (ovale clair si le récipient est droit, ménisque sombre dans un col étroit), graduations émaillées blanches, bec,
+       pied d'éprouvette, bourrelet de tube, robinet et col rodé d'ampoule, bouchon.
+Reçoit : le groupe SVG, le profil, la pose { x, y (milieu du fond, px), angle (degrés), e (px par mm) } et l'état
+         { regions : [{ poly (repère du récipient), rgb, alpha }], surface : [p1, p2] ou null, bouchon, robinet, etiquette }.
+Produit : Labo.dessiner_verrerie(g, profil, pose, etat).
+Utilisé par : recipient_physique.js.
+*/
+(function (L) {
+  const chemin = (poly) => (poly.length ? "M" + poly.map((p) => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`).join(" L") + " Z" : "");
+  const VERRE_FOND = "rgba(214,233,240,0.20)", BORD = "rgba(120,150,160,0.85)";
+
+  function verre(g, pr) {
+    // Corps du verre : paroi (entre contour extérieur et intérieur) légèrement teintée, contours, fond épais en perspective.
+    const R = pr.r(pr.h0) + pr.t, ry = 0.12 * R, yb = -pr.h0;
+    L.svg("path", { d: chemin(pr.exterieur) + " " + chemin(pr.interieur), fill: "rgba(200,225,233,0.45)", "fill-rule": "evenodd" }, g);
+    L.svg("path", { d: chemin(pr.interieur), fill: VERRE_FOND }, g);
+    L.svg("path", { d: chemin(pr.exterieur), fill: "none", stroke: BORD, "stroke-width": 0.45 }, g);
+    if (!pr.extras.tige) L.svg("path", { d: `M${-R} ${yb} A${R} ${ry} 0 0 0 ${R} ${yb}`, fill: "none", stroke: "rgba(255,255,255,0.55)", "stroke-width": 0.5 }, g);
+  }
+
+  function reflets(g, pr) {
+    // Deux reflets verticaux sur la gauche, un mince sur la droite (lumière venant de la gauche).
+    const H = pr.H, r = pr.r(H * 0.5);
+    L.svg("rect", { x: -r * 0.78, y: -H * 0.9, width: r * 0.14, height: H * 0.78, rx: r * 0.07, fill: "#fff", opacity: 0.28 }, g);
+    L.svg("rect", { x: -r * 0.55, y: -H * 0.86, width: r * 0.05, height: H * 0.7, fill: "#fff", opacity: 0.2 }, g);
+    L.svg("rect", { x: r * 0.78, y: -H * 0.8, width: r * 0.05, height: H * 0.6, fill: "#fff", opacity: 0.18 }, g);
+  }
+
+  function bord(g, pr) {
+    // Bord supérieur vu un peu d'en haut : anneau ovale (épaisseur du verre), bec éventuel.
+    const H = pr.H, r = pr.r(H), t = pr.t, ry = 0.12 * (r + t);
+    L.svg("ellipse", { cx: 0, cy: -H, rx: r + t / 2, ry, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": t }, g);
+    L.svg("ellipse", { cx: 0, cy: -H, rx: r + t, ry: ry + t / 2, fill: "none", stroke: BORD, "stroke-width": 0.35 }, g);
+    if (pr.extras.bec) L.svg("path", { d: `M${r} ${-H - 0.5} q2.5 -0.5 3.8 -2.2 q-1 2.8 -3.8 3.4`, fill: "rgba(225,240,245,0.9)", stroke: BORD, "stroke-width": 0.35 }, g);
+    if (pr.extras.bourrelet) L.svg("ellipse", { cx: 0, cy: -H, rx: r + t * 1.6, ry: ry + t, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": t * 0.9 }, g);
+  }
+
+  function graduations(g, pr) {
+    // Traits et nombres émaillés en blanc, sur la droite, et la capacité.
+    for (const { v, h } of pr.graduations) {
+      const r = pr.r(h);
+      L.svg("path", { d: `M${r * 0.35} ${-h} H${r * 0.9}`, stroke: "#fff", "stroke-width": 0.5, opacity: 0.9 }, g);
+      L.svg("text", { x: r * 0.3, y: -h + 0.9, "font-size": 2.6, "text-anchor": "end", fill: "#fff", opacity: 0.9, "font-family": "sans-serif" }, g).textContent = String(v);
+    }
+    if (pr.graduations.length) L.svg("text", { x: -pr.r(pr.H * 0.2) * 0.5, y: -pr.H * 0.12, "font-size": 2.8, fill: "#fff", opacity: 0.85, "font-family": "sans-serif" }, g).textContent = `${pr.graduations[pr.graduations.length - 1].v} mL`;
+  }
+
+  function liquide(g, etat) {
+    // Phases (tranches qui ne se recouvrent pas ; la première est celle du haut), puis surface : ovale clair et ménisque.
+    for (const ph of etat.regions) L.svg("path", { d: chemin(ph.poly), fill: L.rgb(ph.rgb), "fill-opacity": ph.alpha, stroke: "rgba(110,135,148,0.55)", "stroke-width": 0.35 }, g);
+    const s = etat.surface;
+    if (!s) return;
+    const mx = (s[0].x + s[1].x) / 2, my = (s[0].y + s[1].y) / 2, l = Math.hypot(s[1].x - s[0].x, s[1].y - s[0].y) / 2, a = (Math.atan2(s[1].y - s[0].y, s[1].x - s[0].x) * 180) / Math.PI;
+    const haut = etat.regions[0];
+    if (etat.droit) L.svg("ellipse", { cx: mx, cy: my, rx: l, ry: l * 0.12, transform: `rotate(${a} ${mx} ${my})`, fill: L.rgb(haut.rgb.map((v) => Math.min(255, v + 25))), opacity: Math.min(0.9, haut.alpha + 0.15) }, g);
+    L.svg("path", { d: `M${s[0].x} ${s[0].y} L${s[1].x} ${s[1].y}`, stroke: "rgba(255,255,255,0.7)", "stroke-width": 0.4 }, g);
+    // Dans un col étroit, le ménisque (surface creusée, qui remonte le long du verre) se voit comme une ligne sombre ;
+    // son point le plus bas est au niveau calculé (c'est lui que l'on amène sur un trait de jauge).
+    if (etat.droit && l < 9) L.svg("path", { d: `M${s[0].x} ${s[0].y - 0.25 * l} Q${mx} ${my + 0.25 * l} ${s[1].x} ${s[1].y - 0.25 * l}`, fill: "none", stroke: "#24435e", "stroke-width": 0.35, opacity: 0.85 }, g);
+  }
+
+  L.dessiner_verrerie = function (g, pr, pose, etat) {
+    // Dessine la pièce complète ; tout est dessiné dans le repère du récipient (mm).
+    g.replaceChildren();
+    if (Math.abs(pose.angle || 0) < 2 && etat.ombre !== false && !pr.extras.tige && !pr.extras.sans_ombre) L.svg("ellipse", { cx: pose.x + 4, cy: pose.y + 2, rx: (pr.r(0) + pr.t) * pose.e * 1.05, ry: (pr.r(0) + pr.t) * pose.e * 0.16, fill: "#000", opacity: 0.28 }, g);
+    const l = L.svg("g", { transform: `translate(${pose.x} ${pose.y}) rotate(${pose.angle || 0}) scale(${pose.e})` }, g);
+    verre(l, pr);
+    liquide(l, etat);
+    L.dessin_accessoires?.(l, pr, etat);
+    reflets(l, pr);
+    graduations(l, pr);
+    bord(l, pr);
+    return l;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : accessoires dessinés avec une pièce de verrerie, dans son repère (mm) : robinet d'ampoule à décanter (clé en
+       PTFE bleu, ouverte dans l'axe, fermée en travers), col rodé (verre dépoli), bouchon, trait de jauge d'une fiole jaugée, pied hexagonal d'éprouvette, tubulure latérale d'une fiole à vide,
+       étiquette collée (et ses pictogrammes de danger).
+Reçoit : le groupe du récipient (repère en mm), son profil et son état { bouchon, robinet, etiquette }.
+Produit : Labo.dessin_accessoires(g, profil, etat) (appelée par verrerie_rendu.js).
+Utilisé par : verrerie_rendu.js.
+*/
+(function (L) {
+  function robinet(g, pr, ouvert) {
+    // Boisseau du robinet (verre épais), clé en PTFE ; la poignée est dans l'axe quand le robinet est ouvert.
+    const h = pr.extras.robinet;
+    L.svg("rect", { x: -5, y: -h - 5, width: 10, height: 10, rx: 2, fill: "rgba(210,232,240,0.8)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -9, y: -h - 2.2, width: 18, height: 4.4, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    if (ouvert) L.svg("rect", { x: 9, y: -h - 1, width: 2, height: 2, fill: "#1d3f6b" }, g);
+    L.svg("rect", ouvert ? { x: 10, y: -h - 6, width: 3.4, height: 12, rx: 1.2, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 } : { x: 10, y: -h - 1.7, width: 12, height: 3.4, rx: 1.2, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+  }
+
+  function bouchon(g, pr) {
+    // Bouchon rodé en PTFE, enfoncé dans le col ; pour un flacon à gaz, plaque de verre posée sur le bord.
+    const H = pr.H, r = pr.r(H);
+    if (pr.extras.plaque) return void L.svg("rect", { x: -r - 9, y: -H - 4.5, width: 2 * r + 18, height: 3.4, rx: 0.6, fill: "rgba(200,230,236,0.75)", stroke: "rgba(110,150,160,0.9)", "stroke-width": 0.4 }, g);
+    L.svg("path", { d: `M${-r + 0.6} ${-H + 9} L${-r - 1.5} ${-H - 3} H${r + 1.5} L${r - 0.6} ${-H + 9} Z`, fill: "#3b7cc4", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -r - 3, y: -H - 7, width: 2 * r + 6, height: 5, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+  }
+
+  function etiquette(g, pr, texte) {
+    // Étiquette blanche collée sur le verre, à mi-hauteur.
+    const h = pr.H * (pr.extras.etiquette_h || 0.42), r = Math.min(pr.r(h) * 0.8, 16);
+    L.svg("rect", { x: -r, y: -h - 4, width: 2 * r, height: 8, rx: 0.8, fill: "#fbfaf3", stroke: "#cfcab8", "stroke-width": 0.3 }, g);
+    L.svg("text", { x: 0, y: -h + 1.2, "font-size": Math.min(3.6, (3.4 * r) / Math.max(4, texte.length * 0.95)), "text-anchor": "middle", "font-weight": 700, fill: "#23315a", "font-family": "sans-serif" }, g).textContent = texte;
+  }
+
+  function tige(g, pr, etat) {
+    // Tige de l'ampoule sous le robinet : vide, sauf quand le liquide s'écoule.
+    const h = pr.extras.robinet;
+    if (etat.coule) L.svg("rect", { x: -1.4, y: -h, width: 2.8, height: h, fill: L.rgb(etat.coule), opacity: 0.85 }, g);
+    L.svg("path", { d: `M-2.8 ${-h} V-1 L-1.6 0 H1.6 L2.8 -1 V${-h}`, fill: "rgba(200,225,233,0.35)", stroke: "rgba(120,150,160,0.85)", "stroke-width": 0.4 }, g);
+  }
+
+  L.dessin_accessoires = function (g, pr, etat) {
+    // Ajoute ce qui va avec la pièce.
+    const x = pr.extras;
+    if (x.rode) L.svg("rect", { x: -pr.r(pr.H) - pr.t, y: -pr.H, width: 2 * (pr.r(pr.H) + pr.t), height: 12, fill: "#ffffff", opacity: 0.35 }, g);
+    if (x.tige) tige(g, pr, etat);
+    if (x.robinet) robinet(g, pr, etat.robinet && etat.robinet.ouvert);
+    if (x.tubulure) L.svg("path", { d: `M${pr.r(x.tubulure) + pr.t - 0.5} ${-x.tubulure - 3.5} H${pr.r(x.tubulure) + 24} V${-x.tubulure + 3.5} H${pr.r(x.tubulure) + pr.t - 0.5}`, fill: "rgba(205,228,236,0.6)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.5 }, g);
+    if (x.pied) L.svg("path", { d: "M-24 3 L-18 0 H18 L24 3 L18 6 H-18 Z", fill: "rgba(205,228,236,0.85)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+    if (x.jauge) {
+      // Trait de jauge : anneau gravé sur le col (moitié arrière vue à travers le verre), à la hauteur du volume exact ; volume et précision écrits sur le corps.
+      const h = pr.hauteur_de(x.jauge), r = pr.r(h) + pr.t;
+      L.svg("path", { d: `M${-r} ${-h} A${r} 1.1 0 0 1 ${r} ${-h}`, fill: "none", stroke: "#1f2a44", "stroke-width": 0.35, opacity: 0.4 }, g);
+      L.svg("path", { d: `M${-r} ${-h} A${r} 1.1 0 0 0 ${r} ${-h}`, fill: "none", stroke: "#1f2a44", "stroke-width": 0.45 }, g);
+      L.svg("text", { x: 0, y: -pr.r(0) * 0.5, "font-size": 3.6, "text-anchor": "middle", fill: "#ffffff", "font-family": "sans-serif", "font-weight": 700 }, g).textContent = `${x.jauge} mL ± ${x.jauge >= 100 ? "0,1" : "0,06"}`;
+    }
+    if (etat.bouchon) bouchon(g, pr);
+    if (etat.etiquette) etiquette(g, pr, etat.etiquette);
+    (etat.pictos || []).forEach((c, i, t) => L.pictogramme?.(g, (i - (t.length - 1) / 2) * 11, -pr.H * (pr.extras.etiquette_h || 0.42) - 11, 5, c));
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : récipient de liquide qui respecte la physique : la surface reste perpendiculaire à la pesanteur apparente (elle
+       penche quand on accélère le récipient et oscille ensuite, comme un vrai liquide qui ballotte) ; le liquide qui
+       dépasse la lèvre la plus basse déborde (débit d'un déversoir) ; un robinet ouvert laisse couler le liquide du bas
+       (loi de Torricelli, v = √(2gh)), sauf si le récipient est bouché (l'air ne peut pas entrer).
+Reçoit : le contexte (ctx.ecoulement), et { id, profil, x, y, angle, e (px/mm), contenu, bouchon, robinet, etiquette, pictos (codes SGH collés au-dessus de l'étiquette) }.
+Produit : Labo.recipient(ctx, reglage) -> { id, pr, pose, c, bouchon, robinet, pas(dt), etat(), monde(p) (p dans le repère du
+          récipient, y vers le bas, mm), interieur_monde(), dessiner() }.
+Utilisé par : recipient_gestes.js, ecoulement.js et les simulations de chimie.
+*/
+(function (L) {
+  const G = L.geometrie, g_mm = 9810, RAIDEUR = 300, AMORTI = 5;
+  const rad = (a) => (a * Math.PI) / 180;
+
+  function regions(r) {
+    // Région de chaque phase dans le repère du récipient (du bas vers le haut), et la corde de la surface.
+    // Chaque phase occupe la tranche comprise entre deux niveaux (elles ne se recouvrent pas).
+    const u = r.normale(), out = [], bas = { x: -u.x, y: -u.y };
+    let V = 0, s = null;
+    const phases = r.c.emulsion > 0.5 ? [{ ...r.c.phases[0], V: r.c.volume(), melange: true }] : r.c.phases;
+    for (const ph of phases) {
+      V += ph.V;
+      const n = G.niveau(r.pr.interieur, u, r.pr.aire_de(V)), poly = s === null ? n.region : G.couper(n.region, bas, -s);
+      out.push({ poly, ...(ph.melange ? melange(r.c) : r.c.couleur(ph)) }); s = n.s;
+    }
+    return { regions: out.reverse(), s, u };
+  }
+
+  function melange(c) {
+    // Couleur d'une émulsion : moyenne des phases, trouble.
+    const cs = c.phases.map((p) => ({ ...c.couleur(p), V: p.V })), V = c.volume();
+    return { rgb: [0, 1, 2].map((i) => cs.reduce((s, p) => s + (p.rgb[i] * p.V) / V, 0)), alpha: Math.min(0.92, cs.reduce((s, p) => s + (p.alpha * p.V) / V, 0) + 0.25) };
+  }
+
+  function corde(region, u, s) {
+    // Les deux extrémités de la surface libre (points de la région situés sur la droite u·p = s).
+    const sur = region.filter((p) => Math.abs(G.pv(u, p) - s) < 0.05);
+    if (sur.length < 2) return null;
+    const t = { x: -u.y, y: u.x };
+    sur.sort((a, b) => G.pv(t, a) - G.pv(t, b));
+    return [sur[0], sur[sur.length - 1]];
+  }
+
+  function deborder(r, dt, u, s) {
+    // Liquide au-dessus de la lèvre la plus basse : il s'écoule (débit d'un déversoir de 15 mm de large).
+    if (r.bouchon || !r.c.volume()) return;
+    const lev = [r.pr.levres.g, r.pr.levres.d].sort((a, b) => G.pv(u, a) - G.pv(u, b))[0], h = s - G.pv(u, lev);
+    if (h <= 0.05) return;
+    const q = 0.6 * 15 * Math.pow(h, 1.5) * Math.sqrt(2 * g_mm) / 1000, V = Math.min(r.c.volume(), q * dt);
+    const sens = Math.sign(lev.x) || 1, v = Math.sqrt(2 * g_mm * h) * r.pose.e, a = rad(r.pose.angle);
+    r.sortie(lev, { x: sens * Math.cos(a) * v * 0.22 + r.vitesse.x, y: Math.abs(Math.sin(a)) * v * 0.22 + r.vitesse.y }, r.c.retirer(V, "haut"), V);
+  }
+
+  function vidanger(r, dt, u, s) {
+    // Robinet ouvert : vidange par la pointe (orifice de 2 mm) ; bouché, le flacon ne laisse couler que quelques gouttes.
+    if (!r.robinet || !r.robinet.ouvert || !r.c.volume()) return;
+    if (r.bouchon && r.robinet.air <= 0) return;
+    const pointe = { x: 0, y: 0 }, h = Math.max(0, s - G.pv(u, pointe)), v = Math.sqrt(2 * g_mm * h);
+    const V = Math.min(r.c.volume(), (0.6 * Math.PI * 1 * v * dt) / 1000);
+    if (r.bouchon) r.robinet.air -= V;
+    if (V > 0) r.coule = r.c.couleur(r.c.phases[0]).rgb;
+    if (V <= 0) return;
+    r.sortie(pointe, { x: r.vitesse.x, y: v * r.pose.e * 0.5 + r.vitesse.y }, r.c.retirer(V, "bas"), V);
+  }
+
+  L.recipient = function (ctx, { id, profil, x, y, angle = 0, e = 1.6, contenu = {}, bouchon = false, robinet = null, etiquette = "", pictos = [] }) {
+    // Construit le récipient et l'inscrit dans l'écoulement de la paillasse.
+    const pr = L.profil(profil);
+    const r = { id, pr, pose: { x, y, angle, e }, c: L.contenu(contenu), bouchon, robinet: robinet && { ouvert: false, air: 0.4 }, etiquette, pictos, phi: 0, w: 0, vitesse: { x: 0, y: 0 }, acc: { x: 0, y: 0 }, g: L.svg("g", { class: `recipient recipient-${id}` }, ctx.objets) };
+    r.normale = () => { const a = r.phi - rad(r.pose.angle); return { x: Math.sin(a), y: -Math.cos(a) }; };
+    r.monde = (p) => G.transformer([{ x: p.x, y: -p.y }], r.pose)[0];
+    r.interieur_monde = () => G.transformer(pr.interieur.map((p) => ({ x: p.x, y: -p.y })), r.pose);
+    r.sortie = (p, v, parts, V) => ctx.ecoulement.emettre(r, r.monde(p), v, parts, V);
+    r.pas = (dt) => {
+      // Ballottement (oscillateur amorti vers l'angle de la pesanteur apparente), puis débordement et robinet.
+      const cible = Math.atan2(r.acc.x, g_mm * r.pose.e), cle = `${r.c.volume().toFixed(4)} ${r.pose.angle} ${r.bouchon} ${r.robinet?.ouvert}`;
+      // Liquide au repos dans un récipient immobile : rien ne change (on évite de recalculer la surface).
+      if (!r.tenu && Math.abs(r.w) < 1e-3 && Math.abs(r.phi - cible) < 1e-4 && cle === r.cle && !r.c.emulsion) return;
+      r.cle = cle;
+      r.w += (-RAIDEUR * (r.phi - cible) - AMORTI * r.w) * dt; r.phi = Math.max(-1.2, Math.min(1.2, r.phi + r.w * dt));
+      if (r.bouchon && Math.hypot(r.acc.x, r.acc.y) > 2500) r.c.agiter(dt * 2); else r.c.decanter(dt);
+      const k = Math.exp(-dt / 0.06); r.acc.x *= k; r.acc.y *= k; r.vitesse.x *= k; r.vitesse.y *= k;
+      const { s, u } = regions(r);
+      r.coule = null;
+      deborder(r, dt, u, s); vidanger(r, dt, u, s);
+    };
+    r.etat = () => { const R = regions(r), haut = R.regions[0]; return { regions: R.regions, surface: haut ? corde(haut.poly, R.u, R.s) : null, droit: Math.abs(r.phi - rad(r.pose.angle)) < 0.15, bouchon: r.bouchon, robinet: r.robinet, etiquette: r.etiquette, pictos: r.pictos, coule: r.coule }; };
+    r.dessiner = () => L.dessiner_verrerie(r.g, pr, r.pose, r.etat());
+    ctx.ecoulement.ajouter(r);
+    r.dessiner();
+    return r;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : gestes de la main sur un récipient : le prendre et le déplacer (ses accélérations font ballotter le liquide ;
+       secoué trop fort, il déborde), le poser sur la paillasse, ou le tenir au-dessus d'un autre récipient pour verser :
+       une poignée apparaît, on l'incline soi-même (le débit dépend de l'inclinaison) ; un toucher le redresse et le remet à sa place.
+Reçoit : le contexte de la paillasse (ctx.obstacles : bandes [x1, x2] de la paillasse déjà occupées, comme un socle), le récipient (recipient_physique.js) et { sol (y de pose, px), fixe (non déplaçable),
+         support : { x, y } ou supports : [{ x, y, ... }] (places sur un support : anneau, porte-tubes, bain-marie ; lâché près
+         d'une place libre, il s'y met, et r.place la désigne), pose_libre (faux pour un tube : il ne tient pas debout sur la
+         paillasse et retourne à la place libre la plus proche), autoriser() (faux : on ne peut pas le prendre, par exemple
+         sans gants ; la fonction peut afficher pourquoi) } ; on verse aussi dans une cible qui a une ouverture (bouche()).
+Produit : Labo.manipuler(ctx, r, reglage) ; r.tenu, r.versement (vrai pendant que l'on verse).
 Utilisé par : les simulations de chimie.
 */
 (function (L) {
-  function obligation(g, cx, cy, dessin) {
-    // Pictogramme d'obligation : disque bleu, dessin blanc.
-    L.svg("circle", { cx, cy, r: 17, fill: "#1f5fae" }, g);
-    L.svg("path", { d: dessin(cx, cy), fill: "none", stroke: "#fff", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, g);
+  function suivre_mouvement(r, p) {
+    // Vitesse et accélération du récipient tenu (moyennées), qui font ballotter le liquide.
+    const t = performance.now() / 1000, m = r.mvt || { t, x: p.x, y: p.y, vx: 0, vy: 0 }, dt = Math.max(0.008, t - m.t);
+    const vx = (p.x - m.x) / dt, vy = (p.y - m.y) / dt;
+    r.acc = { x: 0.6 * r.acc.x + 0.4 * ((vx - m.vx) / dt), y: 0.6 * r.acc.y + 0.4 * ((vy - m.vy) / dt) };
+    r.vitesse = { x: vx, y: vy };
+    r.mvt = { t, x: p.x, y: p.y, vx, vy };
   }
 
-  L.affiche_securite = function (g, x, y) {
-    // Affiche blanche à trois pictogrammes et leurs légendes.
-    const a = L.svg("g", { class: "affiche-securite" }, g);
-    L.svg("rect", { x: x + 3, y: y + 4, width: 170, height: 92, fill: "#000", opacity: 0.15, filter: "url(#flou)" }, a);
-    L.svg("rect", { x, y, width: 170, height: 92, fill: "#fdfdfb", stroke: "#c9ccc4" }, a);
-    L.texte(a, x + 85, y + 11, "SÉCURITÉ AU LABORATOIRE", { "font-size": 8, "font-weight": 700, fill: "#23315a" });
-    obligation(a, x + 30, y + 42, (cx, cy) => `M${cx - 12} ${cy - 2} h24 M${cx - 11} ${cy - 2} q0 7 5 7 q4 0 5 -5 h2 q1 5 5 5 q5 0 5 -7`);
-    obligation(a, x + 85, y + 42, (cx, cy) => `M${cx - 4} ${cy - 10} l4 5 l4 -5 l7 4 l-3 6 l-3 -1 v11 h-10 v-11 l-3 1 l-3 -6 Z M${cx} ${cy - 5} v14`);
-    L.svg("circle", { cx: x + 140, cy: y + 42, r: 15.5, fill: "#fff", stroke: "#d31f26", "stroke-width": 3.2 }, a);
-    L.svg("path", { d: `M${x + 133} ${y + 36} h14 l-2 13 h-10 Z M${x + 147} ${y + 39} q5 0 5 4 q0 4 -6 4`, fill: "none", stroke: "#111", "stroke-width": 1.6 }, a);
-    L.svg("line", { x1: x + 129, y1: y + 31, x2: x + 151, y2: y + 53, stroke: "#d31f26", "stroke-width": 3.2 }, a);
-    [[30, "Lunettes"], [85, "Blouse"], [140, "Ne jamais goûter"]].forEach(([dx, t]) => L.texte(a, x + dx, y + 72, t, { "font-size": 7, "font-weight": 700, fill: "#23315a" }));
-    L.texte(a, x + 85, y + 84, "On ne goûte ni ne mange au laboratoire.", { "font-size": 6, fill: "#444" });
-    return a;
+  function cible_de_versement(ctx, r) {
+    // Récipient ouvert (ni bouché ni fermé par un objet : q.ferme) dont l'ouverture est juste sous la lèvre de celui qu'on tient (et plus bas que son bord) ;
+    // s'il y en a plusieurs, celui dont l'ouverture est la plus proche de la lèvre.
+    let choix = null;
+    for (const q of ctx.ecoulement.recipients) {
+      if (q === r || q.bouchon || q.ferme) continue;
+      const bouche = q.monde({ x: 0, y: -q.pr.H }), sens = Math.sign(bouche.x - r.pose.x) || 1;
+      const levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), larg = (q.pr.r(q.pr.H) + 12) * q.pose.e, d = Math.abs(levre.x - bouche.x);
+      if (d < larg + 20 && levre.y < bouche.y - 4 && levre.y > bouche.y - 120 && (!choix || d < choix.d)) choix = { q, sens, d };
+    }
+    for (const c of ctx.ecoulement.cibles) {
+      // Cible qui a une ouverture (entonnoir) : on peut aussi verser dedans.
+      if (!c.bouche) continue;
+      const b = c.bouche(), sens = Math.sign(b.x - r.pose.x) || 1, levre = r.monde(sens > 0 ? r.pr.levres.d : r.pr.levres.g), d = Math.abs(levre.x - b.x);
+      if (d < b.r + 20 && levre.y < b.y - 4 && levre.y > b.y - 120 && (!choix || d < choix.d)) choix = { q: c, sens, d };
+    }
+    return choix;
+  }
+
+  function poignee(ctx, r, sens) {
+    // Poignée ronde au-dessus du récipient : on la fait tourner autour de la lèvre (le bec reste au-dessus de l'autre récipient).
+    const lev = sens > 0 ? r.pr.levres.d : r.pr.levres.g, pivot = r.monde(lev);
+    const g = L.svg("g", { class: "poignee", role: "button", "aria-label": "Incliner" }, ctx.haut);
+    const placer = () => { const p = r.monde({ x: -sens * r.pr.r(r.pr.H) * 0.6, y: -r.pr.H - 16 }); g.replaceChildren(); L.svg("circle", { cx: p.x, cy: p.y, r: 12, fill: "#fff7d6", stroke: "#c08a16", "stroke-width": 2 }, g); L.svg("path", { d: `M${p.x - 5} ${p.y + 2} a6 6 0 1 1 8 -6 m0 0 l1 -4 m-1 4 l-4 -1`, fill: "none", stroke: "#8a5a00", "stroke-width": 1.6 }, g); };
+    const orienter = (a) => {
+      // Nouvelle inclinaison, la lèvre restant fixe.
+      r.pose.angle = a;
+      const c = Math.cos((a * Math.PI) / 180), s = Math.sin((a * Math.PI) / 180), lx = lev.x, ly = lev.y;
+      r.pose.x = pivot.x - r.pose.e * (lx * c - ly * s); r.pose.y = pivot.y - r.pose.e * (lx * s + ly * c);
+    };
+    let depart = null;
+    placer();
+    L.glissable(g, { soulever: false, debut: () => { depart = null; return { x: 0, y: 0 }; }, deplacer: (d, ev) => {
+      const q = L.scene.vers_scene(ev), ang = (Math.atan2(q.y - pivot.y, q.x - pivot.x) * 180) / Math.PI;
+      if (depart === null) depart = { ang, a: r.pose.angle };
+      let delta = ang - depart.ang; if (delta > 180) delta -= 360; if (delta < -180) delta += 360;
+      orienter(sens > 0 ? Math.max(0, Math.min(135, depart.a + delta)) : Math.min(0, Math.max(-135, depart.a + delta))); placer();
+    } });
+    return { placer, retirer: () => g.remove() };
+  }
+
+  function place_libre(ctx, r, sol, depart, marge = 0) {
+    // Abscisse libre la plus proche de depart sur la paillasse (deux objets ne peuvent pas occuper la même place) ; null s'il n'y en a pas.
+    const R = (q) => (Math.max(q.pr.r(q.pr.h0), q.pr.r(q.pr.H)) + q.pr.t) * q.pose.e + 3;
+    const occupe = (x) => ctx.ecoulement.recipients.some((q) => q !== r && Math.abs(q.pose.y - sol) < 2 && !q.tenu && Math.abs(q.pose.x - x) < R(q) + R(r) - marge) || (ctx.obstacles || []).some(([a, b]) => x + R(r) > a && x - R(r) < b);
+    for (let d = 0; d < 700; d += 4) for (const x of [depart + d, depart - d]) if (x > 200 && x < 830 && !occupe(x)) return x;
+    return null;
+  }
+
+  L.manipuler = function (ctx, r, { sol, fixe = false, support = null, supports = null, pose_libre = true, autoriser = () => true }) {
+    const places = supports || (support ? [support] : []);
+    // Rend le récipient déplaçable (s'il n'est pas fixe) ; gère la pose et le versement.
+    let pg = null;
+    const origine = r.pose.x;
+    const reposer = (a_sa_place = false) => {
+      // Redresse le récipient et le pose : à sa place de départ (si elle est libre) quand on le rend, sinon à la place libre
+      // la plus proche de l'endroit où on le lâche ; jamais caché derrière un appareil.
+      pg?.retirer(); pg = null; r.versement = false; r.tenu = false;
+      const x = a_sa_place ? place_libre(ctx, r, sol, origine, 12) : place_libre(ctx, r, sol, r.pose.x);
+      r.pose.angle = 0; r.pose.y = sol; r.pose.x = x ?? place_libre(ctx, r, sol, origine, 12) ?? origine; r.acc = { x: 0, y: 0 }; r.vitesse = { x: 0, y: 0 }; r.mvt = null; r.w += 0.8;
+      ctx.objets.append(r.g);
+    };
+    const libre = (q) => !ctx.ecoulement.recipients.some((o) => o !== r && Math.hypot(o.pose.x - q.x, o.pose.y - q.y) < 2);
+    const place_proche = () => places.filter(libre).sort((a, b) => Math.hypot(r.pose.x - a.x, r.pose.y - a.y) - Math.hypot(r.pose.x - b.x, r.pose.y - b.y))[0];
+    const sur_support = (sup = place_proche()) => { reposer(); Object.assign(r.pose, { x: sup.x, y: sup.y }); r.place = sup; };
+    if (fixe) return;
+    L.glissable(r.g, {
+      soulever: false,
+      debut: () => (autoriser() ? { x: r.pose.x, y: r.pose.y } : null),
+      saisir: () => { r.tenu = true; ctx.haut.append(r.g); },
+      deplacer: (p) => { if (r.versement) return; r.pose.x = p.x; r.pose.y = Math.min(sol, p.y); suivre_mouvement(r, p); },
+      lacher: () => {
+        if (r.versement) return;
+        r.acc = { x: 0, y: 0 };
+        const sup = place_proche();
+        // Près d'une place libre : on l'y pose ; au-dessus d'un récipient : on verse ; sinon on le pose (ou, s'il ne tient
+        // pas debout, il retourne à la place libre la plus proche).
+        if (sup && Math.hypot(r.pose.x - sup.x, r.pose.y - sup.y) < 80) return sur_support(sup);
+        r.place = null;
+        const c = cible_de_versement(ctx, r);
+        if (c) { r.versement = true; r.vitesse = { x: 0, y: 0 }; pg = poignee(ctx, r, c.sens); } else if (sup && !pose_libre) sur_support(sup); else reposer();
+      },
+      toucher: () => { if (!r.versement) return; if (!pose_libre && place_proche()) sur_support(); else reposer(true); },
+    });
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : écoulement des liquides sur une paillasse de chimie : le liquide qui sort d'un récipient (débordement, robinet)
+       tombe en chute libre (pesanteur réelle, 9,81 m/s² à l'échelle de la scène) sous forme d'un filet ; il entre dans
+       le récipient ouvert qu'il rencontre, ou se renverse sur la paillasse (flaque). Boucle d'animation de la paillasse.
+Reçoit : le contexte de la paillasse { objets, haut } et { sol (y de la paillasse, px), e (px/mm) }.
+Produit : Labo.dans_polygone(poly, p) ; Labo.ecoulement(ctx, reglage) -> { ajouter(r), ajouter_cible({ contient(p), recevoir(goutte) }) (surface qui reçoit des
+          gouttes : verre de montre, papier), emettre(source, p, v, parts, V), renverse (mL), sur_pas(f) } ;
+          ctx.ecoulement est créé.
+Utilisé par : recipient_physique.js, recipient_gestes.js et les simulations de chimie.
+*/
+(function (L) {
+  function dedans(poly, p) {
+    // Le point est-il dans le polygone (méthode du rayon) ?
+    let ok = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const a = poly[i], b = poly[j];
+      if (a.y > p.y !== b.y > p.y && p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x) ok = !ok;
+    }
+    return ok;
+  }
+
+  L.dans_polygone = dedans;
+
+  L.ecoulement = function (ctx, { sol, e = 1.6 }) {
+    // Particules de liquide, flaques, boucle d'animation (dessin des récipients qui bougent ou qui coulent).
+    const E = { recipients: [], cibles: [], gouttes: [], flaques: [], renverse: 0, ecouteurs: [], g: 9810 * e };
+    const calque = L.svg("g", { class: "ecoulement", "pointer-events": "none" }, ctx.haut), sol_g = L.svg("g", { class: "flaques", "pointer-events": "none" }, ctx.fond);
+    E.ajouter = (r) => E.recipients.push(r);
+    E.ajouter_cible = (c) => E.cibles.push(c);
+    E.sur_pas = (f) => E.ecouteurs.push(f);
+    E.emettre = (source, p, v, parts, V) => {
+      // Une portion de liquide quitte un récipient en p (px), à la vitesse v (px/s).
+      if (V <= 0) return;
+      const c = source.c.phases.length ? source.c.couleur(source.c.phases[source.c.phases.length - 1]) : { rgb: [220, 235, 245], alpha: 0.5 };
+      E.gouttes.push({ x: p.x, y: p.y, vx: v.x, vy: v.y, parts, V, rgb: c.rgb, source, t: performance.now() });
+    };
+    const recevoir = (gt) => E.recipients.find((r) => r !== gt.source && !r.bouchon && dedans(r.interieur_monde(), gt));
+    function deplacer(dt) {
+      // Chute libre de chaque portion ; entrée dans un récipient, ou flaque sur la paillasse.
+      for (const gt of E.gouttes) {
+        gt.vy += E.g * dt; gt.x += gt.vx * dt; gt.y += gt.vy * dt;
+        const cb = E.cibles.find((c) => c.contient(gt));
+        if (cb) { gt.fini = true; cb.recevoir(gt); continue; }
+        const r = recevoir(gt);
+        if (r) { gt.fini = true; gt.parts.forEach((p) => r.c.verser(p)); r.sale = true; continue; }
+        if (gt.y >= sol && !dedans(gt.source.interieur_monde(), gt)) {
+          gt.fini = true; E.renverse += gt.V;
+          const f = E.flaques.find((q) => Math.abs(q.x - gt.x) < 30) || (E.flaques.push({ x: gt.x, V: 0, rgb: gt.rgb }), E.flaques[E.flaques.length - 1]);
+          f.V += gt.V;
+        }
+      }
+      E.gouttes = E.gouttes.filter((gt) => !gt.fini);
+    }
+    function dessiner() {
+      // Filet : les portions successives d'un même récipient sont reliées ; flaques : ovales qui s'étalent.
+      calque.replaceChildren();
+      let prec = null;
+      for (const gt of E.gouttes) {
+        if (prec && prec.source === gt.source && Math.hypot(prec.x - gt.x, prec.y - gt.y) < 40) {
+          // Bord du filet un peu plus sombre (on voit aussi un filet d'eau incolore), puis le liquide.
+          L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: "rgba(110,140,155,0.55)", "stroke-width": 3.6, "stroke-linecap": "round" }, calque);
+          L.svg("line", { x1: prec.x, y1: prec.y, x2: gt.x, y2: gt.y, stroke: L.rgb(gt.rgb), "stroke-width": 2.2, "stroke-linecap": "round", opacity: 0.9 }, calque);
+        }
+        else L.svg("circle", { cx: gt.x, cy: gt.y, r: 1.6, fill: L.rgb(gt.rgb), opacity: 0.85 }, calque);
+        prec = gt;
+      }
+      sol_g.replaceChildren();
+      for (const f of E.flaques) L.svg("ellipse", { cx: f.x, cy: sol + 3, rx: 6 + 7 * Math.sqrt(f.V), ry: 1.5 + 1.6 * Math.sqrt(f.V), fill: L.rgb(f.rgb), opacity: 0.55 }, sol_g);
+    }
+    let avant = null;
+    const image = (t) => {
+      const dt = avant === null ? 0 : Math.min(0.033, (t - avant) / 1000); avant = t;
+      if (dt > 0) {
+        // Pas fins (4 ms) pour une chute et un ballottement stables.
+        for (let k = 0, n = Math.ceil(dt / 0.004); k < n; k++) { for (const r of E.recipients) r.pas(dt / n); deplacer(dt / n); }
+        for (const r of E.recipients) {
+          // On ne redessine que les récipients dont l'aspect a changé.
+          const sig = `${r.pose.x} ${r.pose.y} ${r.pose.angle} ${r.phi.toFixed(3)} ${r.c.volume().toFixed(3)} ${r.c.phases.length} ${r.c.emulsion.toFixed(2)} ${(r.c.avance || 0).toFixed(3)} ${r.bouchon} ${r.robinet?.ouvert} ${r.coule}`;
+          if (sig !== r.sig) { r.sig = sig; r.dessiner(); }
+        }
+        if (E.gouttes.length || E.trace) dessiner();
+        E.trace = E.gouttes.length > 0;
+        E.ecouteurs.forEach((f) => f(dt));
+      }
+      requestAnimationFrame(image);
+    };
+    requestAnimationFrame(image);
+    ctx.ecoulement = E;
+    return E;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pipette compte-gouttes aux vraies dimensions, rangée dans son flacon (30 mL, verre teinté, étiquette) ou dans un
+       bécher d'échantillon (pipette Pasteur à tétine rouge) : on la sort (elle contient 1 mL, pris dans le bécher), on la
+       lâche au-dessus d'un récipient ou d'un verre de montre où elle reste tenue ; tant qu'on appuie sur la poire, une goutte
+       de 0,05 mL se forme toutes les 0,3 s et tombe (chute libre, ecoulement.js) là où elle tombe vraiment. Remise dans son
+       flacon ou son bécher, elle se remplit de nouveau.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, x, sol, e (px/mm), liquide, texte, autoriser() } (flacon) ou
+         { id, becher (récipient fixe de recipient_physique.js), e } (pipette Pasteur dans un bécher : elle est dessinée
+         derrière la paroi avant et le liquide du bécher).
+Produit : Labo.flacon_gouttes(ctx, reglage) -> { pipette : { charge (mL), tenue } }.
+Utilisé par : les simulations de chimie.
+*/
+(function (L) {
+  const GOUTTE = 0.05;
+
+  function flacon(g, ouvert, texte, rgb) {
+    // Flacon de 30 mL (repère en mm, fond en (0, 0)) : verre brun, épaule, col ; étiquette.
+    g.replaceChildren();
+    L.svg("ellipse", { cx: 2, cy: 1, rx: 19, ry: 3.5, fill: "#000", opacity: 0.3 }, g);
+    L.svg("path", { d: "M-17 -2 V-52 Q-17 -62 -7 -64 V-72 H7 V-64 Q17 -62 17 -52 V-2 Q17 0 15 0 H-15 Q-17 0 -17 -2 Z", fill: "#6b3a12", opacity: 0.9, stroke: "#2b1606", "stroke-width": 0.5 }, g);
+    L.svg("rect", { x: -15, y: -40, width: 30, height: 36, fill: L.rgb(rgb), opacity: 0.25 }, g);
+    L.svg("rect", { x: -12, y: -14 - 40, width: 3, height: 46, rx: 1.5, fill: "#fff", opacity: 0.18 }, g);
+    L.svg("rect", { x: -14, y: -46, width: 28, height: 22, fill: "#f7f3e6", stroke: "#bdb59c", "stroke-width": 0.4 }, g);
+    String(texte).split("\n").forEach((t, i, tout) => L.svg("text", { x: 0, y: -36 + i * 5 - 2.5 * (tout.length - 1), "font-size": 4, "font-weight": 700, "text-anchor": "middle", fill: "#222", "font-family": "sans-serif" }, g).textContent = t);
+    if (ouvert) L.svg("ellipse", { cx: 0, cy: -72, rx: 6, ry: 1.6, fill: "#1a0d04" }, g);
+  }
+
+  function pipette(g, entiere, charge, rgb, pasteur) {
+    // Pipette, pointe en (0, 0) : tube de verre effilé (60 mm), bague, poire en caoutchouc (22 mm).
+    g.replaceChildren();
+    if (entiere) {
+      L.svg("path", { d: "M-0.8 0 L-3 -24 V-60 H3 V-24 L0.8 0 Z", fill: "rgba(214,233,240,0.55)", stroke: "rgba(120,150,160,0.9)", "stroke-width": 0.4 }, g);
+      if (charge > 0) L.svg("path", { d: `M-0.6 -1 L-2.2 -18 V${-18 - 30 * charge} H2.2 V-18 L0.6 -1 Z`, fill: L.rgb(rgb), opacity: 0.85 }, g);
+      L.svg("rect", { x: -1.6, y: -58, width: 1.2, height: 50, fill: "#fff", opacity: 0.4 }, g);
+    }
+    if (!pasteur) L.svg("rect", { x: -7, y: -68, width: 14, height: 8, rx: 1.5, fill: "#2a2a2c" }, g);
+    L.svg("path", { d: `M-6 ${pasteur ? -60 : -68} V-80 Q-6 -92 0 -92 Q6 -92 6 -80 V${pasteur ? -60 : -68} Z`, fill: pasteur ? "#c4472b" : "#1d1d1f" }, g);
+    L.svg("path", { d: "M-3 -88 V-72", stroke: "#fff", "stroke-width": 1, opacity: 0.25 }, g);
+  }
+
+  function cible_sous(ctx, p) {
+    // Y a-t-il, sous la pointe, un récipient ouvert ou une surface qui peut recevoir des gouttes ?
+    const E = ctx.ecoulement;
+    for (let y = p.y; y < p.y + 260; y += 6) {
+      const q = { x: p.x, y };
+      if (E.cibles.some((c) => c.contient(q)) || E.recipients.some((r) => !r.bouchon && L.dans_polygone(r.interieur_monde(), q))) return true;
+    }
+    return false;
+  }
+
+  L.flacon_gouttes = function (ctx, { id, x, sol, e = 1.6, liquide, texte, becher = null, autoriser = () => true }) {
+    // Flacon fixe (ou bécher) ; pipette déplaçable ; gouttes tant qu'on appuie sur la poire.
+    const g_f = becher ? null : L.svg("g", { class: `flacon flacon-${id}` }, ctx.fond), g_p = L.svg("g", { class: `pipette pipette-${id}`, role: "button" }, ctx.objets);
+    const nom = () => liquide || Object.entries(becher.c.phases[0]?.liquides || { eau: 1 }).sort((a, b) => b[1] - a[1])[0][0];
+    if (becher) becher.g.setAttribute("pointer-events", "none");
+    const repos = becher ? { x: becher.pose.x + 8 * e, y: becher.pose.y - 6 * e } : { x, y: sol - 12 * e };
+    const p = { charge: 0, tenue: false, pos: { ...repos } }, source = { c: L.contenu({}), interieur_monde: () => [] };
+    const dessiner = () => {
+      const rgb = L.LIQUIDES[nom()].rgb;
+      if (g_f) { flacon(g_f, p.tenue, texte, rgb); L.placer(g_f, x, sol, e); }
+      pipette(g_p, p.tenue || !!becher, p.charge, rgb, !!becher); L.placer(g_p, p.pos.x, p.pos.y, e);
+    };
+    const remplir = () => {
+      // Aspiration : 1 mL (pris dans le bécher, s'il y en a un).
+      const parts = becher ? becher.c.retirer(Math.min(1, becher.c.volume()), "bas") : [{ liquides: { [liquide]: 1 }, dissous: { ...(L.LIQUIDES[liquide].dissous || {}) }, classe: L.LIQUIDES[liquide].classe }];
+      source.c = L.contenu({}); parts.forEach((q) => source.c.verser(q)); p.charge = source.c.volume();
+    };
+    const ranger = () => { Object.assign(p, { tenue: false, pos: { ...repos } }); remplir(); if (becher) ctx.objets.insertBefore(g_p, becher.g); else ctx.objets.append(g_p); dessiner(); };
+    let goutteur = null;
+    const arreter = () => { clearInterval(goutteur); goutteur = null; };
+    const goutte = () => {
+      // Une goutte quitte la pointe (vitesse initiale presque nulle).
+      if (p.charge < 0.02) return arreter();
+      const v = Math.min(GOUTTE, p.charge); p.charge -= v;
+      ctx.ecoulement.emettre(source, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 20 }, source.c.retirer(v), v); dessiner();
+    };
+    L.glissable(g_p, {
+      debut: (ev) => { if (p.tenue && Math.abs(L.scene.vers_scene(ev).y - (p.pos.y - 80 * e)) < 14 * e) { goutte(); goutteur = setInterval(goutte, 300); window.addEventListener("pointerup", arreter, { once: true }); return null; } if (!p.tenue && !autoriser()) return null; return { ...p.pos }; },
+      saisir: () => { p.tenue = true; ctx.haut.append(g_p); dessiner(); },
+      deplacer: (q) => { p.pos = q; dessiner(); },
+      lacher: (q) => { if (Math.hypot(q.x - repos.x, q.y - repos.y) < 16 || !cible_sous(ctx, q)) return ranger(); p.pos = q; dessiner(); },
+    });
+    ranger();
+    return { pipette: p };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : porte-tubes en plastique blanc aux vraies dimensions : socle, deux montants, plateau percé de trous à 70 mm du
+       socle. Les tubes passent dans les trous et reposent sur le socle ; la face avant du plateau passe devant eux.
+Reçoit : le contexte de la paillasse et { x (milieu), sol (y de la paillasse, px), e (px/mm), n (nombre de places), pas (mm) }.
+Produit : Labo.porte_tubes(ctx, reglage) -> places [{ x, y, porte : true }] (y : fond intérieur d'un tube posé, pour
+          Labo.manipuler(..., { supports })).
+Utilisé par : les simulations de chimie (tubes à essai).
+*/
+(function (L) {
+  const BLANC = "#f2f3f0", OMBRE = "#c9ccc6", TRAIT = "#a7aba3";
+
+  function arriere(g, W) {
+    // Ombre, socle, montants et bord arrière du plateau (derrière les tubes) ; repère en mm, socle en y = 0.
+    L.svg("ellipse", { cx: 3, cy: 1, rx: W / 2 + 4, ry: 4, fill: "#000", opacity: 0.28 }, g);
+    L.svg("path", { d: `M${-W / 2} -5 L${-W / 2 + 3} -9 H${W / 2 - 3} L${W / 2} -5 Z`, fill: OMBRE }, g);
+    L.svg("rect", { x: -W / 2, y: -5, width: W, height: 5, rx: 1, fill: BLANC, stroke: TRAIT, "stroke-width": 0.4 }, g);
+    for (const s of [-1, 1]) L.svg("rect", { x: s > 0 ? W / 2 - 5 : -W / 2 + 1, y: -70, width: 4, height: 65, fill: "#e6e8e3", stroke: TRAIT, "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -W / 2, y: -75, width: W, height: 1.5, fill: OMBRE }, g);
+  }
+
+  function avant(g, W, xs) {
+    // Plateau vu un peu d'en haut : face supérieure percée (on voit les tubes dans les trous), puis face avant.
+    const trous = xs.map((x) => `M${x - 8.6} -72 a8.6 1.9 0 1 0 17.2 0 a8.6 1.9 0 1 0 -17.2 0 Z`).join(" ");
+    L.svg("path", { d: `M${-W / 2} -70 L${-W / 2 + 2} -74.5 H${W / 2 - 2} L${W / 2} -70 Z ${trous}`, fill: "#fbfbf8", stroke: TRAIT, "stroke-width": 0.4, "fill-rule": "evenodd" }, g);
+    L.svg("rect", { x: -W / 2, y: -70, width: W, height: 7, rx: 0.8, fill: BLANC, stroke: TRAIT, "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -W / 2 + 1, y: -64.6, width: W - 2, height: 1.2, fill: OMBRE, opacity: 0.6 }, g);
+  }
+
+  L.porte_tubes = function (ctx, { x, sol, e = 1.6, n = 3, pas = 30 }) {
+    // Construit le porte-tubes et renvoie ses places.
+    const W = n * pas + 16, xs = Array.from({ length: n }, (_, k) => (k - (n - 1) / 2) * pas);
+    const g_a = L.svg("g", { class: "porte-tubes", "pointer-events": "none" }, ctx.fond), g_v = L.svg("g", { class: "porte-tubes-avant", "pointer-events": "none" }, ctx.devant);
+    arriere(g_a, W); avant(g_v, W, xs);
+    L.placer(g_a, x, sol, e); L.placer(g_v, x, sol, e);
+    return xs.map((dx) => ({ x: x + dx * e, y: sol - 6 * e, porte: true }));
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : plaque chauffante de chimie : boîtier blanc, plateau en fonte, bouton de réglage, voyant rouge allumé quand elle
+       chauffe ; version interactive avec une touche Marche/Arrêt.
+Reçoit : le groupe SVG, la position { x (milieu), bas } et, pour la version interactive, une fonction appelée à chaque
+         changement (allumée ou non).
+Produit : Labo.dessin_plaque(g, x, bas, allumee) ; Labo.plaque_chauffante(g, { x, bas, changer }) -> { allumee }.
+Utilisé par : chimie_chauffage.js et les simulations de chimie (décoction, hydrodistillation).
+*/
+(function (L) {
+  L.dessin_plaque = function (g, x, bas, allumee) {
+    // Plaque chauffante vue de face ; le plateau rougeoie un peu quand elle chauffe.
+    g.replaceChildren();
+    L.svg("ellipse", { cx: x + 4, cy: bas + 2, rx: 70, ry: 6, fill: "#000", opacity: 0.3 }, g);
+    L.svg("rect", { x: x - 66, y: bas - 30, width: 132, height: 30, rx: 4, fill: "#e8eaea", stroke: "#a7adb0" }, g);
+    L.svg("rect", { x: x - 60, y: bas - 36, width: 120, height: 8, rx: 2, fill: allumee ? "#5a3a30" : "#3b3f43" }, g);
+    L.svg("circle", { cx: x + 44, cy: bas - 15, r: 7, fill: "#30353a" }, g);
+    L.svg("line", { x1: x + 44, y1: bas - 15, x2: x + 48, y2: bas - 20, stroke: "#fff", "stroke-width": 1.4 }, g);
+    L.svg("circle", { cx: x + 26, cy: bas - 15, r: 2.6, fill: allumee ? "#ff3b2f" : "#5b2420" }, g);
+    L.texte(g, x - 34, bas - 14, "PLAQUE CHAUFFANTE", { "font-size": 4.8, "font-weight": 700, fill: "#566066" });
+  };
+
+  L.plaque_chauffante = function (g, { x, bas, changer = () => {} }) {
+    // Plaque avec touche Marche/Arrêt (à gauche du voyant).
+    const p = { allumee: false }, dessin = L.svg("g", {}, g);
+    L.dessin_plaque(dessin, x, bas, false);
+    L.bouton_rond(g, x + 8, bas - 15, "I/O", () => { p.allumee = !p.allumee; L.dessin_plaque(dessin, x, bas, p.allumee); changer(p.allumee); }, 7);
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pictogrammes de danger du système général harmonisé (SGH), dessinés comme sur les étiquettes : losange à bord
+       rouge, fond blanc, symbole noir. SGH02 flamme (inflammable), SGH05 corrosion, SGH07 point d'exclamation (nocif,
+       irritant), SGH09 environnement (arbre et poisson).
+Reçoit : le groupe SVG, le centre (x, y), la demi-diagonale d (px) et le code ("SGH02", "SGH05", "SGH07", "SGH09").
+Produit : Labo.pictogramme(g, x, y, d, code) ; Labo.DANGERS = { code : texte }.
+Utilisé par : les simulations de chimie (étiquettes, fiches de sécurité).
+*/
+(function (L) {
+  L.DANGERS = { SGH02: "inflammable", SGH05: "corrosif", SGH07: "nocif, irritant", SGH09: "dangereux pour l'environnement" };
+  const SYMBOLES = {
+    // Symboles dans un carré de 20 × 20 centré en (0, 0).
+    SGH02: "M-6 7 H6 M0 5 C-6 4 -6 -2 -2 -6 C-2 -2 0 -1 1 -4 C4 -1 6 4 0 5 Z M0 5 C-2 3 -2 0 0 -2 C1 0 2 2 0 5 Z",
+    SGH05: "M-8 -6 L-5 -9 M-6 -7 L-2 -3 M2 -8 L5 -5 M3 -6 L7 -2 M-3 -1 V1 M5 0 V2 M-8 5 H-1 Q0 3 -2 2 L-6 3 M1 6 H8 V4 L5 3 L3 5 Z",
+    SGH07: "M-1.4 -7 H1.4 L0.8 3 H-0.8 Z M0 5.2 A1.4 1.4 0 1 0 0.01 5.2 Z",
+    SGH09: "M-7 7 V-2 M-7 -2 L-9 -6 M-7 0 L-4 -5 M-7 2 L-10 -1 M-1 4 Q3 1 7 4 Q3 7 -1 4 Z M-1 4 L-3 2 M-1 4 L-3 6 M-9 7 H9",
+  };
+
+  L.pictogramme = function (g, x, y, d, code) {
+    // Losange rouge et blanc, symbole noir mis à l'échelle.
+    const p = L.svg("g", { transform: `translate(${x} ${y})` }, g), k = d / 14;
+    L.svg("path", { d: `M0 ${-d} L${d} 0 L0 ${d} L${-d} 0 Z`, fill: "#fff", stroke: "#d01c1c", "stroke-width": Math.max(0.8, d * 0.13), "stroke-linejoin": "round" }, p);
+    const s = L.svg("path", { d: SYMBOLES[code], transform: `scale(${k})`, fill: code === "SGH02" || code === "SGH07" ? "#111" : "none", stroke: "#111", "stroke-width": 1.4, "stroke-linecap": "round", "stroke-linejoin": "round" }, p);
+    if (code === "SGH07") s.setAttribute("stroke-width", 0.2);
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : équipement de protection individuelle accroché au mur : lunettes de protection et gants en nitrile. On les touche
+       pour les mettre (ils quittent leur crochet) ; une étiquette rappelle ce que l'on porte (la blouse est déjà mise).
+Reçoit : le groupe SVG de la paillasse, la position { x, y } du premier crochet et une fonction appelée à chaque changement.
+Produit : Labo.equipement(g, reglage) -> { porte : { lunettes, gants }, protege() (vrai si lunettes et gants sont mis) }.
+Utilisé par : les simulations de synthèse (soude, acides).
+*/
+(function (L) {
+  function lunettes(g, x, y) {
+    // Lunettes-masque : monture verte, écran transparent, élastique.
+    L.svg("path", { d: `M${x - 30} ${y} Q${x - 30} ${y - 16} ${x} ${y - 16} Q${x + 30} ${y - 16} ${x + 30} ${y} Q${x + 30} ${y + 14} ${x + 12} ${y + 14} Q${x} ${y + 6} ${x - 12} ${y + 14} Q${x - 30} ${y + 14} ${x - 30} ${y} Z`, fill: "rgba(220,240,246,0.7)", stroke: "#3c8a4a", "stroke-width": 3 }, g);
+    L.svg("path", { d: `M${x - 30} ${y - 4} Q${x} ${y - 34} ${x + 30} ${y - 4}`, fill: "none", stroke: "#2b2b2b", "stroke-width": 2 }, g);
+  }
+
+  function gant(g, x, y) {
+    // Gant en nitrile bleu, doigts vers le bas.
+    L.svg("path", { d: `M${x - 12} ${y - 22} H${x + 12} V${y + 4} L${x + 14} ${y + 22} Q${x + 12} ${y + 26} ${x + 9} ${y + 22} L${x + 7} ${y + 8} L${x + 5} ${y + 26} Q${x + 2} ${y + 29} ${x} ${y + 25} L${x - 1} ${y + 8} L${x - 3} ${y + 25} Q${x - 6} ${y + 28} ${x - 8} ${y + 23} L${x - 8} ${y + 6} L${x - 16} ${y + 14} Q${x - 19} ${y + 11} ${x - 16} ${y + 7} L${x - 12} ${y}`, fill: "#4f7fd1", stroke: "#2c4f8f", "stroke-width": 1 }, g);
+  }
+
+  L.equipement = function (g, { x, y, changer = () => {} }) {
+    // Deux crochets ; toucher un objet le met ; l'étiquette dit ce que l'on porte.
+    const e = { porte: { lunettes: false, gants: false } }, etiquette = L.svg("g", { "pointer-events": "none" }, g);
+    const objets = [["lunettes", x, (q) => lunettes(q, x, y + 26)], ["gants", x + 90, (q) => { gant(q, x + 80, y + 34); gant(q, x + 102, y + 36); }]];
+    for (const [nom, cx, dessin] of objets) {
+      L.svg("circle", { cx, cy: y, r: 3.5, fill: "#8c949a" }, g);
+      const o = L.svg("g", { class: `epi epi-${nom}`, role: "button", "aria-label": nom }, g);
+      dessin(o);
+      L.glissable(o, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { e.porte[nom] = true; o.style.display = "none"; maj(); changer(e); } });
+    }
+    const maj = () => {
+      etiquette.replaceChildren();
+      const liste = ["blouse", ...Object.keys(e.porte).filter((k) => e.porte[k])].join(", ");
+      L.svg("rect", { x: x - 40, y: y + 70, width: 190, height: 18, rx: 3, fill: "#fbfaf3", stroke: "#cfcab8" }, etiquette);
+      L.texte(etiquette, x + 55, y + 79, `Vous portez : ${liste}`, { "font-size": 7.5, "font-weight": 700, fill: "#23315a" });
+    };
+    e.protege = () => e.porte.lunettes && e.porte.gants;
+    maj();
+    return e;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : balance électronique de laboratoire au centième de gramme (portée 200 g), aux vraies dimensions : boîtier gris clair,
+       plateau rond en inox de 9 cm, afficheur à cristaux liquides, touches Marche/Arrêt et TARE. L'affichage monte vers la
+       masse posée puis se stabilise (le signe « g » n'apparaît qu'une fois la mesure stable).
+Reçoit : le contexte de la paillasse et { x (milieu), sol, e (px/mm) }.
+Produit : Labo.balance_electronique(ctx, reglage) -> { plateau { x, y, r } (dessus du plateau), ajouter(objet), retirer(objet),
+          lecture() (nombre affiché en g, ou null si éteinte ou instable), sur_changement(f) } ; un objet a une masse (g).
+Utilisé par : les simulations de chimie (masse des atomes, quantité de matière).
+*/
+(function (L) {
+  function boitier(g, x, sol, e) {
+    // Boîtier vu un peu d'en haut : dessus incliné, face avant avec l'afficheur et les touches, pieds réglables.
+    const l = 190 * e, h = 32 * e, p = 26 * e;
+    L.svg("ellipse", { cx: x + 6, cy: sol, rx: l / 2 + 6, ry: 6, fill: "#000", opacity: 0.28, filter: "url(#flou)" }, g);
+    L.svg("path", { d: `M${x - l / 2 + 12} ${sol - h - p} H${x + l / 2 - 12} L${x + l / 2} ${sol - h} H${x - l / 2} Z`, fill: "#e4e7e8", stroke: "#a9b0b4" }, g);
+    L.svg("rect", { x: x - l / 2, y: sol - h, width: l, height: h - 3, rx: 4, fill: "#d3d8db", stroke: "#a0a8ad" }, g);
+    for (const s of [-1, 1]) L.svg("rect", { x: x + s * (l / 2 - 16) - 6, y: sol - 4, width: 12, height: 4, rx: 1, fill: "#2b2f33" }, g);
+    L.svg("rect", { x: x - 44, y: sol - h + 8, width: 88, height: 26, rx: 2, fill: "#2a3a30", stroke: "#56635a" }, g);
+    L.texte(g, x - l / 2 + 26, sol - 12, "200 g × 0,01 g", { "font-size": 6.4, fill: "#4a5258", "font-weight": 700 });
+  }
+
+  function plateau(g, x, y, r) {
+    // Plateau rond en inox posé sur son croisillon.
+    L.svg("rect", { x: x - 6, y, width: 12, height: 8, fill: "#7d868c" }, g);
+    L.svg("ellipse", { cx: x, cy: y + 3, rx: r, ry: r * 0.22, fill: "#8d969c" }, g);
+    L.svg("ellipse", { cx: x, cy: y, rx: r, ry: r * 0.22, fill: "url(#metal-h)", stroke: "#7d868c" }, g);
+    L.svg("ellipse", { cx: x - r * 0.25, cy: y - 1, rx: r * 0.45, ry: r * 0.06, fill: "#fff", opacity: 0.45 }, g);
+  }
+
+  L.balance_electronique = function (ctx, { x, sol, e = 1.6 }) {
+    // Dessine la balance ; la lecture suit la masse posée moins la tare ; les touches allument et tarent.
+    const h = 32 * e, b = { plateau: { x, y: sol - h - 16 * e, r: 45 * e }, objets: new Set(), allumee: false, tare: 0, affiche: 0, stable: true, ecouteurs: [] };
+    boitier(ctx.fond, x, sol, e);
+    plateau(ctx.fond, x, b.plateau.y, b.plateau.r);
+    const ecran = L.svg("g", { "pointer-events": "none" }, ctx.devant);
+    const vraie = () => [...b.objets].reduce((s, o) => s + o.masse, 0);
+    const dessiner = () => {
+      ecran.replaceChildren();
+      if (!b.allumee) return;
+      L.texte(ecran, x + 30, sol - h + 27, L.nombre(b.affiche, 2), { "font-size": 16, "font-family": "monospace", "text-anchor": "end", fill: "#9dffb0" });
+      if (b.stable) L.texte(ecran, x + 38, sol - h + 27, "g", { "font-size": 10, "font-family": "monospace", fill: "#9dffb0" });
+    };
+    const prevenir = () => b.ecouteurs.forEach((f) => f());
+    setInterval(() => {
+      if (!b.allumee) return;
+      const cible = Math.round((vraie() - b.tare) * 100) / 100, avant = b.affiche;
+      b.affiche = Math.abs(cible - b.affiche) < 0.02 ? cible : b.affiche + (cible - b.affiche) * 0.45;
+      b.stable = b.affiche === cible;
+      if (b.affiche !== avant) { dessiner(); prevenir(); }
+    }, 80);
+    L.bouton_rond(ctx.haut, x - 60, sol - h + 21, "I/O", () => { b.allumee = !b.allumee; b.tare = vraie(); b.affiche = 0; b.stable = true; dessiner(); prevenir(); }, 8);
+    L.bouton_rond(ctx.haut, x + 62, sol - h + 21, "T", () => { if (b.allumee) { b.tare = vraie(); b.affiche = 0; dessiner(); prevenir(); } }, 8);
+    b.ajouter = (o) => { b.objets.add(o); prevenir(); };
+    b.retirer = (o) => { b.objets.delete(o); prevenir(); };
+    b.lecture = () => (b.allumee && b.stable ? b.affiche : null);
+    b.sur_changement = (f) => b.ecouteurs.push(f);
+    dessiner();
+    return b;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pot de poudre à large col (étiquette, pictogrammes) et microspatule en inox de 12 cm, aux vraies dimensions : la
+       spatule est plantée dans la poudre ; on la sort (elle emporte une pointe de poudre), puis on la lâche, son bout
+       au-dessus de l'ouverture d'un récipient : la poudre tombe dedans. Ensuite, ou lâchée ailleurs, elle retourne dans le pot.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { x, sol, e (px/mm), solide (nom dans Labo.LIQUIDES), dose (mL),
+         texte (étiquette), rgb (couleur de la poudre), pictos, autoriser() }.
+Produit : Labo.spatule_poudre(ctx, reglage) -> { versees (nombre de pointes versées) } ; Labo.pot_poudre(g, x, sol, e, texte, rgb, pictos).
+Utilisé par : les simulations de chimie (poudre de fer, de zinc...).
+*/
+(function (L) {
+  function pot(g, x, sol, e, texte, rgb, pictos) {
+    // Pot en plastique blanc de 50 mm, ouvert, poudre visible dans le col, étiquette et pictogrammes.
+    const l = 50 * e, h = 60 * e;
+    L.svg("ellipse", { cx: x + 4, cy: sol + 1, rx: l / 2 + 3, ry: 4, fill: "#000", opacity: 0.28 }, g);
+    L.svg("rect", { x: x - l / 2, y: sol - h, width: l, height: h, rx: 5, fill: "#f2f3f0", stroke: "#a9b0b2" }, g);
+    L.svg("ellipse", { cx: x, cy: sol - h, rx: l / 2 - 4, ry: 5, fill: "#dfe2df", stroke: "#a9b0b2" }, g);
+    L.svg("ellipse", { cx: x, cy: sol - h + 1, rx: l / 2 - 9, ry: 3.2, fill: L.rgb(rgb) }, g);
+    L.svg("rect", { x: x - l / 2 + 6, y: sol - h + 18, width: l - 12, height: 40, fill: "#fff", stroke: "#c9c4b0", "stroke-width": 0.5 }, g);
+    String(texte).split("\n").forEach((t, i) => L.texte(g, x, sol - h + 30 + i * 9, t, { "font-size": 7.4, "font-weight": 700, fill: "#222" }));
+    (pictos || []).forEach((code, i) => L.pictogramme(g, x - 10 + i * 20, sol - 26, 16, code));
+    return { x, y: sol - h };
+  }
+
+  function spatule(g, chargee, rgb, e) {
+    // Microspatule : bout plat (où se pose la poudre) en (0, 0), tige vers la droite ; poudre éventuelle.
+    g.replaceChildren();
+    L.svg("path", { d: `M-2 -2 Q-6 0 -2 2 H${10 * e} L${12 * e} 0.8 H${120 * e} V-0.8 H${12 * e} L${10 * e} -2 Z`, fill: "url(#metal)", stroke: "#6d767c", "stroke-width": 0.4 }, g);
+    if (chargee) L.svg("path", { d: `M-2 -1.5 Q${5 * e} -7 ${10 * e} -1.5 Z`, fill: L.rgb(rgb) }, g);
+  }
+
+  L.pot_poudre = pot;
+
+  L.spatule_poudre = function (ctx, { x, sol, e = 1.6, solide, dose, texte, rgb, pictos = [], autoriser = () => true }) {
+    // Spatule plantée dans le pot (derrière sa paroi), inclinée ; sortie, elle porte une pointe de poudre.
+    const s = { versees: 0 }, g = L.svg("g", { class: "spatule", role: "button", "aria-label": "Spatule" }, ctx.fond);
+    pot(ctx.fond, x, sol, e, texte, rgb, pictos);
+    const repos = { x, y: sol - 22 * e }, ANGLE = -64;
+    const poser = (p) => g.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${ANGLE})`);
+    const bouche = (r) => { const a = r.monde(r.pr.levres.g), b = r.monde(r.pr.levres.d); return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; };
+    L.glissable(g, {
+      debut: () => (autoriser() ? { ...repos } : null),
+      saisir: () => { ctx.haut.append(g); spatule(g, true, rgb, e); },
+      deplacer: poser,
+      lacher: (p) => {
+        const r = ctx.ecoulement.recipients.find((q) => !q.bouchon && Math.hypot(bouche(q).x - p.x, bouche(q).y - p.y) < 22);
+        if (r) { r.c.ajouter(solide, dose); s.versees++; ctx.signaler?.(); }
+        ctx.fond.insertBefore(g, ctx.fond.children[ordre]); spatule(g, false, rgb, e); poser(repos);
+      },
+    });
+    const ordre = [...ctx.fond.children].indexOf(g);
+    spatule(g, false, rgb, e); poser(repos);
+    return s;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pesée d'un solide en poudre : pots de produits (chacun avec sa spatule plantée dedans), coupelles de pesée en
+       plastique posées sur un plateau. On pose une coupelle sur la balance, on tare, puis on tient la spatule chargée
+       au-dessus de la coupelle : la poudre y tombe peu à peu (environ 0,1 g par seconde) tant qu'on la tient là ; on
+       retourne au pot pour recharger la spatule. Une coupelle ne reçoit qu'un seul produit ; touchée hors de la balance,
+       elle est vidée. Si le pot donne le nom du solide, la coupelle lâchée au-dessus d'une ouverture y verse sa poudre
+       (coupelle_versement.js) ; touchée, elle revient sur le plateau.
+Reçoit : le contexte de la paillasse, la balance (balance_electronique.js) et { pots [{ id, nom, x, rgb, solide }], coupelles [x], sol, sol_pots
+         (pots au fond de la paillasse, facultatif), e, dire }.
+Produit : Labo.pesee_poudre(ctx, balance, reglage) -> { coupelles [{ produit, poudre (g), sur_balance }] }.
+Utilisé par : les simulations de chimie (quantité de matière, préparation de solutions).
+*/
+(function (L) {
+  const TARE = 1.25, DEBIT = 0.1, CHARGE = 1.0;
+
+  function coupelle(g, c, rgb) {
+    // Coupelle carrée en plastique blanc vue de biais, tas de poudre proportionnel à sa masse.
+    g.replaceChildren();
+    L.svg("path", { d: "M-24 -10 L24 -10 L18 0 L-18 0 Z", fill: "#f4f6f7", stroke: "#a9b0b4" }, g);
+    L.svg("path", { d: "M-24 -10 L-20 -13 L20 -13 L24 -10", fill: "#e3e7e9", stroke: "#a9b0b4", "stroke-width": 0.6 }, g);
+    if (c.poudre > 0.005) { const h = Math.min(9, 2 + 3.2 * Math.cbrt(c.poudre)), l = Math.min(18, 6 + 5 * Math.cbrt(c.poudre)); L.svg("path", { d: `M${-l} -9 Q0 ${-9 - 2 * h} ${l} -9 Z`, fill: L.rgb(rgb) }, g); }
+  }
+
+  function spatule(g, charge, rgb) {
+    // Spatule-cuillère en inox, bout en (0, 0), manche vers le haut à droite ; poudre si elle est chargée.
+    g.replaceChildren();
+    L.svg("path", { d: "M-7 -1 Q0 5 7 -1 L5 -3 L-5 -3 Z M5 -3 L82 -120 L84 -118 L7 -1", fill: "url(#metal)", stroke: "#6d767c", "stroke-width": 0.5 }, g);
+    if (charge > 0.02) L.svg("ellipse", { cx: 0, cy: -3, rx: 5.5, ry: 2 + 1.6 * (charge / CHARGE), fill: L.rgb(rgb) }, g);
+    L.svg("path", { d: "M2 -2 L84 -120", stroke: "#000", "stroke-width": 16, opacity: 0 }, g);
+  }
+
+  L.pesee_poudre = function (ctx, balance, { pots, coupelles: xs, sol, sol_pots = sol, e = 1.6, dire = () => {} }) {
+    // Pots et spatules ; coupelles déplaçables (plateau ou balance) ; la poudre coule à chaque pas si la spatule est au-dessus.
+    const couleurs = Object.fromEntries(pots.map((p) => [p.id, p.rgb])), solides = Object.fromEntries(pots.map((p) => [p.id, p.solide]));
+    const C = xs.map((x) => ({ produit: null, poudre: 0, sur_balance: false, repos: { x, y: sol - 6 }, pos: { x, y: sol - 6 }, masse: TARE }));
+    L.svg("rect", { x: Math.min(...xs) - 34, y: sol - 6, width: Math.max(...xs) - Math.min(...xs) + 68, height: 6, rx: 2, fill: "#d9dcde", stroke: "#a9b0b4" }, ctx.fond);
+    const pan = { x: balance.plateau.x, y: balance.plateau.y - 1 };
+    C.forEach((c) => {
+      c.g = L.svg("g", { class: "coupelle", role: "button", "aria-label": "Coupelle de pesée" }, ctx.objets);
+      const dessiner = () => { coupelle(c.g, c, couleurs[c.produit] || [255, 255, 255]); if (L.coupelle_placer) L.coupelle_placer(c); else L.placer(c.g, c.pos.x, c.pos.y); };
+      c.dessiner = dessiner;
+      L.glissable(c.g, {
+        debut: () => ({ ...c.pos }), saisir: () => { c.versant = null; if (c.sur_balance) { balance.retirer(c); c.sur_balance = false; } ctx.haut.append(c.g); },
+        deplacer: (p) => { c.pos = p; dessiner(); },
+        lacher: (p) => {
+          ctx.objets.append(c.g);
+          if (solides[c.produit] && L.coupelle_verser?.(ctx, c, p, solides[c.produit])) return ctx.signaler?.();
+          const libre = !C.some((o) => o !== c && o.sur_balance);
+          if (libre && Math.abs(p.x - pan.x) < balance.plateau.r && Math.abs(p.y - pan.y) < 50) { c.pos = { ...pan }; c.sur_balance = true; balance.ajouter(c); } else c.pos = { ...c.repos };
+          dessiner(); ctx.signaler?.();
+        },
+        toucher: () => { if (c.versant) { c.versant = null; c.pos = { ...c.repos }; dessiner(); return ctx.signaler?.(); } if (!c.sur_balance && c.poudre > 0) { c.poudre = 0; c.produit = null; c.masse = TARE; dire("Coupelle vidée dans le récipient à déchets."); dessiner(); ctx.signaler?.(); } },
+      });
+      dessiner();
+    });
+    pots.forEach((p) => L.pot_spatule(ctx, p, sol_pots, e, C, couleurs, dire));
+    return { coupelles: C };
+  };
+
+  L.pot_spatule = function (ctx, p, sol, e, C, couleurs, dire) {
+    // Un pot et sa spatule : sortie du pot, elle est chargée ; tenue au-dessus d'une coupelle, la poudre coule.
+    const s = { charge: 0, tenue: false, pos: { x: p.x, y: sol - 30 } }, g = L.svg("g", { class: `spatule-${p.id}`, role: "button", "aria-label": `spatule ${p.nom}` }, ctx.fond);
+    L.pot_poudre(ctx.fond, p.x, sol, e, p.nom, p.rgb);
+    const avant = g.nextSibling, repos = { x: p.x - 4, y: sol - 40 };
+    const ranger = () => { s.tenue = false; s.charge = 0; spatule(g, 0, p.rgb); L.placer(g, repos.x, repos.y); ctx.fond.insertBefore(g, avant); };
+    L.glissable(g, { debut: () => ({ ...repos }), saisir: () => { s.tenue = true; s.charge = CHARGE; ctx.haut.append(g); }, deplacer: (q) => { s.pos = q; L.placer(g, q.x, q.y); }, lacher: ranger });
+    ctx.ecoulement.sur_pas((dt) => {
+      if (!s.tenue || s.charge <= 0) return;
+      const c = C.find((o) => Math.abs(o.pos.x - s.pos.x) < 22 && s.pos.y < o.pos.y - 8 && s.pos.y > o.pos.y - 70);
+      if (!c) return;
+      if (c.produit && c.produit !== p.id) return dire("Cette coupelle contient déjà un autre produit : prenez-en une autre.");
+      const d = Math.min(s.charge, DEBIT * dt * (0.8 + 0.4 * Math.random()));
+      c.produit = p.id; c.poudre += d; c.masse = TARE + c.poudre; s.charge -= d;
+      spatule(g, s.charge, p.rgb); c.dessiner(); ctx.signaler?.();
+    });
+    ranger();
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : verser le solide d'une coupelle de pesée dans un récipient (ou dans un entonnoir posé sur une fiole) : lâchée,
+       son bord au-dessus de l'ouverture, la coupelle reste tenue, inclinée ; la poudre glisse et tombe (chute libre,
+       ecoulement.js), mais quelques grains restent collés à la coupelle (moins pour une poudre
+       qui ne colle pas : Labo.LIQUIDES[solide].collant, 1 par défaut). Un jet de pissette sur la coupelle inclinée
+       la rince : l'eau entraîne les grains restants dans le récipient.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement), la coupelle (pesee_poudre.js), le point où on la lâche et le
+         nom du solide (Labo.LIQUIDES).
+Produit : Labo.coupelle_verser(ctx, coupelle, p, solide) -> vrai si la coupelle verse ; coupelle.versant ; Labo.coupelle_placer(coupelle).
+Utilisé par : pesee_poudre.js.
+*/
+(function (L) {
+  const INCLINAISON = 35, LEVRE = { x: 25.4, y: 5.6 }, RESTE = 0.02;
+
+  function ouverture(ctx, p) {
+    // Ouverture la plus proche sous le bord de la coupelle : récipient ouvert, ou cible qui a une bouche (entonnoir).
+    const lev = { x: p.x + LEVRE.x, y: p.y + LEVRE.y }, choix = [];
+    for (const r of ctx.ecoulement.recipients) {
+      if (r.bouchon || r.ferme) continue;
+      const b = r.monde({ x: 0, y: -r.pr.H });
+      choix.push({ x: b.x, y: b.y, r: r.pr.r(r.pr.H) * r.pose.e + 14 });
+    }
+    for (const c of ctx.ecoulement.cibles) if (c.bouche) { const b = c.bouche(); choix.push({ x: b.x, y: b.y, r: b.r + 10 }); }
+    return choix.filter((b) => Math.abs(lev.x - b.x) < b.r && lev.y < b.y + 6 && lev.y > b.y - 90).sort((a, b) => Math.abs(lev.x - a.x) - Math.abs(lev.x - b.x))[0];
+  }
+
+  L.coupelle_placer = function (c) {
+    // Position de la coupelle : à plat, ou inclinée au-dessus d'une ouverture.
+    c.g.setAttribute("transform", `translate(${c.pos.x} ${c.pos.y})` + (c.versant ? ` rotate(${INCLINAISON})` : ""));
+  };
+
+  function installer(ctx) {
+    // Une seule fois par paillasse : la poudre s'écoule à chaque pas ; le jet de pissette qui touche une coupelle inclinée la rince.
+    const E = ctx.ecoulement, versantes = new Set(), source = { c: L.contenu({ eau: 1 }), interieur_monde: () => [] };
+    const levre = (c) => ({ x: c.pos.x + LEVRE.x, y: c.pos.y + LEVRE.y });
+    const part = (c, m) => ({ classe: "solide", liquides: { [c.versant.solide]: m / L.LIQUIDES[c.versant.solide].d }, dissous: {}, T: 20 });
+    E.sur_pas((dt) => {
+      for (const c of versantes) {
+        if (!c.versant) { versantes.delete(c); continue; }
+        const m = Math.min(c.poudre - c.versant.reste, 1.5 * dt);
+        if (m <= 1e-5) continue;
+        c.poudre -= m; c.masse -= m; c.dessiner();
+        E.emettre({ c: L.contenu({ [c.versant.solide]: 1 }), interieur_monde: () => [] }, levre(c), { x: 15, y: 30 }, [part(c, m)], m / L.LIQUIDES[c.versant.solide].d);
+      }
+    });
+    E.ajouter_cible({
+      contient: (gt) => gt.source !== source && [...versantes].some((c) => c.versant && Math.abs(gt.x - c.pos.x) < 24 && gt.y > c.pos.y - 16 && gt.y < c.pos.y + 3),
+      recevoir: (gt) => {
+        // L'eau ruisselle sur la coupelle et emporte une partie des grains restants.
+        const c = [...versantes].find((k) => Math.abs(gt.x - k.pos.x) < 24), parts = [...gt.parts];
+        const m = c.poudre * Math.min(1, gt.V / 0.5) * 0.6;
+        if (m > 0) { c.poudre -= m; c.masse -= m; c.versant.reste = Math.max(0, c.versant.reste - m); parts.push(part(c, m)); if (c.poudre < 1e-4) { c.masse -= c.poudre; c.poudre = 0; } c.dessiner(); }
+        E.emettre(source, levre(c), { x: 10, y: 40 }, parts, gt.V);
+      },
+    });
+    return versantes;
+  }
+
+  L.coupelle_verser = function (ctx, c, p, solide) {
+    // La coupelle lâchée au-dessus d'une ouverture se place, inclinée, son bord juste au-dessus ; la poudre commence à couler.
+    const b = c.poudre > 0 && ouverture(ctx, p);
+    if (!b) return false;
+    const versantes = ctx.versantes || (ctx.versantes = installer(ctx));
+    c.pos = { x: b.x - LEVRE.x, y: b.y - 22 }; const k = L.LIQUIDES[solide].collant ?? 1;
+    c.versant = { solide, reste: Math.min(c.poudre, k * Math.max(0.01, c.poudre * RESTE)) };
+    versantes.add(c); c.dessiner();
+    return true;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pipette graduée de 10 mL (graduations tous les 0,1 mL, lues de 0 en haut à 10 en bas) surmontée d'un pipeteur à
+       molette. On la pose, pointe dans un récipient ; la molette tournée vers le haut aspire le liquide (si la pointe est
+       sous la surface ; sinon de l'air), tournée vers le bas elle le fait couler : le volume délivré est la différence de
+       deux lectures. Le liquide qui sort tombe dans le récipient où est la pointe (lâchée juste au-dessus d'un col étroit,
+       la pointe y entre). Rangée sur son support quand on la
+       lâche ailleurs (elle garde son liquide).
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement), { support { x, y } (place de la pointe au repos), e (px/mm), dire }.
+Produit : Labo.pipette_graduee(ctx, reglage) -> p { c (contenu), V (mL dans la pipette), lecture(), dans (récipient où est la pointe) }.
+Utilisé par : les simulations de chimie (prélever un volume, préparer et diluer une solution).
+*/
+(function (L) {
+  const A = 10 / 210, CONE = 25, VC = 0.15, BAS = 15, GRAD = 210, HAUT = 50, V10 = VC + BAS * A, VMAX = V10 + 10 + 40 * A;
+
+  function dessiner(g, p, e) {
+    // Pipette (repère en mm, pointe en (0, 0), vers le haut : y négatif), graduations, liquide, pipeteur et molette.
+    g.replaceChildren();
+    const H = CONE + BAS + GRAD + HAUT, verre = { fill: "rgba(214,233,240,0.5)", stroke: "rgba(110,140,150,0.9)", "stroke-width": 0.35 };
+    L.svg("path", { d: `M-0.7 0 L-3.6 ${-CONE} V${-H} H3.6 V${-CONE} L0.7 0 Z`, ...verre }, g);
+    const rgb = p.c.phases.length ? p.c.couleur(p.c.phases[0]).rgb : [220, 235, 242], liq = { fill: L.rgb(rgb.map((v) => v * 0.93)), opacity: 0.9 };
+    if (p.V > 0) {
+      const hc = CONE * Math.min(1, p.V / VC), lc = 0.5 + (2.6 * hc) / CONE;
+      L.svg("path", { d: `M-0.5 -0.3 L${-lc} ${-hc} H${lc} L0.5 -0.3 Z`, ...liq }, g);
+      if (p.V > VC) {
+        const y = -CONE - (p.V - VC) / A;
+        L.svg("rect", { x: -3.1, y, width: 6.2, height: (p.V - VC) / A, ...liq }, g);
+        L.svg("path", { d: `M-3.1 ${y - 0.6} Q0 ${y + 1.4} 3.1 ${y - 0.6}`, fill: "none", stroke: "#1d3f6b", "stroke-width": 0.45, opacity: 0.85 }, g);
+      }
+    }
+    for (let k = 0; k <= 100; k++) {
+      const y = -(CONE + BAS + (GRAD * k) / 100), long = k % 10 === 0 ? 3.2 : k % 5 === 0 ? 2.2 : 1.3;
+      L.svg("line", { x1: -3.6, y1: y, x2: -3.6 + long, y2: y, stroke: "#1d3f6b", "stroke-width": 0.18 }, g);
+      if (k % 10 === 0) L.svg("text", { x: -3.6 - 0.6, y: y + 0.9, "font-size": 2.6, "text-anchor": "end", fill: "#1d3f6b", "font-family": "sans-serif" }, g).textContent = String(10 - k / 10);
+    }
+    L.svg("rect", { x: -5, y: -H - 92, width: 10, height: 92, rx: 2, fill: "#2f8a3c", stroke: "#1d5a26", "stroke-width": 0.5 }, g);
+    L.svg("rect", { x: -3.2, y: -H - 4, width: 6.4, height: 8, fill: "#1d5a26" }, g);
+    L.svg("ellipse", { cx: 6.5, cy: -H - 55, rx: 3, ry: 11, fill: "#1f2a30", stroke: "#000", "stroke-width": 0.3 }, g);
+    for (let k = -4; k <= 4; k++) L.svg("line", { x1: 4.5, y1: -H - 55 + k * 2.4, x2: 8.5, y2: -H - 55 + k * 2.4, stroke: "#5d646a", "stroke-width": 0.5 }, g);
+  }
+
+  L.pipette_graduee = function (ctx, { support, e = 1.2, dire = () => {} }) {
+    // Pipette déplaçable ; molette (glisser verticalement) ; transfert du liquide entre la pipette et le récipient.
+    const p = { c: L.contenu({}), V: 0, dans: null, pos: { ...support } }, g = L.svg("g", { class: "pipette-graduee", role: "button", "aria-label": "Pipette graduée" }, ctx.objets);
+    const H = CONE + BAS + GRAD + HAUT, prise = L.svg("rect", { x: -9, y: -H, width: 18, height: H - CONE, fill: "#000", opacity: 0 }), molette = L.svg("rect", { x: 1, y: -H - 70, width: 14, height: 30, fill: "#000", opacity: 0, class: "molette" });
+    const corps = L.svg("g", {}, g);
+    g.append(prise, molette);
+    const maj = () => { dessiner(corps, p, e); g.setAttribute("transform", `translate(${p.pos.x} ${p.pos.y}) scale(${e})`); ctx.signaler?.(); };
+    p.lecture = () => Math.round((10 - (p.V - V10)) * 100) / 100;
+    const surface = (r) => r.pose.y - r.pr.hauteur_de(r.c.volume()) * r.pose.e;
+    const recipient = (q) => ctx.ecoulement.recipients.find((r) => L.dans_polygone(r.interieur_monde(), q));
+    const col = (q) => ctx.ecoulement.recipients.find((r) => { const b = r.monde({ x: 0, y: -r.pr.H }); return !r.bouchon && Math.abs(q.x - b.x) < r.pr.r(r.pr.H) * r.pose.e + 10 && q.y > b.y - 12 && q.y < r.pose.y; });
+    L.glissable(prise, {
+      soulever: false, debut: () => ({ ...p.pos }), saisir: () => { p.dans = null; dire(""); ctx.haut.append(g); }, deplacer: (q) => { p.pos = q; maj(); },
+      lacher: (q) => {
+        // Dans un récipient (ou juste au-dessus d'un col étroit : la pointe y entre, au milieu) ; ailleurs, retour au support.
+        const r = recipient(q), c = !r && col(q), b = c && c.monde({ x: 0, y: -c.pr.H });
+        ctx.objets.append(g);
+        if (r) { p.dans = r; p.pos = { x: q.x, y: Math.min(q.y, r.pose.y - 4) }; } else if (c) { p.dans = c; p.pos = { x: b.x, y: Math.max(q.y, b.y + 8) }; } else { p.dans = null; p.pos = { ...support }; }
+        maj();
+      },
+    });
+    let y0 = null;
+    L.glissable(molette, {
+      soulever: false, debut: () => { y0 = null; return { x: 0, y: 0 }; },
+      deplacer: (d) => {
+        if (y0 === null) { y0 = d.y; return; }
+        const dV = -(d.y - y0) * 0.06; y0 = d.y;
+        if (dV > 0) {
+          const r = p.dans;
+          if (!r || p.pos.y < surface(r) + 2) return dire(r ? "La pointe n'est pas dans le liquide : vous aspirez de l'air." : "");
+          const v = Math.min(dV, r.c.volume(), VMAX - p.V);
+          if (p.V + dV > VMAX) dire("Attention : le liquide arrive au pipeteur !");
+          r.c.retirer(v, "bas").forEach((part) => p.c.verser(part)); p.V += v; r.sig = null;
+        } else if (p.V > 0) {
+          const v = Math.min(-dV, p.V), parts = p.c.retirer(v, "bas"); p.V -= v;
+          if (p.dans) { parts.forEach((part) => p.dans.c.verser(part)); p.dans.sig = null; } else ctx.ecoulement.emettre({ c: L.contenu({}), interieur_monde: () => [] }, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 40 }, parts, v);
+        }
+        maj();
+      },
+    });
+    maj();
+    return p;
   };
 })(window.Labo);
 </script>
@@ -2049,79 +3463,371 @@ Utilisé par : tableau_lewis.js.
 </script>
   <script>
 /*
-Rôle : décor d'une paillasse d'électricité vue de plus haut : un bandeau de mur carrelé avec sa prise, un grand plan de
-       travail où l'on pose les appareils et les fils, le bord avant et les placards.
-Reçoit : le groupe SVG de la paillasse et son numéro.
-Produit : Labo.decor_circuit(groupe, numero) -> { pense_bete } ; Labo.PLAN_CIRCUIT : hauteurs (fond, avant, placard) ;
-          Labo.PRISES_MUR : centres des prises du mur ; Labo.bouton_rond(g, x, y, texte, action, rayon) : touche ronde ; Labo.cordon_secteur(groupe, depart, prise) : cordon et fiche ;
-          Labo.boitier(groupe, x, y, largeur, profondeur, hauteur, { dessus, face }) : boîtier d'appareil vu d'en haut.
-Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer), les composants circuit_*.js.
+Rôle : dissolution d'un solide moléculaire dans un liquide (saccharose, glucose, diiode) : les cristaux, posés au fond,
+       passent peu à peu dans la solution (loi de Noyes-Whitney : la vitesse est proportionnelle à la surface des cristaux
+       et à l'écart entre la solubilité et la concentration) ; agiter (agitateur, récipient secoué) accélère beaucoup la
+       dissolution. La solubilité dépend du solvant (le diiode est très peu soluble dans l'eau, très soluble dans
+       l'éthanol). Une solution saturée ne dissout plus rien. Les cristaux non dissous sont dessinés au fond.
+Reçoit : le contexte de la paillasse (ctx.ecoulement) ; chaque récipient peut porter r.agitation (0 à 1, donnée par l'agitateur).
+Produit : de nouveaux solides dans Labo.LIQUIDES (sucre_cristaux, glucose_cristaux, diiode_cristaux) ; Labo.DISSOLUTION ;
+          Labo.dissolution(ctx) ; Labo.dissous_g(contenu, solide) (masse dissoute, g) ; Labo.solide_g(contenu, solide).
+Utilisé par : les simulations de chimie (solutions).
 */
 (function (L) {
-  L.PLAN_CIRCUIT = { fond: 168, avant: 585, placard: 598 };
-  L.PRISES_MUR = [{ x: 860, y: 130 }, { x: 905, y: 130 }, { x: 950, y: 130 }];
-  const P = L.PLAN_CIRCUIT;
+  const solide = (nom, d, rgb) => ({ nom, d, rgb, alpha: 0.97, classe: "solide" });
+  Object.assign(L.LIQUIDES, {
+    sucre_cristaux: solide("saccharose", 1.59, [250, 250, 246]),
+    glucose_cristaux: solide("glucose", 1.54, [252, 252, 250]),
+    diiode_cristaux: solide("diiode", 4.93, [62, 48, 74]),
+  });
+  // Espèce dissoute, quantité notée par gramme dissous (mol/g ; pour le diiode, unités de teinte de liquide_contenu.js),
+  // solubilité (g/mL) dans chaque solvant, constante de vitesse K ; taille (mm) et nombre de cristaux dessinés (n × √masse).
+  L.DISSOLUTION = {
+    sucre_cristaux: { espece: "saccharose", par_g: 1 / 342, sol: { eau: 2.0, ethanol: 0.006 }, K: 0.09, grain: 1.5, n: 40 },
+    glucose_cristaux: { espece: "glucose", par_g: 1 / 180, sol: { eau: 0.9, ethanol: 0.003 }, K: 0.3, grain: 1.4, n: 40 },
+    diiode_cristaux: { espece: "I2", par_g: 6e4 / 254, sol: { eau: 0.0003, ethanol: 0.21 }, K: 5, grain: 2.4, n: 25 },
+  };
+  const D = L.DISSOLUTION;
 
-  function mur(g) {
-    // Mur peint, carrelage, bloc de trois prises électriques (à droite, pour les appareils branchés sur le secteur).
-    L.svg("rect", { x: 0, y: 0, width: L.LARGEUR, height: P.fond, fill: "url(#mur)" }, g);
-    L.svg("rect", { x: 0, y: 96, width: L.LARGEUR, height: P.fond - 96, fill: "url(#carrelage)" }, g);
-    L.svg("rect", { x: 0, y: 92, width: L.LARGEUR, height: 5, fill: "#b9bdb5" }, g);
-    L.svg("rect", { x: 834, y: 106, width: 142, height: 48, rx: 5, fill: "#f7f7f4", stroke: "#b8bbb4" }, g);
-    for (const p of L.PRISES_MUR) {
-      L.svg("circle", { cx: p.x, cy: p.y, r: 15, fill: "#e6e7e2", stroke: "#c4c7c0" }, g);
-      for (const dx of [-5, 5]) L.svg("circle", { cx: p.x + dx, cy: p.y, r: 2, fill: "#555" }, g);
+  L.solide_g = (c, nom) => c.phases.reduce((s, p) => s + (p.liquides[nom] || 0), 0) * L.LIQUIDES[nom].d;
+  L.dissous_g = (c, nom) => c.phases.reduce((s, p) => s + (p.dissous[D[nom].espece] || 0), 0) / D[nom].par_g;
+
+  function agitation(r) {
+    // Agitation du récipient : agitateur, récipient bouché secoué, ou récipient tenu que l'on fait tourner.
+    const a = Math.hypot(r.acc.x, r.acc.y);
+    return Math.max(r.agitation || 0, r.bouchon && a > 2500 ? 1 : 0, r.tenu && a > 400 ? 0.5 : 0);
+  }
+
+  function dissoudre(r, dt) {
+    // Une partie de chaque solide passe dans la phase liquide ; vrai si quelque chose a changé.
+    const liq = r.c.phases.find((p) => p.classe === "aqueuse"), sol = r.c.phases.find((p) => p.classe === "solide");
+    if (!liq || !sol || liq.V < 0.05) return false;
+    const ag = 0.04 + agitation(r);
+    let change = false;
+    for (const [nom, V] of Object.entries(sol.liquides)) {
+      const d = D[nom];
+      if (!d || V <= 0) continue;
+      const m = V * L.LIQUIDES[nom].d, s = Object.entries(liq.liquides).reduce((t, [n, v]) => t + (v / liq.V) * (d.sol[n] || 0), 0);
+      const c = (liq.dissous[d.espece] || 0) / d.par_g / liq.V;
+      if (c >= s) continue;
+      let dm = Math.min(m, d.K * ag * (Math.cbrt(m * m) + 0.02) * (s - c) * dt, (s - c) * liq.V);
+      if (m - dm < 2e-5) dm = m;
+      sol.liquides[nom] -= dm / L.LIQUIDES[nom].d; sol.V -= dm / L.LIQUIDES[nom].d;
+      liq.dissous[d.espece] = (liq.dissous[d.espece] || 0) + dm * d.par_g; change = true;
+    }
+    if (sol.V < 1e-7) r.c.phases.splice(r.c.phases.indexOf(sol), 1);
+    return change;
+  }
+
+  function hasard(k) {
+    // Nombre pseudo-aléatoire fixe pour le grain k (les cristaux ne bougent pas d'une image à l'autre).
+    const x = Math.sin(k * 127.1 + 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  }
+
+  function cristaux(l, r) {
+    // Cristaux non dissous : au fond, ou en suspension dans le liquide quand on agite.
+    const sol = r.c.phases.find((p) => p.classe === "solide"), liq = r.c.phases.find((p) => p.classe === "aqueuse");
+    if (!sol) return;
+    const pr = r.pr, ag = agitation(r), haut = liq ? pr.hauteur_de(r.c.volume()) - pr.h0 : 0;
+    let k = 0;
+    for (const [nom, V] of Object.entries(sol.liquides)) {
+      const d = D[nom], m = V * L.LIQUIDES[nom].d, n = Math.min(90, Math.ceil(d.n * Math.sqrt(m) + (m > 1e-4 ? 3 : 0))), w = Math.min(pr.r(pr.h0) - 2, 5 + 12 * Math.sqrt(m));
+      if (!d) continue;
+      for (let i = 0; i < n; i++, k++) {
+        // Au repos, un petit tas au milieu du fond ; en suspension, n'importe où dans le liquide.
+        const suspendu = liq && hasard(k + 0.5) < ag * 0.8, u = hasard(k) * 2 - 1, t = d.grain * (0.6 + 0.6 * hasard(k + 0.7));
+        const h = pr.h0 + (suspendu ? Math.random() * haut * 0.9 : 0.3 + hasard(k + 0.3) * (0.8 + 2.5 * Math.sqrt(m)) * (1 - Math.abs(u)));
+        const x = suspendu ? (Math.random() * 2 - 1) * (pr.r(h) - 1.5) : u * w;
+        L.svg("rect", { x: x - t / 2, y: -h - t / 2, width: t, height: t * 0.75, transform: `rotate(${hasard(k + 0.9) * 90} ${x} ${-h})`, fill: L.rgb(L.LIQUIDES[nom].rgb), stroke: "rgba(80,90,100,0.6)", "stroke-width": 0.12 }, l);
+      }
     }
   }
 
-  L.cordon_secteur = function (g, depart, P) {
-    // Cordon secteur : il part de l'arrière de l'appareil (caché sous lui) et finit par une fiche enfoncée dans la prise P.
-    L.svg("path", { d: `M${depart.x} ${depart.y} C${depart.x + 30} ${depart.y - 50} ${P.x - 40} ${P.y + 70} ${P.x} ${P.y + 22}`, fill: "none", stroke: "#2a2d30", "stroke-width": 5, "stroke-linecap": "round" }, g);
-    L.svg("rect", { x: P.x - 4, y: P.y + 8, width: 8, height: 16, rx: 3, fill: "#34373a" }, g);
-    L.svg("circle", { cx: P.x + 1, cy: P.y + 2, r: 13, fill: "#000", opacity: 0.25 }, g);
-    L.svg("circle", { cx: P.x, cy: P.y, r: 12, fill: "#3a3d41", stroke: "#1c1e20" }, g);
-    for (const dy of [-6, 0, 6]) L.svg("rect", { x: P.x - 8, y: P.y + dy - 1, width: 16, height: 2, rx: 1, fill: "#4c5055" }, g);
-    L.svg("circle", { cx: P.x - 4, cy: P.y - 5, r: 3, fill: "#fff", opacity: 0.12 }, g);
+  L.dissolution = function (ctx) {
+    // À chaque pas : dissolution dans chaque récipient ; les récipients sont redessinés avec leurs cristaux.
+    const E = ctx.ecoulement;
+    const habiller = (r) => { if (r.cristaux) return; r.cristaux = true; r.dessiner = () => cristaux(L.dessiner_verrerie(r.g, r.pr, r.pose, r.etat()), r); };
+    E.recipients.forEach(habiller);
+    let attente = false, t = 0;
+    E.sur_pas((dt) => {
+      // Les missions sont prévenues au plus cinq fois par seconde (et une fois après le dernier changement).
+      for (const r of E.recipients) {
+        habiller(r);
+        if (dissoudre(r, dt)) { attente = true; r.sig = null; }
+        if (r.agitation) { r.agitation *= Math.exp(-dt / 0.3); if (r.agitation < 0.02) { r.agitation = 0; r.sig = null; } }
+      }
+      t += dt;
+      if (attente && t > 0.2) { attente = false; t = 0; ctx.signaler?.(); }
+    });
   };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : agitateur en verre (baguette de 20 cm, 6 mm de diamètre), couché sur un papier absorbant : on le prend, on plonge
+       sa pointe dans un récipient et on le déplace pour agiter. Plus on le remue vite, plus l'agitation est forte (elle
+       accélère la dissolution, dissolution.js) ; le liquide est mis en mouvement (il ballotte, et déborde si l'on remue
+       trop fort). La pointe ne traverse pas le fond. Lâché dans un récipient, il y reste appuyé ; ailleurs, il retourne sur le papier.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { x, sol, e (px/mm) }.
+Produit : Labo.agitateur(ctx, reglage) -> a { pos (pointe, px), dans (récipient où est la pointe, ou null) } ; r.agitation (0 à 1).
+Utilisé par : les simulations de chimie (dissolution, solutions).
+*/
+(function (L) {
+  const LONG = 200, ANGLE = 12;
 
-  function plan(g) {
-    // Plan de travail sombre vu d'en haut, avec un reflet doux ; bord avant et placards.
-    L.svg("rect", { x: 0, y: P.fond, width: L.LARGEUR, height: P.avant - P.fond, fill: "url(#paillasse)" }, g);
-    L.svg("rect", { x: 0, y: P.fond, width: L.LARGEUR, height: 8, fill: "#000", opacity: 0.25 }, g);
-    L.svg("rect", { x: 0, y: P.fond + 40, width: L.LARGEUR, height: 200, fill: "url(#reflet)", opacity: 0.7 }, g);
-    L.svg("rect", { x: 0, y: P.avant, width: L.LARGEUR, height: P.placard - P.avant, fill: "url(#bord)" }, g);
-    L.svg("rect", { x: 0, y: P.placard, width: L.LARGEUR, height: L.HAUTEUR - P.placard, fill: "url(#facade)" }, g);
-    for (let x = 0; x < L.LARGEUR; x += 256) {
-      L.svg("rect", { x: x + 6, y: P.placard + 6, width: 244, height: 40, fill: "none", stroke: "#5d6567", "stroke-width": 1.5 }, g);
-      L.svg("rect", { x: x + 108, y: P.placard + 14, width: 40, height: 6, rx: 3, fill: "url(#metal-h)" }, g);
-    }
+  function baguette(g) {
+    // Baguette de verre, pointe en (0, 0), vers le haut (repère en mm) : verre plein, bouts arrondis, reflet.
+    L.svg("rect", { x: -3, y: -LONG, width: 6, height: LONG, rx: 3, fill: "rgba(214,234,241,0.62)", stroke: "rgba(110,140,150,0.9)", "stroke-width": 0.45 }, g);
+    L.svg("rect", { x: -1.6, y: -LONG + 4, width: 1.1, height: LONG - 8, fill: "#fff", opacity: 0.55 }, g);
+    L.svg("rect", { x: -10, y: -LONG, width: 20, height: LONG, fill: "#000", opacity: 0 }, g);
   }
 
-  L.boitier = function (g, x, y, l, p, h, { dessus = "#d9dcd8", face = "#9aa2a6" } = {}) {
-    // Boîtier posé sur la paillasse : ombre, dessus (vu d'en haut), face avant (hauteur h), arête claire.
-    L.svg("rect", { x: x + 4, y: y + 6, width: l, height: p + h, rx: 4, fill: "#000", opacity: 0.3, filter: "url(#flou)" }, g);
-    L.svg("rect", { x, y: y + p - 4, width: l, height: h + 4, rx: 3, fill: face, stroke: "#00000050" }, g);
-    L.svg("rect", { x, y, width: l, height: p, rx: 4, fill: dessus, stroke: "#00000040" }, g);
-    L.svg("rect", { x: x + 3, y: y + 1.5, width: l - 6, height: 2, rx: 1, fill: "#fff", opacity: 0.35 }, g);
+  L.agitateur = function (ctx, { x, sol, e = 1.6 }) {
+    // Papier et baguette ; pendant qu'on la tient, sa vitesse dans un liquide donne l'agitation du récipient.
+    const repos = { x: x - (LONG / 2) * e, y: sol - 3 * e }, a = { pos: { ...repos }, dans: null, tenu: false, mvt: null };
+    L.svg("path", { d: `M${x - 118 * e} ${sol} l${10 * e} ${-6 * e} h${216 * e} l${-10 * e} ${6 * e} Z`, fill: "#f6f6f2", stroke: "#cfd2cc" }, ctx.fond);
+    const g = L.svg("g", { class: "agitateur", role: "button", "aria-label": "Agitateur en verre" }, ctx.objets), corps = L.svg("g", {}, g);
+    baguette(corps);
+    const dessiner = () => {
+      const couche = !a.tenu && !a.dans;
+      g.setAttribute("transform", `translate(${a.pos.x} ${a.pos.y}) rotate(${couche ? 90 : ANGLE}) scale(${e})`);
+    };
+    const dans = (p) => ctx.ecoulement.recipients.find((r) => L.dans_polygone(r.interieur_monde(), p));
+    const fond = (r) => r.pose.y - (r.pr.h0 + 1.5) * r.pose.e;
+    function remuer(p) {
+      // Nouvelle position de la pointe ; si elle est dans un liquide, sa vitesse agite le récipient.
+      const t = performance.now() / 1000, m = a.mvt, r = dans(p) || (a.dans && Math.abs(p.x - a.pos.x) < 30 ? a.dans : null);
+      if (r && p.y > fond(r)) p = { x: p.x, y: fond(r) };
+      if (m && r) {
+        const dt = Math.max(0.008, t - m.t), vx = (p.x - m.x) / dt, vy = (p.y - m.y) / dt, surface = r.pose.y - r.pr.hauteur_de(r.c.volume()) * r.pose.e;
+        if (p.y > surface) { r.agitation = Math.max(r.agitation || 0, Math.min(1, Math.hypot(vx, vy) / 350)); r.acc.x += 0.25 * (vx - (m.vx || 0)); }
+        a.mvt = { t, x: p.x, y: p.y, vx };
+      } else a.mvt = { t, x: p.x, y: p.y, vx: 0 };
+      a.pos = p; a.dans = r && L.dans_polygone(r.interieur_monde(), p) ? r : null; dessiner();
+    }
+    const ranger = () => { a.tenu = false; a.dans = null; a.pos = { ...repos }; ctx.objets.append(g); dessiner(); ctx.signaler?.(); };
+    L.glissable(g, {
+      soulever: false,
+      // Couchée, on la saisit par le haut : la pointe est 15 cm sous la main.
+      debut: (ev) => { if (!a.tenu && !a.dans) { const q = L.scene.vers_scene(ev), s = Math.sin((ANGLE * Math.PI) / 180), c = Math.cos((ANGLE * Math.PI) / 180); a.pos = { x: q.x - 150 * e * s, y: q.y + 150 * e * c }; } return { ...a.pos }; },
+      saisir: () => { a.tenu = true; a.mvt = null; ctx.haut.append(g); dessiner(); },
+      deplacer: remuer,
+      lacher: () => { a.tenu = false; if (!a.dans) return ranger(); ctx.objets.append(g); dessiner(); ctx.signaler?.(); },
+      toucher: ranger,
+    });
+    ctx.ecoulement.sur_pas(() => { if (a.dans && !a.tenu && (a.dans.tenu || !L.dans_polygone(a.dans.interieur_monde(), a.pos))) ranger(); });
+    dessiner();
+    return a;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : pissette d'eau distillée de 500 mL en polyéthylène souple, aux vraies dimensions (corps de 72 mm, bouchon, tube
+       recourbé) : on la prend et on la lâche, le bec au-dessus d'un récipient ; elle reste tenue, inclinée, le bec vers le
+       bas. Tant qu'on appuie sur son corps, un jet d'eau (environ 4 mL/s) sort du bec et tombe (chute libre, ecoulement.js)
+       là où il tombe vraiment : dans le récipient, dans un entonnoir, sur une coupelle à rincer, ou sur la paillasse.
+       Un toucher sur le bouchon (ou un lâcher ailleurs) la repose sur la paillasse.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { x, sol, e (px/mm), V (mL d'eau au départ) }.
+Produit : Labo.pissette(ctx, reglage) -> p { V (mL restants), tenue, pressee, bec() (position du bec, px) }.
+Utilisé par : les simulations de chimie (préparation de solutions, rinçage).
+*/
+(function (L) {
+  const ROT = 31, BEC = { x: 36, y: -188 }, DEBIT = 4;
+  const CORPS = "M-36 -4 Q-36 0 -32 0 H32 Q36 0 36 -4 V-136 Q36 -152 22 -160 L15 -166 V-172 H-15 V-166 L-22 -160 Q-36 -152 -36 -136 Z";
+
+  function dessin(g, p, id) {
+    // Pissette debout (repère en mm, milieu du fond en (0, 0)) : eau visible à travers le plastique, étiquette, bouchon, tube.
+    g.replaceChildren();
+    const clip = L.svg("clipPath", { id }, g);
+    L.svg("path", { d: CORPS }, clip);
+    L.svg("path", { d: CORPS, fill: "rgba(246,248,249,0.78)", stroke: "#aab3b8", "stroke-width": 0.6 }, g);
+    const niveau = 4 + (p.V / 500) * 150, eau = L.svg("g", { "clip-path": `url(#${id})` }, g);
+    L.svg("rect", { x: -150, y: -niveau, width: 300, height: 260, fill: "rgba(196,222,236,0.55)", transform: p.tenue ? `rotate(${-ROT} 0 ${-niveau})` : "" }, eau);
+    L.svg("rect", { x: -26, y: -112, width: 52, height: 44, rx: 2, fill: "#fff", opacity: 0.92 }, g);
+    L.svg("text", { x: 0, y: -96, "font-size": 8, "text-anchor": "middle", "font-weight": 700, fill: "#1f5fa8", "font-family": "sans-serif" }, g).textContent = "EAU";
+    L.svg("text", { x: 0, y: -82, "font-size": 6.4, "text-anchor": "middle", "font-weight": 700, fill: "#1f5fa8", "font-family": "sans-serif" }, g).textContent = "distillée";
+    L.svg("rect", { x: -22, y: -60, width: 6, height: 50, rx: 3, fill: "#fff", opacity: 0.35 }, g);
+    L.svg("rect", { x: -17, y: -184, width: 34, height: 13, rx: 2.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.5 }, g);
+    L.svg("path", { d: `M0 -184 V-205 Q0 -216 10 -214 Q22 -211 30 -198 L${BEC.x} ${BEC.y}`, fill: "none", stroke: "#9aa5ab", "stroke-width": 4.2, "stroke-linecap": "round" }, g);
+    L.svg("path", { d: `M0 -184 V-205 Q0 -216 10 -214 Q22 -211 30 -198 L${BEC.x} ${BEC.y}`, fill: "none", stroke: "#eef2f4", "stroke-width": 2.4, "stroke-linecap": "round" }, g);
+    if (p.pressee) L.svg("path", { d: "M-38 -70 h8 M30 -70 h8", stroke: "#c08a16", "stroke-width": 1.5 }, g);
+  }
+
+  L.pissette = function (ctx, { x, sol, e = 1.6, V = 400 }) {
+    // Pissette déplaçable ; jet tant qu'on appuie sur le corps de la pissette tenue.
+    const p = { V, tenue: false, pressee: false, pos: { x, y: sol } }, id = `pissette-${Math.round(x)}`;
+    const g = L.svg("g", { class: "pissette", role: "button", "aria-label": "Pissette d'eau distillée" }, ctx.objets), source = { c: L.contenu({ eau: 1 }), interieur_monde: () => [] };
+    const a = (ROT * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a);
+    const vers_local = (q) => { const dx = (q.x - p.pos.x) / e, dy = (q.y - p.pos.y) / e; return { x: BEC.x + dx * c + dy * s, y: BEC.y - dx * s + dy * c }; };
+    p.bec = () => (p.tenue ? { ...p.pos } : { x: x + BEC.x * e, y: sol + BEC.y * e });
+    const placer = () => {
+      dessin(g, p, id);
+      g.setAttribute("transform", p.tenue ? `translate(${p.pos.x} ${p.pos.y}) rotate(${ROT}) scale(${e}) translate(${-BEC.x} ${-BEC.y})` : `translate(${x} ${sol}) scale(${e})`);
+    };
+    const sous = (q) => { for (let y = q.y; y < q.y + 300; y += 6) { const t = { x: q.x, y }; if (ctx.ecoulement.cibles.some((k) => k.contient(t)) || ctx.ecoulement.recipients.some((r) => !r.bouchon && L.dans_polygone(r.interieur_monde(), t))) return true; } return false; };
+    const ranger = () => { Object.assign(p, { tenue: false, pressee: false }); ctx.objets.append(g); placer(); };
+    const relacher = () => { p.pressee = false; placer(); };
+    L.glissable(g, {
+      soulever: false,
+      debut: (ev) => {
+        // Tenue : appuyer sur le corps fait jaillir l'eau ; ailleurs (bouchon, tube), on la déplace.
+        const q = vers_local(L.scene.vers_scene(ev));
+        if (p.tenue && Math.abs(q.x) < 38 && q.y < 2 && q.y > -150) { p.pressee = true; placer(); window.addEventListener("pointerup", relacher, { once: true }); return null; }
+        return p.tenue ? { ...p.pos } : { x: x + BEC.x * e, y: sol + BEC.y * e };
+      },
+      saisir: () => { p.tenue = true; ctx.haut.append(g); },
+      deplacer: (q) => { p.pos = q; placer(); },
+      lacher: (q) => { if (!sous(q)) return ranger(); p.pos = q; placer(); },
+      toucher: ranger,
+    });
+    ctx.ecoulement.sur_pas((dt) => {
+      // Jet : la portion d'eau quitte le bec vers le bas, à 1 m/s environ.
+      if (!p.pressee || p.V <= 0) return;
+      const v = Math.min(p.V, DEBIT * dt * (0.85 + 0.3 * Math.random()));
+      p.V -= v;
+      ctx.ecoulement.emettre(source, { x: p.pos.x, y: p.pos.y + 2 }, { x: 0, y: 1000 * e }, [{ classe: "aqueuse", liquides: { eau: v }, dissous: {}, T: 20 }], v);
+    });
+    placer();
+    return p;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : accessoires mobiles d'une fiole jaugée, aux vraies dimensions : un entonnoir à solide en verre (cône de 60 mm, tige
+       large de 9 mm), posé dans le col de la fiole ou rangé dans un erlenmeyer ; ce qui tombe dans son cône (poudre, eau)
+       descend dans la fiole. Le bouchon en polypropylène, posé à l'envers sur la paillasse : glissé sur le col, il
+       bouche la fiole (impossible tant que l'entonnoir est en place) ; touché sur la fiole, il retourne sur la paillasse.
+       On ne déplace pas la fiole tant que l'entonnoir y est posé.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement), la fiole (recipient_physique.js) et { x (place de repos), sol, e, dire }.
+Produit : Labo.entonnoir_fiole(ctx, fiole, reglage) -> { sur_fiole } ; Labo.bouchon_fiole(ctx, fiole, reglage).
+Utilisé par : les simulations de chimie (préparation de solutions).
+*/
+(function (L) {
+  const CONE = [[-4.5, 0], [-5, -30], [-30, -70], [30, -70], [5, -30], [4.5, 0]];
+  const verre = { fill: "rgba(214,233,240,0.45)", stroke: "rgba(110,140,150,0.9)", "stroke-width": 0.45 };
+
+  function entonnoir(g) {
+    // Entonnoir, bout de la tige en (0, 0) (repère en mm) : cône, bord épais, tige, reflet.
+    L.svg("path", { d: "M" + CONE.map((p) => p.join(" ")).join(" L") + " Z", ...verre }, g);
+    L.svg("ellipse", { cx: 0, cy: -70, rx: 30, ry: 3.6, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": 1.4 }, g);
+    L.svg("ellipse", { cx: 0, cy: -70, rx: 30.8, ry: 4.2, fill: "none", stroke: "rgba(110,140,150,0.9)", "stroke-width": 0.35 }, g);
+    L.svg("path", { d: "M-22 -64 L-4 -33", stroke: "#fff", "stroke-width": 1.2, opacity: 0.4 }, g);
+  }
+
+  L.entonnoir_fiole = function (ctx, f, { x, sol, e = 1.6, dire = () => {} }) {
+    // Erlenmeyer de rangement, entonnoir déplaçable ; posé sur la fiole, il est une cible qui conduit tout dans la fiole.
+    const erl = L.recipient(ctx, { id: "erlen-entonnoir", profil: "erlenmeyer_250", x, y: sol, e });
+    erl.g.setAttribute("pointer-events", "none");
+    const k = { sur_fiole: true, pos: null }, g = L.svg("g", { class: "entonnoir", role: "button", "aria-label": "Entonnoir" }, ctx.objets);
+    entonnoir(g); L.svg("rect", { x: -32, y: -76, width: 64, height: 80, fill: "#000", opacity: 0 }, g);
+    const assis = () => f.monde({ x: 0, y: -(f.pr.H - 33.7) }), range = { x, y: sol - 71 * e };
+    const cone = () => CONE.map(([u, v]) => ({ x: k.pos.x + u * e, y: k.pos.y + v * e }));
+    const cible = {
+      contient: (gt) => k.sur_fiole && L.dans_polygone(cone(), gt),
+      recevoir: (gt) => { gt.parts.forEach((p) => f.c.verser(p)); f.sig = null; ctx.signaler?.(); },
+    };
+    ctx.ecoulement.ajouter_cible(cible);
+    const poser = (sur) => {
+      // Sur la fiole (fiole fermée par l'entonnoir : on verse dans le cône) ou rangé dans l'erlenmeyer.
+      k.sur_fiole = sur; f.ferme = sur; k.pos = sur ? assis() : { ...range };
+      if (sur) cible.bouche = () => ({ x: k.pos.x, y: k.pos.y - 70 * e, r: 30 * e }); else delete cible.bouche;
+      ctx.objets.append(g); L.placer(g, k.pos.x, k.pos.y, e); ctx.signaler?.();
+    };
+    const peut = () => !f.bouchon && !f.tenu;
+    L.glissable(g, {
+      debut: () => ({ ...k.pos }), saisir: () => { poser(false); ctx.haut.append(g); }, deplacer: (q) => { k.pos = q; L.placer(g, q.x, q.y, e); },
+      lacher: (q) => { const a = assis(); poser(peut() && Math.abs(q.x - a.x) < 26 && Math.abs(q.y - a.y) < 60); if (f.bouchon && Math.abs(q.x - a.x) < 26) dire("Ôtez d'abord le bouchon de la fiole."); },
+      toucher: () => { if (k.sur_fiole) return poser(false); if (peut()) poser(true); else dire("Ôtez d'abord le bouchon de la fiole."); },
+    });
+    poser(true);
+    return k;
   };
 
-  L.bouton_rond = function (g, x, y, texte, action, rayon = 9) {
-    // Petit bouton poussoir rond, touchable.
-    const b = L.svg("g", { class: "bouton-rond", role: "button", "aria-label": texte }, g);
-    L.svg("circle", { cx: x + 0.8, cy: y + 1.5, r: rayon, fill: "#000", opacity: 0.3 }, b);
-    L.svg("circle", { cx: x, cy: y, r: rayon, fill: "url(#acier)", stroke: "#111" }, b);
-    L.texte(b, x, y + 0.5, texte, { "font-size": texte.length > 2 ? 7 : 10, "font-weight": 700, fill: "#eef" });
-    L.glissable(b, { soulever: false, debut: () => ({ x, y }), toucher: action });
-    return b;
+  L.bouchon_fiole = function (ctx, f, { x, sol, e = 1.6, dire = () => {}, entonnoir = null }) {
+    // Bouchon posé à l'envers sur la paillasse ; glissé sur le col, il bouche la fiole ; touché sur la fiole, il revient.
+    const r = f.pr.r(f.pr.H), g = L.svg("g", { class: "bouchon-fiole", role: "button", "aria-label": "Bouchon de la fiole" }, ctx.objets);
+    L.svg("rect", { x: -r - 3, y: -5, width: 2 * r + 6, height: 5, rx: 1.5, fill: "#2f6fb8", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    L.svg("path", { d: `M${-r - 1.5} -5 L${-r + 0.6} -17 H${r - 0.6} L${r + 1.5} -5 Z`, fill: "#3b7cc4", stroke: "#1d3f6b", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: -r - 8, y: -22, width: 2 * r + 16, height: 26, fill: "#000", opacity: 0 }, g);
+    const zone = L.svg("circle", { r: 16, fill: "#000", opacity: 0, class: "bouchon-pose", role: "button", "aria-label": "Ôter le bouchon" }, ctx.haut);
+    const repos = { x, y: sol };
+    const montrer = () => { g.style.display = f.bouchon ? "none" : ""; zone.style.display = f.bouchon ? "" : "none"; L.placer(g, repos.x, repos.y, e); ctx.signaler?.(); };
+    L.glissable(g, {
+      debut: () => ({ ...repos }), saisir: () => ctx.haut.append(g), deplacer: (q) => L.placer(g, q.x, q.y, e),
+      lacher: (q) => {
+        const b = f.monde({ x: 0, y: -f.pr.H });
+        ctx.objets.append(g);
+        if (Math.hypot(q.x - b.x, q.y - b.y) < 34) { if (entonnoir?.sur_fiole) dire("Retirez d'abord l'entonnoir."); else { f.bouchon = true; f.sig = null; } }
+        montrer();
+      },
+    });
+    L.glissable(zone, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { f.bouchon = false; f.sig = null; montrer(); } });
+    ctx.ecoulement.sur_pas(() => { if (f.bouchon) { const b = f.monde({ x: 0, y: -f.pr.H - 3 }); L.placer(zone, b.x, b.y); } });
+    montrer();
   };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : poste « fiole jaugée » : la fiole (100 mL ou 50 mL) et ses accessoires (entonnoir, bouchon, fiole_accessoires.js),
+       une loupe qui grossit quatre fois le col autour du trait de jauge (comme l'œil placé à la hauteur du trait, pour
+       amener le bas du ménisque sur le trait), et le suivi de l'homogénéisation : après le dernier ajout d'eau, il faut
+       boucher la fiole et l'agiter (au moins 1,5 s de secousses) pour que la solution soit homogène.
+Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { id, profil, x, sol, e, dire, entonnoir { x, sol } (facultatif),
+         bouchon { x, sol }, loupe { x, y, r } }.
+Produit : Labo.fiole_jaugee(ctx, reglage) -> { r (le récipient), entonnoir, etat() -> { V, ecart (mL au-dessus du trait),
+          bouchon, entonnoir, homogene, solide (g de cristaux non dissous), dissous { espèce : quantité } }, vider() }.
+Utilisé par : les simulations de chimie (préparation d'une solution, dilution).
+*/
+(function (L) {
+  const GROSSI = 4;
 
-  L.decor_circuit = function (g, numero) {
-    // Dessine le décor ; le pense-bête est collé sur le mur, en haut à gauche.
-    mur(g);
-    plan(g);
-    g.prises_libres = L.PRISES_MUR.map((p) => ({ ...p }));
-    L.svg("text", { x: 1000, y: 30, "text-anchor": "end", class: "numero-paillasse" }, g).textContent = `Paillasse ${numero + 1}`;
-    return { pense_bete: L.decor.pense_bete(g, 24, 12, 300, 126) };
+  function loupe(ctx, r, { x, y, r: R }, id) {
+    // Disque grossissant : copie vivante du dessin de la fiole (élément use), centrée sur le trait de jauge.
+    r.g.id = `fiole-${id}`;
+    const g = L.svg("g", { class: "loupe", "pointer-events": "none" }, ctx.haut), clip = L.svg("clipPath", { id: `loupe-${id}` }, g);
+    L.svg("circle", { cx: x, cy: y, r: R }, clip);
+    const vue = L.svg("g", { "clip-path": `url(#loupe-${id})` }, g);
+    L.svg("circle", { cx: x, cy: y, r: R, fill: "#b9beba" }, vue);
+    const copie = L.svg("use", { href: `#fiole-${id}` }, vue);
+    L.svg("circle", { cx: x, cy: y, r: R, fill: "none", stroke: "#3a3f44", "stroke-width": 5 }, g);
+    L.svg("circle", { cx: x, cy: y, r: R - 3, fill: "none", stroke: "#fff", "stroke-width": 1, opacity: 0.6 }, g);
+    L.texte(g, x, y + R + 14, `Loupe ×${GROSSI} : trait de jauge`, { "font-size": 8, "font-weight": 700, fill: "#33414b" });
+    let avant = "";
+    return () => {
+      const m = r.monde({ x: 0, y: -r.pr.hauteur_de(r.pr.extras.jauge) }), cle = `${m.x} ${m.y}`;
+      if (cle !== avant) { avant = cle; copie.setAttribute("transform", `translate(${x} ${y}) scale(${GROSSI}) translate(${-m.x} ${-m.y})`); }
+    };
+  }
+
+  L.fiole_jaugee = function (ctx, { id, profil, x, sol, e = 1.6, dire = () => {}, entonnoir = null, bouchon, loupe: lp }) {
+    // Fiole déplaçable (sauf avec l'entonnoir), accessoires, loupe ; suivi des ajouts d'eau et des secousses bouché.
+    const r = L.recipient(ctx, { id, profil, x, y: sol, e });
+    const f = { r, entonnoir: entonnoir && L.entonnoir_fiole(ctx, r, { ...entonnoir, e, dire }) };
+    L.bouchon_fiole(ctx, r, { ...bouchon, e, dire, entonnoir: f.entonnoir });
+    L.manipuler(ctx, r, { sol, autoriser: () => !f.entonnoir?.sur_fiole || (dire("Retirez d'abord l'entonnoir pour prendre la fiole."), false) });
+    const suivre = loupe(ctx, r, lp, id), s = { homogene: false, t: 0, V: 0 };
+    ctx.ecoulement.sur_pas((dt) => {
+      // Un ajout de liquide rend la solution hétérogène ; des secousses, fiole bouchée, la rendent homogène.
+      suivre();
+      const V = r.c.volume(), solide = r.c.phases.some((p) => p.classe === "solide");
+      if (V > s.V + 0.004) { s.homogene = false; s.t = 0; }
+      if (Math.abs(V - s.V) > 1e-4) s.change = true;
+      s.attente = (s.attente || 0) + dt; s.V = V;
+      if (s.change && s.attente > 0.15) { s.change = false; s.attente = 0; ctx.signaler?.(); }
+      if (r.bouchon && Math.hypot(r.acc.x, r.acc.y) > 2500) s.t += dt;
+      if (!s.homogene && s.t > 1.5 && !solide && V > 1) { s.homogene = true; dire("La solution est homogène."); ctx.signaler?.(); }
+    });
+    f.etat = () => {
+      const dissous = {}, sol_g = r.c.phases.filter((p) => p.classe === "solide").reduce((t, p) => t + Object.entries(p.liquides).reduce((u, [n, v]) => u + v * L.LIQUIDES[n].d, 0), 0);
+      r.c.phases.forEach((p) => Object.entries(p.dissous).forEach(([k, q]) => { dissous[k] = (dissous[k] || 0) + q; }));
+      return { V: Math.round(r.c.volume() * 100) / 100, ecart: Math.round((r.c.volume() - r.pr.extras.jauge) * 100) / 100, bouchon: r.bouchon, entonnoir: !!f.entonnoir?.sur_fiole, homogene: s.homogene, solide: Math.round(sol_g * 1e4) / 1e4, dissous };
+    };
+    f.vider = () => { r.c.phases.splice(0); r.c.emulsion = 0; r.sig = null; s.homogene = false; s.V = 0; ctx.signaler?.(); };
+    return f;
   };
 })(window.Labo);
 </script>
@@ -2188,14 +3894,564 @@ Utilisé par : les simulations d'optique.
 </script>
   <script>
 /*
-Rôle : physique et appareils de la conductimétrie : conductivités molaires ioniques (valeurs des tables, à 25 °C, en
+Rôle : calcule les potentiels et les courants d'un circuit en courant continu (méthode des nœuds). Chaque dipôle est
+       vu comme une conductance g en parallèle avec une source de courant j : i(a→b) = g·(Va − Vb) + j.
+       Un générateur (E, r) est donc g = 1/r, j = E/r de sa borne − vers sa borne +. Un dipôle non linéaire
+       (DEL, lampe, diode) est remplacé par sa tangente au point de fonctionnement : on recalcule jusqu'à stabilité.
+Reçoit : le nombre de nœuds et la liste des dipôles { a, b (numéros de nœuds), g (S), j (A), ctrl (facultatif : sources
+         commandées [{ c, d, g }] qui ajoutent g·(Vc − Vd) au courant de a vers b), ajuster(u, i, V) (facultatif : renvoie
+         vrai si le dipôle change d'état et met à jour g, j et ctrl) }.
+Produit : Labo.resoudre_circuit(n, dipoles) -> { potentiels: [V], courants: [A] (de a vers b, un par dipôle) } ;
+          Labo.dipole_non_lineaire(a, b, courant(u), pas_max) -> dipôle à caractéristique quelconque.
+Utilisé par : circuit.js.
+*/
+(function (L) {
+  const FUITE = 1e-9, TOURS = 60;
+
+  function eliminer(A, B) {
+    // Résout A·x = B (pivot de Gauss partiel) ; A et B sont modifiés.
+    const n = B.length;
+    for (let k = 0; k < n; k++) {
+      let p = k;
+      for (let i = k + 1; i < n; i++) if (Math.abs(A[i][k]) > Math.abs(A[p][k])) p = i;
+      [A[k], A[p]] = [A[p], A[k]];
+      [B[k], B[p]] = [B[p], B[k]];
+      for (let i = k + 1; i < n; i++) {
+        const f = A[i][k] / A[k][k];
+        if (!f) continue;
+        for (let c = k; c < n; c++) A[i][c] -= f * A[k][c];
+        B[i] -= f * B[k];
+      }
+    }
+    const x = new Array(n).fill(0);
+    for (let k = n - 1; k >= 0; k--) {
+      let s = B[k];
+      for (let c = k + 1; c < n; c++) s -= A[k][c] * x[c];
+      x[k] = s / A[k][k];
+    }
+    return x;
+  }
+
+  function une_fois(n, dipoles) {
+    // Assemble les équations des nœuds (somme des courants sortants nulle) et les résout.
+    const A = Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, c) => (i === c ? FUITE : 0)));
+    const B = new Array(n).fill(0);
+    for (const d of dipoles) {
+      A[d.a][d.a] += d.g; A[d.b][d.b] += d.g;
+      A[d.a][d.b] -= d.g; A[d.b][d.a] -= d.g;
+      B[d.a] -= d.j || 0; B[d.b] += d.j || 0;
+      for (const k of d.ctrl || []) { A[d.a][k.c] += k.g; A[d.a][k.d] -= k.g; A[d.b][k.c] -= k.g; A[d.b][k.d] += k.g; }
+    }
+    const V = eliminer(A, B);
+    const commande = (d) => (d.ctrl || []).reduce((s, k) => s + k.g * (V[k.c] - V[k.d]), 0);
+    return { potentiels: V, courants: dipoles.map((d) => d.g * (V[d.a] - V[d.b]) + (d.j || 0) + commande(d)) };
+  }
+
+  L.dipole_non_lineaire = function (a, b, courant, pas_max) {
+    // Dipôle de caractéristique i = courant(u) : remplacé par sa tangente au dernier point ; à chaque tour, la tension
+    // de ce point se rapproche de la tension calculée, d'au plus pas_max (méthode de Newton amortie).
+    const d = { a, b, u0: 0 };
+    const tangente = (u) => {
+      const h = 1e-5, i = courant(u), g = Math.max(1e-9, (courant(u + h) - courant(u - h)) / (2 * h));
+      Object.assign(d, { u0: u, g, j: i - g * u });
+    };
+    tangente(0);
+    d.ajuster = (u) => {
+      const v = d.u0 + Math.max(-pas_max, Math.min(pas_max, u - d.u0));
+      if (Math.abs(v - d.u0) < 1e-6) return false;
+      tangente(v);
+      return true;
+    };
+    return d;
+  };
+
+  L.resoudre_circuit = function (n, dipoles) {
+    // Calcule, puis laisse les dipôles non linéaires (DEL, lampe, diode) se réajuster et recalcule, jusqu'à stabilité.
+    let r = une_fois(n, dipoles);
+    for (let t = 0; t < TOURS; t++) {
+      let change = false;
+      dipoles.forEach((d, k) => { if (d.ajuster && d.ajuster(r.potentiels[d.a] - r.potentiels[d.b], r.courants[k], r.potentiels)) change = true; });
+      if (!change) break;
+      r = une_fois(n, dipoles);
+    }
+    return r;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : le circuit électrique d'une paillasse : il réunit les composants, leurs bornes et les fils posés par l'élève,
+       calcule les courants et les tensions à chaque changement et les donne aux composants.
+Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ctrl, ajuster }],
+         mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
+         un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
+         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
+Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), sur_calcul(f),
+          fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
+          prise() (prise murale libre pour un appareil branché sur le secteur) } ;
+          Labo.ROUGE_BORNE, Labo.NOIR_BORNE (couleurs des bornes + et −).
+Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fils), circuit_*.js (composants).
+*/
+(function (L) {
+  const G_FIL = 1000, ECHANTILLONS = 72;
+  L.ROUGE_BORNE = "#c62828";
+  L.NOIR_BORNE = "#1d1f22";
+
+  function dessiner_borne(g, x, y, couleur) {
+    // Borne vue d'en haut : écrou métallique, capuchon isolant de couleur, trou pour la fiche.
+    L.svg("ellipse", { cx: x + 1, cy: y + 3, rx: 10, ry: 7, fill: "#000", opacity: 0.3 }, g);
+    L.svg("circle", { cx: x, cy: y, r: 9, fill: "url(#metal)", stroke: "#3b4045", "stroke-width": 0.8 }, g);
+    L.svg("circle", { cx: x, cy: y - 1, r: 6.5, fill: couleur, stroke: "#00000060" }, g);
+    L.svg("circle", { cx: x, cy: y - 1, r: 2.3, fill: "#151719" }, g);
+  }
+
+  function distribuer(c, cles, r, ondes, pris) {
+    // Donne à chaque composant ses courants, ses tensions u et, s'il y a un GBF, l'onde de ses tensions ; à chaque fil son courant.
+    const V = (cle) => r.potentiels[cles[cle]];
+    let k = 0;
+    for (const comp of c.composants) {
+      const n = pris[comp.id], cle = (x) => `${comp.id}.${x}`;
+      const onde = (a, b) => (ondes ? ondes.map((P) => P[cles[cle(a)]] - P[cles[cle(b)]]) : null);
+      comp.mettre_a_jour?.({ u: (a, b) => V(cle(a)) - V(cle(b)), onde, i: r.courants.slice(k, k + n) });
+      k += n;
+    }
+    c.fils.forEach((f) => { f.i = r.courants[k++]; });
+  }
+
+  function reajuster(d, u, i, V) {
+    // Le dipôle non linéaire se réajuste (il reçoit aussi les tensions qui le commandent) ; on recopie g, j et ctrl.
+    const ch = d.source.ajuster(u, i, d.ctrl ? d.ctrl.map((k) => V[k.c] - V[k.d]) : null);
+    Object.assign(d, { g: d.source.g, j: d.source.j });
+    if (d.ctrl) d.ctrl.forEach((k, n) => { k.g = d.source.ctrl[n].g; });
+    return ch;
+  }
+
+  function assembler(c, cles, mode) {
+    // Dipôles des composants (mode « continu », ou « instant » : GBF à sa valeur c.instant) et des fils.
+    const dipoles = [], pris = {};
+    for (const comp of c.composants) {
+      const liste = comp.dipoles ? comp.dipoles(mode) : [];
+      pris[comp.id] = liste.length;
+      const cle = (x) => cles[`${comp.id}.${x}`];
+      for (const d of liste) dipoles.push({ ...d, a: cle(d.a), b: cle(d.b), ctrl: d.ctrl ? d.ctrl.map((k) => ({ c: cle(k.c), d: cle(k.d), g: k.g })) : null, source: d, ajuster: undefined });
+    }
+    for (const f of c.fils) dipoles.push({ a: cles[f.a], b: cles[f.b], g: G_FIL, j: 0 });
+    for (const d of dipoles) if (d.source && d.source.ajuster) d.ajuster = (u, i, V) => reajuster(d, u, i, V);
+    return { dipoles, pris };
+  }
+
+  function echantillonner(c, cles, n) {
+    // Tension variable : le circuit est recalculé à ÉCHANTILLONS instants d'une période du GBF ; renvoie les potentiels.
+    const { forme, Umax } = c.alternatif, ondes = [];
+    for (let k = 0; k < ECHANTILLONS; k++) {
+      c.instant = Umax * L.forme_tension(forme, (2 * Math.PI * k) / ECHANTILLONS);
+      ondes.push(L.resoudre_circuit(n, assembler(c, cles, "instant").dipoles).potentiels);
+    }
+    c.instant = 0;
+    return ondes;
+  }
+
+  L.circuit = function (parent) {
+    // Crée le circuit vide : calques des composants, des fils et des bornes (au-dessus, pour tirer un fil).
+    const c = { composants: [], fils: [], bornes: {}, ecouteurs: [] };
+    c.calque_composants = L.svg("g", { class: "composants" }, parent);
+    c.calque_fils = L.svg("g", { class: "fils" }, parent);
+    c.calque_bornes = L.svg("g", { class: "bornes" }, parent);
+    c.ajouter = (comp) => { c.composants.push(comp); return comp; };
+    c.prise = () => (parent.prises_libres || []).shift() || L.PRISES_MUR[L.PRISES_MUR.length - 1];
+    c.borne = (comp, nom, x, y, couleur) => {
+      // Dessine une borne du composant et la rend « tirable » (un fil part de là).
+      const b = { cle: `${comp.id}.${nom}`, comp, nom, x, y, couleur };
+      c.bornes[b.cle] = b;
+      dessiner_borne(comp.g, x, y, couleur);
+      L.fils.brancher_borne(c, b);
+      return b;
+    };
+    c.calculer = () => {
+      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), puis prévient.
+      const cles = {};
+      Object.keys(c.bornes).forEach((cle, n) => { cles[cle] = n; });
+      const n = Object.keys(cles).length, ondes = c.alternatif ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu");
+      distribuer(c, cles, L.resoudre_circuit(n, dc.dipoles), ondes, dc.pris);
+      L.fils.dessiner(c);
+      for (const f of c.ecouteurs) f(c);
+    };
+    c.meme_noeud = (x, y) => {
+      // Vrai si deux bornes sont reliées par des fils (directement ou de fil en fil).
+      const vues = new Set([x]), file = [x];
+      while (file.length) {
+        const k = file.shift();
+        if (k === y) return true;
+        for (const f of c.fils) for (const [p, q] of [[f.a, f.b], [f.b, f.a]]) if (p === k && !vues.has(q)) { vues.add(q); file.push(q); }
+      }
+      return false;
+    };
+    c.sur_calcul = (f) => c.ecouteurs.push(f);
+    c.relies = (x, y) => c.fils.some((f) => (f.a === x && f.b === y) || (f.a === y && f.b === x));
+    return c;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : fils de connexion du circuit : l'élève tire un fil depuis une borne et le lâche sur une autre borne ; il tire un fil
+       posé pour le débrancher (le bout le plus proche suit le doigt : lâché sur une borne, il s'y rebranche ; ailleurs, le
+       fil est rangé). Les fiches banane s'empilent sur une borne ; le câble pend un peu.
+Reçoit : le circuit (circuit.js) et ses bornes ; les gestes de l'élève.
+Produit : Labo.fils.brancher_borne(circuit, borne), Labo.fils.dessiner(circuit) ; Labo.fils.point(fil, t) (point du câble).
+Utilisé par : circuit.js.
+*/
+(function (L) {
+  const FICHE = 15, ETAGE = 11, PRISE_PX = 18, COULEURS = ["#e8b923", "#2f6fd0", "#3c9a4a", "#8e44ad"];
+  let temporaire = null;
+
+  function couleur_fil(c, a) {
+    // Rouge depuis une borne rouge, noir depuis une borne noire, sinon une couleur à tour de rôle.
+    const b = c.bornes[a];
+    if (b.couleur === L.ROUGE_BORNE) return "#d32f2f";
+    if (b.couleur === L.NOIR_BORNE) return "#25282b";
+    return COULEURS[c.fils.length % COULEURS.length];
+  }
+
+  function bout(c, cle, fil) {
+    // Haut de la fiche d'un fil sur une borne (les fiches déjà branchées sont en dessous ; fil absent : au-dessus de toutes).
+    const b = c.bornes[cle], sur = c.fils.filter((f) => f.a === cle || f.b === cle), rang = fil ? sur.indexOf(fil) : sur.length;
+    return { x: b.x, y: b.y - FICHE - ETAGE * rang, base: b.y - ETAGE * rang };
+  }
+
+  function chemin(P, Q) {
+    // Câble souple entre deux points : il retombe sur la paillasse (vers l'avant), plus bas s'il est long.
+    const pend = 22 + 0.22 * Math.hypot(Q.x - P.x, Q.y - P.y);
+    return { P, C1: { x: P.x, y: P.y + pend }, C2: { x: Q.x, y: Q.y + pend }, Q };
+  }
+
+  function point_bezier({ P, C1, C2, Q }, t) {
+    // Point du câble au paramètre t (0 : premier bout, 1 : second bout).
+    const s = 1 - t, k = [s * s * s, 3 * s * s * t, 3 * s * t * t, t * t * t];
+    return { x: k[0] * P.x + k[1] * C1.x + k[2] * C2.x + k[3] * Q.x, y: k[0] * P.y + k[1] * C1.y + k[2] * C2.y + k[3] * Q.y };
+  }
+
+  function dessiner_cable(g, ch, couleur) {
+    // Câble : ombre portée, gaine colorée, reflet.
+    const d = `M${ch.P.x} ${ch.P.y} C${ch.C1.x} ${ch.C1.y} ${ch.C2.x} ${ch.C2.y} ${ch.Q.x} ${ch.Q.y}`;
+    L.svg("path", { d, fill: "none", stroke: "#000", "stroke-width": 5, opacity: 0.25, transform: "translate(2 4)" }, g);
+    L.svg("path", { d, fill: "none", stroke: couleur, "stroke-width": 4.5, "stroke-linecap": "round" }, g);
+    L.svg("path", { d, fill: "none", stroke: "#fff", "stroke-width": 1.2, opacity: 0.3, transform: "translate(-0.8 -0.8)" }, g);
+    return L.svg("path", { d, fill: "none", stroke: "#000", "stroke-width": 16, opacity: 0.001, class: "fil" }, g);
+  }
+
+  function dessiner_fiche(g, p, couleur) {
+    // Fiche banane debout sur la borne : corps isolant coloré, bague claire.
+    L.svg("rect", { x: p.x - 4.5, y: p.y, width: 9, height: p.base - p.y, rx: 3, fill: couleur, stroke: "#00000070", "stroke-width": 0.8 }, g);
+    L.svg("rect", { x: p.x - 4.5, y: p.y + 3, width: 9, height: 2, fill: "#fff", opacity: 0.35 }, g);
+    L.svg("ellipse", { cx: p.x, cy: p.y, rx: 4.5, ry: 2.2, fill: "#151719" }, g);
+  }
+
+  function borne_sous(c, p, sauf) {
+    // Borne la plus proche du point lâché (à moins de PRISE_PX), autre que « sauf ».
+    let meilleure = null, d_min = PRISE_PX;
+    for (const b of Object.values(c.bornes)) {
+      const d = Math.hypot(b.x - p.x, b.y - p.y);
+      if (b.cle !== sauf && d < d_min) [meilleure, d_min] = [b, d];
+    }
+    return meilleure;
+  }
+
+  function rendre_tirable(c, fil, zone) {
+    // Tirer un fil posé : le bout le plus proche se débranche et suit le pointeur.
+    let bouge = null, fixe = null;
+    L.glissable(zone, {
+      soulever: false,
+      debut: (e) => {
+        const p = L.scene.vers_scene(e), A = c.bornes[fil.a], B = c.bornes[fil.b];
+        [bouge, fixe] = Math.hypot(p.x - A.x, p.y - A.y) < Math.hypot(p.x - B.x, p.y - B.y) ? ["a", "b"] : ["b", "a"];
+        return { x: c.bornes[fil[bouge]].x, y: c.bornes[fil[bouge]].y };
+      },
+      deplacer: (p) => { const k = c.fils.indexOf(fil); if (k >= 0) c.fils.splice(k, 1); temporaire = { de: fil[fixe], vers: p, couleur: fil.couleur, fil }; L.fils.dessiner(c); },
+      lacher: (p) => {
+        const b = borne_sous(c, p, fil[fixe]);
+        temporaire = null;
+        if (b && !c.relies(b.cle, fil[fixe])) c.fils.push({ ...fil, [bouge]: b.cle, [fixe]: fil[fixe] });
+        c.calculer();
+      },
+    });
+  }
+
+  L.fils = {
+    brancher_borne(c, b) {
+      // Zone de la borne : tirer depuis là crée un nouveau fil.
+      const zone = L.svg("circle", { cx: b.x, cy: b.y - 6, r: 13, fill: "#000", opacity: 0.001, class: "zone-borne", "aria-label": `Borne ${b.nom}` }, c.calque_bornes);
+      L.glissable(zone, {
+        soulever: false,
+        debut: () => ({ x: b.x, y: b.y }),
+        deplacer: (p) => { temporaire = { de: b.cle, vers: p, couleur: couleur_fil(c, b.cle) }; L.fils.dessiner(c); },
+        lacher: (p) => {
+          const cible = borne_sous(c, p, b.cle);
+          temporaire = null;
+          if (cible && !c.relies(b.cle, cible.cle)) c.fils.push({ a: b.cle, b: cible.cle, couleur: couleur_fil(c, b.cle), i: 0 });
+          c.calculer();
+        },
+      });
+    },
+    dessiner(c) {
+      // Redessine tous les fils (et le fil en cours de pose) avec leurs fiches.
+      const g = c.calque_fils;
+      g.replaceChildren();
+      for (const fil of c.fils) {
+        const P = bout(c, fil.a, fil), Q = bout(c, fil.b, fil);
+        fil.chemin = chemin(P, Q);
+        dessiner_fiche(g, P, fil.couleur); dessiner_fiche(g, Q, fil.couleur);
+        rendre_tirable(c, fil, dessiner_cable(g, fil.chemin, fil.couleur));
+      }
+      if (!temporaire) return;
+      const P = bout(c, temporaire.de, null), Q = { x: temporaire.vers.x, y: temporaire.vers.y - FICHE, base: temporaire.vers.y };
+      dessiner_fiche(g, P, temporaire.couleur); dessiner_fiche(g, Q, temporaire.couleur);
+      dessiner_cable(g, chemin(P, Q), temporaire.couleur);
+    },
+    point: (fil, t) => point_bezier(fil.chemin, t),
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : générateur basse fréquence (GBF) : tension alternative sinusoïdale, triangulaire ou carrée, de fréquence affichée
+       (50 Hz à 2 kHz) et d'amplitude réglable (0,5 à 10 V) mais non affichée — on la mesure à l'oscilloscope, comme
+       en vrai. Résistance de sortie 50 Ω ; bornes SORTIE (rouge) et masse (noire).
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, forme, f (Hz), Umax (V) }.
+Produit : Labo.gbf(c, reglage) -> composant { forme, f, Umax } ; il tient à jour c.alternatif = { forme, f, Umax } ;
+          Labo.forme_tension(forme, phase) -> valeur entre −1 et 1.
+Utilisé par : les postes des simulations de tensions variables ; circuit.js et oscilloscope_ecran.js (forme_tension).
+*/
+(function (L) {
+  const FREQUENCES = [50, 100, 200, 250, 500, 1000, 2000], R_SORTIE = 50;
+
+  L.forme_tension = function (forme, phase) {
+    // Valeur (entre −1 et 1) d'une tension de forme donnée ; phase en radians, 0 = passage à zéro en montant.
+    const s = Math.sin(phase);
+    if (forme === "triangle") return (2 / Math.PI) * Math.asin(s);
+    if (forme === "carre") return s >= 0 ? 1 : -1;
+    return s;
+  };
+
+  function symbole(g, x, y, forme) {
+    // Petit dessin de la forme de tension sur la touche.
+    const d = { sinus: `M${x - 8} ${y} q4 -9 8 0 t8 0`, triangle: `M${x - 8} ${y} l4 -6 l8 12 l4 -6`, carre: `M${x - 8} ${y + 5} v-10 h8 v10 h8 v-10` }[forme];
+    L.svg("path", { d, fill: "none", stroke: "#e8f0ff", "stroke-width": 1.4, "pointer-events": "none" }, g);
+  }
+
+  function dessiner(g, x, y) {
+    // Boîtier gris, plaque, afficheur de fréquence, légendes.
+    L.boitier(g, x, y, 220, 104, 30, { dessus: "#d5d9dc", face: "#7f8a92" });
+    L.svg("rect", { x: x + 10, y: y + 8, width: 70, height: 13, rx: 2, fill: "#37474f" }, g);
+    L.texte(g, x + 45, y + 15, "GBF", { "font-size": 8.5, fill: "#eef3f6", "font-weight": 700, "letter-spacing": 1 });
+    L.svg("rect", { x: x + 92, y: y + 6, width: 118, height: 24, rx: 2, fill: "#2b1208", stroke: "#120702" }, g);
+    for (const [dx, t] of [[30, "FORME"], [126, "FRÉQ."], [184, "AMPL."]]) L.texte(g, x + dx + 6, y + 40, t, { "font-size": 7, "font-weight": 700, fill: "#37474f" });
+    L.texte(g, x + 124, y + 87, "SORTIE", { "font-size": 7, "font-weight": 700, fill: "#37474f" });
+    L.texte(g, x + 176, y + 87, "⏚", { "font-size": 10, "font-weight": 700, fill: "#37474f" });
+    return L.texte(g, x + 204, y + 19, "", { "text-anchor": "end", "font-size": 14, "font-family": "monospace", "font-weight": 700, fill: "#ff7a3c" });
+  }
+
+  L.gbf = function (c, { id = "gbf", x, y, forme = "sinus", f = 500, Umax = 3 }) {
+    // Construit le GBF, ses touches (forme, fréquence −/+, amplitude −/+) et ses deux bornes.
+    const comp = { id, forme, f, Umax, g: L.svg("g", { class: "gbf" }, c.calque_composants) };
+    L.cordon_secteur(comp.g, { x: x + 200, y: y + 24 }, c.prise());
+    const afficheur = dessiner(comp.g, x, y);
+    const changer = (k) => {
+      Object.assign(comp, k);
+      c.alternatif = { forme: comp.forme, f: comp.f, Umax: comp.Umax };
+      afficheur.textContent = comp.f >= 1000 ? `${comp.f / 1000} kHz` : `${comp.f} Hz`;
+      L.missions.noter("gbf", { ...c.alternatif });
+      c.calculer();
+    };
+    ["sinus", "triangle", "carre"].forEach((nom, k) => {
+      L.bouton_rond(comp.g, x + 18 + k * 24, y + 56, "", () => changer({ forme: nom }), 10);
+      symbole(comp.g, x + 18 + k * 24, y + 56, nom);
+    });
+    const pas = (liste, v, s) => liste[Math.max(0, Math.min(liste.length - 1, liste.indexOf(v) + s))];
+    L.bouton_rond(comp.g, x + 120, y + 54, "−", () => changer({ f: pas(FREQUENCES, comp.f, -1) }));
+    L.bouton_rond(comp.g, x + 144, y + 54, "+", () => changer({ f: pas(FREQUENCES, comp.f, 1) }));
+    L.bouton_rond(comp.g, x + 178, y + 54, "−", () => changer({ Umax: Math.max(0.5, comp.Umax - 0.5) }));
+    L.bouton_rond(comp.g, x + 202, y + 54, "+", () => changer({ Umax: Math.min(10, comp.Umax + 0.5) }));
+    c.borne(comp, "sortie", x + 150, y + 86, L.ROUGE_BORNE);
+    c.borne(comp, "masse", x + 194, y + 86, L.NOIR_BORNE);
+    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / R_SORTIE, j: mode === "instant" ? c.instant / R_SORTIE : 0 }];
+    c.ajouter(comp);
+    changer({});
+    return comp;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : ce que mesure le multimètre selon la position de son commutateur : tension continue (V⎓), tension alternative
+       (V~, valeur efficace vraie « TRMS »), intensité alternative (A~, TRMS), intensité continue (A⎓, de 2 mA à 10 A), résistance (Ω : l'appareil envoie un petit courant
+       de test et mesure la tension). Calibres, résolution et précision d'un appareil réel à 2000 points ; au-delà du
+       calibre (ou circuit ouvert en ohmmètre), l'afficheur montre « 1 ».
+Reçoit : l'état du multimètre (mode, tension continue, onde de tension s'il y a un GBF, courants reçus du circuit et, s'il y a
+         un GBF, leurs ondes onde_i par borne).
+Produit : Labo.MULTIMETRE_MODES (positions du commutateur), Labo.multimetre_lire(comp) -> { valeur, lecture, unite, depasse } ;
+          Labo.multimetre_incertitude(mode, valeur) -> incertitude de la notice (même unité que valeur).
+Utilisé par : multimetre.js.
+*/
+(function (L) {
+  // precision : [part de la lecture, nombre d'unités du dernier chiffre] (notice de l'appareil).
+  const PAS = 360 / 16;
+  L.MULTIMETRE_MODES = [
+    { nom: "OFF", texte: "OFF" },
+    { nom: "2V", texte: "2", type: "V", calibre: 2, unite: "V", facteur: 1, decimales: 3, precision: [0.005, 2] },
+    { nom: "20V", texte: "20", type: "V", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.005, 2] },
+    { nom: "200V", texte: "200", type: "V", calibre: 200, unite: "V", facteur: 1, decimales: 1, precision: [0.005, 2] },
+    { nom: "2V~", texte: "2", type: "VAC", calibre: 2, unite: "V", facteur: 1, decimales: 3, precision: [0.01, 3] },
+    { nom: "20V~", texte: "20", type: "VAC", calibre: 20, unite: "V", facteur: 1, decimales: 2, precision: [0.01, 3] },
+    { nom: "20mA~", texte: "20m", type: "AAC", borne: "mA", calibre: 0.02, unite: "mA", facteur: 1000, decimales: 2, precision: [0.015, 3] },
+    { nom: "200mA~", texte: "200m", type: "AAC", borne: "mA", calibre: 0.2, unite: "mA", facteur: 1000, decimales: 1, precision: [0.015, 3] },
+    { nom: "2mA", texte: "2m", type: "A", borne: "mA", calibre: 0.002, unite: "mA", facteur: 1000, decimales: 3, precision: [0.01, 2] },
+    { nom: "20mA", texte: "20m", type: "A", borne: "mA", calibre: 0.02, unite: "mA", facteur: 1000, decimales: 2, precision: [0.01, 2] },
+    { nom: "200mA", texte: "200m", type: "A", borne: "mA", calibre: 0.2, unite: "mA", facteur: 1000, decimales: 1, precision: [0.01, 2] },
+    { nom: "10A", texte: "10A", type: "A", borne: "10A", calibre: 10, unite: "A", facteur: 1, decimales: 2, precision: [0.02, 3] },
+    { nom: "200Ω", texte: "200", type: "R", calibre: 200, test: 1e-3, unite: "Ω", facteur: 1, decimales: 1, precision: [0.008, 3] },
+    { nom: "2kΩ", texte: "2k", type: "R", calibre: 2000, test: 1e-3, unite: "kΩ", facteur: 1e-3, decimales: 3, precision: [0.008, 3] },
+    { nom: "20kΩ", texte: "20k", type: "R", calibre: 20000, test: 1e-4, unite: "kΩ", facteur: 1e-3, decimales: 2, precision: [0.008, 3] },
+    { nom: "200kΩ", texte: "200k", type: "R", calibre: 200000, test: 1e-5, unite: "kΩ", facteur: 1e-3, decimales: 1, precision: [0.008, 3] },
+  ].map((m, k) => ({ ...m, angle: k * PAS }));
+  L.MULTIMETRE_GROUPES = [{ type: "V", texte: "V⎓", angle: 2 * PAS, couleur: "#f4f4ee" }, { type: "VAC", texte: "V~", angle: 4.5 * PAS, couleur: "#ffb74d" }, { type: "AAC", texte: "A~", angle: 6.5 * PAS, couleur: "#ffcc80" }, { type: "A", texte: "A⎓", angle: 9.5 * PAS, couleur: "#80deea" }, { type: "R", texte: "Ω", angle: 13.5 * PAS, couleur: "#c5e1a5" }];
+  const COMPLIANCE_V = 2.8;
+  const moyenne = (t) => t.reduce((s, v) => s + v, 0) / t.length;
+  const efficace = (onde) => (onde ? Math.sqrt(Math.max(0, moyenne(onde.map((x) => x * x)) - moyenne(onde) ** 2)) : 0);
+
+  L.multimetre_lire = function (comp) {
+    // Valeur mesurée (V, A ou Ω) et texte de l'afficheur pour le mode choisi. En V~ : valeur efficace vraie (TRMS)
+    // de la partie variable (de même en A~ pour le courant) ; en V⎓ : valeur moyenne ; en Ω : tension aux bornes divisée par le courant de test.
+    const m = L.MULTIMETRE_MODES.find((k) => k.nom === comp.mode);
+    if (!m.type) return { valeur: 0, lecture: "", unite: "", depasse: false };
+    const onde = comp.onde, moy = onde ? moyenne(onde) : comp.u_continue;
+    let v = 0, hors = false;
+    if (m.type === "V") v = moy;
+    else if (m.type === "VAC") v = efficace(onde);
+    else if (m.type === "AAC") v = efficace((comp.onde_i || {})[m.borne]);
+    else if (m.type === "A") v = comp.courants[m.borne];
+    else { v = comp.u_continue / m.test; hors = comp.u_continue > COMPLIANCE_V || v < 0; }
+    const resolution = Math.pow(10, -m.decimales) / m.facteur, depasse = hors || Math.abs(v) > m.calibre - resolution / 2;
+    return { valeur: v, lecture: depasse ? "1" : (v * m.facteur).toFixed(m.decimales), unite: m.unite, depasse };
+  };
+
+  L.multimetre_incertitude = function (mode, valeur) {
+    // Incertitude de la notice : p % de la lecture + n unités du dernier chiffre affiché (dans l'unité de valeur, V ou A).
+    const m = L.MULTIMETRE_MODES.find((k) => k.nom === mode);
+    return m.precision[0] * Math.abs(valeur) + (m.precision[1] * Math.pow(10, -m.decimales)) / m.facteur;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : multimètre numérique : commutateur rotatif (OFF ; V⎓ 2 à 200 V ; V~ 2 et 20 V ; A~ 20 et 200 mA ; A⎓ 2 mA à 10 A ; Ω 200 Ω à
+       200 kΩ), quatre bornes (10A, mA, COM, VΩ). En voltmètre, il mesure U = V(VΩ) − V(COM) (résistance d'entrée 10 MΩ) ;
+       en ohmmètre, il envoie un courant de test par VΩ (le dipôle mesuré doit être isolé du circuit) ;
+       en ampèremètre (A⎓ ou A~), le courant qui entre par 10A ou mA et sort par COM. La borne mA est protégée par un fusible
+       (0,25 A) : branché en dérivation sur un générateur, il grille ; un toucher sur l'étiquette le remplace.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, mode (nom d'un mode de multimetre_mesure.js), etiquette }.
+Produit : Labo.multimetre(c, reglage) -> composant { mode, valeur (V ou A, signée), lecture (texte affiché), depasse, fusible } ;
+          faits notés « calibre » = { <id> : mode }, « fusible_grille » = id.
+Utilisé par : les postes des simulations d'électricité.
+*/
+(function (L) {
+  const LARGEUR = 150, PROFONDEUR = 232, FUSIBLE_A = 0.25, BORNES = [["10A", 22, L.ROUGE_BORNE], ["mA", 57, L.ROUGE_BORNE], ["COM", 93, L.NOIR_BORNE], ["VΩ", 128, L.ROUGE_BORNE]];
+  const groupe = (type) => L.MULTIMETRE_GROUPES.find((k) => k.type === type);
+
+  function corps(g, x, y) {
+    // Gaine jaune, façade sombre, écran à cristaux liquides, légende des bornes.
+    L.boitier(g, x, y, LARGEUR, PROFONDEUR, 12, { dessus: "#f0bf2a", face: "#b98d14" });
+    L.svg("rect", { x: x + 8, y: y + 8, width: LARGEUR - 16, height: PROFONDEUR - 16, rx: 8, fill: "#2f3337" }, g);
+    L.svg("rect", { x: x + 18, y: y + 16, width: LARGEUR - 36, height: 44, rx: 3, fill: "#b7c3a6", stroke: "#1b1e1a" }, g);
+    L.texte(g, x + 26, y + 71, "TRUE RMS", { "text-anchor": "start", "font-size": 6.5, "font-weight": 700, fill: "#cfd2cf" });
+    for (const [nom, dx] of BORNES) L.texte(g, x + dx, y + 227, nom, { "font-size": 7.5, "font-weight": 700, fill: "#e8e8e2" });
+  }
+
+  function commutateur(g, x, y, comp, choisir) {
+    // Bouton rotatif, ses repères (touchables) et les symboles des groupes de calibres.
+    const c = { x: x + LARGEUR / 2, y: y + 128 }, aiguille = L.svg("g", {}, g);
+    const polaire = (a, r) => ({ x: c.x + r * Math.sin((a * Math.PI) / 180), y: c.y - r * Math.cos((a * Math.PI) / 180) });
+    L.svg("circle", { cx: c.x, cy: c.y, r: 24, fill: "url(#acier)", stroke: "#111" }, g);
+    for (const k of L.MULTIMETRE_GROUPES) { const p = polaire(k.angle, 61); L.texte(g, p.x, p.y, k.texte, { "font-size": 8.5, "font-weight": 700, fill: k.couleur }); }
+    for (const m of L.MULTIMETRE_MODES) {
+      const p = polaire(m.angle, 46);
+      L.texte(g, p.x, p.y, m.texte, { "font-size": 7, "font-weight": 700, fill: m.type ? groupe(m.type).couleur : "#cfd2cf" });
+      const zone = L.svg("circle", { cx: p.x, cy: p.y, r: 8, fill: "#000", opacity: 0.001, class: `repere repere-${m.nom}`, role: "button", "aria-label": `Calibre ${m.nom}` }, g);
+      L.glissable(zone, { soulever: false, debut: () => p, toucher: () => choisir(m.nom) });
+    }
+    g.append(aiguille);
+    return () => {
+      // Tourne le bouton vers le mode choisi.
+      const a = L.MULTIMETRE_MODES.find((m) => m.nom === comp.mode).angle;
+      aiguille.replaceChildren();
+      L.svg("rect", { x: c.x - 4, y: c.y - 22, width: 8, height: 44, rx: 3, fill: "#1a1c1e", transform: `rotate(${a} ${c.x} ${c.y})` }, aiguille);
+      L.svg("path", { d: `M${c.x} ${c.y - 22} l-3 7 h6 Z`, fill: "#fff", transform: `rotate(${a} ${c.x} ${c.y})` }, aiguille);
+    };
+  }
+
+  function afficheur(g, x, y) {
+    // Chiffres, unité et type de mesure (DC, AC) ; renvoie une fonction qui écrit la mesure.
+    const ecran = L.texte(g, x + 126, y + 38, "", { "text-anchor": "end", "font-size": 26, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17" });
+    const unite = L.texte(g, x + 128, y + 54, "", { "text-anchor": "end", "font-size": 8, "font-weight": 700, fill: "#1b1f17" });
+    const type = L.texte(g, x + 24, y + 54, "", { "text-anchor": "start", "font-size": 7.5, "font-weight": 700, fill: "#1b1f17" });
+    return (comp) => {
+      const r = L.multimetre_lire(comp), m = L.MULTIMETRE_MODES.find((k) => k.nom === comp.mode);
+      Object.assign(comp, { valeur: r.valeur, lecture: r.lecture, depasse: r.depasse });
+      ecran.setAttribute("x", r.depasse ? x + 26 : x + 126);
+      ecran.setAttribute("text-anchor", r.depasse ? "start" : "end");
+      ecran.textContent = r.lecture;
+      unite.textContent = r.unite;
+      type.textContent = { V: "DC", A: "DC", VAC: "AC", AAC: "AC" }[m.type] || "";
+    };
+  }
+
+  function fusible(c, comp, x, y) {
+    // Étiquette « fusible grillé » sous l'écran ; un toucher remplace le fusible.
+    const g = L.svg("g", { class: "fusible", style: "display:none", role: "button", "aria-label": "Changer le fusible" }, comp.g);
+    L.svg("rect", { x: x + 22, y: y + 63, width: 106, height: 14, rx: 2, fill: "#b71c1c" }, g);
+    L.texte(g, x + 75, y + 70.5, "fusible mA grillé : toucher", { "font-size": 7, "font-weight": 700, fill: "#fff" });
+    L.glissable(g, { soulever: false, debut: () => ({ x, y }), toucher: () => { comp.fusible = true; g.style.display = "none"; c.calculer(); } });
+    return () => {
+      // Courant trop fort (continu ou crête) dans la borne mA : le fusible fond, la borne mA ne conduit plus.
+      if (!comp.fusible || Math.max(Math.abs(comp.courants.mA), ...(comp.onde_i.mA || []).map(Math.abs)) <= FUSIBLE_A) return;
+      comp.fusible = false;
+      g.style.display = "";
+      L.missions.noter("fusible_grille", comp.id);
+      setTimeout(() => c.calculer(), 0);
+    };
+  }
+
+  L.multimetre = function (c, { id = "multimetre", x, y, mode = "OFF", etiquette = "" }) {
+    // Construit l'appareil : bornes (shunts 0,01 Ω sur 10A, 1 Ω sur mA ; 10 MΩ entre VΩ et COM) et commutateur.
+    const comp = { id, mode, valeur: 0, lecture: "", depasse: false, fusible: true, courants: { "10A": 0, mA: 0 }, onde_i: {}, u_continue: 0, onde: null, g: L.svg("g", { class: `multimetre multimetre-${id}` }, c.calque_composants) };
+    corps(comp.g, x, y);
+    if (etiquette) L.texte(comp.g, x + 118, y + 71, etiquette, { "font-size": 11, "font-weight": 700, fill: "#ffd54f" });
+    const ecrire = afficheur(comp.g, x, y);
+    const tourner = commutateur(comp.g, x, y, comp, (nom) => { comp.mode = nom; tourner(); L.missions.noter("calibre", { [id]: nom }); c.calculer(); });
+    tourner();
+    const surveiller = fusible(c, comp, x, y);
+    for (const [nom, dx, couleur] of BORNES) c.borne(comp, nom, x + dx, y + 212, couleur);
+    const test = () => (L.MULTIMETRE_MODES.find((m) => m.nom === comp.mode).test || 0);
+    const g_mA = () => (comp.fusible ? 1 : 1e-9), fois = (t, k) => t && t.map((x) => x * k);
+    comp.dipoles = () => [{ a: "10A", b: "COM", g: 100, j: 0 }, { a: "mA", b: "COM", g: g_mA(), j: 0 }, { a: "COM", b: "VΩ", g: 1e-7, j: test() }];
+    comp.mettre_a_jour = ({ u, i, onde }) => {
+      const onde_i = { "10A": fois(onde("10A", "COM"), 100), mA: fois(onde("mA", "COM"), g_mA()) };
+      Object.assign(comp, { courants: { "10A": i[0], mA: i[1] }, onde_i, u_continue: u("VΩ", "COM"), onde: onde("VΩ", "COM") });
+      surveiller();
+      ecrire(comp);
+    };
+    return c.ajouter(comp);
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : physique de la conductimétrie : conductivités molaires ioniques (valeurs des tables, à 25 °C, en
        mS·m²/mol), solutions (ions et coefficients), conductivité σ = Σ λi·[Xi] (SI) corrigée pour la concentration
        (les ions se gênent : facteur 1 − 0,5·√C) et la température (+ 2,1 % par °C) ; eau distillée σ = 5 × 10⁻⁴ S/m ;
-       conductance G = σ·S/L. Appareils sur une étagère murale : GBF (500 Hz, tension efficace réglable), ampèremètre
-       (mA~) et voltmètre (V~) numériques, à cristaux liquides.
-Reçoit : le nom de la solution, C (mol/L), θ (°C), S (m²), L (m) ; le groupe SVG et les positions des appareils.
-Produit : Labo.LAMBDA ; Labo.SOLUTIONS ; Labo.sigma(nom, C, θ) (S/m) ; Labo.conductance({ nom, C, theta, S, L }) (S) ;
-          Labo.etagere_appareils(g, { x, y }) -> { bornes { gbf, a, v } (points des câbles), afficher(U, I) }.
+       conductance G = σ·S/L.
+Reçoit : le nom de la solution, C (mol/L), θ (°C), S (m²), L (m).
+Produit : Labo.LAMBDA ; Labo.SOLUTIONS ; Labo.sigma(nom, C, θ) (S/m) ; Labo.conductance({ nom, C, theta, S, L }) (S).
 Utilisé par : cellule_conductance.js et les simulations de conductimétrie.
 */
 (function (L) {
@@ -2213,108 +4469,168 @@ Utilisé par : cellule_conductance.js et les simulations de conductimétrie.
     return (s * (1 - 0.5 * Math.sqrt(C)) + 5e-4) * (1 + 0.021 * (theta - 25));
   };
   L.conductance = ({ nom, C, theta = 25, S, L: l }) => (l > 0 && S > 0 ? (L.sigma(nom, C, theta) * S) / l : 0);
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : cellule de conductance aux vraies dimensions (1,6 px par mm, comme toute la verrerie) : deux plaques parallèles de
+       1 cm × 4 cm tenues par une barrette graduée au bout d'un pied (on fait glisser la plaque de droite : L de 0,5 à 3 cm),
+       reliées à un bornier à deux bornes (composant du circuit : conductance G) ; support élévateur à manivelle (on la fait
+       glisser vers le haut ou le bas) ; béchers de 100 mL des solutions (verrerie physique : on les prend, on les pose sur
+       le plateau, on peut verser). S = 1 cm × profondeur immergée ; σ d'un mélange : moyenne des σ pondérée par les volumes.
+Reçoit : le contexte de chimie (paillasse_chimie), le circuit (circuit.js) et { flacons: [{ id, texte, sol (Labo.SOLUTIONS),
+         C (mol/L) }], L (cm), L_fixe, S_fixe (cm² : la manivelle n'a que deux positions, bas ou plaques immergées de S_fixe cm) }.
+Produit : Labo.cellule_conductance(ctx, c, reglage) -> { etat() -> { flacon (id du bécher posé sur le plateau, ou « melange »),
+          L, S, G }, comp (bornes « cellule.1 » et « cellule.2 »), glisse() (vrai pendant un réglage), sur_lacher(f) }.
+Utilisé par : poste_conductance.js.
+*/
+(function (L) {
+  const X = 600, E = 1.6, PX_CM = 16, SOL = 576, YPB = 470, YB = 356, HAUT = 479, BAS = 552, MANIV = { x: X + 76 }, YBO = 327;
+  const PLACES = [[50, 470], [140, 470], [230, 470], [320, 470], [410, 470], [236, 576], [324, 576], [412, 576]].map(([x, y]) => ({ x, y }));
 
-  function boitier(g, x, y, titre, couleur) {
-    // Appareil de 100 × 80 posé sur l'étagère : boîtier, écran, légende, deux bornes ; renvoie le groupe de l'écran.
-    L.svg("rect", { x: x + 3, y: y + 3, width: 100, height: 80, rx: 6, fill: "#1b1e21" }, g);
-    L.svg("rect", { x, y, width: 100, height: 80, rx: 6, fill: couleur, stroke: "#111" }, g);
-    L.svg("rect", { x: x + 8, y: y + 8, width: 84, height: 26, rx: 3, fill: "#1d2a22", stroke: "#000" }, g);
-    L.texte(g, x + 50, y + 46, titre, { "font-size": 7.5, "font-weight": 700, fill: "#e8e2cc" });
-    for (const [dx, c] of [[30, "#c62828"], [70, "#111"]]) L.svg("circle", { cx: x + dx, cy: y + 66, r: 6, fill: c, stroke: "#000" }, g);
-    return L.svg("g", {}, g);
+  function cellule(g, l) {
+    // Barrette graduée, tiges, deux plaques (vues de trois quarts), graduations de profondeur, fils jusqu'au bornier.
+    g.replaceChildren();
+    const xg = X - 24, xd = xg + l * PX_CM;
+    L.svg("rect", { x: X - 44, y: YB - 6, width: 88, height: 6, rx: 2, fill: "#f0efe8", stroke: "#8f8b7c" }, g);
+    for (let c = 0; c <= 4; c += 0.5) L.svg("line", { x1: xg + c * PX_CM, y1: YB - 6, x2: xg + c * PX_CM, y2: YB - (c % 1 ? 4 : 2), stroke: "#333", "stroke-width": 0.5 }, g);
+    for (const [x, xb, couleur] of [[xg, X - 13, "#c62828"], [xd, X + 13, "#1d1f22"]]) {
+      L.svg("path", { d: `M${xb} ${YBO + 4} C${xb} ${YBO + 14} ${x} ${YB - 22} ${x} ${YB - 8}`, fill: "none", stroke: couleur, "stroke-width": 1.6 }, g);
+      L.svg("rect", { x: x - 4, y: YB - 10, width: 8, height: 11, rx: 2, fill: "#2b3035" }, g);
+      L.svg("rect", { x: x + 2, y: YB, width: 2, height: YPB - 64 - YB + 2, fill: "url(#metal)" }, g);
+      L.svg("path", { d: `M${x} ${YPB - 62} L${x + 7} ${YPB - 66} V${YPB - 4} L${x} ${YPB} Z`, fill: "#4a4f55", stroke: "#22262a", "stroke-width": 0.6 }, g);
+    }
+    for (let k = 1; k <= 3; k++) { const y = YPB - k * PX_CM; L.svg("line", { x1: xg - 5, y1: y, x2: xg, y2: y, stroke: "#e8e2cc", "stroke-width": 0.7 }, g); L.texte(g, xg - 11, y + 3, `${k}`, { "font-size": 6, fill: "#e8e2cc" }); }
+    return { xd };
   }
 
-  L.etagere_appareils = function (g, { x, y }) {
-    // Étagère murale (planche, équerres) ; GBF, ampèremètre (mA~), voltmètre (V~) ; écrans mis à jour par afficher(U, I).
-    L.svg("rect", { x: x - 10, y: y + 80, width: 360, height: 9, fill: "url(#bois)", stroke: "#6d4a26" }, g);
-    for (const dx of [20, 320]) L.svg("path", { d: `M${x + dx} ${y + 89} v22 l-12 -22 Z`, fill: "#8d918a" }, g);
-    const e = [boitier(g, x, y, "GBF 500 Hz", "#2f3a45"), boitier(g, x + 120, y, "AMPÈREMÈTRE mA~", "#c9a227"), boitier(g, x + 240, y, "VOLTMÈTRE V~", "#c9a227")];
-    const ecrire = (k, t) => { e[k].replaceChildren(); L.texte(e[k], x + 120 * k + 50, y + 26, t, { "font-size": 13, "font-weight": 700, fill: "#7dff9a", "font-family": "monospace" }); };
-    const b = (k) => [{ x: x + 120 * k + 30, y: y + 66 }, { x: x + 120 * k + 70, y: y + 66 }];
-    return {
-      bornes: { gbf: b(0), a: b(1), v: b(2) },
-      afficher: (U, I) => { const bruit = 1 + (Math.random() - 0.5) * 0.002; ecrire(0, `${U.toFixed(2).replace(".", ",")} V`); ecrire(1, (I * 1000 * bruit).toFixed(3).replace(".", ",")); ecrire(2, (U * bruit).toFixed(3).replace(".", ",")); },
-    };
+  function support(g, y) {
+    // Support élévateur (socle, ciseaux, plateau en y) et sa manivelle.
+    g.replaceChildren();
+    L.ombre_sol(g, X, SOL + 2, 62, 5, 0.4);
+    L.svg("rect", { x: X - 56, y: SOL - 6, width: 112, height: 6, rx: 2, fill: "url(#metal)", stroke: "#444" }, g);
+    for (const s of [-1, 1]) L.svg("line", { x1: X - 48, y1: s > 0 ? SOL - 6 : y + 6, x2: X + 48, y2: s > 0 ? y + 6 : SOL - 6, stroke: "#6a7177", "stroke-width": 3.5 }, g);
+    L.svg("rect", { x: X - 56, y, width: 112, height: 6, rx: 2, fill: "url(#metal)", stroke: "#444" }, g);
+    const ym = (y + SOL) / 2;
+    L.svg("line", { x1: X + 48, y1: ym, x2: MANIV.x, y2: ym, stroke: "#555", "stroke-width": 3 }, g);
+    L.svg("circle", { cx: MANIV.x, cy: ym, r: 8, fill: "#2b3035", stroke: "#000" }, g); L.svg("circle", { cx: MANIV.x, cy: ym, r: 3, fill: "url(#metal)" }, g);
+  }
+
+  function composant(c) {
+    // Bornier isolant au bout de la potence, deux bornes ; modèle électrique : conductance G entre les bornes 1 et 2.
+    const comp = { id: "cellule", G: 0, g: L.svg("g", { class: "cellule" }, c.calque_composants) };
+    L.svg("rect", { x: X - 28, y: YBO - 11, width: 56, height: 24, rx: 3, fill: "#2b3035", stroke: "#111" }, comp.g);
+    L.texte(comp.g, X, YBO - 15, "CELLULE", { "font-size": 6.5, "font-weight": 700, fill: "#e8e2cc" });
+    c.borne(comp, "1", X - 13, YBO, L.ROUGE_BORNE);
+    c.borne(comp, "2", X + 13, YBO, L.NOIR_BORNE);
+    comp.dipoles = () => [{ a: "1", b: "2", g: Math.max(1e-12, comp.G), j: 0 }];
+    return c.ajouter(comp);
+  }
+
+  function mesurer(b, flacons, l) {
+    // Bécher sur le plateau : surface du liquide, profondeur immergée, σ du contenu (moyenne pondérée), G.
+    if (!b) return { flacon: null, S: 0, G: 0 };
+    const ph = b.c.phases.find((p) => p.classe === "aqueuse"), V = ph ? ph.V : 0;
+    const prof = V > 0 ? Math.max(0, Math.min(4, (YPB - (b.pose.y - b.pr.hauteur_de(b.c.volume()) * E)) / PX_CM)) : 0, S = Math.round(prof * 10) / 10;
+    let sigma = 0; const purs = [];
+    for (const [n, v] of Object.entries(ph?.liquides || {})) { const f = flacons.find((k) => `cond_${k.id}` === n); if (f && v > 1e-6) { sigma += (v / V) * L.sigma(f.sol, f.C); purs.push(f.id); } else if (n === "eau") sigma += (v / V) * L.sigma("eau", 0); }
+    return { flacon: purs.length === 1 && Object.keys(ph.liquides).length === 1 ? purs[0] : "melange", S, G: S > 0 ? (sigma * S * 1e-4) / (l * 1e-2) : 0 };
+  }
+
+  function bechers(ctx, flacons, station, e) {
+    // Un bécher de 100 mL par solution (70 mL), sur sa place ; on ne le reprend sur le plateau que plateau en bas.
+    return flacons.map((k, i) => {
+      L.LIQUIDES[`cond_${k.id}`] = { nom: k.texte.replace("\n", " "), d: 1.0, rgb: [228, 240, 246], alpha: 0.3, classe: "aqueuse" };
+      const r = L.recipient(ctx, { id: k.id, profil: "becher_100", x: PLACES[i].x, y: PLACES[i].y, e: E, contenu: { [`cond_${k.id}`]: 70 }, etiquette: k.texte.replace("\n", " ") });
+      L.manipuler(ctx, r, { sol: SOL, supports: [...PLACES, station], pose_libre: false, autoriser: () => r.place !== station || e.y >= BAS - 1 });
+      return r;
+    });
+  }
+
+  L.cellule_conductance = function (ctx, c, { flacons, L: l0 = 1, L_fixe = false, S_fixe = null }) {
+    // Matériel et gestes ; la conductance du composant suit le bécher, la hauteur du plateau et la distance des plaques.
+    const e = { l: l0, y: BAS, glisse: false, lachers: [] }, station = { x: X, y: BAS, station: true };
+    L.ecoulement(ctx, { sol: SOL, e: E });
+    L.pied_support(ctx.fond, X - 100, SOL, 300); L.svg("rect", { x: X - 100, y: 340, width: 100, height: 5, fill: "url(#metal)" }, ctx.fond); L.svg("rect", { x: X - 2, y: 340, width: 4, height: YB - 346, fill: "url(#metal)" }, ctx.fond); L.noix(ctx.fond, X - 100, 342);
+    const gs = L.svg("g", {}, ctx.fond), gc = L.svg("g", { "pointer-events": "none" }, ctx.fond), comp = composant(c), liste = bechers(ctx, flacons, station, e);
+    const gm = L.svg("g", { class: "manivelle", role: "slider", "aria-label": "Manivelle du support élévateur" }, ctx.haut), gd = L.svg("g", { class: "plaque", role: "slider", "aria-label": "Plaque mobile" }, ctx.haut);
+    const sur_plateau = () => liste.find((b) => b.place === station && !b.tenu);
+    const etat = () => { const m = mesurer(sur_plateau(), flacons, e.l); return { flacon: m.flacon, L: e.l, S: m.S, G: m.G }; };
+    const actualiser = () => { const G = etat().G; if (Math.abs(G - comp.G) > 1e-12) { comp.G = G; c.calculer(); } };
+    const hauteur = (y) => { const b = sur_plateau(); e.y = b ? Math.max(HAUT, Math.min(BAS, y)) : BAS; if (S_fixe && b) { const h = YPB + b.pr.hauteur_de(b.c.volume()) * E - S_fixe * PX_CM; e.y = e.y < (h + BAS) / 2 ? h : BAS; } station.y = e.y; if (b) { b.pose.y = e.y; b.dessiner(); } };
+    const dessiner = () => { const p = cellule(gc, e.l); support(gs, e.y); gm.replaceChildren(); L.svg("circle", { cx: MANIV.x, cy: (e.y + SOL) / 2, r: 14, fill: "#fff", opacity: 0.01 }, gm); gd.replaceChildren(); L.svg("rect", { x: p.xd - 8, y: YB - 14, width: 18, height: YPB - YB + 16, fill: "#fff", opacity: 0.01 }, gd); actualiser(); };
+    const lacher = () => { e.glisse = false; actualiser(); e.lachers.forEach((f) => f()); };
+    L.glissable(gm, { soulever: false, debut: () => { e.glisse = true; return { x: MANIV.x, y: e.y }; }, deplacer: (p) => { hauteur(p.y); dessiner(); }, lacher });
+    if (!L_fixe) L.glissable(gd, { soulever: false, debut: () => { e.glisse = true; return { x: X - 24 + e.l * PX_CM, y: 0 }; }, deplacer: (p) => { e.l = Math.round(Math.max(0.5, Math.min(3, (p.x - X + 24) / PX_CM)) * 2) / 2; dessiner(); }, lacher });
+    dessiner();
+    setInterval(() => { if (!sur_plateau() && e.y < BAS) { e.y = BAS; station.y = BAS; dessiner(); } if (!e.glisse) actualiser(); }, 300);
+    return { etat, comp, glisse: () => e.glisse, sur_lacher: (f) => e.lachers.push(f) };
   };
 })(window.Labo);
 </script>
   <script>
 /*
-Rôle : poste de mesure de conductance aux vraies dimensions (2,4 px par mm) : cellule à deux plaques parallèles de 1 cm de
-       large et 4 cm de haut, tenue par une barrette graduée (on fait glisser la plaque de droite : L de 0,5 à 3 cm) au bout
-       d'un pied ; bécher de 100 mL sur un support élévateur (on fait glisser le plateau : la surface immergée S = 1 cm ×
-       profondeur varie de 0 à 3 cm) ; flacons de solutions (un toucher rince le bécher et le remplit) ; étagère du GBF et
-       des deux appareils, câbles branchés. U efficace réglée par les touches du GBF (0,50 à 2,00 V) ; I = G × U.
-Reçoit : le groupe SVG de la paillasse et { flacons: [{ id, texte, sol (Labo.SOLUTIONS), C (mol/L) }], L (cm), L_fixe, S_fixe (cm² : le plateau n'a que deux positions, bas ou plaques immergées de S_fixe cm) }.
-Produit : Labo.cellule_conductance(g, reglage) -> { etat() -> { flacon, sol, C, L, S, U, I, G }, mesures: [] } ;
-          fait « conductance » = { flacon, L, S, U, I, G, mesures: [{ flacon, L, S, U, I, G }] }.
+Rôle : paillasse de mesure de conductance : GBF (tension alternative de 500 Hz, amplitude réglable), deux multimètres
+       (A et V), cellule de conductance et béchers (cellule_conductance.js). L'élève tire les fils : GBF → ampèremètre (borne
+       mA, puis COM) → cellule → GBF ; voltmètre (VΩ, COM) aux bornes de la cellule ; il choisit les calibres
+       alternatifs (V~ et A~). Une mesure est notée quand le montage est juste et que les deux appareils affichent une valeur
+       en alternatif : U et I lus, G = I/U.
+Reçoit : le groupe SVG de la paillasse et le réglage de la cellule (cellule_conductance.js).
+Produit : Labo.poste_conductance(g, reglage) -> { pense_bete } ; fait « conductance » = { flacon, L, S, U, I, G, montage
+          { serie, derivation, A (mode), V (mode) }, mesures: [{ flacon, L, S, U (V), I (A), G (S) }] } (U et I lus sur les
+          afficheurs, G = I/U) ; Labo.etape_montage_conductance : étape de mission « câbler et choisir les calibres ».
 Utilisé par : les simulations de conductimétrie.
 */
 (function (L) {
-  const X = 580, YB = 262, YP = 335, E = 2.4, PX_CM = 24, SOL = 560, HAUT_LIQ = 85;
+  const mode = (m) => L.MULTIMETRE_MODES.find((k) => k.nom === m.mode) || {};
+  const lu = (m, type) => (mode(m).type === type && !m.depasse ? Number(m.lecture) / mode(m).facteur : null);
 
-  function cellule(g, l) {
-    // Barrette graduée, tige, deux plaques (vues de trois quarts) ; renvoie les points d'attache des câbles.
-    g.replaceChildren();
-    const xg = X - 36, xd = xg + l * PX_CM;
-    L.svg("rect", { x: X - 60, y: YB - 8, width: 120, height: 8, rx: 2, fill: "#f0efe8", stroke: "#8f8b7c" }, g);
-    for (let c = 0; c <= 4; c += 0.5) L.svg("line", { x1: xg + c * PX_CM, y1: YB - 8, x2: xg + c * PX_CM, y2: YB - (c % 1 ? 5 : 3), stroke: "#333", "stroke-width": 0.6 }, g);
-    for (const x of [xg, xd]) {
-      L.svg("rect", { x: x - 5, y: YB - 12, width: 10, height: 14, rx: 2, fill: "#2b3035" }, g);
-      L.svg("rect", { x: x + 3, y: YB, width: 3, height: YP - YB + 2, fill: "url(#metal)" }, g);
-      L.svg("path", { d: `M${x} ${YP + 4} L${x + 10} ${YP - 2} V${YP + 90} L${x} ${YP + 96} Z`, fill: "#4a4f55", stroke: "#22262a" }, g);
-    }
-    for (let k = 1; k <= 3; k++) { const y = YP + 96 - k * PX_CM; L.svg("line", { x1: xg - 6, y1: y, x2: xg, y2: y, stroke: "#e8e2cc", "stroke-width": 0.8 }, g); L.texte(g, xg - 12, y + 3, `${k} cm`, { "font-size": 6, fill: "#e8e2cc" }); }
-    return { g: { x: xg, y: YB - 12 }, d: { x: xd, y: YB - 12 } };
+  function montage(c) {
+    // Ampèremètre en série avec la cellule sur le GBF, voltmètre en dérivation sur la cellule, sans court-circuit.
+    const n = (a, b) => c.meme_noeud(a, b), deux = [["1", "2"], ["2", "1"]], gbf = [["sortie", "masse"], ["masse", "sortie"]];
+    const boucle = (p, q) => gbf.some(([x, y]) => deux.some(([r, s]) => n(`gbf.${x}`, `A.${p}`) && n(`A.${q}`, `cellule.${r}`) && n(`cellule.${s}`, `gbf.${y}`)));
+    const court = n("gbf.sortie", "gbf.masse") || n("cellule.1", "cellule.2") || n("A.mA", "A.COM") || n("A.10A", "A.COM");
+    const serie = (boucle("mA", "COM") || boucle("COM", "mA")) && !court;
+    const derivation = deux.some(([r, s]) => n("V.VΩ", `cellule.${r}`) && n("V.COM", `cellule.${s}`)) && !court;
+    return { serie, derivation };
   }
 
-  function becher(g, y, rgb, texte) {
-    // Support élévateur (ciseaux) dont le plateau est en y, bécher de 100 mL posé dessus, liquide, étiquette.
-    g.replaceChildren();
-    L.ombre_sol(g, X, SOL + 2, 74, 6, 0.4);
-    L.svg("rect", { x: X - 70, y: SOL - 8, width: 140, height: 8, rx: 2, fill: "url(#metal)", stroke: "#444" }, g);
-    for (const s of [-1, 1]) L.svg("line", { x1: X - 60, y1: s > 0 ? SOL - 8 : y + 8, x2: X + 60, y2: s > 0 ? y + 8 : SOL - 8, stroke: "#6a7177", "stroke-width": 4 }, g);
-    L.svg("rect", { x: X - 70, y, width: 140, height: 8, rx: 2, fill: "url(#metal)", stroke: "#444" }, g);
-    L.svg("rect", { x: X - 60, y: y - HAUT_LIQ, width: 120, height: HAUT_LIQ, fill: rgb, opacity: 0.45 }, g);
-    L.svg("path", { d: `M${X - 62} ${y - 168} V${y} H${X + 62} V${y - 168}`, fill: "none", stroke: "#8fb3bd", "stroke-width": 2 }, g);
-    L.svg("rect", { x: X - 62, y: y - 168, width: 124, height: 168, fill: "#e8f2f6", opacity: 0.18 }, g);
-    if (texte) { L.svg("rect", { x: X + 8, y: y - 60, width: 50, height: 18, rx: 2, fill: "#fdfdf8", stroke: "#999" }, g); L.texte(g, X + 33, y - 48, texte, { "font-size": 6.5, "font-weight": 700, fill: "#222" }); }
+  function lire(c, A, V, cel) {
+    // État de la cellule, montage, lectures (U en V, I en A) si le montage est juste et les calibres alternatifs.
+    const s = cel.etat(), m = montage(c), U = m.derivation ? lu(V, "VAC") : null, I = m.serie ? lu(A, "AAC") : null;
+    const ok = s.S > 0 && U > 0 && I !== null;
+    return { flacon: s.flacon, L: s.L, S: s.S, U: ok ? U : null, I: ok ? I : null, G: ok ? I / U : null, montage: { ...m, A: A.mode, V: V.mode } };
   }
 
-  function cables(g, a, b, bornes) {
-    // Câbles : GBF → ampèremètre → plaque gauche ; plaque droite → GBF ; voltmètre aux bornes des plaques.
-    g.replaceChildren();
-    const c = (p, q, couleur) => L.svg("path", { d: `M${p.x} ${p.y} C${p.x} ${p.y + 60} ${q.x} ${q.y - 70} ${q.x} ${q.y}`, fill: "none", stroke: couleur, "stroke-width": 2.2 }, g);
-    c(bornes.gbf[0], bornes.a[0], "#c62828"); c(bornes.a[1], a, "#111"); c(bornes.gbf[1], b, "#111"); c(bornes.v[0], { x: a.x - 3, y: a.y }, "#c62828"); c(bornes.v[1], { x: b.x + 3, y: b.y }, "#111");
-  }
-
-  L.cellule_conductance = function (g, { flacons, L: l0 = 1, L_fixe = false, S_fixe = null }) {
-    // Matériel, gestes, calcul de G et des lectures ; mesures notées quand on lâche un réglage ou change de solution.
-    const e = { l: l0, y: 540, flacon: null, U: 1, mesures: [] }, fond = L.svg("g", {}, g);
-    L.pied_support(fond, 480, SOL, 226); L.svg("rect", { x: 480, y: 238, width: X - 480, height: 6, fill: "url(#metal)" }, fond); L.svg("rect", { x: X - 3, y: 238, width: 6, height: YB - 246, fill: "url(#metal)" }, fond); L.noix(fond, 480, 241);
-    const app = L.etagere_appareils(fond, { x: 672, y: 150 });
-    const gb = L.svg("g", { class: "plateau", role: "slider", "aria-label": "Plateau du support élévateur" }, g), gc = L.svg("g", {}, g), gd = L.svg("g", { class: "plaque", role: "slider", "aria-label": "Plaque mobile" }, g), gk = L.svg("g", { "pointer-events": "none" }, g);
-    const f = () => flacons.find((k) => k.id === e.flacon);
-    const etat = () => {
-      // Profondeur immergée (cm), surface S (cm²), conductance et lectures.
-      const prof = f() ? Math.max(0, Math.min(4, (YP + 96 - (e.y - HAUT_LIQ)) / PX_CM)) : 0, S = Math.round(prof * 10) / 10;
-      const G = prof > 0 ? L.conductance({ nom: f().sol, C: f().C, S: S * 1e-4, L: e.l * 1e-2 }) : 0;
-      return { flacon: e.flacon, sol: f()?.sol || null, C: f()?.C ?? null, L: e.l, S: prof > 0 ? S : 0, U: e.U, I: G * e.U, G };
+  L.poste_conductance = function (g, reglage) {
+    // Décor, circuit (calques entre les béchers posés et l'objet tenu), appareils, cellule ; mesures notées hors réglage.
+    const { pense_bete } = L.decor_circuit(g, 0), ctx = L.paillasse_chimie(g), c = L.circuit(g), mesures = [];
+    g.append(ctx.haut);
+    L.gbf(c, { x: 30, y: 176, forme: "sinus", f: 500, Umax: 1.5 });
+    const A = L.multimetre(c, { id: "A", x: 704, y: 176, etiquette: "A" }), V = L.multimetre(c, { id: "V", x: 862, y: 176, etiquette: "V" });
+    const cel = L.cellule_conductance(ctx, c, reglage);
+    const noter = () => {
+      const l = lire(c, A, V, cel);
+      if (l.G !== null && !mesures.some((k) => k.flacon === l.flacon && k.L === l.L && k.S === l.S && k.U === l.U && k.I === l.I)) mesures.push({ flacon: l.flacon, L: l.L, S: l.S, U: l.U, I: l.I, G: l.G });
     };
-    const dessiner = () => { const p = cellule(gc, e.l); becher(gb, e.y, f() ? [200, 225, 238] : [255, 255, 255], f()?.texte); cables(gk, p.g, p.d, app.bornes); gd.replaceChildren(); L.svg("rect", { x: p.d.x - 10, y: YB - 20, width: 22, height: YP - YB + 116, fill: "#fff", opacity: 0.01 }, gd); app.afficher(e.U, etat().I); };
-    const noter = () => { const s = etat(); if (s.S > 0 && !e.mesures.some((m) => m.flacon === s.flacon && m.L === s.L && m.S === s.S && m.U === s.U)) e.mesures.push({ flacon: s.flacon, L: s.L, S: s.S, U: s.U, I: s.I, G: s.G }); };
-    L.glissable(gb, { soulever: false, debut: () => ({ x: X, y: e.y }), deplacer: (p) => { e.y = Math.max(440, Math.min(540, p.y)); if (S_fixe) { const haut = YP + 96 + HAUT_LIQ - S_fixe * PX_CM; e.y = e.y < (haut + 540) / 2 ? haut : 540; } dessiner(); }, lacher: noter });
-    if (!L_fixe) L.glissable(gd, { soulever: false, debut: () => ({ x: X - 36 + e.l * PX_CM, y: 0 }), deplacer: (p) => { e.l = Math.round(Math.max(0.5, Math.min(3, (p.x - X + 36) / PX_CM)) * 2) / 2; dessiner(); }, lacher: noter });
-    flacons.forEach((k, i) => {
-      const x = (flacons.length > 4 ? 120 : 215) + i * 44, gf = L.svg("g", { class: "flacon", role: "button", "aria-label": `Flacon : ${k.texte}` }, g);
-      L.svg("rect", { x: x - 16, y: 396, width: 32, height: 70, rx: 5, fill: "#e8f2f6", opacity: 0.8, stroke: "#8fb3bd" }, gf); L.svg("rect", { x: x - 8, y: 384, width: 16, height: 14, rx: 2, fill: "#3b7cc4" }, gf);
-      L.svg("rect", { x: x - 15, y: 420, width: 30, height: 26, fill: "#fdfdf8" }, gf); L.texte(gf, x, 431, k.texte.split("\n")[0], { "font-size": 5.6, "font-weight": 700, fill: "#222" }); L.texte(gf, x, 440, k.texte.split("\n")[1] || "", { "font-size": 5.2, fill: "#222" });
-      L.glissable(gf, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { e.flacon = k.id; e.y = 540; dessiner(); } });
-    });
-    [["−", -0.25], ["+", 0.25]].forEach(([t, d], k) => L.bouton_rond(g, 712 + k * 22, 254, t, () => { e.U = Math.max(0.5, Math.min(2, e.U + d)); dessiner(); noter(); }, 7));
-    dessiner();
-    setInterval(() => { app.afficher(e.U, etat().I); L.missions.noter("conductance", JSON.parse(JSON.stringify({ ...etat(), mesures: e.mesures }))); }, 400);
-    return { etat, mesures: e.mesures };
+    c.sur_calcul(() => { if (!cel.glisse()) noter(); });
+    cel.sur_lacher(noter);
+    setInterval(() => L.missions.noter("conductance", JSON.parse(JSON.stringify({ ...lire(c, A, V, cel), mesures }))), 400);
+    c.calculer();
+    return { pense_bete };
+  };
+
+  L.etape_montage_conductance = {
+    consigne: "Câblez : sortie du GBF → borne mA de l'ampèremètre ; COM → une borne de la cellule ; l'autre borne de la cellule → masse du GBF. Voltmètre (VΩ, COM) aux bornes de la cellule. Calibres : 20 mA~ et 2 V~. Posez un bécher de solution sur le plateau et montez-le.",
+    court: "Montage et calibres.",
+    aide_geste: "Tirez un fil d'une borne à une autre ; touchez un repère du commutateur pour choisir le calibre.",
+    verifier: ({ faits }) => {
+      // Montage juste, puis calibres alternatifs, puis une lecture.
+      const f = faits.conductance || {}, m = f.montage || {};
+      if (!m.serie || !m.derivation) return false;
+      if (!/~$/.test(m.A) || !/~$/.test(m.V) || !/mA/.test(m.A)) return "Le GBF délivre une tension alternative : choisissez les calibres A~ (borne mA) et V~.";
+      return f.G !== null && f.G !== undefined;
+    },
   };
 })(window.Labo);
 </script>
@@ -2335,12 +4651,7 @@ Utilisé par : page.html (dernier script).
   const FLACONS = [...ETALONS.map((c) => ({ id: `n${c}`, texte: `NaCl\n${c} mmol/L`, sol: "NaCl", C: c / 1000 })), { id: "serum", texte: "sérum\ndilué ×20", sol: "NaCl", C: 0.154 / 20 }, { id: "n100", texte: "NaCl\n0,10 mol/L", sol: "NaCl", C: 0.1 }];
   const me = (f) => (f.conductance || {}).mesures || [], a = (f, id) => me(f).some((m) => m.flacon === id);
 
-  function poste(g) {
-    // Paillasse unique : cellule de géométrie fixe (L = 1 cm, S = 1 cm²), huit flacons.
-    const pense_bete = L.decor.pense_bete(g, 24, 52, 230);
-    L.cellule_conductance(g, { flacons: FLACONS, L: 1, L_fixe: true, S_fixe: 1 });
-    return { pense_bete };
-  }
+  const poste = (g) => L.poste_conductance(g, { flacons: FLACONS, L: 1, L_fixe: true, S_fixe: 1 });
 
   function tableau({ faits, feuille }) {
     // Les six étalons : C (mmol/L), G (mS) mesurée.
@@ -2358,7 +4669,8 @@ Utilisé par : page.html (dernier script).
     conclusion: "Pour des solutions diluées (C ≤ 10⁻² mol/L), la conductance est proportionnelle à la concentration : G = k·C. Cette droite d'étalonnage permet de trouver la concentration d'une solution de chlorure de sodium à partir de sa conductance, mesurée dans les mêmes conditions.",
     conclusion_courte: "Solutions diluées : G = k·C.",
     etapes: [
-      { consigne: "Pour chaque étalon : touchez le flacon, montez le bécher, lisez U et I. En A, C (mmol/L) ; en B, G = I/U (mS).", court: "Tableur : A, B.", aide_geste: "Touchez un flacon ; faites glisser le plateau vers le haut.", verifier: tableau },
+      L.etape_montage_conductance,
+      { consigne: "Pour chaque étalon : posez son bécher sur le plateau, montez-le avec la manivelle, lisez U et I. En A, C (mmol/L) ; en B, G = I/U (mS).", court: "Tableur : A, B.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: tableau },
       { consigne: "Tracez G (B) en fonction de C (A) et modélisez.", court: "Courbe G = f(C).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 6 && courbe.modele !== "aucun") || "Abscisse : A (C) ; ordonnée : B (G) ; choisissez un modèle." },
       { consigne: "Pour ces solutions diluées, G est…", court: "Répondez dans le carnet.", question: choix(["proportionnelle à C (droite passant par l'origine)", "indépendante de C", "proportionnelle à 1/C"], "Regardez la courbe.", "Exact.") },
     ],
@@ -2391,7 +4703,7 @@ Utilisé par : page.html (dernier script).
     ],
   };
 
-  L.demarrer({ id: "b1_chim3_a2_etalonnage", titre: "Laboratoire : courbe d'étalonnage", paillasses: [poste], missions: [ETALONNAGE, SERUM, LIMITE] });
+  L.demarrer({ id: "b1_chim3_a2_etalonnage", titre: "Laboratoire : courbe d'étalonnage", decor: "aucun", paillasses: [poste], missions: [ETALONNAGE, SERUM, LIMITE] });
 })(window.Labo);
 </script>
 </body>
