@@ -3027,6 +3027,52 @@
         "La pression d'un gaz est proportionnelle à sa température en degrés Celsius.",
         "Le volume molaire est le même quelles que soient la température et la pression."
       ]
+    },
+    {
+      "id": "b1_chim2_a2_electrolytes",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim2_a2_electrolytes.html",
+      "description": "Burettes d'eau et de cyclohexane : une baguette frottée sur la laine attire le filet d'eau (molécules polaires), pas celui de cyclohexane ; maquette du cristal de chlorure de sodium. Préparation de 100,0 mL de sulfate de cuivre à 0,100 mol/L (lunettes et gants, pictogrammes, pesée de 2,50 g, fiole jaugée, dissolution des cristaux bleus) ; C, [Cu²⁺], [SO₄²⁻], cas de Na₂SO₄. Tests de précipitation sur quatre solutions (soude, nitrate d'argent, chlorure de baryum). Migration des ions Cu²⁺ et MnO₄⁻ sur papier imbibé, générateur de 12 V, inversion des bornes.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim2_grandeurs_quantite_matiere",
+      "activite": "Préparer des solutions électrolytiques et détecter les ions ; migration des ions.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O4",
+        "O5",
+        "O6",
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Molécules polaires, solide ionique",
+          "ce_que_fait_l_eleve": "Observe la déviation d'un filet d'eau et explique la cohésion d'un solide ionique.",
+          "conclusion": "Dans la molécule d'eau, l'atome d'oxygène, plus électronégatif, attire les électrons des liaisons : les centres des charges positives et négatives ne coïncident pas, la molécule est polaire et elle est attirée par un objet électrisé. Le cyclohexane est apolaire. HCl est aussi polaire. Dans un solide ionique comme le chlorure de sodium, chaque ion est entouré d'ions de signe opposé : les attractions électriques entre ions voisins assurent sa cohésion ; il est neutre, de formule statistique NaCl."
+        },
+        {
+          "titre": "Préparer une solution de sulfate de cuivre",
+          "ce_que_fait_l_eleve": "Prépare une solution de sulfate de cuivre et calcule les concentrations des ions.",
+          "conclusion": "On pèse m = C × V × M = 2,50 g de sulfate de cuivre pentahydraté, on le dissout dans la fiole jaugée, on complète au trait et on homogénéise : CuSO₄(s) → Cu²⁺(aq) + SO₄²⁻(aq). La concentration du soluté apporté est C = 0,100 mol/L ; les concentrations effectives des ions sont [Cu²⁺] = [SO₄²⁻] = 0,100 mol/L. Pour Na₂SO₄ à 0,1 mol/L : [Na⁺] = 0,2 mol/L."
+        },
+        {
+          "titre": "Détecter les ions",
+          "ce_que_fait_l_eleve": "Identifie les ions de quatre solutions par précipitation.",
+          "conclusion": "Les ions HO⁻ (soude) donnent un précipité bleu avec Cu²⁺ et rouille avec Fe³⁺ ; les ions Ag⁺ (nitrate d'argent) un précipité blanc avec Cl⁻ ; les ions Ba²⁺ (chlorure de baryum) un précipité blanc avec SO₄²⁻. Une solution de chlorure de fer (III) s'écrit Fe³⁺(aq) + 3 Cl⁻(aq) : elle contient des ions, pas des « molécules FeCl₃ »."
+        },
+        {
+          "titre": "Migration des ions",
+          "ce_que_fait_l_eleve": "Observe la migration des ions colorés vers les électrodes.",
+          "conclusion": "Quand le générateur fonctionne, les cations Cu²⁺ (bleus) se déplacent vers l'électrode reliée à la borne −, les anions MnO₄⁻ (violets) vers l'électrode reliée à la borne + ; si l'on inverse les bornes, ils changent de sens. Dans une solution électrolytique, le courant électrique est dû au déplacement des ions dans les deux sens."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Une solution de chlorure de sodium contient des molécules NaCl.",
+        "La concentration de chaque ion est toujours égale à celle du soluté apporté.",
+        "Dans une solution, le courant est dû à des électrons."
+      ]
     }
   ]
 }
