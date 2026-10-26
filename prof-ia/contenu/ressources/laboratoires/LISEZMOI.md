@@ -422,6 +422,18 @@ au-delà d'un grossissement de 450 environ est un modèle qualitatif.
 
 La teinte des tubes vient du moteur de chimie (espèce dissoute E131) : elle fonce avec la concentration.
 
+## Chapitre 1re année du bac « Grandeurs physiques liées aux quantités de matière » (fiche 1bac/chim2_grandeurs_quantite_matiere)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim2_a1_gaz.html | A1 : vérifier PV = cte (expérience et logiciel) | O1, O3 | Seringue de 60 mL, robinet à trois voies, pressiomètre : 40 mL d'air enfermés, six volumes, P × V constant au tableur, courbe P = f(1/V) ; ballon de 250 mL dans un bain thermostaté (0 à 80 °C), droite P = f(θ) prolongée jusqu'à −273 °C ; n = PV/RT, Vm = 24,1 L/mol. |
+| b1_chim2_a2_electrolytes.html | A2 : préparer des solutions électrolytiques, détecter les ions, migration | O1, O2, O4 à O7 | Filet d'eau attiré par une baguette frottée, cyclohexane non ; maquette du cristal NaCl ; 2,50 g de sulfate de cuivre dans une fiole jaugée de 100 mL (lunettes, gants, pictogrammes) ; tests à la soude, au nitrate d'argent et au chlorure de baryum ; migration des ions Cu²⁺ et MnO₄⁻ vers les électrodes, inversion. |
+| b1_chim2_a3_gaz_produit.html | A3 : transformation produisant un gaz, mesure de la pression | O2, O3, O8, O9 | Ruban de magnésium dans 20 mL d'acide chlorhydrique à 0,50 mol/L, erlenmeyer bouché relié au pressiomètre ; n(H₂) = ΔP·V/(RT) au tableur pour quatre rubans ; réactif limitant (Mg, puis H⁺ pour 0,24 g : x_max = 5 mmol) ; pression finale prévue (1 152 hPa) puis vérifiée. |
+
+Les gaz suivent PV = nRT (R = 8,314 SI). Dans le bain thermostaté, l'eau puis l'air du ballon rejoignent la consigne en
+quelques secondes. Les précipités sont calculés à partir des ions apportés par chaque goutte (mmol). La réaction du
+magnésium commence après 3 s (couche d'oxyde) ; le gaz produit avant que l'on bouche est perdu.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

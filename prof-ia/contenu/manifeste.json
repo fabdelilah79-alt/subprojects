@@ -3073,6 +3073,45 @@
         "La concentration de chaque ion est toujours égale à celle du soluté apporté.",
         "Dans une solution, le courant est dû à des électrons."
       ]
+    },
+    {
+      "id": "b1_chim2_a3_gaz_produit",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim2_a3_gaz_produit.html",
+      "description": "Erlenmeyer de 250 mL contenant 20,0 mL d'acide chlorhydrique à 0,50 mol/L, bouchon relié à un pressiomètre, lunettes et gants. On lâche un ruban de magnésium (0,024 g, 0,036 g, 0,048 g ou 0,24 g) et l'on bouche : Mg + 2 H⁺ → Mg²⁺ + H₂, bulles, pression qui monte. n(H₂) = ΔP·V/(RT) au tableur ; tableau d'avancement, réactif limitant (Mg, puis H⁺ pour le gros ruban), prévision de la pression finale.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim2_grandeurs_quantite_matiere",
+      "activite": "Transformation produisant un gaz : mesure du volume ou de la pression (manomètre absolu ou différentiel).",
+      "objectifs": [
+        "O2",
+        "O3",
+        "O8",
+        "O9"
+      ],
+      "missions": [
+        {
+          "titre": "Un gaz qui fait monter la pression",
+          "ce_que_fait_l_eleve": "Fait réagir un ruban de magnésium dans un erlenmeyer bouché et calcule n(H₂) à partir de la pression.",
+          "conclusion": "Le dihydrogène formé reste dans l'erlenmeyer bouché : sa pression s'ajoute à celle de l'air. On en déduit sa quantité : n(H₂) = ΔP × V / (R T). Avec 0,048 g de magnésium (1,98 mmol), on trouve n(H₂) ≈ 1,98 mmol : tout le magnésium a réagi, c'est le réactif limitant (les ions H⁺, 10 mmol, sont en excès)."
+        },
+        {
+          "titre": "Tableau d'avancement",
+          "ce_que_fait_l_eleve": "Refait l'expérience avec d'autres rubans et identifie le réactif limitant.",
+          "conclusion": "D'après le tableau d'avancement, n(Mg) = n₀ − x, n(H⁺) = 10 − 2x, n(H₂) = x. La réaction s'arrête quand un réactif est épuisé : x_max = n₀ si le magnésium est limitant (petits rubans), x_max = 10/2 = 5 mmol si ce sont les ions H⁺ (ruban de 0,24 g, 9,9 mmol). La quantité de gaz mesurée est égale à x_max."
+        },
+        {
+          "titre": "Prévoir la pression finale",
+          "ce_que_fait_l_eleve": "Prévoit la pression finale puis la vérifie.",
+          "conclusion": "À température constante, on prévoit la pression finale : x_max = n(Mg) = 1,48 mmol (le magnésium est limitant), donc P = 1 013 hPa + x_max R T / V ≈ 1 152 hPa. La mesure confirme la prévision."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La pression finale dépend toujours de la masse de métal.",
+        "Les deux réactifs disparaissent toujours entièrement.",
+        "L'avancement maximal est la quantité du réactif en plus petite quantité, sans tenir compte des coefficients."
+      ]
     }
   ]
 }

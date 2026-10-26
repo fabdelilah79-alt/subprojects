@@ -786,3 +786,19 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Les teneurs (nitrates, colorant) sont fixées dans le code ; on peut les changer pour varier les exercices.
 - Une bandelette ne se trempe qu'une fois ; on ne peut pas reprendre une bandelette déjà lue.
+
+## 2026-10-26 — Laboratoires virtuels : chapitre 1re année du bac « Grandeurs physiques liées aux quantités de matière »
+
+Fait :
+- Trois simulations, inscrites au manifeste (97 ressources) : A1 le gaz parfait (Boyle-Mariotte à la seringue, pression
+  et température au bain thermostaté, PV = nRT) ; A2 les solutions électrolytiques (molécules polaires, solide ionique,
+  préparation d'une solution de sulfate de cuivre, tests d'ions, migration des ions) ; A3 un gaz produit par une
+  transformation (pression mesurée, tableau d'avancement, réactif limitant, prévision). Objectifs O1 à O9.
+- Matériel commun nouveau : pressiomètre numérique et thermomètre électronique (capteurs_numeriques.js).
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les gaz sont parfaits et la température de la salle est fixe (20 °C) ; la réaction du magnésium ne chauffe pas l'acide.
+- Dans les tubes, l'ordre des réactifs n'est pas pris en compte (par exemple, pas d'oxyde d'argent avec la soude) :
+  « Nouveaux tubes » permet de faire chaque test sur une solution neuve.
+- La vitesse de migration des ions est fixée (quelques millimètres par seconde, accélérée).

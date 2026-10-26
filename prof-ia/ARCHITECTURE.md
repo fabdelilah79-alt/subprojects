@@ -437,6 +437,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_opt3_a1_lunette/ | Documents et tri (documents_lunette.js) ; maquette de lunette au banc, Lune, cercle oculaire, faisceau (lunette_banc.js, poste_lunette.js). |
 | contenu/ressources/laboratoires/sources/b1_opt3_a2_microscope/ | Microscope en volume (microscope_dessin.js), lames et vue dans l'oculaire (lames.js), documents, gestes (poste_microscope.js) ; modèle au banc (poste_modele_microscope.js). |
 | contenu/ressources/laboratoires/sources/b1_chim1_a1_mesure/ | Documents et tri des mesures par domaine (documents_mesure.js) ; bandelettes « nitrates » (poste_bandelettes.js) ; échelle de teintes du colorant E131 (poste_echelle_teintes.js). |
+| contenu/ressources/laboratoires/commun/capteurs_numeriques.js | Pressiomètre numérique (embout, écran en hPa) et thermomètre électronique (sonde, écran en °C). |
+| contenu/ressources/laboratoires/sources/b1_chim2_a1_gaz/ | Seringue et robinet à trois voies (seringue_gaz.js), loi de Boyle-Mariotte (poste_boyle.js), ballon dans un bain thermostaté (poste_temperature.js). |
+| contenu/ressources/laboratoires/sources/b1_chim2_a2_electrolytes/ | Filet d'eau dévié et cristal ionique (poste_polarite.js), solution de sulfate de cuivre (poste_preparation.js), tests de précipitation (poste_tests_ions.js), migration des ions (poste_migration.js). |
+| contenu/ressources/laboratoires/sources/b1_chim2_a3_gaz_produit/ | Magnésium et acide chlorhydrique en erlenmeyer bouché relié au pressiomètre (poste_pression_gaz.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
