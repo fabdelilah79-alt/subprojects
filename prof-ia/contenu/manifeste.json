@@ -3112,6 +3112,113 @@
         "Les deux réactifs disparaissent toujours entièrement.",
         "L'avancement maximal est la quantité du réactif en plus petite quantité, sans tenir compte des coefficients."
       ]
+    },
+    {
+      "id": "b1_chim3_a1_conductance",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim3_a1_conductance.html",
+      "description": "Cellule à deux plaques parallèles (L réglable de 0,5 à 3 cm) au bout d'un pied, bécher sur un support élévateur (surface immergée S réglable), GBF à 500 Hz, ampèremètre et voltmètre sur une étagère, câbles branchés ; flacons d'eau distillée, d'eau sucrée et de chlorure de sodium. Les ions sont indispensables ; G = I/U = 1/R au tableur ; G inversement proportionnelle à L, proportionnelle à S, croissante avec C ; σ = G·L/S.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim3_conductance",
+      "activite": "Mesurer R et G avec GBF, ampèremètre, voltmètre et deux électrodes planes parallèles.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Les ions conduisent le courant",
+          "ce_que_fait_l_eleve": "Compare le courant dans l'eau distillée, l'eau sucrée et une solution de chlorure de sodium.",
+          "conclusion": "L'eau distillée et l'eau sucrée (molécules de saccharose) ne laissent passer qu'un courant presque nul ; la solution de chlorure de sodium, qui contient des ions Na⁺ et Cl⁻, laisse passer un courant notable : les ions sont indispensables à la conduction dans une solution."
+        },
+        {
+          "titre": "Conductance et résistance",
+          "ce_que_fait_l_eleve": "Mesure U et I pour plusieurs tensions et calcule G et R.",
+          "conclusion": "Le rapport I/U ne dépend pas de la tension : c'est la conductance G de la portion de solution entre les plaques (en siemens, S). Sa résistance est R = 1/G. Pour NaCl à 10 mmol/L, L = 1,0 cm et S = 2,0 cm² : G ≈ 2,4 mS, R ≈ 415 Ω."
+        },
+        {
+          "titre": "De quoi dépend la conductance ?",
+          "ce_que_fait_l_eleve": "Fait varier L, S et C et calcule la conductivité.",
+          "conclusion": "La conductance est inversement proportionnelle à la distance L des plaques, proportionnelle à la surface immergée S, et elle augmente avec la concentration (et la température). On écrit G = σ·S/L : la conductivité σ ne dépend que de la solution (nature, concentration, température). Pour NaCl à 10 mmol/L : σ ≈ 0,12 S/m. Pour comparer des mesures, il faut les faire dans les mêmes conditions."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "L'eau pure conduit bien le courant.",
+        "La conductance dépend de la tension appliquée.",
+        "La conductance ne dépend que de la solution."
+      ]
+    },
+    {
+      "id": "b1_chim3_a2_etalonnage",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim3_a2_etalonnage.html",
+      "description": "Même montage, cellule de géométrie fixe (L = 1 cm, S = 1 cm²) ; six étalons de chlorure de sodium (1 à 10 mmol/L) : courbe d'étalonnage G = f(C) au tableur ; sérum physiologique dilué 20 fois : concentration lue sur la droite (7,7 mmol/L), 154 mmol/L et 9,0 g/L ; solution à 0,10 mol/L hors du domaine de la droite.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim3_conductance",
+      "activite": "Courbe d'étalonnage avec NaCl.",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Courbe d'étalonnage",
+          "ce_que_fait_l_eleve": "Trace la courbe d'étalonnage G = f(C) avec six solutions étalons.",
+          "conclusion": "Pour des solutions diluées (C ≤ 10⁻² mol/L), la conductance est proportionnelle à la concentration : G = k·C. Cette droite d'étalonnage permet de trouver la concentration d'une solution de chlorure de sodium à partir de sa conductance, mesurée dans les mêmes conditions."
+        },
+        {
+          "titre": "Le sérum physiologique",
+          "ce_que_fait_l_eleve": "Détermine la concentration du sérum physiologique.",
+          "conclusion": "Le sérum dilué 20 fois a une concentration d'environ 7,7 mmol/L (lue sur la droite d'étalonnage) : le sérum contient 154 mmol/L de chlorure de sodium, soit 0,154 × 58,5 ≈ 9,0 g/L. L'étiquette est exacte. On a dilué le sérum pour que sa conductance tombe dans le domaine de la droite d'étalonnage."
+        },
+        {
+          "titre": "Limite de l'étalonnage",
+          "ce_que_fait_l_eleve": "Constate la limite de l'étalonnage pour une solution concentrée.",
+          "conclusion": "Pour C = 0,10 mol/L, la conductance mesurée est nettement plus faible que celle que donne la droite prolongée : les ions, plus nombreux, se gênent. La droite d'étalonnage n'est valable que pour les solutions diluées (C ≤ 10⁻² mol/L) : il faut diluer les solutions trop concentrées."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "La droite d'étalonnage vaut pour toutes les concentrations.",
+        "On peut comparer des conductances mesurées avec des cellules différentes.",
+        "La conductance d'une solution diluée ne dépend pas de sa concentration."
+      ]
+    },
+    {
+      "id": "b1_chim3_a3_ion_commun",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim3_a3_ion_commun.html",
+      "description": "Même montage, cellule fixe ; six solutions à 5,0 mmol/L (NaCl, KCl, NaOH, KOH, HCl, NH₄Cl) : G et σ au tableur ; comparaisons deux à deux (ion commun) : λ(K⁺) − λ(Na⁺), λ(HO⁻) > λ(Cl⁻), H₃O⁺ très conducteur ; σ = Σ λi·[Xi] avec les valeurs des tables.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim3_conductance",
+      "activite": "Comparer les conductances de NaOH, KOH, HCl, NH4Cl, NaCl, KCl de même concentration.",
+      "objectifs": [
+        "O3",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Six solutions de même concentration",
+          "ce_que_fait_l_eleve": "Mesure G et calcule σ pour six solutions de même concentration.",
+          "conclusion": "À même concentration, les conductivités sont différentes : elles dépendent de la nature des ions. La solution d'acide chlorhydrique est de loin la plus conductrice, puis celles d'hydroxyde de sodium et de potassium."
+        },
+        {
+          "titre": "Conductivités molaires ioniques",
+          "ce_que_fait_l_eleve": "Compare des solutions ayant un ion commun et calcule σ avec les conductivités molaires ioniques.",
+          "conclusion": "Chaque ion contribue à la conductivité : σ = Σ λi·[Xi]. Les différences σ(KCl) − σ(NaCl) et σ(KOH) − σ(NaOH) sont égales : elles valent (λ(K⁺) − λ(Na⁺))·C. Les ions H₃O⁺ et HO⁻ ont des conductivités molaires ioniques beaucoup plus grandes que les autres ions. Les valeurs mesurées sont un peu plus faibles que celles calculées avec les tables, établies pour une dilution infinie."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Deux solutions de même concentration ont la même conductivité.",
+        "Tous les ions conduisent autant.",
+        "La conductivité ne dépend que du cation."
+      ]
     }
   ]
 }

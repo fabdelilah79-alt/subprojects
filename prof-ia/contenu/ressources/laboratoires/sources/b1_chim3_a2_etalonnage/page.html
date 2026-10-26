@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+Rôle : simulation de l'activité 2 du chapitre « La conductance » (1re année du bac) : courbe d'étalonnage G = f(C) avec NaCl, concentration d'un sérum physiologique.
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : mesures, tableur et courbes sur la tablette, missions du carnet ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/b1_chim3_a2_etalonnage.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : courbe d'étalonnage</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/chimie_decor.js"></script>
+  <script src="../../commun/lewis_dessin.js"></script>
+  <script src="../../commun/circuit_decor.js"></script>
+  <script src="../../commun/optique_materiel.js"></script>
+  <script src="../../commun/conductimetrie.js"></script>
+  <script src="../../commun/cellule_conductance.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

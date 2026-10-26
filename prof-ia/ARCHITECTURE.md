@@ -441,6 +441,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim2_a1_gaz/ | Seringue et robinet à trois voies (seringue_gaz.js), loi de Boyle-Mariotte (poste_boyle.js), ballon dans un bain thermostaté (poste_temperature.js). |
 | contenu/ressources/laboratoires/sources/b1_chim2_a2_electrolytes/ | Filet d'eau dévié et cristal ionique (poste_polarite.js), solution de sulfate de cuivre (poste_preparation.js), tests de précipitation (poste_tests_ions.js), migration des ions (poste_migration.js). |
 | contenu/ressources/laboratoires/sources/b1_chim2_a3_gaz_produit/ | Magnésium et acide chlorhydrique en erlenmeyer bouché relié au pressiomètre (poste_pression_gaz.js). |
+| contenu/ressources/laboratoires/commun/conductimetrie.js | Conductivités molaires ioniques, solutions, σ = Σ λ·[X] (corrigée), G = σ·S/L ; étagère du GBF, de l'ampèremètre et du voltmètre. |
+| contenu/ressources/laboratoires/commun/cellule_conductance.js | Cellule à plaques parallèles (L réglable), bécher sur support élévateur (S), flacons, câbles ; mesures de U et I. |
+| contenu/ressources/laboratoires/sources/b1_chim3_a1_conductance/ | Ions indispensables, G = I/U, facteurs L, S, C, conductivité (simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim3_a2_etalonnage/ | Courbe d'étalonnage au chlorure de sodium, sérum physiologique, limite (simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim3_a3_ion_commun/ | Six solutions à 5 mmol/L, conductivités molaires ioniques (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

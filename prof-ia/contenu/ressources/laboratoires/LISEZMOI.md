@@ -434,6 +434,17 @@ Les gaz suivent PV = nRT (R = 8,314 SI). Dans le bain thermostaté, l'eau puis l
 quelques secondes. Les précipités sont calculés à partir des ions apportés par chaque goutte (mmol). La réaction du
 magnésium commence après 3 s (couche d'oxyde) ; le gaz produit avant que l'on bouche est perdu.
 
+## Chapitre 1re année du bac « La conductance » (fiche 1bac/chim3_conductance)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim3_a1_conductance.html | A1 : mesurer R et G (GBF, ampèremètre, voltmètre, électrodes planes) | O1, O2, O3 | Eau distillée, eau sucrée, NaCl : il faut des ions ; trois tensions : G = I/U constante (2,41 mS pour 10 mmol/L, L = 1 cm, S = 2 cm²), R = 1/G ; L, S et C variés ; σ ≈ 0,12 S/m. |
+| b1_chim3_a2_etalonnage.html | A2 : courbe d'étalonnage avec NaCl | O4 | Six étalons (1 à 10 mmol/L), droite G = k·C ; sérum physiologique dilué 20 fois : 7,7 mmol/L, soit 154 mmol/L et 9,0 g/L ; NaCl 0,10 mol/L sous la droite prolongée. |
+| b1_chim3_a3_ion_commun.html | A3 : comparer NaOH, KOH, HCl, NH₄Cl, NaCl, KCl de même concentration | O3, O5, O6 | Six solutions à 5 mmol/L : G et σ ; σ(KCl) − σ(NaCl) = σ(KOH) − σ(NaOH), λ(K⁺) − λ(Na⁺) ≈ 2,3 mS·m²/mol ; HCl et NaOH très conducteurs ; σ(NaCl) calculée avec les tables (0,0632 S/m). |
+
+La conductivité est calculée par σ = Σ λi·[Xi] (λ des tables, à 25 °C), multipliée par (1 − 0,5·√C) pour rendre compte de
+la gêne entre ions (C en mol/L) ; l'eau distillée a σ = 5 × 10⁻⁴ S/m. G = σ·S/L ; I = G·U (GBF à 500 Hz, 0,50 à 2,00 V).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

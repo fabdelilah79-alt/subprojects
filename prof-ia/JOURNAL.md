@@ -802,3 +802,18 @@ Problèmes restants, à faire par l'enseignant :
 - Dans les tubes, l'ordre des réactifs n'est pas pris en compte (par exemple, pas d'oxyde d'argent avec la soude) :
   « Nouveaux tubes » permet de faire chaque test sur une solution neuve.
 - La vitesse de migration des ions est fixée (quelques millimètres par seconde, accélérée).
+
+## 2026-10-26 — Laboratoires virtuels : chapitre 1re année du bac « La conductance »
+
+Fait :
+- Trois simulations, inscrites au manifeste (100 ressources) : A1 mesure de la conductance (ions indispensables,
+  G = I/U, facteurs L, S, C, conductivité) ; A2 courbe d'étalonnage au chlorure de sodium et sérum physiologique ;
+  A3 solutions de même concentration et conductivités molaires ioniques. Objectifs O1 à O6.
+- Matériel commun nouveau : conductimetrie.js (λ, σ, G, appareils sur étagère) et cellule_conductance.js (cellule à
+  plaques parallèles, support élévateur, flacons).
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le montage est déjà câblé (GBF, ampèremètre, voltmètre) : l'élève ne branche pas les fils dans cette simulation.
+- La température reste à 25 °C (son influence est seulement citée).
+- La gêne entre ions est un modèle simple (1 − 0,5·√C).
