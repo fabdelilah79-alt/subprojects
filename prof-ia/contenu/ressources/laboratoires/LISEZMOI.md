@@ -390,6 +390,18 @@ de Δm = F/g (1,63 g pour 5 A, 4 cm, 0,080 T).
 Les rayons traversant les lentilles sont calculés exactement, face par face (lois de Descartes en vecteurs, faces sphériques) :
 on voit donc l'épaisseur et l'aberration des bords, et f' mesurée depuis le centre dépasse un peu la valeur de la lentille mince.
 
+## Chapitre 1re année du bac « Obtention de l'image d'un objet » (fiche 1bac/opt2_images)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_opt2_a1_miroir.html | A1 : miroir plan, deux bougies, champ de vision | O1 | Vitre sur une feuille graduée en perspective : la bougie éteinte, glissée derrière, paraît allumée quand elle est à la place de l'image (distances égales au tableur, image virtuelle) ; vue de dessus : figurine œil, six pions, champ de vision qui se rétrécit quand l'œil s'éloigne. |
+| b1_opt2_a2_lentille.html | A2 : caractéristiques d'une lentille, construction | O2, O3, O4 | Banc d'optique : image nette d'une maison lointaine (f' = 10 et 20 cm, C = 10 et 5 δ au tableur) ; « F » de la lanterne avec et sans diaphragme (conditions de Gauss) ; image réduite, agrandie, puis aucune image (objet entre F et O). Planche à dessin : aimants F et F', objet AB mobile, rayons 1, 2, 3, prolongements, aimant B' (image réelle ou virtuelle). |
+| b1_opt2_a3_conjugaison.html | A3 : relations de conjugaison et de grandissement, loupe | O5, O6 | Banc et vue rapprochée de l'écran : OA, OA', 1/OA, 1/OA' pour quatre images (D − C = 0,1 cm⁻¹, f' = 10 cm) ; A'B' lu sur le quadrillage, comparé à OA'/OA. Loupe sur pied devant une coccinelle : ce que voit l'œil (droite, grossie jusqu'à × 5, nette ou floue), rayons et prolongements jusqu'à B', C = 20 δ. |
+
+Au banc, l'image est calculée par la relation de conjugaison ; son flou vient du cercle de flou (diamètre utile × écart /
+OA') et d'un flou d'aberration sans diaphragme. Une image est notée quand l'élève lâche un cavalier et qu'elle est nette.
+La loupe calcule l'angle sous lequel l'œil (fixe, à 22 cm de la carte) voit l'image ; l'œil voit net de 25 cm à l'infini.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

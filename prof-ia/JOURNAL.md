@@ -741,3 +741,19 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - Les loupes agrandissent ou réduisent le texte d'un facteur fixe (pas de calcul selon la distance au texte).
 - Les angles du disque optique sont entiers ; la lecture de i2 se fait sur les graduations (à 0,5° près).
+
+## 2026-10-26 — Laboratoires virtuels : chapitre 1re année du bac « Obtention de l'image d'un objet »
+
+Fait :
+- Trois simulations, inscrites au manifeste (91 ressources) : A1 miroir plan (deux bougies, champ de vision) ;
+  A2 lentille convergente au banc d'optique (foyer, distance focale, vergence, conditions de Gauss, images réelles et
+  virtuelle) et construction de l'image sur une planche à dessin ; A3 relations de conjugaison et de grandissement au
+  banc, loupe. Objectifs O1 à O6.
+- Matériel commun nouveau : banc d'optique (rail gradué sur pieds, cavaliers, lanterne « F », lentille, écran quadrillé),
+  calcul de l'image (nette ou floue) et faisceau visible.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La mise au point se fait au millimètre en faisant glisser les cavaliers : sur un petit écran, zoomer à deux doigts aide.
+- Le flou d'aberration sans diaphragme est un modèle simple (valeur fixe), pas un tracé des rayons des bords.
+- À la loupe, l'œil est fixe ; on ne peut pas rapprocher l'œil de la loupe.

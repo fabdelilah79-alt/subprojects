@@ -2761,6 +2761,117 @@
         "La distance focale ne dépend que de la taille de la lentille.",
         "Toute lentille grossit."
       ]
+    },
+    {
+      "id": "b1_opt2_a1_miroir",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt2_a1_miroir.html",
+      "description": "Expérience des deux bougies : bougie allumée devant une vitre posée sur une feuille graduée, bougie éteinte que l'on fait glisser derrière jusqu'à ce qu'elle paraisse allumée ; distances à la vitre au tableur (image symétrique, même taille, virtuelle). Champ de vision d'un miroir vu de dessus : figurine œil que l'on déplace, pions vus ou non, rayons tracés.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt2_images",
+      "activite": "Image par un miroir plan ; champ de vision ; expérience des deux bougies.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "L'expérience des deux bougies",
+          "ce_que_fait_l_eleve": "Place la bougie éteinte à l'endroit de l'image et compare les distances à la vitre.",
+          "conclusion": "L'image d'un objet donnée par un miroir plan est symétrique de l'objet par rapport au plan du miroir : elle est derrière le miroir, à la même distance que l'objet, et elle a la même taille. C'est une image virtuelle : on la voit dans le miroir, mais on ne peut pas la recueillir sur un écran."
+        },
+        {
+          "titre": "Champ de vision d'un miroir",
+          "ce_que_fait_l_eleve": "Déplace l'œil devant un miroir et compte les pions vus.",
+          "conclusion": "L'œil voit dans le miroir les objets dont l'image se trouve dans le cône issu de l'image de l'œil et s'appuyant sur les bords du miroir : c'est le champ de vision. Il est d'autant plus large que l'œil est proche du miroir et que le miroir est grand."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "L'image est sur la surface du miroir.",
+        "On peut recueillir l'image d'un miroir plan sur un écran.",
+        "On voit plus d'objets dans un miroir en s'en éloignant."
+      ]
+    },
+    {
+      "id": "b1_opt2_a2_lentille",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt2_a2_lentille.html",
+      "description": "Banc d'optique gradué sur pieds, cavaliers, lanterne avec l'objet « F », lentilles L1 (+10 δ) et L2 (+5 δ), diaphragme, écran quadrillé ; image floue ou nette calculée (relation de conjugaison, cercle de flou), faisceau visible. Objet très éloigné (foyer image, f', vergence au tableur), conditions de Gauss, images réduite, agrandie, virtuelle. Planche à dessin : aimants F, F', objet AB mobile, trois rayons particuliers, prolongements, aimant B'.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt2_images",
+      "activite": "Caractéristiques d'une lentille ; construction géométrique.",
+      "objectifs": [
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Foyer, distance focale, vergence",
+          "ce_que_fait_l_eleve": "Forme l'image d'un objet lointain et en déduit f' et la vergence de deux lentilles.",
+          "conclusion": "L'image d'un objet très éloigné (à l'infini) se forme dans le plan focal image, au foyer image F' : la distance OF' = f' est la distance focale. La vergence C = 1 / f' s'exprime en dioptries (δ) quand f' est en mètres ; elle est positive pour une lentille convergente. Plus C est grande, plus f' est petite : la lentille est plus convergente."
+        },
+        {
+          "titre": "Conditions de Gauss",
+          "ce_que_fait_l_eleve": "Compare l'image du « F » avec et sans diaphragme (conditions de Gauss).",
+          "conclusion": "Une lentille donne une image nette seulement si les rayons sont peu inclinés sur l'axe et passent près du centre optique : ce sont les conditions de Gauss. Un diaphragme placé contre la lentille arrête les rayons des bords : l'image est plus nette, mais moins lumineuse. On travaille alors avec des objets petits, près de l'axe."
+        },
+        {
+          "titre": "Image réelle, image virtuelle",
+          "ce_que_fait_l_eleve": "Cherche une image réduite, une image agrandie, puis constate l'image virtuelle.",
+          "conclusion": "Quand l'objet est avant le foyer objet F, la lentille en donne une image réelle, renversée, que l'on recueille sur un écran : plus petite que l'objet quand il est loin (au-delà de 2f'), plus grande quand il est près de F. Quand l'objet est entre F et la lentille, aucune image ne se forme sur l'écran : l'image est virtuelle, droite et agrandie (on la voit à travers la lentille : c'est la loupe)."
+        },
+        {
+          "titre": "Construire l'image",
+          "ce_que_fait_l_eleve": "Construit l'image d'un objet avec les rayons particuliers (image réelle et virtuelle).",
+          "conclusion": "Trois rayons particuliers issus de B suffisent pour construire B' : le rayon parallèle à l'axe ressort en passant par F' ; le rayon qui passe par O n'est pas dévié ; le rayon qui passe par F ressort parallèle à l'axe. A' est sur l'axe, à l'aplomb de B'. Si l'objet est entre F et O, les rayons sortants divergent : B' est à l'intersection de leurs prolongements ; l'image est virtuelle, droite et plus grande."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "L'image se forme toujours au foyer.",
+        "Un diaphragme coupe une partie de l'image.",
+        "Une lentille convergente donne toujours une image sur l'écran."
+      ]
+    },
+    {
+      "id": "b1_opt2_a3_conjugaison",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_opt2_a3_conjugaison.html",
+      "description": "Banc d'optique (lanterne « F » à 10 cm, L1 de 10 cm diaphragmée, écran) avec une vue rapprochée de l'écran quadrillé : OA, OA', 1/OA, 1/OA' au tableur (D − C = 1/f'), puis A'B' mesuré et comparé à OA'/OA. Loupe sur pied devant une coccinelle imprimée, élève qui regarde, règle : vue de ce que voit l'œil (grossissement, netteté d'accommodation), rayons et prolongements jusqu'à B'.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/opt2_images",
+      "activite": "Établir les relations de conjugaison et de grandissement (algébriques, le plus simplement possible).",
+      "objectifs": [
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Relation de conjugaison",
+          "ce_que_fait_l_eleve": "Mesure OA et OA' pour quatre images nettes et établit 1/OA' − 1/OA = 1/f'.",
+          "conclusion": "Pour une lentille mince, les positions de l'objet et de son image sont liées par la relation de conjugaison : 1/OA' − 1/OA = 1/f' = C (distances algébriques, axe orienté dans le sens de la lumière). Elle permet de calculer la position de l'image."
+        },
+        {
+          "titre": "Grandissement",
+          "ce_que_fait_l_eleve": "Mesure A'B' et vérifie γ = A'B'/AB = OA'/OA.",
+          "conclusion": "Le grandissement γ = A'B'/AB = OA'/OA compare l'image à l'objet : |γ| > 1, l'image est plus grande ; |γ| < 1, plus petite ; γ < 0, l'image est renversée (image réelle) ; γ > 0, elle est droite (image virtuelle)."
+        },
+        {
+          "titre": "La loupe",
+          "ce_que_fait_l_eleve": "Place une loupe pour voir une coccinelle nette et grossie, construit l'image virtuelle.",
+          "conclusion": "Une loupe est une lentille convergente de petite distance focale. L'objet est placé entre le foyer objet F et la lentille : l'image est virtuelle, droite et agrandie ; l'œil la voit à travers la loupe. Elle est vue la plus grande et sans fatigue quand l'objet est près du foyer : l'image est alors très loin."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "1/OA + 1/OA' = 1/f' sans tenir compte du signe.",
+        "Le grandissement est toujours positif.",
+        "La loupe grossit quelle que soit la distance à l'objet."
+      ]
     }
   ]
 }
