@@ -724,3 +724,20 @@ Problèmes restants, à faire par l'enseignant :
 - La limaille s'aligne aussitôt quand on déplace un aimant (en vrai, il faut tapoter de nouveau).
 - Le haut-parleur, le moteur et l'induction sont des modèles animés simplifiés (pas de mesure).
 - Le teslamètre mesure la valeur de la composante choisie, sans orientation de la sonde.
+
+## 2026-10-26 — Laboratoires virtuels : chapitre 1re année du bac « Conditions de visibilité d'un objet »
+
+Fait :
+- Trois simulations, inscrites au manifeste (88 ressources) : A1 voir la lumière (laser et fumée), conditions de vision,
+  propagation rectiligne, sources, rôle du cerveau ; A2 lois de la réflexion et de la réfraction sur un disque optique ;
+  A3 lentilles convergentes et divergentes (tableau magnétique, tracé exact des rayons), loupes. Objectifs O1 à O4.
+- Matériel commun nouveau : rayon lumineux, pied et noix, lampe sur douille, module laser, écran percé, lampe
+  d'architecte, livre, élève assis.
+- Corrigé à la demande de l'enseignant : objets plats ou flottants remplacés par du matériel en volume posé sur la
+  paillasse (pieds, noix, caisse vitrée, chevalets, règle à faire glisser, disque sur pied avec épaisseur, laser
+  cylindrique) ; dans les écrans percés, la lumière entre par chaque trou et ressort derrière le carton.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les loupes agrandissent ou réduisent le texte d'un facteur fixe (pas de calcul selon la distance au texte).
+- Les angles du disque optique sont entiers ; la lecture de i2 se fait sur les graduations (à 0,5° près).

@@ -379,6 +379,17 @@ teslamètre retranche le champ terrestre ; les mesures de B créé par un couran
 ouvert. Sur la balance de Laplace, le cadre exerce sur l'aimant une force opposée à la force de Laplace : l'indication varie
 de Δm = F/g (1,63 g pour 5 A, 4 cm, 0,080 T).
 
+## Chapitre 1re année du bac « Conditions de visibilité d'un objet » (fiche 1bac/opt1_visibilite)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_opt1_a1_vision.html | A1 : peut-on voir la lumière ? conditions de vision | O1, O2 | Caisse vitrée à fond noir : laser sans fumée (seule la tache est vue), puis bâton d'encens (le faisceau apparaît) ; salle obscure : lampe d'architecte, livre, élève assis, carton qui coupe la lumière ; trois écrans percés à aligner (la lumière passe par les trous) ; tri sources primaires / objets diffusants ; règle sur l'illusion de Müller-Lyer, triangle de Kanizsa. |
+| b1_opt1_a2_lois.html | A2 : réflexion et réfraction | O3, O4 | Disque optique sur pied, laser sur curseur : miroir (r = i pour cinq angles, retour inverse) ; demi-cylindre de plexiglas (sin i1 / sin i2 = 1,50 au tableur, retour inverse, angle limite ≈ 41,8°, réflexion totale) ; paille dans l'eau, reflet d'un arbre. |
+| b1_opt1_a3_lentilles.html | A3 : lentilles face à un faisceau parallèle | O4 | Tableau magnétique, boîte à cinq rayons, lentilles profil L1 à L4 : foyer image réel ou virtuel (repère F', prolongements) ; f' mesurée (42, 28, 31 mm) comparée à R/(2(n − 1)) (40, 25, 29 mm : lentilles épaisses) ; loupes A et B au-dessus d'un texte. |
+
+Les rayons traversant les lentilles sont calculés exactement, face par face (lois de Descartes en vecteurs, faces sphériques) :
+on voit donc l'épaisseur et l'aberration des bords, et f' mesurée depuis le centre dépasse un peu la valeur de la lentille mince.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

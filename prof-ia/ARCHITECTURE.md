@@ -422,6 +422,12 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_elec3_a1_champ/ | Barreau aimanté (boussole, limaille, teslamètre), aimant brisé, superposition, champ terrestre, Œrsted. |
 | contenu/ressources/laboratoires/sources/b1_elec3_a2_courants/ | Champ d'un fil rectiligne, d'une spire, d'une bobine ; B ∝ I, B = 2×10⁻⁷·I/d, μ0·N·I/2R, μ0·n·I. |
 | contenu/ressources/laboratoires/sources/b1_elec3_a3_laplace/ | Rails et balance de Laplace, courants parallèles, faisceau d'électrons, haut-parleur, moteur, induction. |
+| contenu/ressources/laboratoires/commun/rayon_lumineux.js | Rayon de lumière : ligne brisée avec halo et flèches du sens de propagation. |
+| contenu/ressources/laboratoires/commun/optique_materiel.js | Pied et noix, lampe sur douille, module laser, écran de carton percé (en volume). |
+| contenu/ressources/laboratoires/commun/objets_scene.js | Lampe d'architecte, livre à plat, élève assis de profil. |
+| contenu/ressources/laboratoires/sources/b1_opt1_a1_vision/ | Laser dans la fumée, conditions de vision, écrans percés, sources et objets diffusants, illusions. |
+| contenu/ressources/laboratoires/sources/b1_opt1_a2_lois/ | Disque optique gradué : réflexion (r = i, retour inverse), réfraction (n = 1,50, angle limite). |
+| contenu/ressources/laboratoires/sources/b1_opt1_a3_lentilles/ | Tableau magnétique, boîte à rayons, lentilles profil (tracé exact), foyer, f' ; loupes. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
