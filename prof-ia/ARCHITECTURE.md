@@ -447,6 +447,17 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim3_a1_conductance/ | Ions indispensables, G = I/U, facteurs L, S, C, conductivité (simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim3_a2_etalonnage/ | Courbe d'étalonnage au chlorure de sodium, sérum physiologique, limite (simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim3_a3_ion_commun/ | Six solutions à 5 mmol/L, conductivités molaires ioniques (simulation.js). |
+| contenu/ressources/laboratoires/commun/reactions_totales.js | Réactions totales entre espèces dissoutes (avancement jusqu'au réactif limitant), en mmol ; équations observées. |
+| contenu/ressources/laboratoires/commun/acide_base.js | Solutions acides et basiques, réactions de transfert de protons, pH calculé à partir des espèces, BBT et hélianthine. |
+| contenu/ressources/laboratoires/commun/oxydoreduction.js | Solutions et réactions d'oxydoréduction (permanganate, fer II, diiode, thiosulfate, Javel, vitamine C), teintes du permanganate, du diiode et de l'amidon. |
+| contenu/ressources/laboratoires/commun/burette.js | Burette de 25 mL aux vraies dimensions : graduations, robinet (goutte à goutte, filet), écoulement réel, loupe du ménisque. |
+| contenu/ressources/laboratoires/commun/agitateur_magnetique.js | Agitateur magnétique : plateau (support), bouton de vitesse, barreau aimanté vu à travers le verre. |
+| contenu/ressources/laboratoires/commun/conductimetre.js | Conductimètre à sonde plongeante : σ = Σ λi·[Xi], temps de réponse selon l'agitation ; sonde dessinée derrière la paroi du bécher. |
+| contenu/ressources/laboratoires/commun/poste_titrage.js | Paillasse de titrage (1 px/mm) : burette, agitateur, bécher à titrer, récipients et flacons, conductimètre facultatif ; réactions continues. |
+| contenu/ressources/laboratoires/sources/b1_chim4_a1_protons/ | Indicateurs colorés et produits courants ; vinaigre + soude, ammoniaque + acide : transfert de protons (postes_protons.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim4_a2_electrons/ | Fer + ions cuivre II, Javel + iodure, diiode + vitamine C : transfert d'électrons (postes_electrons.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim4_a3_conductimetrique/ | Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique (simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim4_a4_colorimetrique/ | Titrages des ions fer II par le permanganate et du diiode par le thiosulfate (postes_colorimetrie.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

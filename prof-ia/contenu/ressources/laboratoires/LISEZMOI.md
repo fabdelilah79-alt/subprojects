@@ -451,6 +451,21 @@ VΩ et COM aux bornes de la cellule) et choisit les calibres alternatifs (20 mA~
 notée quand le montage est juste : U et I sont ceux des afficheurs, G = I/U. La cellule est un composant du circuit
 (`poste_conductance.js`, `cellule_conductance.js`) ; les béchers sont la verrerie physique commune.
 
+## Chapitre 1re année du bac « Titrages » (fiche 1bac/chim4_titrages)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim4_a1_protons.html | A1 : transfert de protons, indicateurs colorés, acides et bases de la vie courante | O1, O2 | BBT dans six produits (acides jaunes, eau verte, basiques bleus) ; vinaigre + soude (jaune → bleu), ammoniaque + acide chlorhydrique (bleu → jaune) ; couples, eau ampholyte. |
+| b1_chim4_a2_electrons.html | A2 : transfert d'électrons, eau de Javel, acide ascorbique | O3, O4 | Clou de fer dans le sulfate de cuivre, ions Fe²⁺ révélés par la soude ; Javel + iodure → diiode (bleu-noir avec l'amidon) ; vitamine C qui réduit le diiode ; demi-équations. |
+| b1_chim4_a3_conductimetrique.html | A3 : titrage conductimétrique d'un déboucheur par l'acide chlorhydrique | O2, O5, O6 | Bécher sur l'agitateur, sonde plongée ; 11 mesures σ = f(V) ; deux droites, VE = 8,45 mL ; Cb = 8,45 × 10⁻² mol/L ; déboucheur commercial ≈ 4,2 mol/L ; chiffres significatifs. |
+| b1_chim4_a4_colorimetrique.html | A4 : titrage des ions fer II par le permanganate, du diiode par le thiosulfate | O3, O4, O5, O6 | Acidifier, titrer jusqu'au rose persistant (VE = 9,60 mL, [Fe²⁺] = 0,0960 mol/L) ; diiode, empois d'amidon, décoloration (VE = 8,50 mL, [I₂] = 0,0425 mol/L). |
+
+Les réactions sont totales (une seule réaction, flèche simple) et instantanées si la solution est agitée ; sinon elles se font
+toutes les 2 s (une goutte colore d'abord le liquide). Les quantités sont en mmol (`reactions_totales.js`). Le pH est calculé
+à partir des espèces : acide ou base forte en excès, sinon couple CH₃CO₂H/CH₃CO₂⁻ ou NH₄⁺/NH₃ (`acide_base.js`). La scène de
+titrage est à 1 px/mm pour que la burette de 25 mL tienne entière ; la loupe grossit cinq fois le ménisque (lecture à 0,05 mL).
+Robinet : un toucher sur la clé ouvre au goutte à goutte ou ferme ; glisser la clé vers le haut donne un filet, vers le bas ferme.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

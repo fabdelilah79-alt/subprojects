@@ -833,3 +833,22 @@ Fait (à la demande de l'enseignant : verrerie et appareils réalistes, comme da
 Problèmes restants, à faire par l'enseignant :
 - Les plaques ne se polarisent pas, quelle que soit la fréquence du GBF (la conductance ne dépend pas de f).
 - Pas de calibre 2 mA~ : pour les solutions très diluées, il faut augmenter l'amplitude du GBF.
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 1re année du bac « Titrages »
+
+Fait :
+- Quatre simulations, inscrites au manifeste (104 ressources) : A1 transfert de protons (indicateurs, vinaigre + soude,
+  ammoniaque + acide) ; A2 transfert d'électrons (fer et ions cuivre, Javel et iodure, diiode et vitamine C) ; A3 titrage
+  conductimétrique d'un déboucheur ; A4 titrages colorimétriques (fer II par le permanganate, diiode par le thiosulfate).
+  Objectifs O1 à O6.
+- Matériel commun nouveau : reactions_totales.js, acide_base.js, oxydoreduction.js (chimie des espèces, pH, couleurs) ;
+  burette.js, agitateur_magnetique.js, conductimetre.js, poste_titrage.js (paillasse de titrage à 1 px/mm).
+- Remarque de l'enseignant prise en compte : la sonde du conductimètre et le barreau aimanté sont dessinés derrière la paroi
+  avant du bécher (on les voit à travers le verre), comme la pipette dans un bécher.
+- Vérifié : parcours complets des quatre simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La burette est remplie et ajustée au zéro par une touche (pas de rinçage ni de remplissage geste par geste).
+- Les prises d'essai (10,0 mL) sont déjà dans les béchers : la pipette jaugée n'est pas manipulée.
+- Le tableur a 11 lignes : le titrage conductimétrique se fait en 11 mesures (environ tous les 1,5 mL).
+- Le pH des mélanges est un modèle simple (acides et bases forts, deux couples faibles) ; le jus de citron n'a qu'un pH.

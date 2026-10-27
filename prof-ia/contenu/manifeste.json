@@ -3219,6 +3219,142 @@
         "Tous les ions conduisent autant.",
         "La conductivité ne dépend que du cation."
       ]
+    },
+    {
+      "id": "b1_chim4_a1_protons",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim4_a1_protons.html",
+      "description": "Porte-tubes de six produits de la vie courante (vinaigre, jus de citron, eau distillée, eau savonneuse, ammoniaque, déboucheur dilués) et flacons de bleu de bromothymol, d'hélianthine et de phénolphtaléine : classement acide / neutre / basique par la teinte. Puis vinaigre + BBT + soude goutte à goutte (jaune → bleu) et ammoniaque + BBT + acide chlorhydrique (bleu → jaune) : transfert de protons, réactions totales, couples acide/base, eau ampholyte. Lunettes et gants pour les produits corrosifs.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim4_titrages",
+      "activite": "Transfert de protons avec des indicateurs colorés ; acides et bases de la vie courante (vinaigre, déboucheur…).",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Acides et bases de la vie courante",
+          "ce_que_fait_l_eleve": "Ajoute du BBT aux six produits et les classe en acides, neutres et basiques.",
+          "conclusion": "Le vinaigre et le jus de citron sont acides (BBT jaune) ; l'eau distillée est neutre (vert) ; l'eau savonneuse, l'ammoniaque et le déboucheur sont basiques (bleu). Un indicateur coloré est un couple acide/base dont les deux formes n'ont pas la même couleur : sa teinte dépend du pH."
+        },
+        {
+          "titre": "Le transfert de protons",
+          "ce_que_fait_l_eleve": "Fait réagir le vinaigre avec la soude et l'ammoniaque avec l'acide chlorhydrique en suivant le changement de teinte du BBT ; écrit les équations et les couples.",
+          "conclusion": "Selon Brønsted, un acide est une espèce capable de céder un proton H⁺, une base une espèce capable d'en capter un. Dans CH₃CO₂H + HO⁻ → CH₃CO₂⁻ + H₂O, l'acide acétique cède un proton à l'ion hydroxyde ; dans NH₃ + H₃O⁺ → NH₄⁺ + H₂O, l'ammoniac capte le proton de l'ion oxonium. Les protons ne sont jamais libres en solution : ils passent directement de l'acide d'un couple à la base d'un autre couple. Couples : CH₃CO₂H/CH₃CO₂⁻, H₂O/HO⁻, NH₄⁺/NH₃, H₃O⁺/H₂O ; l'eau est acide dans un couple et base dans l'autre : c'est un ampholyte."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Un acide est un produit qui brûle ; une base n'est pas dangereuse.",
+        "Le proton H⁺ existe libre dans l'eau.",
+        "L'eau ne participe jamais aux réactions acide-base."
+      ]
+    },
+    {
+      "id": "b1_chim4_a2_electrons",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim4_a2_electrons.html",
+      "description": "Clou de fer dans une solution de sulfate de cuivre (décoloration, dépôt de cuivre, tube témoin), ions fer II identifiés par la soude (précipité vert) ; eau de Javel diluée sur une solution d'iodure de potassium (diiode brun, bleu-noir avec l'empois d'amidon) ; acide ascorbique (vitamine C) qui décolore une solution de diiode. Oxydant, réducteur, couples Ox/Red, demi-équations, électrons jamais libres en solution.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim4_titrages",
+      "activite": "Transfert d'électrons ; eau de Javel, acide ascorbique.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Le fer et les ions cuivre II",
+          "ce_que_fait_l_eleve": "Plonge un clou de fer dans le sulfate de cuivre, identifie les ions fer II à la soude et écrit les demi-équations.",
+          "conclusion": "Le clou se recouvre de cuivre et la solution se décolore ; la soude donne un précipité vert : des ions Fe²⁺ se sont formés. Chaque atome de fer a cédé deux électrons (Fe → Fe²⁺ + 2 e⁻), captés par un ion cuivre II (Cu²⁺ + 2 e⁻ → Cu) : Fe + Cu²⁺ → Fe²⁺ + Cu. Un réducteur cède des électrons (ici le fer), un oxydant en capte (ici l'ion Cu²⁺) ; les électrons ne sont jamais libres en solution."
+        },
+        {
+          "titre": "Eau de Javel, diiode, vitamine C",
+          "ce_que_fait_l_eleve": "Oxyde les ions iodure par l'eau de Javel, révèle le diiode à l'amidon, puis le réduit par la vitamine C.",
+          "conclusion": "L'eau de Javel fait apparaître du diiode (brun, bleu-noir avec l'amidon) : l'ion hypochlorite, oxydant, capte deux électrons cédés par deux ions iodure (2 I⁻ → I₂ + 2 e⁻). L'acide ascorbique fait disparaître le diiode : c'est un réducteur, il cède des électrons au diiode (I₂ + 2 e⁻ → 2 I⁻). Une même espèce (I₂) peut être produite par un oxydant et consommée par un réducteur : I₂/I⁻ est un couple oxydant/réducteur."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Un oxydant contient forcément de l'oxygène.",
+        "Les électrons circulent librement dans la solution.",
+        "Le fer disparaît sans rien produire."
+      ]
+    },
+    {
+      "id": "b1_chim4_a3_conductimetrique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim4_a3_conductimetrique.html",
+      "description": "Paillasse de titrage à l'échelle réelle : burette de 25 mL (graduée tous les 0,1 mL, robinet goutte à goutte ou filet, loupe sur le ménisque) remplie d'acide chlorhydrique à 0,100 mol/L, agitateur magnétique et barreau, bécher de 10,0 mL de déboucheur dilué 50 fois + 140 mL d'eau, conductimètre à sonde plongeante. Mesures σ = f(V) au tableur et courbe (deux droites), équivalence à 8,45 mL, Cb = Ca·VE/Vb, concentration du déboucheur commercial (≈ 4,2 mol/L), chiffres significatifs.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim4_titrages",
+      "activite": "Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique ou d'une eau de Javel.",
+      "objectifs": [
+        "O2",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Le montage du titrage",
+          "ce_que_fait_l_eleve": "Installe le bécher sur l'agitateur, plonge la sonde, identifie la réaction support.",
+          "conclusion": "La réaction support du titrage est la réaction acide-base totale H₃O⁺ + HO⁻ → 2 H₂O : chaque ion H₃O⁺ versé cède un proton à un ion HO⁻. L'agitation rend la solution homogène ; l'eau ajoutée immerge la sonde et rend la dilution due à l'acide versé presque négligeable."
+        },
+        {
+          "titre": "La courbe σ = f(V)",
+          "ce_que_fait_l_eleve": "Verse l'acide par portions, mesure σ, trace la courbe σ = f(V) et l'interprète.",
+          "conclusion": "Avant l'équivalence, σ diminue : les ions HO⁻, très conducteurs, sont remplacés par des ions Cl⁻, moins conducteurs (λ(HO⁻) = 19,9 contre λ(Cl⁻) = 7,6 mS·m²/mol). Après l'équivalence, σ augmente : les ions H₃O⁺ et Cl⁻ versés s'accumulent sans réagir, et H₃O⁺ est l'ion le plus conducteur. La courbe est formée de deux droites."
+        },
+        {
+          "titre": "L'équivalence",
+          "ce_que_fait_l_eleve": "Détermine l'équivalence, la concentration du déboucheur et la précision du résultat.",
+          "conclusion": "À l'équivalence, les réactifs ont été introduits dans les proportions stœchiométriques : n(HO⁻) initiale = n(H₃O⁺) versée, soit Cb·Vb = Ca·VE. Avec VE ≈ 8,45 mL : Cb ≈ 8,45 × 10⁻² mol/L ; le déboucheur commercial contient environ 4,2 mol/L d'hydroxyde de sodium. Le résultat n'a pas plus de chiffres significatifs que la donnée la moins précise (trois)."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "À l'équivalence, la conductivité est nulle.",
+        "Ajouter de l'eau au bécher change la quantité d'ions à titrer.",
+        "Le résultat est d'autant plus précis qu'il a de chiffres."
+      ]
+    },
+    {
+      "id": "b1_chim4_a4_colorimetrique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim4_a4_colorimetrique.html",
+      "description": "Deux paillasses de titrage (burette, agitateur magnétique). Ions fer II (10,0 mL, acidifiés par l'acide sulfurique versé par l'élève) titrés par le permanganate de potassium à 0,020 mol/L : décoloration, puis première teinte rose persistante à 9,60 mL ; sans acide, la teinte violette persiste. Diiode (10,0 mL) titré par le thiosulfate de sodium à 0,100 mol/L : brun, jaune pâle, bleu-noir avec l'empois d'amidon, décoloration à 8,50 mL. Équivalence dépassée : bécher neuf et burette remplie de nouveau.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim4_titrages",
+      "activite": "Titrage des ions fer(II) par le permanganate en milieu acide, ou du diiode par le thiosulfate.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Ions fer II et permanganate",
+          "ce_que_fait_l_eleve": "Acidifie la solution d'ions fer II et la titre par le permanganate jusqu'à la teinte rose persistante ; calcule [Fe²⁺].",
+          "conclusion": "La réaction support MnO₄⁻ + 5 Fe²⁺ + 8 H⁺ → Mn²⁺ + 5 Fe³⁺ + 4 H₂O est totale et rapide ; elle consomme des ions H⁺ : il faut acidifier. Tant qu'il reste des ions Fe²⁺, le permanganate versé est réduit et la teinte violette disparaît ; la première goutte en excès donne une teinte rose qui persiste : c'est l'équivalence. Alors n(MnO₄⁻) versée = n(Fe²⁺) initiale / 5, d'où [Fe²⁺] = 5 × 0,020 × 9,60 / 10,0 = 0,0960 mol/L."
+        },
+        {
+          "titre": "Diiode et thiosulfate",
+          "ce_que_fait_l_eleve": "Titre le diiode par le thiosulfate avec l'empois d'amidon ; calcule [I₂].",
+          "conclusion": "La réaction support I₂ + 2 S₂O₃²⁻ → 2 I⁻ + S₄O₆²⁻ est totale. La teinte du diiode pâlit ; quand elle est jaune pâle, quelques gouttes d'empois d'amidon donnent une teinte bleu-noir, beaucoup plus visible : sa disparition marque l'équivalence. Alors n(I₂) initiale = n(S₂O₃²⁻) versée / 2, d'où [I₂] = 0,100 × 8,50 / (2 × 10,0) = 0,0425 mol/L."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "L'équivalence est atteinte quand la solution change de couleur, même si l'on a versé trop vite.",
+        "Il faut toujours un indicateur coloré pour repérer l'équivalence.",
+        "À l'équivalence, les quantités de réactifs versées sont égales, quels que soient les coefficients."
+      ]
     }
   ]
 }
