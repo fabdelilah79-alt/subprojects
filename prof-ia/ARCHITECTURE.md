@@ -468,7 +468,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
-| contenu/ressources/laboratoires/commun/corde_tendue.js | Corde de 2 m tendue sur une poulie par des masses (T = M·g), trois cordes de masses linéiques différentes, v = √(T/μ). |
+| contenu/ressources/laboratoires/commun/corde_tendue.js | Corde de 2 m tendue sur une poulie par des masses (T = M·g), trois cordes de masses linéiques différentes, v = √(T/μ) ; coup sec réglable, ralenti × 20, chronophotographie. |
 | contenu/ressources/laboratoires/commun/micro_claquoir.js | Claquoir, règle de 1 m et deux microphones déplaçables reliés à l'oscilloscope à mémoire : retard d'un son. |
 | contenu/ressources/laboratoires/commun/oscilloscope_memoire.js | Oscilloscope numérique à mémoire, deux voies, monocoup déclenché par la voie 1 ; sensibilités et balayage réglables. |
 | contenu/ressources/laboratoires/sources/b2_ondes1_a1_exemples/ | Cuve à vague et bouchon (cuve_vague.js), ressort et documents son/séismes avec tableau de tri (postes_exemples.js, simulation.js). |

@@ -919,3 +919,14 @@ Problèmes restants, à faire par l'enseignant :
   après un aller-retour : à ajuster si l'on veut voir plus de réflexions.
 - La cuve à ondes à deux dimensions (ondes circulaires) n'est pas simulée : la fiche se limite aux ondes à une dimension.
 - Les pages chargent tout le matériel commun des ondes, même celui qu'une activité n'utilise pas.
+
+## 2026-10-27 — Correction : la corde tendue (ondes mécaniques, A3)
+
+Remarque de l'enseignant : la corde paraissait élastique et l'onde ne se propageait pas de façon observable.
+Cause : la secousse à la main durait trop longtemps (bosse de près de 1 m) et l'onde allait trop vite (0,4 s pour 2 m).
+Fait :
+- commun/corde_tendue.js : un toucher de la poignée donne un coup sec (demi-sinusoïde, grande ou petite, brève ou
+  longue) ; boîtier de commande au mur ; caméra rapide (ralenti × 20 par défaut, le chronomètre mesure les vraies
+  durées) ; chronophotographie (huit images numérotées, toutes les 0,05 s).
+- A3 : deux étapes ajoutées (chronophotographie et son interprétation ; la forme du coup ne change pas le retard).
+- Vérifié : parcours complet de l'A3 ; les célérités mesurées sont à moins de 1 % de √(T/μ).

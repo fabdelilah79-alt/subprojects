@@ -498,7 +498,7 @@ modèle). `modele_atelier.js` ajoute ce nom au bilan du modèle.
 |---|---|---|---|
 | b2_ondes1_a1_exemples.html | A1 : exemples familiers (vagues, sons, séismes) | O1, O2 | Vague dans une cuve (cale enfoncée puis relâchée), bouchon qui monte et redescend sans avancer, célérité ; long ressort secoué (onde transversale) ou poussé (onde longitudinale), spire rouge ; documents son et séismes, tri transversale / longitudinale, distance d'un foyer. |
 | b2_ondes1_a2_retard.html | A2 : corde, ressort, ondes sonores : retard et célérité | O3, O4, O5 | Retard d'une bosse le long du ressort entre deux cellules (chronomètre électronique), Δt = f(d) ; retard d'un son entre deux micros à l'oscilloscope à mémoire (claquoir), τ = f(d), v ≈ 343 m/s. |
-| b2_ondes1_a3_milieu.html | A3 : influence de l'inertie et de la rigidité du milieu | O4, O5 | Corde tendue par des masses sur une poulie : v² = f(T) ; trois cordes (50, 100, 200 g/m) à la même tension ; documents sur le son dans différents milieux et selon la température. |
+| b2_ondes1_a3_milieu.html | A3 : influence de l'inertie et de la rigidité du milieu | O4, O5 | Corde tendue par des masses sur une poulie ; coup sec réglable, caméra rapide (ralenti × 20) et chronophotographie toutes les 0,05 s ; v² = f(T) ; trois cordes (50, 100, 200 g/m) à la même tension ; documents sur le son dans différents milieux et selon la température. |
 
 Le milieu à une dimension (`milieu_1d.js`) calcule l'élongation en 201 points avec un pas de temps égal à dx / v : la
 perturbation avance exactement à la célérité v, sans se déformer ; elle se réfléchit sur une extrémité fixe (ressort,
