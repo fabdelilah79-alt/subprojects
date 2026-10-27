@@ -3392,6 +3392,130 @@
         "Une bougie qui brûle disparaît sans rien produire.",
         "Le carbone forme toujours quatre liaisons simples."
       ]
+    },
+    {
+      "id": "b1_chim6_a1_squelette",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim6_a1_squelette.html",
+      "description": "Trois paillasses. Tubes d'hexane, de cyclohexane et d'éthanol où l'on ajoute de l'eau à la pissette : deux phases (l'hydrocarbure, moins dense, au-dessus) ou mélange homogène. Bain-marie à 50 °C où l'on plonge des tubes de pentane, d'hexane et de cyclohexane : seul le pentane bout ; tableur et courbe Téb = f(n) des alcanes linéaires. Tests des groupes caractéristiques sur cinq tubes inconnus A à E (2,4-DNPH, liqueur de Fehling au bain-marie, BBT, permanganate acidifié), lunettes et gants exigés.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim6_formule_chimique",
+      "activite": "Expériences sur l'influence du squelette (densité, solubilité, Téb) ; tests des groupes caractéristiques.",
+      "objectifs": [
+        "O1",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Solubilité et densité",
+          "ce_que_fait_l_eleve": "Ajoute de l'eau à l'hexane, au cyclohexane et à l'éthanol et compare miscibilité et densité.",
+          "conclusion": "L'hexane et le cyclohexane ne se mélangent pas à l'eau : deux phases ; l'hydrocarbure est au-dessus, il est moins dense que l'eau (d = 0,66 et 0,78). L'éthanol se mélange à l'eau en toutes proportions : son groupe –OH le rend soluble. La densité d'un hydrocarbure augmente avec le nombre d'atomes de carbone et quand la chaîne est cyclique."
+        },
+        {
+          "titre": "Températures d'ébullition",
+          "ce_que_fait_l_eleve": "Chauffe trois hydrocarbures au bain-marie, trace Téb = f(n) et relie la température d'ébullition à la longueur et à la ramification de la chaîne.",
+          "conclusion": "Seul le pentane (Téb = 36 °C) bout à 50 °C. La température d'ébullition des alcanes linéaires augmente avec le nombre d'atomes de carbone ; pour un même nombre d'atomes, elle diminue quand la chaîne est ramifiée (pentane 36 °C, 2-méthylbutane 28 °C, 2,2-diméthylpropane 10 °C). La distillation fractionnée du pétrole sépare ainsi ses constituants selon leur température d'ébullition."
+        },
+        {
+          "titre": "Les groupes caractéristiques",
+          "ce_que_fait_l_eleve": "Identifie un alcool primaire, un aldéhyde, une cétone, un acide carboxylique et un alcool tertiaire par des tests.",
+          "conclusion": "B et C contiennent le groupe carbonyle (DNPH) ; B réduit la liqueur de Fehling : c'est l'éthanal CH₃–CHO, un aldéhyde ; C est la propanone CH₃–CO–CH₃, une cétone. D fait virer le BBT au jaune : c'est l'acide éthanoïque CH₃–COOH. A décolore le permanganate : c'est l'éthanol CH₃–CH₂–OH, alcool primaire, oxydé en éthanal puis en acide éthanoïque ; E ne réagit pas : c'est le 2-méthylpropan-2-ol, alcool tertiaire."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Tous les liquides organiques se mélangent à l'eau.",
+        "Une molécule plus lourde bout toujours à plus basse température.",
+        "Tous les alcools sont oxydés par le permanganate."
+      ]
+    },
+    {
+      "id": "b1_chim6_a2_modeles",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim6_a2_modeles.html",
+      "description": "Deux paillasses. Boîte de modèles moléculaires : l'élève assemble le butane et le 2-méthylpropane (isomères de constitution), puis le (Z)- et le (E)-but-2-ène ; le modèle terminé affiche son nom officiel, calculé à partir de la chaîne la plus longue, des ramifications et de la géométrie de la liaison double. Quatre documents au mur : distillation fractionnée du pétrole, craquage, reformage et vapocraquage, polyaddition, polymères courants.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim6_formule_chimique",
+      "activite": "Modèles moléculaires et logiciels ; documents sur la pétrochimie et la polymérisation.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Isomères de constitution",
+          "ce_que_fait_l_eleve": "Construit les deux isomères de C₄H₁₀, écrit leurs formules semi-développées et les nomme.",
+          "conclusion": "Le butane CH₃–CH₂–CH₂–CH₃ a une chaîne linéaire ; le 2-méthylpropane CH₃–CH(CH₃)–CH₃ a une chaîne ramifiée. Ils ont la même formule brute C₄H₁₀ mais des enchaînements d'atomes différents : ce sont des isomères de constitution, qui n'ont pas les mêmes propriétés (Téb : −0,5 °C et −12 °C). C₅H₁₂ a trois isomères : pentane, 2-méthylbutane, 2,2-diméthylpropane."
+        },
+        {
+          "titre": "L'isomérie Z/E",
+          "ce_que_fait_l_eleve": "Construit les isomères Z et E du but-2-ène et explique pourquoi ils ne se transforment pas l'un en l'autre.",
+          "conclusion": "Autour de la liaison double, la molécule est plane et ne peut pas tourner. Dans le (Z)-but-2-ène, les deux groupes CH₃ sont du même côté de la liaison double ; dans le (E)-but-2-ène, ils sont de part et d'autre. Ce sont deux isomères Z et E, de propriétés différentes. Le but-1-ène n'a pas d'isomère Z/E : un des carbones de la double liaison porte deux hydrogènes."
+        },
+        {
+          "titre": "Pétrochimie et polymères",
+          "ce_que_fait_l_eleve": "Lit les documents sur la pétrochimie et écrit le motif d'un polymère à partir de son monomère.",
+          "conclusion": "La distillation fractionnée sépare les constituants du pétrole selon leur température d'ébullition. Le craquage raccourcit les chaînes, le reformage les ramifie ou les cyclise, le vapocraquage donne des alcènes légers. Par polyaddition, n CH₂=CHA → –(CH₂–CHA)n– : l'éthène donne le polyéthylène, le chlorure de vinyle le PVC, le propène le polypropylène."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Deux molécules de même formule brute sont identiques.",
+        "On peut passer de l'isomère Z à l'isomère E en tournant la molécule.",
+        "Un polymère est un mélange de monomères."
+      ]
+    },
+    {
+      "id": "b1_chim6_a3_benzoique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim6_a3_benzoique.html",
+      "description": "Cinq paillasses. Montage à reflux : 2,0 mL d'alcool benzylique et la solution de permanganate de potassium en milieu basique versés par l'entonnoir, pierre ponce, réfrigérant, chauffage pendant 20 min ; le violet laisse place au brun du dioxyde de manganèse. Filtration sous vide du MnO₂ (Büchner, trompe à eau). Acidification du filtrat d'ions benzoate par l'acide chlorhydrique (gants, lunettes) : précipité blanc d'acide benzoïque, recueilli sur Büchner. Pesée du produit sec sur une balance au centième (coupelle tarée), calcul du rendement. Chromatographie du produit, de l'acide benzoïque pur et de l'alcool benzylique, révélée sous UV.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim6_formule_chimique",
+      "activite": "Synthèse : acide benzoïque par oxydation de l'alcool benzylique par le permanganate en milieu basique.",
+      "objectifs": [
+        "O5",
+        "O6",
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Oxyder l'alcool benzylique",
+          "ce_que_fait_l_eleve": "Réalise le chauffage à reflux et interprète le changement de couleur par l'oxydation de l'alcool et la réduction du permanganate.",
+          "conclusion": "À chaud, l'ion permanganate (violet) oxyde l'alcool benzylique, un alcool primaire : 3 C₆H₅–CH₂OH + 4 MnO₄⁻ → 3 C₆H₅–COO⁻ + 4 MnO₂ + HO⁻ + 4 H₂O. Le permanganate est réduit en dioxyde de manganèse, solide brun ; en milieu basique, l'acide benzoïque formé est sous forme d'ions benzoate C₆H₅–COO⁻, solubles. Le reflux permet de chauffer longtemps sans perdre de matière."
+        },
+        {
+          "titre": "Éliminer le dioxyde de manganèse",
+          "ce_que_fait_l_eleve": "Sépare le dioxyde de manganèse par filtration sous vide.",
+          "conclusion": "Le dioxyde de manganèse, solide, reste sur le papier filtre. Le filtrat est incolore : il contient les ions benzoate C₆H₅–COO⁻, solubles dans l'eau. La filtration sous vide (Büchner, fiole à vide, trompe à eau) est plus rapide qu'une filtration simple."
+        },
+        {
+          "titre": "Précipiter l'acide benzoïque",
+          "ce_que_fait_l_eleve": "Acidifie le filtrat, observe la précipitation de l'acide benzoïque et le recueille par filtration sous vide.",
+          "conclusion": "L'acide chlorhydrique apporte des ions H₃O⁺ : C₆H₅–COO⁻ + H₃O⁺ → C₆H₅–COOH + H₂O. L'acide benzoïque, peu soluble dans l'eau froide, précipite en cristaux blancs ; on ajoute l'acide jusqu'à ce que plus rien ne précipite (pH acide). Une filtration sous vide le recueille ; on le rince à l'eau glacée et on le sèche à l'étuve avant de le peser."
+        },
+        {
+          "titre": "Peser le produit, calculer le rendement",
+          "ce_que_fait_l_eleve": "Pèse le produit sec et calcule n(max), n(obtenu) et le rendement.",
+          "conclusion": "n(alcool) = 1,04 × 2,0 / 108 = 1,93 × 10⁻² mol : le permanganate étant en excès, c'est aussi la quantité maximale d'acide benzoïque. On obtient 1,62 g, soit n = 1,62 / 122 = 1,33 × 10⁻² mol. Le rendement r = n(obtenu) / n(max) ≈ 0,69 = 69 %. Il est inférieur à 100 % : pertes lors des transferts et des filtrations, acide resté dissous dans l'eau mère."
+        },
+        {
+          "titre": "Le produit est-il pur ?",
+          "ce_que_fait_l_eleve": "Contrôle la pureté du produit par chromatographie sur couche mince.",
+          "conclusion": "Le produit obtenu (1) donne une seule tache, à la même hauteur que l'acide benzoïque pur (2), et aucune tache à la hauteur de l'alcool benzylique (3) : le produit est de l'acide benzoïque, et il ne reste plus de réactif. On peut aussi mesurer sa température de fusion (122 °C) au banc Kofler."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Le rendement d'une synthèse est toujours de 100 %.",
+        "Le produit d'une synthèse est forcément pur.",
+        "L'acide benzoïque se forme directement à l'état solide dans le ballon."
+      ]
     }
   ]
 }

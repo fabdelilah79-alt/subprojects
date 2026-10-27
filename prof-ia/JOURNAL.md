@@ -867,3 +867,23 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - La buée n'est pas testée au sulfate de cuivre anhydre (ce test est seulement rappelé dans les données).
 - Un trou libre tourné vers l'arrière n'est pas visible : il faut incliner le modèle (indiqué dans l'aide).
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 1re année du bac « Lecture d'une formule chimique »
+
+Fait :
+- Trois simulations, inscrites au manifeste (108 ressources) : A1 squelette carboné (solubilité, densité, températures
+  d'ébullition, courbe Téb = f(n)) et tests des groupes caractéristiques (DNPH, Fehling, BBT, permanganate) ; A2 modèles
+  moléculaires (isomères de constitution, noms officiels, isomérie Z/E) et documents (pétrochimie, polymères) ; A3 synthèse
+  de l'acide benzoïque (reflux, deux filtrations sous vide, précipitation, pesée, rendement, chromatographie).
+  Objectifs O1 à O7.
+- Matériel commun nouveau : chimie_organique.js, nomenclature.js.
+- Fichier commun modifié (signalé) : modele_atelier.js ajoute le nom officiel du modèle à son bilan. La simulation
+  « représentation de Cram » du tronc commun a été rejouée : elle passe.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les paillasses de filtration, de précipitation et de pesée partent de quantités préparées (elles ne reprennent pas ce que
+  l'élève a obtenu au reflux) ; la masse de produit sec est fixée à 1,62 g (rendement d'environ 69 %).
+- Le séchage à l'étuve et la température de fusion (banc Kofler) sont seulement cités ; le pH du filtrat acidifié n'est
+  pas mesuré au papier pH.
+- Le nom officiel n'est calculé que pour les alcanes et les alcènes de six carbones au plus (ramifications méthyle, éthyle).

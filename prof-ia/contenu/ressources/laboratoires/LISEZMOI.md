@@ -475,6 +475,17 @@ Robinet : un toucher sur la clé ouvre au goutte à goutte ou ferme ; glisser la
 La boîte de modèles moléculaires (commun : molecule_3d.js, modele_dessin.js, modele_atelier.js) fait maintenant aussi la
 liaison triple : un toucher sur une liaison la fait passer de simple à double, puis à triple, puis de nouveau à simple.
 
+## Chapitre 1re année du bac « Lecture d'une formule chimique » (fiche 1bac/chim6_formule_chimique)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim6_a1_squelette.html | A1 : influence du squelette carboné ; tests des groupes caractéristiques | O1, O4, O5 | Eau ajoutée à la pissette dans l'hexane, le cyclohexane, l'éthanol (deux phases ou mélange) ; pentane, hexane, cyclohexane au bain-marie à 50 °C (seul le pentane bout), tableur et courbe Téb = f(n) ; tubes inconnus A à E testés au 2,4-DNPH, à la liqueur de Fehling (bain-marie), au BBT, au permanganate acidifié. |
+| b1_chim6_a2_modeles.html | A2 : modèles moléculaires, isomérie, noms ; pétrochimie et polymérisation | O1, O2, O3 | Butane et 2-méthylpropane, (Z)- et (E)-but-2-ène construits avec la boîte de modèles (le nom officiel du modèle s'affiche) ; quatre documents (distillation fractionnée, craquage et reformage, polyaddition, polymères courants) ; motifs du PVC et du polypropylène. |
+| b1_chim6_a3_benzoique.html | A3 : synthèse de l'acide benzoïque | O5, O6, O7 | Reflux de l'alcool benzylique avec le permanganate en milieu basique (violet → brun) ; filtration sous vide du MnO₂ ; acidification du filtrat (précipité blanc) et filtration des cristaux ; pesée du produit sec (coupelle tarée), n(max), n(obtenu), rendement ; chromatographie révélée sous UV (pureté). |
+
+Fichiers communs nouveaux : `chimie_organique.js` (espèces organiques et tests), `nomenclature.js` (nom officiel d'un
+modèle). `modele_atelier.js` ajoute ce nom au bilan du modèle.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

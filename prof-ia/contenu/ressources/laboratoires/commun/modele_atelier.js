@@ -7,7 +7,7 @@ Rôle : atelier où l'on assemble un modèle moléculaire posé sur son support 
 Reçoit : le contexte de la paillasse, { cx, cy (centre du modèle), r (rayon de l'atelier), fait, dire(texte) }.
 Produit : Labo.atelier_modele(ctx, reglage) -> { atomes, accrocher(el, point) -> vrai si accroché, vider(), bilan() } ;
           fait « <fait> » = bilan : { brute, n, complet, central, voisins, angle_min, angle_max, plan, lineaire, vue { plan, avant, arriere },
-          liaisons { simples, doubles, triples } }.
+          liaisons { simples, doubles, triples }, nom (nomenclature.js, si le fichier est chargé : { nom, famille, ramifie, ze }) }.
 Utilisé par : boite_modeles.js.
 */
 (function (L) {
@@ -28,7 +28,7 @@ Utilisé par : boite_modeles.js.
     const r1 = (v) => Math.round(v * 10) / 10, ordres = placees.filter((a) => a.parent !== null).map((a) => a.ordre);
     const liaisons = { simples: ordres.filter((o) => o === 1).length, doubles: ordres.filter((o) => o === 2).length, triples: ordres.filter((o) => o === 3).length };
     return { brute, n: placees.length, complet: placees.length > 0 && placees.every((a) => !a.dirs.length), central: placees[c]?.el || "", voisins: vs.length,
-      angle_min: angles.length ? r1(Math.min(...angles)) : 0, angle_max: angles.length ? r1(Math.max(...angles)) : 0, plan, lineaire: angles.length === 1 && angles[0] > 179, vue, liaisons };
+      angle_min: angles.length ? r1(Math.min(...angles)) : 0, angle_max: angles.length ? r1(Math.max(...angles)) : 0, plan, lineaire: angles.length === 1 && angles[0] > 179, vue, liaisons, nom: L.nommer ? L.nommer(placees) : null };
   }
 
   L.atelier_modele = function (ctx, { cx, cy, r, fait, dire = () => {} }) {
