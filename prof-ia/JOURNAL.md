@@ -906,7 +906,7 @@ Problèmes restants, à faire par l'enseignant :
 ## 2026-10-27 — Laboratoires virtuels : chapitre 2e année du bac « Ondes mécaniques progressives »
 
 Fait :
-- Trois simulations, inscrites au manifeste (113 ressources) : A1 exemples familiers (vague et bouchon, ressort :
+- Trois simulations, inscrites au manifeste (112 ressources) : A1 exemples familiers (vague et bouchon, ressort :
   ondes transversale et longitudinale, documents son et séismes) ; A2 retard et célérité (ressort avec cellules et
   chronomètre électronique, son avec claquoir, deux micros et oscilloscope à mémoire) ; A3 influence du milieu (corde
   tendue par des masses, trois masses linéiques ; documents). Objectifs O1 à O5.
