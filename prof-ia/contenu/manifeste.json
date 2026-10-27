@@ -3355,6 +3355,43 @@
         "Il faut toujours un indicateur coloré pour repérer l'équivalence.",
         "À l'équivalence, les quantités de réactifs versées sont égales, quels que soient les coefficients."
       ]
+    },
+    {
+      "id": "b1_chim5_a1_organique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_chim5_a1_organique.html",
+      "description": "Trois paillasses. Documents au mur : composition des espèces organiques, jalons historiques (Berzelius, Wöhler, Kekulé), matières naturelles (photosynthèse, biochimie, hydrocarbures fossiles), diversité et importance économique. Combustion d'une bougie : bécher sec et froid tenu retourné au-dessus de la flamme (buée : élément hydrogène ; la flamme s'éteint si le dioxygène s'épuise), remis à l'endroit, eau de chaux versée qui se trouble (élément carbone). Boîte de modèles moléculaires : éthane (liaisons simples, tétraèdre), éthène (liaison double, molécule plane), éthyne (liaison triple, molécule linéaire) ; duet, octet, représentation de Lewis.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/chim5_chimie_organique",
+      "activite": "Documents : composition des espèces organiques, histoire, diversité des molécules, importance économique.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "La chimie organique",
+          "ce_que_fait_l_eleve": "Lit les quatre documents sur les espèces organiques, leur histoire, leur origine et leur importance.",
+          "conclusion": "Les espèces organiques sont constituées principalement de carbone et d'hydrogène. On les a d'abord extraites des êtres vivants ; depuis la synthèse de l'urée par Wöhler (1828), on sait les fabriquer. Les plantes les produisent par photosynthèse ; le pétrole, le gaz naturel et le charbon en sont des réserves fossiles. La chimie organique de synthèse fournit carburants, plastiques, textiles et médicaments."
+        },
+        {
+          "titre": "De quoi est faite la paraffine ?",
+          "ce_que_fait_l_eleve": "Identifie l'eau et le dioxyde de carbone produits par la combustion d'une bougie et en déduit les éléments de la paraffine.",
+          "conclusion": "La combustion de la paraffine dans le dioxygène de l'air produit de l'eau (buée sur la paroi froide) et du dioxyde de carbone (eau de chaux troublée). D'après la conservation des éléments, la paraffine contient les éléments hydrogène et carbone : c'est un hydrocarbure. Sans renouvellement de l'air, la flamme s'éteint : la combustion consomme du dioxygène."
+        },
+        {
+          "titre": "Les liaisons du carbone",
+          "ce_que_fait_l_eleve": "Construit l'éthane, l'éthène et l'éthyne avec les modèles moléculaires et décrit les liaisons du carbone.",
+          "conclusion": "Dans toutes ces molécules, chaque atome de carbone forme quatre liaisons (quatre doublets liants : octet) et chaque atome d'hydrogène une seule (duet). L'éthane C₂H₆ n'a que des liaisons simples : autour de chaque carbone, les quatre liaisons forment un tétraèdre (109,5°). L'éthène C₂H₄ a une liaison double C=C : la molécule est plane (angles de 120°). L'éthyne C₂H₂ a une liaison triple C≡C : la molécule est linéaire (180°). La représentation de Lewis permet de prévoir ces liaisons et leur orientation dans l'espace."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Les espèces organiques ne peuvent être produites que par les êtres vivants.",
+        "Une bougie qui brûle disparaît sans rien produire.",
+        "Le carbone forme toujours quatre liaisons simples."
+      ]
     }
   ]
 }

@@ -852,3 +852,18 @@ Problèmes restants, à faire par l'enseignant :
 - Les prises d'essai (10,0 mL) sont déjà dans les béchers : la pipette jaugée n'est pas manipulée.
 - Le tableur a 11 lignes : le titrage conductimétrique se fait en 11 mesures (environ tous les 1,5 mL).
 - Le pH des mélanges est un modèle simple (acides et bases forts, deux couples faibles) ; le jus de citron n'a qu'un pH.
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 1re année du bac « Expansion de la chimie organique »
+
+Fait :
+- Une simulation (l'unique activité de la fiche), inscrite au manifeste (105 ressources), en trois paillasses : documents
+  (composition, histoire, matières naturelles, diversité et économie) ; combustion d'une bougie (buée et eau de chaux :
+  éléments hydrogène et carbone) ; modèles moléculaires de l'éthane, de l'éthène et de l'éthyne. Objectifs O1, O2.
+- Fichiers communs modifiés (signalé) : molecule_3d.js, modele_dessin.js, modele_atelier.js reçoivent la liaison triple
+  (trois ressorts, molécule linéaire) et le bilan compte les liaisons simples, doubles et triples. La simulation
+  « représentation de Cram » du tronc commun a été rejouée : elle passe.
+- Vérifié : parcours complet ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La buée n'est pas testée au sulfate de cuivre anhydre (ce test est seulement rappelé dans les données).
+- Un trou libre tourné vers l'arrière n'est pas visible : il faut incliner le modèle (indiqué dans l'aide).

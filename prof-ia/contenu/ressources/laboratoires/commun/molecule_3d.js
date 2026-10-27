@@ -2,8 +2,8 @@
 Rôle : géométrie d'un modèle moléculaire (boules et bâtonnets) que l'on assemble atome par atome : autour de chaque atome,
        les doublets (liaisons, trous encore libres, doublets non liants) se repoussent et s'écartent le plus possible :
        2 directions → droite (180°), 3 → triangle plan (120°), 4 → tétraèdre (109,5°). Les doublets non liants repoussent
-       un peu plus : H–N–H = 107° dans NH₃, H–O–H = 104,5° dans H₂O. Une liaison double compte pour une seule direction.
-Reçoit : la liste des atomes [{ el, parent (indice ou null), ordre (1 ou 2, liaison avec le parent), trou (facultatif : numéro
+       un peu plus : H–N–H = 107° dans NH₃, H–O–H = 104,5° dans H₂O. Une liaison double ou triple compte pour une seule direction.
+Reçoit : la liste des atomes [{ el, parent (indice ou null), ordre (1, 2 ou 3, liaison avec le parent), trou (facultatif : numéro
          de la direction du parent où il est accroché) }].
 Produit : Labo.MOLECULE_3D = { placer(atomes) -> [{ pos [x, y, z], dirs (trous libres), libres (leurs numéros), ... }], TROUS, R, longueur } ;
           Labo.V3 (petites opérations sur les vecteurs).
@@ -18,8 +18,8 @@ Utilisé par : boite_modeles.js, modele_dessin.js.
   V.angle = (a, b) => (Math.acos(Math.max(-1, Math.min(1, V.dot(V.norm(a), V.norm(b))))) * 180) / Math.PI;
   L.V3 = V;
   const TROUS = { H: 1, C: 4, N: 3, O: 2, Cl: 1 }, NON_LIANTS = { H: 0, C: 0, N: 1, O: 2, Cl: 3 }, R = { H: 13, C: 18, N: 18, O: 18, Cl: 20 };
-  const LONGUEUR = { "C-H": 52, "C-C": 74, "C=C": 64, "C=O": 56, "O-H": 46, "N-H": 48, "C-O": 69, "C-N": 70, "C-Cl": 80, "H-Cl": 61, "H-H": 36 };
-  const longueur = (a, b, n) => LONGUEUR[[a, b].sort().join(n === 2 ? "=" : "-")] || 60;
+  const LONGUEUR = { "C-H": 52, "C-C": 74, "C=C": 64, "C#C": 58, "C#N": 55, "C=O": 56, "O-H": 46, "N-H": 48, "C-O": 69, "C-N": 70, "C-Cl": 80, "H-Cl": 61, "H-H": 36 };
+  const longueur = (a, b, n) => LONGUEUR[[a, b].sort().join(n === 3 ? "#" : n === 2 ? "=" : "-")] || 60;
 
   function directions(n, e3, e1) {
     // n directions qui s'écartent au mieux, la première selon e3, la référence d'azimut selon e1.

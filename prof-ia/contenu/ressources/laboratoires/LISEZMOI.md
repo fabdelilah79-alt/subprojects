@@ -466,6 +466,15 @@ toutes les 2 s (une goutte colore d'abord le liquide). Les quantités sont en mm
 titrage est à 1 px/mm pour que la burette de 25 mL tienne entière ; la loupe grossit cinq fois le ménisque (lecture à 0,05 mL).
 Robinet : un toucher sur la clé ouvre au goutte à goutte ou ferme ; glisser la clé vers le haut donne un filet, vers le bas ferme.
 
+## Chapitre 1re année du bac « Expansion de la chimie organique » (fiche 1bac/chim5_chimie_organique)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim5_a1_organique.html | Documents : composition des espèces organiques, histoire, diversité, importance économique | O1, O2 | Quatre documents au mur ; bécher retourné au-dessus d'une bougie (buée : H ; eau de chaux troublée : C ; la flamme s'éteint sans dioxygène) ; modèles de l'éthane, de l'éthène et de l'éthyne (liaisons simple, double, triple ; tétraèdre, plan, linéaire). |
+
+La boîte de modèles moléculaires (commun : molecule_3d.js, modele_dessin.js, modele_atelier.js) fait maintenant aussi la
+liaison triple : un toucher sur une liaison la fait passer de simple à double, puis à triple, puis de nouveau à simple.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

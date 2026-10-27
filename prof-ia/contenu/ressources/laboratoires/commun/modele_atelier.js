@@ -1,11 +1,13 @@
 /*
 Rôle : atelier où l'on assemble un modèle moléculaire posé sur son support : le premier atome se met au centre, chaque
        atome suivant s'enfonce dans le trou libre le plus proche de l'endroit où on le lâche ; glisser à côté du modèle le
-       fait tourner ; toucher une liaison la fait passer de simple à double (deux ressorts) et inversement ; un atome tiré
+       fait tourner ; toucher une liaison la fait passer de simple à double (deux ressorts), puis à triple (trois ressorts),
+       puis de nouveau à simple (il faut un trou libre sur chacun des deux atomes) ; un atome tiré
        hors de l'atelier est démonté (avec ceux qui lui sont accrochés).
 Reçoit : le contexte de la paillasse, { cx, cy (centre du modèle), r (rayon de l'atelier), fait, dire(texte) }.
 Produit : Labo.atelier_modele(ctx, reglage) -> { atomes, accrocher(el, point) -> vrai si accroché, vider(), bilan() } ;
-          fait « <fait> » = bilan : { brute, n, complet, central, voisins, angle_min, angle_max, plan, lineaire, vue { plan, avant, arriere } }.
+          fait « <fait> » = bilan : { brute, n, complet, central, voisins, angle_min, angle_max, plan, lineaire, vue { plan, avant, arriere },
+          liaisons { simples, doubles, triples } }.
 Utilisé par : boite_modeles.js.
 */
 (function (L) {
@@ -23,9 +25,10 @@ Utilisé par : boite_modeles.js.
     for (const k of vs) { const dz = (P[k].z - P[c].z) / (e * Math.max(1, Math.hypot(...V.sub(placees[k].pos, placees[c].pos)))); vue[dz > 0.3 ? "avant" : dz < -0.3 ? "arriere" : "plan"]++; }
     const pts = placees.map((a) => a.pos), nrm = pts.length > 2 ? V.cross(V.sub(pts[1], pts[0]), V.sub(pts[2], pts[0])) : [0, 0, 0];
     const plan = pts.length > 3 && Math.hypot(...nrm) > 1 && pts.every((p) => Math.abs(V.dot(V.norm(nrm), V.sub(p, pts[0]))) < 1);
-    const r1 = (v) => Math.round(v * 10) / 10;
+    const r1 = (v) => Math.round(v * 10) / 10, ordres = placees.filter((a) => a.parent !== null).map((a) => a.ordre);
+    const liaisons = { simples: ordres.filter((o) => o === 1).length, doubles: ordres.filter((o) => o === 2).length, triples: ordres.filter((o) => o === 3).length };
     return { brute, n: placees.length, complet: placees.length > 0 && placees.every((a) => !a.dirs.length), central: placees[c]?.el || "", voisins: vs.length,
-      angle_min: angles.length ? r1(Math.min(...angles)) : 0, angle_max: angles.length ? r1(Math.max(...angles)) : 0, plan, lineaire: angles.length === 1 && angles[0] > 179, vue };
+      angle_min: angles.length ? r1(Math.min(...angles)) : 0, angle_max: angles.length ? r1(Math.max(...angles)) : 0, plan, lineaire: angles.length === 1 && angles[0] > 179, vue, liaisons };
   }
 
   L.atelier_modele = function (ctx, { cx, cy, r, fait, dire = () => {} }) {
@@ -54,7 +57,7 @@ Utilisé par : boite_modeles.js.
         const l = depart && res.liaisons.map((o) => ({ ...o, d: Math.hypot(o.x - depart.x, o.y - depart.y) })).sort((u, w) => u.d - w.d)[0];
         if (!l || l.d > 12) return;
         const c = a.atomes[l.enfant], pa = placees[c.parent], en = placees[l.enfant];
-        if (c.ordre === 2) c.ordre = 1; else if (pa.dirs.length && en.dirs.length) c.ordre = 2; else return dire("Pour une liaison double, il faut un trou libre sur chacun des deux atomes.");
+        if (c.ordre < 3 && pa.dirs.length && en.dirs.length) c.ordre += 1; else if (c.ordre > 1) c.ordre = 1; else return dire("Pour une liaison double, il faut un trou libre sur chacun des deux atomes.");
         dire(""); maj();
       },
     });

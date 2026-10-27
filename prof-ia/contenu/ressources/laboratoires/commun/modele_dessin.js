@@ -31,15 +31,15 @@ Utilisé par : boite_modeles.js.
   };
 
   function baton(g, P0, Q0, ordre) {
-    // Bâtonnet gris (liaison simple) ou deux ressorts plus fins (liaison double), qui sort de la surface de chaque boule.
+    // Bâtonnet gris (liaison simple), deux ou trois ressorts plus fins (liaison double ou triple), qui sortent de la surface de chaque boule.
     const L3 = Math.hypot(Q0.x - P0.x, Q0.y - P0.y, Q0.z - P0.z) || 1, f = (k) => ({ x: P0.x + (Q0.x - P0.x) * k, y: P0.y + (Q0.y - P0.y) * k });
     const p = f(P0.r / L3), q = f(1 - Q0.r / L3);
     const d = Math.hypot(q.x - p.x, q.y - p.y) || 1, n = { x: -(q.y - p.y) / d, y: (q.x - p.x) / d };
-    const decal = ordre === 2 ? [-4.5, 4.5] : [0];
+    const decal = ordre === 3 ? [-6, 0, 6] : ordre === 2 ? [-4.5, 4.5] : [0], ressort = ordre > 1;
     for (const o of decal) {
       const a = { x: p.x + n.x * o, y: p.y + n.y * o }, b = { x: q.x + n.x * o, y: q.y + n.y * o };
-      L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: "#6f757a", "stroke-width": ordre === 2 ? 5 : 8, "stroke-linecap": "round" }, g);
-      L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: ordre === 2 ? "#e9edf0" : "#d9dde0", "stroke-width": ordre === 2 ? 2.4 : 4.5, "stroke-linecap": "round", "stroke-dasharray": ordre === 2 ? "3 2" : "none" }, g);
+      L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: "#6f757a", "stroke-width": ressort ? (ordre === 3 ? 4 : 5) : 8, "stroke-linecap": "round" }, g);
+      L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: ressort ? "#e9edf0" : "#d9dde0", "stroke-width": ressort ? 2 : 4.5, "stroke-linecap": "round", "stroke-dasharray": ressort ? "3 2" : "none" }, g);
     }
   }
 

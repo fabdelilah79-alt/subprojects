@@ -458,6 +458,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim4_a2_electrons/ | Fer + ions cuivre II, Javel + iodure, diiode + vitamine C : transfert d'électrons (postes_electrons.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim4_a3_conductimetrique/ | Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique (simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim4_a4_colorimetrique/ | Titrages des ions fer II par le permanganate et du diiode par le thiosulfate (postes_colorimetrie.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim5_a1_organique/ | Documents de la chimie organique, combustion d'une bougie (C et H), modèles de l'éthane, de l'éthène et de l'éthyne (documents_organique.js, poste_bougie.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
