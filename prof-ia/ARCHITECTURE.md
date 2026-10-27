@@ -464,6 +464,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim6_a1_squelette/ | Solubilité et densité, températures d'ébullition au bain-marie (postes_squelette.js), tests des groupes caractéristiques (poste_groupes.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim6_a2_modeles/ | Isomères de constitution, noms officiels et isomérie Z/E aux modèles ; documents pétrochimie et polymères (documents_petrochimie.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim6_a3_benzoique/ | Synthèse de l'acide benzoïque : espèces et réactions (especes_benzoique.js), reflux, filtrations, précipitation (postes_benzoique.js), pesée (poste_pesee_benzoique.js), missions (missions_benzoique.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_intro_a1_physicien/ | Article d'une physicienne, questions rangées par partie du programme, démarche sur le problème du satellite GPS (documents_physicien.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

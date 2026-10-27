@@ -3516,6 +3516,37 @@
         "Le produit d'une synthèse est forcément pur.",
         "L'acide benzoïque se forme directement à l'état solide dans le ballon."
       ]
+    },
+    {
+      "id": "b2_intro_a1_physicien",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_intro_a1_physicien.html",
+      "description": "Deux paillasses. L'article d'une physicienne en cinq documents au mur (communiquer avec les ondes, l'énergie du noyau, des circuits partout, satellites et horloges, comment je travaille) et un tableau magnétique où l'on range huit questions du physicien dans les parties du programme (ondes, transformations nucléaires, électricité, mécanique). Un problème : à quelle distance est un satellite GPS ? Document, tableau magnétique des étapes de la démarche (observer et questionner, choisir un modèle, mesurer, calculer et valider), calcul d = c·Δt.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/intro_physicien",
+      "activite": "Analyser un article ou une intervention de physicien.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "L'article d'une physicienne",
+          "ce_que_fait_l_eleve": "Lit l'article et range les questions du physicien par partie du programme de l'année.",
+          "conclusion": "Le physicien se pose des questions sur le monde qui l'entoure et sur les techniques : communiquer (ondes mécaniques et lumineuses, modulation), produire de l'énergie et dater (transformations nucléaires), stocker l'énergie et la faire osciller dans un circuit (condensateur, bobine), comprendre le mouvement des satellites et mesurer le temps (lois de Newton, oscillateurs). Ces questions structurent le programme de l'année."
+        },
+        {
+          "titre": "Résoudre un problème de physicien",
+          "ce_que_fait_l_eleve": "Range les étapes de la démarche du physicien et calcule la distance d'un satellite GPS.",
+          "conclusion": "Le physicien part d'une observation et d'une question précise, choisit un modèle (onde qui se propage en ligne droite à la célérité c), mesure une grandeur (le retard Δt, avec des horloges très précises), calcule (d = c·Δt = 3,00 × 10⁸ × 0,0673 ≈ 2,02 × 10⁷ m, soit environ 20 200 km) puis valide en comparant à une valeur connue. Une erreur d'un millionième de seconde sur Δt donne 300 m d'erreur : d'où les horloges atomiques."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "Le physicien découvre les lois par hasard, sans démarche.",
+        "La physique est éloignée de la vie courante et des techniques.",
+        "Un résultat calculé est forcément juste."
+      ]
     }
   ]
 }

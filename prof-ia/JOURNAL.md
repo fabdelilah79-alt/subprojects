@@ -887,3 +887,18 @@ Problèmes restants, à faire par l'enseignant :
 - Le séchage à l'étuve et la température de fusion (banc Kofler) sont seulement cités ; le pH du filtrat acidifié n'est
   pas mesuré au papier pH.
 - Le nom officiel n'est calculé que pour les alcanes et les alcènes de six carbones au plus (ramifications méthyle, éthyle).
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 2e année du bac « Les questions que se pose le physicien »
+
+Fait :
+- La 1re année du bac est complète (chaque activité des 17 fiches a sa simulation) ; on passe à la 2e année, dans l'ordre
+  de l'index.
+- Une simulation (l'unique activité de la fiche), inscrite au manifeste (109 ressources), en deux paillasses : l'article
+  d'une physicienne (cinq documents) et le tableau des questions par partie du programme ; la démarche du physicien sur
+  un problème (distance d'un satellite GPS, d = c·Δt). Objectif O1.
+- Aucun fichier commun modifié.
+- Vérifié : parcours complet ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- L'article est un texte écrit pour la simulation (pas un article réel cité) : à remplacer, si l'on veut, par un extrait
+  authentique.

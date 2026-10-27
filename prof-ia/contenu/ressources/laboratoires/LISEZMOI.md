@@ -486,6 +486,12 @@ liaison triple : un toucher sur une liaison la fait passer de simple à double, 
 Fichiers communs nouveaux : `chimie_organique.js` (espèces organiques et tests), `nomenclature.js` (nom officiel d'un
 modèle). `modele_atelier.js` ajoute ce nom au bilan du modèle.
 
+## Chapitre 2e année du bac « Les questions que se pose le physicien » (fiche 2bac/intro_physicien)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_intro_a1_physicien.html | Analyser un article ou une intervention de physicien | O1 | Cinq documents (télécommunications, noyau, circuits, satellites et horloges, démarche) ; huit questions rangées par partie du programme (ondes, transformations nucléaires, électricité, mécanique) ; problème du satellite GPS : étapes de la démarche rangées au tableau, d = c·Δt ≈ 20 200 km, effet d'une erreur sur Δt. |
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
