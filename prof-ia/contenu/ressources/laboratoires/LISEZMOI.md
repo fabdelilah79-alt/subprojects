@@ -515,6 +515,16 @@ L'image de la cuve à ondes est calculée par le principe de Huygens (sources r�
 `canvas` du navigateur, transformé en image de la scène ; la relation de dispersion des ondes à la surface de l'eau
 (pesanteur et tension superficielle, 5 mm d'eau) donne λ pour chaque fréquence.
 
+## Chapitre 2e année du bac « Propagation d'une onde lumineuse » (fiche 2bac/ondes3_lumiere)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes3_a1_diffraction.html | A1 : diffraction par une fente, un fil ou un obstacle ; vérifier θ = λ/a | O1, O2, O3 | Laser rouge et fentes de 40 à 150 µm, écran à 2,00 m : largeur L de la tache centrale aux curseurs, tableur et courbe θ = f(1/a), λ ≈ 650 nm, ν ≈ 4,6 × 10¹⁴ Hz ; fil et fente, laser vert, lumière blanche ; épaisseur d'un cheveu. |
+| b2_ondes3_a2_prisme.html | A2 : dispersion de la lumière blanche par un prisme | O3, O4, O5 | Goniomètre : D = f(i), minimum de déviation, n(rouge) ≈ 1,619 et n(vert) ≈ 1,630, spectre de la lumière blanche ; fréquence inchangée, λ dans le verre. |
+
+La figure de diffraction est calculée (intensité sinc², somme de quinze radiations pour la lumière blanche) et dessinée
+dans un `canvas` ; le trajet dans le prisme suit les lois de Descartes avec un indice de Cauchy.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

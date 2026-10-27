@@ -480,6 +480,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/banc_ultrasons.js | Banc de diffraction des ultrasons : émetteur 40 kHz, fente de 10 à 40 mm, récepteur sur bras tournant, rapporteur, amplitude reçue. |
 | contenu/ressources/laboratoires/sources/b2_ondes2_a1_sinusoidale/ | Corde au stroboscope, son reçu par deux micros (postes_sinusoidale.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_ondes2_a2_diffraction/ | Cuve à ondes, ultrasons, documents et tri sur la diffraction (postes_diffraction.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/banc_diffraction.js | Banc de diffraction de la lumière : lasers rouge et vert, lumière blanche, fentes, fils, cheveu, écran mobile, figure calculée vue de face, curseurs. |
+| contenu/ressources/laboratoires/commun/goniometre_prisme.js | Goniomètre à prisme (A = 60°, flint) : incidence, lunette, lois de Descartes, déviation, spectre de la lumière blanche ; Labo.indice_flint. |
+| contenu/ressources/laboratoires/sources/b2_ondes3_a1_diffraction/ | Diffraction par une fente et un fil, θ = λ / a, lumière blanche, cheveu (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes3_a2_prisme/ | Déviation par un prisme, minimum de déviation, indice pour deux couleurs, spectre (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -949,3 +949,18 @@ Problèmes restants, à faire par l'enseignant :
 - La largeur de la fente des ultrasons ne prend que trois valeurs (10, 20, 40 mm) ; l'amplitude suit la loi d'une fente
   idéale, sans réflexion sur la table.
 - La diffraction n'est pas interprétée (hors programme) : la relation θ = λ / a n'est pas demandée.
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 2e année du bac « Propagation d'une onde lumineuse »
+
+Fait :
+- Deux simulations, inscrites au manifeste (116 ressources) : A1 diffraction de la lumière (fentes, fils, cheveu ; lasers
+  rouge et vert ; lumière blanche ; θ = λ / a, ν = c / λ) ; A2 dispersion par un prisme au goniomètre (minimum de
+  déviation, indice pour deux couleurs, spectre, fréquence inchangée). Objectifs O1 à O5.
+- Matériel commun nouveau : banc_diffraction.js, goniometre_prisme.js. Aucun fichier commun existant modifié.
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La diffraction par un obstacle autre qu'un fil (bord d'écran, trou circulaire) n'est pas proposée.
+- Au goniomètre, le trajet dans le prisme est dessiné à partir de son centre (le prisme est petit devant le plateau) ;
+  les angles affichés sont exacts.
+- Les étiquettes des lasers donnent leur longueur d'onde : la mesure de λ est une vérification de θ = λ / a.

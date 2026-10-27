@@ -3729,6 +3729,72 @@
         "La longueur d'onde change après une fente.",
         "La célérité d'une onde ne dépend jamais de sa fréquence."
       ]
+    },
+    {
+      "id": "b2_ondes3_a1_diffraction",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_ondes3_a1_diffraction.html",
+      "description": "Une paillasse. Banc de diffraction : laser rouge (650 nm), laser vert (532 nm) ou lampe avec fente (lumière blanche) ; diapositive de fentes (40 à 150 µm), de fils (100 et 200 µm) et d'un cheveu ; écran que l'on fait glisser le long d'un mètre-ruban (0,50 à 2,20 m). L'écran vu de face (agrandi) montre la figure calculée (sinc²) ; deux curseurs mesurent la largeur L de la tache centrale. Tableur a, L, θ = L/(2D), 1/a et courbe θ = f(1/a) ; ν = c/λ ; épaisseur du cheveu.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/ondes3_lumiere",
+      "activite": "Diffraction par une fente, un fil ou un obstacle ; vérifier θ = λ/a.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Diffraction par une fente",
+          "ce_que_fait_l_eleve": "Mesure la largeur de la tache centrale pour quatre fentes, trace θ = f(1/a) et en déduit λ et ν.",
+          "conclusion": "Après une fente fine, la lumière ne se propage plus en ligne droite : elle s'étale perpendiculairement à la fente, en une tache centrale très lumineuse et des taches latérales séparées par des extinctions. C'est la diffraction, comme pour les ondes à la surface de l'eau : la lumière se comporte comme une onde. θ = L / (2D) est proportionnel à 1/a : θ = λ / a, avec λ ≈ 650 nm pour ce laser. Sa fréquence vaut ν = c / λ ≈ 4,6 × 10¹⁴ Hz."
+        },
+        {
+          "titre": "Fil, couleur, lumière blanche",
+          "ce_que_fait_l_eleve": "Compare fente et fil, laser rouge et vert, lumière blanche, et mesure l'épaisseur d'un cheveu.",
+          "conclusion": "Un fil de diamètre a donne la même figure qu'une fente de largeur a. Avec le laser vert (λ plus petite), la tache centrale est plus étroite : θ = λ / a. Une lumière monochromatique a une seule longueur d'onde ; la lumière blanche est polychromatique : chaque radiation donne sa propre figure, d'où une tache centrale blanche bordée de couleurs. Le spectre visible s'étend d'environ 400 nm à 800 nm ; au-delà du violet, l'ultraviolet ; au-delà du rouge, l'infrarouge. La diffraction permet de mesurer l'épaisseur d'un cheveu : a = 2λD / L."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La lumière se propage toujours en ligne droite.",
+        "Plus la fente est fine, plus la tache est petite.",
+        "La lumière blanche est une seule radiation."
+      ]
+    },
+    {
+      "id": "b2_ondes3_a2_prisme",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_ondes3_a2_prisme.html",
+      "description": "Une paillasse. Goniomètre : plateau gradué vu un peu d'en haut, prisme de 60° en verre flint (indice selon la loi de Cauchy), source laser rouge, laser vert ou lampe avec fente ; on règle l'incidence i et l'on vise le faisceau émergent avec la lunette, qui donne la déviation D. Tableur et courbe D = f(i), minimum de déviation, n = sin((A + Dm)/2)/sin(A/2) pour le rouge et le vert ; spectre de la lumière blanche ; fréquence inchangée, longueur d'onde dans le verre.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/ondes3_lumiere",
+      "activite": "Dispersion de la lumière blanche par un prisme.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "La déviation par un prisme",
+          "ce_que_fait_l_eleve": "Mesure la déviation pour plusieurs incidences, trouve le minimum de déviation et calcule l'indice pour le rouge.",
+          "conclusion": "La déviation D dépend de l'incidence i : elle passe par un minimum Dm ≈ 48,1° (pour i ≈ 54°, trajet symétrique dans le prisme). Les lois de Descartes appliquées aux deux faces donnent alors n = sin((A + Dm)/2) / sin(A/2) ≈ 1,619 pour la radiation rouge de 650 nm."
+        },
+        {
+          "titre": "Couleurs et indice",
+          "ce_que_fait_l_eleve": "Détermine l'indice pour le vert, observe le spectre de la lumière blanche et calcule la longueur d'onde dans le verre.",
+          "conclusion": "Au minimum de déviation, le vert est plus dévié que le rouge : n(vert) ≈ 1,630 > n(rouge) ≈ 1,619. L'indice du verre dépend de la fréquence de la radiation : le verre est un milieu dispersif, et le prisme sépare les radiations de la lumière blanche (le violet est le plus dévié). En entrant dans le verre, la fréquence ne change pas ; la célérité devient v = c / n et la longueur d'onde λ = λ₀ / n."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Le prisme colore la lumière.",
+        "L'indice d'un verre est le même pour toutes les couleurs.",
+        "La fréquence de la lumière change quand elle entre dans le verre."
+      ]
     }
   ]
 }
