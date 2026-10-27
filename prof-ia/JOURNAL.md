@@ -930,3 +930,22 @@ Fait :
   durées) ; chronophotographie (huit images numérotées, toutes les 0,05 s).
 - A3 : deux étapes ajoutées (chronophotographie et son interprétation ; la forme du coup ne change pas le retard).
 - Vérifié : parcours complet de l'A3 ; les célérités mesurées sont à moins de 1 % de √(T/μ).
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 2e année du bac « Ondes mécaniques progressives périodiques »
+
+Fait :
+- Deux simulations, inscrites au manifeste (114 ressources) : A1 onde sinusoïdale (corde, vibreur et stroboscope ; son,
+  deux micros et oscilloscope) ; A2 diffraction et dispersion (cuve à ondes, ultrasons, documents). Objectifs O1 à O5.
+- Matériel commun nouveau : corde_vibreur.js, banc_haut_parleur.js, cuve_ondes.js (image calculée dans un canvas, sans
+  bibliothèque), banc_ultrasons.js.
+- Fichiers communs modifiés (signalé) : micro_claquoir.js rend accessibles ses dessins du micro et de la règle
+  (Labo.micro_pied, Labo.regle_1m) ; oscilloscope_memoire.js reçoit un titre facultatif. La simulation « retard et
+  célérité » a été rejouée : elle passe.
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le stroboscope de la cuve à ondes est supposé réglé sur le vibreur (image immobile ou défilement lent) : on ne règle
+  pas sa fréquence comme pour la corde.
+- La largeur de la fente des ultrasons ne prend que trois valeurs (10, 20, 40 mm) ; l'amplitude suit la loi d'une fente
+  idéale, sans réflexion sur la table.
+- La diffraction n'est pas interprétée (hors programme) : la relation θ = λ / a n'est pas demandée.

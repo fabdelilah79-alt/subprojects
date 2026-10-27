@@ -474,6 +474,12 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_ondes1_a1_exemples/ | Cuve à vague et bouchon (cuve_vague.js), ressort et documents son/séismes avec tableau de tri (postes_exemples.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_ondes1_a2_retard/ | Retard le long du ressort (cellules, chronomètre) et retard d'un son (micros, oscilloscope) ; thermomètre mural (postes_retard.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_ondes1_a3_milieu/ | Corde tendue (tension, masse linéique), documents sur le son selon le milieu (postes_milieu.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/corde_vibreur.js | Corde, vibreur et GBF, coton absorbant ; lumière ordinaire (bande floue) ou stroboscope (images des éclairs, immobile si f = n·fe) ; règle et curseurs pour λ. |
+| contenu/ressources/laboratoires/commun/banc_haut_parleur.js | Haut-parleur et GBF sinusoïdal, deux micros sur une règle de 1 m, oscilloscope à deux voies : points en phase, λ. |
+| contenu/ressources/laboratoires/commun/cuve_ondes.js | Cuve à ondes : onde plane, fente ou obstacle de largeur réglable, image calculée (Huygens) dans un canvas, dispersion de la surface de l'eau, curseurs. |
+| contenu/ressources/laboratoires/commun/banc_ultrasons.js | Banc de diffraction des ultrasons : émetteur 40 kHz, fente de 10 à 40 mm, récepteur sur bras tournant, rapporteur, amplitude reçue. |
+| contenu/ressources/laboratoires/sources/b2_ondes2_a1_sinusoidale/ | Corde au stroboscope, son reçu par deux micros (postes_sinusoidale.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes2_a2_diffraction/ | Cuve à ondes, ultrasons, documents et tri sur la diffraction (postes_diffraction.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

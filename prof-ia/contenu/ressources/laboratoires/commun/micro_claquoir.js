@@ -7,8 +7,8 @@ Rôle : banc de mesure du retard d'un son : claquoir en bois (deux planchettes a
 Reçoit : le groupe SVG, l'oscilloscope (oscilloscope_memoire.js) et { x0 (px du zéro de la règle), k (px par m), sol,
          theta (°C), positions [x1, x2] (m), fait }.
 Produit : Labo.banc_son(g, oscillo, reglage) -> s { x1, x2, v } ; fait « <fait> » = { x1, x2, d (m), tau (ms, retard réel
-          de M2 sur M1), claps }.
-Utilisé par : les simulations d'ondes (célérité du son).
+          de M2 sur M1), claps } ; Labo.micro_pied(g, x, sol, nom) et Labo.regle_1m(g, x0, k, sol) (dessins réutilisés).
+Utilisé par : les simulations d'ondes (célérité du son) ; banc_haut_parleur.js (micros et règle).
 */
 (function (L) {
   const salve = (t) => (t <= 0 ? 0 : Math.sin(2 * Math.PI * 4000 * t) * Math.exp(-t / 0.0006) * (1 - Math.exp(-t / 0.00006)));
@@ -44,6 +44,9 @@ Utilisé par : les simulations d'ondes (célérité du son).
     L.texte(g, x, sol - 90, nom, { "font-size": 8, "font-weight": 700, fill: "#23315a" });
     L.svg("rect", { x: x - 16, y: sol - 96, width: 32, height: 98, fill: "#000", opacity: 0 }, g);
   }
+
+  L.micro_pied = micro;
+  L.regle_1m = regle;
 
   L.banc_son = function (g, oscillo, { x0, k, sol, theta = 20, positions = [0.1, 0.5], fait = "son" }) {
     // Règle, claquoir, deux micros déplaçables et leurs câbles ; un toucher du claquoir déclenche l'enregistrement.

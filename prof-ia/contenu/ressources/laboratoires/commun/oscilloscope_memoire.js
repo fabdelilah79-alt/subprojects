@@ -3,7 +3,7 @@ Rôle : oscilloscope numérique à mémoire à deux voies, en mode monocoup : d�
        dépasse 50 mV), il enregistre les deux voies et garde les traces à l'écran (1 division avant le déclenchement,
        9 après). Écran 10 × 8 divisions ; voie 1 décalée de 2 divisions vers le haut, voie 2 de 2 divisions vers le bas
        (repères à gauche) ; sensibilités Sv1, Sv2 (V/div) et balayage b (ms/div) réglés par des touches −/+.
-Reçoit : le groupe SVG et { x, y (coin du boîtier), Sv, Sv2, b, fait }.
+Reçoit : le groupe SVG et { x, y (coin du boîtier), Sv, Sv2, b, fait, titre (facultatif) }.
 Produit : Labo.oscilloscope_memoire(g, reglage) -> o { prises [CH1, CH2] ({ x, y }), enregistrer([u1(t), u2(t)]) (t en s
           après l'événement), Sv, Sv2, b } ; fait « <fait> » = { Sv, Sv2, b, enregistre (nombre d'enregistrements) }.
 Utilisé par : les simulations d'ondes (retard d'un son entre deux micros).
@@ -42,11 +42,11 @@ Utilisé par : les simulations d'ondes (retard d'un son entre deux micros).
     return 0;
   }
 
-  L.oscilloscope_memoire = function (g, { x, y, Sv = 0.5, Sv2 = 0.5, b = 0.5, fait = "oscillo_memoire" }) {
+  L.oscilloscope_memoire = function (g, { x, y, Sv = 0.5, Sv2 = 0.5, b = 0.5, fait = "oscillo_memoire", titre = "OSCILLOSCOPE NUMÉRIQUE — MONOCOUP" }) {
     // Boîtier, écran, réglages, prises ; enregistrer() fige les traces, que les réglages redessinent.
     const o = { Sv, Sv2, b, n: 0, signaux: null, prises: [{ x: x + 266, y: y + 196 }, { x: x + 312, y: y + 196 }] };
     L.boitier(g, x, y, 350, 236, 34, { dessus: "#dfe3e6", face: "#8d979e" });
-    L.texte(g, x + 18, y + 14, "OSCILLOSCOPE NUMÉRIQUE — MONOCOUP", { "text-anchor": "start", "font-size": 8, "font-weight": 700, fill: "#37474f", "letter-spacing": 0.8 });
+    L.texte(g, x + 18, y + 14, titre, { "text-anchor": "start", "font-size": 8, "font-weight": 700, fill: "#37474f", "letter-spacing": 0.8 });
     const calque = ecran(g, x + 18, y + 34), cy = y + 34 + 4 * DIV;
     const tracer = () => {
       calque.replaceChildren();

@@ -504,6 +504,17 @@ Le milieu à une dimension (`milieu_1d.js`) calcule l'élongation en 201 points 
 perturbation avance exactement à la célérité v, sans se déformer ; elle se réfléchit sur une extrémité fixe (ressort,
 poulie) et disparaît sur la plage de la cuve.
 
+## Chapitre 2e année du bac « Ondes mécaniques progressives périodiques » (fiche 2bac/ondes2_periodiques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes2_a1_sinusoidale.html | A1 : onde sinusoïdale le long d'une corde (stroboscope) ; onde sonore (oscilloscope) | O1, O2 | Corde reliée à un vibreur : bande floue en lumière ordinaire ; au stroboscope, immobilisation (fe = f), mouvement apparent ralenti (fe un peu plus petite) ; λ aux curseurs, tableur f, λ, v ; haut-parleur et deux micros : période, cinq positions en phase, λ et v du son. |
+| b2_ondes2_a2_diffraction.html | A2 : diffraction (cuve à ondes, ultrasons) ; dispersion | O3, O4, O5 | Cuve à ondes : fente de 60 mm puis 10 mm, obstacle ; λ pour 10 à 30 Hz, v = λ·f variable (milieu dispersif) ; ultrasons à travers une fente de 40 mm puis 10 mm, amplitude selon l'angle ; documents et classement des situations. |
+
+L'image de la cuve à ondes est calculée par le principe de Huygens (sources réparties dans la fente) et dessinée dans un
+`canvas` du navigateur, transformé en image de la scène ; la relation de dispersion des ondes à la surface de l'eau
+(pesanteur et tension superficielle, 5 mm d'eau) donne λ pour chaque fréquence.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

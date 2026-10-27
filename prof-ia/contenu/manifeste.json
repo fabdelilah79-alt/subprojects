@@ -3654,6 +3654,81 @@
         "Une corde plus lourde transmet plus vite la perturbation.",
         "La célérité du son est la même dans tous les milieux."
       ]
+    },
+    {
+      "id": "b2_ondes2_a1_sinusoidale",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_ondes2_a1_sinusoidale.html",
+      "description": "Deux paillasses. Corde de 1,5 m reliée à un vibreur et à un GBF (10 à 100 Hz), coton absorbant au bout : en lumière ordinaire une bande floue ; au stroboscope (salle obscure, fréquence des éclairs réglable) la corde paraît immobile quand f est un multiple de fe, ou avance lentement quand fe est un peu plus petite ; deux curseurs sur la règle pour mesurer λ ; tableur f, λ, v = λ·f. Haut-parleur alimenté par un GBF (500 à 5 000 Hz), deux micros sur une règle de 1 m et oscilloscope à deux voies : période, positions où les courbes sont en phase (multiples de λ), célérité du son.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/ondes2_periodiques",
+      "activite": "Onde sinusoïdale le long d'une corde (stroboscope) ; onde sonore (oscilloscope).",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Une onde sinusoïdale le long d'une corde",
+          "ce_que_fait_l_eleve": "Immobilise la corde au stroboscope, mesure λ pour plusieurs fréquences et vérifie λ = v / f.",
+          "conclusion": "Chaque point de la corde vibre avec la période T = 1/f de la source : c'est une périodicité temporelle. À un instant donné, la corde a une forme sinusoïdale qui se répète tous les λ : c'est une périodicité spatiale. La longueur d'onde λ est la distance parcourue par l'onde pendant une période : λ = v·T = v / f. Ici v ≈ 10 m/s quelle que soit la fréquence. Deux points distants de λ vibrent en phase."
+        },
+        {
+          "titre": "Une onde sonore sinusoïdale",
+          "ce_que_fait_l_eleve": "Mesure à l'oscilloscope la période du son et la distance de cinq positions en phase, en déduit λ et v.",
+          "conclusion": "Les deux micros reçoivent un son de même période T = 1/f que la tension du GBF. Quand on éloigne M2, sa courbe se décale ; elle est de nouveau en phase avec celle de M1 chaque fois que M1M2 augmente d'une longueur d'onde. Pour 5λ ≈ 86 cm à 2 000 Hz : λ ≈ 17,2 cm et v = λ·f ≈ 343 m/s."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La longueur d'onde dépend de l'amplitude de la vibration.",
+        "Deux points d'une corde vibrent toujours en même temps.",
+        "Ce que l'on voit au stroboscope est le mouvement réel."
+      ]
+    },
+    {
+      "id": "b2_ondes2_a2_diffraction",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_ondes2_a2_diffraction.html",
+      "description": "Trois paillasses. Cuve à ondes (onde plane, image projetée sur un écran, stroboscope) : barrière à fente de largeur réglable (5 à 60 mm), obstacle ou rien ; image calculée par le principe de Huygens ; mesure de λ avec deux curseurs pour 10 à 30 Hz : v = λ·f varie (milieu dispersif). Banc à ultrasons de 40 kHz : fente de 10, 20 ou 40 mm, récepteur sur un bras tournant au-dessus d'un rapporteur, amplitude reçue selon l'angle. Documents (houle et port, son par une porte, lumière, longueurs d'onde) et classement des situations : diffraction marquée ou peu marquée.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/ondes2_periodiques",
+      "activite": "Diffraction dans la cuve à ondes ou avec des ultrasons ; simulation.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Diffraction à la surface de l'eau",
+          "ce_que_fait_l_eleve": "Observe une onde plane qui traverse une fente large, une fente étroite et un obstacle, et compare a à λ.",
+          "conclusion": "Quand la fente est large devant λ (a = 60 mm), l'onde reste plane derrière la fente, limitée à un faisceau à peine élargi. Quand a est du même ordre que λ ou plus petite (a = 10 mm), l'onde qui sort de la fente est circulaire, centrée sur la fente : c'est la diffraction. Elle est d'autant plus marquée que a est petite devant λ. Un obstacle de petite taille est contourné de la même manière. La fréquence et la longueur d'onde ne changent pas après la fente."
+        },
+        {
+          "titre": "La célérité dépend-elle de la fréquence ?",
+          "ce_que_fait_l_eleve": "Mesure λ pour plusieurs fréquences et calcule v = λ·f pour reconnaître un milieu dispersif.",
+          "conclusion": "La longueur d'onde diminue quand la fréquence augmente, mais le produit λ·f n'est pas constant : la célérité des ondes à la surface de l'eau passe d'environ 0,22 m/s à 10 Hz à 0,26 m/s à 30 Hz. Un milieu où la célérité d'une onde périodique dépend de sa fréquence est un milieu dispersif. L'air, pour le son, n'est pas dispersif."
+        },
+        {
+          "titre": "Diffraction des ultrasons",
+          "ce_que_fait_l_eleve": "Mesure l'amplitude des ultrasons diffractés par deux fentes selon l'angle.",
+          "conclusion": "Avec a = 40 mm (environ 5 λ), le faisceau d'ultrasons reste étroit : l'amplitude s'annule vers 12°. Avec a = 10 mm (proche de λ = 8,5 mm), elle est encore grande à 30° : le faisceau s'élargit fortement derrière la fente, c'est la diffraction. Les ultrasons sont des ondes mécaniques comme les rides de l'eau : elles sont diffractées dans les mêmes conditions."
+        },
+        {
+          "titre": "Reconnaître la diffraction",
+          "ce_que_fait_l_eleve": "Lit les documents et classe des situations selon que la diffraction est marquée ou non.",
+          "conclusion": "La diffraction est marquée quand la largeur de l'ouverture ou de l'obstacle est du même ordre que la longueur d'onde, ou plus petite : la houle dans un port, la voix par une porte, les ultrasons par une fente de 1 cm. Elle est peu marquée quand l'ouverture est très grande devant λ : la lumière par une porte ou un tunnel se propage en ligne droite."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Une onde passe par une ouverture sans changer de forme, quelle que soit sa taille.",
+        "La longueur d'onde change après une fente.",
+        "La célérité d'une onde ne dépend jamais de sa fréquence."
+      ]
     }
   ]
 }
