@@ -902,3 +902,20 @@ Fait :
 Problèmes restants, à faire par l'enseignant :
 - L'article est un texte écrit pour la simulation (pas un article réel cité) : à remplacer, si l'on veut, par un extrait
   authentique.
+
+## 2026-10-27 — Laboratoires virtuels : chapitre 2e année du bac « Ondes mécaniques progressives »
+
+Fait :
+- Trois simulations, inscrites au manifeste (113 ressources) : A1 exemples familiers (vague et bouchon, ressort :
+  ondes transversale et longitudinale, documents son et séismes) ; A2 retard et célérité (ressort avec cellules et
+  chronomètre électronique, son avec claquoir, deux micros et oscilloscope à mémoire) ; A3 influence du milieu (corde
+  tendue par des masses, trois masses linéiques ; documents). Objectifs O1 à O5.
+- Matériel commun nouveau : milieu_1d.js (propagation calculée), detecteurs_onde.js, ressort_long.js, corde_tendue.js,
+  micro_claquoir.js, oscilloscope_memoire.js. Aucun fichier commun existant modifié.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- L'amortissement du ressort et de la corde est choisi pour que les bosses réfléchies ne coupent plus les faisceaux
+  après un aller-retour : à ajuster si l'on veut voir plus de réflexions.
+- La cuve à ondes à deux dimensions (ondes circulaires) n'est pas simulée : la fiche se limite aux ondes à une dimension.
+- Les pages chargent tout le matériel commun des ondes, même celui qu'une activité n'utilise pas.

@@ -465,6 +465,15 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim6_a2_modeles/ | Isomères de constitution, noms officiels et isomérie Z/E aux modèles ; documents pétrochimie et polymères (documents_petrochimie.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim6_a3_benzoique/ | Synthèse de l'acide benzoïque : espèces et réactions (especes_benzoique.js), reflux, filtrations, précipitation (postes_benzoique.js), pesée (poste_pesee_benzoique.js), missions (missions_benzoique.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_intro_a1_physicien/ | Article d'une physicienne, questions rangées par partie du programme, démarche sur le problème du satellite GPS (documents_physicien.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
+| contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
+| contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
+| contenu/ressources/laboratoires/commun/corde_tendue.js | Corde de 2 m tendue sur une poulie par des masses (T = M·g), trois cordes de masses linéiques différentes, v = √(T/μ). |
+| contenu/ressources/laboratoires/commun/micro_claquoir.js | Claquoir, règle de 1 m et deux microphones déplaçables reliés à l'oscilloscope à mémoire : retard d'un son. |
+| contenu/ressources/laboratoires/commun/oscilloscope_memoire.js | Oscilloscope numérique à mémoire, deux voies, monocoup déclenché par la voie 1 ; sensibilités et balayage réglables. |
+| contenu/ressources/laboratoires/sources/b2_ondes1_a1_exemples/ | Cuve à vague et bouchon (cuve_vague.js), ressort et documents son/séismes avec tableau de tri (postes_exemples.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes1_a2_retard/ | Retard le long du ressort (cellules, chronomètre) et retard d'un son (micros, oscilloscope) ; thermomètre mural (postes_retard.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes1_a3_milieu/ | Corde tendue (tension, masse linéique), documents sur le son selon le milieu (postes_milieu.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

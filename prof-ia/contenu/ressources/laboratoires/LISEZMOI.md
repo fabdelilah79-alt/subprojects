@@ -492,6 +492,18 @@ modèle). `modele_atelier.js` ajoute ce nom au bilan du modèle.
 |---|---|---|---|
 | b2_intro_a1_physicien.html | Analyser un article ou une intervention de physicien | O1 | Cinq documents (télécommunications, noyau, circuits, satellites et horloges, démarche) ; huit questions rangées par partie du programme (ondes, transformations nucléaires, électricité, mécanique) ; problème du satellite GPS : étapes de la démarche rangées au tableau, d = c·Δt ≈ 20 200 km, effet d'une erreur sur Δt. |
 
+## Chapitre 2e année du bac « Ondes mécaniques progressives » (fiche 2bac/ondes1_mecaniques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes1_a1_exemples.html | A1 : exemples familiers (vagues, sons, séismes) | O1, O2 | Vague dans une cuve (cale enfoncée puis relâchée), bouchon qui monte et redescend sans avancer, célérité ; long ressort secoué (onde transversale) ou poussé (onde longitudinale), spire rouge ; documents son et séismes, tri transversale / longitudinale, distance d'un foyer. |
+| b2_ondes1_a2_retard.html | A2 : corde, ressort, ondes sonores : retard et célérité | O3, O4, O5 | Retard d'une bosse le long du ressort entre deux cellules (chronomètre électronique), Δt = f(d) ; retard d'un son entre deux micros à l'oscilloscope à mémoire (claquoir), τ = f(d), v ≈ 343 m/s. |
+| b2_ondes1_a3_milieu.html | A3 : influence de l'inertie et de la rigidité du milieu | O4, O5 | Corde tendue par des masses sur une poulie : v² = f(T) ; trois cordes (50, 100, 200 g/m) à la même tension ; documents sur le son dans différents milieux et selon la température. |
+
+Le milieu à une dimension (`milieu_1d.js`) calcule l'élongation en 201 points avec un pas de temps égal à dx / v : la
+perturbation avance exactement à la célérité v, sans se déformer ; elle se réfléchit sur une extrémité fixe (ressort,
+poulie) et disparaît sur la plage de la cuve.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
