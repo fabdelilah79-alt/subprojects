@@ -4,10 +4,11 @@ Rôle : interface d'acquisition reliée à l'ordinateur (ecran_acquisition.js) :
        ou descente), et l'instant t = 0 est le dernier instant où EA0 était encore stable : on bascule l'interrupteur après
        avoir lancé. 400 points sur la durée choisie (0,5 à 20 s par défaut). Les trois dernières acquisitions restent affichées.
 Reçoit : le circuit (avec son horloge, circuit_temps.js) et { id, x, y (boîtier), ecran { x, y } (ordinateur), etiquette(),
-         sur_fin(derniere) (appelée à la fin de chaque acquisition), durees [s] (choix de la touche Durée) }.
+         sur_fin(derniere) (appelée à la fin de chaque acquisition), durees [s] (choix de la touche Durée), energies(p)
+         (facultatif : [Ee, Em, E] en µJ pour un point [t, EA0, EA1] ; la touche Voie 2 propose alors « Énergies ») }.
 Produit : Labo.interface_acquisition(c, reglage) -> comp { u0, u1, s } ; bornes « EA0 », « EA1 », « GND » ; fait « acquisition »
           = { duree, etat, n, voie2, derniere { duree, u_debut, u_fin, tau (s, instant où EA0 a fait 63 % de sa variation), ... },
-          curseur { t, u0, u1 (voie 2 affichée), voie2 } }.
+          curseur { t, u0, u1 (voie 2 affichée), voie2, e (énergie totale, mode Énergies : u0 = Ee, u1 = Em) } }.
 Utilisé par : les simulations du dipôle RC.
 */
 (function (L) {
@@ -36,19 +37,19 @@ Utilisé par : les simulations du dipôle RC.
     return s.etat === "terminée";
   }
 
-  L.interface_acquisition = function (c, { id = "interface", x, y, ecran, etiquette = () => ({}), sur_fin = () => {}, durees = DUREES }) {
+  L.interface_acquisition = function (c, { id = "interface", x, y, ecran, etiquette = () => ({}), sur_fin = () => {}, durees = DUREES, energies = null }) {
     // Boîtier, entrées, câble USB, ordinateur ; enregistrement à chaque pas de l'horloge ; dessin une fois par image.
     const comp = { id, u0: 0, u1: 0, g: L.svg("g", { class: "interface-acquisition" }, c.calque_composants) };
-    const s = comp.s = { duree: durees[Math.min(3, durees.length - 1)], etat: "prête", voie2: "EA1", courbes: [], curseur: 0, tangente: false, memoire: [], n: 0 };
+    const s = comp.s = { duree: durees[Math.min(3, durees.length - 1)], etat: "prête", voie2: "EA1", energies, courbes: [], curseur: 0, tangente: false, memoire: [], n: 0 };
     L.svg("path", { d: `M${x + 150} ${y + 20} C${x + 190} ${y + 20} ${ecran.x - 40} ${ecran.y + 290} ${ecran.x} ${ecran.y + 290}`, fill: "none", stroke: "#2b2b2b", "stroke-width": 3 }, comp.g);
     L.boitier(comp.g, x, y, 150, 64, 18, { dessus: "#d9dcd8", face: "#3b4248" });
     L.texte(comp.g, x + 75, y + 12, "INTERFACE D'ACQUISITION", { "font-size": 6.5, "font-weight": 700, fill: "#23315a" });
     [["EA0", 30, "#c62828"], ["EA1", 75, "#f2a20b"], ["GND", 120, L.NOIR_BORNE]].forEach(([n, dx, col]) => { L.texte(comp.g, x + dx, y + 26, n, { "font-size": 7, "font-weight": 700, fill: "#333" }); c.borne(comp, n, x + dx, y + 46, col); });
     let lecture = null;
-    const noter = () => L.missions.noter("acquisition", { duree: s.duree, etat: s.etat, n: s.n, voie2: s.voie2, derniere: s.derniere || null, curseur: lecture ? { t: lecture[0], u0: Math.round(lecture[1] * 1000) / 1000, u1: Math.round(lecture[2] * 1000) / 1000, voie2: s.voie2 } : null });
+    const noter = () => L.missions.noter("acquisition", { duree: s.duree, etat: s.etat, n: s.n, voie2: s.voie2, derniere: s.derniere || null, curseur: lecture ? { t: lecture[0], u0: Math.round(lecture[1] * 1000) / 1000, u1: Math.round(lecture[2] * 1000) / 1000, voie2: s.voie2, ...(lecture.length > 3 ? { e: Math.round(lecture[3] * 100) / 100 } : {}) } : null });
     const tracer = L.ecran_acquisition(L.svg("g", {}, c.calque_composants), ecran, {
       duree: () => { if (s.etat !== "en cours") s.duree = durees[(durees.indexOf(s.duree) + 1) % durees.length]; maj(); },
-      voie2: () => { s.voie2 = VOIES[(VOIES.indexOf(s.voie2) + 1) % 3]; maj(); },
+      voie2: () => { const v = energies ? [...VOIES, "Énergies"] : VOIES; s.voie2 = v[(v.indexOf(s.voie2) + 1) % v.length]; maj(); },
       lancer: () => { if (s.etat === "en cours") return; s.etat = "en attente"; s.base = comp.u0; s.calme = c.horloge.t; s.memoire = []; maj(); },
       effacer: () => { if (s.etat !== "en cours") { s.courbes = []; s.etat = "prête"; } maj(); },
       tangente: () => { s.tangente = !s.tangente; maj(); },

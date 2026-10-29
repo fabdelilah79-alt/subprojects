@@ -583,6 +583,19 @@ La bobine (bobine.js) suit le même principe que le condensateur : pendant un pa
 bobine enfonce ou retire son noyau de fer doux (L multipliée par 10). Le GBF de l'activité 2 (gbf_temps.js) donne sa
 tension instant par instant, au rythme de l'horloge.
 
+## Chapitre 2e année du bac « Oscillations libres d'un circuit RLC série » (fiche 2bac/elec3_rlc_libre)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec3_a1_decharge.html | A1 : décharge oscillante amortie (ordinateur) | O1, O2, O3, O6 | Générateur 6 V, commutateur K, boîte de condensateurs (1 à 10 µF), bobine (0,05 ou 0,5 H, r = 10 Ω), boîte de résistances, interface : oscillations amorties (T = 14,06 ms pour 0,5 H et 10 µF), régime apériodique (1 kΩ), régime critique ; T pour quatre couples (L, C) au tableur, T ≈ 2π√(LC) ; équation différentielle, q(t), i(t). |
+| b2_elec3_a2_energies.html | A2 : évolution graphique des énergies | O4 | Même circuit, EA1 sur R ; touche « Voie 2 » → « Énergies » : Ee, Em, E (µJ) ; échanges, E(0) = 180 µJ, 43 % perdus en une pseudo-période ; régime apériodique ; cas idéal Im = Um·√(C/L). |
+| b2_elec3_a3_entretien.html | A3 : entretien par un circuit intégré | O5, O6, O3 | Dispositif d'entretien (résistance négative −R₀, 0 à 40 Ω) : amorties pour R₀ = 0, sinusoïdales pour R₀ = R + r = 20 Ω, amplitude limitée par la saturation pour R₀ = 40 Ω ; tension sinusoïdale de 150 Hz (C = 2,2 µF). |
+
+Le circuit suit la méthode des trapèzes (option trapeze de circuit_temps.js) : un circuit LC sans résistance garde son
+énergie, sans amortissement artificiel du calcul ; les pseudo-périodes mesurées concordent avec la théorie à 0,1 %
+près. Le dispositif d'entretien (entretien_rlc.js) n'est vu que par son rôle : u = −R₀·i, et au-delà de 40 mA
+l'amplificateur sature (le dispositif se comporte alors comme une résistance de 100 Ω).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

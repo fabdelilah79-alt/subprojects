@@ -510,6 +510,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_elec2_a1_bobine/ | Bobine en continu (ohmmètre) et en variable (deux lampes, retards) (poste_bobine.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec2_a2_inductance/ | Tension triangulaire, uL = L·di/dt, mesure de L avec et sans noyau (poste_inductance.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec2_a3_echelon/ | Réponse RL à un échelon, τ = L/(R + r), rupture, équation, énergie (poste_echelon_rl.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/entretien_rlc.js | Dispositif d'entretien (AO) : résistance négative −R₀ réglable, saturation à 40 mA. |
+| contenu/ressources/laboratoires/commun/poste_rlc.js | Paillasse du circuit RLC série (commutateur, C, bobine, R, entretien facultatif, interface) ; analyse des enregistrements (régime, pseudo-période). |
+| contenu/ressources/laboratoires/sources/b2_elec3_a1_decharge/ | Décharge oscillante, régimes, pseudo-période et T₀, équation différentielle (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec3_a2_energies/ | Énergies Ee, Em, E à l'ordinateur ; échanges et effet Joule (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec3_a3_entretien/ | Entretien des oscillations, tension sinusoïdale de fréquence donnée (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

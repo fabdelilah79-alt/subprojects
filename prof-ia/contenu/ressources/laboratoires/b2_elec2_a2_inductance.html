@@ -2852,15 +2852,17 @@ Rôle : horloge d'un circuit qui évolue dans le temps (condensateur, bobine) : 
        recalculé et redessiné (c.calculer). Méthode d'Euler implicite : un condensateur de capacité C est, pendant un pas,
        une conductance C/pas en parallèle avec une source qui garde sa tension précédente. Avec ralenti = k, une seconde
        réelle ne représente que 1/k seconde du circuit (phénomènes de quelques millisecondes, rendus visibles).
-Reçoit : le circuit (circuit.js) et { pas (s), max (nombre de pas au plus par image), ralenti (1 par défaut) }.
-Produit : Labo.horloge_circuit(c, reglage) -> h { t (s), pas, ralenti, sur_pas(f(t)) } ; c.pas, c.horloge.
-Utilisé par : condensateur.js et les simulations du dipôle RC.
+       Avec trapeze = vrai (c.trapeze), condensateur et bobine suivent la méthode des trapèzes : elle conserve l'énergie
+       d'un circuit LC (oscillations sans amortissement artificiel).
+Reçoit : le circuit (circuit.js) et { pas (s), max (nombre de pas au plus par image), ralenti (1 par défaut), trapeze }.
+Produit : Labo.horloge_circuit(c, reglage) -> h { t (s), pas, ralenti, sur_pas(f(t)) } ; c.pas, c.trapeze, c.horloge.
+Utilisé par : condensateur.js, bobine.js et les simulations des dipôles RC, RL et du circuit RLC.
 */
 (function (L) {
-  L.horloge_circuit = function (c, { pas = 5e-4, max = 60, ralenti = 1 } = {}) {
+  L.horloge_circuit = function (c, { pas = 5e-4, max = 60, ralenti = 1, trapeze = false } = {}) {
     // Boucle d'images : pas de temps, validation des états, enregistrements, puis dessin.
     const h = { t: 0, pas, ralenti, ecouteurs: [] }, reel = pas * ralenti * 1000;
-    c.pas = pas; c.horloge = h;
+    c.pas = pas; c.trapeze = trapeze; c.horloge = h;
     h.sur_pas = (f) => h.ecouteurs.push(f);
     let avant = performance.now();
     const image = (maintenant) => {
@@ -2884,7 +2886,8 @@ Utilisé par : condensateur.js et les simulations du dipôle RC.
 Rôle : condensateur (non polarisé) sur son support à deux bornes : boîtier bleu où sont imprimés son nom et sa capacité ;
        si plusieurs valeurs sont données, c'est une boîte de condensateurs : un toucher sur le boîtier passe à la valeur
        suivante (le condensateur choisi est neuf : déchargé). Il évolue avec l'horloge du circuit (circuit_temps.js) :
-       pendant un pas dt, i = C·du/dt devient i = (C/dt)·(u − u précédente). Les charges +q et −q des armatures sont
+       pendant un pas dt, i = C·du/dt devient i = (C/dt)·(u − u précédente) ; avec la méthode des trapèzes (c.trapeze),
+       i + i précédent = (2C/dt)·(u − u précédente). Les charges +q et −q des armatures sont
        écrites près des bornes quand il est chargé. Sans horloge, il se comporte comme un circuit ouvert.
 Reçoit : le circuit et { id, x, y, C (F), valeurs [F] (facultatif), nom, lettres }.
 Produit : Labo.condensateur(c, reglage) -> comp { C, u (V, borne 1 − borne 2), i (A, de 1 vers 2), q (C) } ; bornes « 1 », « 2 ».
@@ -2907,13 +2910,17 @@ Utilisé par : les simulations du dipôle RC.
 
   L.condensateur = function (c, { id = "condensateur", x, y, C = 1e-4, valeurs = null, nom = "C", lettres = null }) {
     // Support, boîtier ; dipôle « compagnon » pour l'horloge ; toucher : valeur suivante (boîte de condensateurs).
-    const comp = { id, C, u: 0, u_calc: 0, i: 0, q: 0, g: L.svg("g", { class: `condensateur condensateur-${id}`, role: valeurs ? "button" : null, "aria-label": "Condensateur" }, c.calque_composants) };
+    const comp = { id, C, u: 0, u_calc: 0, i: 0, i_prec: 0, q: 0, g: L.svg("g", { class: `condensateur condensateur-${id}`, role: valeurs ? "button" : null, "aria-label": "Condensateur" }, c.calque_composants) };
     L.support_dipole(c, comp, x, y, valeurs ? `${nom} (boîte : touchez)` : nom, ["1", "2"], ["#4a4f55", "#4a4f55"], lettres);
     const gc = L.svg("g", {}, comp.g), dessiner = () => corps(gc, x, y, comp);
-    if (valeurs) L.glissable(comp.g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { comp.C = valeurs[(valeurs.indexOf(comp.C) + 1) % valeurs.length]; comp.u = 0; comp.q = 0; dessiner(); c.calculer(); } });
-    comp.dipoles = () => (c.pas ? [{ a: "1", b: "2", g: comp.C / c.pas, j: (-comp.C / c.pas) * comp.u }] : []);
+    if (valeurs) L.glissable(comp.g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { comp.C = valeurs[(valeurs.indexOf(comp.C) + 1) % valeurs.length]; comp.u = 0; comp.q = 0; comp.i_prec = 0; dessiner(); c.calculer(); } });
+    comp.dipoles = () => {
+      if (!c.pas) return [];
+      const g = ((c.trapeze ? 2 : 1) * comp.C) / c.pas;
+      return [{ a: "1", b: "2", g, j: -g * comp.u - (c.trapeze ? comp.i_prec : 0) }];
+    };
     comp.mettre_a_jour = ({ u, i }) => { comp.u_calc = u("1", "2"); comp.i = i[0] || 0; };
-    comp.valider = () => { const avant = Math.abs(comp.u) > 0.1; comp.u = comp.u_calc; comp.q = comp.C * comp.u; if (avant !== Math.abs(comp.u) > 0.1) dessiner(); };
+    comp.valider = () => { const avant = Math.abs(comp.u) > 0.1; comp.u = comp.u_calc; comp.i_prec = comp.i; comp.q = comp.C * comp.u; if (avant !== Math.abs(comp.u) > 0.1) dessiner(); };
     dessiner();
     return c.ajouter(comp);
   };
@@ -3034,10 +3041,10 @@ Utilisé par : les simulations du dipôle RC (charge à courant constant).
   <script>
 /*
 Rôle : ordinateur portable et logiciel d'acquisition : barre de touches (Durée, Lancer, Effacer, Tangente, Voie 2 : EA1,
-       −EA1 ou EA1 − EA0), graphique des tensions enregistrées (EA0 en rouge, voie 2 en orange ; temps en ms pour les durées
+       −EA1, EA1 − EA0 ou Énergies), graphique des tensions enregistrées (EA0 en rouge, voie 2 en orange ; temps en ms pour les durées
        courtes ; les deux acquisitions précédentes restent en clair, pour
        comparer), curseur vertical que l'on fait glisser et qui affiche t et les tensions, tangente à l'origine de la
-       dernière courbe EA0 jusqu'à son asymptote.
+       dernière courbe EA0 jusqu'à son asymptote. Mode Énergies : Ee (rouge), Em (orange) et E = Ee + Em (bleu), en µJ.
 Reçoit : le groupe SVG, { x, y } (coin de l'écran) et les actions { duree(), lancer(), effacer(), tangente(), voie2(), curseur(t) }.
 Produit : Labo.ecran_acquisition(g, coin, actions) -> tracer(s) ; s = { duree, etat, courbes [{ pts [[t, u0, u1]] }],
           curseur (s), tangente, voie2 (« EA1 », « −EA1 », « EA1 − EA0 ») } ; Labo.voie2(p, mode) (tension de la voie 2).
@@ -3067,28 +3074,28 @@ Utilisé par : interface_acquisition.js.
 
   function echelles(s) {
     // Bornes du graphique : 0 à la durée ; tensions arrondies au volt.
-    const u = s.courbes.flatMap((c) => c.pts.flatMap((p) => [p[1], p[2]]));
+    const u = s.courbes.flatMap((c) => c.pts.flatMap((p) => p.slice(1)));
     return { tmax: s.duree, umax: Math.max(1, Math.ceil(Math.max(0, ...u))), umin: Math.min(0, Math.floor(Math.min(0, ...u))) };
   }
 
   L.voie2 = (p, mode) => (mode === "−EA1" ? -p[2] : mode === "EA1 − EA0" ? p[2] - p[1] : p[2]);
   const unite = (d) => (d < 0.5 ? { k: 1000, nom: "ms" } : { k: 1, nom: "s" });
 
-  function axes(g, x0, y0, e) {
+  function axes(g, x0, y0, e, titre) {
     // Quadrillage, graduations (temps en ms pour les durées courtes), titres des axes.
     const u = unite(e.tmax);
     for (let k = 0; k <= 10; k++) { const X = x0 + (k * P.l) / 10; L.svg("line", { x1: X, y1: y0, x2: X, y2: y0 + P.h, stroke: "#e2e2dc", "stroke-width": 0.6 }, g); if (k % 2 === 0) L.texte(g, X, y0 + P.h + 11, fmt((k * e.tmax * u.k) / 10, e.tmax * u.k < 2 ? 2 : 1), { "font-size": 6.5, fill: "#333" }); }
     const pasu = Math.max(1, Math.ceil((e.umax - e.umin) / 6));
     for (let u = e.umin; u <= e.umax + 1e-9; u += pasu) { const Y = y0 + P.h - ((u - e.umin) / (e.umax - e.umin)) * P.h; L.svg("line", { x1: x0, y1: Y, x2: x0 + P.l, y2: Y, stroke: u === 0 ? "#999" : "#e2e2dc", "stroke-width": 0.6 }, g); L.texte(g, x0 - 6, Y + 2.5, String(u).replace("-", "−"), { "font-size": 6.5, fill: "#333", "text-anchor": "end" }); }
     L.texte(g, x0 + P.l, y0 + P.h + 22, `t (${u.nom})`, { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "end" });
-    L.texte(g, x0 - 6, y0 - 6, "u (V)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "start" });
+    L.texte(g, x0 - 6, y0 - 6, titre, { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "start" });
   }
 
   function courbes(g, s, X, Y) {
     // Courbes EA0 et EA1 ; les anciennes en clair ; tangente à l'origine de la dernière courbe EA0.
     s.courbes.forEach((c, n) => {
       const vieille = n < s.courbes.length - 1;
-      for (const v of [1, 2]) { if (v === 2 && c.pts.every((p) => Math.abs(p[2]) < 0.1)) continue; L.svg("path", { d: c.pts.map((p, k) => `${k ? "L" : "M"}${X(p[0]).toFixed(1)} ${Y(p[v]).toFixed(1)}`).join(" "), fill: "none", stroke: v === 1 ? "#d32f2f" : "#f29d0b", "stroke-width": vieille ? 1 : 1.6, opacity: vieille ? 0.35 : 1 }, g); }
+      for (const v of [1, 2, 3]) { if (!c.pts.length || c.pts[0].length <= v || (v === 2 && c.pts.every((p) => Math.abs(p[2]) < 0.1))) continue; L.svg("path", { d: c.pts.map((p, k) => `${k ? "L" : "M"}${X(p[0]).toFixed(1)} ${Y(p[v]).toFixed(1)}`).join(" "), fill: "none", stroke: ["", "#d32f2f", "#f29d0b", "#1565c0"][v], "stroke-width": vieille ? 1 : 1.6, opacity: vieille ? 0.35 : 1 }, g); }
     });
     const d = s.courbes[s.courbes.length - 1];
     if (!s.tangente || !d || d.pts.length < 10) return;
@@ -3106,14 +3113,17 @@ Utilisé par : interface_acquisition.js.
     let s0 = null;
     L.glissable(poignee, { soulever: false, debut: () => ({ x: x0 + ((s0?.curseur ?? 0) / (s0?.duree || 1)) * P.l, y: 0 }), deplacer: (p) => a.curseur(Math.max(0, Math.min(1, (p.x - x0) / P.l)) * (s0?.duree || 1)) });
     return (s0_) => {
-      const s = { ...s0_, courbes: s0_.courbes.map((c) => ({ pts: c.pts.map((p) => [p[0], p[1], L.voie2(p, s0_.voie2)]) })) }, u = unite(s.duree);
+      const en = s0_.voie2 === "Énergies", conv = en ? (p) => [p[0], ...s0_.energies(p)] : (p) => [p[0], p[1], L.voie2(p, s0_.voie2)];
+      const s = { ...s0_, tangente: s0_.tangente && !en, courbes: s0_.courbes.map((c) => ({ pts: c.pts.map(conv) })) }, u = unite(s.duree);
       s0 = s; gg.replaceChildren();
       const e = echelles(s), X = (t) => x0 + (t / e.tmax) * P.l, Y = (u) => y0 + P.h - ((u - e.umin) / (e.umax - e.umin)) * P.h;
-      axes(gg, x0, y0, e); courbes(gg, s, X, Y);
+      axes(gg, x0, y0, e, en ? "E (µJ)" : "u (V)"); courbes(gg, s, X, Y);
+      if (en) L.texte(gg, x0 + P.l, y0 - 6, "Ee : rouge · Em : orange · E = Ee + Em : bleu", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "end" });
       const d = s.courbes[s.courbes.length - 1], p = d && d.pts.length ? d.pts.reduce((m, q) => (Math.abs(q[0] - s.curseur) < Math.abs(m[0] - s.curseur) ? q : m)) : null;
       L.svg("line", { x1: X(s.curseur), y1: y0, x2: X(s.curseur), y2: y0 + P.h, stroke: "#2e7d32", "stroke-width": 1 }, gg);
       L.texte(gg, x + 338, y + 26, `${fmt(s.duree * u.k, s.duree * u.k < 1 ? 1 : 0)} ${u.nom} · ${s.etat}`, { "font-size": 7.5, fill: "#23315a", "text-anchor": "start" });
-      L.texte(gg, x + 220, y + 246, p ? `curseur : t = ${fmt(p[0] * u.k, 3)} ${u.nom} ; EA0 = ${fmt(p[1])} V ; ${s.voie2} = ${fmt(p[2])} V` : "curseur : pas de mesure", { "font-size": 8.5, "font-weight": 700, fill: "#2e7d32" });
+      const texte = !p ? "curseur : pas de mesure" : en ? `curseur : t = ${fmt(p[0] * u.k, 3)} ${u.nom} ; Ee = ${fmt(p[1], 1)} ; Em = ${fmt(p[2], 1)} ; E = ${fmt(p[3], 1)} µJ` : `curseur : t = ${fmt(p[0] * u.k, 3)} ${u.nom} ; EA0 = ${fmt(p[1])} V ; ${s.voie2} = ${fmt(p[2])} V`;
+      L.texte(gg, x + 220, y + 246, texte, { "font-size": 8.5, "font-weight": 700, fill: "#2e7d32" });
       return p;
     };
   };
@@ -3126,10 +3136,11 @@ Rôle : interface d'acquisition reliée à l'ordinateur (ecran_acquisition.js) :
        ou descente), et l'instant t = 0 est le dernier instant où EA0 était encore stable : on bascule l'interrupteur après
        avoir lancé. 400 points sur la durée choisie (0,5 à 20 s par défaut). Les trois dernières acquisitions restent affichées.
 Reçoit : le circuit (avec son horloge, circuit_temps.js) et { id, x, y (boîtier), ecran { x, y } (ordinateur), etiquette(),
-         sur_fin(derniere) (appelée à la fin de chaque acquisition), durees [s] (choix de la touche Durée) }.
+         sur_fin(derniere) (appelée à la fin de chaque acquisition), durees [s] (choix de la touche Durée), energies(p)
+         (facultatif : [Ee, Em, E] en µJ pour un point [t, EA0, EA1] ; la touche Voie 2 propose alors « Énergies ») }.
 Produit : Labo.interface_acquisition(c, reglage) -> comp { u0, u1, s } ; bornes « EA0 », « EA1 », « GND » ; fait « acquisition »
           = { duree, etat, n, voie2, derniere { duree, u_debut, u_fin, tau (s, instant où EA0 a fait 63 % de sa variation), ... },
-          curseur { t, u0, u1 (voie 2 affichée), voie2 } }.
+          curseur { t, u0, u1 (voie 2 affichée), voie2, e (énergie totale, mode Énergies : u0 = Ee, u1 = Em) } }.
 Utilisé par : les simulations du dipôle RC.
 */
 (function (L) {
@@ -3158,19 +3169,19 @@ Utilisé par : les simulations du dipôle RC.
     return s.etat === "terminée";
   }
 
-  L.interface_acquisition = function (c, { id = "interface", x, y, ecran, etiquette = () => ({}), sur_fin = () => {}, durees = DUREES }) {
+  L.interface_acquisition = function (c, { id = "interface", x, y, ecran, etiquette = () => ({}), sur_fin = () => {}, durees = DUREES, energies = null }) {
     // Boîtier, entrées, câble USB, ordinateur ; enregistrement à chaque pas de l'horloge ; dessin une fois par image.
     const comp = { id, u0: 0, u1: 0, g: L.svg("g", { class: "interface-acquisition" }, c.calque_composants) };
-    const s = comp.s = { duree: durees[Math.min(3, durees.length - 1)], etat: "prête", voie2: "EA1", courbes: [], curseur: 0, tangente: false, memoire: [], n: 0 };
+    const s = comp.s = { duree: durees[Math.min(3, durees.length - 1)], etat: "prête", voie2: "EA1", energies, courbes: [], curseur: 0, tangente: false, memoire: [], n: 0 };
     L.svg("path", { d: `M${x + 150} ${y + 20} C${x + 190} ${y + 20} ${ecran.x - 40} ${ecran.y + 290} ${ecran.x} ${ecran.y + 290}`, fill: "none", stroke: "#2b2b2b", "stroke-width": 3 }, comp.g);
     L.boitier(comp.g, x, y, 150, 64, 18, { dessus: "#d9dcd8", face: "#3b4248" });
     L.texte(comp.g, x + 75, y + 12, "INTERFACE D'ACQUISITION", { "font-size": 6.5, "font-weight": 700, fill: "#23315a" });
     [["EA0", 30, "#c62828"], ["EA1", 75, "#f2a20b"], ["GND", 120, L.NOIR_BORNE]].forEach(([n, dx, col]) => { L.texte(comp.g, x + dx, y + 26, n, { "font-size": 7, "font-weight": 700, fill: "#333" }); c.borne(comp, n, x + dx, y + 46, col); });
     let lecture = null;
-    const noter = () => L.missions.noter("acquisition", { duree: s.duree, etat: s.etat, n: s.n, voie2: s.voie2, derniere: s.derniere || null, curseur: lecture ? { t: lecture[0], u0: Math.round(lecture[1] * 1000) / 1000, u1: Math.round(lecture[2] * 1000) / 1000, voie2: s.voie2 } : null });
+    const noter = () => L.missions.noter("acquisition", { duree: s.duree, etat: s.etat, n: s.n, voie2: s.voie2, derniere: s.derniere || null, curseur: lecture ? { t: lecture[0], u0: Math.round(lecture[1] * 1000) / 1000, u1: Math.round(lecture[2] * 1000) / 1000, voie2: s.voie2, ...(lecture.length > 3 ? { e: Math.round(lecture[3] * 100) / 100 } : {}) } : null });
     const tracer = L.ecran_acquisition(L.svg("g", {}, c.calque_composants), ecran, {
       duree: () => { if (s.etat !== "en cours") s.duree = durees[(durees.indexOf(s.duree) + 1) % durees.length]; maj(); },
-      voie2: () => { s.voie2 = VOIES[(VOIES.indexOf(s.voie2) + 1) % 3]; maj(); },
+      voie2: () => { const v = energies ? [...VOIES, "Énergies"] : VOIES; s.voie2 = v[(v.indexOf(s.voie2) + 1) % v.length]; maj(); },
       lancer: () => { if (s.etat === "en cours") return; s.etat = "en attente"; s.base = comp.u0; s.calme = c.horloge.t; s.memoire = []; maj(); },
       effacer: () => { if (s.etat !== "en cours") { s.courbes = []; s.etat = "prête"; } maj(); },
       tangente: () => { s.tangente = !s.tangente; maj(); },
@@ -3415,11 +3426,12 @@ Utilisé par : les simulations du dipôle RL (inductance avec une tension triang
 Rôle : bobine de 1 000 spires sur son support, avec son noyau de fer doux que l'on enfonce ou que l'on retire d'un toucher
        (le noyau multiplie l'inductance par 10) ; résistance de son fil r. En convention récepteur, u = r·i + L·di/dt :
        avec l'horloge du circuit (circuit_temps.js), pendant un pas dt, i = (i précédente + (dt/L)·u) / (1 + r·dt/L) ;
-       le courant qui la traverse ne fait donc jamais de saut. Sans horloge (courant continu), elle se comporte comme r.
+       le courant qui la traverse ne fait donc jamais de saut (avec c.trapeze : méthode des trapèzes, sans perte d'énergie
+       artificielle). Sans horloge (courant continu), elle se comporte comme r.
 Reçoit : le circuit et { id, x, y, L (H, sans noyau), r (Ω), noyau (vrai : enfoncé), nom }.
 Produit : Labo.bobine(c, reglage) -> comp { L (H, inductance actuelle), r, i (A, de 1 vers 2), u (V), noyau, energie (J) } ;
           bornes « 1 », « 2 » ; fait « <id> » = { L, noyau }.
-Utilisé par : les simulations du dipôle RL.
+Utilisé par : les simulations du dipôle RL et du circuit RLC.
 */
 (function (L) {
   function dessin(g, x, y, comp) {
@@ -3434,20 +3446,27 @@ Utilisé par : les simulations du dipôle RL.
     L.texte(g, x + 65, y + 62, `${comp.nom} : 1 000 spires, r = ${comp.r} Ω`, { "font-size": 6.5, "font-weight": 700, fill: "#2a2a28" });
   }
 
+  function trapeze(comp, dt) {
+    // Méthode des trapèzes : (u + u préc.)/2 = r·(i + i préc.)/2 + L·(i − i préc.)/dt ; 1 MΩ entre les spires (fuite).
+    const a = comp.r / 2 + comp.L / dt;
+    return [{ a: "1", b: "2", g: 1 / (2 * a), j: (comp.u_prec / 2 + comp.i * (comp.L / dt - comp.r / 2)) / a }, { a: "1", b: "2", g: 1e-6, j: 0 }];
+  }
+
   L.bobine = function (c, { id = "bobine", x, y, L: L0 = 0.05, r = 10, noyau = false, nom = "L" }) {
     // Dessin, bornes, modèle à pas de temps ; toucher : noyau enfoncé ou retiré.
-    const comp = { id, L: noyau ? 10 * L0 : L0, r, i: 0, i_calc: 0, u: 0, noyau, nom, energie: 0, g: L.svg("g", { class: `bobine bobine-${id}`, role: "button", "aria-label": "Bobine (toucher : noyau)" }, c.calque_composants) };
+    const comp = { id, L: noyau ? 10 * L0 : L0, r, i: 0, i_calc: 0, u: 0, u_prec: 0, noyau, nom, energie: 0, g: L.svg("g", { class: `bobine bobine-${id}`, role: "button", "aria-label": "Bobine (toucher : noyau)" }, c.calque_composants) };
     const gd = L.svg("g", {}, comp.g), noter = () => L.missions.noter(id, { L: comp.L, noyau: comp.noyau });
     dessin(gd, x, y, comp);
     c.borne(comp, "1", x + 12, y + 44, "#4a4f55"); c.borne(comp, "2", x + 118, y + 44, "#4a4f55");
     L.glissable(comp.g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { comp.noyau = !comp.noyau; comp.L = comp.noyau ? 10 * L0 : L0; dessin(gd, x, y, comp); noter(); c.calculer(); } });
     comp.dipoles = () => {
       if (!c.pas) return [{ a: "1", b: "2", g: 1 / r, j: 0 }];
+      if (c.trapeze) return trapeze(comp, c.pas);
       const k = 1 + (r * c.pas) / comp.L;
       return [{ a: "1", b: "2", g: c.pas / comp.L / k, j: comp.i / k }];
     };
     comp.mettre_a_jour = ({ u, i }) => { comp.i_calc = i[0] || 0; comp.u = u("1", "2"); };
-    comp.valider = () => { comp.i = comp.i_calc; comp.energie = 0.5 * comp.L * comp.i * comp.i; };
+    comp.valider = () => { comp.i = comp.i_calc; comp.u_prec = comp.u; comp.energie = 0.5 * comp.L * comp.i * comp.i; };
     noter();
     return c.ajouter(comp);
   };

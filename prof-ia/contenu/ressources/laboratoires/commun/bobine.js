@@ -2,11 +2,12 @@
 Rôle : bobine de 1 000 spires sur son support, avec son noyau de fer doux que l'on enfonce ou que l'on retire d'un toucher
        (le noyau multiplie l'inductance par 10) ; résistance de son fil r. En convention récepteur, u = r·i + L·di/dt :
        avec l'horloge du circuit (circuit_temps.js), pendant un pas dt, i = (i précédente + (dt/L)·u) / (1 + r·dt/L) ;
-       le courant qui la traverse ne fait donc jamais de saut. Sans horloge (courant continu), elle se comporte comme r.
+       le courant qui la traverse ne fait donc jamais de saut (avec c.trapeze : méthode des trapèzes, sans perte d'énergie
+       artificielle). Sans horloge (courant continu), elle se comporte comme r.
 Reçoit : le circuit et { id, x, y, L (H, sans noyau), r (Ω), noyau (vrai : enfoncé), nom }.
 Produit : Labo.bobine(c, reglage) -> comp { L (H, inductance actuelle), r, i (A, de 1 vers 2), u (V), noyau, energie (J) } ;
           bornes « 1 », « 2 » ; fait « <id> » = { L, noyau }.
-Utilisé par : les simulations du dipôle RL.
+Utilisé par : les simulations du dipôle RL et du circuit RLC.
 */
 (function (L) {
   function dessin(g, x, y, comp) {
@@ -21,20 +22,27 @@ Utilisé par : les simulations du dipôle RL.
     L.texte(g, x + 65, y + 62, `${comp.nom} : 1 000 spires, r = ${comp.r} Ω`, { "font-size": 6.5, "font-weight": 700, fill: "#2a2a28" });
   }
 
+  function trapeze(comp, dt) {
+    // Méthode des trapèzes : (u + u préc.)/2 = r·(i + i préc.)/2 + L·(i − i préc.)/dt ; 1 MΩ entre les spires (fuite).
+    const a = comp.r / 2 + comp.L / dt;
+    return [{ a: "1", b: "2", g: 1 / (2 * a), j: (comp.u_prec / 2 + comp.i * (comp.L / dt - comp.r / 2)) / a }, { a: "1", b: "2", g: 1e-6, j: 0 }];
+  }
+
   L.bobine = function (c, { id = "bobine", x, y, L: L0 = 0.05, r = 10, noyau = false, nom = "L" }) {
     // Dessin, bornes, modèle à pas de temps ; toucher : noyau enfoncé ou retiré.
-    const comp = { id, L: noyau ? 10 * L0 : L0, r, i: 0, i_calc: 0, u: 0, noyau, nom, energie: 0, g: L.svg("g", { class: `bobine bobine-${id}`, role: "button", "aria-label": "Bobine (toucher : noyau)" }, c.calque_composants) };
+    const comp = { id, L: noyau ? 10 * L0 : L0, r, i: 0, i_calc: 0, u: 0, u_prec: 0, noyau, nom, energie: 0, g: L.svg("g", { class: `bobine bobine-${id}`, role: "button", "aria-label": "Bobine (toucher : noyau)" }, c.calque_composants) };
     const gd = L.svg("g", {}, comp.g), noter = () => L.missions.noter(id, { L: comp.L, noyau: comp.noyau });
     dessin(gd, x, y, comp);
     c.borne(comp, "1", x + 12, y + 44, "#4a4f55"); c.borne(comp, "2", x + 118, y + 44, "#4a4f55");
     L.glissable(comp.g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { comp.noyau = !comp.noyau; comp.L = comp.noyau ? 10 * L0 : L0; dessin(gd, x, y, comp); noter(); c.calculer(); } });
     comp.dipoles = () => {
       if (!c.pas) return [{ a: "1", b: "2", g: 1 / r, j: 0 }];
+      if (c.trapeze) return trapeze(comp, c.pas);
       const k = 1 + (r * c.pas) / comp.L;
       return [{ a: "1", b: "2", g: c.pas / comp.L / k, j: comp.i / k }];
     };
     comp.mettre_a_jour = ({ u, i }) => { comp.i_calc = i[0] || 0; comp.u = u("1", "2"); };
-    comp.valider = () => { comp.i = comp.i_calc; comp.energie = 0.5 * comp.L * comp.i * comp.i; };
+    comp.valider = () => { comp.i = comp.i_calc; comp.u_prec = comp.u; comp.energie = 0.5 * comp.L * comp.i * comp.i; };
     noter();
     return c.ajouter(comp);
   };

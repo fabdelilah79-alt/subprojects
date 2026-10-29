@@ -1052,3 +1052,24 @@ Problèmes restants, à faire par l'enseignant :
 - Pas de surtension ni d'étincelle à l'ouverture d'un circuit sans boucle de décharge : K de l'activité 3 garde la bobine
   en boucle avec R.
 
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Oscillations libres d'un circuit RLC série »
+
+Fait :
+- Trois simulations, inscrites au manifeste (131 ressources) : A1 décharge oscillante (régimes pseudo-périodique, critique,
+  apériodique ; pseudo-période comparée à 2π√(LC) au tableur ; équation différentielle, q(t), i(t)) ; A2 évolution
+  graphique des énergies (mode « Énergies » du logiciel : échanges, effet Joule, trois régimes) ; A3 entretien par un
+  dispositif à amplificateur opérationnel (R₀ = R + r, saturation, tension sinusoïdale de 150 Hz). Objectifs O1 à O6.
+- Matériel commun nouveau : poste_rlc.js (paillasse partagée par les trois activités), entretien_rlc.js.
+- Fichiers communs modifiés (signalés) : circuit_temps.js (option « trapeze ») ; condensateur.js et bobine.js (méthode des
+  trapèzes quand elle est choisie ; la bobine a alors une fuite de 1 MΩ entre ses spires) ; interface_acquisition.js et
+  ecran_acquisition.js (option « energies » : mode « Énergies » de la touche Voie 2, trois courbes et leur légende).
+  Sans ces options, rien ne change : les simulations des dipôles RC et RL ont été rejouées et passent.
+- Vérifié : parcours complets des trois simulations (source et fichier assemblé) ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le dispositif d'entretien est un modèle fonctionnel (résistance négative, saturation simplifiée), comme le demandent les
+  orientations ; son schéma interne n'est pas montré.
+- La saturation est fixée à 40 mA (plus que beaucoup d'amplificateurs réels) pour que l'augmentation de l'amplitude se voie
+  en partant de 6 V.
+- Le régime critique n'est pas mesuré : on l'encadre entre 220 Ω et 470 Ω.
+

@@ -2,7 +2,8 @@
 Rôle : condensateur (non polarisé) sur son support à deux bornes : boîtier bleu où sont imprimés son nom et sa capacité ;
        si plusieurs valeurs sont données, c'est une boîte de condensateurs : un toucher sur le boîtier passe à la valeur
        suivante (le condensateur choisi est neuf : déchargé). Il évolue avec l'horloge du circuit (circuit_temps.js) :
-       pendant un pas dt, i = C·du/dt devient i = (C/dt)·(u − u précédente). Les charges +q et −q des armatures sont
+       pendant un pas dt, i = C·du/dt devient i = (C/dt)·(u − u précédente) ; avec la méthode des trapèzes (c.trapeze),
+       i + i précédent = (2C/dt)·(u − u précédente). Les charges +q et −q des armatures sont
        écrites près des bornes quand il est chargé. Sans horloge, il se comporte comme un circuit ouvert.
 Reçoit : le circuit et { id, x, y, C (F), valeurs [F] (facultatif), nom, lettres }.
 Produit : Labo.condensateur(c, reglage) -> comp { C, u (V, borne 1 − borne 2), i (A, de 1 vers 2), q (C) } ; bornes « 1 », « 2 ».
@@ -25,13 +26,17 @@ Utilisé par : les simulations du dipôle RC.
 
   L.condensateur = function (c, { id = "condensateur", x, y, C = 1e-4, valeurs = null, nom = "C", lettres = null }) {
     // Support, boîtier ; dipôle « compagnon » pour l'horloge ; toucher : valeur suivante (boîte de condensateurs).
-    const comp = { id, C, u: 0, u_calc: 0, i: 0, q: 0, g: L.svg("g", { class: `condensateur condensateur-${id}`, role: valeurs ? "button" : null, "aria-label": "Condensateur" }, c.calque_composants) };
+    const comp = { id, C, u: 0, u_calc: 0, i: 0, i_prec: 0, q: 0, g: L.svg("g", { class: `condensateur condensateur-${id}`, role: valeurs ? "button" : null, "aria-label": "Condensateur" }, c.calque_composants) };
     L.support_dipole(c, comp, x, y, valeurs ? `${nom} (boîte : touchez)` : nom, ["1", "2"], ["#4a4f55", "#4a4f55"], lettres);
     const gc = L.svg("g", {}, comp.g), dessiner = () => corps(gc, x, y, comp);
-    if (valeurs) L.glissable(comp.g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { comp.C = valeurs[(valeurs.indexOf(comp.C) + 1) % valeurs.length]; comp.u = 0; comp.q = 0; dessiner(); c.calculer(); } });
-    comp.dipoles = () => (c.pas ? [{ a: "1", b: "2", g: comp.C / c.pas, j: (-comp.C / c.pas) * comp.u }] : []);
+    if (valeurs) L.glissable(comp.g, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => { comp.C = valeurs[(valeurs.indexOf(comp.C) + 1) % valeurs.length]; comp.u = 0; comp.q = 0; comp.i_prec = 0; dessiner(); c.calculer(); } });
+    comp.dipoles = () => {
+      if (!c.pas) return [];
+      const g = ((c.trapeze ? 2 : 1) * comp.C) / c.pas;
+      return [{ a: "1", b: "2", g, j: -g * comp.u - (c.trapeze ? comp.i_prec : 0) }];
+    };
     comp.mettre_a_jour = ({ u, i }) => { comp.u_calc = u("1", "2"); comp.i = i[0] || 0; };
-    comp.valider = () => { const avant = Math.abs(comp.u) > 0.1; comp.u = comp.u_calc; comp.q = comp.C * comp.u; if (avant !== Math.abs(comp.u) > 0.1) dessiner(); };
+    comp.valider = () => { const avant = Math.abs(comp.u) > 0.1; comp.u = comp.u_calc; comp.i_prec = comp.i; comp.q = comp.C * comp.u; if (avant !== Math.abs(comp.u) > 0.1) dessiner(); };
     dessiner();
     return c.ajouter(comp);
   };

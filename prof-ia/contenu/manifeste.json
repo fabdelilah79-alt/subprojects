@@ -4225,6 +4225,109 @@
         "τ ne dépend que de L.",
         "La bobine produit de l'énergie."
       ]
+    },
+    {
+      "id": "b2_elec3_a1_decharge",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec3_a1_decharge.html",
+      "description": "Une paillasse. Générateur 6 V, commutateur K, boîte de condensateurs (1 à 10 µF), bobine (r = 10 Ω ; 50 mH, 0,5 H avec son noyau), boîte de résistances (10 Ω à 2,2 kΩ), interface d'acquisition et ordinateur. Décharge d'un condensateur dans la bobine : oscillations amorties (pseudo-période 14 ms pour 0,5 H et 10 µF), régime apériodique pour 1 kΩ, régime critique ; pseudo-période pour quatre couples (L, C) au tableur, T ≈ 2π√(LC) ; équation différentielle, q(t), i(t). Temps ralenti 40 fois.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec3_rlc_libre",
+      "activite": "Décharge oscillante amortie (oscilloscope, ordinateur).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Décharge oscillante, régimes",
+          "ce_que_fait_l_eleve": "Câble le circuit, enregistre la décharge pour R = 10 Ω, 100 Ω et 1 kΩ et reconnaît les régimes.",
+          "conclusion": "Le condensateur chargé se décharge dans la bobine : uC oscille autour de 0 avec une amplitude qui diminue, ce sont des oscillations libres amorties (régime pseudo-périodique). Plus la résistance totale R + r est grande, plus l'amortissement est fort ; pour une grande résistance, uC tend vers 0 sans osciller : régime apériodique. Le régime critique sépare les deux : uC revient à 0 le plus vite, sans osciller. L'amortissement est dû à l'effet Joule dans les résistances ; sans résistance, les oscillations seraient périodiques."
+        },
+        {
+          "titre": "Pseudo-période et période propre",
+          "ce_que_fait_l_eleve": "Mesure la pseudo-période pour quatre couples (L, C) et la compare à 2π√(LC) au tableur et à la courbe.",
+          "conclusion": "La pseudo-période ne dépend que de L et de C quand l'amortissement est faible : T ≈ T₀ = 2π√(LC), la période propre de l'oscillateur LC. Elle augmente avec L et avec C. L'équation aux dimensions de √(LC) donne une durée : √((V·s/A)·(A·s/V)) = s."
+        },
+        {
+          "titre": "Équation différentielle",
+          "ce_que_fait_l_eleve": "Établit l'équation différentielle sans amortissement, sa solution q(t), i(t) et calcule T₀.",
+          "conclusion": "Sans résistance, uC + uL = 0, soit L·d²q/dt² + q/C = 0, ou d²q/dt² + q/(LC) = 0. La solution est q(t) = Qm·cos(2πt/T₀ + φ) avec T₀ = 2π√(LC) ; ici φ = 0 et Qm = C·E = 60 µC. L'intensité i = dq/dt = −(2π/T₀)·Qm·sin(2πt/T₀) est en quadrature avec q : elle est nulle quand la charge est maximale."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Le condensateur se décharge toujours sans osciller.",
+        "La pseudo-période dépend de la résistance du circuit.",
+        "L'amortissement est dû au condensateur."
+      ]
+    },
+    {
+      "id": "b2_elec3_a2_energies",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec3_a2_energies.html",
+      "description": "Une paillasse : le même circuit, EA1 sur la résistance (uR = R·i) ; le logiciel affiche Ee = ½·C·uC², Em = ½·L·i² et E = Ee + Em (en µJ). Échanges d'énergie entre condensateur et bobine, diminution de E par effet Joule (43 % par pseudo-période pour R = 10 Ω), régime apériodique, cas idéal sans résistance (Im = Um·√(C/L)). Temps ralenti 40 fois.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec3_rlc_libre",
+      "activite": "Évolution graphique des énergies.",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Énergies et échanges",
+          "ce_que_fait_l_eleve": "Câble le circuit avec EA1, enregistre une décharge, affiche les énergies et lit E(0) et la perte d'énergie en une pseudo-période.",
+          "conclusion": "Pendant les oscillations, l'énergie passe du condensateur à la bobine et inversement : quand uC est extrême, i = 0, Em = 0 et Ee est maximale ; quand uC = 0, l'intensité est maximale et l'énergie est surtout magnétique. L'énergie totale diminue : elle est dissipée par effet Joule dans R + r ; c'est l'origine de l'amortissement."
+        },
+        {
+          "titre": "Les trois régimes et l'énergie",
+          "ce_que_fait_l_eleve": "Compare les énergies en régime apériodique et dans le cas idéal sans résistance.",
+          "conclusion": "En régime apériodique, l'énergie du condensateur est dissipée par effet Joule avant de pouvoir être échangée : Em reste faible et E décroît sans oscillation. En régime pseudo-périodique, une partie de l'énergie est perdue à chaque échange. Sans résistance (régime périodique), l'énergie totale se conserverait : ½·C·Um² = ½·L·Im², et les oscillations seraient sinusoïdales, d'amplitude constante."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "L'énergie totale se conserve dans un circuit RLC réel.",
+        "L'énergie disparaît sans être transformée.",
+        "Le condensateur et la bobine stockent leur énergie au même instant."
+      ]
+    },
+    {
+      "id": "b2_elec3_a3_entretien",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec3_a3_entretien.html",
+      "description": "Une paillasse : le même circuit avec un dispositif d'entretien à amplificateur opérationnel (résistance négative −R₀ réglable de 0 à 40 Ω, saturation à 40 mA). Oscillations amorties pour R₀ = 0, entretenues et sinusoïdales pour R₀ = R + r = 20 Ω, de période T₀ ; amplitude qui augmente puis se limite pour R₀ > R + r ; production d'une tension sinusoïdale de 150 Hz (L = 0,5 H, C = 2,2 µF). Temps ralenti 40 fois.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec3_rlc_libre",
+      "activite": "Entretien par un circuit intégré.",
+      "objectifs": [
+        "O5",
+        "O6",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Entretenir les oscillations",
+          "ce_que_fait_l_eleve": "Insère le dispositif d'entretien, règle R₀ jusqu'à des oscillations d'amplitude constante, mesure leur période et observe l'effet de R₀ > R + r.",
+          "conclusion": "Sans entretien (R₀ = 0), les oscillations s'amortissent. Le dispositif d'entretien fournit au circuit, à chaque instant, l'énergie dissipée par effet Joule : quand R₀ = R + r, il la compense exactement et les oscillations sont sinusoïdales, d'amplitude constante, de période T₀ = 2π√(LC). Si R₀ > R + r, l'amplitude augmente jusqu'à la saturation de l'amplificateur, qui la limite (la tension se déforme un peu). L'énergie vient de l'alimentation ±15 V du dispositif."
+        },
+        {
+          "titre": "Tension sinusoïdale de fréquence donnée",
+          "ce_que_fait_l_eleve": "Calcule C pour 150 Hz, produit cette tension sinusoïdale et mesure sa fréquence.",
+          "conclusion": "Un circuit LC entretenu est un générateur de tension sinusoïdale ; sa fréquence f₀ = 1/(2π√(LC)) se règle par L et C. Pour 150 Hz avec L = 0,50 H, il faut C ≈ 2,2 µF."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Le dispositif d'entretien supprime la résistance du circuit.",
+        "Les oscillations entretenues ont une période différente de T₀.",
+        "On règle la fréquence avec la tension du générateur."
+      ]
     }
   ]
 }

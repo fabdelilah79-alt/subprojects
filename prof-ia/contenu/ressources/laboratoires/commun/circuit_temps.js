@@ -5,15 +5,17 @@ Rôle : horloge d'un circuit qui évolue dans le temps (condensateur, bobine) : 
        recalculé et redessiné (c.calculer). Méthode d'Euler implicite : un condensateur de capacité C est, pendant un pas,
        une conductance C/pas en parallèle avec une source qui garde sa tension précédente. Avec ralenti = k, une seconde
        réelle ne représente que 1/k seconde du circuit (phénomènes de quelques millisecondes, rendus visibles).
-Reçoit : le circuit (circuit.js) et { pas (s), max (nombre de pas au plus par image), ralenti (1 par défaut) }.
-Produit : Labo.horloge_circuit(c, reglage) -> h { t (s), pas, ralenti, sur_pas(f(t)) } ; c.pas, c.horloge.
-Utilisé par : condensateur.js et les simulations du dipôle RC.
+       Avec trapeze = vrai (c.trapeze), condensateur et bobine suivent la méthode des trapèzes : elle conserve l'énergie
+       d'un circuit LC (oscillations sans amortissement artificiel).
+Reçoit : le circuit (circuit.js) et { pas (s), max (nombre de pas au plus par image), ralenti (1 par défaut), trapeze }.
+Produit : Labo.horloge_circuit(c, reglage) -> h { t (s), pas, ralenti, sur_pas(f(t)) } ; c.pas, c.trapeze, c.horloge.
+Utilisé par : condensateur.js, bobine.js et les simulations des dipôles RC, RL et du circuit RLC.
 */
 (function (L) {
-  L.horloge_circuit = function (c, { pas = 5e-4, max = 60, ralenti = 1 } = {}) {
+  L.horloge_circuit = function (c, { pas = 5e-4, max = 60, ralenti = 1, trapeze = false } = {}) {
     // Boucle d'images : pas de temps, validation des états, enregistrements, puis dessin.
     const h = { t: 0, pas, ralenti, ecouteurs: [] }, reel = pas * ralenti * 1000;
-    c.pas = pas; c.horloge = h;
+    c.pas = pas; c.trapeze = trapeze; c.horloge = h;
     h.sur_pas = (f) => h.ecouteurs.push(f);
     let avant = performance.now();
     const image = (maintenant) => {
