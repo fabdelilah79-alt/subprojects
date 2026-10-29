@@ -1031,3 +1031,24 @@ Problèmes restants, à faire par l'enseignant :
 - Pour décharger un condensateur de l'activité 1, une touche « Décharger » remplace le fil que l'on poserait entre ses bornes.
 - L'énergie dissipée dans la lampe n'est pas mesurée : on compare les éclairs (durée, éclat) à E = ½·C·u².
 
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Dipôle RL »
+
+Fait :
+- Trois simulations, inscrites au manifeste (128 ressources) : A1 bobine en continu (ohmmètre, r = 10 Ω) et en variable
+  (deux lampes : retard à l'allumage et à l'extinction, avec et sans noyau) ; A2 inductance par une tension triangulaire
+  (uL = L·di/dt, L = 50 mH et 0,5 H, henry) ; A3 réponse à un échelon (établissement, τ = L/(R + r), influence de R et L,
+  rupture, équation différentielle, énergie ½·L·i²). Objectifs O1 à O6.
+- Matériel commun nouveau : bobine.js, gbf_temps.js.
+- Fichiers communs modifiés (signalés) : circuit_temps.js (option « ralenti » : le temps du circuit avance N fois moins
+  vite) ; interface_acquisition.js et ecran_acquisition.js (option « durees », bouton « Voie 2 » : EA1, −EA1 ou EA1 − EA0,
+  unité ms pour les durées courtes, rappel sur_fin) ; boite_resistances.js (touches − et + au-dessus des fils, pour rester
+  cliquables). Les trois simulations du dipôle RC ont été rejouées : elles passent.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le temps est ralenti (40 ou 100 fois) pour que l'œil et l'ordinateur suivent des phénomènes de quelques millisecondes ;
+  c'est écrit sur la paillasse.
+- À l'activité 1, l'extinction de L₁ reste brève (environ 5 ms, soit 0,5 s à l'écran) : elle se voit, mais il faut regarder.
+- Pas de surtension ni d'étincelle à l'ouverture d'un circuit sans boucle de décharge : K de l'activité 3 garde la bobine
+  en boucle avec R.
+

@@ -570,6 +570,19 @@ Le circuit avance dans le temps par petits pas (0,25 à 1 ms, horloge circuit_te
 est une conductance C/dt en parallèle avec une source qui garde sa tension précédente (méthode d'Euler implicite, stable,
 même quand on relie ses bornes par un fil). L'interface d'acquisition démarre seule quand la tension EA0 change.
 
+## Chapitre 2e année du bac « Dipôle RL » (fiche 2bac/elec2_dipole_rl)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec2_a1_bobine.html | A1 : bobine en courant continu et variable | O1, O4 | Ohmmètre : r = 10 Ω ; en continu, la bobine agit comme r (di/dt = 0) ; deux lampes identiques, L₁ avec la bobine et L₂ avec R = 10 Ω : L₁ s'allume en retard (11 ms avec le noyau, 1 ms sans) et s'éteint progressivement. Temps ralenti 100 fois. |
+| b2_elec2_a2_inductance.html | A2 : inductance par une tension triangulaire | O1, O2 | GBF triangulaire (500 Hz), bobine et boîte de résistances, interface (voie 2 : −EA1) : uL en créneaux, pente de uR, L = uL / (di/dt) = 50 mH, 0,5 H avec le noyau ; 1 H = 1 V·s/A. Temps ralenti 40 fois. |
+| b2_elec2_a3_echelon.html | A3 : réponse RL à un échelon ; mesure de τ | O3, O4, O5, O6 | Générateur 6 V, commutateur K, bobine, boîte de résistances, interface : établissement (I₀ = 54 mA, τ = 4,5 ms), τ = L/(R + r) pour quatre couples au tableur et à la courbe, rupture, équation différentielle et solution, énergie ½·L·I₀² = 0,74 mJ. Temps ralenti 40 fois. |
+
+La bobine (bobine.js) suit le même principe que le condensateur : pendant un pas dt, elle est une conductance
+(dt/L)/(1 + r·dt/L) en parallèle avec une source qui garde son courant précédent ; i est donc continue. Toucher la
+bobine enfonce ou retire son noyau de fer doux (L multipliée par 10). Le GBF de l'activité 2 (gbf_temps.js) donne sa
+tension instant par instant, au rythme de l'horloge.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

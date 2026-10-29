@@ -3,21 +3,22 @@ Rôle : horloge d'un circuit qui évolue dans le temps (condensateur, bobine) : 
        en petits pas (0,5 ms) ; à chaque pas, le circuit est résolu (c.resoudre), puis chaque composant valide son nouvel
        état (valider) et les appareils enregistreurs lisent les tensions (sur_pas) ; une fois par image, le circuit est
        recalculé et redessiné (c.calculer). Méthode d'Euler implicite : un condensateur de capacité C est, pendant un pas,
-       une conductance C/pas en parallèle avec une source qui garde sa tension précédente.
-Reçoit : le circuit (circuit.js) et { pas (s), max (nombre de pas au plus par image) }.
-Produit : Labo.horloge_circuit(c, reglage) -> h { t (s), pas, sur_pas(f(t)) } ; c.pas, c.horloge.
+       une conductance C/pas en parallèle avec une source qui garde sa tension précédente. Avec ralenti = k, une seconde
+       réelle ne représente que 1/k seconde du circuit (phénomènes de quelques millisecondes, rendus visibles).
+Reçoit : le circuit (circuit.js) et { pas (s), max (nombre de pas au plus par image), ralenti (1 par défaut) }.
+Produit : Labo.horloge_circuit(c, reglage) -> h { t (s), pas, ralenti, sur_pas(f(t)) } ; c.pas, c.horloge.
 Utilisé par : condensateur.js et les simulations du dipôle RC.
 */
 (function (L) {
-  L.horloge_circuit = function (c, { pas = 5e-4, max = 60 } = {}) {
+  L.horloge_circuit = function (c, { pas = 5e-4, max = 60, ralenti = 1 } = {}) {
     // Boucle d'images : pas de temps, validation des états, enregistrements, puis dessin.
-    const h = { t: 0, pas, ecouteurs: [] };
+    const h = { t: 0, pas, ralenti, ecouteurs: [] }, reel = pas * ralenti * 1000;
     c.pas = pas; c.horloge = h;
     h.sur_pas = (f) => h.ecouteurs.push(f);
     let avant = performance.now();
     const image = (maintenant) => {
-      const n = Math.min(max, Math.floor((maintenant - avant) / 1000 / pas));
-      avant = n === max ? maintenant : avant + n * pas * 1000;
+      const n = Math.min(max, Math.floor((maintenant - avant) / reel));
+      avant = n === max ? maintenant : avant + n * reel;
       for (let k = 0; k < n; k++) {
         h.t += pas; c.resoudre();
         for (const comp of c.composants) comp.valider?.();

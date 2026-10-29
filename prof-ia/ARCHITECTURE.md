@@ -505,6 +505,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_elec1_a1_courant/ | Charge à courant constant, relevés, q = C·u, associations (poste_courant.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec1_a2_echelon/ | Réponse RC à un échelon, τ = R·C, décharge, équation différentielle (poste_echelon.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec1_a3_energie/ | Énergie stockée, décharge dans une lampe, flash et défibrillateur (poste_flash.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/bobine.js | Bobine de 1 000 spires (r, L, noyau de fer doux amovible) : modèle à pas de temps, i continue. |
+| contenu/ressources/laboratoires/commun/gbf_temps.js | GBF dont la tension suit l'horloge du circuit (sinus, carré, triangle), pour l'interface d'acquisition. |
+| contenu/ressources/laboratoires/sources/b2_elec2_a1_bobine/ | Bobine en continu (ohmmètre) et en variable (deux lampes, retards) (poste_bobine.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec2_a2_inductance/ | Tension triangulaire, uL = L·di/dt, mesure de L avec et sans noyau (poste_inductance.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec2_a3_echelon/ | Réponse RL à un échelon, τ = L/(R + r), rupture, équation, énergie (poste_echelon_rl.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

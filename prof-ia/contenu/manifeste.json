@@ -4127,6 +4127,104 @@
         "L'énergie stockée est proportionnelle à la tension.",
         "La décharge d'un condensateur est instantanée."
       ]
+    },
+    {
+      "id": "b2_elec2_a1_bobine",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec2_a1_bobine.html",
+      "description": "Une paillasse. Générateur 6 V, interrupteur K, deux lampes identiques 6 V – 0,1 A, bobine de 1 000 spires (r = 10 Ω ; 50 mH, 0,5 H avec son noyau de fer doux), résistance R = 10 Ω, multimètre. Ohmmètre : résistance de la bobine ; deux branches en dérivation (L₁ avec la bobine, L₂ avec R) : à la fermeture, L₁ s'allume en retard ; à l'ouverture, elle s'éteint progressivement ; retard plus court sans le noyau. Temps ralenti 100 fois.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec2_dipole_rl",
+      "activite": "Bobine en courant continu et variable.",
+      "objectifs": [
+        "O1",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "La bobine en courant continu",
+          "ce_que_fait_l_eleve": "Mesure la résistance de la bobine à l'ohmmètre et explique son comportement en courant continu.",
+          "conclusion": "Une bobine est un fil enroulé : elle a une résistance r (ici 10 Ω) et une inductance L. En convention récepteur, u = r·i + L·di/dt. En courant continu (régime permanent), di/dt = 0 : u = r·i, la bobine se comporte comme un conducteur ohmique de résistance r."
+        },
+        {
+          "titre": "La bobine en courant variable",
+          "ce_que_fait_l_eleve": "Câble deux branches, ferme et ouvre K avec et sans noyau, et compare l'allumage et l'extinction des deux lampes.",
+          "conclusion": "À la fermeture, L₂ (avec R) s'allume aussitôt, L₁ (avec la bobine) en retard : la bobine retarde l'établissement du courant. À l'ouverture, L₁ ne s'éteint pas aussitôt : la bobine retarde la rupture du courant. L'intensité qui traverse une bobine est une fonction continue du temps. Le retard est plus grand quand l'inductance L est grande (noyau de fer doux)."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "Une bobine est un simple fil : elle n'a aucun effet sur le courant.",
+        "Le courant s'établit instantanément dans tout le circuit.",
+        "Une bobine s'oppose au courant même quand il est constant."
+      ]
+    },
+    {
+      "id": "b2_elec2_a2_inductance",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec2_a2_inductance.html",
+      "description": "Une paillasse. GBF (tension triangulaire, 50 Hz à 2 kHz), bobine (r = 10 Ω ; 50 mH, 0,5 H avec son noyau), boîte de résistances (100 Ω à 2,2 kΩ), interface d'acquisition et ordinateur (voie EA0 : uL ; EA1 : −uR, à inverser). Le courant triangulaire donne une tension créneau aux bornes de la bobine : uL = L·di/dt ; mesure de L avec et sans noyau ; unité henry et équation aux dimensions. Temps ralenti 40 fois.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec2_dipole_rl",
+      "activite": "Inductance par une tension triangulaire.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Bobine et tension triangulaire",
+          "ce_que_fait_l_eleve": "Câble le montage, enregistre uL et uR avec une tension triangulaire, mesure di/dt et uL, calcule L avec et sans noyau de fer doux et retrouve 1 H = 1 V·s/A.",
+          "conclusion": "Avec une tension triangulaire, i (donc uR) varie à vitesse constante sur chaque montée et chaque descente ; la tension aux bornes de la bobine est alors constante (créneaux) : elle est proportionnelle à di/dt. En convention récepteur, u = r·i + L·di/dt ; quand i = 0, u = L·di/dt. On en déduit L = u / (di/dt) = 50 mH. Le henry (H) vaut 1 V·s/A. Avec le noyau de fer doux, L est environ dix fois plus grande : 0,5 H."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "La tension aux bornes d'une bobine a la même forme que le courant.",
+        "L'inductance dépend du courant qui traverse la bobine.",
+        "Le henry est une unité indépendante des autres."
+      ]
+    },
+    {
+      "id": "b2_elec2_a3_echelon",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec2_a3_echelon.html",
+      "description": "Une paillasse. Générateur réglable (6 V), commutateur K, bobine (r = 10 Ω ; 50 mH, 0,5 H avec son noyau), boîte de résistances (10 à 220 Ω), interface d'acquisition et ordinateur. Établissement et rupture du courant dans un dipôle RL : i continue, régime permanent I₀ = E / (R + r), τ = L / (R + r) mesurée à 63 % ; tableur et courbe pour plusieurs R et L ; équation différentielle, solution, énergie ½·L·i². Temps ralenti 40 fois.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec2_dipole_rl",
+      "activite": "Réponse RL à un échelon ; mesure de τ.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Établissement du courant",
+          "ce_que_fait_l_eleve": "Câble le montage, enregistre l'établissement du courant, lit I₀ et τ et compare à L/(R + r).",
+          "conclusion": "Quand on ferme le circuit, l'intensité ne passe pas brusquement de 0 à sa valeur finale : la bobine retarde l'établissement du courant ; i est continue. En régime permanent, di/dt = 0 et la bobine se comporte comme sa résistance r : I₀ = E / (R + r) ≈ 54 mA. La constante de temps vaut τ = L / (R + r) ≈ 4,5 ms. La tension aux bornes de la bobine saute à E à la fermeture, puis diminue jusqu'à r·I₀."
+        },
+        {
+          "titre": "Influence de R et de L",
+          "ce_que_fait_l_eleve": "Mesure τ pour quatre couples (R, L) et trace τ = f(L/(R + r)).",
+          "conclusion": "τ augmente avec L et diminue quand R augmente : τ = L / R_totale. L'équation aux dimensions [L]/[R] = (V·s/A)/(V/A) = s confirme que τ est un temps."
+        },
+        {
+          "titre": "Rupture, équation, énergie",
+          "ce_que_fait_l_eleve": "Enregistre la rupture du courant, établit l'équation différentielle et sa solution, calcule l'énergie stockée.",
+          "conclusion": "À l'ouverture (K en 2), le courant ne s'annule pas brusquement : la bobine retarde la rupture du courant ; i = I₀·e^(−t/τ). À l'établissement, (R + r)·i + L·di/dt = E, soit i + (L/R_t)·di/dt = E/R_t, de solution i = (E/R_t)·(1 − e^(−t/τ)) avec τ = L/R_t. Parcourue par I₀, la bobine stocke l'énergie ½·L·I₀² ≈ 0,74 mJ, rendue au circuit pendant la rupture (dissipée par effet Joule dans les résistances)."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Le courant s'annule aussitôt quand on ouvre le circuit.",
+        "τ ne dépend que de L.",
+        "La bobine produit de l'énergie."
+      ]
     }
   ]
 }

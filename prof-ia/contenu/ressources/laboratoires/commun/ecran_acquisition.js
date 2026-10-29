@@ -1,11 +1,12 @@
 /*
-Rôle : ordinateur portable et logiciel d'acquisition : barre de touches (Durée, Lancer, Effacer, Tangente), graphique des
-       tensions enregistrées (EA0 en rouge, EA1 en orange ; les deux acquisitions précédentes restent en clair, pour
+Rôle : ordinateur portable et logiciel d'acquisition : barre de touches (Durée, Lancer, Effacer, Tangente, Voie 2 : EA1,
+       −EA1 ou EA1 − EA0), graphique des tensions enregistrées (EA0 en rouge, voie 2 en orange ; temps en ms pour les durées
+       courtes ; les deux acquisitions précédentes restent en clair, pour
        comparer), curseur vertical que l'on fait glisser et qui affiche t et les tensions, tangente à l'origine de la
        dernière courbe EA0 jusqu'à son asymptote.
-Reçoit : le groupe SVG, { x, y } (coin de l'écran) et les actions { duree(), lancer(), effacer(), tangente(), curseur(t) }.
+Reçoit : le groupe SVG, { x, y } (coin de l'écran) et les actions { duree(), lancer(), effacer(), tangente(), voie2(), curseur(t) }.
 Produit : Labo.ecran_acquisition(g, coin, actions) -> tracer(s) ; s = { duree, etat, courbes [{ pts [[t, u0, u1]] }],
-          curseur (s), tangente }.
+          curseur (s), tangente, voie2 (« EA1 », « −EA1 », « EA1 − EA0 ») } ; Labo.voie2(p, mode) (tension de la voie 2).
 Utilisé par : interface_acquisition.js.
 */
 (function (L) {
@@ -22,8 +23,8 @@ Utilisé par : interface_acquisition.js.
 
   function touches(g, x, y, a) {
     // Touches du logiciel (petits boutons gris).
-    [["Durée", a.duree], ["Lancer", a.lancer], ["Effacer", a.effacer], ["Tangente", a.tangente]].forEach(([t, f], k) => {
-      const b = L.svg("g", { class: `logiciel-${t.toLowerCase()}`, role: "button", "aria-label": t }, g);
+    [["Durée", a.duree], ["Lancer", a.lancer], ["Effacer", a.effacer], ["Tangente", a.tangente], ["Voie 2", a.voie2]].forEach(([t, f], k) => {
+      const b = L.svg("g", { class: `logiciel-${t.toLowerCase().replace(" ", "")}`, role: "button", "aria-label": t }, g);
       L.svg("rect", { x: x + 16 + k * 62, y: y + 14, width: 56, height: 17, rx: 3, fill: "#e4e8ec", stroke: "#8a96a0" }, b);
       L.texte(b, x + 44 + k * 62, y + 26, t, { "font-size": 8, "font-weight": 700, fill: "#23315a" });
       L.glissable(b, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: f });
@@ -36,12 +37,16 @@ Utilisé par : interface_acquisition.js.
     return { tmax: s.duree, umax: Math.max(1, Math.ceil(Math.max(0, ...u))), umin: Math.min(0, Math.floor(Math.min(0, ...u))) };
   }
 
+  L.voie2 = (p, mode) => (mode === "−EA1" ? -p[2] : mode === "EA1 − EA0" ? p[2] - p[1] : p[2]);
+  const unite = (d) => (d < 0.5 ? { k: 1000, nom: "ms" } : { k: 1, nom: "s" });
+
   function axes(g, x0, y0, e) {
-    // Quadrillage, graduations, titres des axes.
-    for (let k = 0; k <= 10; k++) { const X = x0 + (k * P.l) / 10; L.svg("line", { x1: X, y1: y0, x2: X, y2: y0 + P.h, stroke: "#e2e2dc", "stroke-width": 0.6 }, g); if (k % 2 === 0) L.texte(g, X, y0 + P.h + 11, fmt((k * e.tmax) / 10, e.tmax < 2 ? 2 : 1), { "font-size": 6.5, fill: "#333" }); }
+    // Quadrillage, graduations (temps en ms pour les durées courtes), titres des axes.
+    const u = unite(e.tmax);
+    for (let k = 0; k <= 10; k++) { const X = x0 + (k * P.l) / 10; L.svg("line", { x1: X, y1: y0, x2: X, y2: y0 + P.h, stroke: "#e2e2dc", "stroke-width": 0.6 }, g); if (k % 2 === 0) L.texte(g, X, y0 + P.h + 11, fmt((k * e.tmax * u.k) / 10, e.tmax * u.k < 2 ? 2 : 1), { "font-size": 6.5, fill: "#333" }); }
     const pasu = Math.max(1, Math.ceil((e.umax - e.umin) / 6));
     for (let u = e.umin; u <= e.umax + 1e-9; u += pasu) { const Y = y0 + P.h - ((u - e.umin) / (e.umax - e.umin)) * P.h; L.svg("line", { x1: x0, y1: Y, x2: x0 + P.l, y2: Y, stroke: u === 0 ? "#999" : "#e2e2dc", "stroke-width": 0.6 }, g); L.texte(g, x0 - 6, Y + 2.5, String(u).replace("-", "−"), { "font-size": 6.5, fill: "#333", "text-anchor": "end" }); }
-    L.texte(g, x0 + P.l, y0 + P.h + 22, "t (s)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "end" });
+    L.texte(g, x0 + P.l, y0 + P.h + 22, `t (${u.nom})`, { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "end" });
     L.texte(g, x0 - 6, y0 - 6, "u (V)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "start" });
   }
 
@@ -66,14 +71,15 @@ Utilisé par : interface_acquisition.js.
     const poignee = L.svg("rect", { x: x0, y: y0, width: P.l, height: P.h, fill: "#000", opacity: 0, class: "curseur-acquisition", role: "slider", "aria-label": "Curseur" }, g);
     let s0 = null;
     L.glissable(poignee, { soulever: false, debut: () => ({ x: x0 + ((s0?.curseur ?? 0) / (s0?.duree || 1)) * P.l, y: 0 }), deplacer: (p) => a.curseur(Math.max(0, Math.min(1, (p.x - x0) / P.l)) * (s0?.duree || 1)) });
-    return (s) => {
+    return (s0_) => {
+      const s = { ...s0_, courbes: s0_.courbes.map((c) => ({ pts: c.pts.map((p) => [p[0], p[1], L.voie2(p, s0_.voie2)]) })) }, u = unite(s.duree);
       s0 = s; gg.replaceChildren();
       const e = echelles(s), X = (t) => x0 + (t / e.tmax) * P.l, Y = (u) => y0 + P.h - ((u - e.umin) / (e.umax - e.umin)) * P.h;
       axes(gg, x0, y0, e); courbes(gg, s, X, Y);
       const d = s.courbes[s.courbes.length - 1], p = d && d.pts.length ? d.pts.reduce((m, q) => (Math.abs(q[0] - s.curseur) < Math.abs(m[0] - s.curseur) ? q : m)) : null;
       L.svg("line", { x1: X(s.curseur), y1: y0, x2: X(s.curseur), y2: y0 + P.h, stroke: "#2e7d32", "stroke-width": 1 }, gg);
-      L.texte(gg, x + 300, y + 26, `durée : ${fmt(s.duree, s.duree < 1 ? 1 : 0)} s · ${s.etat}`, { "font-size": 7.5, fill: "#23315a", "text-anchor": "start" });
-      L.texte(gg, x + 220, y + 246, p ? `curseur : t = ${fmt(p[0], 3)} s ; EA0 = ${fmt(p[1])} V ; EA1 = ${fmt(p[2])} V` : "curseur : pas de mesure", { "font-size": 8.5, "font-weight": 700, fill: "#2e7d32" });
+      L.texte(gg, x + 338, y + 26, `${fmt(s.duree * u.k, s.duree * u.k < 1 ? 1 : 0)} ${u.nom} · ${s.etat}`, { "font-size": 7.5, fill: "#23315a", "text-anchor": "start" });
+      L.texte(gg, x + 220, y + 246, p ? `curseur : t = ${fmt(p[0] * u.k, 3)} ${u.nom} ; EA0 = ${fmt(p[1])} V ; ${s.voie2} = ${fmt(p[2])} V` : "curseur : pas de mesure", { "font-size": 8.5, "font-weight": 700, fill: "#2e7d32" });
       return p;
     };
   };
