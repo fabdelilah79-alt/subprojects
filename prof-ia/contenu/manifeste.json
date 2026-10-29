@@ -4662,6 +4662,71 @@
         "La vitesse horizontale diminue pendant le vol.",
         "La portée augmente toujours avec l'angle de tir."
       ]
+    },
+    {
+      "id": "b2_meca3_a1_angulaire",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca3_a1_angulaire.html",
+      "description": "Une paillasse. Disque d'aluminium (R = 10 cm, J = 2,0 × 10⁻³ kg·m²) tournant autour d'un axe horizontal, entraîné par une masse de 200 g (fil enroulé sur un tambour de 2 cm) ; boîtier de commande du frein (lâcher, freiner, remonter) qui déclenche la caméra ; logiciel de pointage en mode polaire (abscisse angulaire θ). θ̇ et θ̈ par encadrement : θ̈ = 18,9 rad/s² constante ; équations horaires ; aT = 1,51 m/s² et aN = 1,14 m/s² à 0,20 s pour M (OM = 8 cm) ; fil décroché : rotation uniforme (27,5 rad/s) ; patin : θ̈ = −10 rad/s².",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca3_rotation",
+      "activite": "Enregistrements : abscisse et accélération angulaires par encadrement.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Rotation entraînée par la masse",
+          "ce_que_fait_l_eleve": "Lâche le disque, pointe le repère M en mode polaire, calcule θ̇ et θ̈ par encadrement, trace θ̇(t), mesure θ̈, écrit les équations horaires et calcule aT et aN.",
+          "conclusion": "Un point M d'un solide en rotation autour d'un axe fixe est repéré par son abscisse angulaire θ (rad). Par analogie avec la translation, la vitesse angulaire est θ̇ = dθ/dt (rad/s) et l'accélération angulaire θ̈ = d²θ/dt² (rad/s²) ; on les calcule par encadrement. Entraîné par la masse, le disque a une accélération angulaire constante : la rotation est uniformément variée, θ̇ = θ̈·t + θ̇0 et θ = ½·θ̈·t² + θ̇0·t + θ0. Le point M a une accélération tangentielle aT = R·θ̈ et une accélération normale aN = R·θ̇²."
+        },
+        {
+          "titre": "Rotation uniforme, rotation freinée",
+          "ce_que_fait_l_eleve": "Filme le disque quand le fil s'est décroché puis pendant le freinage, trace θ̇(t) et reconnaît une rotation uniforme et une rotation uniformément retardée.",
+          "conclusion": "Le type de rotation se lit sur θ̈ : si θ̈ = 0, θ̇ est constante et la rotation est uniforme (θ = θ̇·t + θ0) ; si θ̈ est constante et non nulle, la rotation est uniformément variée, accélérée si θ̇·θ̈ > 0, retardée si θ̇·θ̈ < 0."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La vitesse angulaire est la même chose que l'accélération angulaire.",
+        "Un solide qui n'est plus entraîné s'arrête aussitôt.",
+        "L'accélération d'un point d'un solide en rotation est toujours tangente à sa trajectoire."
+      ]
+    },
+    {
+      "id": "b2_meca3_a2_relation",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca3_a2_relation.html",
+      "description": "Une paillasse. Tige d'aluminium (48 cm, J_tige = 2,4 × 10⁻³ kg·m²) portant deux masselottes de 150 g (d = 5, 10, 15 ou 20 cm), axe horizontal, tambour r = 2,5 cm ; porte-masse et disques fendus de 50 g ; cellule à 50 cm et chronomètre qui démarre au lâcher. θ̈ = 2h/(r·t²), T = m·(g − r·θ̈), ΣM = T·r : ΣM = f(θ̈) est une droite de pente J = 5,4 × 10⁻³ kg·m² (d = 10 cm) ; J = J_tige + 2·m'·d² (1,44 × 10⁻² kg·m² à 20 cm).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca3_rotation",
+      "activite": "Vérification expérimentale de la relation fondamentale ; rôle du moment d'inertie.",
+      "objectifs": [
+        "O3",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Moments et accélération angulaire",
+          "ce_que_fait_l_eleve": "Mesure la durée de chute pour cinq masses (masselottes à 10 cm), calcule θ̈ et ΣM au tableur, trace ΣM = f(θ̈) et en déduit JΔ.",
+          "conclusion": "Pour un solide en rotation autour d'un axe fixe Δ, la somme des moments des forces est proportionnelle à l'accélération angulaire : ΣMΔ = JΔ·θ̈ (relation fondamentale de la dynamique en rotation). Le coefficient JΔ est le moment d'inertie du solide par rapport à l'axe (kg·m²). Pour le système, on applique la deuxième loi de Newton à la masse (translation : m·a = m·g − T) et la relation fondamentale au solide (rotation : T·r = JΔ·θ̈), avec a = r·θ̈."
+        },
+        {
+          "titre": "Rôle du moment d'inertie",
+          "ce_que_fait_l_eleve": "Déplace les masselottes (5 à 20 cm) avec 100 g, calcule J = ΣM/θ̈ et le compare à J_tige + 2·m'·d².",
+          "conclusion": "Pour la même masse motrice, l'accélération angulaire diminue quand on éloigne les masselottes de l'axe : le moment d'inertie JΔ augmente. JΔ mesure l'inertie du solide en rotation ; il dépend de sa masse et de la répartition de cette masse autour de l'axe : pour des masses ponctuelles, J = Σ m·r², d'où J = J_tige + 2·m'·d²."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La tension du fil est égale au poids de la masse suspendue.",
+        "Le moment d'inertie ne dépend que de la masse du solide.",
+        "Une force plus grande donne une vitesse angulaire plus grande, pas une accélération angulaire plus grande."
+      ]
     }
   ]
 }

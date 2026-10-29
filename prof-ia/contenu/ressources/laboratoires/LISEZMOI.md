@@ -654,3 +654,15 @@ du chapitre du cours choisi dans `config/application.json`. Un test vérifie que
 Quand elle est ouverte dans le cadre des médias, la simulation envoie (postMessage) :
 `laboratoire_ouvert`, `etape_reussie`, `reponse` (avec juste / faux), `mission_terminee` (avec la durée),
 `laboratoire_termine`. Ces messages ne sont pas encore enregistrés par le journal de recherche.
+
+## Chapitre 2e année du bac « Relation entre la somme des moments et l'accélération angulaire » (fiche 2bac/meca3_rotation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca3_a1_angulaire.html | A1 : abscisse et accélération angulaires par encadrement | O1, O2, O4 | Disque (J = 2,0 × 10⁻³ kg·m²) entraîné par une masse de 200 g, filmé à 25 images/s ; logiciel de pointage en mode polaire (θ du repère M) ; θ̇ et θ̈ par encadrement au tableur, θ̇(t) droite de pente 18,9 rad/s² ; équations horaires ; aT = OM·θ̈ et aN = OM·θ̇² ; fil décroché : rotation uniforme (27,5 rad/s) ; patin : θ̈ = −10 rad/s² (uniformément retardée). |
+| b2_meca3_a2_relation.html | A2 : vérification de la relation fondamentale, rôle du moment d'inertie | O3, O5 | Tige à masselottes (d = 5 à 20 cm), tambour r = 2,5 cm, porte-masse et disques de 50 g, cellule à 50 cm et chronomètre : θ̈ = 2h/(r·t²), T = m·(g − r·θ̈), ΣM = T·r ; ΣM = f(θ̈) droite de pente J = 5,4 × 10⁻³ kg·m² ; J = J_tige + 2·m'·d² (1,44 × 10⁻² kg·m² à 20 cm). |
+
+Comme le demandent les orientations, on rappelle l'encadrement de 1re année (θ̇i = (θi+1 − θi−1)/(2Δt)) et l'analogie avec la
+translation (θ̇ = dθ/dt, θ̈ = d²θ/dt²) ; les moments d'inertie sont donnés pour des formes simples (tige, masses ponctuelles) ;
+les types de rotation se lisent sur θ̈ (nulle ou constante). Le logiciel de pointage (pointage_video.js) a reçu une option
+« polaire » : l'origine placée sur l'axe, il donne l'abscisse angulaire θ = (Ox, OM) au lieu de x et y.

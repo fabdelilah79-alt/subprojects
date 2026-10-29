@@ -2838,18 +2838,32 @@ Rôle : ordinateur portable et logiciel de pointage vidéo (comme Aviméca) : la
        image par image (◀ ▶), on étalonne l'échelle en cliquant les deux repères de l'étalon filmé (règle de longueur
        connue), on place l'origine, puis on pointe l'objet sur chaque image (le logiciel passe seul à l'image suivante).
        Les coordonnées viennent des clics de l'élève : x vers la droite, y vers le haut, en mètres. « Exporter » copie
-       t, x, y dans le tableur de la tablette (colonnes A, B, C).
-Reçoit : le groupe SVG et { nom (fait), x, y (coin du portable) } ; puis, à chaque vidéo filmée, charger(video) avec
+       t, x, y dans le tableur de la tablette (colonnes A, B, C). Option polaire (solide en rotation, origine sur l'axe) :
+       le logiciel donne l'abscisse angulaire θ = (Ox, OM) en radians, comptée dans le sens trigonométrique et sans saut
+       d'un tour à l'autre ; « Exporter » copie alors t et θ (colonnes A, B).
+Reçoit : le groupe SVG et { nom (fait), x, y (coin du portable), polaire (faux par défaut) } ; puis, à chaque vidéo filmée, charger(video) avec
          video = { id, fps, n (images), largeur_m, hauteur_m (champ filmé), dessiner(g, k, m) (fond et objet de
          l'image k ; m(xm, ym) -> point de l'écran), etalon { a, b (m), longueur_m }, objet(k) (position vraie, pour les tests) }.
 Produit : Labo.pointage_video(g, reglages) -> { charger(video), m(xm, ym), video } ; Labo.pointages[nom] (pour les tests) ;
-          fait « <nom> » = { video, echelle (px/m de l'élève), echelle_ok, origine, points [{ k, t, x, y }] }.
+          fait « <nom> » = { video, echelle (px/m de l'élève), echelle_ok, origine, origine_m ({ x, y } dans le champ filmé),
+          points [{ k, t, x, y (, theta) }] }.
 Utilisé par : les simulations du chapitre « Applications des lois de Newton ».
 */
 (function (L) {
   const V = { x: 16, y: 40, l: 262, h: 200 }, OUTILS = ["◀", "▶", "Échelle", "Origine", "Pointer", "Exporter"];
   const fr = (v, n = 3) => v.toFixed(n).replace(".", ",").replace("-", "−");
   L.pointages = {};
+
+  function angles(pts) {
+    // Abscisse angulaire de chaque point (images rangées dans l'ordre), sans saut de 2π d'une image à la suivante.
+    let avant = null;
+    for (const p of pts) {
+      let a = Math.atan2(p.y, p.x);
+      if (avant !== null) a += 2 * Math.PI * Math.round((avant - a) / (2 * Math.PI));
+      p.theta = avant = a;
+    }
+    return pts;
+  }
 
   function portable(g, x, y) {
     // Écran, charnière et clavier en perspective, posés sur la paillasse, avec leur ombre.
@@ -2876,16 +2890,17 @@ Utilisé par : les simulations du chapitre « Applications des lois de Newton »
   function tableau(s, g) {
     // Panneau de droite : mode, échelle, origine, tableau des points pointés (les dix derniers).
     g.replaceChildren();
-    const X = s.x + 288, lignes = [`Mode : ${s.mode || "—"}`, `Échelle : ${s.echelle ? `${fr(s.echelle, 1)} px/m` : "à faire"}`, `Origine : ${s.origine ? "placée" : "à placer"}`, "k    t (s)    x (m)    y (m)"];
-    const pts = Object.values(s.points).sort((a, b) => a.k - b.k);
-    pts.slice(-10).forEach((p) => lignes.push(`${String(p.k).padEnd(3)} ${fr(p.t)}  ${fr(p.x)}  ${fr(p.y)}`));
+    const X = s.x + 288, lignes = [`Mode : ${s.mode || "—"}`, `Échelle : ${s.echelle ? `${fr(s.echelle, 1)} px/m` : "à faire"}`, `Origine : ${s.origine ? "placée" : "à placer"}`, s.polaire ? "k    t (s)    θ (rad)" : "k    t (s)    x (m)    y (m)"];
+    const pts = angles(Object.values(s.points).sort((a, b) => a.k - b.k));
+    pts.slice(-10).forEach((p) => lignes.push(`${String(p.k).padEnd(3)} ${fr(p.t)}  ${s.polaire ? fr(p.theta) : `${fr(p.x)}  ${fr(p.y)}`}`));
     lignes.forEach((t, i) => L.texte(g, X, s.y + 48 + i * 11, t, { "font-size": i < 3 ? 7 : 6.5, fill: i === 3 ? "#23315a" : "#333", "text-anchor": "start", "font-family": i > 2 ? "monospace" : "inherit", "font-weight": i === 3 ? 700 : 400 }));
   }
 
   function noter(s) {
     // Fait du pointage (coordonnées arrondies au millimètre).
-    const pts = Object.values(s.points).sort((a, b) => a.k - b.k).map(({ k, t, x, y }) => ({ k, t, x: Math.round(x * 1000) / 1000, y: Math.round(y * 1000) / 1000 }));
-    L.missions.noter(s.nom, { video: s.video ? s.video.id : null, echelle: s.echelle, echelle_ok: !!s.echelle && Math.abs(s.echelle / s.k_ecran - 1) < 0.03, origine: !!s.origine, points: pts });
+    const r = (v) => Math.round(v * 1000) / 1000, o = s.origine && s.video ? s.vers_m(s.origine) : null;
+    const pts = angles(Object.values(s.points).sort((a, b) => a.k - b.k)).map(({ k, t, x, y, theta }) => ({ k, t, x: r(x), y: r(y), ...(s.polaire ? { theta: r(theta) } : {}) }));
+    L.missions.noter(s.nom, { video: s.video ? s.video.id : null, echelle: s.echelle, echelle_ok: !!s.echelle && Math.abs(s.echelle / s.k_ecran - 1) < 0.03, origine: !!s.origine, origine_m: o && { x: r(o.x), y: r(o.y) }, points: pts });
   }
 
   function cliquer(s, p) {
@@ -2900,19 +2915,21 @@ Utilisé par : les simulations du chapitre « Applications des lois de Newton »
   }
 
   function exporter(s) {
-    // Copie t, x, y des points (onze au plus) dans les colonnes A, B, C du tableur de la mission affichée.
-    const f = L.tablette.feuille(), pts = Object.values(s.points).sort((a, b) => a.k - b.k).slice(0, 11), v = (x) => String(Math.round(x * 1000) / 1000).replace(".", ",");
-    Object.assign(f.brut, { A1: "t (s)", B1: "x (m)", C1: "y (m)" });
-    pts.forEach((p, i) => Object.assign(f.brut, { [`A${i + 2}`]: v(p.t), [`B${i + 2}`]: v(p.x), [`C${i + 2}`]: v(p.y) }));
+    // Copie t, x, y (ou t, θ) des points (onze au plus) dans le tableur de la mission affichée, après avoir vidé A à C.
+    const f = L.tablette.feuille(), pts = angles(Object.values(s.points).sort((a, b) => a.k - b.k)).slice(0, 11), v = (x) => String(Math.round(x * 1000) / 1000).replace(".", ",");
+    for (let n = 2; n <= 12; n++) for (const c of "ABC") delete f.brut[`${c}${n}`];
+    Object.assign(f.brut, s.polaire ? { A1: "t (s)", B1: "θ (rad)" } : { A1: "t (s)", B1: "x (m)", C1: "y (m)" });
+    pts.forEach((p, i) => Object.assign(f.brut, { [`A${i + 2}`]: v(p.t), [`B${i + 2}`]: v(s.polaire ? p.theta : p.x) }, s.polaire ? {} : { [`C${i + 2}`]: v(p.y) }));
     f.afficher(); L.annoncer("tableur", { feuille: f });
   }
 
-  L.pointage_video = function (g, { nom = "pointage", x, y }) {
+  L.pointage_video = function (g, { nom = "pointage", x, y, polaire = false }) {
     // Portable, logiciel (touches, vidéo, tableau) ; renvoie de quoi charger chaque nouvelle vidéo.
-    const s = { nom, x, y, video: null, k: 0, mode: null, echelle: null, origine: null, points: {}, clics: [], k_ecran: 1 };
+    const s = { nom, x, y, polaire, video: null, k: 0, mode: null, echelle: null, origine: null, points: {}, clics: [], k_ecran: 1 };
     portable(g, x, y);
     const cadre = L.svg("g", {}, g), panneau = L.svg("g", {}, g), maj = () => { image(s, cadre); tableau(s, panneau); noter(s); };
     s.m = (xm, ym) => ({ x: s.x + V.x + (V.l - s.video.largeur_m * s.k_ecran) / 2 + xm * s.k_ecran, y: s.y + V.y + V.h - (V.h - s.video.hauteur_m * s.k_ecran) / 2 - ym * s.k_ecran });
+    s.vers_m = (p) => ({ x: (p.x - s.m(0, 0).x) / s.k_ecran, y: (s.m(0, 0).y - p.y) / s.k_ecran });
     OUTILS.forEach((t, i) => {
       const b = L.svg("g", { role: "button", "aria-label": t, class: `pointage-${i}` }, g);
       L.svg("rect", { x: x + 16 + i * 68, y: y + 16, width: 62, height: 17, rx: 3, fill: "#e4e8ec", stroke: "#8a96a0" }, b);

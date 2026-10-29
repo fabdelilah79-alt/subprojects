@@ -9,6 +9,8 @@ ELEC = [s for s in re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + 'sourc
 RC = ['circuit_temps.js', 'condensateur.js', 'commutateur.js', 'boite_resistances.js', 'source_courant.js', 'ecran_acquisition.js', 'interface_acquisition.js', 'documents_mur.js', 'lewis_dessin.js', 'gbf.js', 'gbf_temps.js', 'bobine.js', 'entretien_rlc.js', 'poste_rlc.js', 'circuit_sinus.js', 'oscilloscope_ecran.js', 'oscilloscope.js', 'poste_rlc_force.js', 'modulation.js']
 MECA = [x for x in re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + 'sources/tc_meca4_a1_quantite/page.html').read())] + ['../../commun/documents_mur.js', '../../commun/tri.js']
 SIMS = {
+ 'b2_meca3_a1_angulaire': ("Laboratoire : abscisse et accélération angulaires", "simulation de l'activité 1 du chapitre « Relation entre la somme des moments et l'accélération angulaire » (2e année du bac) : disque entraîné par une masse, filmé et pointé en mode polaire ; θ, θ̇ et θ̈ par encadrement, rotation uniformément variée, aT et aN, rotations uniforme et freinée."),
+ 'b2_meca3_a2_relation': ("Laboratoire : moments et accélération angulaire", "simulation de l'activité 2 du chapitre « Relation entre la somme des moments et l'accélération angulaire » (2e année du bac) : tige à masselottes entraînée par une masse, chronomètre à cellule ; vérification de ΣM = JΔ·θ̈, système en translation et en rotation, rôle du moment d'inertie."),
  'b2_meca2_a1_chute': ("Laboratoire : la chute libre", "simulation de l'activité 1 du chapitre « Applications des lois de Newton » (2e année du bac) : bille en chute libre filmée, pointage vidéo, vy(t), accélération g, équation différentielle, rôle de la masse."),
  'b2_meca2_a2_plans': ("Laboratoire : solide sur un plan", "simulation de l'activité 2 du chapitre « Applications des lois de Newton » (2e année du bac) : pavé glissant sur un plan horizontal ou incliné, avec ou sans frottement, filmé et pointé ; deuxième loi de Newton."),
  'b2_meca2_a3_projectiles': ("Laboratoire : mouvement d'un projectile", "simulation de l'activité 3 du chapitre « Applications des lois de Newton » (2e année du bac) : projectiles de masses différentes lancés par un lanceur à ressort, filmés et pointés ; équations horaires, trajectoire, flèche et portée."),
@@ -59,7 +61,7 @@ for sid, (titre, role) in SIMS.items():
     tri = ['../../commun/tri.js'] if sid == 'b2_elec5_a1_histoire' else []
     scripts = base + ['../../commun/' + f for f in plus + extra if '../../commun/' + f not in base] + locaux
     if sid.startswith('b2_elec'): scripts = ELEC + ['../../commun/' + f for f in RC] + tri + locaux
-    if sid.startswith('b2_meca'): scripts = MECA + (['../../commun/pointage_video.js'] if sid.startswith('b2_meca2') else []) + locaux
+    if sid.startswith('b2_meca'): scripts = MECA + (['../../commun/pointage_video.js'] if sid.startswith(('b2_meca2', 'b2_meca3_a1')) else []) + (['../../commun/circuit_decor.js'] if sid.startswith('b2_meca3') else []) + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux
     html = f'''<!doctype html>
 <!--

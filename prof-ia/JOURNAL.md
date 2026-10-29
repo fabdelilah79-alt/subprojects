@@ -1157,3 +1157,23 @@ Problèmes restants, à faire par l'enseignant :
 - La balle de bois et la bille de verre sont choisies denses pour que l'action de l'air reste négligeable ; il n'y a pas
   d'objet léger (balle de ping-pong) pour montrer une chute non libre.
 
+
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Relation entre la somme des moments et l'accélération angulaire »
+
+Fait (en suivant la compétence « laboratoire-realiste ») :
+- Deux simulations, inscrites au manifeste (143 ressources) : A1 disque entraîné par une masse, filmé et pointé en mode
+  polaire (θ, θ̇ et θ̈ par encadrement, rotation uniformément variée, équations horaires, aT et aN ; rotation uniforme
+  quand le fil se décroche, uniformément retardée au freinage) ; A2 tige à masselottes, masse motrice, cellule et
+  chronomètre (système en translation et en rotation, ΣM = JΔ·θ̈, J = J_tige + 2·m'·d²). Objectifs O1 à O5.
+- Fichier commun modifié (signalé) : pointage_video.js reçoit une option « polaire », désactivée par défaut (θ = (Ox, OM)
+  en radians, sans saut d'un tour) ; « Exporter » vide d'abord les colonnes A à C (plus de lignes d'un ancien pointage).
+  Régression : les trois simulations « Applications des lois de Newton » rejouées.
+- Outil de test nouveau : outils_pointage.js (étalonnage, origine, pointage, export) dans la compétence.
+- Vérifié : parcours complets (sources et fichiers assemblés) ; mesures comparées à la théorie (θ̈ = 18,87 rad/s² pour
+  m·g·r/(J + m·r²) = 18,87 ; θ̇ libre 27,47 rad/s ; freinage −9,98 pour −10 ; J mesuré 5,40 × 10⁻³ kg·m² pour 5,40 × 10⁻³ ;
+  J(20 cm) = 1,440 × 10⁻² pour 1,44 × 10⁻²) ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Frottements de l'axe négligés : les mesures tombent juste sur la théorie (pas d'ordonnée à l'origine due au frottement).
+- Le chronomètre et la vidéo sont exacts au calcul près ; seule l'erreur de pointage de l'élève (A1) disperse les θ̈.
+- Les masselottes se déplacent toutes les deux ensemble (solide toujours équilibré) ; on ne peut pas les régler séparément.

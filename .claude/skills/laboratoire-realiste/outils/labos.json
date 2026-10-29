@@ -2694,5 +2694,46 @@
    "Tire la bille à 45°, pointe la vidéo, trace x(t) et vy(t), mesure v0x et g, écrit les équations horaires et l'équation de la trajectoire.",
    "Calcule la flèche et la portée, compare les tirs à 30° et 60°, puis tire la balle de bois."
   ]
+ },
+ {
+  "id": "b2_meca3_a1_angulaire",
+  "chapitre": "2bac/meca3_rotation",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O4"
+  ],
+  "duree_min": 55,
+  "description": "Une paillasse. Disque d'aluminium (R = 10 cm, J = 2,0 × 10⁻³ kg·m²) tournant autour d'un axe horizontal, entraîné par une masse de 200 g (fil enroulé sur un tambour de 2 cm) ; boîtier de commande du frein (lâcher, freiner, remonter) qui déclenche la caméra ; logiciel de pointage en mode polaire (abscisse angulaire θ). θ̇ et θ̈ par encadrement : θ̈ = 18,9 rad/s² constante ; équations horaires ; aT = 1,51 m/s² et aN = 1,14 m/s² à 0,20 s pour M (OM = 8 cm) ; fil décroché : rotation uniforme (27,5 rad/s) ; patin : θ̈ = −10 rad/s².",
+  "conceptions": [
+   "La vitesse angulaire est la même chose que l'accélération angulaire.",
+   "Un solide qui n'est plus entraîné s'arrête aussitôt.",
+   "L'accélération d'un point d'un solide en rotation est toujours tangente à sa trajectoire."
+  ],
+  "faire": [
+   "Lâche le disque, pointe le repère M en mode polaire, calcule θ̇ et θ̈ par encadrement, trace θ̇(t), mesure θ̈, écrit les équations horaires et calcule aT et aN.",
+   "Filme le disque quand le fil s'est décroché puis pendant le freinage, trace θ̇(t) et reconnaît une rotation uniforme et une rotation uniformément retardée."
+  ]
+ },
+ {
+  "id": "b2_meca3_a2_relation",
+  "chapitre": "2bac/meca3_rotation",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O5"
+  ],
+  "duree_min": 55,
+  "description": "Une paillasse. Tige d'aluminium (48 cm, J_tige = 2,4 × 10⁻³ kg·m²) portant deux masselottes de 150 g (d = 5, 10, 15 ou 20 cm), axe horizontal, tambour r = 2,5 cm ; porte-masse et disques fendus de 50 g ; cellule à 50 cm et chronomètre qui démarre au lâcher. θ̈ = 2h/(r·t²), T = m·(g − r·θ̈), ΣM = T·r : ΣM = f(θ̈) est une droite de pente J = 5,4 × 10⁻³ kg·m² (d = 10 cm) ; J = J_tige + 2·m'·d² (1,44 × 10⁻² kg·m² à 20 cm).",
+  "conceptions": [
+   "La tension du fil est égale au poids de la masse suspendue.",
+   "Le moment d'inertie ne dépend que de la masse du solide.",
+   "Une force plus grande donne une vitesse angulaire plus grande, pas une accélération angulaire plus grande."
+  ],
+  "faire": [
+   "Mesure la durée de chute pour cinq masses (masselottes à 10 cm), calcule θ̈ et ΣM au tableur, trace ΣM = f(θ̈) et en déduit JΔ.",
+   "Déplace les masselottes (5 à 20 cm) avec 100 g, calcule J = ΣM/θ̈ et le compare à J_tige + 2·m'·d²."
+  ]
  }
 ]

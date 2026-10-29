@@ -84,6 +84,11 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
   `objet(k)` (position vraie) pour pointer juste ; `L.pointages[nom]` donne l'écran du logiciel.
 - Un bouton dessiné par `L.bouton_poussoir` est large (≈ 120 px) : prévoir un boîtier assez grand pour que son titre
   ne soit pas caché.
+- `L.bouton_rond`, `L.boitier` et `L.cordon_secteur` sont dans `circuit_decor.js`, absent des pages de mécanique : `pages.py`
+  l'ajoute pour `b2_meca3*` (l'ajouter aussi pour un autre chapitre qui en a besoin).
+- Solide en rotation filmé : `L.pointage_video(g, { …, polaire: true })` donne θ = (Ox, OM) sans saut d'un tour (origine
+  sur l'axe) ; la vérification contrôle `origine_m` (position de l'origine dans le champ filmé).
+- Un fil clair (#e9e2cf) disparaît devant le mur carrelé : fil tendu en gris-brun (#7d735c).
 
 ## 7. Outils (dossier `outils/` de cette compétence)
 
@@ -91,7 +96,8 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
   Ajouter d'abord l'entrée `'<id>': (titre, rôle)` dans `SIMS` et, si besoin, la liste de scripts du domaine.
 - `node lancer.js sources/<id>/page.html ./scenario.js capture.png` (depuis `outils/`) : joue un scénario Playwright,
   affiche les erreurs. Aides : `outils_test.js` (attendre, glisser, etat, tableur, repondre, mission_suivante,
-  courbe_xy), `outils_circuit.js` (brancher, toucher, deplacer_fil, multimetre), `coussin_*.js` (table à coussin d'air).
+  courbe_xy), `outils_circuit.js` (brancher, toucher, deplacer_fil, multimetre), `coussin_*.js` (table à coussin d'air),
+  `outils_pointage.js` (pointer(page, images, { origine }) : étalonnage, origine, pointage d'après objet(k), export).
   Pour lire les faits : remplacer `Labo.missions.noter` pour copier dans `window.notes` (voir `exemple_scenario.js`).
 - `python3 -m outils.assembler_laboratoire <ids>` (dans `prof-ia/`) : fichier autonome `laboratoires/<id>.html`.
 - `ajouter.py labos.json` (le `labos.json` de ce dossier est la source à jour) : ajouter une entrée par simulation (id, chapitre, activite, objectifs,
