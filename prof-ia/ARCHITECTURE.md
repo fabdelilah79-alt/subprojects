@@ -523,6 +523,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_elec5_a1_histoire/ | Histoire de la transmission, bandes de fréquences, antennes (documents_transmission.js, poste_antennes.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec5_a2_modulation/ | Maquette de modulation-démodulation, deux GBF, oscilloscope (maquette_am.js, poste_modulation.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec5_a3_recepteur/ | Récepteur AM à monter librement, trois émetteurs, écouteur (pieces_recepteur.js, poste_recepteur.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca1_a1_vecteurs/ | Vecteurs vitesse et accélération : pente (montée, descente) et mouvement circulaire (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca1_a2_newton/ | ΣF = m·ΔvG/Δt (cales, surcharge), référentiels galiléens, troisième loi (poste_newton.js, documents_newton.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

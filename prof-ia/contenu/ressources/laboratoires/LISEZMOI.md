@@ -621,6 +621,16 @@ les calcule sur une période commune (modulation.js) d'après les fils posés, e
 Quand la porteuse varie trop vite pour les points de l'écran, la trace devient une bande pleine, comme sur un vrai écran.
 Le son de l'écouteur passe par l'interface audio du navigateur (aucune bibliothèque) ; sans elle, l'oscilloscope reste le témoin.
 
+## Chapitre 2e année du bac « Lois de Newton » (fiche 2bac/meca1_newton)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca1_a1_vecteurs.html | A1 : vecteurs vitesse et accélération à partir d'enregistrements | O1, O2, O3 | Paillasse 1 : table inclinée (sin α = 0,050), mobile lancé vers le haut : v₂, v₄, Δv opposé à v, v(t) au tableur, aG = 0,49 m/s², a·v < 0 à la montée, > 0 à la descente. Paillasse 2 : mouvement circulaire uniforme (fil) : v₄, v₆, Δv vers le centre O (marqué sur la feuille), R, v, aN = v²/R, repère de Frenet. |
+| b2_meca1_a2_newton.html | A2 : vérification de ΣF = m·ΔvG/Δt en faisant varier m, ΣF ou ΔvG/Δt | O4, O5, O6, O7 | Paillasse 1 : trois cales (sin α = 0,030 ; 0,050 ; 0,080) et une surcharge de 300 g : quatre essais au moins, tableur m, ΣF, ΔvG/Δt, m·ΔvG/Δt, courbe de coefficient directeur 1 ; rôle de la masse ; application. Paillasse 2 : référentiels galiléens (documents, tri), troisième loi. |
+
+La table à coussin d'air, l'éclateur, la feuille, la règle, les flèches et la surcharge sont ceux du tronc commun. Seule
+nouveauté locale : les cales (poste_newton.js), qui règlent la pente de la table pendant la séance.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

@@ -1115,3 +1115,18 @@ Problèmes restants, à faire par l'enseignant :
 - Le détecteur suppose une diode de seuil 0,2 V (diode au germanium) ; le filtre passe-haut est idéal (il retire la moyenne).
 - À l'activité 1, l'amplitude reçue suit une loi simple en 1/d (champ proche non modélisé).
 
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Lois de Newton »
+
+Fait :
+- Deux simulations, inscrites au manifeste (138 ressources) : A1 vecteurs vitesse et accélération (table inclinée : montée
+  et descente, v(t), aG, signe de a·v ; mouvement circulaire uniforme : accélération centripète, repère de Frenet) ;
+  A2 deuxième loi (quatre essais en faisant varier la masse et la pente, ΣF = m·ΔvG/Δt au tableur et à la courbe),
+  référentiels galiléens (documents, tri) et troisième loi. Objectifs O1 à O7.
+- Aucun fichier commun modifié : la table à coussin d'air et ses outils du tronc commun suffisent ; les cales sont locales.
+- Vérifié : parcours complets des deux simulations (sources et fichiers assemblés) ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Pas de fil tiré par une masse suspendue (poulie) : la force est variée par la pente, la masse par la surcharge.
+- Au bas de la pente, le mobile rebondit plusieurs fois sur la butée avant de s'arrêter : il faut attendre pour poser la surcharge.
+- Le vecteur accélération n'est pas tracé à la main : on le déduit de Δv (questions).
+

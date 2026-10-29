@@ -4500,6 +4500,73 @@
         "Le circuit d'accord démodule le signal.",
         "Pour changer de station, on change la diode."
       ]
+    },
+    {
+      "id": "b2_meca1_a1_vecteurs",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca1_a1_vecteurs.html",
+      "description": "Deux paillasses avec la table à coussin d'air, l'éclateur et la règle. 1 : table inclinée (sin α = 0,050), mobile lancé vers le haut : il ralentit, s'arrête et redescend ; vecteurs vitesse v₂ et v₄, Δv opposé à la vitesse, v(t) au tableur, aG = 0,49 m/s², signe de a·v (ralenti, accéléré), coordonnées cartésiennes de l'accélération. 2 : mobile retenu par un fil (mouvement circulaire uniforme) : vecteurs v₄ et v₆, Δv vers le centre O, R et v mesurés, aN = v²/R, repère de Frenet.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca1_newton",
+      "activite": "Vecteurs vitesse et accélération à partir d'enregistrements.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Vitesse et accélération sur une pente",
+          "ce_que_fait_l_eleve": "Enregistre une montée suivie d'une descente, trace v₂ et v₄, construit v(t) au tableur, mesure aG et relie le signe de a·v au caractère ralenti ou accéléré.",
+          "conclusion": "Le vecteur vitesse est tangent à la trajectoire, dans le sens du mouvement. Le vecteur accélération aG = dvG/dt s'exprime en m/s² ; ici, il est constant, parallèle à la pente et dirigé vers le bas : aG = g·sin α ≈ 0,49 m/s², à la montée comme à la descente. À la montée, aG et vG sont de sens contraires (aG·vG < 0) : le mouvement est ralenti ; à la descente, ils ont le même sens (aG·vG > 0) : le mouvement est accéléré. Dans un repère cartésien, ax = dvx/dt = d²x/dt²."
+        },
+        {
+          "titre": "Accélération d'un mouvement circulaire",
+          "ce_que_fait_l_eleve": "Enregistre un mouvement circulaire uniforme, trace v₄ et v₆, mesure R et v, calcule aN = v²/R et écrit aG dans le repère de Frenet.",
+          "conclusion": "Dans un mouvement circulaire uniforme, la valeur de la vitesse ne change pas mais sa direction tourne : Δv est dirigé vers le centre. Dans le repère de Frenet, aG = (dv/dt)·u + (v²/R)·n ; ici dv/dt = 0, donc aG = (v²/R)·n : l'accélération est centripète, de valeur v²/R."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Si la vitesse est constante en valeur, l'accélération est nulle.",
+        "L'accélération a toujours le sens du mouvement.",
+        "À l'arrêt, au sommet de la pente, l'accélération est nulle."
+      ]
+    },
+    {
+      "id": "b2_meca1_a2_newton",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca1_a2_newton.html",
+      "description": "Deux paillasses. 1 : table à coussin d'air à pente choisie par trois cales (sin α = 0,030 ; 0,050 ; 0,080), mobile de 600 g et surcharge de 300 g : ΔvG/Δt mesurée sur l'enregistrement pour quatre essais au moins ; tableur m, ΣF = m·g·sin α, ΔvG/Δt, m·ΔvG/Δt et courbe : ΣF = m·aG ; rôle de la masse, application, équation aux dimensions. 2 : quatre documents (référentiels galiléens, Copernic, référentiels non galiléens, troisième loi) et tri de huit référentiels ; questions sur les actions réciproques.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca1_newton",
+      "activite": "Vérification expérimentale de ΣF = m·ΔvG/Δt en variant m, ΣF ou ΔvG/Δt.",
+      "objectifs": [
+        "O4",
+        "O5",
+        "O6",
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Vérifier ΣF = m·ΔvG/Δt",
+          "ce_que_fait_l_eleve": "Choisit la pente et la masse, enregistre quatre descentes, mesure ΔvG/Δt, remplit le tableur et trace m·ΔvG/Δt en fonction de ΣF.",
+          "conclusion": "Dans un référentiel galiléen, la somme vectorielle des forces extérieures appliquées à un solide est égale au produit de sa masse par l'accélération de son centre d'inertie : ΣFext = m·aG (deuxième loi de Newton, ou théorème du centre d'inertie). Pour une même force, plus la masse est grande, plus l'accélération est petite : la masse mesure l'inertie du solide. Équation aux dimensions : 1 N = 1 kg·m/s²."
+        },
+        {
+          "titre": "Référentiels galiléens et troisième loi",
+          "ce_que_fait_l_eleve": "Lit les documents, range les référentiels (galiléen ou non) et applique la troisième loi.",
+          "conclusion": "Les lois de Newton s'appliquent dans un référentiel galiléen : le référentiel terrestre pour des expériences courtes, le référentiel géocentrique pour les satellites, le référentiel héliocentrique pour les planètes. Un référentiel accéléré par rapport à eux (bus qui freine, manège) n'est pas galiléen. Troisième loi : deux corps en interaction exercent l'un sur l'autre des forces opposées, de même droite d'action et de même intensité, qui s'appliquent à deux corps différents."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Un corps plus lourd tombe ou glisse plus vite.",
+        "La force et la vitesse ont toujours la même direction.",
+        "Le corps le plus massif exerce la force la plus grande dans une interaction."
+      ]
     }
   ]
 }
