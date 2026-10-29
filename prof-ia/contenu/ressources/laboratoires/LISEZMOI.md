@@ -558,6 +558,18 @@ Les masses de l'affiche sont des masses de noyaux (masse atomique moins Z masses
 les énergies calculées concordent avec les valeurs de référence. La balance est un modèle : on ne pèse pas un noyau,
 ses masses viennent de la spectrométrie de masse.
 
+## Chapitre 2e année du bac « Dipôle RC » (fiche 2bac/elec1_dipole_rc)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec1_a1_courant.html | A1 : charge par un générateur de courant idéal (u = f(t)) | O1, O2, O3 | Générateur de courant 0,10 mA, C₁ = 100 µF, voltmètre, fiche de relevés avec chronomètre : u augmente proportionnellement à t ; tableur q = I·t, courbe q = f(u), C₁ = 100 µF ; série (32 µF) et parallèle (147 µF). |
+| b2_elec1_a2_echelon.html | A2 : réponse RC à un échelon, à l'ordinateur ; influence de R et C ; mesure de τ | O4, O5, O6 | Générateur 6 V, commutateur K, boîtes de résistances et de condensateurs, interface d'acquisition et ordinateur : charge, continuité de uC, τ à 63 % et par la tangente (1,0 s), τ = R·C pour quatre couples au tableur, décharge, équation uC + RC·duC/dt = E et sa solution. |
+| b2_elec1_a3_energie.html | A3 : énergie stockée ; applications (flash) | O5, O7 | Décharge du condensateur dans une lampe (éclair), pour 2,2 et 4,7 mF, sous 6 et 12 V ; E = ½·C·u² ; documents : flash (6,75 J en 1 ms), défibrillateur (200 J). |
+
+Le circuit avance dans le temps par petits pas (0,25 à 1 ms, horloge circuit_temps.js) : pendant un pas, le condensateur
+est une conductance C/dt en parallèle avec une source qui garde sa tension précédente (méthode d'Euler implicite, stable,
+même quand on relie ses bornes par un fil). L'interface d'acquisition démarre seule quand la tension EA0 change.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

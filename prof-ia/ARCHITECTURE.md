@@ -281,7 +281,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/accrochage.js | Accrocher des masses en chaîne sous un dynamomètre ou un ressort ; mesures notées. |
 | contenu/ressources/laboratoires/commun/potence.js | Potence de laboratoire et coffret de masses marquées. |
 | contenu/ressources/laboratoires/commun/circuit_solveur.js | Calcul des potentiels et des courants d'un circuit continu (méthode des nœuds, DEL et limitation itérées, sources commandées par une tension pour le transistor et l'AO). |
-| contenu/ressources/laboratoires/commun/circuit.js | Circuit d'une paillasse : composants, bornes, fils ; recalcul et distribution des courants à chaque changement. |
+| contenu/ressources/laboratoires/commun/circuit.js | Circuit d'une paillasse : composants, bornes, fils ; recalcul et distribution des courants à chaque changement ; resoudre() sans redessin, pour les pas de temps. |
 | contenu/ressources/laboratoires/commun/circuit_fils.js | Fils de connexion : tirer d'une borne à l'autre, débrancher, fiches banane empilées, câble souple. |
 | contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, bloc de prises, plan de travail), boîtiers, cordons secteur. |
 | contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur ; touches de réglage sur le dessus. |
@@ -495,6 +495,16 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_nucl1_a2_datation/ | Documents et tri des radioéléments (poste_environnement.js), compteur à scintillation et datation au carbone 14 (poste_datation.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_nucl1_a3_compteur/ | Générateur Cs 137 / Ba 137m (generateur_baryum.js) ; aléatoire, rayonnements α β γ, décroissance (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_nucl2_a1_energie/ | Masses des noyaux et énergie de liaison (masses_noyaux.js), balance des noyaux (balance_noyaux.js), affiche des masses (affiche_masses.js), documents et tri des applications (poste_applications.js), missions (simulation.js). |
+| contenu/ressources/laboratoires/commun/circuit_temps.js | Horloge d'un circuit qui évolue dans le temps : petits pas, résolution, validation des états, enregistreurs. |
+| contenu/ressources/laboratoires/commun/condensateur.js | Condensateur (ou boîte de condensateurs) sur support : modèle à pas de temps, charges ±q des armatures. |
+| contenu/ressources/laboratoires/commun/commutateur.js | Commutateur K à deux positions (borne commune, positions 1 et 2). |
+| contenu/ressources/laboratoires/commun/boite_resistances.js | Boîte de résistances (1 à 100 kΩ) : afficheur, touches − et +. |
+| contenu/ressources/laboratoires/commun/source_courant.js | Générateur de courant constant (0,05 à 0,5 mA), limité à 24 V. |
+| contenu/ressources/laboratoires/commun/interface_acquisition.js | Interface d'acquisition (EA0, EA1, GND) : déclenchement automatique, 400 points, résumé (τ à 63 %). |
+| contenu/ressources/laboratoires/commun/ecran_acquisition.js | Ordinateur portable et logiciel d'acquisition : touches, courbes, curseur, tangente à l'origine. |
+| contenu/ressources/laboratoires/sources/b2_elec1_a1_courant/ | Charge à courant constant, relevés, q = C·u, associations (poste_courant.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec1_a2_echelon/ | Réponse RC à un échelon, τ = R·C, décharge, équation différentielle (poste_echelon.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec1_a3_energie/ | Énergie stockée, décharge dans une lampe, flash et défibrillateur (poste_flash.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -1013,3 +1013,21 @@ Problèmes restants, à faire par l'enseignant :
 - La balance des noyaux est un modèle (masses issues de la spectrométrie de masse) ; l'inclinaison du fléau est amplifiée.
 - Le tableur n'a que quatre colonnes : pour Δm, l'élève tape la masse du noyau dans la formule.
 
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Dipôle RC »
+
+Fait :
+- Trois simulations, inscrites au manifeste (125 ressources) : A1 charge à courant constant (q = I·t, q = C·u, série et
+  parallèle) ; A2 réponse à un échelon à l'interface d'acquisition (continuité de uC, τ à 63 % et par la tangente,
+  τ = R·C, décharge, équation différentielle) ; A3 énergie stockée E = ½·C·u² (éclair d'une lampe, flash, défibrillateur).
+  Objectifs O1 à O7.
+- Matériel commun nouveau : circuit_temps.js, condensateur.js, commutateur.js, boite_resistances.js, source_courant.js,
+  interface_acquisition.js, ecran_acquisition.js.
+- Fichier commun modifié (signalé) : circuit.js a une fonction resoudre() (calcul sans redessiner les fils), utilisée par
+  l'horloge à chaque pas ; calculer() l'appelle, son comportement ne change pas. Simulations d'électricité rejouées.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le temps du circuit avance un peu moins vite que le temps réel si l'ordinateur est lent (au plus 60 pas par image).
+- Pour décharger un condensateur de l'activité 1, une touche « Décharger » remplace le fil que l'on poserait entre ses bornes.
+- L'énergie dissipée dans la lampe n'est pas mesurée : on compare les éclairs (durée, éclat) à E = ½·C·u².
+

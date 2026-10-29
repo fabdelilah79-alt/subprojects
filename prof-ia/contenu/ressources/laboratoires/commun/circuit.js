@@ -5,7 +5,8 @@ Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> 
          mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
          un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
          donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
-Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), sur_calcul(f),
+Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), resoudre() (calcul
+          sans redessiner : pour les pas de temps), sur_calcul(f),
           fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
           prise() (prise murale libre pour un appareil branché sur le secteur) } ;
           Labo.ROUGE_BORNE, Labo.NOIR_BORNE (couleurs des bornes + et −).
@@ -86,12 +87,16 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
       L.fils.brancher_borne(c, b);
       return b;
     };
-    c.calculer = () => {
-      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), puis prévient.
+    c.resoudre = () => {
+      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), distribue.
       const cles = {};
       Object.keys(c.bornes).forEach((cle, n) => { cles[cle] = n; });
       const n = Object.keys(cles).length, ondes = c.alternatif ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu");
       distribuer(c, cles, L.resoudre_circuit(n, dc.dipoles), ondes, dc.pris);
+    };
+    c.calculer = () => {
+      // Résout, redessine les fils (leur courant), puis prévient.
+      c.resoudre();
       L.fils.dessiner(c);
       for (const f of c.ecouteurs) f(c);
     };
