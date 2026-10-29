@@ -2,14 +2,16 @@
 Rôle : oscilloscope à une ou deux voies : écran 10 × 8 divisions, sensibilités verticales Sv (V/div) et balayage b (ms/div)
        réglés par des touches −/+, entrées par un adaptateur BNC-bananes (Y1 rouge, Y2 jaune, masse noire commune aux deux
        voies). Résistance d'entrée 1 MΩ. On lit U = Sv·y (y en divisions verticales) et t = b·x (x en divisions horizontales).
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, Sv, Sv2, b, voies (1 ou 2) }.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, Sv, Sv2, b, voies (1 ou 2), balayages [ms/div], lire (facultatif :
+         { onde(nom de la voie) -> tensions sur une période ou null, f() -> fréquence de cette période }, pour des tensions
+         calculées par le poste, comme en modulation d'amplitude) }.
 Produit : Labo.oscilloscope(c, reglage) -> composant { Sv, Sv2, b, u_dc, onde } ; fait noté « <id> » (« oscillo » par défaut)
           = { Sv, b, u_dc (moyenne), u_max, u_min, gbf, ch2 : { Sv, u_dc, u_max, u_min } ou null }.
 Utilisé par : les postes des simulations de tensions variables.
 */
 (function (L) {
   const SV = [0.1, 0.2, 0.5, 1, 2, 5, 10], B = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10];
-  const ecrire = (v, unite) => `${String(v).replace(".", ",")} ${unite}/div`;
+  const ecrire = (v, unite) => (unite === "ms" && v < 0.1 ? `${String(Math.round(v * 1e4) / 10).replace(".", ",")} µs/div` : `${String(v).replace(".", ",")} ${unite}/div`);
 
   function corps(g, x, y, cadres) {
     // Boîtier gris clair, nom de l'appareil, cadres des réglages.
@@ -48,8 +50,8 @@ Utilisé par : les postes des simulations de tensions variables.
   }
 
   function voie(comp, onde, u, nom) {
-    // Tension d'une voie : onde (s'il y a un GBF) et valeur moyenne.
-    const o = onde(nom, "masse");
+    // Tension d'une voie : onde (s'il y a un GBF, ou donnée par lire), et valeur moyenne.
+    const o = comp.lire ? comp.lire.onde(nom) : onde(nom, "masse");
     return { onde: o, u_dc: o ? o.reduce((s, v) => s + v, 0) / o.length : u(nom, "masse") };
   }
 
@@ -59,21 +61,21 @@ Utilisé par : les postes des simulations de tensions variables.
     return { Sv, u_dc: a(v.u_dc), u_max: a(Math.max(...o)), u_min: a(Math.min(...o)) };
   }
 
-  L.oscilloscope = function (c, { id = "oscillo", x, y, Sv = 1, Sv2 = 1, b = 0.5, voies = 1 }) {
+  L.oscilloscope = function (c, { id = "oscillo", x, y, Sv = 1, Sv2 = 1, b = 0.5, voies = 1, lire = null, balayages = B }) {
     // Construit l'oscilloscope ; à chaque calcul du circuit, il retrace les tensions entre Y1 (et Y2) et la masse.
-    const comp = { id, Sv, Sv2, b, voies, v1: { onde: null, u_dc: 0 }, v2: { onde: null, u_dc: 0 }, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
+    const comp = { id, Sv, Sv2, b, voies, lire, v1: { onde: null, u_dc: 0 }, v2: { onde: null, u_dc: 0 }, g: L.svg("g", { class: "oscilloscope" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 330, y: y + 24 }, c.prise());
     const deux = voies === 2, rangs = deux ? [12, 58, 104] : [24, 86];
     corps(comp.g, x, y, deux ? [[12, "VOLTS/DIV  CH1"], [58, "VOLTS/DIV  CH2"], [104, "TIME/DIV"]] : [[24, "VOLTS/DIV  CH1"], [86, "TIME/DIV"]]);
     const tracer = L.ecran_oscillo(comp.g, x + 18, y + 34, deux);
     const retracer = () => {
       const traces = [{ ...comp.v1, Sv: comp.Sv, couleur: "#b8ffc8" }, ...(deux ? [{ ...comp.v2, Sv: comp.Sv2, couleur: "#ffe27a" }] : [])];
-      tracer({ traces, f: c.alternatif ? c.alternatif.f : 0, b: comp.b });
-      L.missions.noter(id, { ...resume(comp.v1, comp.Sv), b: comp.b, gbf: c.alternatif ? { ...c.alternatif } : null, ch2: deux ? resume(comp.v2, comp.Sv2) : null });
+      tracer({ traces, f: lire ? lire.f() : c.alternatif ? c.alternatif.f : 0, b: comp.b });
+      L.missions.noter(id, { ...resume(comp.v1, comp.Sv), b: comp.b, gbf: c.alternatif && !lire ? { ...c.alternatif } : null, ch2: deux ? resume(comp.v2, comp.Sv2) : null });
     };
     reglage(comp.g, x, y + rangs[0], SV, () => comp.Sv, "V", (v) => { comp.Sv = v; retracer(); });
     if (deux) reglage(comp.g, x, y + rangs[1], SV, () => comp.Sv2, "V", (v) => { comp.Sv2 = v; retracer(); });
-    reglage(comp.g, x, y + rangs[rangs.length - 1], B, () => comp.b, "ms", (v) => { comp.b = v; retracer(); });
+    reglage(comp.g, x, y + rangs[rangs.length - 1], balayages, () => comp.b, "ms", (v) => { comp.b = v; retracer(); });
     entree(c, comp, x, y, voies);
     comp.dipoles = () => [{ a: "Y1", b: "masse", g: 1e-6, j: 0 }, ...(deux ? [{ a: "Y2", b: "masse", g: 1e-6, j: 0 }] : [])];
     comp.mettre_a_jour = ({ u, onde }) => {

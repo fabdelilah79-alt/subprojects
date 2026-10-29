@@ -608,6 +608,19 @@ admittance complexe, et les potentiels des nœuds sont calculés pour la fréque
 triangle ou un carré). L'oscilloscope et le multimètre lisent ces tensions comme pour un circuit résistif. Comme le
 demandent les orientations, on parle d'avance ou de retard de i sur u (une durée), jamais de déphasage.
 
+## Chapitre 2e année du bac « Modulation d'amplitude » (fiche 2bac/elec5_modulation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec5_a1_histoire.html | A1 : histoire de la transmission de l'information | O1, O2 | Paillasse 1 : quatre documents (Chappe, Morse et Bell, Maxwell et Hertz, TSF et après), tri selon ce qui porte l'information. Paillasse 2 : bandes de fréquences (document, tri de huit services, λ = c/f). Paillasse 3 : GBF et antenne émettrice, antenne réceptrice sur un chariot, oscilloscope : même fréquence, amplitude qui diminue avec la distance. |
+| b2_elec5_a2_modulation.html | A2 : modulation avec un multiplieur ; démodulation par détecteur d'enveloppe | O2, O3, O4 | Deux GBF (porteuse 100 kHz, signal 500 Hz), maquette (AD633 avec U₀, diode + R₁∥C₁, passe-haut), oscilloscope : m = Sm/U₀ = 0,5, surmodulation, Fp ≫ Fs ; C₁ = 1 nF (porteuse redressée), 100 nF (enveloppe non suivie), 47 nF (bonne) ; filtre : on retrouve le signal. |
+| b2_elec5_a3_recepteur.html | A3 : réaliser un récepteur radio AM simple | O4, O5 | Montage libre : antenne, terre, bobine 1 mH ∥ condensateur variable, diode, R∥C, écouteur (on l'écoute en le touchant). Trois émetteurs (171, 207, 252 kHz) : accord à 870, 590 et 400 pF ; f₀ = 1/(2π√(LC)) ; oscilloscope ; rôle des éléments. |
+
+Les tensions de ce chapitre (deux fréquences très différentes, diode) ne passent pas par le solveur du circuit : le poste
+les calcule sur une période commune (modulation.js) d'après les fils posés, et l'oscilloscope les lit (option « lire »).
+Quand la porteuse varie trop vite pour les points de l'écran, la trace devient une bande pleine, comme sur un vrai écran.
+Le son de l'écouteur passe par l'interface audio du navigateur (aucune bibliothèque) ; sans elle, l'oscilloscope reste le témoin.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

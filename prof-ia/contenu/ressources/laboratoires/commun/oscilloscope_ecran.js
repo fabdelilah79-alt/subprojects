@@ -1,7 +1,8 @@
 /*
 Rôle : écran de l'oscilloscope : quadrillage de 10 divisions sur 8 (1 division = 20 px), graduations de 0,2 division
        sur les axes centraux, repère de la masse (niveau 0 V) et trace verte de la tension, déclenchée sur un front
-       montant (la courbe commence par un passage à zéro en montant, elle est donc immobile).
+       montant (la courbe commence par un passage à zéro en montant, elle est donc immobile). Quand l'onde varie plus vite
+       que les points de l'écran (porteuse d'une onde modulée), la trace devient une bande pleine, comme sur un vrai écran.
 Reçoit : le groupe SVG et le coin de l'écran ; à chaque tracé, pour chaque voie : tension continue, onde (tensions à des
          instants régulièrement répartis sur une période, ou null) et sensibilité Sv (V/div) ; fréquence f (Hz), balayage b (ms/div).
 Produit : Labo.ecran_oscillo(groupe, x, y, deux_voies) -> tracer({ traces: [{ u_dc, onde, Sv, couleur }], f, b }).
@@ -57,12 +58,22 @@ Utilisé par : oscilloscope.js.
     };
   };
 
+  function colonne(onde, debut, pas) {
+    // Plus petite et plus grande tension de l'onde sur une colonne de l'écran (pas : nombre d'échantillons couverts).
+    const n = onde.length, i0 = ((Math.floor(debut * n) % n) + n) % n;
+    let lo = Infinity, hi = -Infinity;
+    for (let j = 0; j <= pas; j++) { const v = onde[(i0 + j) % n]; lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    return [lo, hi];
+  }
+
   function tracer_voie(calque, x, cy, { u_dc, onde, Sv, couleur }, depart, f, duree) {
-    // Trace une voie sur toute la largeur de l'écran.
-    const points = [];
+    // Trace une voie sur toute la largeur de l'écran ; si l'onde varie trop vite pour les points, une bande pleine (min, max).
+    const points = [], borne = (v) => Math.max(-50 * Sv, Math.min(50 * Sv, v)), pas = onde ? (f * duree * onde.length) / N : 0;
+    const point = (k, v) => points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (borne(v) / Sv) * DIV).toFixed(2)}`);
     for (let k = 0; k <= N; k++) {
-      const t = (k / N) * duree, v = Math.max(-50 * Sv, Math.min(50 * Sv, onde ? valeur(onde, depart + f * t) : u_dc));
-      points.push(`${(x + (k / N) * NX * DIV).toFixed(2)},${(cy - (v / Sv) * DIV).toFixed(2)}`);
+      const t = (k / N) * duree;
+      if (pas > 3) { const [lo, hi] = colonne(onde, depart + f * t, Math.ceil(pas)); point(k, k % 2 ? lo : hi); point(k, k % 2 ? hi : lo); }
+      else point(k, onde ? valeur(onde, depart + f * t) : u_dc);
     }
     L.svg("polyline", { points: points.join(" "), fill: "none", stroke: couleur, "stroke-width": 3, opacity: 0.25 }, calque);
     L.svg("polyline", { points: points.join(" "), fill: "none", stroke: couleur, "stroke-width": 1.3 }, calque);

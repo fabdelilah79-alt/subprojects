@@ -1096,3 +1096,22 @@ Problèmes restants, à faire par l'enseignant :
   surtension (≈ 12,8 V) reste mesurable.
 - Le transitoire du début (avant le régime forcé) n'est pas simulé.
 
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Modulation d'amplitude »
+
+Fait :
+- Trois simulations, inscrites au manifeste (136 ressources) : A1 histoire de la transmission (documents, tri), bandes de
+  fréquences (tri, λ = c/f), émission et réception par deux antennes ; A2 modulation par un multiplieur (taux de
+  modulation, surmodulation, Fp ≫ Fs) et démodulation (détecteur d'enveloppe, choix de τ, filtre passe-haut) ; A3
+  récepteur AM monté librement (circuit d'accord, détecteur, écouteur, trois émetteurs). Objectifs O1 à O5.
+- Matériel commun nouveau : modulation.js.
+- Fichiers communs modifiés (signalés) : oscilloscope.js (option « lire » : tensions calculées par le poste ; option
+  « balayages » ; balayages inférieurs à 0,1 ms/div écrits en µs/div) ; oscilloscope_ecran.js (bande pleine quand l'onde
+  varie plus vite que les points de l'écran). Simulations à oscilloscope rejouées : elles passent.
+- Vérifié : parcours complets des trois simulations (sources et fichiers assemblés) ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les émetteurs de l'activité 3 donnent une tension de quelques volts à l'antenne (bien plus qu'en réalité) pour que la
+  diode conduise sans amplificateur ; leur son est une simple note (400, 600, 900 Hz).
+- Le détecteur suppose une diode de seuil 0,2 V (diode au germanium) ; le filtre passe-haut est idéal (il retire la moyenne).
+- À l'activité 1, l'amplitude reçue suit une loi simple en 1/d (champ proche non modélisé).
+

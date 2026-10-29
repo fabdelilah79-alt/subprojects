@@ -4398,6 +4398,108 @@
         "La tension aux bornes du condensateur ne peut pas dépasser celle du générateur.",
         "Le condensateur et la bobine consomment de la puissance."
       ]
+    },
+    {
+      "id": "b2_elec5_a1_histoire",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec5_a1_histoire.html",
+      "description": "Trois paillasses. 1 : quatre documents (signaux, télégraphe de Chappe, Morse et Bell, Maxwell et Hertz, de la TSF au téléphone portable) et tableau de tri selon ce qui porte l'information. 2 : document sur la répartition des bandes de fréquences, tri de huit services (GO, PO, FM, TNT, portable, Wi-Fi…), λ = c/f. 3 : GBF et antenne émettrice, antenne réceptrice sur un chariot (0,1 à 1 m), oscilloscope : même fréquence, amplitude qui diminue avec la distance.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec5_modulation",
+      "activite": "Histoire de la transmission de l'information.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Histoire de la transmission",
+          "ce_que_fait_l_eleve": "Lit les documents et range huit moyens de communication selon ce qui porte l'information.",
+          "conclusion": "L'information a d'abord été portée par des signaux visibles ou sonores, puis par un courant dans des fils (télégraphe, téléphone), enfin par des ondes électromagnétiques (TSF, radio, télévision, téléphone portable) qui se propagent sans support matériel, à la vitesse de la lumière. Une onde transporte de l'énergie et de l'information sans transport de matière ; l'information est confiée à une onde porteuse de haute fréquence."
+        },
+        {
+          "titre": "Les bandes de fréquences",
+          "ce_que_fait_l_eleve": "Lit le document des bandes de fréquences, range huit services et calcule deux longueurs d'onde.",
+          "conclusion": "Le spectre des fréquences est partagé entre les services par des accords internationaux, pour que les émetteurs ne se brouillent pas : radio AM en kilohertz (grandes et petites ondes), radio FM vers 100 MHz, télévision en centaines de MHz, téléphone portable et Wi-Fi en gigahertz. Plus la fréquence est grande, plus la longueur d'onde λ = c/f est petite."
+        },
+        {
+          "titre": "Émettre et recevoir",
+          "ce_que_fait_l_eleve": "Relie le GBF à l'antenne émettrice, observe la tension reçue, mesure sa fréquence et l'effet de la distance.",
+          "conclusion": "Le GBF fait circuler dans l'antenne émettrice un courant variable : elle émet une onde électromagnétique. L'antenne réceptrice, placée dans cette onde, est le siège d'une tension de même fréquence que celle du GBF. Son amplitude diminue quand la distance augmente : l'énergie de l'onde se répartit dans l'espace. Rien de matériel ne va d'une antenne à l'autre : l'onde transporte de l'énergie et de l'information."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "Une onde transporte de la matière.",
+        "On peut émettre directement le son par une antenne.",
+        "L'antenne réceptrice reçoit à une autre fréquence que celle de l'émetteur."
+      ]
+    },
+    {
+      "id": "b2_elec5_a2_modulation",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec5_a2_modulation.html",
+      "description": "Une paillasse. GBF 1 (porteuse, 10 à 200 kHz), GBF 2 (signal modulant, 100 Hz à 2 kHz), maquette (multiplieur AD633 avec tension de décalage U₀, détecteur d'enveloppe diode + R₁∥C₁ à C₁ réglable, filtre passe-haut), oscilloscope bicourbe. Modulation (m = Sm/U₀ = 0,5), surmodulation pour U₀ < Sm, condition Fp ≫ Fs ; démodulation : τ trop petite (porteuse redressée), trop grande (l'enveloppe n'est plus suivie), bien choisie (Tp ≪ τ < Ts) ; filtre qui retire la composante continue.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec5_modulation",
+      "activite": "Modulation avec un circuit multiplicateur ; démodulation par détecteur d'enveloppe.",
+      "objectifs": [
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Moduler l'amplitude d'une porteuse",
+          "ce_que_fait_l_eleve": "Câble le modulateur, observe la tension modulée, mesure le taux de modulation, provoque la surmodulation et teste Fp ≈ 5 Fs.",
+          "conclusion": "Le multiplieur donne u(t) = k·Pm·(U₀ + s(t))·cos(2π·Fp·t) = A·(1 + m·cos(2π·Fs·t))·cos(2π·Fp·t) : l'amplitude de la porteuse varie comme le signal modulant. Le taux de modulation vaut m = Sm/U₀ = (Umax − Umin)/(Umax + Umin). Pour que l'enveloppe reproduise le signal, il faut m < 1 (U₀ > Sm) — sinon il y a surmodulation — et Fp ≫ Fs."
+        },
+        {
+          "titre": "Démoduler : détecteur d'enveloppe",
+          "ce_que_fait_l_eleve": "Câble le détecteur, essaie trois capacités C₁, choisit la bonne, puis ajoute le filtre passe-haut et retrouve le signal modulant.",
+          "conclusion": "La diode ne laisse passer que les alternances positives ; le condensateur C₁ se charge à chaque sommet de la porteuse et se décharge lentement dans R₁ : la tension suit l'enveloppe si Tp ≪ τ = R₁·C₁ < Ts. Si τ est trop petite, la tension suit la porteuse redressée ; si τ est trop grande, elle ne peut plus suivre l'enveloppe quand elle diminue. Le filtre passe-haut retire la composante continue (due à U₀) : on retrouve le signal modulant."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La modulation change la fréquence de la porteuse.",
+        "Plus U₀ est petite, meilleure est la modulation.",
+        "La diode suffit pour démoduler."
+      ]
+    },
+    {
+      "id": "b2_elec5_a3_recepteur",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec5_a3_recepteur.html",
+      "description": "Une paillasse. Trois émetteurs AM (171, 207 et 252 kHz, sons de 400, 600 et 900 Hz), antenne et terre, bobine d'accord 1 mH, condensateur variable (100 à 1 000 pF), diode, résistance, condensateur du détecteur, condensateur de liaison, écouteur (on l'écoute en le touchant), oscilloscope. Montage libre : circuit d'accord L∥C, détecteur d'enveloppe, écouteur ; accord sur chaque station (870, 590 et 400 pF), f₀ = 1/(2π√(LC)), rôle de chaque élément.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec5_modulation",
+      "activite": "Réaliser un récepteur radio AM simple.",
+      "objectifs": [
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Réaliser un récepteur AM",
+          "ce_que_fait_l_eleve": "Réalise librement le récepteur, l'accorde sur la station B, relève C et calcule f₀, puis écoute les stations A et C.",
+          "conclusion": "Un récepteur AM simple comprend : une antenne (et une prise de terre) qui capte les ondes de tous les émetteurs et les transforme en tensions ; un circuit d'accord L∥C (circuit bouchon) qui sélectionne l'émetteur dont la fréquence vaut f₀ = 1/(2π√(LC)) ; un détecteur d'enveloppe (diode puis R∥C) qui démodule ; un écouteur (ou un amplificateur et un haut-parleur) qui transforme le signal en son. On change de station en réglant le condensateur variable."
+        },
+        {
+          "titre": "Rôle de chaque élément",
+          "ce_que_fait_l_eleve": "Observe à l'oscilloscope la tension de l'antenne et celle du détecteur ; relie chaque élément à son rôle.",
+          "conclusion": "La tension de l'antenne, après le circuit d'accord, est la tension modulée de la station choisie. Le détecteur d'enveloppe en extrait l'enveloppe ; l'écouteur, dont la membrane ne suit pas la porteuse, transforme le signal modulant en son. La chaîne d'un récepteur AM est : antenne → circuit d'accord → démodulateur → (amplificateur) → écouteur ou haut-parleur."
+        }
+      ],
+      "duree_min": 40,
+      "conceptions": [
+        "L'antenne choisit la station.",
+        "Le circuit d'accord démodule le signal.",
+        "Pour changer de station, on change la diode."
+      ]
     }
   ]
 }
