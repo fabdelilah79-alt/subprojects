@@ -1073,3 +1073,26 @@ Problèmes restants, à faire par l'enseignant :
   en partant de 6 V.
 - Le régime critique n'est pas mesuré : on l'encadre entre 220 Ω et 470 Ω.
 
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Oscillations forcées d'un circuit RLC série »
+
+Fait :
+- Deux simulations, inscrites au manifeste (133 ressources) : A1 oscillations forcées (u et i à l'oscilloscope bicourbe,
+  excitateur et résonateur, impédance, construction de Fresnel sur une feuille, valeur efficace, avance ou retard de i sur u,
+  fréquence propre) ; A2 résonance d'intensité (courbes I = f(N) pour 47 Ω et 220 Ω, bande passante, facteur de qualité,
+  surtension, puissance et facteur de puissance). Objectifs O1 à O4.
+- Matériel commun nouveau : circuit_sinus.js (régime sinusoïdal forcé, nombres complexes), poste_rlc_force.js.
+- Fichiers communs modifiés (signalés) : circuit.js (il appelle circuit_sinus.js quand le circuit a un GBF et un condensateur
+  ou une bobine, sans horloge ; sinon rien ne change) ; condensateur.js et bobine.js (admittance) ; gbf.js (options
+  « frequences » et « r_sortie », pas de 10 crans en touchant l'afficheur, touches au-dessus des fils pour rester
+  cliquables). Simulations d'électricité rejouées.
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le GBF a une résistance de sortie de 0,5 Ω dans ce chapitre (au lieu de 50 Ω) : sa tension efficace reste presque
+  constante, comme le suppose l'étude de la résonance.
+- La résistance de l'ampèremètre (1 Ω sur le calibre mA) s'ajoute au circuit : ΔN et Q en tiennent compte (58 Ω au total
+  pour R = 47 Ω).
+- Le multimètre n'a pas de calibre 200 V~ : à l'activité 2, l'amplitude du GBF est réduite (U ≈ 1,06 V) pour que la
+  surtension (≈ 12,8 V) reste mesurable.
+- Le transitoire du début (avant le régime forcé) n'est pas simulé.
+

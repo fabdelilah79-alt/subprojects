@@ -1178,15 +1178,16 @@ Utilisé par : toutes les simulations.
 </script>
   <script>
 /*
-Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180)...) sans jamais
-       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire).
+Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180), =LN(B2)...) sans jamais
+       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire),
+       LN (logarithme népérien, d'un nombre positif) et EXP.
 Reçoit : le texte d'une formule et une fonction qui lit la valeur d'une cellule (« A2 » -> nombre).
 Produit : Labo.formules.calculer(texte, lire) -> nombre (ou lève une erreur « #ERREUR ») ;
          Labo.formules.decaler(texte, lignes) -> la formule recopiée plus bas (A2 -> A3).
 Utilisé par : tableur.js.
 */
 (function (L) {
-  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN)|([-+*/^();]))/iy;
+  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN|LN|EXP)|([-+*/^();]))/iy;
 
   function decouper(texte) {
     // Découpe la formule en jetons : nombres, cellules, fonctions, opérateurs.
@@ -1219,7 +1220,8 @@ Utilisé par : tableur.js.
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();
         if (!prendre(")")) throw new Error("#ERREUR");
-        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin }[j.fonction](v);
+        if (j.fonction === "LN" && !(v > 0)) throw new Error("#ERREUR");
+        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin, LN: Math.log, EXP: Math.exp }[j.fonction](v);
       }
       if (j.signe === "(") { const v = somme(); if (!prendre(")")) throw new Error("#ERREUR"); return v; }
       throw new Error("#ERREUR");
@@ -2077,8 +2079,10 @@ Rôle : le circuit électrique d'une paillasse : il réunit les composants, leur
 Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ctrl, ajuster }],
          mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
          un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
-         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
-Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), sur_calcul(f),
+         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null ; un composant réactif donne admittance(ω)
+         -> [{ a, b, y: [re, im] }] : avec lui, le régime sinusoïdal forcé est calculé par circuit_sinus.js).
+Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), resoudre() (calcul
+          sans redessiner : pour les pas de temps), sur_calcul(f),
           fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
           prise() (prise murale libre pour un appareil branché sur le secteur) } ;
           Labo.ROUGE_BORNE, Labo.NOIR_BORNE (couleurs des bornes + et −).
@@ -2159,12 +2163,18 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
       L.fils.brancher_borne(c, b);
       return b;
     };
-    c.calculer = () => {
-      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), puis prévient.
+    c.resoudre = () => {
+      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), distribue.
       const cles = {};
       Object.keys(c.bornes).forEach((cle, n) => { cles[cle] = n; });
-      const n = Object.keys(cles).length, ondes = c.alternatif ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu");
-      distribuer(c, cles, L.resoudre_circuit(n, dc.dipoles), ondes, dc.pris);
+      // Avec un condensateur ou une bobine (sans horloge) : régime sinusoïdal forcé, calculé par circuit_sinus.js.
+      const n = Object.keys(cles).length, sinus = c.alternatif && !c.pas && c.composants.some((k) => k.admittance);
+      const ondes = c.alternatif && !sinus ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu"), r = L.resoudre_circuit(n, dc.dipoles);
+      distribuer(c, cles, r, sinus ? L.ondes_sinus(c, cles, n, r.potentiels, ECHANTILLONS) : ondes, dc.pris);
+    };
+    c.calculer = () => {
+      // Résout, redessine les fils (leur courant), puis prévient.
+      c.resoudre();
       L.fils.dessiner(c);
       for (const f of c.ecouteurs) f(c);
     };
@@ -2549,7 +2559,7 @@ Rôle : limaille de fer saupoudrée sur la feuille : chaque grain (2 mm) s'orien
        sous 0,05 mT). Les
        grains dessinent ainsi les lignes de champ. Les grains cachés (sous un aimant, une bobine…) ne sont pas dessinés.
 Reçoit : le groupe SVG, le plan (plan_magnetique.js) et { pas (m), masque(p) -> vrai si le point est caché }.
-Produit : Labo.limaille(g, plan, reglage) -> l { visible, saupoudrer(champ), tapoter(champ), retirer(), alignement(champ) }.
+Produit : Labo.limaille(g, plan, reglage) -> l { visible, saupoudrer(champ), tapoter(champ), retirer(), alignement(champ, seuil) (de 0 à 1) }.
 Utilisé par : les postes des simulations de magnétisme.
 */
 (function (L) {
@@ -2580,10 +2590,10 @@ Utilisé par : les postes des simulations de magnétisme.
     };
     l.saupoudrer = (champ) => { l.visible = true; l.tapoter(champ); };
     l.retirer = () => { l.visible = false; dessiner(); };
-    l.alignement = (champ) => {
-      // Part des grains (là où le champ est notable) alignés sur le champ actuel.
-      const s = l.grains.filter((q) => !masque(q)).map((q) => ({ q, B: champ({ x: q.x, y: q.y, z: 0 }) })).filter((x) => Math.hypot(x.B.x, x.B.y) > SEUIL);
-      return s.length ? s.filter((x) => Math.abs(Math.sin(x.q.a - Math.atan2(x.B.y, x.B.x))) < 0.1).length / s.length : 0;
+    l.alignement = (champ, seuil = SEUIL) => {
+      // Moyenne de cos 2(a − φ) sur les grains où le champ dépasse le seuil : 1 si tous sont alignés sur le champ actuel.
+      const s = l.grains.filter((q) => !masque(q)).map((q) => ({ q, B: champ({ x: q.x, y: q.y, z: 0 }) })).filter((x) => Math.hypot(x.B.x, x.B.y) > seuil);
+      return s.length ? s.reduce((m, x) => m + Math.cos(2 * (x.q.a - Math.atan2(x.B.y, x.B.x))), 0) / s.length : 0;
     };
     return l;
   };

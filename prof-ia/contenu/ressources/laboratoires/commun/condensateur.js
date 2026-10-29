@@ -4,10 +4,11 @@ Rôle : condensateur (non polarisé) sur son support à deux bornes : boîtier b
        suivante (le condensateur choisi est neuf : déchargé). Il évolue avec l'horloge du circuit (circuit_temps.js) :
        pendant un pas dt, i = C·du/dt devient i = (C/dt)·(u − u précédente) ; avec la méthode des trapèzes (c.trapeze),
        i + i précédent = (2C/dt)·(u − u précédente). Les charges +q et −q des armatures sont
-       écrites près des bornes quand il est chargé. Sans horloge, il se comporte comme un circuit ouvert.
+       écrites près des bornes quand il est chargé. Sans horloge, il se comporte comme un circuit ouvert en continu ; avec un GBF,
+       son admittance j·C·ω sert au calcul du régime sinusoïdal forcé (circuit_sinus.js).
 Reçoit : le circuit et { id, x, y, C (F), valeurs [F] (facultatif), nom, lettres }.
 Produit : Labo.condensateur(c, reglage) -> comp { C, u (V, borne 1 − borne 2), i (A, de 1 vers 2), q (C) } ; bornes « 1 », « 2 ».
-Utilisé par : les simulations du dipôle RC.
+Utilisé par : les simulations des dipôles RC, du circuit RLC (libre et forcé).
 */
 (function (L) {
   const ecrire_C = (C) => (C >= 1e-3 ? `${String(C * 1e3).replace(".", ",")} mF` : `${String(Math.round(C * 1e7) / 10).replace(".", ",")} µF`);
@@ -35,6 +36,7 @@ Utilisé par : les simulations du dipôle RC.
       const g = ((c.trapeze ? 2 : 1) * comp.C) / c.pas;
       return [{ a: "1", b: "2", g, j: -g * comp.u - (c.trapeze ? comp.i_prec : 0) }];
     };
+    comp.admittance = (w) => [{ a: "1", b: "2", y: [0, comp.C * w] }];
     comp.mettre_a_jour = ({ u, i }) => { comp.u_calc = u("1", "2"); comp.i = i[0] || 0; };
     comp.valider = () => { const avant = Math.abs(comp.u) > 0.1; comp.u = comp.u_calc; comp.i_prec = comp.i; comp.q = comp.C * comp.u; if (avant !== Math.abs(comp.u) > 0.1) dessiner(); };
     dessiner();

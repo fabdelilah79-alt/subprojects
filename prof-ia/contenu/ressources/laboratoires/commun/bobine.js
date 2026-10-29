@@ -3,11 +3,12 @@ Rôle : bobine de 1 000 spires sur son support, avec son noyau de fer doux que l
        (le noyau multiplie l'inductance par 10) ; résistance de son fil r. En convention récepteur, u = r·i + L·di/dt :
        avec l'horloge du circuit (circuit_temps.js), pendant un pas dt, i = (i précédente + (dt/L)·u) / (1 + r·dt/L) ;
        le courant qui la traverse ne fait donc jamais de saut (avec c.trapeze : méthode des trapèzes, sans perte d'énergie
-       artificielle). Sans horloge (courant continu), elle se comporte comme r.
+       artificielle). Sans horloge (courant continu), elle se comporte comme r ; avec un GBF, son admittance 1/(r + j·L·ω) sert
+       au calcul du régime sinusoïdal forcé (circuit_sinus.js).
 Reçoit : le circuit et { id, x, y, L (H, sans noyau), r (Ω), noyau (vrai : enfoncé), nom }.
 Produit : Labo.bobine(c, reglage) -> comp { L (H, inductance actuelle), r, i (A, de 1 vers 2), u (V), noyau, energie (J) } ;
           bornes « 1 », « 2 » ; fait « <id> » = { L, noyau }.
-Utilisé par : les simulations du dipôle RL et du circuit RLC.
+Utilisé par : les simulations du dipôle RL et du circuit RLC (libre et forcé).
 */
 (function (L) {
   function dessin(g, x, y, comp) {
@@ -41,6 +42,7 @@ Utilisé par : les simulations du dipôle RL et du circuit RLC.
       const k = 1 + (r * c.pas) / comp.L;
       return [{ a: "1", b: "2", g: c.pas / comp.L / k, j: comp.i / k }];
     };
+    comp.admittance = (w) => { const d = comp.r * comp.r + comp.L * comp.L * w * w; return [{ a: "1", b: "2", y: [comp.r / d, (-comp.L * w) / d] }]; };
     comp.mettre_a_jour = ({ u, i }) => { comp.i_calc = i[0] || 0; comp.u = u("1", "2"); };
     comp.valider = () => { comp.i = comp.i_calc; comp.u_prec = comp.u; comp.energie = 0.5 * comp.L * comp.i * comp.i; };
     noter();

@@ -515,6 +515,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_elec3_a1_decharge/ | Décharge oscillante, régimes, pseudo-période et T₀, équation différentielle (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec3_a2_energies/ | Énergies Ee, Em, E à l'ordinateur ; échanges et effet Joule (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_elec3_a3_entretien/ | Entretien des oscillations, tension sinusoïdale de fréquence donnée (simulation.js). |
+| contenu/ressources/laboratoires/commun/circuit_sinus.js | Régime sinusoïdal forcé : admittances complexes, potentiels des nœuds par harmonique, ondes d'une période. |
+| contenu/ressources/laboratoires/commun/poste_rlc_force.js | Paillasse du circuit RLC forcé (GBF fin, C, bobine, R, oscilloscope ou ampèremètre, voltmètre) ; faits des mesures. |
+| contenu/ressources/laboratoires/sources/b2_elec4_a1_forcees/ | u et i à l'oscilloscope, impédance, construction de Fresnel, retard (fresnel_feuille.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec4_a2_resonance/ | Courbes de résonance pour deux R, bande passante, Q, surtension, puissance (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -4328,6 +4328,76 @@
         "Les oscillations entretenues ont une période différente de T₀.",
         "On règle la fréquence avec la tension du générateur."
       ]
+    },
+    {
+      "id": "b2_elec4_a1_forcees",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec4_a1_forcees.html",
+      "description": "Une paillasse. GBF sinusoïdal (50 Hz à 1 kHz, pas de 5 ou 50 Hz), boîte de condensateurs (1 à 10 µF), bobine (r = 10 Ω ; 0,5 H avec son noyau), boîte de résistances, oscilloscope bicourbe (u et uR = R·i), voltmètre alternatif, feuille de la construction de Fresnel. Le GBF impose sa fréquence (oscillations forcées) ; Um, Im, Z = Um/Im (600 Ω à 150 Hz) ; construction de Fresnel ; U = Um/√2 ; i en avance sur u à 150 Hz (1,47 ms), en retard à 400 Hz, u et i ensemble à N₀ = 225 Hz.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec4_rlc_force",
+      "activite": "Oscillations forcées : observer u et i.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Oscillations forcées : u et i",
+          "ce_que_fait_l_eleve": "Câble le circuit et l'oscilloscope, observe u et i à 150 Hz et 300 Hz : même fréquence que le GBF.",
+          "conclusion": "Le GBF (excitateur) impose sa fréquence N au circuit RLC (résonateur) : l'intensité i est sinusoïdale, de même fréquence que u, quelle que soit la fréquence propre N₀ du circuit. Ce sont des oscillations forcées. Dans des oscillations libres, au contraire, le circuit oscille à sa propre fréquence. L'amplitude de i dépend de N."
+        },
+        {
+          "titre": "Impédance et construction de Fresnel",
+          "ce_que_fait_l_eleve": "Mesure Um et Im, calcule Z, retrouve Um par la construction de Fresnel et compare U au voltmètre à Um/√2.",
+          "conclusion": "L'impédance du dipôle RLC est Z = Um / Im = U / I, en ohms. La construction de Fresnel (feuille) additionne les vecteurs (R + r)·Im, L·ω·Im (perpendiculaire, vers le haut) et Im/(C·ω) (vers le bas) : Um² = ((R + r)·Im)² + (L·ω·Im − Im/(C·ω))², d'où Z = √((R + r)² + (L·ω − 1/(C·ω))²). Le voltmètre mesure la valeur efficace U = Um/√2 (de même I = Im/√2)."
+        },
+        {
+          "titre": "Retard de i sur u",
+          "ce_que_fait_l_eleve": "Mesure l'avance ou le retard de i sur u et trouve la fréquence où u et i passent ensemble par zéro.",
+          "conclusion": "Pour N < N₀, i est en avance sur u (le condensateur l'emporte) ; pour N > N₀, i est en retard sur u (la bobine l'emporte). Pour N = N₀ = 1/(2π√(LC)) ≈ 225 Hz, u et i passent ensemble par zéro : L·ω = 1/(C·ω), Z = R + r est minimale et Im est maximale. C'est la résonance d'intensité."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Le circuit oscille à sa fréquence propre même quand il est alimenté par un GBF.",
+        "L'impédance est la somme R + Lω + 1/(Cω).",
+        "L'intensité et la tension passent toujours ensemble par zéro."
+      ]
+    },
+    {
+      "id": "b2_elec4_a2_resonance",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_elec4_a2_resonance.html",
+      "description": "Une paillasse : le même circuit avec un ampèremètre et un voltmètre en alternatif (U ≈ 1,06 V). Courbes I = f(N) pour R = 47 Ω et R = 220 Ω au tableur (onze fréquences) et à la courbe ; N₀ = 225 Hz, I₀ = 18 mA, bande passante ΔN ≈ 19 Hz, Q ≈ 12 ; influence de R ; surtension UC ≈ 12,8 V = Q·U ; puissance (R + r)·I² et facteur de puissance.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/elec4_rlc_force",
+      "activite": "Résonance : tracer I = f(N) pour deux ou trois valeurs de R.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Courbes de résonance",
+          "ce_que_fait_l_eleve": "Relève I pour huit fréquences au moins avec deux résistances, trace les deux courbes de résonance, lit N₀, I₀, la bande passante et calcule Q.",
+          "conclusion": "L'intensité efficace passe par un maximum I₀ = U/(R + r) pour N₀ = 1/(2π√(LC)) ≈ 225 Hz : c'est la résonance d'intensité. La bande passante à −3 dB est l'intervalle de fréquences où I ≥ I₀/√2 ; sa largeur vaut ΔN = (R + r)/(2πL). Le facteur de qualité Q = N₀/ΔN mesure l'acuité de la résonance : une petite résistance donne une résonance aiguë (Q grand), une grande résistance une résonance floue."
+        },
+        {
+          "titre": "Surtension et puissance",
+          "ce_que_fait_l_eleve": "Mesure la surtension aux bornes du condensateur, calcule la puissance moyenne et le facteur de puissance.",
+          "conclusion": "À la résonance, la tension efficace aux bornes du condensateur vaut UC = Q·U : elle peut être beaucoup plus grande que la tension du générateur (surtension), ce qui peut détruire un condensateur. La puissance moyenne n'est consommée que par effet Joule dans les résistances : P = (R + r)·I² ; le condensateur et la bobine échangent de l'énergie sans en consommer en moyenne. Le facteur de puissance k = P/(U·I) = (R + r)/Z vaut 1 à la résonance."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La fréquence de résonance dépend de la résistance.",
+        "La tension aux bornes du condensateur ne peut pas dépasser celle du générateur.",
+        "Le condensateur et la bobine consomment de la puissance."
+      ]
     }
   ]
 }

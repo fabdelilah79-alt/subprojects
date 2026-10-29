@@ -1178,15 +1178,16 @@ Utilisé par : toutes les simulations.
 </script>
   <script>
 /*
-Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180)...) sans jamais
-       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire).
+Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180), =LN(B2)...) sans jamais
+       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire),
+       LN (logarithme népérien, d'un nombre positif) et EXP.
 Reçoit : le texte d'une formule et une fonction qui lit la valeur d'une cellule (« A2 » -> nombre).
 Produit : Labo.formules.calculer(texte, lire) -> nombre (ou lève une erreur « #ERREUR ») ;
          Labo.formules.decaler(texte, lignes) -> la formule recopiée plus bas (A2 -> A3).
 Utilisé par : tableur.js.
 */
 (function (L) {
-  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN)|([-+*/^();]))/iy;
+  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN|LN|EXP)|([-+*/^();]))/iy;
 
   function decouper(texte) {
     // Découpe la formule en jetons : nombres, cellules, fonctions, opérateurs.
@@ -1219,7 +1220,8 @@ Utilisé par : tableur.js.
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();
         if (!prendre(")")) throw new Error("#ERREUR");
-        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin }[j.fonction](v);
+        if (j.fonction === "LN" && !(v > 0)) throw new Error("#ERREUR");
+        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin, LN: Math.log, EXP: Math.exp }[j.fonction](v);
       }
       if (j.signe === "(") { const v = somme(); if (!prendre(")")) throw new Error("#ERREUR"); return v; }
       throw new Error("#ERREUR");
@@ -2077,8 +2079,10 @@ Rôle : le circuit électrique d'une paillasse : il réunit les composants, leur
 Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ctrl, ajuster }],
          mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
          un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
-         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
-Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), sur_calcul(f),
+         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null ; un composant réactif donne admittance(ω)
+         -> [{ a, b, y: [re, im] }] : avec lui, le régime sinusoïdal forcé est calculé par circuit_sinus.js).
+Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), resoudre() (calcul
+          sans redessiner : pour les pas de temps), sur_calcul(f),
           fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
           prise() (prise murale libre pour un appareil branché sur le secteur) } ;
           Labo.ROUGE_BORNE, Labo.NOIR_BORNE (couleurs des bornes + et −).
@@ -2159,12 +2163,18 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
       L.fils.brancher_borne(c, b);
       return b;
     };
-    c.calculer = () => {
-      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), puis prévient.
+    c.resoudre = () => {
+      // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), distribue.
       const cles = {};
       Object.keys(c.bornes).forEach((cle, n) => { cles[cle] = n; });
-      const n = Object.keys(cles).length, ondes = c.alternatif ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu");
-      distribuer(c, cles, L.resoudre_circuit(n, dc.dipoles), ondes, dc.pris);
+      // Avec un condensateur ou une bobine (sans horloge) : régime sinusoïdal forcé, calculé par circuit_sinus.js.
+      const n = Object.keys(cles).length, sinus = c.alternatif && !c.pas && c.composants.some((k) => k.admittance);
+      const ondes = c.alternatif && !sinus ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu"), r = L.resoudre_circuit(n, dc.dipoles);
+      distribuer(c, cles, r, sinus ? L.ondes_sinus(c, cles, n, r.potentiels, ECHANTILLONS) : ondes, dc.pris);
+    };
+    c.calculer = () => {
+      // Résout, redessine les fils (leur courant), puis prévient.
+      c.resoudre();
       L.fils.dessiner(c);
       for (const f of c.ecouteurs) f(c);
     };
@@ -2678,8 +2688,9 @@ Utilisé par : les postes des simulations de tension.
 /*
 Rôle : générateur basse fréquence (GBF) : tension alternative sinusoïdale, triangulaire ou carrée, de fréquence affichée
        (50 Hz à 2 kHz) et d'amplitude réglable (0,5 à 10 V) mais non affichée — on la mesure à l'oscilloscope, comme
-       en vrai. Résistance de sortie 50 Ω ; bornes SORTIE (rouge) et masse (noire).
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y, forme, f (Hz), Umax (V) }.
+       en vrai. Résistance de sortie 50 Ω (réglable) ; bornes SORTIE (rouge) et masse (noire). Avec une longue liste de
+       fréquences (réglage fin), un toucher sur l'afficheur fait passer le pas des touches −/+ de 1 à 10 crans.
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, forme, f (Hz), Umax (V), frequences [Hz], r_sortie (Ω) }.
 Produit : Labo.gbf(c, reglage) -> composant { forme, f, Umax } ; il tient à jour c.alternatif = { forme, f, Umax } ;
           Labo.forme_tension(forme, phase) -> valeur entre −1 et 1.
 Utilisé par : les postes des simulations de tensions variables ; circuit.js et oscilloscope_ecran.js (forme_tension).
@@ -2713,30 +2724,35 @@ Utilisé par : les postes des simulations de tensions variables ; circuit.js et 
     return L.texte(g, x + 204, y + 19, "", { "text-anchor": "end", "font-size": 14, "font-family": "monospace", "font-weight": 700, fill: "#ff7a3c" });
   }
 
-  L.gbf = function (c, { id = "gbf", x, y, forme = "sinus", f = 500, Umax = 3 }) {
-    // Construit le GBF, ses touches (forme, fréquence −/+, amplitude −/+) et ses deux bornes.
-    const comp = { id, forme, f, Umax, g: L.svg("g", { class: "gbf" }, c.calque_composants) };
+  L.gbf = function (c, { id = "gbf", x, y, forme = "sinus", f = 500, Umax = 3, frequences = FREQUENCES, r_sortie = R_SORTIE }) {
+    // Construit le GBF, ses touches (forme, fréquence −/+, amplitude −/+ : au-dessus des fils) et ses deux bornes.
+    const comp = { id, forme, f, Umax, saut: 1, g: L.svg("g", { class: "gbf" }, c.calque_composants) };
     L.cordon_secteur(comp.g, { x: x + 200, y: y + 24 }, c.prise());
     const afficheur = dessiner(comp.g, x, y);
     const changer = (k) => {
       Object.assign(comp, k);
       c.alternatif = { forme: comp.forme, f: comp.f, Umax: comp.Umax };
-      afficheur.textContent = comp.f >= 1000 ? `${comp.f / 1000} kHz` : `${comp.f} Hz`;
+      afficheur.textContent = `${comp.saut > 1 ? "×10  " : ""}${comp.f >= 1000 ? `${comp.f / 1000} kHz` : `${comp.f} Hz`}`;
       L.missions.noter("gbf", { ...c.alternatif });
       c.calculer();
     };
+    const t = L.svg("g", { class: "gbf-touches" }, c.calque_bornes);
     ["sinus", "triangle", "carre"].forEach((nom, k) => {
-      L.bouton_rond(comp.g, x + 18 + k * 24, y + 56, "", () => changer({ forme: nom }), 10);
-      symbole(comp.g, x + 18 + k * 24, y + 56, nom);
+      L.bouton_rond(t, x + 18 + k * 24, y + 56, "", () => changer({ forme: nom }), 10);
+      symbole(t, x + 18 + k * 24, y + 56, nom);
     });
     const pas = (liste, v, s) => liste[Math.max(0, Math.min(liste.length - 1, liste.indexOf(v) + s))];
-    L.bouton_rond(comp.g, x + 120, y + 54, "−", () => changer({ f: pas(FREQUENCES, comp.f, -1) }));
-    L.bouton_rond(comp.g, x + 144, y + 54, "+", () => changer({ f: pas(FREQUENCES, comp.f, 1) }));
-    L.bouton_rond(comp.g, x + 178, y + 54, "−", () => changer({ Umax: Math.max(0.5, comp.Umax - 0.5) }));
-    L.bouton_rond(comp.g, x + 202, y + 54, "+", () => changer({ Umax: Math.min(10, comp.Umax + 0.5) }));
+    L.bouton_rond(t, x + 120, y + 54, "−", () => changer({ f: pas(frequences, comp.f, -comp.saut) }));
+    L.bouton_rond(t, x + 144, y + 54, "+", () => changer({ f: pas(frequences, comp.f, comp.saut) }));
+    if (frequences.length > 20) {
+      const zone = L.svg("rect", { x: x + 92, y: y + 6, width: 118, height: 24, fill: "#000", opacity: 0, class: "gbf-pas", role: "button", "aria-label": "Pas de la fréquence" }, comp.g);
+      L.glissable(zone, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: () => changer({ saut: comp.saut > 1 ? 1 : 10 }) });
+    }
+    L.bouton_rond(t, x + 178, y + 54, "−", () => changer({ Umax: Math.max(0.5, comp.Umax - 0.5) }));
+    L.bouton_rond(t, x + 202, y + 54, "+", () => changer({ Umax: Math.min(10, comp.Umax + 0.5) }));
     c.borne(comp, "sortie", x + 150, y + 86, L.ROUGE_BORNE);
     c.borne(comp, "masse", x + 194, y + 86, L.NOIR_BORNE);
-    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / R_SORTIE, j: mode === "instant" ? c.instant / R_SORTIE : 0 }];
+    comp.dipoles = (mode) => [{ a: "masse", b: "sortie", g: 1 / r_sortie, j: mode === "instant" ? c.instant / r_sortie : 0 }];
     c.ajouter(comp);
     changer({});
     return comp;

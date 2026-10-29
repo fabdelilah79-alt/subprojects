@@ -4,7 +4,8 @@ Rôle : le circuit électrique d'une paillasse : il réunit les composants, leur
 Reçoit : le groupe SVG de la paillasse ; des composants { id, dipoles(mode) -> [{ a, b (noms de bornes), g, j, ctrl, ajuster }],
          mettre_a_jour({ u(a, b), onde(a, b), i: [courant de chaque dipôle] }) } ; mode « continu » ou « instant » (s'il y a
          un GBF, c.alternatif = { forme, f, Umax } : le circuit est calculé à 72 instants d'une période, et onde(a, b)
-         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null).
+         donne la tension u_ab à chacun de ces instants ; sinon onde renvoie null ; un composant réactif donne admittance(ω)
+         -> [{ a, b, y: [re, im] }] : avec lui, le régime sinusoïdal forcé est calculé par circuit_sinus.js).
 Produit : Labo.circuit(groupe) -> { calque_composants, ajouter(c), borne(c, nom, x, y, couleur), calculer(), resoudre() (calcul
           sans redessiner : pour les pas de temps), sur_calcul(f),
           fils: [{ a, b (clés « composant.borne »), couleur, i (A, de a vers b) }], relies(cle1, cle2), meme_noeud(cle1, cle2),
@@ -91,8 +92,10 @@ Utilisé par : les postes des simulations d'électricité ; circuit_fils.js (fil
       // Numérote les bornes (un nœud chacune), résout (instant par instant s'il y a un GBF, puis GBF à 0 V), distribue.
       const cles = {};
       Object.keys(c.bornes).forEach((cle, n) => { cles[cle] = n; });
-      const n = Object.keys(cles).length, ondes = c.alternatif ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu");
-      distribuer(c, cles, L.resoudre_circuit(n, dc.dipoles), ondes, dc.pris);
+      // Avec un condensateur ou une bobine (sans horloge) : régime sinusoïdal forcé, calculé par circuit_sinus.js.
+      const n = Object.keys(cles).length, sinus = c.alternatif && !c.pas && c.composants.some((k) => k.admittance);
+      const ondes = c.alternatif && !sinus ? echantillonner(c, cles, n) : null, dc = assembler(c, cles, "continu"), r = L.resoudre_circuit(n, dc.dipoles);
+      distribuer(c, cles, r, sinus ? L.ondes_sinus(c, cles, n, r.potentiels, ECHANTILLONS) : ondes, dc.pris);
     };
     c.calculer = () => {
       // Résout, redessine les fils (leur courant), puis prévient.

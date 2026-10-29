@@ -596,6 +596,18 @@ Le circuit suit la méthode des trapèzes (option trapeze de circuit_temps.js) :
 près. Le dispositif d'entretien (entretien_rlc.js) n'est vu que par son rôle : u = −R₀·i, et au-delà de 40 mA
 l'amplificateur sature (le dispositif se comporte alors comme une résistance de 100 Ω).
 
+## Chapitre 2e année du bac « Oscillations forcées d'un circuit RLC série » (fiche 2bac/elec4_rlc_force)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec4_a1_forcees.html | A1 : oscillations forcées, observer u et i | O1, O2, O3 | GBF sinusoïdal (pas de 5 Hz, ou 50 Hz en touchant l'afficheur), C = 1 µF, bobine 0,5 H (r = 10 Ω), R = 100 Ω, oscilloscope bicourbe (u, uR), voltmètre, feuille de Fresnel : i à la fréquence du GBF ; Z = Um/Im = 600 Ω à 150 Hz ; Fresnel ; U = Um/√2 ; i en avance (150 Hz), en retard (400 Hz), u et i ensemble à N₀ = 225 Hz. |
+| b2_elec4_a2_resonance.html | A2 : résonance, I = f(N) pour deux valeurs de R | O3, O4 | Ampèremètre et voltmètre (V~), U ≈ 1,06 V : courbes I = f(N) pour 47 Ω et 220 Ω (tableur, deux courbes) ; N₀, I₀ = 18 mA, ΔN ≈ 19 Hz, Q ≈ 12 ; surtension UC = Q·U ≈ 12,8 V ; P = (R + r)·I², facteur de puissance. |
+
+Le circuit est calculé en régime sinusoïdal forcé (circuit_sinus.js) : le condensateur et la bobine donnent leur
+admittance complexe, et les potentiels des nœuds sont calculés pour la fréquence du GBF (ou ses harmoniques pour un
+triangle ou un carré). L'oscilloscope et le multimètre lisent ces tensions comme pour un circuit résistif. Comme le
+demandent les orientations, on parle d'avance ou de retard de i sur u (une durée), jamais de déphasage.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
