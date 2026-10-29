@@ -484,6 +484,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/goniometre_prisme.js | Goniomètre à prisme (A = 60°, flint) : incidence, lunette, lois de Descartes, déviation, spectre de la lumière blanche ; Labo.indice_flint. |
 | contenu/ressources/laboratoires/sources/b2_ondes3_a1_diffraction/ | Diffraction par une fente et un fil, θ = λ / a, lumière blanche, cheveu (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_ondes3_a2_prisme/ | Déviation par un prisme, minimum de déviation, indice pour deux couleurs, spectre (simulation.js). |
+| contenu/ressources/laboratoires/commun/reseau_lumiere.js | Physique de la fente et du réseau : objets (fentes, réseaux, CD, DVD), ordres sin θk − sin i = kλ/a, éclat, image de l'écran (taches ou spectres) dans un canvas. |
+| contenu/ressources/laboratoires/commun/ecran_reseau.js | Écran de 70 cm vu de face (salle obscure), règle en mm, deux curseurs qui affichent leur position. |
+| contenu/ressources/laboratoires/commun/banc_reseau.js | Banc à réseau vu de dessus : source, diapositive sur plateau tournant (incidence i), mètre-ruban, écran mobile, faisceaux diffractés. |
+| contenu/ressources/laboratoires/sources/b2_ondes4_a1_reseau/ | Modèles de réseau au microscope (poste_modeles.js), fente et réseau au laser, sin θk = kλ/a, pas d'un CD, nombre de maximums (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes4_a2_incidence/ | Réseau en incidence non normale, spectres de la lumière blanche, λ d'un laser vert (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

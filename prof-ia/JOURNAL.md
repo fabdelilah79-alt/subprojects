@@ -964,3 +964,20 @@ Problèmes restants, à faire par l'enseignant :
 - Au goniomètre, le trajet dans le prisme est dessiné à partir de son centre (le prisme est petit devant le plateau) ;
   les angles affichés sont exacts.
 - Les étiquettes des lasers donnent leur longueur d'onde : la mesure de λ est une vérification de θ = λ / a.
+
+## 2026-10-29 — Laboratoires virtuels : chapitre 2e année du bac « Diffraction de la lumière par un réseau »
+
+Fait :
+- Deux simulations, inscrites au manifeste (118 ressources) : A1 modèles de réseau (diapositives, CD, DVD au microscope :
+  pas a = 1/n), fente qui rétrécit, réseau au laser, sin θk = k·λ / a au tableur, pas d'un CD par diffraction, nombre de
+  maximums ; A2 incidence non normale (sin θk − sin i = k·λ / a), spectres de la lumière blanche, λ d'un laser vert.
+  Objectifs O1 à O4.
+- Matériel commun nouveau : reseau_lumiere.js, ecran_reseau.js, banc_reseau.js (banc vu de dessus : les faisceaux
+  diffractés sont visibles sur la table). Aucun fichier commun existant modifié.
+- Vérifié : parcours complets des deux simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Les photographies au microscope sont des dessins schématiques à l'échelle (pas de vraies images).
+- Le CD et le DVD sont utilisés en transmission (couche réfléchissante retirée), pas en réflexion.
+- En incidence oblique, l'élève calcule les angles à la calculatrice (le tableur n'a pas de fonction arctangente).
+

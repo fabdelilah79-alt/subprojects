@@ -525,6 +525,17 @@ L'image de la cuve à ondes est calculée par le principe de Huygens (sources r�
 La figure de diffraction est calculée (intensité sinc², somme de quinze radiations pour la lumière blanche) et dessinée
 dans un `canvas` ; le trajet dans le prisme suit les lois de Descartes avec un indice de Cauchy.
 
+## Chapitre 2e année du bac « Diffraction de la lumière par un réseau » (fiche 2bac/ondes4_reseau)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes4_a1_reseau.html | A1 : modèles de réseau (CD…) ; questions guidées (fente qui rétrécit, nombre de traits par mm) | O1, O2, O3, O4 | Paillasse 1 : photographies au microscope de réseaux de 100, 300 et 600 traits/mm, d'un CD et d'un DVD ; pas a aux curseurs, a = 1/n. Paillasse 2 : banc vu de dessus (faisceaux visibles) et écran vu de face ; fente de 100 puis 50 µm, réseau de 100 traits/mm, tableur et courbe sin θk = f(k) (pente λ/a = 0,065) ; pas du CD par diffraction (1,6 µm) ; 5 maximums avec 600 traits/mm, 3 avec le DVD. |
+| b2_ondes4_a2_incidence.html | A2 : incidence normale et non normale ; lumière blanche ; nature ondulatoire | O2, O3, O4 | Plateau tournant (i de 0 à 40°) : figure dissymétrique, sin θ±1 − sin i = ±λ/a = ±0,195 ; spectres de la lumière blanche (violet le moins dévié, ordres 2 et 3 qui se chevauchent) ; λ du laser vert ≈ 532 nm. |
+
+Les directions des maximums suivent sin θk − sin i = k·λ / a (θk mesuré depuis la normale au réseau) ; l'éclat de chaque
+ordre vient de la largeur des fentes (b = 0,15·a). L'écran vu de face (70 cm, 1 px par mm) est calculé dans un `canvas`.
+Le dessin des photographies au microscope est schématique (fentes, sillons et cuvettes à l'échelle de la règle).
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
