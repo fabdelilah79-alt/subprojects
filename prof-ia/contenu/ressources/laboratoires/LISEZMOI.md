@@ -548,6 +548,16 @@ Les comptages sont tirés au hasard (loi de Poisson) à partir du taux d'impulsi
 rayonnement de l'échantillon que laisse passer l'écran. Au-delà de Z = 8, l'affiche du diagramme (N, Z) est un schéma
 calculé (vallée de stabilité Z₀ = A / (1,98 + 0,0155·A^(2/3))) ; les noyaux légers du tableau sont exacts.
 
+## Chapitre 2e année du bac « Noyaux, masse et énergie » (fiche 2bac/nucl2_masse_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_nucl2_a1_energie.html | Documents sur les applications des réactions nucléaires | O1 à O5 | Paillasse 1 : balance de précision (modèle), noyau contre nucléons séparés : Δm (0,030377 u pour ⁴He), El = 28,3 MeV, conversions J ↔ eV, E = m·c² pour 1 u, équation aux dimensions ; El/A du fer (8,79 MeV). Paillasse 2 : affiche des masses de 21 noyaux ; courbe d'Aston au tableur ; bilans α (4,87 MeV), β− (0,157 MeV), β+ (0,635 MeV), fission (185 MeV), fusion (17,6 MeV), 1 g d'uranium 235 (7,6 × 10¹⁰ J). Paillasse 3 : quatre documents et tri des applications (fission, fusion, désintégration). |
+
+Les masses de l'affiche sont des masses de noyaux (masse atomique moins Z masses d'électrons), comme le demande la fiche ;
+les énergies calculées concordent avec les valeurs de référence. La balance est un modèle : on ne pèse pas un noyau,
+ses masses viennent de la spectrométrie de masse.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

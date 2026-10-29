@@ -494,6 +494,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_nucl1_a1_becquerel/ | Expérience de Becquerel (poste_becquerel.js, documents_becquerel.js), diagramme (N, Z) des noyaux légers (tableau_nz.js) et de tous les noyaux (affiche_nz.js), équations (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_nucl1_a2_datation/ | Documents et tri des radioéléments (poste_environnement.js), compteur à scintillation et datation au carbone 14 (poste_datation.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_nucl1_a3_compteur/ | Générateur Cs 137 / Ba 137m (generateur_baryum.js) ; aléatoire, rayonnements α β γ, décroissance (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_nucl2_a1_energie/ | Masses des noyaux et énergie de liaison (masses_noyaux.js), balance des noyaux (balance_noyaux.js), affiche des masses (affiche_masses.js), documents et tri des applications (poste_applications.js), missions (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

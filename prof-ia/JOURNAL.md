@@ -1000,3 +1000,16 @@ Problèmes restants, à faire par l'enseignant :
 - Le béryllium 7 (capture électronique, hors programme) n'apparaît pas dans le tableau des noyaux légers.
 - La moyenne et la variance se calculent à la main ou par des formules simples : le tableur n'a pas de fonction MOYENNE.
 
+## 2026-10-29 — Laboratoires virtuels : chapitre 2e année du bac « Noyaux, masse et énergie »
+
+Fait :
+- Une simulation à trois paillasses, inscrite au manifeste (122 ressources) : défaut de masse et énergie de liaison sur
+  une balance de précision (modèle), unités (u, eV, J) et E = m·c², courbe d'Aston au tableur, bilans d'énergie avec les
+  masses des noyaux (α, β−, β+, fission, fusion), applications et dangers (documents, tri). Objectifs O1 à O5.
+- Aucun fichier commun modifié.
+- Vérifié : parcours complet ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La balance des noyaux est un modèle (masses issues de la spectrométrie de masse) ; l'inclinaison du fléau est amplifiée.
+- Le tableur n'a que quatre colonnes : pour Δm, l'élève tape la masse du noyau dans la formule.
+

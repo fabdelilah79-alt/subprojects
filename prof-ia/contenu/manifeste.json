@@ -3978,6 +3978,52 @@
         "Tous les rayonnements sont arrêtés par une feuille de papier.",
         "Au bout de deux demi-vies, il ne reste plus aucun noyau."
       ]
+    },
+    {
+      "id": "b2_nucl2_a1_energie",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_nucl2_a1_energie.html",
+      "description": "Trois paillasses. 1) Balance de précision (modèle) : un noyau (²H, ⁴He, ¹²C, ⁵⁶Fe, ²³⁵U) sur un plateau, ses protons et neutrons séparés sur l'autre ; l'écran donne les masses en u et le défaut de masse ; document sur les unités (u, eV, E = m·c², équation aux dimensions). 2) Affiche des masses de 21 noyaux : courbe d'Aston au tableur (Δm, El/A) ; bilans d'énergie avec les masses des noyaux (α, β−, β+, fission, fusion, 1 g d'uranium 235). 3) Quatre documents (centrale nucléaire, Soleil et ITER, médecine nucléaire, dangers et déchets) et tri des applications : fission, fusion, désintégration.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/nucl2_masse_energie",
+      "activite": "Documents sur les applications des réactions nucléaires.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Défaut de masse et énergie de liaison",
+          "ce_que_fait_l_eleve": "Compare la masse d'un noyau à celle de ses nucléons, calcule le défaut de masse, l'énergie de liaison et convertit les unités.",
+          "conclusion": "La masse d'un noyau est plus petite que la somme des masses de ses nucléons séparés : c'est le défaut de masse Δm = Z·mp + (A − Z)·mn − m(noyau) > 0. L'énergie de liaison El = Δm·c² est l'énergie qu'il faut fournir à un noyau au repos pour le séparer en nucléons isolés au repos : 28,3 MeV pour ⁴He. L'énergie de liaison par nucléon El/A mesure la stabilité : 7,07 MeV pour ⁴He, 8,79 MeV pour ⁵⁶Fe, plus stable. Avec 1 eV = 1,602 × 10⁻¹⁹ J, 1 u correspond à 931,5 MeV."
+        },
+        {
+          "titre": "La courbe d'Aston",
+          "ce_que_fait_l_eleve": "Calcule El/A de dix noyaux et trace la courbe d'Aston.",
+          "conclusion": "El/A augmente rapidement pour les noyaux légers, atteint un maximum d'environ 8,8 MeV par nucléon vers A ≈ 60 (fer, nickel), les noyaux les plus stables, puis diminue lentement jusqu'à 7,6 MeV pour l'uranium. La courbe d'Aston (−El/A en fonction de A) montre donc deux façons de libérer de l'énergie : la fission d'un noyau lourd en deux noyaux moyens et la fusion de deux noyaux légers ; dans les deux cas, les noyaux formés sont plus liés."
+        },
+        {
+          "titre": "Bilans d'énergie",
+          "ce_que_fait_l_eleve": "Fait le bilan d'énergie de désintégrations, d'une fission et d'une fusion.",
+          "conclusion": "Dans une transformation nucléaire spontanée ou provoquée, la masse des produits est plus petite que celle des réactifs : la différence Δm donne l'énergie libérée E = |Δm|·c². Désintégration α du radium 226 : 4,87 MeV ; β− du carbone 14 : 0,157 MeV ; β+ du fluor 18 : 0,635 MeV ; fission d'un noyau d'uranium 235 : environ 185 MeV ; fusion deutérium-tritium : 17,6 MeV, soit plus d'énergie par nucléon que la fission. Un gramme d'uranium 235 libère environ 7,6 × 10¹⁰ J."
+        },
+        {
+          "titre": "Applications et dangers",
+          "ce_que_fait_l_eleve": "Lit des documents sur les applications et les dangers et classe les applications.",
+          "conclusion": "Les centrales nucléaires et la bombe A utilisent la fission ; le Soleil, ITER et la bombe H, la fusion ; la médecine (imagerie, radiothérapie) et la datation utilisent des désintégrations radioactives. Les rayonnements sont dangereux : irradiation par une source extérieure, contamination par une substance radioactive absorbée. Les déchets à vie longue doivent être stockés et surveillés pendant des milliers d'années."
+        }
+      ],
+      "duree_min": 70,
+      "conceptions": [
+        "Un noyau a la même masse que ses nucléons séparés.",
+        "L'énergie de liaison est l'énergie contenue dans un nucléon.",
+        "Seule la fission libère de l'énergie ; la fusion en consomme.",
+        "Les noyaux les plus lourds sont les plus stables."
+      ]
     }
   ]
 }
