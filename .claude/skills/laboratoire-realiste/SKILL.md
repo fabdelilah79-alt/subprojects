@@ -18,8 +18,9 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
    de la liberté à l'élève »).
 3. Chercher ce qui existe déjà dans `commun/` (grep) et le réutiliser : table à coussin d'air (`poste_coussin_air.js`,
    éclateur, feuille, règle, `vecteurs_vitesse.js`, `surcharge.js`), circuits (`circuit.js` et composants, multimètre,
-   oscilloscope, GBF, interface d'acquisition), chimie (verrerie, réactifs), documents (`documents_mur.js`), tri
-   (`tri.js`), tableur, courbe, carnet. Lire l'en-tête « Reçoit / Produit » du fichier avant de l'utiliser.
+   oscilloscope, GBF, interface d'acquisition), mouvements filmés (`pointage_video.js` : caméra + portable + logiciel de
+   pointage, étalonnage, origine, export vers le tableur), chimie (verrerie, réactifs), documents (`documents_mur.js`),
+   tri (`tri.js`), tableur, courbe, carnet. Lire l'en-tête « Reçoit / Produit » du fichier avant de l'utiliser.
 4. Choisir des **valeurs réalistes** (matériel courant d'un lycée marocain : bobine 1 000 spires, GBF 50 Ω, multimètre
    2 000 points, éclateur 20/40/60 ms…) et **vérifier la physique sur le papier** : ordres de grandeur, ce que verra
    l'élève, ce qu'il mesurera, avec quelle précision. Les nombres attendus doivent sortir de la simulation elle-même.
@@ -78,6 +79,11 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
   plusieurs secondes au bas d'une pente avant d'être « immobile ».
 - Corrélation d'un son avec une note : comparer au sinus **et** au cosinus.
 - `pages.py` régénère les pages de **tous** les identifiants de SIMS sans argument : toujours lui passer l'identifiant.
+- Tests : avant de taper dans une cellule déjà remplie, `outils_test.js` sélectionne son contenu (Ctrl+A) ; l'équation
+  d'une courbe se lit dans `.courbe-equation` (le fait « courbe » n'est pas noté) ; une vidéo de pointage donne
+  `objet(k)` (position vraie) pour pointer juste ; `L.pointages[nom]` donne l'écran du logiciel.
+- Un bouton dessiné par `L.bouton_poussoir` est large (≈ 120 px) : prévoir un boîtier assez grand pour que son titre
+  ne soit pas caché.
 
 ## 7. Outils (dossier `outils/` de cette compétence)
 
@@ -88,7 +94,7 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
   courbe_xy), `outils_circuit.js` (brancher, toucher, deplacer_fil, multimetre), `coussin_*.js` (table à coussin d'air).
   Pour lire les faits : remplacer `Labo.missions.noter` pour copier dans `window.notes` (voir `exemple_scenario.js`).
 - `python3 -m outils.assembler_laboratoire <ids>` (dans `prof-ia/`) : fichier autonome `laboratoires/<id>.html`.
-- `ajouter.py labos.json` : ajouter dans `labos.json` une entrée par simulation (id, chapitre, activite, objectifs,
+- `ajouter.py labos.json` (le `labos.json` de ce dossier est la source à jour) : ajouter une entrée par simulation (id, chapitre, activite, objectifs,
   duree_min, description, conceptions, faire — une phrase par mission), puis lancer : réécrit `contenu/manifeste.json`.
 - `bash regression.sh "<id> <scenario>" …` : rejoue des scénarios.
 

@@ -1130,3 +1130,30 @@ Problèmes restants, à faire par l'enseignant :
 - Au bas de la pente, le mobile rebondit plusieurs fois sur la butée avant de s'arrêter : il faut attendre pour poser la surcharge.
 - Le vecteur accélération n'est pas tracé à la main : on le déduit de Δv (questions).
 
+## 2026-10-30 — Compétence « laboratoire-realiste »
+
+Fait :
+- À la demande de l'enseignant (simulations réalistes, attention aux détails, ne plus répéter les remarques) : compétence
+  `.claude/skills/laboratoire-realiste/` : méthode d'un chapitre, liste de contrôle du réalisme visuel, justesse physique,
+  pédagogie, règles de code, pièges connus ; dossier `outils/` avec les outils de génération de pages, de test
+  (Playwright), d'assemblage du manifeste (labos.json) et de régression, qui étaient jusqu'ici dans un dossier temporaire.
+
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Applications des lois de Newton »
+
+Fait :
+- Trois simulations, inscrites au manifeste (141 ressources) : A1 chute libre filmée (pointage vidéo, vy(t), g, équation
+  différentielle, masse sans influence) ; A2 solide sur plan horizontal et incliné, chariot ou pavé (ẍ = 0, ẍ = cte,
+  frottement f) ; A3 projectiles (équations horaires, parabole, flèche, portée, angles complémentaires, masse sans
+  influence). Objectifs O1 à O4.
+- Matériel commun nouveau : pointage_video.js (ordinateur et logiciel de pointage, comme le demandent les orientations).
+- Aucun fichier commun existant modifié.
+- Vérifié : parcours complets (sources et fichiers assemblés) ; valeurs mesurées comparées à la théorie (g = 9,81 m/s² ;
+  a = −2,92 m/s² pour −2,94 ; 4,09 pour 4,10 ; 1,49 pour 1,48 ; v0x = 2,12 m/s ; portées égales à 30° et 60°) ; tests et
+  contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- La précision du pointage dépend des clics de l'élève (1 pixel ≈ 5 à 6 mm) : zoomer à deux doigts pour pointer juste.
+- La vidéo commence au lâcher (ou au tir) ; il n'y a pas d'images avant le départ à écarter.
+- La balle de bois et la bille de verre sont choisies denses pour que l'action de l'air reste négligeable ; il n'y a pas
+  d'objet léger (balle de ping-pong) pour montrer une chute non libre.
+

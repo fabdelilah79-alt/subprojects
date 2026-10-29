@@ -525,6 +525,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_elec5_a3_recepteur/ | Récepteur AM à monter librement, trois émetteurs, écouteur (pieces_recepteur.js, poste_recepteur.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_meca1_a1_vecteurs/ | Vecteurs vitesse et accélération : pente (montée, descente) et mouvement circulaire (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_meca1_a2_newton/ | ΣF = m·ΔvG/Δt (cales, surcharge), référentiels galiléens, troisième loi (poste_newton.js, documents_newton.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/pointage_video.js | Portable et logiciel de pointage vidéo : images, étalonnage, origine, pointage, export vers le tableur. |
+| contenu/ressources/laboratoires/sources/b2_meca2_a1_chute/ | Chute libre filmée et pointée (poste_chute.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca2_a2_plans/ | Solide sur plan horizontal ou incliné, avec ou sans frottement (poste_plan.js, reglages_plan.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca2_a3_projectiles/ | Projectiles : lance-projectile, tableau quadrillé, flèche et portée (poste_tir.js, reglages_tir.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

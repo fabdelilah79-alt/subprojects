@@ -9,7 +9,7 @@ const etat = (page) => page.evaluate(() => { const e = Labo.missions.etat(); ret
 async function tableur(page, valeurs) {
   await page.evaluate(() => Labo.tablette.lever()); await attendre(page, 650);
   await page.click('.tablette-onglet[data-app="tableur"]');
-  for (const [cle, v] of valeurs) { await page.click(`.tableur-feuille:not([hidden]) input[aria-label="Cellule ${cle}"]`); await page.keyboard.type(v); await page.keyboard.press('Enter'); }
+  for (const [cle, v] of valeurs) { await page.click(`.tableur-feuille:not([hidden]) input[aria-label="Cellule ${cle}"]`); await page.keyboard.press('Control+A'); await page.keyboard.type(v); await page.keyboard.press('Enter'); }
   await page.click('.tablette-onglet[data-app="courbe"]'); await attendre(page, 500);
   await page.evaluate(() => Labo.tablette.poser()); await attendre(page, 650);
 }

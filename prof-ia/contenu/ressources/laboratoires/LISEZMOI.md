@@ -631,6 +631,18 @@ Le son de l'écouteur passe par l'interface audio du navigateur (aucune biblioth
 La table à coussin d'air, l'éclateur, la feuille, la règle, les flèches et la surcharge sont ceux du tronc commun. Seule
 nouveauté locale : les cales (poste_newton.js), qui règlent la pente de la table pendant la séance.
 
+## Chapitre 2e année du bac « Applications des lois de Newton » (fiche 2bac/meca2_applications)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca2_a1_chute.html | A1 : bille en chute libre | O1, O2 | Électroaimant, règle de 1 m, caméra 25 images/s, logiciel de pointage : étalonnage, origine, pointage, export ; vy(t) au tableur, droite de pente −9,8 m/s² ; d²y/dt² = −g ; bille d'acier (33 g) et bille de verre (5 g) : même accélération. |
+| b2_meca2_a2_plans.html | A2 : solide sur plan horizontal ou incliné | O2, O3 | Planche articulée (0° à 30°), chariot et pavé de bois de 200 g, lanceur à ressort, caméra inclinée comme la planche : vx(t) ; chariot uniforme, pavé a ≈ −2,9 m/s² (f ≈ 0,59 N) ; à 25° : a = g·sin α ≈ 4,1 m/s² sans frottement, 1,5 m/s² avec (f ≈ 0,53 N) ; à 10°, le pavé ne glisse pas. |
+| b2_meca2_a3_projectiles.html | A3 : projectiles de masses différentes (logiciel, vidéo) | O4 | Lance-projectile (30°, 45°, 60° ; 2,5 à 3,5 m/s), bille d'acier et balle de bois, tableau quadrillé : x(t) (v0x = 2,12 m/s), vy(t) (pente −g) ; équations horaires, parabole ; flèche 0,23 m, portée 0,92 m ; 30° et 60° : même portée ; même trajectoire pour les deux masses. |
+
+Comme le demandent les orientations, l'ordinateur et la caméra sont utilisés : le logiciel de pointage (pointage_video.js)
+montre la vidéo image par image ; l'élève étalonne lui-même l'échelle sur l'étalon filmé, choisit l'origine et pointe
+l'objet ; les coordonnées viennent de ses clics, puis « Exporter » les copie dans le tableur.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,

@@ -4567,6 +4567,101 @@
         "La force et la vitesse ont toujours la même direction.",
         "Le corps le plus massif exerce la force la plus grande dans une interaction."
       ]
+    },
+    {
+      "id": "b2_meca2_a1_chute",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_a1_chute.html",
+      "description": "Une paillasse. Potence, électroaimant, règle de 1 m, bac à sable, deux billes (acier 33 g, verre 5 g), caméra 25 images/s reliée à un ordinateur portable avec un logiciel de pointage vidéo (étalonnage sur la règle filmée, origine, pointage image par image, export vers le tableur). vy(t) est une droite de pente −9,8 m/s² : chute libre, mouvement rectiligne uniformément varié, d²y/dt² = −g ; même accélération pour les deux billes.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "Bille en chute libre.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Une bille en chute libre",
+          "ce_que_fait_l_eleve": "Lâche la bille d'acier, étalonne et pointe la vidéo, calcule vy au tableur, trace vy(t), mesure g et v0, écrit l'équation différentielle et les équations horaires.",
+          "conclusion": "La bille n'est soumise qu'à son poids (l'action de l'air est négligeable) : c'est une chute libre. La deuxième loi de Newton donne m·a = m·g, soit d²y/dt² = −g sur un axe vertical vers le haut. vy(t) est une droite : vy = −g·t + v0y ; y = −½·g·t² + v0y·t + y0. Le mouvement est rectiligne uniformément varié ; l'accélération vaut g ≈ 9,8 m/s²."
+        },
+        {
+          "titre": "La masse compte-t-elle ?",
+          "ce_que_fait_l_eleve": "Recommence avec la bille de verre et compare les accélérations.",
+          "conclusion": "La bille de verre, presque sept fois plus légère, tombe avec la même accélération g : en chute libre, l'accélération ne dépend pas de la masse (m·a = m·g, la masse se simplifie). Une chute libre ne fait intervenir que le poids ; pour un objet léger et grand (feuille, plume), l'action de l'air n'est plus négligeable et la chute n'est plus libre."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Un corps lourd tombe plus vite qu'un corps léger.",
+        "La vitesse d'un corps qui tombe est constante.",
+        "En chute libre, il n'y a aucune force."
+      ]
+    },
+    {
+      "id": "b2_meca2_a2_plans",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_a2_plans.html",
+      "description": "Une paillasse. Planche de 1,1 m articulée (α de 0° à 30°, rapporteur), chariot à roulettes et pavé de bois de 200 g, lanceur à ressort (v0 = 1,4 m/s), caméra inclinée comme la planche, ordinateur et logiciel de pointage. Plan horizontal : chariot uniforme (ẍ = 0), pavé freiné (a ≈ −2,9 m/s², f ≈ 0,59 N). Plan incliné à 25° : chariot a = g·sin α ≈ 4,1 m/s², pavé a ≈ 1,5 m/s², f ≈ 0,53 N ; à 10°, le pavé ne glisse pas.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "Solide sur plan horizontal ou incliné.",
+      "objectifs": [
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Sur un plan horizontal",
+          "ce_que_fait_l_eleve": "Lance le chariot puis le pavé sur la planche horizontale, pointe les vidéos, trace vx(t), mesure a et calcule la force de frottement.",
+          "conclusion": "Sur le plan horizontal, le chariot garde une vitesse constante : ẍ = 0, le mouvement est rectiligne uniforme, P et R se compensent. Le pavé ralentit avec une accélération constante a ≈ −2,9 m/s² : la réaction du plan a une composante tangentielle f, opposée au mouvement (frottement) ; la deuxième loi projetée sur l'axe du mouvement donne −f = m·a, soit f = m·|a| ≈ 0,59 N."
+        },
+        {
+          "titre": "Sur un plan incliné",
+          "ce_que_fait_l_eleve": "Lâche le chariot puis le pavé sur la planche inclinée à 25°, mesure a, calcule f, et observe le pavé à 10°.",
+          "conclusion": "Sur le plan incliné, l'accélération est constante : ẍ = cte, le mouvement est rectiligne uniformément varié, x = ½·a·t² + v0·t + x0. Sans frottement, la deuxième loi projetée donne a = g·sin α ≈ 4,1 m/s² pour α = 25°. Avec frottement, a = g·sin α − f/m est plus petite (≈ 1,5 m/s²), d'où f = m·(g·sin α − a) ≈ 0,53 N. Pour une pente faible (α = 10°), le pavé reste immobile : le frottement compense la composante du poids le long du plan."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Sans force motrice, un objet finit toujours par s'arrêter.",
+        "Sur un plan incliné, l'accélération dépend de la masse.",
+        "La force de frottement est toujours égale au poids."
+      ]
+    },
+    {
+      "id": "b2_meca2_a3_projectiles",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_a3_projectiles.html",
+      "description": "Une paillasse. Lance-projectile à ressort (α = 30°, 45°, 60° ; v0 = 2,5 ; 3,0 ; 3,5 m/s), bille d'acier (33 g) et balle de bois (8 g), tableau quadrillé derrière la trajectoire, bac à sable, caméra et logiciel de pointage. x(t) droite (v0x = 2,12 m/s à 45°), vy(t) droite de pente −g ; équations horaires et trajectoire parabolique ; flèche 0,23 m, portée 0,92 m ; même portée à 30° et 60° ; même trajectoire pour les deux masses.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "Logiciels et vidéos de projectiles de masses différentes (air négligé).",
+      "objectifs": [
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Mouvement d'un projectile",
+          "ce_que_fait_l_eleve": "Tire la bille à 45°, pointe la vidéo, trace x(t) et vy(t), mesure v0x et g, écrit les équations horaires et l'équation de la trajectoire.",
+          "conclusion": "Seul le poids agit : a = g, vertical vers le bas. Selon x, ẍ = 0 : x = v0·cos α·t (mouvement uniforme) ; selon y, ÿ = −g : vy = −g·t + v0·sin α et y = −½·g·t² + v0·sin α·t (mouvement uniformément varié). En éliminant t, la trajectoire est une parabole : y = −g·x² / (2·v0²·cos²α) + x·tan α."
+        },
+        {
+          "titre": "Flèche, portée, conditions initiales",
+          "ce_que_fait_l_eleve": "Calcule la flèche et la portée, compare les tirs à 30° et 60°, puis tire la balle de bois.",
+          "conclusion": "La flèche h = v0²·sin²α/(2g) et la portée D = v0²·sin(2α)/g ne dépendent que des conditions initiales (v0, α) et de g, pas de la masse : la bille d'acier et la balle de bois suivent la même trajectoire. Pour une même vitesse, deux angles complémentaires (30° et 60°) donnent la même portée ; elle est maximale pour α = 45°."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Un projectile lourd retombe plus près.",
+        "La vitesse horizontale diminue pendant le vol.",
+        "La portée augmente toujours avec l'angle de tir."
+      ]
     }
   ]
 }

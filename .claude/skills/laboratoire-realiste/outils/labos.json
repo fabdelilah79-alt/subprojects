@@ -2635,5 +2635,64 @@
    "Choisit la pente et la masse, enregistre quatre descentes, mesure ΔvG/Δt, remplit le tableur et trace m·ΔvG/Δt en fonction de ΣF.",
    "Lit les documents, range les référentiels (galiléen ou non) et applique la troisième loi."
   ]
+ },
+ {
+  "id": "b2_meca2_a1_chute",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 45,
+  "description": "Une paillasse. Potence, électroaimant, règle de 1 m, bac à sable, deux billes (acier 33 g, verre 5 g), caméra 25 images/s reliée à un ordinateur portable avec un logiciel de pointage vidéo (étalonnage sur la règle filmée, origine, pointage image par image, export vers le tableur). vy(t) est une droite de pente −9,8 m/s² : chute libre, mouvement rectiligne uniformément varié, d²y/dt² = −g ; même accélération pour les deux billes.",
+  "conceptions": [
+   "Un corps lourd tombe plus vite qu'un corps léger.",
+   "La vitesse d'un corps qui tombe est constante.",
+   "En chute libre, il n'y a aucune force."
+  ],
+  "faire": [
+   "Lâche la bille d'acier, étalonne et pointe la vidéo, calcule vy au tableur, trace vy(t), mesure g et v0, écrit l'équation différentielle et les équations horaires.",
+   "Recommence avec la bille de verre et compare les accélérations."
+  ]
+ },
+ {
+  "id": "b2_meca2_a2_plans",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. Planche de 1,1 m articulée (α de 0° à 30°, rapporteur), chariot à roulettes et pavé de bois de 200 g, lanceur à ressort (v0 = 1,4 m/s), caméra inclinée comme la planche, ordinateur et logiciel de pointage. Plan horizontal : chariot uniforme (ẍ = 0), pavé freiné (a ≈ −2,9 m/s², f ≈ 0,59 N). Plan incliné à 25° : chariot a = g·sin α ≈ 4,1 m/s², pavé a ≈ 1,5 m/s², f ≈ 0,53 N ; à 10°, le pavé ne glisse pas.",
+  "conceptions": [
+   "Sans force motrice, un objet finit toujours par s'arrêter.",
+   "Sur un plan incliné, l'accélération dépend de la masse.",
+   "La force de frottement est toujours égale au poids."
+  ],
+  "faire": [
+   "Lance le chariot puis le pavé sur la planche horizontale, pointe les vidéos, trace vx(t), mesure a et calcule la force de frottement.",
+   "Lâche le chariot puis le pavé sur la planche inclinée à 25°, mesure a, calcule f, et observe le pavé à 10°."
+  ]
+ },
+ {
+  "id": "b2_meca2_a3_projectiles",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 3,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. Lance-projectile à ressort (α = 30°, 45°, 60° ; v0 = 2,5 ; 3,0 ; 3,5 m/s), bille d'acier (33 g) et balle de bois (8 g), tableau quadrillé derrière la trajectoire, bac à sable, caméra et logiciel de pointage. x(t) droite (v0x = 2,12 m/s à 45°), vy(t) droite de pente −g ; équations horaires et trajectoire parabolique ; flèche 0,23 m, portée 0,92 m ; même portée à 30° et 60° ; même trajectoire pour les deux masses.",
+  "conceptions": [
+   "Un projectile lourd retombe plus près.",
+   "La vitesse horizontale diminue pendant le vol.",
+   "La portée augmente toujours avec l'angle de tir."
+  ],
+  "faire": [
+   "Tire la bille à 45°, pointe la vidéo, trace x(t) et vy(t), mesure v0x et g, écrit les équations horaires et l'équation de la trajectoire.",
+   "Calcule la flèche et la portée, compare les tirs à 30° et 60°, puis tire la balle de bois."
+  ]
  }
 ]
