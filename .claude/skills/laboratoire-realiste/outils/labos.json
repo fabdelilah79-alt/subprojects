@@ -1,0 +1,2639 @@
+[
+ {
+  "id": "tc_meca1_a1_echelle",
+  "chapitre": "tronc_commun/meca1_interactions",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 15,
+  "description": "Laboratoire virtuel : frise des puissances de dix, de l'atome aux galaxies. L'élève convertit des longueurs en mètre et les place sur la frise.",
+  "faire": [
+   "Convertit 8 longueurs (noyau, atome, Terre, distance Terre-Lune, Terre-Soleil, galaxie...) en mètre au tableur, place les étiquettes aimantées sur la frise des puissances de dix, compare les ordres de grandeur et calcule la durée du trajet de la lumière du Soleil à la Terre."
+  ]
+ },
+ {
+  "id": "tc_meca1_a2_gravitation",
+  "chapitre": "tronc_commun/meca1_interactions",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O4"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : le Soleil, la Terre et la Lune vus dans l'espace (mouvements, actions réciproques), puis des sondes pour découvrir la loi de la gravitation universelle. G est donnée, jamais modifiée.",
+  "conceptions": [
+   "Seule la Terre attire la Lune, la Lune n'attire pas la Terre.",
+   "La force de gravitation ne dépend que de la masse de l'astre."
+  ],
+  "faire": [
+   "Observe une année (phases de la Lune), arrête le temps avec le bouton « Pause » et pose les vecteurs-forces F_S/T, F_T/S et F_T/L.",
+   "Place des sondes de masses différentes près de la Terre puis de la Lune, relève F au tableur et trouve que F est proportionnelle à m et à M.",
+   "Éloigne la sonde, trace F en fonction de 1/d², calcule F·d²/(m·M) et retrouve la constante G, puis calcule la force Terre-Lune."
+  ]
+ },
+ {
+  "id": "tc_meca1_a3_force_pressante",
+  "chapitre": "tronc_commun/meca1_interactions",
+  "activite": 3,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : brique posée sur la mousse (effet de la force pressante), classement des actions mécaniques, capsule manométrique dans l'eau et baromètre.",
+  "faire": [
+   "Pose la brique sur la mousse par ses trois faces, puis deux briques, mesure l'enfoncement au réglet, calcule P = F/S au tableur et classe les actions sur le tableau magnétique.",
+   "Plonge la capsule manométrique dans l'eau à différentes profondeurs et orientations, trace Δh en fonction de h, puis lit le baromètre en hPa, bar et cmHg."
+  ]
+ },
+ {
+  "id": "tc_meca1_o3_poids",
+  "chapitre": "tronc_commun/meca1_interactions",
+  "activite": null,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 15,
+  "description": "Laboratoire virtuel (complément, sans activité dans la fiche) : masses marquées accrochées à un dynamomètre pour trouver P = m·g.",
+  "faire": [
+   "Accroche des masses marquées au dynamomètre, relève P au tableur, trace P en fonction de m, trouve g ≈ 9,8 N/kg puis détermine la masse d'un caillou."
+  ]
+ },
+ {
+  "id": "tc_meca1_o3_altitude",
+  "chapitre": "tronc_commun/meca1_interactions",
+  "activite": null,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 15,
+  "description": "Laboratoire virtuel (complément, sans activité dans la fiche) : une sonde de 1000 kg éloignée de la Terre jusqu'à 36 000 km pour découvrir g = g0·R²/(R+h)².",
+  "faire": [
+   "Déplace la sonde de 0 à 36 000 km d'altitude, relève F au tableur, trace F en fonction de h puis de 1/(R+h)², trouve g = g0·R²/(R+h)² et l'applique à la Station spatiale internationale."
+  ]
+ },
+ {
+  "id": "tc_meca2_a1_relativite",
+  "chapitre": "tronc_commun/meca2_mouvement",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 10,
+  "description": "Laboratoire virtuel : un cycliste passe dans une rue, filmé par une caméra fixe (référentiel terrestre) et par une caméra embarquée sur le vélo (référentiel du vélo), avec un stroboscope.",
+  "conceptions": [
+   "Le mouvement d'un objet est le même pour tous les observateurs.",
+   "Un objet est immobile ou en mouvement dans l'absolu."
+  ],
+  "faire": [
+   "Regarde un passage avec la caméra fixe (la valve décrit une cycloïde), touche la caméra du porte-bagages (la valve décrit un cercle, le casque est immobile), puis choisit le référentiel adapté (terrestre, géocentrique)."
+  ]
+ },
+ {
+  "id": "tc_meca2_a2_repere",
+  "chapitre": "tronc_commun/meca2_mouvement",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O4"
+  ],
+  "duree_min": 20,
+  "description": "Laboratoire virtuel : table à coussin d'air et éclateur ; l'élève enregistre un mouvement et choisit un repère d'espace (transparent millimétré) et un repère de temps.",
+  "faire": [
+   "Enregistre un lancer, pose l'origine du transparent millimétré sur M0, relève t, x et y de M0 à M6 au tableur, trace la trajectoire et répond sur le choix du repère et de l'origine des dates."
+  ]
+ },
+ {
+  "id": "tc_meca2_a3_vitesse",
+  "chapitre": "tronc_commun/meca2_mouvement",
+  "activite": 3,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : table à coussin d'air inclinée ; l'élève mesure des distances à la règle pour approcher la vitesse instantanée et trace des vecteurs vitesse.",
+  "faire": [
+   "Enregistre le mouvement sur la table inclinée, calcule la vitesse moyenne entre M2 et M4, remplit le tableau vi = Mi-1Mi+1 / 2τ pour i = 1 à 8, trace v en fonction de t, trace les vecteurs v3 et v7 et convertit en km/h."
+  ]
+ },
+ {
+  "id": "tc_meca2_a4_mru_mcu",
+  "chapitre": "tronc_commun/meca2_mouvement",
+  "activite": 4,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : table à coussin d'air horizontale ; mobile lancé librement (mouvement rectiligne uniforme), puis retenu par un fil au clou central (mouvement circulaire uniforme).",
+  "faire": [
+   "Lance le mobile sans fil, relève x = M0Mi au tableur, modélise x = v·t et utilise l'équation horaire (distance en 5 s, durée pour 2 m).",
+   "Accroche le fil au mobile, enregistre, vérifie que les distances Mi-1Mi+1 sont égales, trace v2, v6 et v10 tangents au cercle, puis compare avec la Lune et les satellites."
+  ]
+ },
+ {
+  "id": "tc_meca3_a1_actions",
+  "chapitre": "tronc_commun/meca3_inertie",
+  "activite": 1,
+  "objectifs": [
+   "O2"
+  ],
+  "duree_min": 15,
+  "description": "Laboratoire virtuel : bille d'acier lâchée d'une gouttière (photographie à pose multiple) près d'un aimant ou contre une cale en bois ; palet sur la table à coussin d'air avec et sans air.",
+  "conceptions": [
+   "Une force est nécessaire pour entretenir un mouvement rectiligne uniforme.",
+   "La force reçue au départ s'épuise, c'est pourquoi un objet finit par s'arrêter."
+  ],
+  "faire": [
+   "Lâche la bille sur le plateau vide (droite, léger ralentissement dû aux frottements), puis avec l'aimant près du trajet (trajectoire courbée : action à distance), puis avec la cale sur le trajet (rebond : action de contact).",
+   "Lance le palet air coupé (il s'arrête vite : frottement), puis avec l'air (il glisse sans ralentir : poids et action de l'air se compensent, palet pseudo-isolé)."
+  ]
+ },
+ {
+  "id": "tc_meca3_a2_principe",
+  "chapitre": "tronc_commun/meca3_inertie",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : vérification du principe d'inertie sur une table à coussin d'air horizontale avec soufflerie, puis sur une table inclinée.",
+  "conceptions": [
+   "Une force est nécessaire pour entretenir un mouvement rectiligne uniforme."
+  ],
+  "faire": [
+   "Met l'air sous le palet posé et constate qu'il reste immobile : son poids et l'action de l'air se compensent (pseudo-isolé).",
+   "Enregistre un lancer, mesure à la règle les distances MiMi+1 (i = 0 à 9) au tableur, constate qu'elles sont égales et énonce le principe d'inertie.",
+   "Enregistre un lancer sur la table inclinée : le mouvement n'est plus rectiligne uniforme car les actions ne se compensent plus ; cas d'une sonde spatiale isolée."
+  ]
+ },
+ {
+  "id": "tc_meca3_a3_centre_inertie",
+  "chapitre": "tronc_commun/meca3_inertie",
+  "activite": 3,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : deux palets solidaires (400 g et 200 g) lancés en tournant sur la table à coussin d'air ; recherche du centre d'inertie sur l'enregistrement ; centre d'inertie de solides homogènes.",
+  "faire": [
+   "Enregistre le mouvement des deux palets (traces A et B courbes), fait glisser un curseur le long de A0B0 jusqu'à ce que les croix soient alignées et régulièrement espacées (point G), mesure GA et GB, découvre mA·GA = mB·GB et la relation barycentrique ; mouvement d'ensemble et mouvement propre.",
+   "Colle une gommette au centre d'inertie d'une tige, d'une barre, d'un disque et d'une sphère homogènes, puis applique la relation barycentrique à deux boules reliées par une tige."
+  ]
+ },
+ {
+  "id": "tc_meca4_a1_quantite",
+  "chapitre": "tronc_commun/meca4_quantite_mouvement",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 20,
+  "description": "Laboratoire virtuel : table à coussin d'air, mobile de 300 g et surcharge de 300 g ; l'élève calcule p = m·v et trace le vecteur quantité de mouvement.",
+  "faire": [
+   "Enregistre un lancer du mobile de 300 g, mesure sa vitesse à la règle, calcule p = m·v en kg·m/s, trace le vecteur p5 à l'échelle (1 cm ↔ 0,05 kg·m/s) et donne l'unité de p.",
+   "Pose la surcharge de 300 g sur le mobile, enregistre un nouveau lancer, calcule p ; constate qu'à vitesse égale p est proportionnelle à m ; calcule p d'une voiture."
+  ]
+ },
+ {
+  "id": "tc_meca4_a2_conservation",
+  "chapitre": "tronc_commun/meca4_quantite_mouvement",
+  "activite": 2,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : « explosion » de deux mobiles A et B serrés contre un ressort comprimé et retenus par un fil, sur la table à coussin d'air ; surcharge à poser sur A.",
+  "conceptions": [
+   "La quantité de mouvement d'un système immobile peut devenir non nulle sans action extérieure."
+  ],
+  "faire": [
+   "Pose la surcharge sur A (400 g contre 200 g), enregistre, coupe le fil, mesure vA et vB à la règle, compare pA et pB : vecteurs opposés, pA + pB = 0 ; la quantité de mouvement du système se conserve.",
+   "Recommence sans surcharge (masses égales) : vA = vB ; énonce la loi de conservation et l'applique à deux patineurs qui se repoussent."
+  ]
+ },
+ {
+  "id": "tc_meca4_a3_applications",
+  "chapitre": "tronc_commun/meca4_quantite_mouvement",
+  "activite": 3,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : choc de deux mobiles qui se collent sur la table à coussin d'air ; enfant qui saute d'une barque sur un lac ; canon à ressort sur un chariot qui recule (photographies à pose multiple).",
+  "faire": [
+   "Lance A (200 g) vers B (400 g) immobile ; ils se collent ; mesure vA avant et v' après le choc, vérifie mA·vA = (mA + mB)·v'.",
+   "Fait sauter l'enfant (40 kg, 2,4 m/s) de la barque (80 kg) vers le ponton, mesure la vitesse de recul de la barque avec les bouées graduées, vérifie p(barque) = − p(enfant).",
+   "Fait tirer le canon (bille de 50 g à 3,2 m/s, chariot de 400 g), mesure la vitesse de recul sur le rail gradué, vérifie la conservation, calcule le recul d'un fusil."
+  ]
+ },
+ {
+  "id": "tc_meca4_a4_force",
+  "chapitre": "tronc_commun/meca4_quantite_mouvement",
+  "activite": 4,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : chronophotographie d'une bille de 50 g lâchée par un électroaimant devant une règle verticale, puis lancée horizontalement devant un tableau quadrillé ; fils de lecture pour mesurer.",
+  "conceptions": [
+   "Le vecteur force a toujours la direction du mouvement."
+  ],
+  "faire": [
+   "Lâche la bille, relève t et y des 10 images au tableur, calcule v3, v7 puis Δp/Δt et le compare au poids P = m·g : F = Δp/Δt ; Δp est vertical vers le bas, comme le poids.",
+   "Lance la bille horizontalement : la distance horizontale entre deux images est constante (vx = 1 m/s), Δp est vertical vers le bas ; la direction de la force se déduit de Δp."
+  ]
+ },
+ {
+  "id": "tc_meca5_a1_ressort",
+  "chapitre": "tronc_commun/meca5_equilibre",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 20,
+  "description": "Laboratoire virtuel : deux ressorts suspendus à une potence, règle graduée et index ; masses marquées à accrocher.",
+  "faire": [
+   "Lit la longueur à vide, accroche au moins 4 masses, relève m, T = m·g, l et Δl au tableur, trace T en fonction de Δl : droite passant par l'origine, T = K·Δl, K ≈ 25 N/m.",
+   "Avec un ressort plus raide, mesure K à partir d'une seule masse (200 g), compare les raideurs, et explique l'étalonnage d'un dynamomètre."
+  ]
+ },
+ {
+  "id": "tc_meca5_a2_archimede",
+  "chapitre": "tronc_commun/meca5_equilibre",
+  "activite": 2,
+  "objectifs": [
+   "O2"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : dynamomètre fin (2 N), deux cylindres de même volume (aluminium, plastique), béchers d'eau et d'eau salée sur un support élévateur.",
+  "conceptions": [
+   "La poussée d'Archimède dépend de la masse du corps immergé.",
+   "Un corps plus lourd subit une poussée plus grande."
+  ],
+  "faire": [
+   "Pèse le cylindre d'aluminium dans l'air (P), l'immerge entièrement en montant le support élévateur (poids apparent P'), calcule F = P − P', puis l'immerge à moitié : la poussée dépend du volume immergé.",
+   "Compare avec le cylindre en plastique de même volume (même poussée), puis avec l'eau salée (poussée plus grande) ; calcule ρ·V·g et énonce les caractéristiques de la poussée."
+  ]
+ },
+ {
+  "id": "tc_meca5_a3_trois_forces",
+  "chapitre": "tronc_commun/meca5_equilibre",
+  "activite": 3,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : table à forces verticale, anneau tenu par trois fils (deux sur des poulies), porte-masses et masses à fente, rapporteur, polygone des forces.",
+  "faire": [
+   "Charge les porte-masses, observe l'anneau en équilibre (forces coplanaires et concourantes), mesure au rapporteur les angles des fils avec l'horizontale, vérifie que les projections horizontales et verticales s'annulent (méthode analytique).",
+   "Fait apparaître les vecteurs F1, F2, F3 et les met bout à bout : le triangle des forces est fermé (méthode graphique) ; applique la condition d'équilibre à un lustre suspendu par deux câbles."
+  ]
+ },
+ {
+  "id": "tc_meca5_a4_frottement",
+  "chapitre": "tronc_commun/meca5_equilibre",
+  "activite": 4,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 20,
+  "description": "Laboratoire virtuel : plan inclinable avec un pavé de bois et un pavé à semelle de caoutchouc (angle de frottement), puis traction horizontale d'un pavé au dynamomètre (index du maximum).",
+  "faire": [
+   "Pose le pavé sur le plan, soulève lentement le plan jusqu'au glissement, lit l'angle φ et calcule k = tan φ ; recommence avec le caoutchouc ; représente la réaction R inclinée sur la normale.",
+   "Tire le pavé au dynamomètre jusqu'au démarrage, lit la force maximale, recommence avec 200 g de plus : F_max / P = k ; importance du frottement dans la vie courante."
+  ]
+ },
+ {
+  "id": "tc_meca5_a5_moments",
+  "chapitre": "tronc_commun/meca5_equilibre",
+  "activite": 5,
+  "objectifs": [
+   "O5",
+   "O6",
+   "O7"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : barre à trous mobile autour d'un axe fixe et masses marquées (moment d'une force, théorème des moments) ; pendule de torsion à cadran gradué, couple appliqué par deux fils et des masses à fente.",
+  "conceptions": [
+   "L'effet de rotation d'une force ne dépend que de sa valeur."
+  ],
+  "faire": [
+   "Accroche une masse à 15 cm de l'axe (la barre tourne), puis sur l'axe (pas de rotation) ; équilibre 200 g à 10 cm par 100 g à 20 cm, trouve un équilibre à trois masses ; énonce le théorème des moments ; calcule M = F·d.",
+   "Applique un couple de deux forces égales au tambour du fil de torsion, relève M = F·d et θ pour 3 charges, trace M en fonction de θ : M = C·θ, C ≈ 0,02 N·m/rad ; signification du signe dans M = −C·θ."
+  ]
+ },
+ {
+  "id": "tc_elec1_a1_electrisation",
+  "chapitre": "tronc_commun/elec1_courant_continu",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 25,
+  "description": "Laboratoire virtuel : baguettes de PVC et de verre frottées sur la laine ou la soie, coupelle de petits papiers ; baguette suspendue à un étrier (attraction, répulsion) ; loupe « modèle » qui montre noyaux et électrons de la matière.",
+  "conceptions": [
+   "Le frottement fabrique de l'électricité.",
+   "Pendant le frottement, ce sont les charges positives qui se déplacent.",
+   "Un corps électrisé attire tous les autres corps électrisés."
+  ],
+  "faire": [
+   "Approche une baguette non frottée puis frottée des petits papiers ; électrise le PVC avec la laine et le verre avec la soie : les corps légers sont attirés.",
+   "Pose un PVC frotté sur l'étrier ; approche un second PVC frotté (répulsion) puis le verre frotté (attraction) ; énonce les deux types d'électricité et leurs interactions ; convention : verre frotté positif.",
+   "Promène la loupe sur le PVC et sur la laine frottés : électrons en excès ou en manque ; seuls les électrons se déplacent ; calcule n = |Q|/e et retiens Q = n·e."
+  ]
+ },
+ {
+  "id": "tc_elec1_a2_nature_courant",
+  "chapitre": "tronc_commun/elec1_courant_continu",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 35,
+  "description": "Laboratoire virtuel : l'élève pose lui-même les fils entre générateur, interrupteur, lampe, DEL et multimètre (ampèremètre) ; loupe « modèle » sur un fil de cuivre (électrons libres) ; tube en U d'électrolyse du dichromate de cuivre (migration des ions colorés, inversion de polarité).",
+  "conceptions": [
+   "Le courant sort des deux bornes du générateur et s'use dans la lampe.",
+   "Dans un fil, les électrons vont de la borne + vers la borne −.",
+   "Le courant ne passe pas dans une solution, ou y est porté par des électrons."
+  ],
+  "faire": [
+   "Réalise un circuit en série avec une DEL, ferme l'interrupteur, puis échange les fils de la DEL : le courant a un sens ; sens conventionnel de + vers − hors du générateur.",
+   "Promène la loupe sur un fil, circuit fermé puis ouvert : les électrons libres avancent en sens inverse de I, ou s'agitent sans avancer.",
+   "Branche le multimètre en série (mA, COM, calibre 200 mA), lis I, calcule Q = I·Δt pour 2 min et n = Q/e ; 1 A = 1 C/s.",
+   "Branche le tube en U en série avec le multimètre, observe la migration des ions Cu²⁺ (vers −) et dichromate (vers +), inverse le générateur : double migration des ions."
+  ]
+ },
+ {
+  "id": "tc_elec1_a3_loi_noeuds",
+  "chapitre": "tronc_commun/elec1_courant_continu",
+  "activite": 3,
+  "objectifs": [
+   "O5"
+  ],
+  "duree_min": 35,
+  "description": "Laboratoire virtuel : l'élève pose les fils entre générateur, interrupteur, deux lampes différentes et des multimètres (ampèremètres, calibres 10 A, 200 mA, 20 mA) ; circuit en série (un ampèremètre déplacé), circuit en dérivation (trois ampèremètres A, A1, A2) ; tableur sur la tablette.",
+  "conceptions": [
+   "Le courant s'use en traversant les lampes.",
+   "La lampe qui brille le moins reçoit le moins de courant, même en série.",
+   "Au nœud, le courant se partage en deux moitiés égales."
+  ],
+  "faire": [
+   "Monte L1 et L2 en série, insère le multimètre à trois endroits, recopie les intensités dans le tableur : la même intensité partout ; essaie le calibre 20 mA (dépassement « 1 ») et choisis le bon calibre.",
+   "Monte L1 et L2 en dérivation avec A, A1, A2, recopie I, I1, I2 et calcule I1 + I2 dans le tableur : loi des nœuds I = I1 + I2, conservation de la charge."
+  ]
+ },
+ {
+  "id": "tc_elec2_a1_tensions_continues",
+  "chapitre": "tronc_commun/elec2_tension",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 40,
+  "description": "Laboratoire virtuel : générateur (bornes P et N), interrupteur, deux lampes (A, B et C, D) et multimètre en voltmètre (V⎓, calibres, notice de précision) ; l'élève pose les fils ; tableur sur la tablette.",
+  "conceptions": [
+   "La tension circule dans le circuit comme le courant.",
+   "Pas de courant, donc pas de tension (interrupteur ouvert).",
+   "Deux lampes en série reçoivent chacune la tension du générateur.",
+   "La tension n'a pas de signe."
+  ],
+  "faire": [
+   "Mesure U_PN au voltmètre en dérivation, échange les fils (U_NP = −U_PN), représente U_PN par une flèche vers P, constate le dépassement sur 2 V, calcule l'incertitude de la notice et écrit U_PN = (6,00 ± 0,05) V.",
+   "Monte deux lampes en série, mesure U_PN, U_AB et U_CD et vérifie U_PN = U_AB + U_CD dans le tableur ; interrupteur ouvert, U_EF = U_PN sans courant.",
+   "Monte les lampes en dérivation et vérifie U_AB = U_CD = U_PN."
+  ]
+ },
+ {
+  "id": "tc_elec2_a2_potentiel",
+  "chapitre": "tronc_commun/elec2_tension",
+  "activite": 2,
+  "objectifs": [
+   "O2"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : générateur 12 V, plaquette de trois résistances en série au code des couleurs (100, 220 et 330 Ω entre les points A, B, C, D) et voltmètre ; l'élève choisit le point de référence (masse).",
+  "conceptions": [
+   "Le potentiel et la tension sont la même chose.",
+   "Le potentiel d'un point est fixé une fois pour toutes.",
+   "La tension change si l'on change de masse."
+  ],
+  "faire": [
+   "Masse en D : mesure U_AD, U_BD, U_CD et écrit les potentiels V_A, V_B, V_C, V_D dans le tableur.",
+   "Mesure U_AB et U_BC et les compare à V_A − V_B et V_B − V_C : U_AB = V_A − V_B ; calcul de U_FE.",
+   "Masse en C : les potentiels changent (V_D < 0), la tension U_AB reste la même."
+  ]
+ },
+ {
+  "id": "tc_elec2_a3_oscilloscope",
+  "chapitre": "tronc_commun/elec2_tension",
+  "activite": 3,
+  "objectifs": [
+   "O1",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 40,
+  "description": "Laboratoire virtuel : pile de 4,5 V, GBF (sinus, triangle, carré ; fréquence affichée, amplitude à mesurer), oscilloscope (10 × 8 divisions, Sv en V/div, b en ms/div, entrée Y1 et masse) et multimètre TRMS (V~) ; l'élève pose les fils.",
+  "conceptions": [
+   "L'oscilloscope mesure un courant.",
+   "Une tension variable n'a pas de période définie, elle dépend de la forme.",
+   "U = Umax/√2 pour toute tension variable.",
+   "La valeur affichée par le voltmètre en alternatif est la valeur maximale."
+  ],
+  "faire": [
+   "Branche une pile sur l'oscilloscope : droite horizontale, U = Sv·y ; inversée, elle passe sous la masse.",
+   "Branche le GBF sinusoïdal, règle Sv et b, mesure x pour une période, T = b·x, f = 1/T, Umax = Sv·y ; le voltmètre V~ affiche U = Umax/√2.",
+   "Observe des tensions triangulaire et carrée : la période ne change pas ; en carré, le voltmètre affiche Umax : U = Umax/√2 seulement en sinusoïdal."
+  ]
+ },
+ {
+  "id": "tc_elec3_a1_associations",
+  "chapitre": "tronc_commun/elec3_montages_electriques",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 45,
+  "description": "Laboratoire virtuel : résistances sur support au code des couleurs (valeurs réelles dans la tolérance), multimètre en ohmmètre (calibres 200 Ω à 200 kΩ), planche de fils résistants (constantan et cuivre, longueurs et sections différentes), diviseur de tension avec un générateur 12 V ; l'élève pose les fils.",
+  "conceptions": [
+   "La valeur d'une résistance est exactement celle du code des couleurs.",
+   "En parallèle, la résistance équivalente est plus grande que chacune des résistances.",
+   "La résistance d'un fil ne dépend que de sa longueur.",
+   "L'ohmmètre peut mesurer une résistance dans un circuit alimenté."
+  ],
+  "faire": [
+   "Mesure R1, R2, R3 à l'ohmmètre en choisissant le calibre ; lit le code des couleurs et vérifie la tolérance de 5 %.",
+   "Mesure R1 et R2 en série (Req = R1 + R2) puis en parallèle (G = G1 + G2, Req plus petite que chacune).",
+   "Mesure quatre fils : R proportionnelle à l, inversement proportionnelle à S, dépendant du matériau ; calcule ρ du constantan.",
+   "Monte un diviseur de tension, mesure U0 et U aux bornes de R2 et vérifie U = R2/(R1 + R2)·U0."
+  ]
+ },
+ {
+  "id": "tc_elec3_a2_caracteristiques",
+  "chapitre": "tronc_commun/elec3_montages_electriques",
+  "activite": 2,
+  "objectifs": [
+   "O4",
+   "O5"
+  ],
+  "duree_min": 60,
+  "description": "Laboratoire virtuel : alimentation réglable (grossier et fin), ampèremètre et voltmètre ; caractéristiques d'une résistance (droite), d'une lampe à filament (résistance qui augmente en chauffant) et d'une diode 1N4007 (seuil vers 0,6 V) ; diode Zener 5,1 V alimentée par un GBF et observée à l'oscilloscope ; thermistance CTN (béchers d'eau glacée, du robinet, chaude) et photorésistance (lampe de poche, cache) à l'ohmmètre ; tableur et courbes sur la tablette.",
+  "conceptions": [
+   "Tous les dipôles suivent la loi d'Ohm.",
+   "La résistance d'une lampe est constante.",
+   "Une diode conduit dans les deux sens.",
+   "Une Zener ne conduit jamais en sens inverse.",
+   "La résistance d'une CTN augmente avec la température."
+  ],
+  "faire": [
+   "Relève au moins 6 points (I, U) d'une résistance, trace U = f(I) : droite passant par l'origine, R = coefficient directeur.",
+   "Relève la caractéristique d'une lampe : U/I augmente avec I (le filament chauffe), la lampe n'est pas un conducteur ohmique.",
+   "Relève I = f(U) d'une diode avec sa résistance de protection : tension de seuil vers 0,6 V ; retournée, la diode est bloquée.",
+   "Observe à l'oscilloscope la tension aux bornes d'une Zener alimentée en sinusoïdal : écrêtage à Uz = 5,1 V et à −0,7 V.",
+   "Mesure à l'ohmmètre une CTN à trois températures et une photorésistance à trois éclairements : R diminue quand θ ou la lumière augmente ; choix d'un capteur."
+  ]
+ },
+ {
+  "id": "tc_elec3_a2_dipoles_actifs",
+  "chapitre": "tronc_commun/elec3_montages_electriques",
+  "activite": 2,
+  "objectifs": [
+   "O6"
+  ],
+  "duree_min": 45,
+  "description": "Laboratoire virtuel : pile plate 4,5 V (r = 2 Ω) débitant dans un rhéostat 100 Ω à curseur et une résistance de protection ; électrolyseur à solution de soude (E' = 1,7 V, r' = 8 Ω, bulles de gaz deux fois plus abondantes à la cathode) alimenté par une alimentation réglable ; ampèremètre et voltmètre ; tableur et courbes sur la tablette.",
+  "conceptions": [
+   "Une pile délivre toujours la même tension, quel que soit le courant.",
+   "La tension d'une pile est la même que le courant soit débité ou non.",
+   "Un électrolyseur conduit dès qu'on lui applique une tension.",
+   "Un court-circuit est sans danger pour une pile."
+  ],
+  "faire": [
+   "Fait varier le courant débité par la pile avec le rhéostat, relève U et I (dont I = 0), trace U = f(I) : droite décroissante U = E − r·I, E = 4,5 V, r = 2 Ω, Icc = E/r.",
+   "Fait varier la tension appliquée à l'électrolyseur, relève U et I : pas de courant ni de bulles sous E' ; au-delà U = E' + r'·I (E' ≈ 1,7 V, r' ≈ 8 Ω)."
+  ]
+ },
+ {
+  "id": "tc_elec3_a3_point_fonctionnement",
+  "chapitre": "tronc_commun/elec3_montages_electriques",
+  "activite": 3,
+  "objectifs": [
+   "O7"
+  ],
+  "duree_min": 50,
+  "description": "Laboratoire virtuel à partir d'un problème d'adaptation : une lampe 6 V – 0,1 A sur une pile 4,5 V (r = 2 Ω) ; point de fonctionnement mesuré, puis lu à l'intersection des caractéristiques de la pile et de la lampe (deux courbes superposées sur la tablette) ; loi de Pouillet avec une résistance et un électrolyseur ; deux piles en série, lampe sur-alimentée puis adaptée par une résistance de 27 Ω.",
+  "conceptions": [
+   "Un générateur impose toujours la même intensité.",
+   "Le point de fonctionnement ne dépend que du générateur.",
+   "Deux piles en série donnent la même tension qu'une seule.",
+   "Plus de piles, c'est toujours mieux pour une lampe."
+  ],
+  "faire": [
+   "Branche la lampe 6 V – 0,1 A sur la pile, mesure I et U : la lampe est sous-alimentée.",
+   "Relève la caractéristique de la lampe, calcule celle de la pile U = 4,5 − 2·I dans le tableur, superpose les deux courbes et lit le point d'intersection.",
+   "Calcule I par la loi de Pouillet (avec R, puis avec R et l'électrolyseur) et vérifie par la mesure ; rôle de la résistance de l'ampèremètre.",
+   "Associe deux piles en série (E = 9 V, r = 4 Ω), constate la sur-alimentation de la lampe, calcule et ajoute la résistance d'adaptation de 27 Ω ; piles en opposition."
+  ]
+ },
+ {
+  "id": "tc_elec4_a1_transistor",
+  "chapitre": "tronc_commun/elec4_montages_electroniques",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Laboratoire virtuel du transistor NPN (BC547) : effet transistor (un faible courant de base commande l'allumage d'une lampe dans le circuit du collecteur), régimes bloqué, linéaire et saturé ; mesure de I_B, I_C et I_E avec trois ampèremètres, droite I_C = β·I_B (β ≈ 150) et loi I_E = I_B + I_C au tableur ; détecteur d'obscurité câblé (photorésistance, transistor, DEL) : capteur, traitement, sortie.",
+  "conceptions": [
+   "Le transistor fabrique du courant.",
+   "La lampe du collecteur est alimentée par le courant de base.",
+   "Plus on augmente I_B, plus I_C augmente, sans limite.",
+   "Le courant qui sort par l'émetteur est égal au courant de collecteur."
+  ],
+  "faire": [
+   "Monte les circuits de base et de collecteur, augmente la tension de G1 : lampe éteinte (bloqué), qui s'allume (linéaire), puis qui brille normalement (saturé).",
+   "Mesure I_B, I_C et I_E pour au moins 5 réglages, trace I_C en fonction de I_B, détermine β et vérifie I_E = I_B + I_C.",
+   "Alimente le détecteur d'obscurité, cache puis éclaire la photorésistance ; identifie capteur, traitement et sortie."
+  ]
+ },
+ {
+  "id": "tc_elec4_a2_ao",
+  "chapitre": "tronc_commun/elec4_montages_electroniques",
+  "activite": 2,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 55,
+  "description": "Laboratoire virtuel de l'amplificateur opérationnel (741) alimenté en ±15 V : caractéristique de transfert Us = f(ε) relevée au voltmètre (saturation à ±13,5 V, ε = 0 en régime linéaire) ; montages suiveur, inverseur (R1 = 10 kΩ, R2 = 22 kΩ, Us = −2,2·Ue, opposition de phase, écrêtage) et non-inverseur (Us = 3,2·Ue) observés à l'oscilloscope bicourbe ; place de l'AO dans une chaîne électronique.",
+  "conceptions": [
+   "Un AO amplifie toujours, quel que soit le montage.",
+   "Un AO fonctionne sans alimentation.",
+   "La tension de sortie peut dépasser la tension d'alimentation.",
+   "L'écrêtage vient d'un mauvais réglage de l'oscilloscope.",
+   "L'AO fournit de l'énergie sans en recevoir."
+  ],
+  "faire": [
+   "Alimente l'AO, applique ε = V+ − V− de −4,5 V à +4,5 V, relève Us et trace la caractéristique de transfert ; lis Vsat.",
+   "Monte le suiveur, compare Ue et Us à l'oscilloscope bicourbe (même sensibilité).",
+   "Monte l'inverseur, constate l'opposition de phase, trace Us en fonction de Ue (coefficient −R2/R1 = −2,2), puis observe l'écrêtage en saturation.",
+   "Monte le non-inverseur, mesure Ue max et Us max, retrouve (R1 + R2)/R1 = 3,2 ; place de l'AO dans une chaîne électronique."
+  ]
+ },
+ {
+  "id": "tc_chim1_a1_sens",
+  "chapitre": "tronc_commun/chim1_especes_chimiques",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 30,
+  "description": "Laboratoire virtuel : observer une orange (entière, coupée, pressée) et une feuille de papier avec les cartes des sens et une loupe (vésicules de jus, pores de la peau, fibres de cellulose) ; la carte du goût est refusée : on ne goûte jamais au laboratoire. Les sens donnent des indices d'espèces chimiques (eau, sucres, huile odorante, cellulose), pas des preuves.",
+  "conceptions": [
+   "Un produit naturel ne contient pas d'espèces chimiques.",
+   "On peut goûter un aliment au laboratoire.",
+   "Les sens suffisent pour affirmer qu'une espèce est présente.",
+   "Le papier est un produit entièrement artificiel."
+  ],
+  "faire": [
+   "Observe l'orange entière, coupe-la, observe pulpe et peau (sens et loupe), presse une moitié et observe le jus ; propose les espèces que contient l'orange.",
+   "Observe une feuille de papier avec les sens et à la loupe : des fibres de cellulose ; définis une espèce chimique."
+  ]
+ },
+ {
+  "id": "tc_chim1_a2_tests",
+  "chapitre": "tronc_commun/chim1_especes_chimiques",
+  "activite": 2,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 55,
+  "description": "Laboratoire virtuel des tests de détection, avec témoins : sulfate de cuivre anhydre (eau) sur le jus d'orange, le papier sec, l'huile et l'eau distillée ; papier pH et phénolphtaléine sur cinq liquides (pH relevés au tableur) ; eau iodée (amidon) sur papier, papier filtre, pomme de terre et pulpe d'orange ; liqueur de Fehling au bain-marie (glucose) sur le jus d'orange. L'élève propose le test qui vérifie une hypothèse.",
+  "conceptions": [
+   "Un test positif montre que le produit est pur.",
+   "La phénolphtaléine devient rose avec les acides.",
+   "Si le jus est sucré au goût, il contient du glucose.",
+   "Un témoin ne sert à rien."
+  ],
+  "faire": [
+   "Teste la présence d'eau au sulfate de cuivre anhydre, avec l'eau distillée comme témoin.",
+   "Mesure le pH de cinq liquides au papier pH, classe-les (acide, neutre, basique) ; constate que la phénolphtaléine ne rosit qu'en milieu basique.",
+   "Propose puis réalise le test de l'amidon à l'eau iodée, avec la pomme de terre comme témoin.",
+   "Propose puis réalise le test du glucose à la liqueur de Fehling au bain-marie, avec une solution de glucose comme témoin."
+  ]
+ },
+ {
+  "id": "tc_chim1_a3_classement",
+  "chapitre": "tronc_commun/chim1_especes_chimiques",
+  "activite": 3,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 40,
+  "description": "Laboratoire virtuel : inventaire des espèces trouvées dans l'orange et le papier ; lecture des étiquettes de six produits (gousse de vanille, sucre vanilliné, citron, vitamine C, fil de nylon, aspirine) et classement des espèces en naturelles, synthétiques identiques à une espèce naturelle, synthétiques artificielles ; documents sur l'industrie chimique (phosphates du Maroc, vanilline de synthèse).",
+  "conceptions": [
+   "Synthétique veut dire artificiel.",
+   "Une espèce synthétique est de moins bonne qualité qu'une espèce naturelle.",
+   "La vanilline de synthèse est une autre espèce que la vanilline naturelle.",
+   "Les engrais se trouvent tels quels dans la nature."
+  ],
+  "faire": [
+   "Classe les espèces trouvées selon le produit qui les contient.",
+   "Lis les étiquettes et classe chaque espèce : naturelle, synthétique identique à une espèce naturelle, synthétique artificielle.",
+   "Lis deux documents sur l'industrie chimique et réponds aux questions."
+  ]
+ },
+ {
+  "id": "tc_chim2_a1_traditionnelles",
+  "chapitre": "tronc_commun/chim2_extraction",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 40,
+  "description": "Laboratoire virtuel : documents historiques (enfleurage, macération, infusion et décoction, distillation chez les savants arabes, eau de rose de Kelâa M'Gouna) ; macération, infusion et décoction de feuilles de thé comparées par l'observation (chronomètre à temps accéléré) ; classement de préparations.",
+  "conceptions": [
+   "L'infusion et la décoction sont la même chose.",
+   "La température ne change rien à l'extraction.",
+   "Les techniques d'extraction sont toutes récentes."
+  ],
+  "faire": [
+   "Lis les quatre documents historiques.",
+   "Compare macération, infusion et décoction pendant 10 minutes.",
+   "Associe chaque préparation à sa technique."
+  ]
+ },
+ {
+  "id": "tc_chim2_a2_extraction",
+  "chapitre": "tronc_commun/chim2_extraction",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Laboratoire virtuel : hydrodistillation de la lavande (pierre ponce, eau du réfrigérant entrant par le bas, huile essentielle au-dessus du distillat) ; extraction du diiode par le cyclohexane choisi grâce à un tableau de données, à l'ampoule à décanter (boucher, agiter, dégazer, décanter, recueillir la phase inférieure) ; filtration sous vide (Büchner, trompe à eau, retour d'eau) ; verrerie du chauffage à reflux.",
+  "conceptions": [
+   "Le liquide le plus coloré est toujours en bas.",
+   "N'importe quel solvant convient pour une extraction.",
+   "Le sens de circulation de l'eau du réfrigérant n'a pas d'importance."
+  ],
+  "faire": [
+   "Réalise l'hydrodistillation de la lavande et observe le distillat.",
+   "Choisis le solvant d'après le tableau, prévois la phase supérieure, réalise l'extraction à l'ampoule à décanter.",
+   "Filtre sous vide en respectant l'ordre d'arrêt.",
+   "Nomme les éléments d'un montage à reflux."
+  ]
+ },
+ {
+  "id": "tc_chim2_a3_ccm",
+  "chapitre": "tronc_commun/chim2_extraction",
+  "activite": 3,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "Laboratoire virtuel de chromatographie sur couche mince, à taille réelle : ligne de dépôt au crayon, dépôts au capillaire, éluant versé sous la ligne, cuve fermée, montée du front, front marqué, mesure de d et D à la règle et calcul de Rf au tableur ; colorants d'un sirop de menthe identifiés par comparaison avec des références ; espèces incolores d'un médicament révélées sous UV puis au diiode.",
+  "conceptions": [
+   "Une tache verte correspond à un seul colorant vert.",
+   "On peut tracer la ligne de dépôt au stylo.",
+   "Si l'on ne voit pas de tache, la plaque ne contient rien."
+  ],
+  "faire": [
+   "Réalise la chromatographie des colorants du sirop de menthe, compare aux références et calcule les Rf.",
+   "Réalise la chromatographie d'un médicament et révèle les taches sous UV puis au diiode."
+  ]
+ },
+ {
+  "id": "tc_chim3_a1_savon",
+  "chapitre": "tronc_commun/chim3_synthese",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Laboratoire virtuel de synthèse d'un savon, à taille réelle : fiches de sécurité et pictogrammes ; lunettes et gants obligatoires pour la soude ; huile, soude et éthanol versés par l'entonnoir, pierre ponce, réfrigérant à boules, chauffage à reflux (vapeurs qui s'échappent sans réfrigérant) ; relargage dans l'eau salée ; filtration sous vide ; test de la mousse comparé à un savon du commerce et à un témoin.",
+  "conceptions": [
+   "Le réfrigérant sert à refroidir le ballon.",
+   "Chauffer plus longtemps fait toujours perdre de la matière.",
+   "Un produit fabriqué au laboratoire n'est pas un vrai savon."
+  ],
+  "faire": [
+   "Lis les fiches de sécurité et réponds aux questions sur les dangers et les déchets.",
+   "Réalise le chauffage à reflux de l'huile avec la soude, puis le relargage.",
+   "Filtre sous vide les grains de savon.",
+   "Compare la mousse du savon obtenu à celle d'un savon du commerce."
+  ]
+ },
+ {
+  "id": "tc_chim3_a2_arome",
+  "chapitre": "tronc_commun/chim3_synthese",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Laboratoire virtuel de synthèse de l'acétate d'isoamyle (arôme de banane) : réactifs corrosifs et inflammables, catalyseur au compte-gouttes, chauffage à reflux ; lavage à l'eau salée dans l'ampoule à décanter (ester en phase supérieure, odeur par déplacement d'air) ; comparaison par chromatographie du produit obtenu, de l'arôme naturel de banane et de l'espèce pure, révélée sous UV.",
+  "conceptions": [
+   "Une espèce synthétique est différente de la même espèce naturelle.",
+   "Le catalyseur donne l'odeur.",
+   "La phase la plus colorée ou la plus abondante est en bas."
+  ],
+  "faire": [
+   "Réalise la synthèse de l'arôme au chauffage à reflux.",
+   "Lave le mélange à l'eau salée et sépare l'ester à l'ampoule à décanter.",
+   "Compare par chromatographie le produit obtenu à l'arôme naturel et à la référence."
+  ]
+ },
+ {
+  "id": "tc_chim4_a1_rutherford",
+  "chapitre": "tronc_commun/chim4_atome",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Recherche historique (Démocrite, Dalton, Thomson, Rutherford, Bohr, Chadwick) avec documents illustrés et classement des découvertes, puis expérience de Rutherford reconstituée avec le matériel d'un laboratoire d'enseignement : chambre de diffusion (source alpha d'américium 241, feuille d'or de 2 µm, détecteur tournant), pompe à vide et manomètre, compteur d'impulsions ; comptages N(θ) au tableur et en courbe ; structure lacunaire, noyau, ordres de grandeur (10⁻¹⁰ m et 10⁻¹⁵ m).",
+  "conceptions": [
+   "L'atome est une boule pleine.",
+   "Les particules alpha traversent la feuille parce qu'elle est trouée.",
+   "La masse de l'atome est répartie dans tout son volume."
+  ],
+  "faire": [
+   "Fait le vide, puis compte les particules alpha reçues à différents angles, avec et sans feuille d'or.",
+   "Lit les documents sur les premiers modèles de l'atome et prévoit le résultat de l'expérience.",
+   "Calcule des ordres de grandeur et range les découvertes par époque."
+  ]
+ },
+ {
+  "id": "tc_chim4_a2_masse",
+  "chapitre": "tronc_commun/chim4_atome",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 60,
+  "description": "Tableau magnétique de l'atome : construire ¹²₆C, ²³₁₁Na, l'ion Na⁺, ¹⁶₈O et ³⁵₁₇Cl (protons et neutrons dans le noyau, électrons sur les couches K, L, M), symbole ᴬ_ZX avec A nombre de nucléons, isotopes, couche externe ; calcul au tableur de la masse de quatre atomes et du rapport masse du noyau / masse de l'atome ; pesée d'un cylindre de cuivre sur une balance au centième et nombre d'atomes qu'il contient.",
+  "conceptions": [
+   "Les électrons sont dans le noyau.",
+   "A est le nombre de neutrons.",
+   "Les électrons représentent une part importante de la masse de l'atome.",
+   "Les électrons se placent sur n'importe quelle couche."
+  ],
+  "faire": [
+   "Construit des atomes et un ion sur le tableau magnétique à partir de leur symbole.",
+   "Calcule la masse d'atomes au tableur et compte les atomes d'un cylindre de cuivre pesé.",
+   "Répartit les électrons sur les couches K, L, M et repère la couche externe."
+  ]
+ },
+ {
+  "id": "tc_chim4_a3_cuivre",
+  "chapitre": "tronc_commun/chim4_atome",
+  "activite": 3,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Conservation de l'élément cuivre, sous la hotte, avec lunettes et gants : tournure de cuivre et acide nitrique (gaz roux, solution bleue d'ions Cu²⁺), soude (précipité bleu d'hydroxyde de cuivre), bain-marie à 90 °C (oxyde de cuivre noir), acide sulfurique (ions Cu²⁺), poudre de fer (dépôt rouge de cuivre métal) ; l'élément cuivre (Z = 29) se conserve.",
+  "conceptions": [
+   "Le cuivre disparaît quand il est attaqué par l'acide.",
+   "Le fer se transforme en cuivre.",
+   "Une transformation chimique peut créer ou détruire un élément."
+  ],
+  "faire": [
+   "Attaque le cuivre par l'acide nitrique, puis précipite les ions Cu²⁺ par la soude.",
+   "Chauffe le précipité, le dissout dans l'acide sulfurique et retrouve le cuivre métal avec la poudre de fer."
+  ]
+ },
+ {
+  "id": "tc_chim4_a4_carbone",
+  "chapitre": "tronc_commun/chim4_atome",
+  "activite": 4,
+  "objectifs": [
+   "O1",
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Combustion du charbon de bois dans un flacon de dioxygène (bec Bunsen et allume-gaz, têt à combustion, plaque de verre), test du dioxyde de carbone à l'eau de chaux (on agite le flacon fermé) ; documents illustrés sur le cycle naturel du carbone, l'abondance des éléments et les réactions nucléaires du Soleil, et classement des phénomènes qui retirent du CO₂ de l'air ou en rejettent.",
+  "conceptions": [
+   "Le carbone qui brûle disparaît.",
+   "Les plantes créent du carbone.",
+   "Une réaction chimique peut changer un élément en un autre."
+  ],
+  "faire": [
+   "Fait brûler du carbone dans le dioxygène et recherche le gaz formé avec l'eau de chaux.",
+   "Lit les documents sur le cycle du carbone et l'abondance des éléments, et classe les phénomènes."
+  ]
+ },
+ {
+  "id": "tc_chim5_a1_lewis",
+  "chapitre": "tronc_commun/chim5_molecules",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Tableau magnétique de l'atome pour former les ions Na⁺ et Cl⁻ (règles du duet et de l'octet, affiche des gaz nobles) ; tableau magnétique de Lewis : aimants d'atomes (H, C, N, O, Cl) et doublets liants ou non liants pour représenter H₂O, NH₃, CH₄, CO₂, N₂, C₂H₄, avec un message qui dit quelle règle n'est pas respectée ; formules développées de deux isomères de C₂H₆O et d'une molécule C₄H₁₀ ; formules semi-développées et limites du modèle de Lewis (NO₂).",
+  "conceptions": [
+   "Les atomes sont isolés dans la matière.",
+   "Un doublet non liant ne compte pas dans l'octet.",
+   "Deux molécules de même formule brute sont la même molécule.",
+   "Le chlore donne l'ion Cl⁺."
+  ],
+  "faire": [
+   "Forme les ions Na⁺ et Cl⁻ sur le tableau de l'atome et prévoit d'autres ions avec les règles du duet et de l'octet.",
+   "Représente des molécules en Lewis sur le tableau magnétique.",
+   "Construit des isomères et écrit leurs formules semi-développées."
+  ]
+ },
+ {
+  "id": "tc_chim5_a2_cram",
+  "chapitre": "tronc_commun/chim5_molecules",
+  "activite": 2,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Boîte de modèles moléculaires (boules à trous, bâtonnets, ressorts pour les liaisons doubles) et modèle en 3D que l'on tourne au doigt : CH₄ tétraédrique (109,5°), NH₃ pyramidale (107°), H₂O coudée (104,5°) par répulsion des doublets liants et non liants ; C₂H₄ plane et CO₂ linéaire ; représentation de Cram du méthane dessinée au tableau à partir du modèle tourné (deux liaisons dans le plan, une vers l'avant, une vers l'arrière).",
+  "conceptions": [
+   "La molécule d'eau est droite (H–O–H).",
+   "Le méthane est plat, en croix, comme sur le papier.",
+   "Les doublets non liants ne jouent aucun rôle dans la forme de la molécule."
+  ],
+  "faire": [
+   "Construit les modèles de CH₄, NH₃ et H₂O et explique leur forme par la répulsion des doublets.",
+   "Tourne le modèle du méthane pour dessiner sa représentation de Cram, puis construit C₂H₄ et CO₂."
+  ]
+ },
+ {
+  "id": "tc_chim6_a1_familles",
+  "chapitre": "tronc_commun/chim6_classification",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Documents sur l'histoire de la classification (de l'Antiquité à Lavoisier, Mendeleïev et l'éka-silicium, la classification par Z) ; 16 cartes d'éléments à ranger comme Mendeleïev, par masse et par formule des composés ; derrière un écran, lithium, sodium et potassium dans l'eau additionnée de phénolphtaléine (dihydrogène, solution basique, réaction de plus en plus vive) ; ions chlorure, bromure, iodure avec le nitrate d'argent (précipités blanc, blanc jaunâtre, jaune) : familles des alcalins et des halogènes.",
+  "conceptions": [
+   "Mendeleïev a rangé les éléments par numéro atomique.",
+   "Les éléments d'une même colonne n'ont rien en commun.",
+   "Le sodium et le potassium réagissent de la même façon, avec la même vivacité."
+  ],
+  "faire": [
+   "Lit les documents historiques et range des cartes d'éléments comme Mendeleïev.",
+   "Compare les réactions du lithium, du sodium et du potassium avec l'eau.",
+   "Compare les réactions des ions chlorure, bromure et iodure avec les ions argent."
+  ]
+ },
+ {
+  "id": "tc_chim6_a2_tableau",
+  "chapitre": "tronc_commun/chim6_classification",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Tableau périodique magnétique à remplir avec 18 cartes (symbole, Z, formule électronique) : période = couches occupées, colonne = électrons externes, familles ; nombre de liaisons (colonnes 14 à 17) et charges des ions (colonnes 1, 2, 13, 16, 17) déduites de la position ; représentations de Lewis de H₂S, PH₃, SiH₄ et CCl₄ à partir des éléments de la même colonne ; formule du chlorure de magnésium.",
+  "conceptions": [
+   "Le numéro de la période est le nombre d'électrons externes.",
+   "Le soufre forme 6 liaisons parce qu'il a 6 électrons externes.",
+   "Le chlorure de magnésium a pour formule MgCl."
+  ],
+  "faire": [
+   "Range les 18 premiers éléments dans la classification d'après leur formule électronique.",
+   "Prévoit liaisons et ions d'après la colonne, et représente des molécules en Lewis."
+  ]
+ },
+ {
+  "id": "tc_chim7_a1_mole",
+  "chapitre": "tronc_commun/chim7_quantite_matiere",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 45,
+  "description": "Masses molaires moléculaires calculées au tableur (C₁₂H₂₂O₁₁, NaCl, S, Fe), puis pesée de 0,010 mol de chaque solide sur une balance au centième (coupelle, tare, spatule) : même quantité de matière, masses différentes ; volume d'éthanol contenant 0,10 mol (V = n·M/ρ) prélevé à la pipette graduée et vérifié à la balance ; volume molaire des gaz (n = V/Vm, Vm dépend de T et P).",
+  "conceptions": [
+   "Une mole de deux espèces différentes a la même masse.",
+   "La masse molaire d'une molécule est celle de son atome le plus lourd.",
+   "Le volume molaire des gaz vaut toujours 22,4 L/mol."
+  ],
+  "faire": [
+   "Calcule des masses molaires et pèse 0,010 mol de quatre solides.",
+   "Prélève 0,10 mol d'éthanol à la pipette graduée, vérifie sa masse et utilise le volume molaire."
+  ]
+ },
+ {
+  "id": "tc_chim7_a2_solutions",
+  "chapitre": "tronc_commun/chim7_quantite_matiere",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Dissolution du saccharose (lente sans agitation, rapide avec l'agitateur), du diiode dans l'eau (très peu soluble) et dans l'éthanol (très soluble), mélange éthanol-eau (miscibles) ; solutions moléculaires et ioniques. Préparation de 100,0 mL de solution de glucose à 0,100 mol/L : pesée de 1,80 g, transfert par l'entonnoir, rinçage à la pissette, dissolution, ajustement au trait de jauge (loupe sur le ménisque), bouchage et homogénéisation. Dilution dix fois d'une eau iodée : 5,0 mL prélevés à la pipette graduée dans une fiole de 50,0 mL ; C₀V₀ = C₁V₁, facteur de dilution.",
+  "conceptions": [
+   "Un solide qui disparaît dans l'eau a disparu (la matière n'est plus là).",
+   "On peut verser l'eau jusqu'à 100 mL puis ajouter le soluté.",
+   "Diluer une solution diminue la quantité de soluté."
+  ],
+  "faire": [
+   "Dissout le saccharose et le diiode dans l'eau et dans l'éthanol, et mélange l'éthanol et l'eau.",
+   "Prépare 100,0 mL de solution de glucose à 0,100 mol/L en fiole jaugée.",
+   "Dilue dix fois une eau iodée à la pipette graduée et en fiole jaugée."
+  ]
+ },
+ {
+  "id": "tc_chim8_a1_transformations",
+  "chapitre": "tronc_commun/chim8_transformation",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 50,
+  "description": "Fil de cuivre dans le nitrate d'argent (aiguilles d'argent, solution qui bleuit) et clou en fer dans le sulfate de cuivre (dépôt de cuivre, solution qui se décolore) ; identification des ions formés à la soude (Cu(OH)₂ bleu, Fe(OH)₂ vert), précipitation de l'hydroxyde de cuivre ; combustions du soufre et de la laine de fer dans le dioxygène, du sodium dans le dichlore, sous la hotte ; tableau magnétique pour écrire et ajuster sept équations (conservation des éléments et des charges, ions spectateurs).",
+  "conceptions": [
+   "Les ions nitrate ou sulfate font partie des réactifs.",
+   "Ajuster une équation, c'est changer les indices des formules.",
+   "Dans une combustion, tous les réactifs disparaissent toujours."
+  ],
+  "faire": [
+   "Observe la réaction du cuivre avec les ions argent et du fer avec les ions cuivre, et identifie les ions formés avec la soude.",
+   "Fait brûler le soufre et le fer dans le dioxygène, et le sodium dans le dichlore.",
+   "Écrit et ajuste les équations des réactions observées."
+  ]
+ },
+ {
+  "id": "tc_chim8_a2_avancement",
+  "chapitre": "tronc_commun/chim8_transformation",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "Vinaigre dilué (10,0 mL à 0,50 mol/L, versé avec une ampoule de coulée isobare) et masses croissantes d'hydrogénocarbonate de sodium pesées à la balance ; le CO₂ est recueilli sur la cuve à eau dans une éprouvette à gaz ; tableur et graphique n(CO₂) = f(n(NaHCO₃)) : l'avancement maximal augmente puis plafonne à 5,0 mmol (réactif limitant) ; tableau d'avancement et bilan de matière au tableur.",
+  "conceptions": [
+   "Plus on met de réactif, plus il se forme de produit, sans limite.",
+   "Le réactif limitant est celui dont la masse est la plus petite.",
+   "L'avancement est une masse."
+  ],
+  "faire": [
+   "Fait réagir le vinaigre avec quatre masses d'hydrogénocarbonate, mesure le volume de CO₂ et trace n(CO₂) en fonction de n(NaHCO₃).",
+   "Dresse le tableau d'avancement de deux essais et fait le bilan de matière."
+  ]
+ },
+ {
+  "id": "b1_meca1_a1_rotation",
+  "chapitre": "1bac/meca1_rotation",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 25,
+  "description": "Maquette de grande roue (8 nacelles) qu'on fait tourner au doigt ; un appareil photo réalise une chronophotographie : le segment [AB] du rayon change de direction (rotation), le segment [CD] d'une nacelle garde sa direction (translation circulaire) ; tri de huit mouvements du vécu (rotation, translation circulaire, translation rectiligne).",
+  "conceptions": [
+   "Tout mouvement sur un cercle est une rotation.",
+   "Une nacelle de grande roue tourne autour de l'axe de la roue.",
+   "Dans une rotation, tous les points ont la même vitesse."
+  ],
+  "faire": [
+   "Fait tourner la grande roue, photographie son mouvement et compare les directions des segments [AB] (rayon) et [CD] (nacelle).",
+   "Classe huit mouvements du vécu : rotation autour d'un axe fixe, translation circulaire ou rectiligne."
+  ]
+ },
+ {
+  "id": "b1_meca1_a2_enregistrement",
+  "chapitre": "1bac/meca1_rotation",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 45,
+  "description": "Table à coussin d'air : un solide pivote autour d'un clou ; l'éclateur marque les positions de deux points A (60 mm) et B (120 mm) ; sur la feuille, règle et rapporteur pour mesurer θ, s_A et s_B ; tableur et courbe θ(t) : droite, vitesse angulaire ω, s = R·θ et v = R·ω.",
+  "conceptions": [
+   "Le point le plus loin de l'axe tourne plus vite (en tours par seconde).",
+   "L'angle se mesure en degrés seulement.",
+   "La vitesse d'un point en rotation ne dépend pas de sa distance à l'axe."
+  ],
+  "faire": [
+   "Enregistre le mouvement de rotation, mesure θ, s_A et s_B sur la feuille, trace θ(t), calcule ω et vérifie v = R·ω."
+  ]
+ },
+ {
+  "id": "b1_meca1_a3_uniforme",
+  "chapitre": "1bac/meca1_rotation",
+  "activite": 3,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 45,
+  "description": "Disque de 20 cm entraîné par un moteur réglable : fréquence de rotation mesurée au stroboscope (salle obscure : un trait immobile quand fe = f, deux traits à 2f) ; capteur optique à fourche et compteur-chronomètre : période T et durée de passage de trois fentes (4, 6 et 8 cm) ; tableur et graphique v = f(R) : v = R·ω ; équations horaires.",
+  "conceptions": [
+   "Au stroboscope, le disque immobile signifie qu'il ne tourne pas.",
+   "Tous les points d'un disque en rotation ont la même vitesse.",
+   "La fréquence et la période sont la même grandeur."
+  ],
+  "faire": [
+   "Règle le moteur, allume le stroboscope et cherche la fréquence des éclairs qui immobilise le disque ; en déduit f, T et ω.",
+   "Mesure T et les durées de passage de trois fentes au capteur à fourche, calcule leurs vitesses et vérifie v = R·ω."
+  ]
+ },
+ {
+  "id": "b1_meca2_a1_translation",
+  "chapitre": "1bac/meca2_travail_puissance",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Pavé de bois de 500 g tiré de A à B (40 cm) à vitesse constante avec un dynamomètre, fil horizontal puis incliné (angle lu sur un rapporteur) : tableur W = F·AB·cos α, travail résistant du frottement, travail nul du poids et de la réaction ; tri de situations (travail moteur, résistant, nul) ; plan incliné réglable : chariot de 500 g tiré jusqu'au faisceau d'un niveau laser (20 cm plus haut) par trois chemins : W(F) = F·L = m·g·h, le travail du poids ne dépend pas du chemin suivi.",
+  "conceptions": [
+   "Une force travaille dès qu'elle s'exerce, même si son point d'application ne se déplace pas.",
+   "Le travail d'une force ne dépend que de sa valeur, pas de sa direction.",
+   "Le travail du poids dépend de la longueur du chemin suivi.",
+   "Un travail est toujours positif."
+  ],
+  "faire": [
+   "Tire le pavé de A à B avec trois inclinaisons du fil, calcule W = F·AB·cos α au tableur et le travail du frottement.",
+   "Classe neuf situations du vécu selon le signe du travail de la force citée.",
+   "Monte le chariot à la même hauteur par trois chemins inclinés, calcule F·L et le travail du poids."
+  ]
+ },
+ {
+  "id": "b1_meca2_a1_rotation",
+  "chapitre": "1bac/meca2_travail_puissance",
+  "activite": 1,
+  "objectifs": [
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Poulie à deux gorges (R = 5,0 cm, r = 1,5 cm) : on tire au dynamomètre le fil de la grande gorge, une masse de 600 g monte ; angle lu sur la poulie graduée, hauteur sur une règle : M = F·R, W(F) = M·Δθ = −W(P). Treuil électrique (tambour de 2,0 cm) : masse de 500 g montée à trois tensions, chronomètre à deux cellules (Δh = 60 cm) et compte-tours : couple moteur M = m·g·r, W = M·Δθ, puissance P = W/Δt = F·v = M·ω.",
+  "conceptions": [
+   "Le travail en rotation se calcule avec l'angle en degrés.",
+   "La puissance et le travail sont la même grandeur.",
+   "Un moteur plus puissant fournit plus de travail pour monter la même charge à la même hauteur."
+  ],
+  "faire": [
+   "Fait tourner la poulie à deux gorges au dynamomètre, s'arrête trois fois, calcule M·Δθ et le travail du poids au tableur.",
+   "Monte une masse de 500 g avec le treuil électrique à trois tensions, mesure Δt et N, compare m·g·Δh/Δt et M·ω."
+  ]
+ },
+ {
+  "id": "b1_meca3_a1_cinetique",
+  "chapitre": "1bac/meca3_travail_energie",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 50,
+  "description": "Banc à coussin d'air : mobile de 200 g (surcharges de 100 g) lancé par un ressort, vitesse mesurée par une cellule (drapeau de 5,0 cm), arrêté par un curseur à frottement : d ∝ m·v², d'où Ec = ½·m·v². Volant d'inertie (disques A et B de 1,00 kg, J donné) lancé par un moteur puis freiné par un couple constant : le nombre de tours jusqu'à l'arrêt est proportionnel à J·ω², d'où Ec = ½·J·ω².",
+  "conceptions": [
+   "L'énergie cinétique est proportionnelle à la vitesse.",
+   "Un objet plus lourd a toujours plus d'énergie cinétique.",
+   "Un solide qui tourne sur place n'a pas d'énergie cinétique.",
+   "Le moment d'inertie ne dépend que de la masse."
+  ],
+  "faire": [
+   "Lance le mobile avec différentes compressions et masses, mesure v et la distance d de freinage, trace d = f(m·v²).",
+   "Lance et freine les deux disques à différentes vitesses, compte les tours jusqu'à l'arrêt, trace n = f(J·ω²)."
+  ]
+ },
+ {
+  "id": "b1_meca3_a2_theoreme",
+  "chapitre": "1bac/meca3_travail_energie",
+  "activite": 2,
+  "objectifs": [
+   "O2"
+  ],
+  "duree_min": 45,
+  "description": "Table à coussin d'air inclinée (sin α = 0,050) : le mobile autoporteur de 600 g est lâché sans vitesse et enregistré (τ = 40 ms) ; à la règle sur la feuille : M1Mi et vi ; tableur et graphique ΔEc = f(W(P)) : droite de pente 1, théorème de l'énergie cinétique ; généralisation à la rotation.",
+  "conceptions": [
+   "La variation d'énergie cinétique est égale au travail du poids seulement si la vitesse initiale est nulle.",
+   "La réaction de la table travaille.",
+   "Le théorème ne vaut que pour des forces constantes."
+  ],
+  "faire": [
+   "Enregistre la descente du mobile, mesure M1Mi et les vitesses, compare ΔEc et W(P) au tableur et sur un graphique."
+  ]
+ },
+ {
+  "id": "b1_meca3_a3_potentielle",
+  "chapitre": "1bac/meca3_travail_energie",
+  "activite": 3,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 40,
+  "description": "Appareil de chute libre : bille d'acier (33,0 g, d = 2,00 cm) lâchée par un électroaimant à 1,100 m ; deux cellules déplaçables et un chronomètre à deux voies (v = d/Δt) ; cellule 1 à 90 cm, cellule 2 à cinq hauteurs : ΔEc = f(m·g·z2) est une droite de pente −1 : W(P) = −ΔEpp, Epp = m·g·z + cte ; choix de l'état de référence.",
+  "conceptions": [
+   "L'énergie potentielle a une valeur absolue, indépendante de la référence.",
+   "Un corps posé sur le sol n'a jamais d'énergie potentielle.",
+   "Le travail du poids est toujours positif."
+  ],
+  "faire": [
+   "Lâche la bille avec la cellule 2 à cinq hauteurs, calcule ΔEc et m·g·z2 au tableur, trace ΔEc = f(m·g·z2) et en déduit Epp."
+  ]
+ },
+ {
+  "id": "b1_meca3_a4_mecanique",
+  "chapitre": "1bac/meca3_travail_energie",
+  "activite": 4,
+  "objectifs": [
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Chute libre : Ec, Epp et Em de la bille à six hauteurs : Em reste constante. Rail à coussin d'air incliné (sin α = 0,100), mobile de 200 g lâché par un électroaimant, deux cellules à 20 et 80 cm : avec le débit d'air normal Em se conserve ; avec le débit faible, le mobile frotte : ΔEm = W(f) = −Q.",
+  "conceptions": [
+   "L'énergie mécanique se conserve toujours.",
+   "L'énergie perdue par frottement disparaît.",
+   "Pendant une chute, Ec et Epp augmentent ensemble."
+  ],
+  "faire": [
+   "Calcule Ec, Epp et Em de la bille à six hauteurs et constate que Em se conserve.",
+   "Compare Em aux deux cellules du rail incliné sans puis avec frottement, calcule ΔEm et la force de frottement."
+  ]
+ },
+ {
+  "id": "b1_meca4_a1_energie_interne",
+  "chapitre": "1bac/meca4_energie_interne",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 55,
+  "description": "Tube à grenaille de plomb (500 g, chute de 1,00 m) retourné 60 fois : la température du plomb s'élève ; tableur n·m·g·h et m·c·ΔT : l'énergie mécanique perdue devient énergie interne. Tableau magnétique des effets du travail (température, déformation, changement d'état, transformation chimique). Seringue à gaz chargée de masses de 1 kg : manomètre et thermomètre, W = p·(V1 − V2), échauffement puis retour à 20 °C : ΔU = 0, Q = −W ; premier principe ΔU = W + Q.",
+  "conceptions": [
+   "L'énergie perdue par frottement ou par un choc disparaît.",
+   "Température et chaleur sont la même chose.",
+   "Un gaz comprimé reçoit de la chaleur.",
+   "L'énergie interne est l'énergie cinétique du système en mouvement."
+  ],
+  "faire": [
+   "Retourne le tube à grenaille 60 fois, relève la température et compare n·m·g·h à m·c·ΔT au tableur.",
+   "Classe neuf situations du vécu selon l'effet du travail reçu.",
+   "Comprime le gaz de la seringue avec 1, 2 puis 3 kg, calcule W = p·(V1 − V2) et la chaleur échangée Q = −W."
+  ]
+ },
+ {
+  "id": "b1_meca5_a1_parametres",
+  "chapitre": "1bac/meca5_thermique",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 40,
+  "description": "Gobelet en polystyrène, thermoplongeur de 100 W (Q = P·t), béchers de 200 g d'eau et d'huile à 20,0 °C, thermomètre électronique : quatre chauffages (200 g / 60 s, 400 g / 60 s, 200 g / 120 s, huile 200 g / 60 s) ; tableur Q/(m·Δθ) : constant pour l'eau (4,18×10³ J·kg⁻¹·K⁻¹), différent pour l'huile : Q = m·c·Δθ.",
+  "conceptions": [
+   "Chaleur et température sont la même chose.",
+   "Deux liquides qui reçoivent la même chaleur s'échauffent de la même façon.",
+   "Plus il y a de liquide, plus il chauffe vite."
+  ],
+  "faire": [
+   "Chauffe différentes masses d'eau pendant différentes durées, puis de l'huile, et calcule Q/(m·Δθ) au tableur."
+  ]
+ },
+ {
+  "id": "b1_meca5_a2_calorimetrie",
+  "chapitre": "1bac/meca5_thermique",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 55,
+  "description": "Calorimètre (vase Dewar) avec thermomètre et agitateur : mélange de 200 g d'eau froide et de 200 g d'eau chaude (capacité thermique du calorimètre, ≈ 150 J/K) ; cylindre de 100,0 g sorti de l'eau bouillante (chaleur massique, identification : aluminium) ; glaçons pesés à la balance fondus dans l'eau tiède (chaleur latente de fusion ≈ 3,34×10⁵ J/kg).",
+  "conceptions": [
+   "À l'équilibre, chaque corps garde sa température.",
+   "Le calorimètre ne reçoit pas de chaleur.",
+   "La glace qui fond se réchauffe pendant la fusion.",
+   "Le froid passe de la glace à l'eau."
+  ],
+  "faire": [
+   "Mélange eau froide et eau chaude, écrit l'équation calorimétrique et calcule la capacité thermique du calorimètre.",
+   "Plonge un cylindre de métal chaud dans le calorimètre, calcule sa chaleur massique et identifie le métal.",
+   "Fait fondre des glaçons dans l'eau tiède et calcule la chaleur latente de fusion de la glace."
+  ]
+ },
+ {
+  "id": "b1_meca5_a3_rayonnement",
+  "chapitre": "1bac/meca5_thermique",
+  "activite": 3,
+  "objectifs": [
+   "O1",
+   "O6"
+  ],
+  "duree_min": 35,
+  "description": "Lampe de 100 W au-dessus de deux plaques de cuivre identiques (noire mate et polie brillante), thermomètres et chronomètre : la plaque noire s'échauffe beaucoup plus ; lampe rapprochée de 20 à 15 cm : échauffement plus grand ; tableau des modes de transfert (conduction, convection, rayonnement) ; vase Dewar.",
+  "conceptions": [
+   "Le rayonnement a besoin de l'air pour se propager.",
+   "Toutes les surfaces absorbent le rayonnement de la même façon.",
+   "La chaleur ne peut passer que par contact."
+  ],
+  "faire": [
+   "Suit la température des deux plaques éclairées par la lampe pendant 5 min, puis rapproche la lampe.",
+   "Classe des situations selon le mode de transfert thermique principal."
+  ]
+ },
+ {
+  "id": "b1_elec1_a1_electrisation",
+  "chapitre": "1bac/elec1_energie_electrostatique",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 40,
+  "description": "Baguettes de PVC et de verre frottées sur la laine et la soie ; pendule électrostatique (boule métallisée) : attraction de la boule neutre, contact puis répulsion, attraction par une charge opposée ; électroscope à feuilles d'or : influence (sans contact), charge par contact, charge par influence avec mise à la Terre par le doigt ; support isolant pour poser une baguette.",
+  "conceptions": [
+   "Un corps neutre ne peut pas être attiré par un corps chargé.",
+   "Un corps chargé par influence prend le signe du corps inducteur.",
+   "Au contact, le corps se charge de signe opposé."
+  ],
+  "faire": [
+   "Électrise une baguette, l'approche du pendule, observe l'attraction, le contact puis la répulsion, et l'attraction par une charge opposée.",
+   "Charge un électroscope par contact puis par influence et compare les signes obtenus."
+  ]
+ },
+ {
+  "id": "b1_elec1_a2_champ",
+  "chapitre": "1bac/elec1_energie_electrostatique",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 50,
+  "description": "Balance de Coulomb : deux sphères identiques chargées à 5,56 nC par une sonde haute tension, sphère A sur une balance (0,1 mg), sphère B sur un statif gradué (d de 4 à 10 cm) : F·d² constant, k ≈ 9×10⁹ SI ; charge de B divisée par 2 avec une sphère neutre : F divisée par 2. Cuve d'huile de ricin et de semoule : lignes de champ de deux pointes (superposition) et champ uniforme entre deux plaques ; E = F/q.",
+  "conceptions": [
+   "La force électrostatique diminue proportionnellement à la distance.",
+   "Les lignes de champ sont les trajectoires des charges.",
+   "Le champ entre deux plaques est plus fort près des plaques."
+  ],
+  "faire": [
+   "Mesure la force entre deux sphères chargées pour cinq distances, calcule F·d² et k, puis divise une charge par deux.",
+   "Observe les lignes de champ dessinées par la semoule entre deux pointes, puis entre deux plaques parallèles."
+  ]
+ },
+ {
+  "id": "b1_elec1_a3_potentiel",
+  "chapitre": "1bac/elec1_energie_electrostatique",
+  "activite": 3,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Cuve rhéographique : eau entre deux plaques de cuivre à 0 V et 12,0 V (d = 10 cm), pointe de touche et voltmètre : V(x) linéaire, E = U/d = 120 V/m, équipotentielles parallèles aux plaques ; travail W = q·(VA − VB) entre deux points mesurés, Epe = q·V + C, électron accéléré : Ec = e·U.",
+  "conceptions": [
+   "Le potentiel est le même partout entre les plaques.",
+   "Le travail de la force électrostatique dépend du chemin suivi.",
+   "Le champ est orienté vers les potentiels croissants."
+  ],
+  "faire": [
+   "Mesure le potentiel en cinq points entre les plaques, trace V = f(x), en déduit E, cherche une équipotentielle.",
+   "Mesure les potentiels de deux points et calcule le travail de la force électrostatique et l'énergie potentielle d'une charge."
+  ]
+ },
+ {
+  "id": "b1_elec2_a1_transferts",
+  "chapitre": "1bac/elec2_transfert_energie",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 40,
+  "description": "Générateur 6,0 V, interrupteur, lampe, moteur à treuil (masse de 200 g) et électrolyseur branchés tour à tour : la lampe éclaire et chauffe, le moteur monte la masse, l'électrolyseur dégage des gaz ; conservation de l'énergie W reçue = W utile + chaleur ; tableau magnétique : forme principale de l'énergie utile d'appareils de la vie courante.",
+  "conceptions": [
+   "Le courant électrique s'use dans un récepteur.",
+   "Un récepteur fabrique de l'énergie.",
+   "Seules les lampes et les radiateurs chauffent."
+  ],
+  "faire": [
+   "Branche tour à tour une lampe, un moteur et un électrolyseur sur le générateur et décrit les transferts d'énergie.",
+   "Classe huit appareils selon la forme principale de l'énergie utile (rayonnement, thermique, mécanique, chimique)."
+  ]
+ },
+ {
+  "id": "b1_elec2_a2_puissance",
+  "chapitre": "1bac/elec2_transfert_energie",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Moteur à treuil (masse de 200 g, montée chronométrée de 40 cm entre deux cellules), ampèremètre en série, voltmètre aux bornes du moteur, alimentation réglable : W = U·I·Δt, P = U·I (vitesse de transfert), travail utile m·g·Δh, chaleur Q = W − W_u ; rendement pour 4 V, 5 V et 6 V (η ≈ 34 % à 45 %).",
+  "conceptions": [
+   "La puissance et l'énergie sont la même chose.",
+   "Le moteur transforme toute l'énergie reçue en travail.",
+   "Plus la tension est grande, plus l'énergie reçue pour un même travail est grande."
+  ],
+  "faire": [
+   "Mesure U, I et la durée d'une montée ; calcule l'énergie et la puissance reçues, le travail utile et la chaleur cédée.",
+   "Refait la montée à trois tensions et calcule le rendement du moteur au tableur."
+  ]
+ },
+ {
+  "id": "b1_elec2_a3_joule",
+  "chapitre": "1bac/elec2_transfert_energie",
+  "activite": 3,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Résistance chauffante R = 4,0 Ω dans un calorimètre (C = 150 J/K, 200 g d'eau), ampèremètre en série, chronomètre de chauffe (temps accéléré × 10) : Q = (m·c + C)·Δθ comparée à R·I²·Δt pour trois intensités (loi de Joule) ; tableau magnétique : effet Joule utile ou nuisible ; transport sous haute tension, lampe à incandescence.",
+  "conceptions": [
+   "La chaleur dégagée est proportionnelle à I.",
+   "L'effet Joule est toujours une perte.",
+   "On transporte l'électricité sous haute tension pour qu'elle aille plus vite."
+  ],
+  "faire": [
+   "Chauffe l'eau du calorimètre 300 s à trois intensités, compare Q = 986·Δθ et R·I²·Δt au tableur.",
+   "Classe huit situations où l'effet Joule est utile ou nuisible et explique le transport sous haute tension."
+  ]
+ },
+ {
+  "id": "b1_elec2_a4_generateur",
+  "chapitre": "1bac/elec2_transfert_energie",
+  "activite": 4,
+  "objectifs": [
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Deux piles plates 4,5 V (r = 1,5 Ω), résistances 22 Ω et 47 Ω, ampèremètre et voltmètre : E à vide, U_PN et I en charge ; P_g = E·I, P_e = U·I, P_j = r·I², rendement U/E ; I comparée à E/(R + r) pour trois montages résistifs ; deux piles en série (les f.é.m. s'additionnent) ; limites de I = E/Req.",
+  "conceptions": [
+   "Un générateur fournit toujours le même courant.",
+   "La tension aux bornes d'une pile vaut toujours E.",
+   "I = E/Req s'applique à tous les circuits."
+  ],
+  "faire": [
+   "Mesure E, U_PN et I ; calcule les puissances produite, fournie et perdue, la résistance interne et le rendement de la pile.",
+   "Mesure I pour trois montages résistifs, compare à E/(R + r) au tableur, puis associe deux piles en série."
+  ]
+ },
+ {
+  "id": "b1_elec3_a1_champ",
+  "chapitre": "1bac/elec3_magnetisme",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 60,
+  "description": "Feuille sur la paillasse, boussole, limaille de fer, teslamètre à sonde de Hall : barreau aimanté (sens du champ près des pôles, lignes de champ, B à 2 et 4 cm), aimant brisé ; deux aimants à angle droit : B = B1 + B2 ; champ terrestre (B_H, B_V, inclinaison, boussole d'inclinaison) ; document et expérience d'Œrsted (fil nord-sud au-dessus d'une boussole).",
+  "conceptions": [
+   "Une boussole indique toujours le nord, même près d'un aimant.",
+   "On peut séparer le pôle nord et le pôle sud d'un aimant en le cassant.",
+   "Les valeurs des champs de deux aimants s'additionnent toujours."
+  ],
+  "faire": [
+   "Explore le champ d'un barreau aimanté avec une boussole, la limaille et le teslamètre.",
+   "Casse l'aimant et observe les pôles des deux morceaux.",
+   "Mesure en O le champ de chaque aimant et des deux ensemble.",
+   "Mesure les composantes du champ terrestre et en déduit sa valeur et l'inclinaison.",
+   "Lit le document d'Œrsted et refait l'expérience en inversant le courant."
+  ]
+ },
+ {
+  "id": "b1_elec3_a2_courants",
+  "chapitre": "1bac/elec3_magnetisme",
+  "activite": 2,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 60,
+  "description": "Générateur de courant, plaque de plexiglas, limaille, boussole, teslamètre (zéro) : fil rectiligne vertical (cercles, règle de la main droite, B ∝ I à 2 cm, B·d constant : B = 2×10⁻⁷·I/d) ; spire de 20 tours (B au centre = μ0·N·I/2R) ; bobine de 200 spires (champ uniforme, faces nord et sud, B = μ0·n·I).",
+  "conceptions": [
+   "Le champ d'un fil est dirigé le long du fil.",
+   "Le champ d'une bobine est nul à l'intérieur.",
+   "B ne dépend pas de l'intensité du courant."
+  ],
+  "faire": [
+   "Observe les lignes de champ d'un fil, trouve le sens du champ, mesure B en fonction de I et de la distance au tableur.",
+   "Mesure le champ au centre d'une spire pour trois intensités et le compare à μ0·N·I/2R.",
+   "Observe les lignes de champ d'une bobine, trouve ses faces et compare B à μ0·n·I."
+  ]
+ },
+ {
+  "id": "b1_elec3_a3_laplace",
+  "chapitre": "1bac/elec3_magnetisme",
+  "activite": 3,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 75,
+  "description": "Rails de Laplace (sens de la force selon I et B, frottements, travail W = F·d) ; balance de Laplace (aimant en U sur une balance, cadres de 1, 2, 4 cm, plateau tournant : F = I·l·B·sin α au tableur) ; deux rubans parallèles, faisceau d'électrons dévié par un aimant ; haut-parleur en coupe et moteur à collecteur ; observation de l'induction (aimant et bobine, galvanomètre).",
+  "conceptions": [
+   "La force de Laplace est dirigée selon le champ.",
+   "Un aimant attire le faisceau d'électrons comme du fer.",
+   "Il y a un courant induit dès que l'aimant est dans la bobine."
+  ],
+  "faire": [
+   "Fait rouler la tige des rails de Laplace, inverse le courant puis le champ, calcule le travail de la force.",
+   "Mesure la force de Laplace avec une balance en faisant varier I, l et α.",
+   "Observe deux courants parallèles et un faisceau d'électrons près d'un aimant.",
+   "Fait fonctionner un haut-parleur et un moteur, enlève le collecteur.",
+   "Déplace un aimant dans une bobine et observe le courant induit."
+  ]
+ },
+ {
+  "id": "b1_opt1_a1_vision",
+  "chapitre": "1bac/opt1_visibilite",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 50,
+  "description": "Caisse vitrée à fond noir, laser de classe 2 et bâton d'encens (le faisceau n'est visible que dans la fumée) ; lampe d'architecte, livre et élève assis dans la salle obscure, carton qui arrête la lumière ; trois écrans percés sur pieds alignés avec une lampe (propagation rectiligne) ; tri sources primaires / objets diffusants ; illusions de Müller-Lyer (mesure avec une règle) et de Kanizsa.",
+  "conceptions": [
+   "On voit la lumière.",
+   "L'œil envoie quelque chose vers l'objet pour le voir.",
+   "Un objet éclairé ne renvoie pas de lumière.",
+   "L'œil voit exactement ce qui est."
+  ],
+  "faire": [
+   "Observe un faisceau laser sans puis avec fumée.",
+   "Cherche quand on voit le livre (lampe, carton) et ce que voit l'élève.",
+   "Aligne trois trous pour voir la lampe.",
+   "Classe des sources primaires et des objets diffusants.",
+   "Mesure deux segments d'une illusion et observe un triangle qui n'est pas dessiné."
+  ]
+ },
+ {
+  "id": "b1_opt1_a2_lois",
+  "chapitre": "1bac/opt1_visibilite",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 55,
+  "description": "Disque optique gradué sur pied et module laser sur curseur : miroir plan (r = i pour cinq angles, plan d'incidence, retour inverse) ; demi-cylindre de plexiglas (sin i1 = 1,50·sin i2 au tableur, rapprochement de la normale, retour inverse, angle limite ≈ 42°, réflexion totale) ; paille dans l'eau et reflet d'un arbre dans un lac.",
+  "conceptions": [
+   "L'angle de réflexion dépend du miroir.",
+   "La lumière ne change pas de direction en entrant dans l'eau.",
+   "La réflexion totale est due à un miroir caché."
+  ],
+  "faire": [
+   "Mesure r pour cinq angles d'incidence et place le laser sur le rayon réfléchi.",
+   "Mesure i1 et i2, calcule le rapport des sinus, cherche l'angle limite.",
+   "Explique la paille brisée et le reflet dans le lac."
+  ]
+ },
+ {
+  "id": "b1_opt1_a3_lentilles",
+  "chapitre": "1bac/opt1_visibilite",
+  "activite": 3,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "Tableau blanc magnétique quadrillé, boîte à cinq rayons laser parallèles, quatre lentilles profil (L1, L2, L3 convergentes, L4 divergente) tracées face par face par les lois de Descartes : foyer image réel ou virtuel (repère F', prolongements), f' mesurée comparée à R/(2(n − 1)) au tableur (rôle du rayon des faces et de la matière) ; lentilles A et B au-dessus d'un texte (loupe), bords minces ou épais.",
+  "conceptions": [
+   "Une lentille divergente n'a pas de foyer.",
+   "La distance focale ne dépend que de la taille de la lentille.",
+   "Toute lentille grossit."
+  ],
+  "faire": [
+   "Pose une lentille convergente puis divergente devant cinq rayons parallèles et repère le foyer image.",
+   "Mesure f' pour trois lentilles convergentes et la compare à R/(2(n − 1)).",
+   "Reconnaît une lentille convergente et une divergente avec un texte."
+  ]
+ },
+ {
+  "id": "b1_opt2_a1_miroir",
+  "chapitre": "1bac/opt2_images",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 40,
+  "description": "Expérience des deux bougies : bougie allumée devant une vitre posée sur une feuille graduée, bougie éteinte que l'on fait glisser derrière jusqu'à ce qu'elle paraisse allumée ; distances à la vitre au tableur (image symétrique, même taille, virtuelle). Champ de vision d'un miroir vu de dessus : figurine œil que l'on déplace, pions vus ou non, rayons tracés.",
+  "conceptions": [
+   "L'image est sur la surface du miroir.",
+   "On peut recueillir l'image d'un miroir plan sur un écran.",
+   "On voit plus d'objets dans un miroir en s'en éloignant."
+  ],
+  "faire": [
+   "Place la bougie éteinte à l'endroit de l'image et compare les distances à la vitre.",
+   "Déplace l'œil devant un miroir et compte les pions vus."
+  ]
+ },
+ {
+  "id": "b1_opt2_a2_lentille",
+  "chapitre": "1bac/opt2_images",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 55,
+  "description": "Banc d'optique gradué sur pieds, cavaliers, lanterne avec l'objet « F », lentilles L1 (+10 δ) et L2 (+5 δ), diaphragme, écran quadrillé ; image floue ou nette calculée (relation de conjugaison, cercle de flou), faisceau visible. Objet très éloigné (foyer image, f', vergence au tableur), conditions de Gauss, images réduite, agrandie, virtuelle. Planche à dessin : aimants F, F', objet AB mobile, trois rayons particuliers, prolongements, aimant B'.",
+  "conceptions": [
+   "L'image se forme toujours au foyer.",
+   "Un diaphragme coupe une partie de l'image.",
+   "Une lentille convergente donne toujours une image sur l'écran."
+  ],
+  "faire": [
+   "Forme l'image d'un objet lointain et en déduit f' et la vergence de deux lentilles.",
+   "Compare l'image du « F » avec et sans diaphragme (conditions de Gauss).",
+   "Cherche une image réduite, une image agrandie, puis constate l'image virtuelle.",
+   "Construit l'image d'un objet avec les rayons particuliers (image réelle et virtuelle)."
+  ]
+ },
+ {
+  "id": "b1_opt2_a3_conjugaison",
+  "chapitre": "1bac/opt2_images",
+  "activite": 3,
+  "objectifs": [
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Banc d'optique (lanterne « F » à 10 cm, L1 de 10 cm diaphragmée, écran) avec une vue rapprochée de l'écran quadrillé : OA, OA', 1/OA, 1/OA' au tableur (D − C = 1/f'), puis A'B' mesuré et comparé à OA'/OA. Loupe sur pied devant une coccinelle imprimée, élève qui regarde, règle : vue de ce que voit l'œil (grossissement, netteté d'accommodation), rayons et prolongements jusqu'à B'.",
+  "conceptions": [
+   "1/OA + 1/OA' = 1/f' sans tenir compte du signe.",
+   "Le grandissement est toujours positif.",
+   "La loupe grossit quelle que soit la distance à l'objet."
+  ],
+  "faire": [
+   "Mesure OA et OA' pour quatre images nettes et établit 1/OA' − 1/OA = 1/f'.",
+   "Mesure A'B' et vérifie γ = A'B'/AB = OA'/OA.",
+   "Place une loupe pour voir une coccinelle nette et grossie, construit l'image virtuelle."
+  ]
+ },
+ {
+  "id": "b1_opt3_a1_lunette",
+  "chapitre": "1bac/opt3_instruments",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 55,
+  "description": "Quatre documents (Galilée, objectif et oculaire, diamètre apparent et grossissement, cercle oculaire) et tri des rôles de l'objectif et de l'oculaire. Maquette au banc d'optique tournée vers la Lune : objectif f'1 = 40 cm, écran (image intermédiaire dans le plan focal), oculaire f'2 = 5 cm à faire glisser (lunette afocale), élève qui regarde ; vues à l'œil nu et dans la lunette (Lune renversée, G = 8), vue rapprochée de l'écran, cercle oculaire (plus petite tache), marche d'un faisceau incliné.",
+  "conceptions": [
+   "Une lunette rapproche l'objet.",
+   "Le grossissement est le rapport des tailles de l'image et de l'objet.",
+   "On peut placer l'œil n'importe où derrière l'oculaire."
+  ],
+  "faire": [
+   "Lit les documents et range les rôles de l'objectif et de l'oculaire.",
+   "Recueille l'image de la Lune donnée par l'objectif.",
+   "Règle l'oculaire pour voir la Lune nette et compare les diamètres apparents.",
+   "Trouve le cercle oculaire, y place l'œil et suit un faisceau."
+  ]
+ },
+ {
+  "id": "b1_opt3_a2_microscope",
+  "chapitre": "1bac/opt3_instruments",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 55,
+  "description": "Microscope en volume (pied et lampe, potence, platine à crémaillère, revolver à trois objectifs × 4, × 10, × 40, oculaire × 10 ou × 20, vis macrométrique et micrométrique) ; lames d'oignon et micromètre objet ; vue dans l'oculaire (champ, flou de mise au point, profondeur de champ, image plus sombre, grossissement à vide) ; mesure du champ et d'une cellule ; documents sur le grossissement et les limites. Modèle au banc : objet de 5 mm, objectif f'1 = 5 cm, écran (A1B1, γ1 = −2,5), oculaire f'2 = 10 cm, G = |γ1| × 0,25/f'2, faisceau issu de B.",
+  "conceptions": [
+   "Plus on grossit, plus on voit de détails.",
+   "L'oculaire seul fait le grossissement.",
+   "On voit plus de choses avec le plus fort objectif."
+  ],
+  "faire": [
+   "Fait la mise au point avec les trois objectifs et calcule le grossissement commercial.",
+   "Mesure le champ avec le micromètre objet, puis la longueur d'une cellule.",
+   "Constate le grossissement à vide et lit les limites du microscope.",
+   "Réalise un modèle au banc, mesure γ1 et calcule G."
+  ]
+ },
+ {
+  "id": "b1_chim1_a1_mesure",
+  "chapitre": "1bac/chim1_importance_mesure",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 45,
+  "description": "Cinq documents au mur (analyses biologiques, environnement, agroalimentaire, sécurité, techniques de mesure) et tri de huit exemples de mesures par domaine. Bandelettes réactives « nitrates » trempées dans trois eaux (robinet, puits, minérale) : teinte comparée à l'échelle colorée, norme de potabilité de 50 mg/L. Échelle de teintes de colorant E131 (2 à 10 mg/L) dans un porte-tubes devant un carton blanc : le tube de boisson à la menthe se range entre 4 et 6 mg/L ; concentration du sirop, masse absorbée, dose journalière admissible.",
+  "conceptions": [
+   "Une analyse ne sert qu'aux scientifiques.",
+   "Un aliment autorisé ne contient aucune espèce chimique dangereuse.",
+   "On mesure une concentration seulement en pesant."
+  ],
+  "faire": [
+   "Lit des documents et range des exemples de mesures par domaine de la vie courante.",
+   "Mesure les nitrates de trois eaux avec des bandelettes et décide si elles sont potables.",
+   "Encadre la concentration d'un colorant avec une échelle de teintes et la compare à la DJA."
+  ]
+ },
+ {
+  "id": "b1_chim2_a1_gaz",
+  "chapitre": "1bac/chim2_grandeurs_quantite_matiere",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Seringue de 60 mL reliée à un pressiomètre par un robinet à trois voies : on enferme 40 mL d'air, on fait glisser le poussoir, P × V reste constant (tableur, courbe P = f(1/V)). Ballon de 250 mL fermé, plongé dans un bain thermostaté (0 à 80 °C), thermomètre électronique : P varie linéairement avec θ ; la droite prolongée coupe P = 0 vers −273 °C (température absolue). PV = nRT : quantité d'air et volume molaire.",
+  "conceptions": [
+   "Quand on comprime un gaz, sa quantité de matière diminue.",
+   "La pression d'un gaz est proportionnelle à sa température en degrés Celsius.",
+   "Le volume molaire est le même quelles que soient la température et la pression."
+  ],
+  "faire": [
+   "Comprime et détend une quantité d'air fixée et vérifie P × V = constante.",
+   "Mesure la pression d'un volume d'air fixe à plusieurs températures et trouve le zéro absolu ; calcule n et Vm."
+  ]
+ },
+ {
+  "id": "b1_chim2_a2_electrolytes",
+  "chapitre": "1bac/chim2_grandeurs_quantite_matiere",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O4",
+   "O5",
+   "O6",
+   "O7"
+  ],
+  "duree_min": 60,
+  "description": "Burettes d'eau et de cyclohexane : une baguette frottée sur la laine attire le filet d'eau (molécules polaires), pas celui de cyclohexane ; maquette du cristal de chlorure de sodium. Préparation de 100,0 mL de sulfate de cuivre à 0,100 mol/L (lunettes et gants, pictogrammes, pesée de 2,50 g, fiole jaugée, dissolution des cristaux bleus) ; C, [Cu²⁺], [SO₄²⁻], cas de Na₂SO₄. Tests de précipitation sur quatre solutions (soude, nitrate d'argent, chlorure de baryum). Migration des ions Cu²⁺ et MnO₄⁻ sur papier imbibé, générateur de 12 V, inversion des bornes.",
+  "conceptions": [
+   "Une solution de chlorure de sodium contient des molécules NaCl.",
+   "La concentration de chaque ion est toujours égale à celle du soluté apporté.",
+   "Dans une solution, le courant est dû à des électrons."
+  ],
+  "faire": [
+   "Observe la déviation d'un filet d'eau et explique la cohésion d'un solide ionique.",
+   "Prépare une solution de sulfate de cuivre et calcule les concentrations des ions.",
+   "Identifie les ions de quatre solutions par précipitation.",
+   "Observe la migration des ions colorés vers les électrodes."
+  ]
+ },
+ {
+  "id": "b1_chim2_a3_gaz_produit",
+  "chapitre": "1bac/chim2_grandeurs_quantite_matiere",
+  "activite": 3,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O8",
+   "O9"
+  ],
+  "duree_min": 50,
+  "description": "Erlenmeyer de 250 mL contenant 20,0 mL d'acide chlorhydrique à 0,50 mol/L, bouchon relié à un pressiomètre, lunettes et gants. On lâche un ruban de magnésium (0,024 g, 0,036 g, 0,048 g ou 0,24 g) et l'on bouche : Mg + 2 H⁺ → Mg²⁺ + H₂, bulles, pression qui monte. n(H₂) = ΔP·V/(RT) au tableur ; tableau d'avancement, réactif limitant (Mg, puis H⁺ pour le gros ruban), prévision de la pression finale.",
+  "conceptions": [
+   "La pression finale dépend toujours de la masse de métal.",
+   "Les deux réactifs disparaissent toujours entièrement.",
+   "L'avancement maximal est la quantité du réactif en plus petite quantité, sans tenir compte des coefficients."
+  ],
+  "faire": [
+   "Fait réagir un ruban de magnésium dans un erlenmeyer bouché et calcule n(H₂) à partir de la pression.",
+   "Refait l'expérience avec d'autres rubans et identifie le réactif limitant.",
+   "Prévoit la pression finale puis la vérifie."
+  ]
+ },
+ {
+  "id": "b1_chim3_a1_conductance",
+  "chapitre": "1bac/chim3_conductance",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Cellule à deux plaques parallèles (L réglable de 0,5 à 3 cm) au bout d'une potence, bécher sur un support élévateur (surface immergée S réglable), GBF à 500 Hz et deux multimètres : l'élève câble le circuit (GBF → ampèremètre → cellule, voltmètre en dérivation) et choisit les calibres alternatifs (A~, V~) ; flacons d'eau distillée, d'eau sucrée et de chlorure de sodium. Les ions sont indispensables ; G = I/U = 1/R au tableur ; G inversement proportionnelle à L, proportionnelle à S, croissante avec C ; σ = G·L/S.",
+  "conceptions": [
+   "L'eau pure conduit bien le courant.",
+   "La conductance dépend de la tension appliquée.",
+   "La conductance ne dépend que de la solution."
+  ],
+  "faire": [
+   "Câble le circuit, choisit les calibres alternatifs, puis compare le courant dans l'eau distillée, l'eau sucrée et une solution de chlorure de sodium.",
+   "Mesure U et I pour plusieurs tensions et calcule G et R.",
+   "Fait varier L, S et C et calcule la conductivité."
+  ]
+ },
+ {
+  "id": "b1_chim3_a2_etalonnage",
+  "chapitre": "1bac/chim3_conductance",
+  "activite": 2,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Même montage, câblé par l'élève (GBF, ampèremètre A~, voltmètre V~), cellule de géométrie fixe (L = 1 cm, S = 1 cm²) ; six étalons de chlorure de sodium (1 à 10 mmol/L) : courbe d'étalonnage G = f(C) au tableur ; sérum physiologique dilué 20 fois : concentration lue sur la droite (7,7 mmol/L), 154 mmol/L et 9,0 g/L ; solution à 0,10 mol/L hors du domaine de la droite (calibre 200 mA~ nécessaire).",
+  "conceptions": [
+   "La droite d'étalonnage vaut pour toutes les concentrations.",
+   "On peut comparer des conductances mesurées avec des cellules différentes.",
+   "La conductance d'une solution diluée ne dépend pas de sa concentration."
+  ],
+  "faire": [
+   "Câble le circuit, choisit les calibres alternatifs, puis trace la courbe d'étalonnage G = f(C) avec six solutions étalons.",
+   "Détermine la concentration du sérum physiologique.",
+   "Constate la limite de l'étalonnage pour une solution concentrée."
+  ]
+ },
+ {
+  "id": "b1_chim3_a3_ion_commun",
+  "chapitre": "1bac/chim3_conductance",
+  "activite": 3,
+  "objectifs": [
+   "O3",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 40,
+  "description": "Même montage, câblé par l'élève (GBF, ampèremètre A~, voltmètre V~), cellule fixe ; six solutions à 5,0 mmol/L (NaCl, KCl, NaOH, KOH, HCl, NH₄Cl) : G et σ au tableur ; comparaisons deux à deux (ion commun) : λ(K⁺) − λ(Na⁺), λ(HO⁻) > λ(Cl⁻), H₃O⁺ très conducteur ; σ = Σ λi·[Xi] avec les valeurs des tables.",
+  "conceptions": [
+   "Deux solutions de même concentration ont la même conductivité.",
+   "Tous les ions conduisent autant.",
+   "La conductivité ne dépend que du cation."
+  ],
+  "faire": [
+   "Câble le circuit, choisit les calibres alternatifs, puis mesure G et calcule σ pour six solutions de même concentration.",
+   "Compare des solutions ayant un ion commun et calcule σ avec les conductivités molaires ioniques."
+  ]
+ },
+ {
+  "id": "b1_chim4_a1_protons",
+  "chapitre": "1bac/chim4_titrages",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 40,
+  "description": "Porte-tubes de six produits de la vie courante (vinaigre, jus de citron, eau distillée, eau savonneuse, ammoniaque, déboucheur dilués) et flacons de bleu de bromothymol, d'hélianthine et de phénolphtaléine : classement acide / neutre / basique par la teinte. Puis vinaigre + BBT + soude goutte à goutte (jaune → bleu) et ammoniaque + BBT + acide chlorhydrique (bleu → jaune) : transfert de protons, réactions totales, couples acide/base, eau ampholyte. Lunettes et gants pour les produits corrosifs.",
+  "conceptions": [
+   "Un acide est un produit qui brûle ; une base n'est pas dangereuse.",
+   "Le proton H⁺ existe libre dans l'eau.",
+   "L'eau ne participe jamais aux réactions acide-base."
+  ],
+  "faire": [
+   "Ajoute du BBT aux six produits et les classe en acides, neutres et basiques.",
+   "Fait réagir le vinaigre avec la soude et l'ammoniaque avec l'acide chlorhydrique en suivant le changement de teinte du BBT ; écrit les équations et les couples."
+  ]
+ },
+ {
+  "id": "b1_chim4_a2_electrons",
+  "chapitre": "1bac/chim4_titrages",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 40,
+  "description": "Clou de fer dans une solution de sulfate de cuivre (décoloration, dépôt de cuivre, tube témoin), ions fer II identifiés par la soude (précipité vert) ; eau de Javel diluée sur une solution d'iodure de potassium (diiode brun, bleu-noir avec l'empois d'amidon) ; acide ascorbique (vitamine C) qui décolore une solution de diiode. Oxydant, réducteur, couples Ox/Red, demi-équations, électrons jamais libres en solution.",
+  "conceptions": [
+   "Un oxydant contient forcément de l'oxygène.",
+   "Les électrons circulent librement dans la solution.",
+   "Le fer disparaît sans rien produire."
+  ],
+  "faire": [
+   "Plonge un clou de fer dans le sulfate de cuivre, identifie les ions fer II à la soude et écrit les demi-équations.",
+   "Oxyde les ions iodure par l'eau de Javel, révèle le diiode à l'amidon, puis le réduit par la vitamine C."
+  ]
+ },
+ {
+  "id": "b1_chim4_a3_conductimetrique",
+  "chapitre": "1bac/chim4_titrages",
+  "activite": 3,
+  "objectifs": [
+   "O2",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Paillasse de titrage à l'échelle réelle : burette de 25 mL (graduée tous les 0,1 mL, robinet goutte à goutte ou filet, loupe sur le ménisque) remplie d'acide chlorhydrique à 0,100 mol/L, agitateur magnétique et barreau, bécher de 10,0 mL de déboucheur dilué 50 fois + 140 mL d'eau, conductimètre à sonde plongeante. Mesures σ = f(V) au tableur et courbe (deux droites), équivalence à 8,45 mL, Cb = Ca·VE/Vb, concentration du déboucheur commercial (≈ 4,2 mol/L), chiffres significatifs.",
+  "conceptions": [
+   "À l'équivalence, la conductivité est nulle.",
+   "Ajouter de l'eau au bécher change la quantité d'ions à titrer.",
+   "Le résultat est d'autant plus précis qu'il a de chiffres."
+  ],
+  "faire": [
+   "Installe le bécher sur l'agitateur, plonge la sonde, identifie la réaction support.",
+   "Verse l'acide par portions, mesure σ, trace la courbe σ = f(V) et l'interprète.",
+   "Détermine l'équivalence, la concentration du déboucheur et la précision du résultat."
+  ]
+ },
+ {
+  "id": "b1_chim4_a4_colorimetrique",
+  "chapitre": "1bac/chim4_titrages",
+  "activite": 4,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Deux paillasses de titrage (burette, agitateur magnétique). Ions fer II (10,0 mL, acidifiés par l'acide sulfurique versé par l'élève) titrés par le permanganate de potassium à 0,020 mol/L : décoloration, puis première teinte rose persistante à 9,60 mL ; sans acide, la teinte violette persiste. Diiode (10,0 mL) titré par le thiosulfate de sodium à 0,100 mol/L : brun, jaune pâle, bleu-noir avec l'empois d'amidon, décoloration à 8,50 mL. Équivalence dépassée : bécher neuf et burette remplie de nouveau.",
+  "conceptions": [
+   "L'équivalence est atteinte quand la solution change de couleur, même si l'on a versé trop vite.",
+   "Il faut toujours un indicateur coloré pour repérer l'équivalence.",
+   "À l'équivalence, les quantités de réactifs versées sont égales, quels que soient les coefficients."
+  ],
+  "faire": [
+   "Acidifie la solution d'ions fer II et la titre par le permanganate jusqu'à la teinte rose persistante ; calcule [Fe²⁺].",
+   "Titre le diiode par le thiosulfate avec l'empois d'amidon ; calcule [I₂]."
+  ]
+ },
+ {
+  "id": "b1_chim5_a1_organique",
+  "chapitre": "1bac/chim5_chimie_organique",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 45,
+  "description": "Trois paillasses. Documents au mur : composition des espèces organiques, jalons historiques (Berzelius, Wöhler, Kekulé), matières naturelles (photosynthèse, biochimie, hydrocarbures fossiles), diversité et importance économique. Combustion d'une bougie : bécher sec et froid tenu retourné au-dessus de la flamme (buée : élément hydrogène ; la flamme s'éteint si le dioxygène s'épuise), remis à l'endroit, eau de chaux versée qui se trouble (élément carbone). Boîte de modèles moléculaires : éthane (liaisons simples, tétraèdre), éthène (liaison double, molécule plane), éthyne (liaison triple, molécule linéaire) ; duet, octet, représentation de Lewis.",
+  "conceptions": [
+   "Les espèces organiques ne peuvent être produites que par les êtres vivants.",
+   "Une bougie qui brûle disparaît sans rien produire.",
+   "Le carbone forme toujours quatre liaisons simples."
+  ],
+  "faire": [
+   "Lit les quatre documents sur les espèces organiques, leur histoire, leur origine et leur importance.",
+   "Identifie l'eau et le dioxyde de carbone produits par la combustion d'une bougie et en déduit les éléments de la paraffine.",
+   "Construit l'éthane, l'éthène et l'éthyne avec les modèles moléculaires et décrit les liaisons du carbone."
+  ]
+ },
+ {
+  "id": "b1_chim6_a1_squelette",
+  "chapitre": "1bac/chim6_formule_chimique",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Trois paillasses. Tubes d'hexane, de cyclohexane et d'éthanol où l'on ajoute de l'eau à la pissette : deux phases (l'hydrocarbure, moins dense, au-dessus) ou mélange homogène. Bain-marie à 50 °C où l'on plonge des tubes de pentane, d'hexane et de cyclohexane : seul le pentane bout ; tableur et courbe Téb = f(n) des alcanes linéaires. Tests des groupes caractéristiques sur cinq tubes inconnus A à E (2,4-DNPH, liqueur de Fehling au bain-marie, BBT, permanganate acidifié), lunettes et gants exigés.",
+  "conceptions": [
+   "Tous les liquides organiques se mélangent à l'eau.",
+   "Une molécule plus lourde bout toujours à plus basse température.",
+   "Tous les alcools sont oxydés par le permanganate."
+  ],
+  "faire": [
+   "Ajoute de l'eau à l'hexane, au cyclohexane et à l'éthanol et compare miscibilité et densité.",
+   "Chauffe trois hydrocarbures au bain-marie, trace Téb = f(n) et relie la température d'ébullition à la longueur et à la ramification de la chaîne.",
+   "Identifie un alcool primaire, un aldéhyde, une cétone, un acide carboxylique et un alcool tertiaire par des tests."
+  ]
+ },
+ {
+  "id": "b1_chim6_a2_modeles",
+  "chapitre": "1bac/chim6_formule_chimique",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 45,
+  "description": "Deux paillasses. Boîte de modèles moléculaires : l'élève assemble le butane et le 2-méthylpropane (isomères de constitution), puis le (Z)- et le (E)-but-2-ène ; le modèle terminé affiche son nom officiel, calculé à partir de la chaîne la plus longue, des ramifications et de la géométrie de la liaison double. Quatre documents au mur : distillation fractionnée du pétrole, craquage, reformage et vapocraquage, polyaddition, polymères courants.",
+  "conceptions": [
+   "Deux molécules de même formule brute sont identiques.",
+   "On peut passer de l'isomère Z à l'isomère E en tournant la molécule.",
+   "Un polymère est un mélange de monomères."
+  ],
+  "faire": [
+   "Construit les deux isomères de C₄H₁₀, écrit leurs formules semi-développées et les nomme.",
+   "Construit les isomères Z et E du but-2-ène et explique pourquoi ils ne se transforment pas l'un en l'autre.",
+   "Lit les documents sur la pétrochimie et écrit le motif d'un polymère à partir de son monomère."
+  ]
+ },
+ {
+  "id": "b1_chim6_a3_benzoique",
+  "chapitre": "1bac/chim6_formule_chimique",
+  "activite": 3,
+  "objectifs": [
+   "O5",
+   "O6",
+   "O7"
+  ],
+  "duree_min": 60,
+  "description": "Cinq paillasses. Montage à reflux : 2,0 mL d'alcool benzylique et la solution de permanganate de potassium en milieu basique versés par l'entonnoir, pierre ponce, réfrigérant, chauffage pendant 20 min ; le violet laisse place au brun du dioxyde de manganèse. Filtration sous vide du MnO₂ (Büchner, trompe à eau). Acidification du filtrat d'ions benzoate par l'acide chlorhydrique (gants, lunettes) : précipité blanc d'acide benzoïque, recueilli sur Büchner. Pesée du produit sec sur une balance au centième (coupelle tarée), calcul du rendement. Chromatographie du produit, de l'acide benzoïque pur et de l'alcool benzylique, révélée sous UV.",
+  "conceptions": [
+   "Le rendement d'une synthèse est toujours de 100 %.",
+   "Le produit d'une synthèse est forcément pur.",
+   "L'acide benzoïque se forme directement à l'état solide dans le ballon."
+  ],
+  "faire": [
+   "Réalise le chauffage à reflux et interprète le changement de couleur par l'oxydation de l'alcool et la réduction du permanganate.",
+   "Sépare le dioxyde de manganèse par filtration sous vide.",
+   "Acidifie le filtrat, observe la précipitation de l'acide benzoïque et le recueille par filtration sous vide.",
+   "Pèse le produit sec et calcule n(max), n(obtenu) et le rendement.",
+   "Contrôle la pureté du produit par chromatographie sur couche mince."
+  ]
+ },
+ {
+  "id": "b2_intro_a1_physicien",
+  "chapitre": "2bac/intro_physicien",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 30,
+  "description": "Deux paillasses. L'article d'une physicienne en cinq documents au mur (communiquer avec les ondes, l'énergie du noyau, des circuits partout, satellites et horloges, comment je travaille) et un tableau magnétique où l'on range huit questions du physicien dans les parties du programme (ondes, transformations nucléaires, électricité, mécanique). Un problème : à quelle distance est un satellite GPS ? Document, tableau magnétique des étapes de la démarche (observer et questionner, choisir un modèle, mesurer, calculer et valider), calcul d = c·Δt.",
+  "conceptions": [
+   "Le physicien découvre les lois par hasard, sans démarche.",
+   "La physique est éloignée de la vie courante et des techniques.",
+   "Un résultat calculé est forcément juste."
+  ],
+  "faire": [
+   "Lit l'article et range les questions du physicien par partie du programme de l'année.",
+   "Range les étapes de la démarche du physicien et calcule la distance d'un satellite GPS."
+  ]
+ },
+ {
+  "id": "b2_ondes1_a1_exemples",
+  "chapitre": "2bac/ondes1_mecaniques",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 40,
+  "description": "Trois paillasses. Cuve en verre de 80 cm (eau sur 3 cm, plage de mousse) : une cale enfoncée puis relâchée crée une vague qui avance à 0,54 m/s ; un bouchon de liège monte et redescend sans avancer. Long ressort de 2 m tenu par une poignée : secousse perpendiculaire (onde transversale) ou poussée le long de l'axe (onde longitudinale, spires serrées puis écartées) ; une spire rouge revient à sa place. Documents sur le son, les séismes (ondes P et S), les vagues et la ola ; tableau magnétique transversale / longitudinale ; distance d'un foyer sismique.",
+  "conceptions": [
+   "Une onde transporte la matière (le bouchon est emporté par la vague).",
+   "Une onde est forcément périodique.",
+   "Le son se propage dans le vide."
+  ],
+  "faire": [
+   "Crée une vague dans la cuve, observe le bouchon et calcule la célérité de la vague.",
+   "Crée une onde transversale puis une onde longitudinale le long du ressort et suit la spire rouge.",
+   "Lit les documents, classe huit ondes et calcule la distance d'un foyer sismique."
+  ]
+ },
+ {
+  "id": "b2_ondes1_a2_retard",
+  "chapitre": "2bac/ondes1_mecaniques",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 55,
+  "description": "Deux paillasses. Long ressort, deux cellules photoélectriques déplaçables sur une règle de 2 m et chronomètre électronique (START/STOP, RAZ) : retard d'une bosse entre A et B, tableur et courbe Δt = f(d), célérité. Claquoir, deux microphones sur une règle de 1 m et oscilloscope numérique à mémoire en monocoup (sensibilités et balayage réglables) : retard d'une salve sonore entre M1 et M2, tableur et courbe τ = f(d), célérité du son dans l'air à 20 °C.",
+  "conceptions": [
+   "Une perturbation plus grande va plus vite.",
+   "Le son arrive au même instant à tous les points.",
+   "Le retard ne dépend pas de la distance."
+  ],
+  "faire": [
+   "Mesure le retard d'une bosse le long du ressort pour plusieurs distances, trace Δt = f(d) et en déduit la célérité.",
+   "Mesure à l'oscilloscope le retard d'un son entre deux micros pour plusieurs distances, trace τ = f(d) et en déduit la célérité du son."
+  ]
+ },
+ {
+  "id": "b2_ondes1_a3_milieu",
+  "chapitre": "2bac/ondes1_mecaniques",
+  "activite": 3,
+  "objectifs": [
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Deux paillasses. Corde de 2 m tendue par un porte-masse et des disques de 100 g sur une poulie (T = M·g) ; un toucher de la poignée donne un coup sec (amplitude et durée réglables) ; caméra rapide (ralenti × 20) et chronophotographie toutes les 0,05 s : la bosse avance de distances égales sans se déformer. Trois cordes de masses linéiques 50, 100 et 200 g/m au mur ; cellules et chronomètre électronique : célérité pour quatre tensions (tableur, courbe v² = f(T), v = √(T/μ)) et pour trois cordes à la même tension. Documents sur la célérité du son dans différents milieux et selon la température.",
+  "conceptions": [
+   "La célérité dépend de la force de la secousse.",
+   "Une corde plus lourde transmet plus vite la perturbation.",
+   "La célérité du son est la même dans tous les milieux."
+  ],
+  "faire": [
+   "Observe la chronophotographie d'un coup sec, mesure la célérité pour quatre tensions et trace v² = f(T).",
+   "Compare la célérité le long de trois cordes de masses linéiques différentes à la même tension.",
+   "Lit les documents sur le son dans différents milieux et calcule des célérités et des durées."
+  ]
+ },
+ {
+  "id": "b2_ondes2_a1_sinusoidale",
+  "chapitre": "2bac/ondes2_periodiques",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 55,
+  "description": "Deux paillasses. Corde de 1,5 m reliée à un vibreur et à un GBF (10 à 100 Hz), coton absorbant au bout : en lumière ordinaire une bande floue ; au stroboscope (salle obscure, fréquence des éclairs réglable) la corde paraît immobile quand f est un multiple de fe, ou avance lentement quand fe est un peu plus petite ; deux curseurs sur la règle pour mesurer λ ; tableur f, λ, v = λ·f. Haut-parleur alimenté par un GBF (500 à 5 000 Hz), deux micros sur une règle de 1 m et oscilloscope à deux voies : période, positions où les courbes sont en phase (multiples de λ), célérité du son.",
+  "conceptions": [
+   "La longueur d'onde dépend de l'amplitude de la vibration.",
+   "Deux points d'une corde vibrent toujours en même temps.",
+   "Ce que l'on voit au stroboscope est le mouvement réel."
+  ],
+  "faire": [
+   "Immobilise la corde au stroboscope, mesure λ pour plusieurs fréquences et vérifie λ = v / f.",
+   "Mesure à l'oscilloscope la période du son et la distance de cinq positions en phase, en déduit λ et v."
+  ]
+ },
+ {
+  "id": "b2_ondes2_a2_diffraction",
+  "chapitre": "2bac/ondes2_periodiques",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 60,
+  "description": "Trois paillasses. Cuve à ondes (onde plane, image projetée sur un écran, stroboscope) : barrière à fente de largeur réglable (5 à 60 mm), obstacle ou rien ; image calculée par le principe de Huygens ; mesure de λ avec deux curseurs pour 10 à 30 Hz : v = λ·f varie (milieu dispersif). Banc à ultrasons de 40 kHz : fente de 10, 20 ou 40 mm, récepteur sur un bras tournant au-dessus d'un rapporteur, amplitude reçue selon l'angle. Documents (houle et port, son par une porte, lumière, longueurs d'onde) et classement des situations : diffraction marquée ou peu marquée.",
+  "conceptions": [
+   "Une onde passe par une ouverture sans changer de forme, quelle que soit sa taille.",
+   "La longueur d'onde change après une fente.",
+   "La célérité d'une onde ne dépend jamais de sa fréquence."
+  ],
+  "faire": [
+   "Observe une onde plane qui traverse une fente large, une fente étroite et un obstacle, et compare a à λ.",
+   "Mesure λ pour plusieurs fréquences et calcule v = λ·f pour reconnaître un milieu dispersif.",
+   "Mesure l'amplitude des ultrasons diffractés par deux fentes selon l'angle.",
+   "Lit les documents et classe des situations selon que la diffraction est marquée ou non."
+  ]
+ },
+ {
+  "id": "b2_ondes3_a1_diffraction",
+  "chapitre": "2bac/ondes3_lumiere",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 55,
+  "description": "Une paillasse. Banc de diffraction : laser rouge (650 nm), laser vert (532 nm) ou lampe avec fente (lumière blanche) ; diapositive de fentes (40 à 150 µm), de fils (100 et 200 µm) et d'un cheveu ; écran que l'on fait glisser le long d'un mètre-ruban (0,50 à 2,20 m). L'écran vu de face (agrandi) montre la figure calculée (sinc²) ; deux curseurs mesurent la largeur L de la tache centrale. Tableur a, L, θ = L/(2D), 1/a et courbe θ = f(1/a) ; ν = c/λ ; épaisseur du cheveu.",
+  "conceptions": [
+   "La lumière se propage toujours en ligne droite.",
+   "Plus la fente est fine, plus la tache est petite.",
+   "La lumière blanche est une seule radiation."
+  ],
+  "faire": [
+   "Mesure la largeur de la tache centrale pour quatre fentes, trace θ = f(1/a) et en déduit λ et ν.",
+   "Compare fente et fil, laser rouge et vert, lumière blanche, et mesure l'épaisseur d'un cheveu."
+  ]
+ },
+ {
+  "id": "b2_ondes3_a2_prisme",
+  "chapitre": "2bac/ondes3_lumiere",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. Goniomètre : plateau gradué vu un peu d'en haut, prisme de 60° en verre flint (indice selon la loi de Cauchy), source laser rouge, laser vert ou lampe avec fente ; on règle l'incidence i et l'on vise le faisceau émergent avec la lunette, qui donne la déviation D. Tableur et courbe D = f(i), minimum de déviation, n = sin((A + Dm)/2)/sin(A/2) pour le rouge et le vert ; spectre de la lumière blanche ; fréquence inchangée, longueur d'onde dans le verre.",
+  "conceptions": [
+   "Le prisme colore la lumière.",
+   "L'indice d'un verre est le même pour toutes les couleurs.",
+   "La fréquence de la lumière change quand elle entre dans le verre."
+  ],
+  "faire": [
+   "Mesure la déviation pour plusieurs incidences, trouve le minimum de déviation et calcule l'indice pour le rouge.",
+   "Détermine l'indice pour le vert, observe le spectre de la lumière blanche et calcule la longueur d'onde dans le verre."
+  ]
+ },
+ {
+  "id": "b2_ondes4_a1_reseau",
+  "chapitre": "2bac/ondes4_reseau",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 60,
+  "description": "Deux paillasses. 1) Modèles de réseau : diapositives de 100, 300 et 600 traits/mm, CD et DVD sans couche réfléchissante ; on touche un objet pour voir sa photographie au microscope, avec une règle en micromètres et deux curseurs pour mesurer le pas a. 2) Banc à réseau vu de dessus dans la salle obscure : laser rouge ou vert, lampe avec fente, fentes de 100 et 50 µm, réseaux, CD et DVD ; on voit les faisceaux diffractés sur la table et les taches sur l'écran vu de face (deux curseurs au millimètre) ; écran mobile de 0,25 à 1,30 m. Tableur et courbe sin θk = f(k), pas d'un CD par diffraction, nombre de maximums.",
+  "conceptions": [
+   "Un réseau est une seule fente très fine.",
+   "Plus il y a de traits par millimètre, plus les taches sont serrées.",
+   "On peut voir autant de maximums que l'on veut avec un réseau."
+  ],
+  "faire": [
+   "Observe des réseaux, un CD et un DVD au microscope, mesure leur pas et le relie au nombre de traits par millimètre.",
+   "Compare une fente qui rétrécit et un réseau, repère les directions des maximums et vérifie sin θk = k·λ/a avec le tableur.",
+   "Mesure le pas d'un CD par diffraction, voit l'influence du nombre de traits par mm et compte les maximums."
+  ]
+ },
+ {
+  "id": "b2_ondes4_a2_incidence",
+  "chapitre": "2bac/ondes4_reseau",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 45,
+  "description": "Une paillasse. Banc à réseau vu de dessus avec un plateau tournant gradué (incidence i de 0 à 40°, normale au réseau en pointillés) ; réseaux de 100, 300 et 600 traits/mm ; laser rouge, laser vert, lampe avec fente source. Figure dissymétrique en incidence oblique, vérification de sin θk − sin i = k·λ/a ; spectres de la lumière blanche (violet le moins dévié, chevauchement des ordres 2 et 3) ; longueur d'onde du laser vert.",
+  "conceptions": [
+   "En incidence oblique, toute la figure tourne avec le réseau.",
+   "Le rouge est le moins dévié par un réseau, comme par un prisme.",
+   "La lumière se propage toujours en ligne droite."
+  ],
+  "faire": [
+   "Tourne le réseau, observe la figure dissymétrique et vérifie sin θk − sin i = k·λ/a pour les ordres 1 et −1.",
+   "Observe les spectres de la lumière blanche et mesure la longueur d'onde d'un laser vert."
+  ]
+ },
+ {
+  "id": "b2_nucl1_a1_becquerel",
+  "chapitre": "2bac/nucl1_decroissance",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 55,
+  "description": "Deux paillasses. 1) Expérience de Becquerel : plaque photographique dans du papier noir, croix de cuivre, sel d'uranium, uranium métal ou sulfate de sodium ; on porte le plateau au soleil (fenêtre) ou dans le tiroir, on laisse passer 3 jours et on développe ; trois documents (Becquerel, les Curie, taille des noyaux et étoile à neutrons). 2) Tableau magnétique du diagramme (N, Z) des noyaux légers (cases colorées : stable, β−, β+, α) où l'on place six cartes ᴬ_Z X, et affiche de tous les noyaux (vallée de stabilité). Équations de désintégration α, β−, β+ et émission γ.",
+  "conceptions": [
+   "La radioactivité a besoin de lumière pour se produire.",
+   "Les isotopes sont des éléments chimiques différents.",
+   "Les noyaux stables ont toujours autant de neutrons que de protons.",
+   "Une désintégration ne conserve rien."
+  ],
+  "faire": [
+   "Refait l'expérience de Becquerel au soleil, à l'obscurité et avec trois composés.",
+   "Place des noyaux dans le diagramme (N, Z), repère les isotopes et les domaines de stabilité.",
+   "Définit les radioactivités et écrit des équations de désintégration en conservant A et Z."
+  ]
+ },
+ {
+  "id": "b2_nucl1_a2_datation",
+  "chapitre": "2bac/nucl1_decroissance",
+  "activite": 2,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Deux paillasses. 1) Quatre documents (radioactivité autour de nous, carbone 14, effets biologiques, dater des roches) et tableau magnétique : ranger huit objets selon le radioélément qui permet de les dater (carbone 14, potassium 40, uranium 238, tritium). 2) Compteur à scintillation : on y place des fioles de carbone (actuel, charbon d'une grotte, os de mammouth) et on mesure l'activité (tirage aléatoire) ; tableur et courbe a(t) = a₀·e^(−λt), datation graphique et par le calcul.",
+  "conceptions": [
+   "On peut dater n'importe quel objet avec le carbone 14.",
+   "Un être vivant n'est pas radioactif.",
+   "La radioactivité naturelle n'existe pas : elle est toujours artificielle."
+  ],
+  "faire": [
+   "Lit les documents et choisit le radioélément adapté à chaque datation.",
+   "Mesure l'activité du carbone actuel et ancien, trace a(t) et date deux échantillons."
+  ]
+ },
+ {
+  "id": "b2_nucl1_a3_compteur",
+  "chapitre": "2bac/nucl1_decroissance",
+  "activite": 3,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5",
+   "O7"
+  ],
+  "duree_min": 60,
+  "description": "Une paillasse. Compteur relié à un tube de Geiger-Müller tenu au-dessus d'un plateau (durées 10, 30 ou 60 s, série, horloge × 20, relevé au mur) ; coffret de sources (américium 241, strontium 90, césium 137) et d'échantillons naturels (granite, engrais au potassium, sel de table) ; écrans de papier, d'aluminium et de plomb ; générateur d'isotopes césium 137 / baryum 137m. Bruit de fond, série de comptages (moyenne, variance, écart-type), rayonnements α, β, γ, décroissance de l'éluat : ln N = f(t), λ, t½, τ, activité.",
+  "conceptions": [
+   "Un même comptage donne toujours le même nombre.",
+   "Tous les rayonnements sont arrêtés par une feuille de papier.",
+   "Au bout de deux demi-vies, il ne reste plus aucun noyau."
+  ],
+  "faire": [
+   "Mesure le bruit de fond, répète des comptages et calcule moyenne, variance et écart-type.",
+   "Compare des échantillons naturels et identifie α, β et γ par les écrans.",
+   "Suit la décroissance du baryum 137m et détermine λ, la demi-vie et la constante de temps."
+  ]
+ },
+ {
+  "id": "b2_nucl2_a1_energie",
+  "chapitre": "2bac/nucl2_masse_energie",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 70,
+  "description": "Trois paillasses. 1) Balance de précision (modèle) : un noyau (²H, ⁴He, ¹²C, ⁵⁶Fe, ²³⁵U) sur un plateau, ses protons et neutrons séparés sur l'autre ; l'écran donne les masses en u et le défaut de masse ; document sur les unités (u, eV, E = m·c², équation aux dimensions). 2) Affiche des masses de 21 noyaux : courbe d'Aston au tableur (Δm, El/A) ; bilans d'énergie avec les masses des noyaux (α, β−, β+, fission, fusion, 1 g d'uranium 235). 3) Quatre documents (centrale nucléaire, Soleil et ITER, médecine nucléaire, dangers et déchets) et tri des applications : fission, fusion, désintégration.",
+  "conceptions": [
+   "Un noyau a la même masse que ses nucléons séparés.",
+   "L'énergie de liaison est l'énergie contenue dans un nucléon.",
+   "Seule la fission libère de l'énergie ; la fusion en consomme.",
+   "Les noyaux les plus lourds sont les plus stables."
+  ],
+  "faire": [
+   "Compare la masse d'un noyau à celle de ses nucléons, calcule le défaut de masse, l'énergie de liaison et convertit les unités.",
+   "Calcule El/A de dix noyaux et trace la courbe d'Aston.",
+   "Fait le bilan d'énergie de désintégrations, d'une fission et d'une fusion.",
+   "Lit des documents sur les applications et les dangers et classe les applications."
+  ]
+ },
+ {
+  "id": "b2_elec1_a1_courant",
+  "chapitre": "2bac/elec1_dipole_rc",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. Générateur de courant (0,05 à 0,5 mA, limité à 24 V), condensateurs C₁ = 100 µF et C₂ = 47 µF (touche « Décharger »), multimètre en voltmètre, fiche de relevés avec chronomètre et touche « Noter » ; l'élève pose les fils. Convention récepteur, u = f(t) linéaire, q = I·t, q = C·u au tableur ; capacités équivalentes en série et en parallèle.",
+  "conceptions": [
+   "Un condensateur laisse passer le courant continu indéfiniment.",
+   "La tension aux bornes d'un condensateur ne dépend pas de sa charge.",
+   "En série, les capacités s'ajoutent."
+  ],
+  "faire": [
+   "Charge C₁ à courant constant, relève u(t), trace q = f(u) et trouve C₁ = 100 µF.",
+   "Mesure la capacité équivalente de C₁ et C₂ en série, puis en parallèle."
+  ]
+ },
+ {
+  "id": "b2_elec1_a2_echelon",
+  "chapitre": "2bac/elec1_dipole_rc",
+  "activite": 2,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 60,
+  "description": "Une paillasse. Générateur réglable, commutateur K, boîte de résistances (1 à 100 kΩ), boîte de condensateurs (47 à 470 µF), interface d'acquisition et ordinateur (durée, déclenchement automatique, curseur, tangente à l'origine, trois courbes superposées) ; l'élève pose les fils. Charge et décharge, continuité de uC, τ à 63 % et par la tangente, τ = R·C au tableur, équation différentielle et solution.",
+  "conceptions": [
+   "Le condensateur se charge instantanément.",
+   "La tension aux bornes du condensateur saute quand on ferme l'interrupteur.",
+   "τ ne dépend que de R."
+  ],
+  "faire": [
+   "Câble le montage, enregistre la charge, lit E et τ (63 % et tangente) et compare à R·C.",
+   "Mesure τ pour quatre couples (R, C) et vérifie τ = R·C.",
+   "Enregistre la décharge, établit l'équation différentielle et choisit sa solution."
+  ]
+ },
+ {
+  "id": "b2_elec1_a3_energie",
+  "chapitre": "2bac/elec1_dipole_rc",
+  "activite": 3,
+  "objectifs": [
+   "O5",
+   "O7"
+  ],
+  "duree_min": 40,
+  "description": "Une paillasse. Générateur réglable (0 à 12 V), commutateur K, boîte de condensateurs (0,47 à 4,7 mF), lampe 6 V – 0,1 A, interface d'acquisition et ordinateur, deux documents (flash, défibrillateur). Le condensateur chargé se décharge dans la lampe, qui s'allume brièvement ; énergie E = ½·C·u² pour plusieurs C et u ; énergie et puissance d'un flash, tension d'un défibrillateur.",
+  "conceptions": [
+   "Le condensateur produit de l'énergie.",
+   "L'énergie stockée est proportionnelle à la tension.",
+   "La décharge d'un condensateur est instantanée."
+  ],
+  "faire": [
+   "Fait des éclairs pour plusieurs capacités et tensions et calcule E = ½·C·u².",
+   "Lit les documents et calcule l'énergie et la puissance d'un flash, la tension d'un défibrillateur."
+  ]
+ },
+ {
+  "id": "b2_elec2_a1_bobine",
+  "chapitre": "2bac/elec2_dipole_rl",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O4"
+  ],
+  "duree_min": 35,
+  "description": "Une paillasse. Générateur 6 V, interrupteur K, deux lampes identiques 6 V – 0,1 A, bobine de 1 000 spires (r = 10 Ω ; 50 mH, 0,5 H avec son noyau de fer doux), résistance R = 10 Ω, multimètre. Ohmmètre : résistance de la bobine ; deux branches en dérivation (L₁ avec la bobine, L₂ avec R) : à la fermeture, L₁ s'allume en retard ; à l'ouverture, elle s'éteint progressivement ; retard plus court sans le noyau. Temps ralenti 100 fois.",
+  "conceptions": [
+   "Une bobine est un simple fil : elle n'a aucun effet sur le courant.",
+   "Le courant s'établit instantanément dans tout le circuit.",
+   "Une bobine s'oppose au courant même quand il est constant."
+  ],
+  "faire": [
+   "Mesure la résistance de la bobine à l'ohmmètre et explique son comportement en courant continu.",
+   "Câble deux branches, ferme et ouvre K avec et sans noyau, et compare l'allumage et l'extinction des deux lampes."
+  ]
+ },
+ {
+  "id": "b2_elec2_a2_inductance",
+  "chapitre": "2bac/elec2_dipole_rl",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 40,
+  "description": "Une paillasse. GBF (tension triangulaire, 50 Hz à 2 kHz), bobine (r = 10 Ω ; 50 mH, 0,5 H avec son noyau), boîte de résistances (100 Ω à 2,2 kΩ), interface d'acquisition et ordinateur (voie EA0 : uL ; EA1 : −uR, à inverser). Le courant triangulaire donne une tension créneau aux bornes de la bobine : uL = L·di/dt ; mesure de L avec et sans noyau ; unité henry et équation aux dimensions. Temps ralenti 40 fois.",
+  "conceptions": [
+   "La tension aux bornes d'une bobine a la même forme que le courant.",
+   "L'inductance dépend du courant qui traverse la bobine.",
+   "Le henry est une unité indépendante des autres."
+  ],
+  "faire": [
+   "Câble le montage, enregistre uL et uR avec une tension triangulaire, mesure di/dt et uL, calcule L avec et sans noyau de fer doux et retrouve 1 H = 1 V·s/A."
+  ]
+ },
+ {
+  "id": "b2_elec2_a3_echelon",
+  "chapitre": "2bac/elec2_dipole_rl",
+  "activite": 3,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. Générateur réglable (6 V), commutateur K, bobine (r = 10 Ω ; 50 mH, 0,5 H avec son noyau), boîte de résistances (10 à 220 Ω), interface d'acquisition et ordinateur. Établissement et rupture du courant dans un dipôle RL : i continue, régime permanent I₀ = E / (R + r), τ = L / (R + r) mesurée à 63 % ; tableur et courbe pour plusieurs R et L ; équation différentielle, solution, énergie ½·L·i². Temps ralenti 40 fois.",
+  "conceptions": [
+   "Le courant s'annule aussitôt quand on ouvre le circuit.",
+   "τ ne dépend que de L.",
+   "La bobine produit de l'énergie."
+  ],
+  "faire": [
+   "Câble le montage, enregistre l'établissement du courant, lit I₀ et τ et compare à L/(R + r).",
+   "Mesure τ pour quatre couples (R, L) et trace τ = f(L/(R + r)).",
+   "Enregistre la rupture du courant, établit l'équation différentielle et sa solution, calcule l'énergie stockée."
+  ]
+ },
+ {
+  "id": "b2_elec3_a1_decharge",
+  "chapitre": "2bac/elec3_rlc_libre",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. Générateur 6 V, commutateur K, boîte de condensateurs (1 à 10 µF), bobine (r = 10 Ω ; 50 mH, 0,5 H avec son noyau), boîte de résistances (10 Ω à 2,2 kΩ), interface d'acquisition et ordinateur. Décharge d'un condensateur dans la bobine : oscillations amorties (pseudo-période 14 ms pour 0,5 H et 10 µF), régime apériodique pour 1 kΩ, régime critique ; pseudo-période pour quatre couples (L, C) au tableur, T ≈ 2π√(LC) ; équation différentielle, q(t), i(t). Temps ralenti 40 fois.",
+  "conceptions": [
+   "Le condensateur se décharge toujours sans osciller.",
+   "La pseudo-période dépend de la résistance du circuit.",
+   "L'amortissement est dû au condensateur."
+  ],
+  "faire": [
+   "Câble le circuit, enregistre la décharge pour R = 10 Ω, 100 Ω et 1 kΩ et reconnaît les régimes.",
+   "Mesure la pseudo-période pour quatre couples (L, C) et la compare à 2π√(LC) au tableur et à la courbe.",
+   "Établit l'équation différentielle sans amortissement, sa solution q(t), i(t) et calcule T₀."
+  ]
+ },
+ {
+  "id": "b2_elec3_a2_energies",
+  "chapitre": "2bac/elec3_rlc_libre",
+  "activite": 2,
+  "objectifs": [
+   "O4"
+  ],
+  "duree_min": 35,
+  "description": "Une paillasse : le même circuit, EA1 sur la résistance (uR = R·i) ; le logiciel affiche Ee = ½·C·uC², Em = ½·L·i² et E = Ee + Em (en µJ). Échanges d'énergie entre condensateur et bobine, diminution de E par effet Joule (43 % par pseudo-période pour R = 10 Ω), régime apériodique, cas idéal sans résistance (Im = Um·√(C/L)). Temps ralenti 40 fois.",
+  "conceptions": [
+   "L'énergie totale se conserve dans un circuit RLC réel.",
+   "L'énergie disparaît sans être transformée.",
+   "Le condensateur et la bobine stockent leur énergie au même instant."
+  ],
+  "faire": [
+   "Câble le circuit avec EA1, enregistre une décharge, affiche les énergies et lit E(0) et la perte d'énergie en une pseudo-période.",
+   "Compare les énergies en régime apériodique et dans le cas idéal sans résistance."
+  ]
+ },
+ {
+  "id": "b2_elec3_a3_entretien",
+  "chapitre": "2bac/elec3_rlc_libre",
+  "activite": 3,
+  "objectifs": [
+   "O5",
+   "O6",
+   "O3"
+  ],
+  "duree_min": 40,
+  "description": "Une paillasse : le même circuit avec un dispositif d'entretien à amplificateur opérationnel (résistance négative −R₀ réglable de 0 à 40 Ω, saturation à 40 mA). Oscillations amorties pour R₀ = 0, entretenues et sinusoïdales pour R₀ = R + r = 20 Ω, de période T₀ ; amplitude qui augmente puis se limite pour R₀ > R + r ; production d'une tension sinusoïdale de 150 Hz (L = 0,5 H, C = 2,2 µF). Temps ralenti 40 fois.",
+  "conceptions": [
+   "Le dispositif d'entretien supprime la résistance du circuit.",
+   "Les oscillations entretenues ont une période différente de T₀.",
+   "On règle la fréquence avec la tension du générateur."
+  ],
+  "faire": [
+   "Insère le dispositif d'entretien, règle R₀ jusqu'à des oscillations d'amplitude constante, mesure leur période et observe l'effet de R₀ > R + r.",
+   "Calcule C pour 150 Hz, produit cette tension sinusoïdale et mesure sa fréquence."
+  ]
+ },
+ {
+  "id": "b2_elec4_a1_forcees",
+  "chapitre": "2bac/elec4_rlc_force",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. GBF sinusoïdal (50 Hz à 1 kHz, pas de 5 ou 50 Hz), boîte de condensateurs (1 à 10 µF), bobine (r = 10 Ω ; 0,5 H avec son noyau), boîte de résistances, oscilloscope bicourbe (u et uR = R·i), voltmètre alternatif, feuille de la construction de Fresnel. Le GBF impose sa fréquence (oscillations forcées) ; Um, Im, Z = Um/Im (600 Ω à 150 Hz) ; construction de Fresnel ; U = Um/√2 ; i en avance sur u à 150 Hz (1,47 ms), en retard à 400 Hz, u et i ensemble à N₀ = 225 Hz.",
+  "conceptions": [
+   "Le circuit oscille à sa fréquence propre même quand il est alimenté par un GBF.",
+   "L'impédance est la somme R + Lω + 1/(Cω).",
+   "L'intensité et la tension passent toujours ensemble par zéro."
+  ],
+  "faire": [
+   "Câble le circuit et l'oscilloscope, observe u et i à 150 Hz et 300 Hz : même fréquence que le GBF.",
+   "Mesure Um et Im, calcule Z, retrouve Um par la construction de Fresnel et compare U au voltmètre à Um/√2.",
+   "Mesure l'avance ou le retard de i sur u et trouve la fréquence où u et i passent ensemble par zéro."
+  ]
+ },
+ {
+  "id": "b2_elec4_a2_resonance",
+  "chapitre": "2bac/elec4_rlc_force",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse : le même circuit avec un ampèremètre et un voltmètre en alternatif (U ≈ 1,06 V). Courbes I = f(N) pour R = 47 Ω et R = 220 Ω au tableur (onze fréquences) et à la courbe ; N₀ = 225 Hz, I₀ = 18 mA, bande passante ΔN ≈ 19 Hz, Q ≈ 12 ; influence de R ; surtension UC ≈ 12,8 V = Q·U ; puissance (R + r)·I² et facteur de puissance.",
+  "conceptions": [
+   "La fréquence de résonance dépend de la résistance.",
+   "La tension aux bornes du condensateur ne peut pas dépasser celle du générateur.",
+   "Le condensateur et la bobine consomment de la puissance."
+  ],
+  "faire": [
+   "Relève I pour huit fréquences au moins avec deux résistances, trace les deux courbes de résonance, lit N₀, I₀, la bande passante et calcule Q.",
+   "Mesure la surtension aux bornes du condensateur, calcule la puissance moyenne et le facteur de puissance."
+  ]
+ },
+ {
+  "id": "b2_elec5_a1_histoire",
+  "chapitre": "2bac/elec5_modulation",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 40,
+  "description": "Trois paillasses. 1 : quatre documents (signaux, télégraphe de Chappe, Morse et Bell, Maxwell et Hertz, de la TSF au téléphone portable) et tableau de tri selon ce qui porte l'information. 2 : document sur la répartition des bandes de fréquences, tri de huit services (GO, PO, FM, TNT, portable, Wi-Fi…), λ = c/f. 3 : GBF et antenne émettrice, antenne réceptrice sur un chariot (0,1 à 1 m), oscilloscope : même fréquence, amplitude qui diminue avec la distance.",
+  "conceptions": [
+   "Une onde transporte de la matière.",
+   "On peut émettre directement le son par une antenne.",
+   "L'antenne réceptrice reçoit à une autre fréquence que celle de l'émetteur."
+  ],
+  "faire": [
+   "Lit les documents et range huit moyens de communication selon ce qui porte l'information.",
+   "Lit le document des bandes de fréquences, range huit services et calcule deux longueurs d'onde.",
+   "Relie le GBF à l'antenne émettrice, observe la tension reçue, mesure sa fréquence et l'effet de la distance."
+  ]
+ },
+ {
+  "id": "b2_elec5_a2_modulation",
+  "chapitre": "2bac/elec5_modulation",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "Une paillasse. GBF 1 (porteuse, 10 à 200 kHz), GBF 2 (signal modulant, 100 Hz à 2 kHz), maquette (multiplieur AD633 avec tension de décalage U₀, détecteur d'enveloppe diode + R₁∥C₁ à C₁ réglable, filtre passe-haut), oscilloscope bicourbe. Modulation (m = Sm/U₀ = 0,5), surmodulation pour U₀ < Sm, condition Fp ≫ Fs ; démodulation : τ trop petite (porteuse redressée), trop grande (l'enveloppe n'est plus suivie), bien choisie (Tp ≪ τ < Ts) ; filtre qui retire la composante continue.",
+  "conceptions": [
+   "La modulation change la fréquence de la porteuse.",
+   "Plus U₀ est petite, meilleure est la modulation.",
+   "La diode suffit pour démoduler."
+  ],
+  "faire": [
+   "Câble le modulateur, observe la tension modulée, mesure le taux de modulation, provoque la surmodulation et teste Fp ≈ 5 Fs.",
+   "Câble le détecteur, essaie trois capacités C₁, choisit la bonne, puis ajoute le filtre passe-haut et retrouve le signal modulant."
+  ]
+ },
+ {
+  "id": "b2_elec5_a3_recepteur",
+  "chapitre": "2bac/elec5_modulation",
+  "activite": 3,
+  "objectifs": [
+   "O4",
+   "O5"
+  ],
+  "duree_min": 40,
+  "description": "Une paillasse. Trois émetteurs AM (171, 207 et 252 kHz, sons de 400, 600 et 900 Hz), antenne et terre, bobine d'accord 1 mH, condensateur variable (100 à 1 000 pF), diode, résistance, condensateur du détecteur, condensateur de liaison, écouteur (on l'écoute en le touchant), oscilloscope. Montage libre : circuit d'accord L∥C, détecteur d'enveloppe, écouteur ; accord sur chaque station (870, 590 et 400 pF), f₀ = 1/(2π√(LC)), rôle de chaque élément.",
+  "conceptions": [
+   "L'antenne choisit la station.",
+   "Le circuit d'accord démodule le signal.",
+   "Pour changer de station, on change la diode."
+  ],
+  "faire": [
+   "Réalise librement le récepteur, l'accorde sur la station B, relève C et calcule f₀, puis écoute les stations A et C.",
+   "Observe à l'oscilloscope la tension de l'antenne et celle du détecteur ; relie chaque élément à son rôle."
+  ]
+ },
+ {
+  "id": "b2_meca1_a1_vecteurs",
+  "chapitre": "2bac/meca1_newton",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 50,
+  "description": "Deux paillasses avec la table à coussin d'air, l'éclateur et la règle. 1 : table inclinée (sin α = 0,050), mobile lancé vers le haut : il ralentit, s'arrête et redescend ; vecteurs vitesse v₂ et v₄, Δv opposé à la vitesse, v(t) au tableur, aG = 0,49 m/s², signe de a·v (ralenti, accéléré), coordonnées cartésiennes de l'accélération. 2 : mobile retenu par un fil (mouvement circulaire uniforme) : vecteurs v₄ et v₆, Δv vers le centre O, R et v mesurés, aN = v²/R, repère de Frenet.",
+  "conceptions": [
+   "Si la vitesse est constante en valeur, l'accélération est nulle.",
+   "L'accélération a toujours le sens du mouvement.",
+   "À l'arrêt, au sommet de la pente, l'accélération est nulle."
+  ],
+  "faire": [
+   "Enregistre une montée suivie d'une descente, trace v₂ et v₄, construit v(t) au tableur, mesure aG et relie le signe de a·v au caractère ralenti ou accéléré.",
+   "Enregistre un mouvement circulaire uniforme, trace v₄ et v₆, mesure R et v, calcule aN = v²/R et écrit aG dans le repère de Frenet."
+  ]
+ },
+ {
+  "id": "b2_meca1_a2_newton",
+  "chapitre": "2bac/meca1_newton",
+  "activite": 2,
+  "objectifs": [
+   "O4",
+   "O5",
+   "O6",
+   "O7"
+  ],
+  "duree_min": 50,
+  "description": "Deux paillasses. 1 : table à coussin d'air à pente choisie par trois cales (sin α = 0,030 ; 0,050 ; 0,080), mobile de 600 g et surcharge de 300 g : ΔvG/Δt mesurée sur l'enregistrement pour quatre essais au moins ; tableur m, ΣF = m·g·sin α, ΔvG/Δt, m·ΔvG/Δt et courbe : ΣF = m·aG ; rôle de la masse, application, équation aux dimensions. 2 : quatre documents (référentiels galiléens, Copernic, référentiels non galiléens, troisième loi) et tri de huit référentiels ; questions sur les actions réciproques.",
+  "conceptions": [
+   "Un corps plus lourd tombe ou glisse plus vite.",
+   "La force et la vitesse ont toujours la même direction.",
+   "Le corps le plus massif exerce la force la plus grande dans une interaction."
+  ],
+  "faire": [
+   "Choisit la pente et la masse, enregistre quatre descentes, mesure ΔvG/Δt, remplit le tableur et trace m·ΔvG/Δt en fonction de ΣF.",
+   "Lit les documents, range les référentiels (galiléen ou non) et applique la troisième loi."
+  ]
+ }
+]
