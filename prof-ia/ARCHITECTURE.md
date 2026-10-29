@@ -258,7 +258,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/espace.js | Ciel étoilé, Soleil, Terre et Lune réalistes (nuit du côté opposé au Soleil). |
 | contenu/ressources/laboratoires/commun/continents.js | Contours des continents (latitude, longitude) et projection de la Terre vue de l'espace. |
 | contenu/ressources/laboratoires/commun/sonde.js | Sonde spatiale et afficheur de son capteur. |
-| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, ABS, PI, COS, SIN, recopie). |
+| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, ABS, PI, COS, SIN, LN, EXP, recopie). |
 | contenu/ressources/laboratoires/commun/tableur.js | Feuille de calcul de la tablette (une par mission). |
 | contenu/ressources/laboratoires/commun/courbe.js | Application Graphique : points qui se dessinent, modélisation par une droite. |
 | contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
@@ -489,6 +489,11 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/banc_reseau.js | Banc à réseau vu de dessus : source, diapositive sur plateau tournant (incidence i), mètre-ruban, écran mobile, faisceaux diffractés. |
 | contenu/ressources/laboratoires/sources/b2_ondes4_a1_reseau/ | Modèles de réseau au microscope (poste_modeles.js), fente et réseau au laser, sin θk = kλ/a, pas d'un CD, nombre de maximums (simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_ondes4_a2_incidence/ | Réseau en incidence non normale, spectres de la lumière blanche, λ d'un laser vert (simulation.js). |
+| contenu/ressources/laboratoires/commun/compteur_geiger.js | Compteur d'impulsions (durée, série, horloge × 20, relevé au mur, prise du tube) ; comptages aléatoires (loi de Poisson). |
+| contenu/ressources/laboratoires/commun/banc_comptage.js | Banc de comptage : tube de Geiger-Müller sur potence, plateau, écrans (papier, aluminium, plomb), coffret de sources et d'échantillons naturels. |
+| contenu/ressources/laboratoires/sources/b2_nucl1_a1_becquerel/ | Expérience de Becquerel (poste_becquerel.js, documents_becquerel.js), diagramme (N, Z) des noyaux légers (tableau_nz.js) et de tous les noyaux (affiche_nz.js), équations (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_nucl1_a2_datation/ | Documents et tri des radioéléments (poste_environnement.js), compteur à scintillation et datation au carbone 14 (poste_datation.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_nucl1_a3_compteur/ | Générateur Cs 137 / Ba 137m (generateur_baryum.js) ; aléatoire, rayonnements α β γ, décroissance (simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -981,3 +981,22 @@ Problèmes restants, à faire par l'enseignant :
 - Le CD et le DVD sont utilisés en transmission (couche réfléchissante retirée), pas en réflexion.
 - En incidence oblique, l'élève calcule les angles à la calculatrice (le tableur n'a pas de fonction arctangente).
 
+## 2026-10-29 — Laboratoires virtuels : chapitre 2e année du bac « Décroissance radioactive »
+
+Fait :
+- Trois simulations, inscrites au manifeste (121 ressources) : A1 expérience de Becquerel, diagramme (N, Z), isotopes,
+  équations α, β−, β+ et γ ; A2 radioactivité dans l'environnement, effets biologiques, choix du radioélément, datation
+  au carbone 14 (graphique et calcul) ; A3 compteur de Geiger-Müller : aléatoire (moyenne, variance, écart-type),
+  radioactivité naturelle, rayonnements et écrans, décroissance du baryum 137m (λ, t½, τ). Objectifs O1 à O7.
+- Matériel commun nouveau : compteur_geiger.js, banc_comptage.js.
+- Fichier commun modifié (signalé) : formules.js accepte LN et EXP dans le tableur (pour ln N et a₀·e^(−λt)). Les pages
+  déjà assemblées gardent l'ancienne version, qui suffit à leurs formules.
+- Correction demandée par l'enseignant : le câble du tube de Geiger-Müller n'était pas branché ; il se branche maintenant
+  sur la prise « entrée tube » du compteur.
+- Vérifié : parcours complets des trois simulations ; tests et contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Au-delà de Z = 8, l'affiche du diagramme (N, Z) est un schéma calculé (quelques noyaux isolés peuvent y être mal placés).
+- Le béryllium 7 (capture électronique, hors programme) n'apparaît pas dans le tableau des noyaux légers.
+- La moyenne et la variance se calculent à la main ou par des formules simples : le tableur n'a pas de fonction MOYENNE.
+

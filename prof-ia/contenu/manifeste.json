@@ -3867,6 +3867,117 @@
         "Le rouge est le moins dévié par un réseau, comme par un prisme.",
         "La lumière se propage toujours en ligne droite."
       ]
+    },
+    {
+      "id": "b2_nucl1_a1_becquerel",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_nucl1_a1_becquerel.html",
+      "description": "Deux paillasses. 1) Expérience de Becquerel : plaque photographique dans du papier noir, croix de cuivre, sel d'uranium, uranium métal ou sulfate de sodium ; on porte le plateau au soleil (fenêtre) ou dans le tiroir, on laisse passer 3 jours et on développe ; trois documents (Becquerel, les Curie, taille des noyaux et étoile à neutrons). 2) Tableau magnétique du diagramme (N, Z) des noyaux légers (cases colorées : stable, β−, β+, α) où l'on place six cartes ᴬ_Z X, et affiche de tous les noyaux (vallée de stabilité). Équations de désintégration α, β−, β+ et émission γ.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/nucl1_decroissance",
+      "activite": "Diagramme (N,Z) ; découverte de la radioactivité (Becquerel).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "L'expérience de Becquerel",
+          "ce_que_fait_l_eleve": "Refait l'expérience de Becquerel au soleil, à l'obscurité et avec trois composés.",
+          "conclusion": "Le sel d'uranium noircit la plaque à travers le papier noir, au soleil comme dans le tiroir : il émet spontanément un rayonnement, sans avoir besoin de lumière. La croix de cuivre arrête une partie du rayonnement : elle apparaît en clair. L'uranium métal agit aussi, le sulfate de sodium non : le rayonnement est une propriété de l'élément uranium (de ses noyaux), quel que soit le composé. C'est la radioactivité."
+        },
+        {
+          "titre": "Le diagramme (N, Z)",
+          "ce_que_fait_l_eleve": "Place des noyaux dans le diagramme (N, Z), repère les isotopes et les domaines de stabilité.",
+          "conclusion": "Le noyau ᴬ_Z X contient Z protons et N = A − Z neutrons. Dans le diagramme (N, Z), les isotopes d'un élément (même Z, N différents) sont sur une même ligne. Les noyaux stables forment la vallée de stabilité : près de la droite N = Z pour les noyaux légers, puis avec plus de neutrons que de protons (N > Z). Les noyaux qui ont trop de neutrons (sous la vallée) sont radioactifs β−, ceux qui ont trop de protons (au-dessus) sont radioactifs β+ ; au-delà du plomb, tous sont radioactifs, souvent α."
+        },
+        {
+          "titre": "Désintégrations et équations",
+          "ce_que_fait_l_eleve": "Définit les radioactivités et écrit des équations de désintégration en conservant A et Z.",
+          "conclusion": "Un noyau radioactif est un noyau instable qui se désintègre spontanément en un noyau fils en émettant une particule. α : émission d'un noyau d'hélium ⁴₂He (²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He). β− : émission d'un électron (¹⁴₆C → ¹⁴₇N + ⁰₋₁e). β+ : émission d'un positon (¹¹₆C → ¹¹₅B + ⁰₊₁e). Une équation nucléaire conserve le nombre de charge Z et le nombre de nucléons A. Le noyau fils, souvent excité, libère son énergie par un rayonnement électromagnétique γ, sans changer A ni Z."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La radioactivité a besoin de lumière pour se produire.",
+        "Les isotopes sont des éléments chimiques différents.",
+        "Les noyaux stables ont toujours autant de neutrons que de protons.",
+        "Une désintégration ne conserve rien."
+      ]
+    },
+    {
+      "id": "b2_nucl1_a2_datation",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_nucl1_a2_datation.html",
+      "description": "Deux paillasses. 1) Quatre documents (radioactivité autour de nous, carbone 14, effets biologiques, dater des roches) et tableau magnétique : ranger huit objets selon le radioélément qui permet de les dater (carbone 14, potassium 40, uranium 238, tritium). 2) Compteur à scintillation : on y place des fioles de carbone (actuel, charbon d'une grotte, os de mammouth) et on mesure l'activité (tirage aléatoire) ; tableur et courbe a(t) = a₀·e^(−λt), datation graphique et par le calcul.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/nucl1_decroissance",
+      "activite": "Radioactivité dans l'environnement ; exemples de datation.",
+      "objectifs": [
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "La radioactivité autour de nous",
+          "ce_que_fait_l_eleve": "Lit les documents et choisit le radioélément adapté à chaque datation.",
+          "conclusion": "La radioactivité est partout : roches, radon, rayons cosmiques, et notre propre corps (potassium 40, carbone 14). Ses effets biologiques dépendent de l'activité, de la durée d'exposition, du rayonnement et de l'énergie déposée dans le corps. Pour dater un objet, on choisit un radioélément dont la demi-vie est du même ordre de grandeur que l'âge cherché : carbone 14 pour les restes d'êtres vivants jusqu'à 50 000 ans environ, potassium 40 ou uranium 238 pour les roches, tritium pour quelques dizaines d'années."
+        },
+        {
+          "titre": "Dater au carbone 14",
+          "ce_que_fait_l_eleve": "Mesure l'activité du carbone actuel et ancien, trace a(t) et date deux échantillons.",
+          "conclusion": "Le carbone d'un être vivant a une activité a₀ ≈ 0,227 Bq/g. Après sa mort, a(t) = a₀·e^(−λt). Sur la courbe, on lit l'âge correspondant à l'activité mesurée (méthode graphique) ; par le calcul, t = (1/λ)·ln(a₀ / a) = (t½ / ln 2)·ln(a₀ / a). Le charbon de la grotte a environ 17 000 ans, l'os de mammouth environ 28 000 ans."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "On peut dater n'importe quel objet avec le carbone 14.",
+        "Un être vivant n'est pas radioactif.",
+        "La radioactivité naturelle n'existe pas : elle est toujours artificielle."
+      ]
+    },
+    {
+      "id": "b2_nucl1_a3_compteur",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_nucl1_a3_compteur.html",
+      "description": "Une paillasse. Compteur relié à un tube de Geiger-Müller tenu au-dessus d'un plateau (durées 10, 30 ou 60 s, série, horloge × 20, relevé au mur) ; coffret de sources (américium 241, strontium 90, césium 137) et d'échantillons naturels (granite, engrais au potassium, sel de table) ; écrans de papier, d'aluminium et de plomb ; générateur d'isotopes césium 137 / baryum 137m. Bruit de fond, série de comptages (moyenne, variance, écart-type), rayonnements α, β, γ, décroissance de l'éluat : ln N = f(t), λ, t½, τ, activité.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/nucl1_decroissance",
+      "activite": "Compteur : caractère aléatoire, courbes, radioactivité naturelle.",
+      "objectifs": [
+        "O3",
+        "O4",
+        "O5",
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Un phénomène aléatoire",
+          "ce_que_fait_l_eleve": "Mesure le bruit de fond, répète des comptages et calcule moyenne, variance et écart-type.",
+          "conclusion": "Même sans échantillon, le compteur enregistre quelques impulsions : c'est le bruit de fond (radioactivité naturelle du sol, de l'air, rayons cosmiques). Avec le même échantillon et la même durée, le nombre d'impulsions change d'un comptage à l'autre : la désintégration d'un noyau est aléatoire ; on ne peut pas prévoir quand un noyau se désintègre. Sur de nombreux comptages, les résultats se répartissent autour d'une moyenne m, avec un écart-type σ voisin de √m. L'engrais contient du potassium 40 radioactif : c'est aussi de la radioactivité naturelle."
+        },
+        {
+          "titre": "Rayonnements α, β, γ",
+          "ce_que_fait_l_eleve": "Compare des échantillons naturels et identifie α, β et γ par les écrans.",
+          "conclusion": "Le granite est légèrement radioactif, le sel de table ne donne que le bruit de fond. Le rayonnement α (noyaux d'hélium) est arrêté par une feuille de papier ; le rayonnement β− (électrons) traverse le papier mais est arrêté par quelques millimètres d'aluminium ; le rayonnement γ (électromagnétique, de très courte longueur d'onde) traverse l'aluminium et n'est qu'atténué par le plomb. Pour se protéger : s'éloigner, limiter la durée d'exposition, utiliser un écran adapté."
+        },
+        {
+          "titre": "Décroissance du baryum 137m",
+          "ce_que_fait_l_eleve": "Suit la décroissance du baryum 137m et détermine λ, la demi-vie et la constante de temps.",
+          "conclusion": "Le nombre de désintégrations diminue au cours du temps : ln N est une fonction affine de t, de pente −λ. La loi de décroissance s'écrit N(t) = N₀·e^(−λt), et l'activité a(t) = λ·N(t) = a₀·e^(−λt) (en becquerels). Pour le baryum 137m, λ ≈ 4,5 × 10⁻³ s⁻¹ : la demi-vie t½ = ln 2 / λ ≈ 153 s (au bout de t½, la moitié des noyaux s'est désintégrée) et la constante de temps τ = 1 / λ ≈ 221 s. λ s'exprime en s⁻¹ : λ·t est sans dimension."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Un même comptage donne toujours le même nombre.",
+        "Tous les rayonnements sont arrêtés par une feuille de papier.",
+        "Au bout de deux demi-vies, il ne reste plus aucun noyau."
+      ]
     }
   ]
 }

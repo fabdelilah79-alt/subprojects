@@ -536,6 +536,18 @@ Les directions des maximums suivent sin θk − sin i = k·λ / a (θk mesuré d
 ordre vient de la largeur des fentes (b = 0,15·a). L'écran vu de face (70 cm, 1 px par mm) est calculé dans un `canvas`.
 Le dessin des photographies au microscope est schématique (fentes, sillons et cuvettes à l'échelle de la règle).
 
+## Chapitre 2e année du bac « Décroissance radioactive » (fiche 2bac/nucl1_decroissance)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_nucl1_a1_becquerel.html | A1 : diagramme (N,Z) ; découverte de la radioactivité (Becquerel) | O1, O2, O3 | Paillasse 1 : plaque photographique dans du papier noir, croix de cuivre et sel d'uranium, au soleil ou dans le tiroir, 3 jours, développement ; uranium métal et sulfate de sodium ; documents (Becquerel, Curie, taille des noyaux). Paillasse 2 : six cartes ᴬ_Z X à placer dans le diagramme (N, Z) des noyaux légers ; affiche de tous les noyaux (vallée de stabilité) ; équations α, β−, β+, émission γ. |
+| b2_nucl1_a2_datation.html | A2 : radioactivité dans l'environnement ; exemples de datation | O4, O5, O6 | Paillasse 1 : quatre documents (radioactivité naturelle, carbone 14, effets biologiques, dater des roches) ; tri : quel radioélément pour dater huit objets. Paillasse 2 : compteur à scintillation, fioles de carbone actuel, d'une grotte et d'un os de mammouth ; tableur et courbe a(t), âges par lecture graphique et par le calcul (17 000 et 28 000 ans). |
+| b2_nucl1_a3_compteur.html | A3 : compteur, caractère aléatoire, courbes, radioactivité naturelle | O3, O4, O5, O7 | Compteur et tube de Geiger-Müller : bruit de fond, dix comptages de 10 s (moyenne, variance, écart-type) ; granite, engrais, sel ; Am 241, Sr 90, Cs 137 derrière papier, aluminium ou plomb ; générateur Cs 137 / Ba 137m : série de comptages de 30 s (horloge × 20), ln N = f(t), λ ≈ 4,5 × 10⁻³ s⁻¹, t½ ≈ 153 s, τ ≈ 221 s. |
+
+Les comptages sont tirés au hasard (loi de Poisson) à partir du taux d'impulsions : bruit de fond 0,4 par seconde, plus le
+rayonnement de l'échantillon que laisse passer l'écran. Au-delà de Z = 8, l'affiche du diagramme (N, Z) est un schéma
+calculé (vallée de stabilité Z₀ = A / (1,98 + 0,0155·A^(2/3))) ; les noyaux légers du tableau sont exacts.
+
 ## Inscription au manifeste
 
 Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
