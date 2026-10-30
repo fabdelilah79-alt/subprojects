@@ -471,6 +471,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_chim1_s1_chocs_efficaces/ | Chocs efficaces (PC, SM) : modele_chocs.js (disques, parois à T, seuil d'énergie), poste_chocs.js (logiciel sur le portable), simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_chim2_a1_prelevements/ | Suivi par prélèvements : postes_prelevements.js (banc de titrage, mélange S₂O₈²⁻ + I⁻, pipette graduée, trempe, horloge ; affiche des résultats de la classe), simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_chim2_a2_mesures_physiques/ | Suivi par une mesure physique : poste_pression.js (Mg + HCl, erlenmeyer bouché, pressiomètre), poste_conductimetrie.js (hydrolyse du 2-chloro-2-méthylpropane, conductimètre), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim3_a1_ph_deux_sens/ | pH et deux sens d'une réaction : poste_acides.js (pH-mètre à étalonner, trois acides), poste_deux_sens.js (ajouts d'acide pur et d'éthanoate de sodium), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim3_s1_equilibre_dynamique/ | Équilibre dynamique (PC, SM) : modele_equilibre.js (A + B ⇌ C + D, chocs efficaces dans les deux sens), poste_equilibre.js (logiciel sur le portable), simulation.js. |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
@@ -544,6 +546,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/pendule_torsion_dessin.js | Dessin du pendule de torsion (potence, fil, barre, masselottes, cadran, capteur de rotation en option). |
 | contenu/ressources/laboratoires/commun/reactions_lentes.js | Transformations lentes en solution : loi de vitesse et loi d'Arrhenius (H₂O₂ + I⁻, S₂O₃²⁻ + H⁺, S₂O₈²⁻ + I⁻, hydrolyse du 2-chloro-2-méthylpropane), solutions, eau glacée, trouble du soufre colloïdal. |
 | contenu/ressources/laboratoires/commun/horloge_releves.js | Horloge murale du suivi temporel (temps écoulé) et feuille de relevés sur porte-bloc (date et mesure écrites à la main). |
+| contenu/ressources/laboratoires/commun/equilibre_acide.js | pH exact à 25 °C (couples faibles, eau, ions spectateurs, électroneutralité), solutions des acides à 1,0 × 10⁻² mol/L, tampons, acide pur, éthanoate de sodium. |
+| contenu/ressources/laboratoires/commun/ph_metre.js | pH-mètre de paillasse : boîtier, touches CAL 7 et CAL 4 (étalonnage), électrode combinée sur sa tige, temps de réponse. |
 | contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
 | contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
 | contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |

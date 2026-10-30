@@ -757,3 +757,13 @@ de thiosulfate à 0,010 mol/L, eau glacée) ; `poste_titrage.js` (option `places
 tige du support de la sonde allongée jusqu'à la pince, conductimètre décalé pour ne plus passer sous la tablette).
 Activité 2 : fichier commun nouveau `horloge_releves.js` (horloge murale et feuille de relevés, aussi utilisée par l'activité 1) ;
 `reactions_lentes.js` : hydrolyse du 2-chloro-2-méthylpropane et sa solution dans l'acétone.
+
+## Chapitre 2e année du bac « Transformations chimiques qui se produisent dans les deux sens » (fiche 2bac/chim3_deux_sens)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim3_a1_ph_deux_sens.html | Mise en évidence par le pH que la transformation n'est pas totale (exemples acide-base) | O1 à O4 | Étalonne le pH-mètre (tampons pH 7 puis pH 4) ; pH de HCl, HCOOH et CH₃COOH à 1,0 × 10⁻² mol/L : 2,00 ; 2,90 ; 3,39 ; [H₃O⁺]f, xf < xmax, τ = 1 ; 0,13 ; 0,04 au tableur ; acide éthanoïque pur : pH 3,06 (sens direct) ; éthanoate de sodium : pH 5,15 (sens inverse) ; équation avec ⇌ ; couples. |
+| b2_chim3_s1_equilibre_dynamique.html | (PC, SMA, SMB) Interprétation microscopique de l'état d'équilibre | O3, O4 | Logiciel A + B ⇌ C + D : depuis les réactifs ou depuis les produits, environ 19 C sur 30 à la fin (τ ≈ 0,6) ; à l'équilibre, autant de chocs efficaces par seconde dans chaque sens : équilibre dynamique. |
+
+Fichiers communs nouveaux : `equilibre_acide.js` (pH exact par l'électroneutralité) et `ph_metre.js` (pH-mètre à étalonner, électrode
+combinée). La fiche du chapitre a reçu l'activité de la partie PC/SM.

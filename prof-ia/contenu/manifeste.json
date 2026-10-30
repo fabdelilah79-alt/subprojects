@@ -5440,6 +5440,67 @@
         "On ne peut suivre une transformation qu'en dosant ses réactifs.",
         "La conductivité d'une solution ne dépend pas de l'avancement de la transformation."
       ]
+    },
+    {
+      "id": "b2_chim3_a1_ph_deux_sens",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim3_a1_ph_deux_sens.html",
+      "description": "pH-mètre de paillasse à étalonner (tampons pH 7,00 puis pH 4,00 ; non étalonné, il se trompe), électrode combinée sur sa tige au-dessus d'un agitateur magnétique ; pH calculé exactement (équilibres acide-base, électroneutralité). Paillasse 1 : acide chlorhydrique, acide méthanoïque et acide éthanoïque à 1,0 × 10⁻² mol/L : pH 2,00 ; 2,90 ; 3,39 ; [H₃O⁺]f = 10⁻ᵖᴴ, xf < xmax, τ = 1 ; 0,13 ; 0,04 au tableur. Paillasse 2 : 50 mL d'acide éthanoïque (pH 3,39) ; deux gouttes d'acide éthanoïque pur : pH 3,06 (sens direct) ; une pointe d'éthanoate de sodium dans un bécher neuf : pH 5,15 (sens inverse) ; équation avec ⇌, couples acide/base.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim3_deux_sens",
+      "activite": "Mise en évidence par le pH que la transformation n'est pas totale (exemples acide-base).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "pH et taux d'avancement final",
+          "ce_que_fait_l_eleve": "Étalonne le pH-mètre, mesure le pH de trois acides de même concentration, calcule [H₃O⁺]f, xf et τ et compare les acides.",
+          "conclusion": "Pour l'acide éthanoïque à C = 1,0 × 10⁻² mol/L, pH = 3,39 : [H₃O⁺]f = 10⁻ᵖᴴ = 4,1 × 10⁻⁴ mol/L, bien plus petit que C. L'avancement final xf = [H₃O⁺]f·V est plus petit que xmax = C·V : la transformation n'est pas totale ; τ = xf / xmax ≈ 4 %. Pour l'acide méthanoïque, τ ≈ 13 % ; pour l'acide chlorhydrique, τ = 1 (transformation totale). À même concentration, le taux d'avancement final permet de comparer les acides."
+        },
+        {
+          "titre": "Une réaction dans les deux sens",
+          "ce_que_fait_l_eleve": "Ajoute de l'acide éthanoïque pur, puis de l'éthanoate de sodium, à une solution d'acide éthanoïque, interprète les variations du pH par les deux sens de la réaction et écrit l'équation avec ⇌.",
+          "conclusion": "Une goutte d'acide éthanoïque pur fait baisser le pH : [H₃O⁺] augmente, la réaction CH₃CO₂H + H₂O → CH₃CO₂⁻ + H₃O⁺ avance dans le sens direct. Une pointe d'éthanoate de sodium fait monter le pH : des ions H₃O⁺ disparaissent, la réaction CH₃CO₂⁻ + H₃O⁺ → CH₃CO₂H + H₂O a lieu, c'est le sens inverse. La transformation est modélisée par deux réactions inverses simultanées : CH₃CO₂H + H₂O ⇌ CH₃CO₂⁻ + H₃O⁺ ; couples CH₃CO₂H / CH₃CO₂⁻ et H₃O⁺ / H₂O."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Une transformation chimique est toujours totale.",
+        "Un acide réagit entièrement avec l'eau : [H₃O⁺] = C.",
+        "Une réaction ne se produit que dans un seul sens."
+      ]
+    },
+    {
+      "id": "b2_chim3_s1_equilibre_dynamique",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim3_s1_equilibre_dynamique.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Logiciel de simulation sur un ordinateur portable : A + B ⇌ C + D à 300 K (disques, parois à la température T) ; choc A–B efficace au-delà de 3,0 kT, choc C–D efficace au-delà de 4,0 kT. Depuis 30 A + 30 B comme depuis 30 C + 30 D, le nombre de C se stabilise vers 17 à 19 (τ ≈ 0,6) ; à l'équilibre, environ 0,5 choc efficace par seconde dans chaque sens : équilibre dynamique.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim3_deux_sens",
+      "activite": "(PC/SMA/SMB) Interpréter au niveau microscopique l'état d'équilibre (chocs efficaces entre réactifs et entre produits) à l'aide d'un logiciel de simulation.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "L'équilibre dynamique",
+          "ce_que_fait_l_eleve": "Lance la simulation depuis les réactifs puis depuis les produits, constate le même état final non total et que les chocs efficaces continuent autant dans les deux sens.",
+          "conclusion": "Partie des réactifs (30 A et 30 B), la simulation s'arrête d'évoluer avec environ 19 particules C : il reste des réactifs, la transformation n'est pas totale (τ ≈ 0,6). Pourtant, les chocs efficaces continuent dans les deux sens : A + B → C + D et C + D → A + B se produisent autant de fois par seconde ; les nombres de particules ne changent plus en moyenne. C'est un équilibre dynamique. Partie des produits (30 C et 30 D), la simulation atteint le même état : la réaction a lieu dans les deux sens."
+        }
+      ],
+      "duree_min": 25,
+      "conceptions": [
+        "À l'équilibre, plus rien ne se passe.",
+        "Une réaction ne peut avoir lieu que des réactifs vers les produits.",
+        "À l'équilibre, il y a autant de réactifs que de produits."
+      ]
     }
   ]
 }

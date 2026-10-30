@@ -3151,5 +3151,47 @@
    "Lâche le ruban de magnésium dans l'acide, bouche l'erlenmeyer, relève la pression au cours du temps, calcule x au tableur, trace x = f(t) et lit x_max et t1/2.",
    "Verse 10,0 mL de 2-chloro-2-méthylpropane dans l'eau agitée, relève la conductivité au cours du temps, en déduit x, trace x = f(t), lit t1/2 et justifie le choix d'une mesure physique pour une transformation rapide."
   ]
+ },
+ {
+  "id": "b2_chim3_a1_ph_deux_sens",
+  "chapitre": "2bac/chim3_deux_sens",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 50,
+  "description": "pH-mètre de paillasse à étalonner (tampons pH 7,00 puis pH 4,00 ; non étalonné, il se trompe), électrode combinée sur sa tige au-dessus d'un agitateur magnétique ; pH calculé exactement (équilibres acide-base, électroneutralité). Paillasse 1 : acide chlorhydrique, acide méthanoïque et acide éthanoïque à 1,0 × 10⁻² mol/L : pH 2,00 ; 2,90 ; 3,39 ; [H₃O⁺]f = 10⁻ᵖᴴ, xf < xmax, τ = 1 ; 0,13 ; 0,04 au tableur. Paillasse 2 : 50 mL d'acide éthanoïque (pH 3,39) ; deux gouttes d'acide éthanoïque pur : pH 3,06 (sens direct) ; une pointe d'éthanoate de sodium dans un bécher neuf : pH 5,15 (sens inverse) ; équation avec ⇌, couples acide/base.",
+  "conceptions": [
+   "Une transformation chimique est toujours totale.",
+   "Un acide réagit entièrement avec l'eau : [H₃O⁺] = C.",
+   "Une réaction ne se produit que dans un seul sens."
+  ],
+  "faire": [
+   "Étalonne le pH-mètre, mesure le pH de trois acides de même concentration, calcule [H₃O⁺]f, xf et τ et compare les acides.",
+   "Ajoute de l'acide éthanoïque pur, puis de l'éthanoate de sodium, à une solution d'acide éthanoïque, interprète les variations du pH par les deux sens de la réaction et écrit l'équation avec ⇌."
+  ]
+ },
+ {
+  "id": "b2_chim3_s1_equilibre_dynamique",
+  "chapitre": "2bac/chim3_deux_sens",
+  "activite": 0,
+  "activite_specifique": 1,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 25,
+  "description": "Partie propre aux filières PC, SMA et SMB. Logiciel de simulation sur un ordinateur portable : A + B ⇌ C + D à 300 K (disques, parois à la température T) ; choc A–B efficace au-delà de 3,0 kT, choc C–D efficace au-delà de 4,0 kT. Depuis 30 A + 30 B comme depuis 30 C + 30 D, le nombre de C se stabilise vers 17 à 19 (τ ≈ 0,6) ; à l'équilibre, environ 0,5 choc efficace par seconde dans chaque sens : équilibre dynamique.",
+  "conceptions": [
+   "À l'équilibre, plus rien ne se passe.",
+   "Une réaction ne peut avoir lieu que des réactifs vers les produits.",
+   "À l'équilibre, il y a autant de réactifs que de produits."
+  ],
+  "faire": [
+   "Lance la simulation depuis les réactifs puis depuis les produits, constate le même état final non total et que les chocs efficaces continuent autant dans les deux sens."
+  ]
  }
 ]

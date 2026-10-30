@@ -1450,3 +1450,20 @@ Problèmes restants : σ est calculée comme dans l'eau (l'acétone, 7 % du mél
 k est choisi pour un mélange riche en eau à 20 °C (t1/2 de l'ordre de la demi-minute) ; la pression ne tient pas compte de
 la vapeur d'eau ni de l'échauffement du mélange.
 
+## 2026-10-30 — Transformations dans les deux sens (b2_chim3_a1_ph_deux_sens, b2_chim3_s1_equilibre_dynamique)
+
+- Nouveaux fichiers communs : equilibre_acide.js (pH exact à 25 °C : couples CH₃CO₂H/CH₃CO₂⁻ pKa 4,76, HCO₂H/HCO₂⁻ pKa 3,75,
+  NH₄⁺/NH₃ pKa 9,25, Ke, ions spectateurs ; racine de l'électroneutralité par dichotomie) et ph_metre.js (boîtier, électrode
+  combinée, étalonnage CAL 7 puis CAL 4 ; non étalonné : pente 0,94 et décalage + 0,23).
+- Activité : mesures du test (théorie entre parenthèses) : HCl 2,00 (2,00), HCOOH 2,90 (2,904), CH₃COOH 3,39 (3,389) ;
+  + 2 gouttes d'acide pur 3,06 (3,059) ; + 0,10 g d'éthanoate de sodium 5,15 (5,155).
+- Un bécher enlevé pendant que l'agitateur tourne déborde (physique des liquides) : le premier test a ainsi dilué l'acide
+  chlorhydrique (pH lu 2,04) ; la consigne conseille d'arrêter l'agitateur avant d'enlever le bécher.
+- Partie PC/SM (activité ajoutée à la fiche) : logiciel A + B ⇌ C + D (modèle de chocs du chapitre 1, rendu réversible :
+  seuils 3,0 kT et 4,0 kT) ; depuis les réactifs : 19 C (τ ≈ 0,63) ; depuis les produits : 17 à 19 C ; à l'équilibre,
+  environ 0,5 choc efficace par seconde dans chaque sens.
+
+Problèmes restants : activités assimilées aux concentrations (pH de HCl 2,00 ; mesuré en vrai vers 2,04) ; l'électrode n'est
+pas rincée entre deux solutions (pas de contamination simulée) ; dans le logiciel, l'énergie de réaction n'est pas comptée
+(parois à température fixe) et les petits nombres de particules font fluctuer l'état final (17 à 21 C).
+
