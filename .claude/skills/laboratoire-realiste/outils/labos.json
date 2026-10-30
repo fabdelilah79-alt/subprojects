@@ -2284,7 +2284,8 @@
    "O2",
    "O3",
    "O4",
-   "O5"
+   "O5",
+   "O6"
   ],
   "duree_min": 70,
   "description": "Trois paillasses. 1) Balance de précision (modèle) : un noyau (²H, ⁴He, ¹²C, ⁵⁶Fe, ²³⁵U) sur un plateau, ses protons et neutrons séparés sur l'autre ; l'écran donne les masses en u et le défaut de masse ; document sur les unités (u, eV, E = m·c², équation aux dimensions). 2) Affiche des masses de 21 noyaux : courbe d'Aston au tableur (Δm, El/A) ; bilans d'énergie avec les masses des noyaux (α, β−, β+, fission, fusion, 1 g d'uranium 235). 3) Quatre documents (centrale nucléaire, Soleil et ITER, médecine nucléaire, dangers et déchets) et tri des applications : fission, fusion, désintégration.",
@@ -2865,6 +2866,27 @@
    "Chauffe le four, explore IA en faisant varier U2, enregistre la courbe, mesure les tensions des maximums, en déduit ΔU = 4,9 V et l'énergie échangée, compare à 140 °C et au photon UV du mercure.",
    "Observe le spectre de raies de l'hydrogène, calcule au tableur la fréquence et l'énergie des photons, relie les raies aux niveaux d'énergie, observe les spectres d'autres gaz et identifie le gaz du tube X.",
    "Observe la raie jaune du sodium dans la flamme, calcule l'énergie de ses photons, puis la raie noire d'absorption à la même longueur d'onde dans le spectre de la lumière blanche."
+  ]
+ },
+ {
+  "id": "b2_meca2_s4_satellites",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 0,
+  "activite_specifique": 4,
+  "objectifs": [
+   "O8"
+  ],
+  "duree_min": 60,
+  "description": "Partie propre aux filières PC, SMA et SMB. Une paillasse : quatre documents au mur (référentiels héliocentrique et géocentrique, de Ptolémée à Newton, les trois lois de Kepler, données des planètes et de la Terre) et un portable avec le simulateur d'orbites. Référentiels adaptés aux planètes et aux satellites. Planète autour du Soleil : ellipse dont le Soleil occupe un foyer, aires égales balayées en des durées égales (secteurs de T/10), vitesse plus grande près du Soleil ; troisième loi avec les données de cinq planètes : pente 2,97 × 10⁻¹⁹ s²/m³, MS = 1,99 × 10³⁰ kg. Satellite de la Terre : orbite circulaire à 400 km (v = 7,67 km/s, T = 5 540 s), deuxième loi de Newton, v = √(G·M/r) indépendante de la masse ; orbite géostationnaire (T = 86 164 s, h ≈ 35 800 km) avec un repère de l'équateur qui tourne en un jour sidéral.",
+  "conceptions": [
+   "Il faut une force dans le sens du mouvement pour qu'un satellite continue de tourner.",
+   "Un satellite plus lourd tourne moins vite.",
+   "Un satellite géostationnaire est immobile dans l'espace."
+  ],
+  "faire": [
+   "Lit les documents sur les référentiels et l'histoire de l'astronomie et choisit le référentiel adapté à une planète et à un satellite.",
+   "Lance une planète sur une orbite elliptique, observe la loi des aires, vérifie la troisième loi de Kepler au tableur avec les données des planètes et en déduit la masse du Soleil.",
+   "Met un satellite en orbite circulaire à 400 km, applique la deuxième loi de Newton (v = √(G·M/r)), lit la période, puis trouve l'orbite géostationnaire et son altitude."
   ]
  }
 ]

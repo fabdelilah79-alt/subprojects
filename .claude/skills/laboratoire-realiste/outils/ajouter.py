@@ -17,6 +17,9 @@ def missions(dossier, faire):
 
 def fiche(l):
     activite = FICHES[l["chapitre"]]["activites"][l["activite"] - 1] if l["activite"] else None
+    if l.get("activite_specifique"):  # activité d'une partie propre à certaines filières (bloc « specifique » de la fiche)
+        bloc = next(b for b in FICHES[l["chapitre"]]["specifique"] if b.get("activites"))
+        activite = f"({'/'.join(bloc['filieres'])}) " + bloc["activites"][l["activite_specifique"] - 1]
     r = {"id": l["id"], "type": "simulation", "fichier": f"laboratoires/{l['id']}.html", "description": l["description"],
          "phase_poe": "observation", "manipulable": GESTES, "chapitre": l["chapitre"], "activite": activite,
          "objectifs": l["objectifs"], "missions": missions(l["id"], l["faire"]), "duree_min": l["duree_min"]}

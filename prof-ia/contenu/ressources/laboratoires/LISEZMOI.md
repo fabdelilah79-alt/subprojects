@@ -705,3 +705,22 @@ les échanges d'énergie sont étudiés avec un faisceau d'électrons de même �
 lumière (raies d'émission et d'absorption). Matériel commun nouveau : portable.js (ordinateur portable de toute taille),
 niveaux_energie.js (diagramme des niveaux d'énergie). Fichier commun modifié (signalé) : documents_mur.js (marge à droite
 du texte des affiches : le texte touchait ou dépassait le bord sur 12 simulations ; aucune ne déborde plus).
+
+## Parties propres aux filières PC, SMA et SMB (vérification du PDF des orientations)
+
+La comparaison avec le PDF (pages 112 à 135) a montré que les **parties spécifiques** aux filières PC, SMA et SMB n'avaient
+pas encore de simulation : leurs activités proposées n'avaient pas été recopiées dans les fiches JSON (c'est corrigé pour
+2bac/meca2_applications et 2bac/meca4_oscillants). Les simulations de ces parties ont un identifiant en « s » (s4 = 4e activité
+spécifique de la fiche).
+
+| Fichier | Partie (PC, SMA, SMB) | Objectif | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca2_s4_satellites.html | « Applications des lois de Newton » : satellites et planètes | O8 | Documents (référentiels héliocentrique et géocentrique, de Ptolémée à Newton, lois de Kepler, données) ; simulateur d'orbites : ellipse et loi des aires (secteurs de T/10) ; troisième loi avec les données de cinq planètes, MS = 1,99 × 10³⁰ kg ; satellite en orbite circulaire à 400 km (v = √(G·M/r) = 7,67 km/s), orbite géostationnaire (86 164 s, 35 800 km). |
+
+Reste à faire (même chapitre ou chapitres déjà traités) : chute verticale avec frottement et méthode d'Euler (meca2, O5),
+particule chargée dans un champ électrostatique (O6) et dans un champ magnétique (O7), pendule pesant et pendule simple
+(meca4, O6), énergie mécanique du pendule pesant (meca5, O5), bilan énergétique d'un circuit à transistor ou à AO
+(1re année, SM, elec2 O7). Fission et fusion (nucl2, O6) étaient déjà traitées dans b2_nucl2_a1_energie : l'objectif a été
+ajouté au manifeste. Matériel commun déplacé : le simulateur d'orbites (orbites_modele.js, orbites_ecran.js,
+orbites_panneau.js, logiciel_orbites.js) passe de b2_meca6_a1_astres_atomes à commun/, avec l'onglet « Soleil – planète »,
+les aires de Kepler et le repère de l'équateur qui tourne en un jour sidéral.

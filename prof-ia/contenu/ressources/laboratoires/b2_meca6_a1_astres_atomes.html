@@ -3048,6 +3048,299 @@ Utilisé par : les simulations où l'élève travaille sur un logiciel (orbites,
 </script>
   <script>
 /*
+Rôle : calculs du simulateur d'orbites (mécanique de Newton) : un satellite de 1 000 kg lancé autour de la Terre, une planète
+       (masse de la Terre) autour du Soleil, ou un électron lancé autour d'un proton ; force centrale en 1/r² (μ = G·M pour la
+       Terre et le Soleil, μ = k·e²/m pour l'électron). Lancement à la
+       distance r0, vitesse v0 perpendiculaire au rayon : orbite elliptique exacte (lois de Kepler), échappement si v0² ≥ 2μ/r0,
+       chute si le périgée est sous la surface de la Terre. Option « rayonnement » (électron) : selon l'électromagnétisme
+       classique, l'électron qui tourne rayonne et tombe sur le proton en t = r0³ / (4·re²·c) (≈ 1,6 × 10⁻¹¹ s pour 53 pm).
+Reçoit : le mode (« terre », « soleil » ou « atome »), r0 (m), v0 (m/s), le temps (s).
+Produit : Labo.orbites = { MODES (onglet, case à cocher, unités, bornes des réglages de chaque mode), OMEGA_TERRE (rad/s), orbite(mode, r0, v0) -> { issue, a, e, rmin, rmax, T, E (J), eV, circulaire, tf },
+          position(o, t) -> { x, y } (m, origine au centre attracteur ; lancement en (r0, 0) vers +y) }.
+Utilisé par : logiciel_orbites.js, orbites_ecran.js, orbites_panneau.js.
+*/
+(function (L) {
+  const G = 6.674e-11, K = 8.988e9, E_CH = 1.602e-19, ME = 9.109e-31, RE = 2.818e-15, C = 2.998e8;
+  const MODES = {
+    terre: { onglet: "Terre – satellite", option: null, mu: G * 5.972e24, R: 6.371e6, m: 1000, ur: 1e3, nom_r: "km", rmin: 6.6e6, rmax: 4.5e7, pas_r: 1e5, vmin: 1000, vmax: 11000, pas_v: 10, r0: 7e6, v0: 7000 },
+    soleil: { onglet: "Soleil – planète", option: "Aires balayées en des durées égales (T/10)", mu: G * 1.989e30, R: 6.96e8, m: 5.972e24, ur: 1.496e11, nom_r: "UA", rmin: 4.5e10, rmax: 9e11, pas_r: 1.496e9, vmin: 5e3, vmax: 6e4, pas_v: 100, r0: 1.496e11, v0: 25000 },
+    atome: { onglet: "Proton – électron", option: "Rayonnement de l'électron (électromagnétisme)", mu: (K * E_CH * E_CH) / ME, R: 0, m: ME, ur: 1e-12, nom_r: "pm", rmin: 2e-11, rmax: 2e-10, pas_r: 1e-12, vmin: 5e5, vmax: 5e6, pas_v: 1e3, r0: 5.3e-11, v0: 2e6 },
+  };
+
+  function orbite(mode, r0, v0) {
+    // Éléments de l'orbite : demi-grand axe, excentricité, distances extrêmes, période, énergie mécanique.
+    const M = MODES[mode], mu = M.mu, E = M.m * (v0 * v0 / 2 - mu / r0), o = { mode, r0, v0, E, eV: E / E_CH };
+    if (v0 * v0 >= (2 * mu) / r0) return Object.assign(o, { issue: "echappe" });
+    o.a = 1 / (2 / r0 - (v0 * v0) / mu);
+    o.e = Math.abs((r0 * v0 * v0) / mu - 1);
+    o.rmin = o.a * (1 - o.e); o.rmax = o.a * (1 + o.e);
+    o.T = 2 * Math.PI * Math.sqrt(o.a ** 3 / mu);
+    o.apogee = v0 * v0 < mu / r0;
+    o.circulaire = (o.rmax - o.rmin) / (o.rmax + o.rmin) < 0.01;
+    o.issue = o.rmin < M.R ? "chute" : "orbite";
+    o.tf = mode === "atome" ? r0 ** 3 / (4 * RE * RE * C) : null;
+    return o;
+  }
+
+  function anomalie(Mo, e) {
+    // Résout l'équation de Kepler E − e·sin E = M (méthode de Newton).
+    let E = e < 0.8 ? Mo : Math.PI;
+    for (let k = 0; k < 30; k++) E -= (E - e * Math.sin(E) - Mo) / (1 - e * Math.cos(E));
+    return E;
+  }
+
+  function position(o, t) {
+    // Position sur l'ellipse à l'instant t ; si r0 est l'apogée, on part de l'apogée.
+    const Mo = (2 * Math.PI * t) / o.T + (o.apogee ? Math.PI : 0), E = anomalie(Mo % (2 * Math.PI), o.e);
+    const x = o.a * (Math.cos(E) - o.e), y = o.a * Math.sqrt(1 - o.e * o.e) * Math.sin(E);
+    return o.apogee ? { x: -x, y: -y } : { x, y };
+  }
+
+  L.orbites = { MODES, orbite, position, E_CH, OMEGA_TERRE: (2 * Math.PI) / 86164 };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : fenêtre de visualisation du simulateur d'orbites : fond noir, centre attracteur (Terre à l'échelle avec un repère sur
+       l'équateur qui tourne en un jour sidéral, Soleil grossi, ou proton), trajectoire prévue (ellipse en pointillés), traînée
+       du mobile, vecteur vitesse de lancement, secteurs balayés en des durées égales (option du mode Soleil), barre d'échelle,
+       message (orbite, échappement, chute, rayonnement).
+Reçoit : le groupe SVG (dans le dessin, pour les matières de la Terre), le cadre { x, y, l, h } et, à chaque image, l'état du logiciel s { mode, r0, v0, o, p, trace, message }.
+Produit : Labo.orbites_ecran(g, cadre) -> dessiner(s).
+Utilisé par : logiciel_orbites.js.
+*/
+(function (L) {
+  const ECHELLES = { atome: [1e-12, 2e-12, 5e-12, 1e-11, 2e-11, 5e-11, 1e-10], terre: [1e6, 2e6, 5e6, 1e7, 2e7], soleil: [0.1, 0.2, 0.5, 1, 2].map((u) => u * 1.496e11) };
+
+  function portee(s) {
+    // Distance (m) représentée par la demi-hauteur de la fenêtre.
+    const o = s.o, M = L.orbites.MODES[s.mode];
+    const loin = o && o.issue !== "echappe" ? Math.max(o.rmax, s.r0) : 2.2 * s.r0;
+    return 1.12 * Math.max(loin, M.R * 1.5);
+  }
+
+  function centre(g, terre, s, c, k) {
+    // Terre à l'échelle (vue du pôle Nord) et son repère équatorial ; Soleil (rayon non à l'échelle) ; ou proton.
+    terre.g.setAttribute("display", s.mode === "terre" ? "inline" : "none");
+    if (s.mode === "terre") {
+      const R = L.orbites.MODES.terre.R * k, a = L.orbites.OMEGA_TERRE * s.t;
+      terre.placer(c.x, c.y, R, { x: c.x - 4000, y: c.y - 2500 });
+      L.svg("line", { x1: c.x, y1: c.y, x2: c.x + R * Math.cos(a), y2: c.y - R * Math.sin(a), stroke: "#ff5252", "stroke-width": 1, "stroke-dasharray": "2 2" }, g);
+      return L.svg("circle", { cx: c.x + R * Math.cos(a), cy: c.y - R * Math.sin(a), r: 2.5, fill: "#ff5252", stroke: "#fff", "stroke-width": 0.5 }, g);
+    }
+    if (s.mode === "soleil") return L.espace.soleil(g, c.x, c.y, 9);
+    L.svg("circle", { cx: c.x, cy: c.y, r: 5, fill: "#e53935", stroke: "#ffcdd2", "stroke-width": 0.8 }, g);
+    L.texte(g, c.x + 9, c.y - 6, "p⁺", { "font-size": 7, fill: "#ffcdd2" });
+  }
+
+  function aires(g, s, X, Y) {
+    // Secteurs balayés par le rayon Soleil-planète pendant chaque dixième de période (deuxième loi de Kepler).
+    const o = s.o, n = Math.min(10, Math.floor(s.t / (o.T / 10)));
+    for (let k = 0; k < n; k++) {
+      const pts = Array.from({ length: 13 }, (_, i) => L.orbites.position(o, ((k + i / 12) * o.T) / 10));
+      L.svg("path", { d: `M${X({ x: 0, y: 0 })} ${Y({ x: 0, y: 0 })} ` + pts.map((p) => `L${X(p).toFixed(1)} ${Y(p).toFixed(1)}`).join(" ") + " Z", fill: k % 2 ? "#4fc3f7" : "#ffb74d", opacity: 0.35 }, g);
+    }
+  }
+
+  function echelle(g, s, cadre, k) {
+    // Barre d'échelle d'environ 60 px, graduée en km ou en pm.
+    const M = L.orbites.MODES[s.mode], d = ECHELLES[s.mode].filter((v) => v * k <= 70).pop() || ECHELLES[s.mode][0];
+    const x = cadre.x + 10, y = cadre.y + cadre.h - 12;
+    L.svg("path", { d: `M${x} ${y - 3} v3 h${d * k} v-3`, fill: "none", stroke: "#e0e0e0", "stroke-width": 1 }, g);
+    L.texte(g, x + (d * k) / 2, y - 5, `${L.nombre_court(d / M.ur, 3)} ${M.nom_r}`, { "font-size": 6.5, fill: "#e0e0e0" });
+  }
+
+  function trajectoires(g, s, c, k) {
+    // Ellipse prévue, traînée, mobile et sa vitesse de lancement.
+    const X = (p) => c.x + p.x * k, Y = (p) => c.y - p.y * k;
+    if (s.o && s.o.issue !== "echappe" && !s.spirale) {
+      const pts = Array.from({ length: 121 }, (_, i) => L.orbites.position(s.o, (i / 120) * s.o.T));
+      L.svg("path", { d: pts.map((p, i) => `${i ? "L" : "M"}${X(p).toFixed(1)} ${Y(p).toFixed(1)}`).join(" "), fill: "none", stroke: "#90a4ae", "stroke-width": 0.8, "stroke-dasharray": "3 3" }, g);
+    }
+    if (s.trace.length > 1) L.svg("path", { d: s.trace.map((p, i) => `${i ? "L" : "M"}${X(p).toFixed(1)} ${Y(p).toFixed(1)}`).join(" "), fill: "none", stroke: s.mode === "atome" ? "#64b5f6" : "#ffd54f", "stroke-width": 1.2, opacity: 0.9 }, g);
+    if (s.mode === "soleil" && s.option && s.o && s.o.issue === "orbite") aires(g, s, X, Y);
+    const p = s.p || { x: s.r0, y: 0 };
+    if (!s.o) L.svg("path", { d: `M${X(p)} ${Y(p)} v-26 m-3 5 l3 -5 l3 5`, fill: "none", stroke: "#81c784", "stroke-width": 1.2 }, g);
+    L.svg("circle", { cx: X(p), cy: Y(p), r: s.mode === "atome" ? 2.6 : 3, fill: s.mode === "atome" ? "#42a5f5" : s.mode === "soleil" ? "#4f8fd8" : "#eceff1", stroke: "#fff", "stroke-width": 0.6 }, g);
+    if (s.mode === "atome") L.texte(g, X(p) + 7, Y(p) - 5, "e⁻", { "font-size": 7, fill: "#bbdefb" });
+  }
+
+  L.orbites_ecran = function (g, cadre) {
+    // Fond étoilé et Terre dessinés une fois, le tout découpé au cadre de la fenêtre ; le reste est redessiné à chaque image.
+    const decoupe = L.svg("clipPath", { id: "fenetre-orbites" }, g.ownerSVGElement.querySelector("defs"));
+    L.svg("rect", { x: cadre.x, y: cadre.y, width: cadre.l, height: cadre.h }, decoupe);
+    g.setAttribute("clip-path", "url(#fenetre-orbites)");
+    L.svg("rect", { x: cadre.x, y: cadre.y, width: cadre.l, height: cadre.h, fill: "#05080d" }, g);
+    for (let i = 0; i < 40; i++) L.svg("circle", { cx: cadre.x + ((i * 97) % cadre.l), cy: cadre.y + ((i * 61) % cadre.h), r: 0.5, fill: "#fff", opacity: 0.5 }, g);
+    const terre = new L.espace.Astre(g, "terre"), dyn = L.svg("g", {}, g);
+    return (s) => {
+      dyn.replaceChildren();
+      const c = { x: cadre.x + cadre.l / 2, y: cadre.y + cadre.h / 2 }, k = cadre.h / 2 / portee(s);
+      centre(dyn, terre, s, c, k); trajectoires(dyn, s, c, k); echelle(dyn, s, cadre, k);
+      if (s.message) L.texte(dyn, c.x, cadre.y + 14, s.message, { "font-size": 7.5, "font-weight": 700, fill: "#ffe082" });
+    };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : panneau de commande du simulateur d'orbites (à gauche de la fenêtre) : deux onglets (les modes choisis : « Terre –
+       satellite », « Soleil – planète », « Proton – électron »), deux glissières (distance de lancement r0, vitesse de lancement
+       v0 perpendiculaire au rayon) avec leurs touches − et + pour le réglage fin, case à cocher du mode (rayonnement de
+       l'électron, ou aires de Kepler), touches « Lancer » et « Effacer », résultats du calcul (altitude pour un satellite).
+Reçoit : le groupe SVG, la dalle { x, y, l, h } du portable, l'état s du logiciel (s.modes : les deux modes des onglets) et les
+         actions { mode(m), regler(cle, valeur), lancer(), effacer(), option() }.
+Produit : Labo.orbites_panneau(g, dalle, s, actions) -> maj() (redessine valeurs, curseurs et résultats).
+Utilisé par : logiciel_orbites.js.
+*/
+(function (L) {
+  const LG = 140, fr = (v, n = 4) => L.nombre_court(v, n);
+
+  function touche(g, x, y, l, texte, action, classe) {
+    // Petit bouton gris du logiciel.
+    const b = L.svg("g", { class: classe, role: "button", "aria-label": texte }, g);
+    L.svg("rect", { x, y, width: l, height: 14, rx: 2.5, fill: "#e4e8ec", stroke: "#8a96a0" }, b);
+    const t = L.texte(b, x + l / 2, y + 10, texte, { "font-size": 7.5, "font-weight": 700, fill: "#23315a" });
+    L.glissable(b, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: action });
+    return { b, t };
+  }
+
+  function glissiere(g, x, y, cle, s, a) {
+    // Rail gradué, curseur que l'on fait glisser, touches − et + (un pas).
+    L.svg("rect", { x, y: y - 1.5, width: LG, height: 3, rx: 1.5, fill: "#b0bec5" }, g);
+    for (let k = 0; k <= 10; k++) L.svg("line", { x1: x + (k * LG) / 10, y1: y + 3, x2: x + (k * LG) / 10, y2: y + 6, stroke: "#90a4ae", "stroke-width": 0.6 }, g);
+    const curseur = L.svg("g", { class: `glissiere-${cle}`, role: "slider", "aria-label": cle }, g);
+    L.svg("rect", { x: -4, y: y - 7, width: 8, height: 14, rx: 2, fill: "#2f4a6b", stroke: "#1b2a3d" }, curseur);
+    const M = () => L.orbites.MODES[s.mode], bornes = () => [M()[cle === "r0" ? "rmin" : "vmin"], M()[cle === "r0" ? "rmax" : "vmax"]];
+    const vers_x = () => { const [b0, b1] = bornes(); return x + ((s[cle] - b0) / (b1 - b0)) * LG; };
+    L.glissable(curseur, { soulever: false, debut: () => ({ x: vers_x(), y }), deplacer: (p) => { const [b0, b1] = bornes(); a.regler(cle, b0 + (Math.max(0, Math.min(LG, p.x - x)) / LG) * (b1 - b0)); } });
+    const pas = () => M()[cle === "r0" ? "pas_r" : "pas_v"];
+    touche(g, x + LG + 6, y - 7, 13, "−", () => a.regler(cle, s[cle] - pas()), `moins-${cle}`);
+    touche(g, x + LG + 22, y - 7, 13, "+", () => a.regler(cle, s[cle] + pas()), `plus-${cle}`);
+    return () => curseur.setAttribute("transform", `translate(${vers_x()} 0)`);
+  }
+
+  function resultats(g, s, x, y) {
+    // Résultats du dernier lancement.
+    g.replaceChildren();
+    const M = L.orbites.MODES[s.mode], o = s.o, r = (v) => `${fr(v / M.ur)} ${M.nom_r}`;
+    const lignes = !o ? ["Réglez r0 et v0, puis « Lancer »."] : o.issue === "echappe" ? ["Trajectoire ouverte : pas d'orbite.", `Énergie mécanique E = ${fr(o.E, 3)} J`] : [
+      ...(s.mode === "terre" ? [`Altitude de lancement h = ${fr((s.r0 - M.R) / 1000)} km`] : []),
+      `Distance minimale rmin = ${r(o.rmin)}`, `Distance maximale rmax = ${r(o.rmax)}`, `Période T = ${fr(o.T)} s`, ...(s.mode === "soleil" ? [`soit T = ${fr(o.T / 86400, 4)} jours`] : []),
+      `Énergie mécanique E = ${fr(o.E, 3)} J`, ...(s.mode === "atome" ? [`soit E = ${fr(o.eV, 3)} eV`] : []), `Temps simulé t = ${fr(s.t, 3)} s`];
+    L.texte(g, x, y, "Résultats du calcul", { "font-size": 7.5, "font-weight": 700, fill: "#23315a", "text-anchor": "start" });
+    lignes.forEach((t, i) => L.texte(g, x, y + 13 + i * 11, t, { "font-size": 7.2, fill: "#222", "text-anchor": "start" }));
+  }
+
+  L.orbites_panneau = function (g, d, s, a) {
+    // Partie fixe (onglets, glissières, touches) et partie redessinée (valeurs, curseurs, résultats).
+    const x = d.x + 8, y = d.y + 22, onglets = s.modes.map((m, k) => touche(g, x + 96 * k, y, 92, L.orbites.MODES[m].onglet, () => a.mode(m), `onglet-${m}`));
+    const titres = L.svg("g", {}, g), vals = L.svg("g", {}, g), res = L.svg("g", {}, g);
+    const maj_r = glissiere(g, x + 4, y + 46, "r0", s, a), maj_v = glissiere(g, x + 4, y + 84, "v0", s, a);
+    const coche = L.svg("g", { class: "case-option", role: "checkbox", "aria-label": "Option" }, g);
+    L.svg("rect", { x, y: y + 102, width: 9, height: 9, fill: "#fff", stroke: "#546e7a" }, coche);
+    const croix = L.texte(coche, x + 4.5, y + 110, "", { "font-size": 9, "font-weight": 700, fill: "#c62828" });
+    const libelle = L.texte(coche, x + 14, y + 109.5, "", { "font-size": 6.8, fill: "#222", "text-anchor": "start" });
+    L.glissable(coche, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: a.option });
+    touche(g, x, y + 120, 92, "Lancer", a.lancer, "touche-lancer"); touche(g, x + 96, y + 120, 92, "Effacer", a.effacer, "touche-effacer");
+    return () => {
+      const M = L.orbites.MODES[s.mode];
+      onglets.forEach((o, k) => o.b.firstChild.setAttribute("fill", s.modes[k] === s.mode ? "#bcd3ea" : "#e4e8ec"));
+      titres.replaceChildren(); vals.replaceChildren();
+      L.texte(titres, x, y + 32, "Distance de lancement r0", { "font-size": 7.2, fill: "#333", "text-anchor": "start" });
+      L.texte(titres, x, y + 70, "Vitesse de lancement v0 (⊥ au rayon)", { "font-size": 7.2, fill: "#333", "text-anchor": "start" });
+      L.texte(vals, x + 188, y + 32, `${fr(s.r0 / M.ur, 5)} ${M.nom_r}`, { "font-size": 7.5, "font-weight": 700, fill: "#0d47a1", "text-anchor": "end" });
+      L.texte(vals, x + 188, y + 70, `${fr(s.v0 / 1000, 5)} km/s`, { "font-size": 7.5, "font-weight": 700, fill: "#0d47a1", "text-anchor": "end" });
+      maj_r(); maj_v();
+      coche.setAttribute("display", M.option ? "inline" : "none"); libelle.textContent = M.option || ""; croix.textContent = s.option ? "✓" : "";
+      resultats(res, s, x, y + 152);
+    };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : simulateur d'orbites qui tourne sur le portable : état (mode, r0, v0, orbite calculée, temps simulé), animation (un tour
+       en 4 s à l'écran ; échappement calculé pas à pas ; chute en spirale de l'électron qui rayonne, montrée en 8 s), faits notés.
+       La case à cocher du mode est l'option : rayonnement de l'électron (mode atome) ou aires de Kepler (mode soleil).
+Reçoit : le groupe SVG, la dalle { x, y, l, h } du portable et { modes } (les deux onglets ; par défaut « terre » et « atome »).
+Produit : Labo.logiciel_orbites(g, dalle, reglage) -> s ; faits « lancers » = [{ mode, r0, v0, issue, circulaire, rmin, rmax, T, E, eV,
+          rayonnement, aires, tombe, tf }] et « simulateur » = { mode }.
+Utilisé par : poste_astres.js (b2_meca6_a1_astres_atomes), poste_satellites.js (b2_meca2_a4_satellites).
+*/
+(function (L) {
+  const TOUR = 4, SPIRALE = 8;
+
+  function noter(s) {
+    // Copie les lancements dans les faits.
+    L.missions.noter("lancers", s.lancers.map((l) => ({ ...l })));
+  }
+
+  function lancer(s) {
+    // Calcule l'orbite et note le lancement.
+    const o = L.orbites.orbite(s.mode, s.r0, s.v0), ray = s.mode === "atome" && s.option && o.issue === "orbite";
+    Object.assign(s, { o, t: 0, p: { x: s.r0, y: 0 }, trace: [{ x: s.r0, y: 0 }], fini: false, vol: { x: s.r0, y: 0, vx: 0, vy: s.v0 }, spirale: ray ? { f: 0, phi: 0 } : null });
+    s.message = ray ? "L'électron rayonne de l'énergie…" : { echappe: "Vitesse trop grande : le mobile s'échappe.", chute: "Le satellite va retomber sur la Terre.", orbite: o.circulaire ? "Orbite circulaire." : "Orbite elliptique." }[o.issue];
+    const r = (v) => (v === undefined ? null : Number(v.toPrecision(5)));
+    s.lancers.push({ mode: s.mode, r0: r(s.r0), v0: r(s.v0), issue: o.issue, circulaire: !!o.circulaire, rmin: r(o.rmin), rmax: r(o.rmax), T: r(o.T), E: r(o.E), eV: r(o.eV), rayonnement: ray, aires: s.mode === "soleil" && s.option, tombe: false, tf: ray ? r(o.tf) : null });
+    noter(s);
+  }
+
+  function spirale(s, dt) {
+    // L'électron perd de l'énergie : r = r0·(1 − t/tf)^(1/3) ; il tombe sur le proton au bout de tf.
+    const sp = s.spirale, a0 = s.o.a;
+    sp.f = Math.min(1, sp.f + dt / SPIRALE);
+    const r = a0 * Math.cbrt(1 - sp.f);
+    sp.phi += dt * 2 * Math.PI * Math.min(3, 0.5 * (a0 / Math.max(r, 1e-13)) ** 1.5);
+    s.p = { x: r * Math.cos(sp.phi), y: r * Math.sin(sp.phi) }; s.t = sp.f * s.o.tf;
+    s.trace.push(s.p); if (s.trace.length > 500) s.trace.shift();
+    if (sp.f >= 1 && !s.fini) {
+      s.fini = true; s.message = `Chute sur le proton en ${L.nombre_court(s.o.tf, 2)} s (≈ ${L.nombre_court(2 * s.o.tf / s.o.T, 1)} tours, non tous dessinés).`;
+      s.lancers[s.lancers.length - 1].tombe = true; noter(s);
+    }
+  }
+
+  function echappement(s, dt) {
+    // Trajectoire ouverte calculée pas à pas (méthode d'Euler-Cromer), arrêtée quand le mobile sort de la fenêtre.
+    const mu = L.orbites.MODES[s.mode].mu, v = s.vol, h = (dt * 3 * s.r0) / s.v0 / 200;
+    for (let k = 0; k < 200; k++) { const r3 = Math.hypot(v.x, v.y) ** 3; v.vx -= (mu * v.x / r3) * h; v.vy -= (mu * v.y / r3) * h; v.x += v.vx * h; v.y += v.vy * h; s.t += h; }
+    s.p = { x: v.x, y: v.y }; s.trace.push(s.p);
+    if (Math.hypot(v.x, v.y) > 2.6 * s.r0) s.fini = true;
+  }
+
+  function avancer(s, dt) {
+    // Un pas d'animation selon l'issue du lancement.
+    if (!s.o || s.fini) return;
+    if (s.spirale) return spirale(s, dt);
+    if (s.o.issue === "echappe") return echappement(s, dt);
+    s.t += (dt * s.o.T) / TOUR; s.p = L.orbites.position(s.o, s.t); s.trace.push(s.p);
+    if (s.trace.length > 160) s.trace.shift();
+    if (s.o.issue === "chute" && Math.hypot(s.p.x, s.p.y) <= L.orbites.MODES.terre.R) { s.fini = true; s.message = "Le satellite s'est écrasé sur la Terre."; }
+  }
+
+  L.logiciel_orbites = function (g, d, { modes = ["terre", "atome"] } = {}) {
+    // Panneau à gauche, fenêtre à droite ; boucle d'animation.
+    const M0 = L.orbites.MODES[modes[0]], s = { modes, mode: modes[0], r0: M0.r0, v0: M0.v0, o: null, t: 0, p: null, trace: [], message: "", option: false, lancers: [] };
+    const fenetre = L.svg("g", { "pointer-events": "none" }, g), dessiner = L.orbites_ecran(fenetre, { x: d.x + 212, y: d.y + 18, l: d.l - 216, h: d.h - 22 });
+    const effacer = () => Object.assign(s, { o: null, t: 0, p: null, trace: [], message: "", spirale: null, fini: false });
+    const arrondi = (cle, v) => { const M = L.orbites.MODES[s.mode], pas = M[cle === "r0" ? "pas_r" : "pas_v"], b = cle === "r0" ? [M.rmin, M.rmax] : [M.vmin, M.vmax]; return Math.min(b[1], Math.max(b[0], Math.round(v / pas) * pas)); };
+    const maj = L.orbites_panneau(g, d, s, {
+      mode: (m) => { if (m === s.mode) return; const M = L.orbites.MODES[m]; Object.assign(s, { mode: m, r0: M.r0, v0: M.v0, option: false }); effacer(); L.missions.noter("simulateur", { mode: m }); maj(); },
+      regler: (cle, v) => { s[cle] = arrondi(cle, v); effacer(); maj(); },
+      lancer: () => { lancer(s); maj(); }, effacer: () => { effacer(); maj(); },
+      option: () => { if (L.orbites.MODES[s.mode].option) { s.option = !s.option; effacer(); maj(); } },
+    });
+    let avant = null;
+    const image = (instant) => { const dt = avant === null ? 0 : Math.min(0.05, (instant - avant) / 1000); avant = instant; avancer(s, dt); dessiner(s); if (s.o) maj(); requestAnimationFrame(image); };
+    L.missions.noter("lancers", []); L.missions.noter("simulateur", { mode: s.mode });
+    maj(); requestAnimationFrame(image);
+    L.logiciel_orbites.actif = s;
+    return s;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : diagramme des niveaux d'énergie d'un atome, à l'échelle (comme dans un manuel) : un trait par niveau, son nom à gauche
        (n = 1, 2… ou E1, E2…), sa valeur en eV à droite, le niveau 0 (atome ionisé) en pointillés, flèche des énergies croissantes.
        Les étiquettes trop proches se décalent d'elles-mêmes vers le haut ou vers le bas.
@@ -3421,277 +3714,6 @@ Utilisé par : les simulations de chimie (combustions).
     };
     maj();
     return s;
-  };
-})(window.Labo);
-</script>
-  <script>
-/*
-Rôle : simulateur d'orbites qui tourne sur le portable : état (mode, r0, v0, orbite calculée, temps simulé), animation (un tour
-       en 4 s à l'écran ; échappement calculé pas à pas ; chute en spirale de l'électron qui rayonne, montrée en 8 s), faits notés.
-Reçoit : le groupe SVG et la dalle { x, y, l, h } du portable.
-Produit : Labo.logiciel_orbites(g, dalle) -> s ; faits « lancers » = [{ mode, r0, v0, issue, circulaire, rmin, rmax, T, E, eV,
-          rayonnement, tombe, tf }] et « simulateur » = { mode }.
-Utilisé par : poste_astres.js.
-*/
-(function (L) {
-  const TOUR = 4, SPIRALE = 8;
-
-  function noter(s) {
-    // Copie les lancements dans les faits.
-    L.missions.noter("lancers", s.lancers.map((l) => ({ ...l })));
-  }
-
-  function lancer(s) {
-    // Calcule l'orbite et note le lancement.
-    const o = L.orbites.orbite(s.mode, s.r0, s.v0), ray = s.mode === "atome" && s.rayonnement && o.issue === "orbite";
-    Object.assign(s, { o, t: 0, p: { x: s.r0, y: 0 }, trace: [{ x: s.r0, y: 0 }], fini: false, vol: { x: s.r0, y: 0, vx: 0, vy: s.v0 }, spirale: ray ? { f: 0, phi: 0 } : null });
-    s.message = ray ? "L'électron rayonne de l'énergie…" : { echappe: "Vitesse trop grande : le mobile s'échappe.", chute: "Le satellite va retomber sur la Terre.", orbite: o.circulaire ? "Orbite circulaire." : "Orbite elliptique." }[o.issue];
-    const r = (v) => (v === undefined ? null : Number(v.toPrecision(5)));
-    s.lancers.push({ mode: s.mode, r0: r(s.r0), v0: r(s.v0), issue: o.issue, circulaire: !!o.circulaire, rmin: r(o.rmin), rmax: r(o.rmax), T: r(o.T), E: r(o.E), eV: r(o.eV), rayonnement: ray, tombe: false, tf: ray ? r(o.tf) : null });
-    noter(s);
-  }
-
-  function spirale(s, dt) {
-    // L'électron perd de l'énergie : r = r0·(1 − t/tf)^(1/3) ; il tombe sur le proton au bout de tf.
-    const sp = s.spirale, a0 = s.o.a;
-    sp.f = Math.min(1, sp.f + dt / SPIRALE);
-    const r = a0 * Math.cbrt(1 - sp.f);
-    sp.phi += dt * 2 * Math.PI * Math.min(3, 0.5 * (a0 / Math.max(r, 1e-13)) ** 1.5);
-    s.p = { x: r * Math.cos(sp.phi), y: r * Math.sin(sp.phi) }; s.t = sp.f * s.o.tf;
-    s.trace.push(s.p); if (s.trace.length > 500) s.trace.shift();
-    if (sp.f >= 1 && !s.fini) {
-      s.fini = true; s.message = `Chute sur le proton en ${L.nombre_court(s.o.tf, 2)} s (≈ ${L.nombre_court(2 * s.o.tf / s.o.T, 1)} tours, non tous dessinés).`;
-      s.lancers[s.lancers.length - 1].tombe = true; noter(s);
-    }
-  }
-
-  function echappement(s, dt) {
-    // Trajectoire ouverte calculée pas à pas (méthode d'Euler-Cromer), arrêtée quand le mobile sort de la fenêtre.
-    const mu = L.orbites.MODES[s.mode].mu, v = s.vol, h = (dt * 3 * s.r0) / s.v0 / 200;
-    for (let k = 0; k < 200; k++) { const r3 = Math.hypot(v.x, v.y) ** 3; v.vx -= (mu * v.x / r3) * h; v.vy -= (mu * v.y / r3) * h; v.x += v.vx * h; v.y += v.vy * h; s.t += h; }
-    s.p = { x: v.x, y: v.y }; s.trace.push(s.p);
-    if (Math.hypot(v.x, v.y) > 2.6 * s.r0) s.fini = true;
-  }
-
-  function avancer(s, dt) {
-    // Un pas d'animation selon l'issue du lancement.
-    if (!s.o || s.fini) return;
-    if (s.spirale) return spirale(s, dt);
-    if (s.o.issue === "echappe") return echappement(s, dt);
-    s.t += (dt * s.o.T) / TOUR; s.p = L.orbites.position(s.o, s.t); s.trace.push(s.p);
-    if (s.trace.length > 160) s.trace.shift();
-    if (s.o.issue === "chute" && Math.hypot(s.p.x, s.p.y) <= L.orbites.MODES.terre.R) { s.fini = true; s.message = "Le satellite s'est écrasé sur la Terre."; }
-  }
-
-  L.logiciel_orbites = function (g, d) {
-    // Panneau à gauche, fenêtre à droite ; boucle d'animation.
-    const M0 = L.orbites.MODES.terre, s = { mode: "terre", r0: M0.r0, v0: M0.v0, o: null, t: 0, p: null, trace: [], message: "", rayonnement: false, lancers: [] };
-    const fenetre = L.svg("g", { "pointer-events": "none" }, g), dessiner = L.orbites_ecran(fenetre, { x: d.x + 212, y: d.y + 18, l: d.l - 216, h: d.h - 22 });
-    const effacer = () => Object.assign(s, { o: null, t: 0, p: null, trace: [], message: "", spirale: null, fini: false });
-    const arrondi = (cle, v) => { const M = L.orbites.MODES[s.mode], pas = M[cle === "r0" ? "pas_r" : "pas_v"], b = cle === "r0" ? [M.rmin, M.rmax] : [M.vmin, M.vmax]; return Math.min(b[1], Math.max(b[0], Math.round(v / pas) * pas)); };
-    const maj = L.orbites_panneau(g, d, s, {
-      mode: (m) => { if (m === s.mode) return; const M = L.orbites.MODES[m]; Object.assign(s, { mode: m, r0: M.r0, v0: M.v0, rayonnement: false }); effacer(); L.missions.noter("simulateur", { mode: m }); maj(); },
-      regler: (cle, v) => { s[cle] = arrondi(cle, v); effacer(); maj(); },
-      lancer: () => { lancer(s); maj(); }, effacer: () => { effacer(); maj(); },
-      rayonnement: () => { if (s.mode === "atome") { s.rayonnement = !s.rayonnement; maj(); } },
-    });
-    let avant = null;
-    const image = (instant) => { const dt = avant === null ? 0 : Math.min(0.05, (instant - avant) / 1000); avant = instant; avancer(s, dt); dessiner(s); if (s.o) maj(); requestAnimationFrame(image); };
-    L.missions.noter("lancers", []); L.missions.noter("simulateur", { mode: "terre" });
-    maj(); requestAnimationFrame(image);
-    L.logiciel_orbites.actif = s;
-    return s;
-  };
-})(window.Labo);
-</script>
-  <script>
-/*
-Rôle : fenêtre de visualisation du simulateur d'orbites : fond noir, centre attracteur (Terre à l'échelle, ou proton), trajectoire
-       prévue (ellipse en pointillés), traînée du mobile (satellite ou électron), vecteur vitesse de lancement, barre d'échelle,
-       message (orbite, échappement, chute, rayonnement).
-Reçoit : le groupe SVG (dans le dessin, pour les matières de la Terre), le cadre { x, y, l, h } et, à chaque image, l'état du logiciel s { mode, r0, v0, o, p, trace, message }.
-Produit : Labo.orbites_ecran(g, cadre) -> dessiner(s).
-Utilisé par : logiciel_orbites.js.
-*/
-(function (L) {
-  const ECHELLES = [1e-12, 2e-12, 5e-12, 1e-11, 2e-11, 5e-11, 1e-10, 1e6, 2e6, 5e6, 1e7, 2e7];
-
-  function portee(s) {
-    // Distance (m) représentée par la demi-hauteur de la fenêtre.
-    const o = s.o, M = L.orbites.MODES[s.mode];
-    const loin = o && o.issue !== "echappe" ? Math.max(o.rmax, s.r0) : 2.2 * s.r0;
-    return 1.12 * Math.max(loin, M.R * 1.5);
-  }
-
-  function centre(g, terre, s, c, k) {
-    // Terre à l'échelle (dessin réaliste de espace.js, éclairée par le Soleil hors champ, en haut à gauche) ou proton.
-    terre.g.setAttribute("display", s.mode === "terre" ? "inline" : "none");
-    if (s.mode === "terre") return terre.placer(c.x, c.y, L.orbites.MODES.terre.R * k, { x: c.x - 4000, y: c.y - 2500 });
-    L.svg("circle", { cx: c.x, cy: c.y, r: 5, fill: "#e53935", stroke: "#ffcdd2", "stroke-width": 0.8 }, g);
-    L.texte(g, c.x + 9, c.y - 6, "p⁺", { "font-size": 7, fill: "#ffcdd2" });
-  }
-
-  function echelle(g, s, cadre, k) {
-    // Barre d'échelle d'environ 60 px, graduée en km ou en pm.
-    const M = L.orbites.MODES[s.mode], d = ECHELLES.filter((v) => v * k <= 70).pop() || ECHELLES[0];
-    const x = cadre.x + 10, y = cadre.y + cadre.h - 12;
-    L.svg("path", { d: `M${x} ${y - 3} v3 h${d * k} v-3`, fill: "none", stroke: "#e0e0e0", "stroke-width": 1 }, g);
-    L.texte(g, x + (d * k) / 2, y - 5, `${L.nombre_court(d / M.ur, 3)} ${M.nom_r}`, { "font-size": 6.5, fill: "#e0e0e0" });
-  }
-
-  function trajectoires(g, s, c, k) {
-    // Ellipse prévue, traînée, mobile et sa vitesse de lancement.
-    const X = (p) => c.x + p.x * k, Y = (p) => c.y - p.y * k;
-    if (s.o && s.o.issue !== "echappe" && !s.rayonnement) {
-      const pts = Array.from({ length: 121 }, (_, i) => L.orbites.position(s.o, (i / 120) * s.o.T));
-      L.svg("path", { d: pts.map((p, i) => `${i ? "L" : "M"}${X(p).toFixed(1)} ${Y(p).toFixed(1)}`).join(" "), fill: "none", stroke: "#90a4ae", "stroke-width": 0.8, "stroke-dasharray": "3 3" }, g);
-    }
-    if (s.trace.length > 1) L.svg("path", { d: s.trace.map((p, i) => `${i ? "L" : "M"}${X(p).toFixed(1)} ${Y(p).toFixed(1)}`).join(" "), fill: "none", stroke: s.mode === "terre" ? "#ffd54f" : "#64b5f6", "stroke-width": 1.2, opacity: 0.9 }, g);
-    const p = s.p || { x: s.r0, y: 0 };
-    if (!s.o) L.svg("path", { d: `M${X(p)} ${Y(p)} v-26 m-3 5 l3 -5 l3 5`, fill: "none", stroke: "#81c784", "stroke-width": 1.2 }, g);
-    L.svg("circle", { cx: X(p), cy: Y(p), r: s.mode === "terre" ? 3 : 2.6, fill: s.mode === "terre" ? "#eceff1" : "#42a5f5", stroke: "#fff", "stroke-width": 0.6 }, g);
-    if (s.mode === "atome") L.texte(g, X(p) + 7, Y(p) - 5, "e⁻", { "font-size": 7, fill: "#bbdefb" });
-  }
-
-  L.orbites_ecran = function (g, cadre) {
-    // Fond étoilé et Terre dessinés une fois, le tout découpé au cadre de la fenêtre ; le reste est redessiné à chaque image.
-    const decoupe = L.svg("clipPath", { id: "fenetre-orbites" }, g.ownerSVGElement.querySelector("defs"));
-    L.svg("rect", { x: cadre.x, y: cadre.y, width: cadre.l, height: cadre.h }, decoupe);
-    g.setAttribute("clip-path", "url(#fenetre-orbites)");
-    L.svg("rect", { x: cadre.x, y: cadre.y, width: cadre.l, height: cadre.h, fill: "#05080d" }, g);
-    for (let i = 0; i < 40; i++) L.svg("circle", { cx: cadre.x + ((i * 97) % cadre.l), cy: cadre.y + ((i * 61) % cadre.h), r: 0.5, fill: "#fff", opacity: 0.5 }, g);
-    const terre = new L.espace.Astre(g, "terre"), dyn = L.svg("g", {}, g);
-    return (s) => {
-      dyn.replaceChildren();
-      const c = { x: cadre.x + cadre.l / 2, y: cadre.y + cadre.h / 2 }, k = cadre.h / 2 / portee(s);
-      centre(dyn, terre, s, c, k); trajectoires(dyn, s, c, k); echelle(dyn, s, cadre, k);
-      if (s.message) L.texte(dyn, c.x, cadre.y + 14, s.message, { "font-size": 7.5, "font-weight": 700, fill: "#ffe082" });
-    };
-  };
-})(window.Labo);
-</script>
-  <script>
-/*
-Rôle : calculs du simulateur d'orbites (mécanique de Newton) : un satellite de 1 000 kg lancé autour de la Terre, ou un électron
-       lancé autour d'un proton ; force centrale en 1/r² (μ = G·M pour la Terre, μ = k·e²/m pour l'électron). Lancement à la
-       distance r0, vitesse v0 perpendiculaire au rayon : orbite elliptique exacte (lois de Kepler), échappement si v0² ≥ 2μ/r0,
-       chute si le périgée est sous la surface de la Terre. Option « rayonnement » (électron) : selon l'électromagnétisme
-       classique, l'électron qui tourne rayonne et tombe sur le proton en t = r0³ / (4·re²·c) (≈ 1,6 × 10⁻¹¹ s pour 53 pm).
-Reçoit : le mode (« terre » ou « atome »), r0 (m), v0 (m/s), le temps (s).
-Produit : Labo.orbites = { MODES, orbite(mode, r0, v0) -> { issue, a, e, rmin, rmax, T, E (J), eV, circulaire, tf },
-          position(o, t) -> { x, y } (m, origine au centre attracteur ; lancement en (r0, 0) vers +y) }.
-Utilisé par : logiciel_orbites.js, orbites_ecran.js.
-*/
-(function (L) {
-  const G = 6.674e-11, K = 8.988e9, E_CH = 1.602e-19, ME = 9.109e-31, RE = 2.818e-15, C = 2.998e8;
-  const MODES = {
-    terre: { mu: G * 5.972e24, R: 6.371e6, m: 1000, ur: 1e3, nom_r: "km", rmin: 6.6e6, rmax: 4.5e7, pas_r: 1e5, vmin: 1000, vmax: 11000, pas_v: 10, r0: 7e6, v0: 7000 },
-    atome: { mu: (K * E_CH * E_CH) / ME, R: 0, m: ME, ur: 1e-12, nom_r: "pm", rmin: 2e-11, rmax: 2e-10, pas_r: 1e-12, vmin: 5e5, vmax: 5e6, pas_v: 1e3, r0: 5.3e-11, v0: 2e6 },
-  };
-
-  function orbite(mode, r0, v0) {
-    // Éléments de l'orbite : demi-grand axe, excentricité, distances extrêmes, période, énergie mécanique.
-    const M = MODES[mode], mu = M.mu, E = M.m * (v0 * v0 / 2 - mu / r0), o = { mode, r0, v0, E, eV: E / E_CH };
-    if (v0 * v0 >= (2 * mu) / r0) return Object.assign(o, { issue: "echappe" });
-    o.a = 1 / (2 / r0 - (v0 * v0) / mu);
-    o.e = Math.abs((r0 * v0 * v0) / mu - 1);
-    o.rmin = o.a * (1 - o.e); o.rmax = o.a * (1 + o.e);
-    o.T = 2 * Math.PI * Math.sqrt(o.a ** 3 / mu);
-    o.apogee = v0 * v0 < mu / r0;
-    o.circulaire = (o.rmax - o.rmin) / (o.rmax + o.rmin) < 0.01;
-    o.issue = o.rmin < M.R ? "chute" : "orbite";
-    o.tf = mode === "atome" ? r0 ** 3 / (4 * RE * RE * C) : null;
-    return o;
-  }
-
-  function anomalie(Mo, e) {
-    // Résout l'équation de Kepler E − e·sin E = M (méthode de Newton).
-    let E = e < 0.8 ? Mo : Math.PI;
-    for (let k = 0; k < 30; k++) E -= (E - e * Math.sin(E) - Mo) / (1 - e * Math.cos(E));
-    return E;
-  }
-
-  function position(o, t) {
-    // Position sur l'ellipse à l'instant t ; si r0 est l'apogée, on part de l'apogée.
-    const Mo = (2 * Math.PI * t) / o.T + (o.apogee ? Math.PI : 0), E = anomalie(Mo % (2 * Math.PI), o.e);
-    const x = o.a * (Math.cos(E) - o.e), y = o.a * Math.sqrt(1 - o.e * o.e) * Math.sin(E);
-    return o.apogee ? { x: -x, y: -y } : { x, y };
-  }
-
-  L.orbites = { MODES, orbite, position, E_CH };
-})(window.Labo);
-</script>
-  <script>
-/*
-Rôle : panneau de commande du simulateur d'orbites (à gauche de la fenêtre) : onglets « Terre – satellite » et « Proton – électron »,
-       deux glissières (distance de lancement r0, vitesse de lancement v0 perpendiculaire au rayon) avec leurs touches − et +
-       pour le réglage fin, case « Rayonnement » (électron seulement), touches « Lancer » et « Effacer », résultats du calcul.
-Reçoit : le groupe SVG, la dalle { x, y, l, h } du portable, l'état s du logiciel et les actions { mode(m), regler(cle, valeur), lancer(),
-         effacer(), rayonnement() }.
-Produit : Labo.orbites_panneau(g, dalle, s, actions) -> maj() (redessine valeurs, curseurs et résultats).
-Utilisé par : logiciel_orbites.js.
-*/
-(function (L) {
-  const LG = 140, fr = (v, n = 4) => L.nombre_court(v, n);
-
-  function touche(g, x, y, l, texte, action, classe) {
-    // Petit bouton gris du logiciel.
-    const b = L.svg("g", { class: classe, role: "button", "aria-label": texte }, g);
-    L.svg("rect", { x, y, width: l, height: 14, rx: 2.5, fill: "#e4e8ec", stroke: "#8a96a0" }, b);
-    const t = L.texte(b, x + l / 2, y + 10, texte, { "font-size": 7.5, "font-weight": 700, fill: "#23315a" });
-    L.glissable(b, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: action });
-    return { b, t };
-  }
-
-  function glissiere(g, x, y, cle, s, a) {
-    // Rail gradué, curseur que l'on fait glisser, touches − et + (un pas).
-    L.svg("rect", { x, y: y - 1.5, width: LG, height: 3, rx: 1.5, fill: "#b0bec5" }, g);
-    for (let k = 0; k <= 10; k++) L.svg("line", { x1: x + (k * LG) / 10, y1: y + 3, x2: x + (k * LG) / 10, y2: y + 6, stroke: "#90a4ae", "stroke-width": 0.6 }, g);
-    const curseur = L.svg("g", { class: `glissiere-${cle}`, role: "slider", "aria-label": cle }, g);
-    L.svg("rect", { x: -4, y: y - 7, width: 8, height: 14, rx: 2, fill: "#2f4a6b", stroke: "#1b2a3d" }, curseur);
-    const M = () => L.orbites.MODES[s.mode], bornes = () => [M()[cle === "r0" ? "rmin" : "vmin"], M()[cle === "r0" ? "rmax" : "vmax"]];
-    const vers_x = () => { const [b0, b1] = bornes(); return x + ((s[cle] - b0) / (b1 - b0)) * LG; };
-    L.glissable(curseur, { soulever: false, debut: () => ({ x: vers_x(), y }), deplacer: (p) => { const [b0, b1] = bornes(); a.regler(cle, b0 + (Math.max(0, Math.min(LG, p.x - x)) / LG) * (b1 - b0)); } });
-    const pas = () => M()[cle === "r0" ? "pas_r" : "pas_v"];
-    touche(g, x + LG + 6, y - 7, 13, "−", () => a.regler(cle, s[cle] - pas()), `moins-${cle}`);
-    touche(g, x + LG + 22, y - 7, 13, "+", () => a.regler(cle, s[cle] + pas()), `plus-${cle}`);
-    return () => curseur.setAttribute("transform", `translate(${vers_x()} 0)`);
-  }
-
-  function resultats(g, s, x, y) {
-    // Résultats du dernier lancement.
-    g.replaceChildren();
-    const M = L.orbites.MODES[s.mode], o = s.o, r = (v) => `${fr(v / M.ur)} ${M.nom_r}`;
-    const lignes = !o ? ["Réglez r0 et v0, puis « Lancer »."] : o.issue === "echappe" ? ["Trajectoire ouverte : pas d'orbite.", `Énergie mécanique E = ${fr(o.E, 3)} J`] : [
-      `Distance minimale rmin = ${r(o.rmin)}`, `Distance maximale rmax = ${r(o.rmax)}`, `Période T = ${fr(o.T)} s`,
-      `Énergie mécanique E = ${fr(o.E, 3)} J`, ...(s.mode === "atome" ? [`soit E = ${fr(o.eV, 3)} eV`] : []), `Temps simulé t = ${fr(s.t, 3)} s`];
-    L.texte(g, x, y, "Résultats du calcul", { "font-size": 7.5, "font-weight": 700, fill: "#23315a", "text-anchor": "start" });
-    lignes.forEach((t, i) => L.texte(g, x, y + 13 + i * 11, t, { "font-size": 7.2, fill: "#222", "text-anchor": "start" }));
-  }
-
-  L.orbites_panneau = function (g, d, s, a) {
-    // Partie fixe (onglets, glissières, touches) et partie redessinée (valeurs, curseurs, résultats).
-    const x = d.x + 8, y = d.y + 22, onglets = [touche(g, x, y, 92, "Terre – satellite", () => a.mode("terre"), "onglet-terre"), touche(g, x + 96, y, 92, "Proton – électron", () => a.mode("atome"), "onglet-atome")];
-    const titres = L.svg("g", {}, g), vals = L.svg("g", {}, g), res = L.svg("g", {}, g);
-    const maj_r = glissiere(g, x + 4, y + 46, "r0", s, a), maj_v = glissiere(g, x + 4, y + 84, "v0", s, a);
-    const coche = L.svg("g", { class: "case-rayonnement", role: "checkbox", "aria-label": "Rayonnement" }, g);
-    L.svg("rect", { x, y: y + 102, width: 9, height: 9, fill: "#fff", stroke: "#546e7a" }, coche);
-    const croix = L.texte(coche, x + 4.5, y + 110, "", { "font-size": 9, "font-weight": 700, fill: "#c62828" });
-    L.texte(coche, x + 14, y + 109.5, "Rayonnement de l'électron (électromagnétisme)", { "font-size": 6.8, fill: "#222", "text-anchor": "start" });
-    L.glissable(coche, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: a.rayonnement });
-    touche(g, x, y + 120, 92, "Lancer", a.lancer, "touche-lancer"); touche(g, x + 96, y + 120, 92, "Effacer", a.effacer, "touche-effacer");
-    return () => {
-      const M = L.orbites.MODES[s.mode];
-      onglets.forEach((o, k) => o.b.firstChild.setAttribute("fill", (k === 0) === (s.mode === "terre") ? "#bcd3ea" : "#e4e8ec"));
-      titres.replaceChildren(); vals.replaceChildren();
-      L.texte(titres, x, y + 32, "Distance de lancement r0", { "font-size": 7.2, fill: "#333", "text-anchor": "start" });
-      L.texte(titres, x, y + 70, "Vitesse de lancement v0 (⊥ au rayon)", { "font-size": 7.2, fill: "#333", "text-anchor": "start" });
-      L.texte(vals, x + 188, y + 32, `${fr(s.r0 / M.ur, 5)} ${M.nom_r}`, { "font-size": 7.5, "font-weight": 700, fill: "#0d47a1", "text-anchor": "end" });
-      L.texte(vals, x + 188, y + 70, `${fr(s.v0 / 1000, 5)} km/s`, { "font-size": 7.5, "font-weight": 700, fill: "#0d47a1", "text-anchor": "end" });
-      maj_r(); maj_v();
-      coche.setAttribute("opacity", s.mode === "atome" ? 1 : 0.35); croix.textContent = s.rayonnement ? "✓" : "";
-      resultats(res, s, x, y + 152);
-    };
   };
 })(window.Labo);
 </script>

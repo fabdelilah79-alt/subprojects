@@ -9,8 +9,10 @@ ELEC = [s for s in re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + 'sourc
 RC = ['circuit_temps.js', 'condensateur.js', 'commutateur.js', 'boite_resistances.js', 'source_courant.js', 'ecran_acquisition.js', 'interface_acquisition.js', 'documents_mur.js', 'lewis_dessin.js', 'gbf.js', 'gbf_temps.js', 'bobine.js', 'entretien_rlc.js', 'poste_rlc.js', 'circuit_sinus.js', 'oscilloscope_ecran.js', 'oscilloscope.js', 'poste_rlc_force.js', 'modulation.js']
 MECA = [x for x in re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + 'sources/tc_meca4_a1_quantite/page.html').read())] + ['../../commun/documents_mur.js', '../../commun/tri.js']
 OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dessin.js', 'banc_ressort.js', 'banc_ressort_accessoires.js', 'logiciel_xt.js', 'chronometre_manuel.js', 'potence.js', 'pendule_torsion_dessin.js', 'dynamometre_traction.js']
-MECA6 = ['continents.js', 'espace.js', 'portable.js', 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
+ORBITES = ['continents.js', 'espace.js', 'portable.js', 'orbites_modele.js', 'orbites_ecran.js', 'orbites_panneau.js', 'logiciel_orbites.js']
+MECA6 = ORBITES + [ 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
 SIMS = {
+ 'b2_meca2_s4_satellites': ("Laboratoire : satellites et planètes", "simulation de la partie « Satellites et planètes » du chapitre « Applications des lois de Newton » (2e année du bac, PC et SM) : référentiels, lois de Kepler au simulateur d'orbites et avec les données des planètes, satellite en orbite circulaire, satellite géostationnaire."),
  'b2_meca6_a1_astres_atomes': ("Laboratoire : astres et atomes", "simulation de l'activité 1 du chapitre « L'atome et la mécanique de Newton » (2e année du bac) : forces électrostatique et gravitationnelle (1/d²), simulateur d'orbites (satellites, troisième loi de Kepler ; électron autour du proton, rayonnement), limites de la mécanique de Newton."),
  'b2_meca6_a2_spectres': ("Laboratoire : quantification de l'énergie", "simulation de l'activité 2 du chapitre « L'atome et la mécanique de Newton » (2e année du bac) : expérience de Franck et Hertz (mercure), spectres de raies des tubes spectraux (hydrogène, hélium, mercure, néon), raie du sodium en émission et en absorption, E = h·ν."),
  'b2_meca5_a1_energie': ("Laboratoire : énergie des oscillateurs mécaniques", "simulation de l'activité du chapitre « Aspects énergétiques des oscillateurs mécaniques » (2e année du bac) : travail de la force d'un ressort (dynamomètre, aire sous F = f(x)), Epe = ½·K·x², diagrammes d'énergie du solide-ressort et du pendule de torsion, conservation et non-conservation de Em."),
@@ -70,6 +72,7 @@ for sid, (titre, role) in SIMS.items():
     scripts = base + ['../../commun/' + f for f in plus + extra if '../../commun/' + f not in base] + locaux
     if sid.startswith('b2_elec'): scripts = ELEC + ['../../commun/' + f for f in RC] + tri + locaux
     if sid.startswith('b2_meca'): scripts = MECA + (['../../commun/pointage_video.js'] if sid.startswith(('b2_meca2', 'b2_meca3_a1')) else []) + (['../../commun/circuit_decor.js'] if sid.startswith('b2_meca3') else []) + (['../../commun/' + f for f in OSCILLATEURS] if sid.startswith(('b2_meca4', 'b2_meca5')) else []) + locaux
+    if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux
     if sid.startswith('b2_meca6'): scripts = MECA + ['../../commun/' + f for f in MECA6 if os.path.exists(B + 'commun/' + f)] + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux
     html = f'''<!doctype html>

@@ -1258,3 +1258,25 @@ Problèmes restants, à faire par l'enseignant :
 - La pente mesurée (4,84 V) est un peu inférieure à 4,9 V, comme dans les vraies mesures ; la tolérance est de ± 0,15 V.
 - La chute de l'électron en spirale est montrée en 8 s avec quelques tours (en réalité environ 200 000 tours).
 - Le spectroscope de poche ne sépare pas le doublet du sodium (589,0 et 589,6 nm) : une seule raie est vue.
+
+## 2026-10-30 — Vérification du PDF des orientations : parties propres aux filières PC et SM
+
+- Remarque de l'enseignant : des parties du programme du bac manquent (exemple : mouvement des planètes et des satellites).
+- Cause : les fiches JSON listaient les activités des parties communes, mais pas celles des parties spécifiques (PC, SMA,
+  SMB) ; je ne faisais qu'une simulation par activité listée. Le texte arabe du PDF ne s'extrait pas (police) : les pages
+  112 à 135 (2e année, PC et SM) et 45 à 49, 59 et 60 (1re année) ont été lues en images.
+- Contrôle automatique : objectifs de chaque fiche (parties communes et spécifiques) sans aucune simulation au manifeste.
+  Physique, parties déjà vues sans simulation : meca2 O5 (frottement, Euler), O6 (champ électrostatique), O7 (champ
+  magnétique), O8 (satellites) ; meca4 O6 (pendule pesant) ; meca5 O5 (énergie du pendule pesant) ; 1re année elec2 O7 (SM,
+  transistor et AO). nucl2 O6 (fission, fusion) était traité : objectif ajouté. La chimie de 2e année reste à faire, dans l'ordre.
+- Fiches corrigées : activités du PDF ajoutées aux parties spécifiques de 2bac/meca2_applications (4 activités, 2
+  orientations) et de 2bac/meca4_oscillants (1 activité, 1 orientation). ajouter.py accepte « activite_specifique ».
+- Nouvelle simulation b2_meca2_s4_satellites (O8). Mesuré : pente T²/a³ = 2,971 × 10⁻¹⁹ s²/m³ (théorie 2,976 × 10⁻¹⁹),
+  MS = 1,99 × 10³⁰ kg ; à 400 km, T = 5 540 s (théorie 5 544 s) ; orbite géostationnaire à 42 200 km, T = 86 005 s.
+- Simulateur d'orbites déplacé dans commun/ (signalé), options désactivées par défaut ; b2_meca6_a1_astres_atomes rejouée
+  (sources et fichier assemblé) ; barre d'échelle choisie selon le mode.
+
+Problèmes restants, à faire par l'enseignant :
+- La Terre du simulateur est vue de côté (Afrique) alors que l'orbite est vue depuis le pôle Nord ; un repère rouge sur
+  l'équateur montre la rotation de la Terre.
+- Le Soleil est grossi (son rayon n'est pas à l'échelle).

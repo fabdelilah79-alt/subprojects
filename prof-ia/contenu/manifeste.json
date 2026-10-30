@@ -3993,7 +3993,8 @@
         "O2",
         "O3",
         "O4",
-        "O5"
+        "O5",
+        "O6"
       ],
       "missions": [
         {
@@ -4953,6 +4954,42 @@
         "Un atome peut absorber n'importe quelle quantité d'énergie.",
         "Les raies d'un spectre sont des couleurs filtrées par l'appareil.",
         "Le spectre d'absorption n'a rien à voir avec le spectre d'émission."
+      ]
+    },
+    {
+      "id": "b2_meca2_s4_satellites",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_s4_satellites.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Une paillasse : quatre documents au mur (référentiels héliocentrique et géocentrique, de Ptolémée à Newton, les trois lois de Kepler, données des planètes et de la Terre) et un portable avec le simulateur d'orbites. Référentiels adaptés aux planètes et aux satellites. Planète autour du Soleil : ellipse dont le Soleil occupe un foyer, aires égales balayées en des durées égales (secteurs de T/10), vitesse plus grande près du Soleil ; troisième loi avec les données de cinq planètes : pente 2,97 × 10⁻¹⁹ s²/m³, MS = 1,99 × 10³⁰ kg. Satellite de la Terre : orbite circulaire à 400 km (v = 7,67 km/s, T = 5 540 s), deuxième loi de Newton, v = √(G·M/r) indépendante de la masse ; orbite géostationnaire (T = 86 164 s, h ≈ 35 800 km) avec un repère de l'équateur qui tourne en un jour sidéral.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "(PC/SMA/SMB) Documents pour présenter les référentiels ; textes historiques ; logiciels de simulation de la mise en orbite et des lois de Kepler.",
+      "objectifs": [
+        "O8"
+      ],
+      "missions": [
+        {
+          "titre": "Référentiels et histoire",
+          "ce_que_fait_l_eleve": "Lit les documents sur les référentiels et l'histoire de l'astronomie et choisit le référentiel adapté à une planète et à un satellite.",
+          "conclusion": "Le mouvement des planètes s'étudie dans le référentiel héliocentrique (centre du Soleil, axes vers trois étoiles lointaines) ; celui de la Lune et des satellites dans le référentiel géocentrique (centre de la Terre, axes parallèles à ceux du référentiel héliocentrique : il est en translation par rapport à lui). Ces référentiels sont considérés comme galiléens. Le référentiel terrestre ne convient pas pour les satellites."
+        },
+        {
+          "titre": "Les lois de Kepler",
+          "ce_que_fait_l_eleve": "Lance une planète sur une orbite elliptique, observe la loi des aires, vérifie la troisième loi de Kepler au tableur avec les données des planètes et en déduit la masse du Soleil.",
+          "conclusion": "Dans le référentiel héliocentrique, chaque planète décrit une ellipse dont le Soleil occupe un foyer (1re loi) ; le segment Soleil-planète balaie des aires égales pendant des durées égales : la planète va plus vite près du Soleil (2e loi) ; pour toutes les planètes, T²/a³ = 4π²/(G·MS) est la même constante (3e loi), ce qui permet de calculer la masse du Soleil, MS ≈ 2,0 × 10³⁰ kg."
+        },
+        {
+          "titre": "Satellites en orbite circulaire",
+          "ce_que_fait_l_eleve": "Met un satellite en orbite circulaire à 400 km, applique la deuxième loi de Newton (v = √(G·M/r)), lit la période, puis trouve l'orbite géostationnaire et son altitude.",
+          "conclusion": "Dans le référentiel géocentrique, un satellite n'est soumis qu'à l'attraction de la Terre, F = G·M·m/r², dirigée vers le centre de la Terre. La deuxième loi de Newton donne une accélération centripète a = G·M/r² ; sur une orbite circulaire, le mouvement est uniforme et v = √(G·M/r), indépendante de la masse du satellite ; T = 2π·r/v. Le satellite géostationnaire tourne dans le plan de l'équateur, dans le sens de rotation de la Terre, en un jour sidéral (86 164 s), à 35 800 km d'altitude : il reste au-dessus du même point de la Terre."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Il faut une force dans le sens du mouvement pour qu'un satellite continue de tourner.",
+        "Un satellite plus lourd tourne moins vite.",
+        "Un satellite géostationnaire est immobile dans l'espace."
       ]
     }
   ]

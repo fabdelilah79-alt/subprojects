@@ -13,14 +13,17 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 1. Lire `prof-ia/CLAUDE.md` (règles de code et de rapport) et la fiche du chapitre
    `prof-ia/contenu/orientations/<niveau>/<chapitre>.json` (contenus, objectifs, activités, **orientations**, hors programme).
    L'ordre des chapitres est celui de `prof-ia/contenu/orientations/index.json`.
-2. Une simulation **par activité** de la fiche ; chaque mission cite ses objectifs (O1, O2…). Respecter les orientations à
+2. Une simulation **par activité** de la fiche, **y compris les parties spécifiques** (bloc `specifique` : PC, SMA, SMB, SM…),
+   même si la fiche ne liste pas leurs activités : les relire dans le PDF des orientations (pages `source_pages`, à lire en
+   images avec `pdftoppm -r 100`, le texte arabe ne s'extrait pas) et compléter la fiche (remarque de l'enseignant : « des
+   parties ne sont pas faites, comme les satellites ») ; identifiant en « s » (`b2_meca2_s4_satellites`), `activite_specifique` dans labos.json ; chaque mission cite ses objectifs (O1, O2…). Respecter les orientations à
    la lettre (ex. « parler de retard, pas de déphasage » ; « ne pas faire tracer les courbes des filtres » ; « laisser
    de la liberté à l'élève »).
 3. Chercher ce qui existe déjà dans `commun/` (grep) et le réutiliser : table à coussin d'air (`poste_coussin_air.js`,
    éclateur, feuille, règle, `vecteurs_vitesse.js`, `surcharge.js`), circuits (`circuit.js` et composants, multimètre,
    oscilloscope, GBF, interface d'acquisition), mouvements filmés (`pointage_video.js` : caméra + portable + logiciel de
    pointage, étalonnage, origine, export vers le tableur), chimie (verrerie, réactifs), documents (`documents_mur.js`),
-   tri (`tri.js`), tableur, courbe, carnet, ordinateur portable (`portable.js`), niveaux d'énergie (`niveaux_energie.js`),
+   tri (`tri.js`), tableur, courbe, carnet, ordinateur portable (`portable.js`), simulateur d'orbites (`logiciel_orbites.js`), niveaux d'énergie (`niveaux_energie.js`),
    bouton de réglage avec afficheur (`bouton_reglage.js`), bec Bunsen (`bec_bunsen.js`, contexte `{ fond, objets }`). Lire l'en-tête « Reçoit / Produit » du fichier avant de l'utiliser.
 4. Choisir des **valeurs réalistes** (matériel courant d'un lycée marocain : bobine 1 000 spires, GBF 50 Ω, multimètre
    2 000 points, éclateur 20/40/60 ms…) et **vérifier la physique sur le papier** : ordres de grandeur, ce que verra

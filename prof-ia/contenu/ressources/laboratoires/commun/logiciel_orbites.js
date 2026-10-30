@@ -1,10 +1,11 @@
 /*
 Rôle : simulateur d'orbites qui tourne sur le portable : état (mode, r0, v0, orbite calculée, temps simulé), animation (un tour
        en 4 s à l'écran ; échappement calculé pas à pas ; chute en spirale de l'électron qui rayonne, montrée en 8 s), faits notés.
-Reçoit : le groupe SVG et la dalle { x, y, l, h } du portable.
-Produit : Labo.logiciel_orbites(g, dalle) -> s ; faits « lancers » = [{ mode, r0, v0, issue, circulaire, rmin, rmax, T, E, eV,
-          rayonnement, tombe, tf }] et « simulateur » = { mode }.
-Utilisé par : poste_astres.js.
+       La case à cocher du mode est l'option : rayonnement de l'électron (mode atome) ou aires de Kepler (mode soleil).
+Reçoit : le groupe SVG, la dalle { x, y, l, h } du portable et { modes } (les deux onglets ; par défaut « terre » et « atome »).
+Produit : Labo.logiciel_orbites(g, dalle, reglage) -> s ; faits « lancers » = [{ mode, r0, v0, issue, circulaire, rmin, rmax, T, E, eV,
+          rayonnement, aires, tombe, tf }] et « simulateur » = { mode }.
+Utilisé par : poste_astres.js (b2_meca6_a1_astres_atomes), poste_satellites.js (b2_meca2_a4_satellites).
 */
 (function (L) {
   const TOUR = 4, SPIRALE = 8;
@@ -16,11 +17,11 @@ Utilisé par : poste_astres.js.
 
   function lancer(s) {
     // Calcule l'orbite et note le lancement.
-    const o = L.orbites.orbite(s.mode, s.r0, s.v0), ray = s.mode === "atome" && s.rayonnement && o.issue === "orbite";
+    const o = L.orbites.orbite(s.mode, s.r0, s.v0), ray = s.mode === "atome" && s.option && o.issue === "orbite";
     Object.assign(s, { o, t: 0, p: { x: s.r0, y: 0 }, trace: [{ x: s.r0, y: 0 }], fini: false, vol: { x: s.r0, y: 0, vx: 0, vy: s.v0 }, spirale: ray ? { f: 0, phi: 0 } : null });
     s.message = ray ? "L'électron rayonne de l'énergie…" : { echappe: "Vitesse trop grande : le mobile s'échappe.", chute: "Le satellite va retomber sur la Terre.", orbite: o.circulaire ? "Orbite circulaire." : "Orbite elliptique." }[o.issue];
     const r = (v) => (v === undefined ? null : Number(v.toPrecision(5)));
-    s.lancers.push({ mode: s.mode, r0: r(s.r0), v0: r(s.v0), issue: o.issue, circulaire: !!o.circulaire, rmin: r(o.rmin), rmax: r(o.rmax), T: r(o.T), E: r(o.E), eV: r(o.eV), rayonnement: ray, tombe: false, tf: ray ? r(o.tf) : null });
+    s.lancers.push({ mode: s.mode, r0: r(s.r0), v0: r(s.v0), issue: o.issue, circulaire: !!o.circulaire, rmin: r(o.rmin), rmax: r(o.rmax), T: r(o.T), E: r(o.E), eV: r(o.eV), rayonnement: ray, aires: s.mode === "soleil" && s.option, tombe: false, tf: ray ? r(o.tf) : null });
     noter(s);
   }
 
@@ -56,21 +57,21 @@ Utilisé par : poste_astres.js.
     if (s.o.issue === "chute" && Math.hypot(s.p.x, s.p.y) <= L.orbites.MODES.terre.R) { s.fini = true; s.message = "Le satellite s'est écrasé sur la Terre."; }
   }
 
-  L.logiciel_orbites = function (g, d) {
+  L.logiciel_orbites = function (g, d, { modes = ["terre", "atome"] } = {}) {
     // Panneau à gauche, fenêtre à droite ; boucle d'animation.
-    const M0 = L.orbites.MODES.terre, s = { mode: "terre", r0: M0.r0, v0: M0.v0, o: null, t: 0, p: null, trace: [], message: "", rayonnement: false, lancers: [] };
+    const M0 = L.orbites.MODES[modes[0]], s = { modes, mode: modes[0], r0: M0.r0, v0: M0.v0, o: null, t: 0, p: null, trace: [], message: "", option: false, lancers: [] };
     const fenetre = L.svg("g", { "pointer-events": "none" }, g), dessiner = L.orbites_ecran(fenetre, { x: d.x + 212, y: d.y + 18, l: d.l - 216, h: d.h - 22 });
     const effacer = () => Object.assign(s, { o: null, t: 0, p: null, trace: [], message: "", spirale: null, fini: false });
     const arrondi = (cle, v) => { const M = L.orbites.MODES[s.mode], pas = M[cle === "r0" ? "pas_r" : "pas_v"], b = cle === "r0" ? [M.rmin, M.rmax] : [M.vmin, M.vmax]; return Math.min(b[1], Math.max(b[0], Math.round(v / pas) * pas)); };
     const maj = L.orbites_panneau(g, d, s, {
-      mode: (m) => { if (m === s.mode) return; const M = L.orbites.MODES[m]; Object.assign(s, { mode: m, r0: M.r0, v0: M.v0, rayonnement: false }); effacer(); L.missions.noter("simulateur", { mode: m }); maj(); },
+      mode: (m) => { if (m === s.mode) return; const M = L.orbites.MODES[m]; Object.assign(s, { mode: m, r0: M.r0, v0: M.v0, option: false }); effacer(); L.missions.noter("simulateur", { mode: m }); maj(); },
       regler: (cle, v) => { s[cle] = arrondi(cle, v); effacer(); maj(); },
       lancer: () => { lancer(s); maj(); }, effacer: () => { effacer(); maj(); },
-      rayonnement: () => { if (s.mode === "atome") { s.rayonnement = !s.rayonnement; maj(); } },
+      option: () => { if (L.orbites.MODES[s.mode].option) { s.option = !s.option; effacer(); maj(); } },
     });
     let avant = null;
     const image = (instant) => { const dt = avant === null ? 0 : Math.min(0.05, (instant - avant) / 1000); avant = instant; avancer(s, dt); dessiner(s); if (s.o) maj(); requestAnimationFrame(image); };
-    L.missions.noter("lancers", []); L.missions.noter("simulateur", { mode: "terre" });
+    L.missions.noter("lancers", []); L.missions.noter("simulateur", { mode: s.mode });
     maj(); requestAnimationFrame(image);
     L.logiciel_orbites.actif = s;
     return s;
