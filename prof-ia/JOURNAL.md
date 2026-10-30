@@ -1352,3 +1352,21 @@ le frottement de l'air est modélisé par un terme proportionnel à la vitesse.
 
 Problèmes restants : Ec est calculée par le logiciel à partir de θ̇ par la méthode des points voisins (comme un vrai
 logiciel) ; la masse coulissante reste fixée à 40 cm dans les consignes (les autres positions marchent aussi).
+
+## 2026-10-30 — Partie spécifique SM : bilan énergétique d'un circuit à transistor ou à AO (b1_elec2_s1_bilan_electronique)
+
+- PDF (p. 59, partie 2.5) : deux activités, ajoutées à la fiche 1bac/elec2_transfert_energie.json (bloc SM) avec
+  l'orientation sur l'échauffement et le refroidissement : bilan énergétique expérimental d'un circuit à transistor ;
+  rôle de l'alimentation d'un montage électronique à AO.
+- Fichier commun modifié (option désactivée par défaut) : amplificateur_operationnel.js, option « bilan » : le courant de
+  sortie vient de la borne +15 (ou part vers −15) et un courant de repos de 1,7 mA traverse l'AO ; l'AO est alimenté dès que
+  ses bornes sont à ±15 V, même à travers un ampèremètre. Régression : tc_elec4_a2_ao (alimentation reliée, AO alimenté)
+  sur la source et le fichier assemblé.
+- Vérifié : parcours complet (sources et fichier assemblé). Transistor : IB = 0,194 mA, IC = 29,2 mA, UBE = 0,742 V,
+  UCE = 7,61 V ; puissance fournie 350,6 mW, reçue 349,6 mW (l'écart est la puissance des ampèremètres) ; transistor
+  222 mW ; boîtier à 55 °C après 35 s environ, 45 °C après la pose du radiateur. AO : Us = 7,95 V pour Ue = 2,5 V (gain
+  3,18) ; I+ = 9,92 mA, I− = 1,70 mA ; 174,2 mW fournis, 63,2 mW pour la charge, 109,0 mW dans l'AO.
+
+Problèmes restants : le circuit est câblé par le professeur (l'élève déplace seulement le voltmètre et relie
+l'alimentation) ; l'échauffement du boîtier suit un modèle simple (Rth = 180 °C/W, τ = 25 s ; avec radiateur 60 °C/W,
+45 s) ; l'AO ne chauffe pas visiblement (pas de thermomètre sur la plaquette).

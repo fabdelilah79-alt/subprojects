@@ -301,7 +301,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/electrolyseur.js | Électrolyseur : récepteur E', r' (coude arrondi), bulles plus abondantes à la cathode. |
 | contenu/ressources/laboratoires/commun/caracteristique.js | Relevé des points (I, U) d'un dipôle quand les appareils sont bien branchés ; vérification du tableur. |
 | contenu/ressources/laboratoires/commun/transistor.js | Transistor NPN BC547 sur support (modèle d'Ebers-Moll) : régimes bloqué, linéaire, saturé ; courants I_B, I_C, I_E. |
-| contenu/ressources/laboratoires/commun/amplificateur_operationnel.js | Alimentation symétrique ±15 V et AO 741 sur plaquette : régime linéaire ou saturé (±13,5 V), choisi de façon cohérente. |
+| contenu/ressources/laboratoires/commun/amplificateur_operationnel.js | Alimentation symétrique ±15 V et AO 741 sur plaquette : régime linéaire ou saturé (±13,5 V), choisi de façon cohérente ; option « bilan » (courants réels dans l'alimentation, courant de repos). |
 | contenu/ressources/laboratoires/commun/chimie_melange.js | Contenu d'un récipient de chimie (produits, réactifs, solides) et règles des tests : pH, phénolphtaléine, eau iodée, Fehling, sulfate de cuivre anhydre. |
 | contenu/ressources/laboratoires/commun/chimie_verrerie.js | Dessin de la verrerie : tube à essai, bécher, verre de montre, flacon compte-gouttes, pipette, porte-tubes. |
 | contenu/ressources/laboratoires/commun/chimie_gouttes.js | Paillasse de chimie (plans de dessin, cibles) et pipette compte-gouttes : les gouttes tombent une à une. |
@@ -554,6 +554,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_meca2_s3_champ_magnetique/ | Électrons dans un champ magnétique (PC, SM) : dessin_bobines.js (bobines, tube, alimentations, cordons), poste_champ_magnetique.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca4_s1_pendule_pesant/ | Pendule pesant et pendule simple (PC, SM) : dessin_pendule_simple.js, poste_pendule_simple.js, verifications_pendule.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca5_s1_pendule_pesant/ | Énergie mécanique du pendule pesant (PC, SM) : verifications_energie_pendule.js, simulation.js (poste commun, variante « énergies »). |
+| contenu/ressources/laboratoires/sources/b1_elec2_s1_bilan_electronique/ | Bilan énergétique d'un circuit à transistor ou à AO (1re année, SM) : poste_bilan_transistor.js (circuit, thermomètre, radiateur), poste_bilan_ao.js, verifications_bilan.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca2_s4_satellites/ | Satellites et planètes (PC, SM) : poste_satellites.js, verifications_satellites.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca6_a2_spectres/ | Quantification : Franck et Hertz (fh_modele.js, fh_dessin.js, fh_logiciel.js, fh_boucle.js, poste_franck_hertz.js), tubes spectraux (dessin_tubes.js, poste_tubes.js), sodium (dessin_sodium.js, poste_sodium.js), spectroscope.js, spectres_donnees.js, missions_spectres.js, simulation.js. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |

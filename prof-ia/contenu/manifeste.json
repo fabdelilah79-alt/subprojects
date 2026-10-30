@@ -5184,6 +5184,50 @@
         "L'énergie mécanique est maximale quand le pendule va le plus vite.",
         "Avec des frottements, l'énergie disparaît."
       ]
+    },
+    {
+      "id": "b1_elec2_s1_bilan_electronique",
+      "type": "simulation",
+      "fichier": "laboratoires/b1_elec2_s1_bilan_electronique.html",
+      "description": "Partie propre à la filière SM (les deux activités du PDF : bilan d'un circuit à transistor ; rôle de l'alimentation d'un montage à AO). Paillasse 1 : circuit câblé (G1 réglable, A1, RB = 22 kΩ ; G2 = 12 V, A2, RC = 150 Ω ; transistor BC547), voltmètre libre, thermomètre à sonde sur le boîtier, radiateur à clipser. G1 = 5 V : IB = 0,194 mA, IC = 29,2 mA ; puissance fournie 351 mW = puissances reçues (RB, RC, transistor 222 mW) ; boîtier vers 65 °C sans radiateur, 38 °C avec. Paillasse 2 : non inverseur (R1 = 10 kΩ, R2 = 22 kΩ, RL = 1 kΩ), alimentation ±15 V à relier par deux ampèremètres : Us = 0 sans alimentation, 7,95 V avec (Ue = 2,5 V) ; I+ = 9,92 mA, I− = 1,70 mA ; 174 mW fournis, 63 mW pour la charge, 109 mW dissipés dans l'AO.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "1bac/elec2_transfert_energie",
+      "activite": "(SM) Réaliser expérimentalement le bilan énergétique d'un circuit contenant un transistor.",
+      "objectifs": [
+        "O2",
+        "O5",
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Bilan énergétique d'un circuit à transistor",
+          "ce_que_fait_l_eleve": "Règle G1, mesure U et I pour les six dipôles du circuit à transistor, calcule les puissances et vérifie que la puissance fournie est égale aux puissances reçues.",
+          "conclusion": "Les générateurs G1 et G2 fournissent de l'énergie ; RB, RC et le transistor en reçoivent. La puissance fournie (P = U·I pour chaque générateur) est égale à la somme des puissances reçues. Le transistor reçoit surtout de l'énergie par le circuit du collecteur (UCE·IC) ; l'énergie reçue par la base (UBE·IB) est très faible."
+        },
+        {
+          "titre": "Échauffement et refroidissement",
+          "ce_que_fait_l_eleve": "Suit la température du transistor, puis clipse le radiateur et explique le rôle du refroidissement.",
+          "conclusion": "L'énergie électrique reçue par le transistor est transférée en chaleur : sa température augmente (vers 65 °C sans radiateur). Le radiateur ne change pas la puissance reçue, mais il facilite le transfert thermique vers l'air : la température reste plus basse (vers 38 °C), ce qui protège le composant. Les composants qui dissipent beaucoup d'énergie sont munis de radiateurs ou de ventilateurs."
+        },
+        {
+          "titre": "Rôle de l'alimentation d'un AO",
+          "ce_que_fait_l_eleve": "Mesure Us sans alimentation, relie l'alimentation ±15 V, mesure Ue et Us et en déduit que l'énergie reçue par la charge vient de l'alimentation.",
+          "conclusion": "Sans alimentation, la sortie de l'AO reste à 0 V : la charge RL ne reçoit rien. Alimenté, l'AO amplifie (Us = 3,2·Ue). Le courant d'entrée de l'AO est presque nul : le générateur G ne fournit presque rien ; l'énergie reçue par la charge vient de l'alimentation ±15 V."
+        },
+        {
+          "titre": "Bilan énergétique du montage à AO",
+          "ce_que_fait_l_eleve": "Lit les courants de l'alimentation et fait le bilan : alimentation, charge et AO, qui dissipe le reste en chaleur.",
+          "conclusion": "L'alimentation fournit P = 15·I+ + 15·I− (≈ 175 mW). La charge RL en reçoit Us²/RL (≈ 64 mW), les résistances R1 et R2 environ 2 mW ; le reste (≈ 109 mW) est reçu par l'AO et transféré en chaleur. Une partie (le courant de repos) est consommée même sans charge."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Le transistor fournit de l'énergie au circuit du collecteur.",
+        "Le signal d'entrée fournit l'énergie reçue par la charge d'un amplificateur.",
+        "Un radiateur diminue la puissance reçue par un composant.",
+        "L'énergie électrique reçue par un composant électronique disparaît."
+      ]
     }
   ]
 }

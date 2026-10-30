@@ -126,6 +126,9 @@ un pictogramme ni à une forme abstraite.
   `pendule_pesant_dessin.js`, paillasse complète `poste_pendule_pesant.js` (variante « énergies ») ; une masse sur un objet qui tourne se saisit dans les deux sens : le geste décide (le long de
   la tige : glisser ; sur le côté : écarter). Dans un test, arrêter le pendule (appui bref) avant de le saisir.
 - `chronometre_manuel` reprend là où il s'est arrêté : touche « 0 » avant chaque mesure (dans les tests aussi).
+- Bilan d'énergie avec un AO : `L.ao(c, { …, bilan: true })` fait passer les courants réels par l'alimentation (sinon les
+  ampèremètres sur ±15 V lisent 0). Tests de circuit : `deplacer_fil(page, A, B)` déplace le bout **qui est en A** ; pour
+  déplacer un voltmètre, retirer son fil par la borne du voltmètre (`deplacer_fil(page, V, null)`) puis rebrancher.
 - Une fenêtre de logiciel où un objet peut sortir (orbite, échappement) : découper le dessin au cadre (`clipPath`).
 
 ## 7. Outils (dossier `outils/` de cette compétence)

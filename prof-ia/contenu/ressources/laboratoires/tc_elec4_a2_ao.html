@@ -2939,8 +2939,12 @@ Rôle : alimentation symétrique ±15 V (bornes +15, 0, −15) et amplificateur 
        entrées e+ et e−, sortie s, alimentation +15, 0, −15. Modèle : Us = A·(V+ − V−) avec A = 2·10⁵, limitée à ±Vsat
        (tension d'alimentation − 1,5 V, soit ±13,5 V) ; tension de décalage d'entrée 1 mV ; résistance d'entrée 2 MΩ, de sortie
        75 Ω. Sans alimentation, la sortie reste à 0 V.
-Reçoit : le circuit (circuit.js) et le réglage { id, x, y } (+ alimentation : id de l'alimentation symétrique).
-Produit : Labo.alimentation_symetrique(c, reglage), Labo.ao(c, { id, x, y, alimentation }) -> composant { us, epsilon } ;
+       Option « bilan » (désactivée par défaut) : le courant débité par la sortie vient de la borne +15 (ou part vers −15
+       quand la sortie absorbe du courant) et un courant de repos (1,7 mA) traverse l'AO de +15 à −15 : des ampèremètres
+       placés sur l'alimentation mesurent les vrais courants ; l'AO est alimenté dès que ses bornes sont à ±15 V
+       (même à travers un ampèremètre).
+Reçoit : le circuit (circuit.js) et le réglage { id, x, y, bilan } (+ alimentation : id de l'alimentation symétrique).
+Produit : Labo.alimentation_symetrique(c, reglage), Labo.ao(c, { id, x, y, alimentation, bilan }) -> composant { us, epsilon } ;
           bornes de l'AO « e+ », « e− », « s », « +15 », « 0 », « −15 ».
 Utilisé par : les postes des simulations d'électronique.
 */
@@ -2984,6 +2988,33 @@ Utilisé par : les postes des simulations d'électronique.
     return d;
   }
 
+  function sortie_rails() {
+    // Option « bilan » : même sortie (source de Thévenin référencée à 0), mais deux dipôles vers s, l'un depuis +15, l'autre
+    // depuis −15 ; un seul est actif (selon le sens du courant de sortie). Commandes : ε, V0 − V(rail), V+15 − V0, V0 − V−15.
+    // Chaque dipôle signale aussi un changement de ses propres valeurs (l'autre dipôle a pu basculer entre-temps).
+    const VSAT = 15 - CHUTE, G = 1 / R_SORTIE, e = { etat: "eteint", rail: "+" };
+    const faire = (r) => ({ a: r, b: "s", g: 0, j: 0, ctrl: [{ c: "e+", d: "e−", g: 0 }, { c: "0", d: r, g: 0 }, { c: "+15", d: "0", g: 0 }, { c: "0", d: "−15", g: 0 }] });
+    const ds = [faire("+15"), faire("−15")];
+    const fem = () => (e.etat === "+" ? VSAT : e.etat === "−" ? -VSAT : 0);
+    const appliquer = () => ds.forEach((d, n) => {
+      const w = (n === 0) === (e.rail === "+") && e.etat !== "eteint" ? 1 : 0, lin = e.etat === "lineaire";
+      Object.assign(d, { g: w * G, j: w * G * (lin ? A * DECALAGE : fem()) });
+      d.ctrl[0].g = lin ? w * G * A : 0; d.ctrl[1].g = w * G;
+    });
+    for (const d of ds) d.ajuster = (u, i, [eps, , vp, vm]) => {
+      // État de la sortie d'après ε ; le rail est choisi d'après le courant réel du dipôle actif (état inchangé).
+      const avant = e.etat + e.rail, ancien = d.vu, etat0 = e.etat, v = A * (eps + DECALAGE);
+      if (vp < 5 || vm < 5) e.etat = "eteint";
+      else if (e.etat === "+" || e.etat === "−") e.etat = (e.etat === "+" ? v < VSAT : v > -VSAT) ? "lineaire" : e.etat;
+      else e.etat = v > VSAT ? "+" : v < -VSAT ? "−" : "lineaire";
+      if (d.actif && e.etat === etat0) e.rail = i >= 0 ? "+" : "−";
+      appliquer(); d.vu = `${d.g}|${d.j}|${d.ctrl[0].g}`; d.actif = d.g > 0;
+      return e.etat + e.rail !== avant || d.vu !== ancien;
+    };
+    appliquer();
+    return [...ds, { a: "+15", b: "−15", g: 1.7e-3 / 30, j: 0 }];
+  }
+
   function dessiner(g, x, y) {
     // Plaquette verte, boîtier DIL-8 noir avec son encoche, symbole triangulaire de l'AO.
     L.boitier(g, x, y, 220, 100, 8, { dessus: "#2f6b45", face: "#1f4a30" });
@@ -2997,7 +3028,7 @@ Utilisé par : les postes des simulations d'électronique.
     L.texte(g, x + 132, y + 32, "∞", { "font-size": 8, fill: "#f4f1e0" });
   }
 
-  L.ao = function (c, { id = "ao", x, y, alimentation = "alim" }) {
+  L.ao = function (c, { id = "ao", x, y, alimentation = "alim", bilan = false }) {
     // Construit l'AO ; il n'est alimenté que si ses trois bornes d'alimentation sont reliées à celles de l'alimentation.
     const comp = { id, us: 0, epsilon: 0, g: L.svg("g", { class: "ao" }, c.calque_composants) };
     dessiner(comp.g, x, y);
@@ -3008,8 +3039,8 @@ Utilisé par : les postes des simulations d'électronique.
       L.texte(comp.g, nom === "s" ? x + dx - 16 : x + dx, nom === "s" ? y + dy + 4 : y + dy + 20, nom, { "font-size": 9, "font-weight": 700, fill: "#f4f1e0" });
       c.borne(comp, nom, x + dx, y + dy, nom === "s" ? "#e0a800" : "#c9a227");
     }
-    const s = sortie(alimente);
-    comp.dipoles = () => [{ a: "e+", b: "e−", g: 1 / R_ENTREE, j: 0 }, s];
+    const s = bilan ? sortie_rails() : [sortie(alimente)];
+    comp.dipoles = () => [{ a: "e+", b: "e−", g: 1 / R_ENTREE, j: 0 }, ...s];
     comp.mettre_a_jour = ({ u }) => { comp.epsilon = u("e+", "e−"); comp.us = u("s", "0"); };
     return c.ajouter(comp);
   };

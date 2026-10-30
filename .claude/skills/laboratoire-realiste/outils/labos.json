@@ -2997,5 +2997,30 @@
    "Lit Ec, Epp et Em au curseur à cinq instants, vérifie la conservation de Em et en déduit la vitesse maximale.",
    "Monte la palette, observe la diminution de Em, mesure ce qui en reste après 4 s et explique où va l'énergie perdue."
   ]
+ },
+ {
+  "id": "b1_elec2_s1_bilan_electronique",
+  "chapitre": "1bac/elec2_transfert_energie",
+  "activite": 0,
+  "activite_specifique": 1,
+  "objectifs": [
+   "O2",
+   "O5",
+   "O7"
+  ],
+  "duree_min": 55,
+  "description": "Partie propre à la filière SM (les deux activités du PDF : bilan d'un circuit à transistor ; rôle de l'alimentation d'un montage à AO). Paillasse 1 : circuit câblé (G1 réglable, A1, RB = 22 kΩ ; G2 = 12 V, A2, RC = 150 Ω ; transistor BC547), voltmètre libre, thermomètre à sonde sur le boîtier, radiateur à clipser. G1 = 5 V : IB = 0,194 mA, IC = 29,2 mA ; puissance fournie 351 mW = puissances reçues (RB, RC, transistor 222 mW) ; boîtier vers 65 °C sans radiateur, 38 °C avec. Paillasse 2 : non inverseur (R1 = 10 kΩ, R2 = 22 kΩ, RL = 1 kΩ), alimentation ±15 V à relier par deux ampèremètres : Us = 0 sans alimentation, 7,95 V avec (Ue = 2,5 V) ; I+ = 9,92 mA, I− = 1,70 mA ; 174 mW fournis, 63 mW pour la charge, 109 mW dissipés dans l'AO.",
+  "conceptions": [
+   "Le transistor fournit de l'énergie au circuit du collecteur.",
+   "Le signal d'entrée fournit l'énergie reçue par la charge d'un amplificateur.",
+   "Un radiateur diminue la puissance reçue par un composant.",
+   "L'énergie électrique reçue par un composant électronique disparaît."
+  ],
+  "faire": [
+   "Règle G1, mesure U et I pour les six dipôles du circuit à transistor, calcule les puissances et vérifie que la puissance fournie est égale aux puissances reçues.",
+   "Suit la température du transistor, puis clipse le radiateur et explique le rôle du refroidissement.",
+   "Mesure Us sans alimentation, relie l'alimentation ±15 V, mesure Ue et Us et en déduit que l'énergie reçue par la charge vient de l'alimentation.",
+   "Lit les courants de l'alimentation et fait le bilan : alimentation, charge et AO, qui dissipe le reste en chaleur."
+  ]
  }
 ]

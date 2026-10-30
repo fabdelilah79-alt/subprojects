@@ -12,6 +12,7 @@ OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dess
 ORBITES = ['continents.js', 'espace.js', 'portable.js', 'orbites_modele.js', 'orbites_ecran.js', 'orbites_panneau.js', 'logiciel_orbites.js']
 MECA6 = ORBITES + [ 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
 SIMS = {
+ 'b1_elec2_s1_bilan_electronique': ("Laboratoire : bilan énergétique d'un circuit électronique", "simulation de la partie propre à la filière SM du chapitre « Transfert d'énergie dans un circuit électrique, puissance électrique » (1re année du bac) : bilan des puissances d'un circuit à transistor, échauffement et radiateur ; rôle de l'alimentation d'un montage à AO et bilan alimentation → charge + AO."),
  'b2_meca5_s1_pendule_pesant': ("Laboratoire : énergie mécanique du pendule pesant", "simulation de la partie « Énergie mécanique du pendule pesant » du chapitre « Aspects énergétiques des oscillateurs mécaniques » (2e année du bac, PC et SM) : capteur de rotation et logiciel (vue des énergies), Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ), conservation de Em sans frottement notable, diminution de Em avec la palette."),
  'b2_meca4_s1_pendule_pesant': ("Laboratoire : pendule pesant et pendule simple", "simulation de la partie « Pendule pesant ; pendule simple » du chapitre « Systèmes mécaniques oscillants » (2e année du bac, PC et SM) : capteur de rotation et logiciel θ(t), isochronisme des petites oscillations, équation différentielle et période propre, amortissement, pendule simple (g, masse), pendule simple synchrone."),
  'b2_meca2_s3_champ_magnetique': ("Laboratoire : électrons dans un champ magnétique", "simulation de la partie « Particule chargée dans un champ magnétique uniforme » du chapitre « Applications des lois de Newton » (2e année du bac, PC et SM) : tube à faisceau filiforme, bobines de Helmholtz, force de Lorentz, mouvement circulaire uniforme, e/m, spectrographe de masse et cyclotron."),
@@ -79,6 +80,9 @@ for sid, (titre, role) in SIMS.items():
     if sid.startswith('b2_meca'): scripts = MECA + (['../../commun/pointage_video.js'] if sid.startswith(('b2_meca2', 'b2_meca3_a1')) else []) + (['../../commun/circuit_decor.js'] if sid.startswith('b2_meca3') else []) + (['../../commun/' + f for f in OSCILLATEURS] if sid.startswith(('b2_meca4', 'b2_meca5')) else []) + locaux
     if sid.startswith(('b2_meca4_s', 'b2_meca5_s')): scripts = scripts[:-len(locaux)] + ['../../commun/pendule_pesant.js', '../../commun/pendule_pesant_dessin.js', '../../commun/poste_pendule_pesant.js'] + locaux
     if sid in ('b2_meca2_s2_champ_electrique', 'b2_meca2_s3_champ_magnetique'): scripts = MECA + ['../../commun/circuit_decor.js', '../../commun/bouton_reglage.js'] + locaux
+    if sid == 'b1_elec2_s1_bilan_electronique':
+        lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
+        scripts = list(dict.fromkeys(lu('tc_elec4_a1_transistor') + lu('tc_elec4_a2_ao') + ['../../commun/capteurs_numeriques.js'])) + locaux
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux
     if sid.startswith('b2_meca6'): scripts = MECA + ['../../commun/' + f for f in MECA6 if os.path.exists(B + 'commun/' + f)] + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux

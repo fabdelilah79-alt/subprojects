@@ -99,6 +99,13 @@
           "id": "O7",
           "texte": "Faire le bilan énergétique d'un circuit contenant un transistor ou un AO ; rôle de l'alimentation."
         }
+      ],
+      "activites": [
+        "Réaliser expérimentalement le bilan énergétique d'un circuit contenant un transistor.",
+        "Montrer le rôle de l'alimentation dans un montage électronique contenant un amplificateur opérationnel."
+      ],
+      "orientations": [
+        "Les composants dont le bilan énergétique montre une dissipation sous forme de chaleur voient leur température augmenter : importance des moyens de refroidissement adaptés."
       ]
     }
   ]
