@@ -3022,5 +3022,25 @@
    "Mesure Us sans alimentation, relie l'alimentation ±15 V, mesure Ue et Us et en déduit que l'énergie reçue par la charge vient de l'alimentation.",
    "Lit les courants de l'alimentation et fait le bilan : alimentation, charge et AO, qui dissipe le reste en chaleur."
   ]
+ },
+ {
+  "id": "b2_intro_a1_chimiste",
+  "chapitre": "2bac/intro_chimiste",
+  "activite": 1,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 45,
+  "description": "Paillasse 1 : article d'une chimiste en cinq documents (extraire : huile essentielle de rose, caféine ; analyser : nitrates d'une eau, comprimé de paracétamol ; synthétiser : aspirine, acide phosphorique, chimie fine et chimie lourde ; recycler : PET, plomb des batteries ; ses préoccupations) et tableau des activités. Paillasse 2 : usine d'acide phosphorique (phosphogypse : 5 t par tonne de P₂O₅) et atelier d'aspirine (rendement 85 %), tableau des préoccupations (rendement, durée, coût, déchets, santé). Paillasse 3 : quatre situations et tableau des questions de l'année (rapide ? totale ? sens prévisible, inversable ? comment contrôler ?).",
+  "conceptions": [
+   "Une transformation chimique est toujours rapide et totale.",
+   "Une espèce de synthèse est différente de la même espèce extraite de la nature.",
+   "Le seul but du chimiste industriel est de produire vite."
+  ],
+  "faire": [
+   "Lit l'article d'une chimiste, classe huit activités (extraire, analyser, synthétiser, recycler) et distingue chimie lourde et chimie fine.",
+   "Étudie une usine et un atelier, classe les préoccupations du chimiste, calcule un rendement et une masse de déchets.",
+   "Range huit situations sous les quatre questions de l'année : rapidité, avancement, sens et contrôle des transformations."
+  ]
  }
 ]

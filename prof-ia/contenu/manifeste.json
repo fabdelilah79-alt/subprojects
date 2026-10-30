@@ -5228,6 +5228,42 @@
         "Un radiateur diminue la puissance reçue par un composant.",
         "L'énergie électrique reçue par un composant électronique disparaît."
       ]
+    },
+    {
+      "id": "b2_intro_a1_chimiste",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_intro_a1_chimiste.html",
+      "description": "Paillasse 1 : article d'une chimiste en cinq documents (extraire : huile essentielle de rose, caféine ; analyser : nitrates d'une eau, comprimé de paracétamol ; synthétiser : aspirine, acide phosphorique, chimie fine et chimie lourde ; recycler : PET, plomb des batteries ; ses préoccupations) et tableau des activités. Paillasse 2 : usine d'acide phosphorique (phosphogypse : 5 t par tonne de P₂O₅) et atelier d'aspirine (rendement 85 %), tableau des préoccupations (rendement, durée, coût, déchets, santé). Paillasse 3 : quatre situations et tableau des questions de l'année (rapide ? totale ? sens prévisible, inversable ? comment contrôler ?).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/intro_chimiste",
+      "activite": "Analyser un article, une vidéo ou une intervention de chimiste.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Les activités du chimiste",
+          "ce_que_fait_l_eleve": "Lit l'article d'une chimiste, classe huit activités (extraire, analyser, synthétiser, recycler) et distingue chimie lourde et chimie fine.",
+          "conclusion": "Le chimiste extrait des espèces qui existent dans la nature (huiles essentielles, caféine), analyse la composition des produits (contrôle de l'eau, des médicaments), synthétise des espèces nouvelles ou rares (médicaments, engrais) et recycle les déchets (plastiques, métaux). La chimie lourde produit des millions de tonnes (engrais, acides) ; la chimie fine produit de petites quantités très pures (médicaments, parfums)."
+        },
+        {
+          "titre": "Les préoccupations du chimiste",
+          "ce_que_fait_l_eleve": "Étudie une usine et un atelier, classe les préoccupations du chimiste, calcule un rendement et une masse de déchets.",
+          "conclusion": "Une fabrication se juge par son rendement (quantité obtenue / quantité attendue : 85 % pour l'aspirine), sa durée (qu'un catalyseur ou une température plus élevée raccourcissent), son coût (réactifs, énergie) et ses conséquences : déchets à stocker ou à valoriser (20 millions de tonnes de phosphogypse par an pour 4 millions de tonnes de P₂O₅), protection des personnes et de l'environnement."
+        },
+        {
+          "titre": "Les questions de l'année",
+          "ce_que_fait_l_eleve": "Range huit situations sous les quatre questions de l'année : rapidité, avancement, sens et contrôle des transformations.",
+          "conclusion": "Les situations observées posent les questions de l'année : une transformation chimique est-elle toujours rapide (non : précipité instantané, rouille lente) ? Toujours totale (non : estérification, acide éthanoïque dans l'eau) ? Son sens est-il prévisible, peut-on l'inverser (pile qui débite, batterie que l'on recharge) ? Comment le chimiste la contrôle-t-il (catalyseur, réactif en excès, élimination d'un produit) ?"
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Une transformation chimique est toujours rapide et totale.",
+        "Une espèce de synthèse est différente de la même espèce extraite de la nature.",
+        "Le seul but du chimiste industriel est de produire vite."
+      ]
     }
   ]
 }

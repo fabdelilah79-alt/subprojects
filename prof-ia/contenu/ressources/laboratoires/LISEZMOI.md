@@ -727,3 +727,9 @@ Toutes les parties propres aux filières des chapitres déjà traités sont fait
 ajouté au manifeste. Matériel commun déplacé : le simulateur d'orbites (orbites_modele.js, orbites_ecran.js,
 orbites_panneau.js, logiciel_orbites.js) passe de b2_meca6_a1_astres_atomes à commun/, avec l'onglet « Soleil – planète »,
 les aires de Kepler et le repère de l'équateur qui tourne en un jour sidéral.
+
+## Chapitre 2e année du bac « Les questions que se pose le chimiste » (fiche 2bac/intro_chimiste)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_intro_a1_chimiste.html | Analyser un article ou une intervention de chimiste | O1 | Article d'une chimiste (extraire, analyser, synthétiser, recycler ; chimie lourde et fine) : huit activités rangées ; usine d'acide phosphorique et atelier d'aspirine : préoccupations rangées (rendement, durée, coût, déchets et santé), rendement 85 %, 20 Mt de phosphogypse par an ; huit situations rangées sous les questions de l'année (rapide ? totale ? sens ? contrôle ?). |

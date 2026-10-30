@@ -1370,3 +1370,17 @@ logiciel) ; la masse coulissante reste fixée à 40 cm dans les consignes (les a
 Problèmes restants : le circuit est câblé par le professeur (l'élève déplace seulement le voltmètre et relie
 l'alimentation) ; l'échauffement du boîtier suit un modèle simple (Rth = 180 °C/W, τ = 25 s ; avec radiateur 60 °C/W,
 45 s) ; l'AO ne chauffe pas visiblement (pas de thermomètre sur la plaquette).
+
+## 2026-10-30 — 2e année du bac : « Les questions que se pose le chimiste » (b2_intro_a1_chimiste)
+
+- PDF (p. 136) : classer les activités du chimiste (extraction, mise en évidence et analyse, synthèse, recyclage) ;
+  réfléchir à ses préoccupations (rendement, durée et coût de fabrication en chimie lourde et fine, déchets, matières
+  nocives pour l'environnement et la santé) ; recueillir les réponses des élèves pour faire émerger les questions de
+  l'année (rapide ? totale ? sens prévisible et inversable ? comment contrôler ?).
+- Trois paillasses de documents au mur et de tableaux magnétiques, sur le modèle de l'introduction du physicien
+  (aucun fichier commun modifié). Chiffres des documents : 4 t de pétales pour 1 kg d'huile essentielle de rose ;
+  50 mg/L de nitrates au plus ; 5 t de phosphogypse par tonne de P₂O₅ ; rendement de l'aspirine 85 %.
+- Vérifié : parcours complet (sources et fichier assemblé).
+
+Problèmes restants : chapitre d'introduction sans manipulation (comme le demande la fiche : analyser un document) ;
+l'usine et l'atelier sont des exemples génériques, sans nom d'entreprise.
