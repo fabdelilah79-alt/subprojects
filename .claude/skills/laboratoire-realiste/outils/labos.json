@@ -2976,5 +2976,26 @@
    "Mesure dix oscillations du pendule simple pour quatre longueurs, trace T² = f(l), en déduit g et vérifie que la masse de la bille ne change pas la période.",
    "Règle le pendule simple à la longueur J/(M·a) et vérifie qu'il a la période du pendule pesant."
   ]
+ },
+ {
+  "id": "b2_meca5_s1_pendule_pesant",
+  "chapitre": "2bac/meca5_energie",
+  "activite": 1,
+  "objectifs": [
+   "O3",
+   "O5"
+  ],
+  "duree_min": 45,
+  "description": "Partie propre aux filières PC, SMA et SMB (le PDF ne propose pas d'activité : celle du chapitre, « exploiter des enregistrements et diagrammes d'énergie », est appliquée au pendule pesant). Pendule pesant (tige d'aluminium, masse coulissante à 40 cm, palette d'amortissement), capteur de rotation, interface et logiciel θ(t) avec la vue « Énergies » : Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ), Em. Lâché à 30° : Em = 137 mJ, constante sans frottement notable, échanges entre Ec et Epp, θ̇max = 2,6 rad/s, v = 1,05 m/s ; avec la palette, Em diminue (37 % après 4 s), surtout au passage par l'équilibre.",
+  "conceptions": [
+   "L'énergie potentielle de pesanteur du pendule est proportionnelle à l'angle.",
+   "L'énergie mécanique est maximale quand le pendule va le plus vite.",
+   "Avec des frottements, l'énergie disparaît."
+  ],
+  "faire": [
+   "Exprime Ec et Epp du pendule pesant, lâche la tige à 30°, affiche le diagramme des énergies et calcule Em au lâcher.",
+   "Lit Ec, Epp et Em au curseur à cinq instants, vérifie la conservation de Em et en déduit la vitesse maximale.",
+   "Monte la palette, observe la diminution de Em, mesure ce qui en reste après 4 s et explique où va l'énergie perdue."
+  ]
  }
 ]

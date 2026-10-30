@@ -538,6 +538,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/pendule_torsion_dessin.js | Dessin du pendule de torsion (potence, fil, barre, masselottes, cadran, capteur de rotation en option). |
 | contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
 | contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
+| contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |
 | contenu/ressources/laboratoires/commun/logiciel_xt.js | Interface et logiciel d'acquisition x(t) (ou θ(t)) : zéro, durée, acquisition au lâcher, curseur, trois courbes, vue « Énergies ». |
 | contenu/ressources/laboratoires/commun/chronometre_manuel.js | Chronomètre à main au centième (marche/arrêt, zéro). |
 | contenu/ressources/laboratoires/sources/b2_meca4_a1_ressort/ | Tri des oscillateurs ; solide-ressort enregistré : T0, masse, raideur, amortissement (poste_oscillateurs.js, poste_ressort.js, simulation.js). |
@@ -551,7 +552,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_meca2_s1_frottement/ | Chute verticale avec frottement (PC, SM) : fluide_modele.js (traînée réelle, masse ajoutée), dessin_frottement.js, poste_frottement.js, verifications_frottement.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca2_s2_champ_electrique/ | Électrons dans un champ électrostatique (PC, SM) : dessin_tube.js (tube, alimentation, cordons), poste_champ_electrique.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca2_s3_champ_magnetique/ | Électrons dans un champ magnétique (PC, SM) : dessin_bobines.js (bobines, tube, alimentations, cordons), poste_champ_magnetique.js, simulation.js. |
-| contenu/ressources/laboratoires/sources/b2_meca4_s1_pendule_pesant/ | Pendule pesant et pendule simple (PC, SM) : poste_pendule_pesant.js, dessin_pendule_simple.js, poste_pendule_simple.js, verifications_pendule.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca4_s1_pendule_pesant/ | Pendule pesant et pendule simple (PC, SM) : dessin_pendule_simple.js, poste_pendule_simple.js, verifications_pendule.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca5_s1_pendule_pesant/ | Énergie mécanique du pendule pesant (PC, SM) : verifications_energie_pendule.js, simulation.js (poste commun, variante « énergies »). |
 | contenu/ressources/laboratoires/sources/b2_meca2_s4_satellites/ | Satellites et planètes (PC, SM) : poste_satellites.js, verifications_satellites.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca6_a2_spectres/ | Quantification : Franck et Hertz (fh_modele.js, fh_dessin.js, fh_logiciel.js, fh_boucle.js, poste_franck_hertz.js), tubes spectraux (dessin_tubes.js, poste_tubes.js), sodium (dessin_sodium.js, poste_sodium.js), spectroscope.js, spectres_donnees.js, missions_spectres.js, simulation.js. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |

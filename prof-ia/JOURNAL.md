@@ -1337,3 +1337,18 @@ proposée ; le tube ne peut donc pas être tourné.
 
 Problèmes restants : la masse coulissante est traitée comme ponctuelle (son propre moment d'inertie changerait T de 0,2 %) ;
 le frottement de l'air est modélisé par un terme proportionnel à la vitesse.
+
+## 2026-10-30 — Partie spécifique PC/SM : énergie mécanique du pendule pesant (b2_meca5_s1_pendule_pesant)
+
+- PDF (p. 134-135) : exprimer et exploiter l'énergie mécanique du pendule pesant ; Epp et Ec en rotation sont rappelées
+  comme acquises ; le PDF ne propose pas d'activité pour cette partie : l'activité du chapitre (exploiter des
+  enregistrements et des diagrammes d'énergie) est appliquée au pendule pesant.
+- Fichier commun déplacé et complété : poste_pendule_pesant.js passe de sources/b2_meca4_s1_pendule_pesant/ à commun/,
+  avec une variante « énergies » (vue « Énergies » du logiciel : Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ)). Frottement de
+  l'air sans palette réduit (τ = 400 s au lieu de 100 s) pour que Em reste constante à moins de 1 % sur 5 s ; scénario de
+  b2_meca4_s1_pendule_pesant rejoué sur le fichier assemblé (tout passe ; T à 50° : 1,304 s, théorie 1,305 s).
+- Vérifié : parcours complet (sources et fichier assemblé) ; Em au lâcher à 30° : 136,69 mJ (théorie 136,68 mJ) ;
+  Em de 136,7 à 136,1 mJ en 1,5 s ; θ̇max = 2,62 rad/s ; avec la palette, 37,7 % de Em après 4 s (théorie e⁻¹ = 36,8 %).
+
+Problèmes restants : Ec est calculée par le logiciel à partir de θ̇ par la méthode des points voisins (comme un vrai
+logiciel) ; la masse coulissante reste fixée à 40 cm dans les consignes (les autres positions marchent aussi).

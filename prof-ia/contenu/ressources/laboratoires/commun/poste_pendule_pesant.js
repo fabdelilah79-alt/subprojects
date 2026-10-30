@@ -3,12 +3,14 @@ Rôle : paillasse « pendule pesant » : tige en aluminium (100 g, 50 cm, axe à
        de l'axe) et masse coulissante de 200 g à d = 10, 20, 30 ou 40 cm (J = J1 + m2·d², M·a = m1·a1 + m2·d) ; palette
        d'amortissement de 4 g que l'on monte au bas de la tige. On écarte la tige (jusqu'à 50°) et on la lâche : le capteur
        de rotation envoie θ(t) au logiciel. Modèle sans approximation des petits angles (sin θ), frottement de l'air faible
-       (τ = 100 s) ou fort avec la palette (τ = 4 s) : les grandes amplitudes ont une période plus longue.
+       (τ = 400 s) ou fort avec la palette (τ = 4 s) : les grandes amplitudes ont une période plus longue.
+       Variante « énergies » : la touche « Énergies » du logiciel montre Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ) (référence :
+       position d'équilibre) et Em.
 Reçoit : le groupe SVG de la paillasse.
-Produit : Labo.poste_pendule_pesant(g) -> { pense_bete } ; faits « pendule_pesant » = { d (m), palette, T0 (s) },
+Produit : Labo.poste_pendule_pesant(g) et Labo.poste_pendule_pesant_energies(g) -> { pense_bete } ; faits « pendule_pesant » = { d (m), palette, T0 (s) },
           « lachers_pesant » = [{ id, d, palette, theta0 (°), T (s) }], « acquisition » ; Labo.pendule_pesant_modele
           = { omega2(d, palette), J(d), Ma(d) } (pour les vérifications et les tests).
-Utilisé par : simulation.js (paillasse 1).
+Utilisé par : b2_meca4_s1_pendule_pesant (période, amortissement), b2_meca5_s1_pendule_pesant (énergies).
 */
 (function (L) {
   const M1 = 0.1, A1 = 0.24, J1 = 0.1 * (0.25 / 12 + A1 * A1), M2 = 0.2, M3 = 0.004, A3 = 0.4625, MAX = (50 * Math.PI) / 180;
@@ -16,12 +18,12 @@ Utilisé par : simulation.js (paillasse 1).
   const omega2 = (d, p) => (L.pendule.G * Ma(d, p)) / J(d, p), deg = (r) => Math.round((r * 1800) / Math.PI) / 10;
   L.pendule_pesant_modele = { omega2, J, Ma };
 
-  function fiche(g) {
-    // Fiche des données collée au mur.
+  function fiche(g, energies) {
+    // Fiche des données collée au mur (la dernière ligne rappelle, dans la variante « énergies », ce que calcule le logiciel).
     L.svg("rect", { x: 560, y: 40, width: 420, height: 94, rx: 3, fill: "#fdfdf8", stroke: "#c9c4b0", filter: "url(#ombre)" }, g);
     L.texte(g, 770, 56, "Pendule pesant", { "font-size": 9.5, "font-weight": 700, fill: "#23315a" });
     ["Tige : m1 = 100 g ; J1 = 7,84 × 10⁻³ kg·m² ; son centre d'inertie G1 est à a1 = 24 cm de l'axe", "Masse coulissante (ponctuelle) : m2 = 200 g à la distance d de l'axe : J2 = m2·d²",
-      "J = J1 + m2·d² ; moment du poids : −(m1·a1 + m2·d)·g·sin θ ; g = 9,81 m/s²", "Palette d'amortissement : 4 g (masse négligeable)"].forEach((t, i) => L.texte(g, 770, 73 + i * 15, t, { "font-size": 8, fill: "#222" }));
+      "J = J1 + m2·d² ; moment du poids : −(m1·a1 + m2·d)·g·sin θ ; g = 9,81 m/s²", energies ? "Logiciel : θ̇ = dθ/dt ; Ec et Epp calculées, Epp = 0 à l'équilibre (θ = 0)" : "Palette d'amortissement : 4 g (masse négligeable)"].forEach((t, i) => L.texte(g, 770, 73 + i * 15, t, { "font-size": 8, fill: "#222" }));
   }
 
   function zones(g, P, e, m, noter, lacher) {
@@ -42,16 +44,22 @@ Utilisé par : simulation.js (paillasse 1).
     return () => gz.setAttribute("transform", `translate(${P.AXE.x} ${P.AXE.y}) rotate(${(-m.th * 180) / Math.PI})`);
   }
 
-  L.poste_pendule_pesant = function (g) {
+  function chaine(g, e, B, energies) {
+    // Interface et logiciel θ(t) en degrés ; vue « Énergies » (Ec, Epp, Em) dans la variante « énergies ».
+    const en = energies ? (th, w) => [0.5 * J(e.d, e.palette) * w * w, Ma(e.d, e.palette) * L.pendule.G * (1 - Math.cos(th))] : null;
+    return L.logiciel_xt(g, { x: 560, y: 160, boitier: B, durees: [5, 10, 20], grandeur: { nom: "θ", unite: "°", facteur: 180 / Math.PI, decimales: 1 },
+      energies: en, noms: ["Ec", "Epp"], etiquette: () => `d = ${Math.round(e.d * 100)} cm${e.palette ? " ; palette" : ""}` });
+  }
+
+  function poste(g, energies) {
     // Pendule, palette, chaîne d'acquisition ; le modèle est intégré à chaque image et envoie θ au logiciel.
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), B = { x: 588, y: 524 }, e = { d: 0.4, palette: false }, lachers = [];
-    fiche(g);
-    const logiciel = L.logiciel_xt(g, { x: 560, y: 160, boitier: B, durees: [5, 10, 20], grandeur: { nom: "θ", unite: "°", facteur: 180 / Math.PI, decimales: 1 },
-      etiquette: () => `d = ${Math.round(e.d * 100)} cm${e.palette ? " ; palette" : ""}` });
+    fiche(g, energies);
+    const logiciel = chaine(g, e, B, energies);
     const P = L.pendule_pesant_dessin({ x: 360, y: 196, sol: 496, prise: { x: B.x + 10, y: B.y + 28 } });
     P.fond(g);
-    const gt = L.svg("g", {}, g), gp = L.svg("g", {}, g), m = L.pendule.creer({ omega2: omega2(e.d, false), tau: 100 }), maintenant = () => performance.now() / 1000;
-    const noter = () => { Object.assign(m, { omega2: omega2(e.d, e.palette), tau: e.palette ? 4 : 100 }); L.missions.noter("pendule_pesant", { d: e.d, palette: e.palette, T0: Math.round(L.pendule.periode(m.omega2, 0) * 10000) / 10000 }); };
+    const gt = L.svg("g", {}, g), gp = L.svg("g", {}, g), m = L.pendule.creer({ omega2: omega2(e.d, false), tau: 400 }), maintenant = () => performance.now() / 1000;
+    const noter = () => { Object.assign(m, { omega2: omega2(e.d, e.palette), tau: e.palette ? 4 : 400 }); L.missions.noter("pendule_pesant", { d: e.d, palette: e.palette, T0: Math.round(L.pendule.periode(m.omega2, 0) * 10000) / 10000 }); };
     let t_lacher = 0;
     const lacher = () => {
       // Lâcher sans vitesse depuis l'angle atteint ; l'essai est noté et l'acquisition démarre.
@@ -72,5 +80,8 @@ Utilisé par : simulation.js (paillasse 1).
     };
     P.palette_table(gt, false); noter(); L.missions.noter("lachers_pesant", []); image();
     return { pense_bete };
-  };
+  }
+
+  L.poste_pendule_pesant = (g) => poste(g, false);
+  L.poste_pendule_pesant_energies = (g) => poste(g, true);
 })(window.Labo);

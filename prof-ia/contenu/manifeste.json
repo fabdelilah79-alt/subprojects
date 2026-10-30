@@ -5147,6 +5147,43 @@
         "Sans palette, il n'y a aucun frottement : l'amplitude ne diminue pas.",
         "Le pendule simple synchrone d'un pendule pesant a la longueur de sa tige."
       ]
+    },
+    {
+      "id": "b2_meca5_s1_pendule_pesant",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca5_s1_pendule_pesant.html",
+      "description": "Partie propre aux filières PC, SMA et SMB (le PDF ne propose pas d'activité : celle du chapitre, « exploiter des enregistrements et diagrammes d'énergie », est appliquée au pendule pesant). Pendule pesant (tige d'aluminium, masse coulissante à 40 cm, palette d'amortissement), capteur de rotation, interface et logiciel θ(t) avec la vue « Énergies » : Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ), Em. Lâché à 30° : Em = 137 mJ, constante sans frottement notable, échanges entre Ec et Epp, θ̇max = 2,6 rad/s, v = 1,05 m/s ; avec la palette, Em diminue (37 % après 4 s), surtout au passage par l'équilibre.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca5_energie",
+      "activite": "Établir Epe à partir du travail ; exploiter des enregistrements et diagrammes d'énergie.",
+      "objectifs": [
+        "O3",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Énergies du pendule pesant",
+          "ce_que_fait_l_eleve": "Exprime Ec et Epp du pendule pesant, lâche la tige à 30°, affiche le diagramme des énergies et calcule Em au lâcher.",
+          "conclusion": "Le pendule pesant tourne autour d'un axe fixe : Ec = ½·JΔ·θ̇². En prenant Epp = 0 à la position d'équilibre, Epp = M·g·zG = M·g·a·(1 − cos θ), où a est la distance de G à l'axe (M·a = m1·a1 + m2·d). Lâché sans vitesse depuis θ0, le pendule a l'énergie mécanique Em = M·g·a·(1 − cos θ0) ; pour les petits angles, Epp ≈ ½·M·g·a·θ²."
+        },
+        {
+          "titre": "Conservation de l'énergie mécanique",
+          "ce_que_fait_l_eleve": "Lit Ec, Epp et Em au curseur à cinq instants, vérifie la conservation de Em et en déduit la vitesse maximale.",
+          "conclusion": "Quand les frottements sont négligeables, Em = Ec + Epp reste constante : Ec est maximale et Epp nulle au passage par la position d'équilibre ; Ec est nulle et Epp maximale aux positions extrêmes. La conservation donne la vitesse angulaire maximale θ̇max = √(2·Em/JΔ) et montre que le pendule remonte à la même hauteur de l'autre côté."
+        },
+        {
+          "titre": "Non-conservation de l'énergie mécanique",
+          "ce_que_fait_l_eleve": "Monte la palette, observe la diminution de Em, mesure ce qui en reste après 4 s et explique où va l'énergie perdue.",
+          "conclusion": "Avec la palette, les frottements de l'air ne sont plus négligeables : leur travail est négatif et Em diminue (il en reste environ 37 % après 4 s). Em diminue surtout au passage par l'équilibre, là où la vitesse est grande. L'énergie perdue par le pendule est transférée à l'air sous forme d'énergie thermique."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "L'énergie potentielle de pesanteur du pendule est proportionnelle à l'angle.",
+        "L'énergie mécanique est maximale quand le pendule va le plus vite.",
+        "Avec des frottements, l'énergie disparaît."
+      ]
     }
   ]
 }
