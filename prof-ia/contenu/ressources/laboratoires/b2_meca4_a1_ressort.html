@@ -2912,6 +2912,89 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
 </script>
   <script>
 /*
+Rôle : pièces détaillées du banc à coussin d'air, dessinées comme le matériel des catalogues scolaires : mobile en aluminium
+       (plaque supérieure rouge anodisée, flancs qui enserrent le rail, vis, crochets à œillet, tige filetée du réflecteur),
+       réflecteur carré en plastique vu de trois quarts, palette d'amortissement en carton sur sa pince, aimant de freinage
+       (monture en acier, deux pastilles aimantées, vis moletée), surcharge cylindrique en laiton, soufflerie (grille,
+       interrupteur à voyant, embout du tuyau, pieds en caoutchouc).
+Reçoit : le groupe SVG et la position de chaque pièce (px) ; HAUT = haut du rail.
+Produit : Labo.pieces_banc = { mobile(g, x, haut, long, n, amortisseur), palette(g, x, y, couchee), aimant(g, x, y),
+          surcharge(g, x, y), soufflerie(g, x, y) }.
+Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
+*/
+(function (L) {
+  function surcharge(g, x, y) {
+    // Masse de 100 g en laiton (cylindre de 14 mm vu un peu d'en haut) posée sur y.
+    L.svg("rect", { x: x - 7, y: y - 9, width: 14, height: 9, fill: "url(#laiton)", stroke: "#7a5a14", "stroke-width": 0.5 }, g);
+    L.svg("ellipse", { cx: x, cy: y - 9, rx: 7, ry: 2.2, fill: "#e6c66e", stroke: "#7a5a14", "stroke-width": 0.5 }, g);
+    L.svg("ellipse", { cx: x, cy: y - 9, rx: 1.6, ry: 0.6, fill: "#5a3d10" }, g);
+  }
+
+  function palette(g, x, y, couchee = false) {
+    // Plaque de carton de 10 × 8 cm vue de trois quarts (ou couchée à plat sur le plateau), bord plus sombre, pince en métal.
+    if (couchee) { L.svg("path", { d: `M${x - 18} ${y + 3} l6 -6 h30 l-6 6 Z`, fill: "#d2b27a", stroke: "#7a5a2a", "stroke-width": 0.6 }, g); L.svg("path", { d: `M${x - 18} ${y + 3} h30 v2 h-30 Z`, fill: "#a8854c" }, g); return; }
+    L.svg("path", { d: `M${x} ${y} l9 -5 v-36 l-9 5 Z`, fill: "#d8bb85", stroke: "#7a5a2a", "stroke-width": 0.6 }, g);
+    L.svg("path", { d: `M${x} ${y} h-2 v-36 l9 -5 h2 l-9 5 Z`, fill: "#a8854c" }, g);
+    L.svg("rect", { x: x - 3, y: y - 4, width: 8, height: 6, rx: 1, fill: "url(#metal)", stroke: "#444", "stroke-width": 0.5 }, g);
+  }
+
+  function aimant(g, x, y, monte = false) {
+    // Aimant de freinage : monture en acier ; sur le plateau, ses deux pastilles aimantées (face rouge) et sa vis moletée ;
+    // monté, il est vissé sur le flanc du mobile, pastilles tournées vers le rail (on voit le dos de la monture et ses vis).
+    if (monte) {
+      L.svg("rect", { x: x - 12, y, width: 24, height: 10, rx: 2, fill: "url(#acier)", stroke: "#2a2e33", "stroke-width": 0.7 }, g);
+      L.svg("rect", { x: x - 12, y: y + 7, width: 24, height: 3, fill: "#b8352c", opacity: 0.85 }, g);
+      for (const dx of [-8, 8]) L.svg("circle", { cx: x + dx, cy: y + 4, r: 1.4, fill: "#d9dde0", stroke: "#444", "stroke-width": 0.4 }, g);
+      return;
+    }
+    L.svg("rect", { x: x - 2, y: y - 4, width: 4, height: 5, fill: "url(#acier)", stroke: "#333", "stroke-width": 0.4 }, g);
+    L.svg("rect", { x: x - 12, y, width: 24, height: 11, rx: 2, fill: "url(#acier)", stroke: "#2a2e33", "stroke-width": 0.7 }, g);
+    for (const dx of [-6, 6]) { L.svg("circle", { cx: x + dx, cy: y + 5.5, r: 3.6, fill: "#3a3f44", stroke: "#111", "stroke-width": 0.5 }, g); L.svg("circle", { cx: x + dx, cy: y + 5.5, r: 2.4, fill: "#b8352c" }, g); }
+  }
+
+  function reflecteur(g, cx, haut) {
+    // Tige filetée et réflecteur carré (5 cm) en plastique gris clair, vu de trois quarts, face tournée vers le capteur.
+    L.svg("rect", { x: cx - 1, y: haut - 30, width: 2, height: 9, fill: "url(#acier)" }, g);
+    L.svg("path", { d: `M${cx - 3} ${haut - 28} l7 -4 v-20 l-7 4 Z`, fill: "#e4e7ea", stroke: "#6a7177", "stroke-width": 0.6 }, g);
+    L.svg("path", { d: `M${cx - 3} ${haut - 28} h-2 v-20 l7 -4 h2 l-7 4 Z`, fill: "#a9b0b6" }, g);
+  }
+
+  function mobile(g, x, haut, long, n, amortisseur) {
+    // Mobile : flancs en aluminium autour du rail, plaque supérieure anodisée, vis, crochets à œillet, accessoires montés.
+    const gr = L.svg("g", { class: "mobile-ressort", role: "button", "aria-label": "Mobile" }, g);
+    if (amortisseur === "palette") palette(gr, x + 12, haut - 22);
+    L.svg("path", { d: `M${x + 1} ${haut - 16} H${x + long - 1} V${haut + 7} l-2 2 H${x + 3} l-2 -2 Z`, fill: "url(#metal-h)", stroke: "#4b5258", "stroke-width": 0.7 }, gr);
+    L.svg("line", { x1: x + 3, y1: haut + 5, x2: x + long - 3, y2: haut + 5, stroke: "#8a9298", "stroke-width": 0.5 }, gr);
+    L.svg("rect", { x, y: haut - 22, width: long, height: 7, rx: 1.5, fill: "#b9352c", stroke: "#6b1813", "stroke-width": 0.7 }, gr);
+    L.svg("rect", { x: x + 1.5, y: haut - 21.5, width: long - 3, height: 1.6, fill: "#fff", opacity: 0.3 }, gr);
+    for (const dx of [5, long - 5]) L.svg("circle", { cx: x + dx, cy: haut - 18.5, r: 1.3, fill: "#d9dde0", stroke: "#555", "stroke-width": 0.4 }, gr);
+    for (const [cx, s] of [[x, -1], [x + long, 1]]) L.svg("path", { d: `M${cx} ${haut - 14} h${3 * s} a2.2 2.2 0 1 ${s > 0 ? 1 : 0} 0 0.1`, fill: "none", stroke: "url(#acier)", "stroke-width": 1.4 }, gr);
+    reflecteur(gr, x + long / 2, haut);
+    for (let k = 0; k < n; k++) surcharge(gr, x + (k ? long - 11 : 11), haut - 22);
+    if (amortisseur === "aimant") aimant(gr, x + 24, haut - 7, true);
+    L.svg("rect", { x: x - 4, y: haut - 70, width: long + 8, height: 90, fill: "#000", opacity: 0.001 }, gr);
+    return gr;
+  }
+
+  function soufflerie(g, x, y) {
+    // Soufflerie posée sur ses pieds : caisson, grille d'aspiration, interrupteur à bascule et voyant, embout du tuyau.
+    L.ombre_sol(g, x + 38, y + 35, 44, 4, 0.35);
+    for (const dx of [8, 68]) L.svg("rect", { x: x + dx - 4, y: y + 32, width: 8, height: 3, rx: 1, fill: "#1b1e21" }, g);
+    L.svg("rect", { x, y, width: 76, height: 32, rx: 4, fill: "#5d6e7b", stroke: "#222" }, g);
+    L.svg("rect", { x: x + 2, y: y + 1, width: 72, height: 3, rx: 1.5, fill: "#fff", opacity: 0.18 }, g);
+    for (let k = 0; k < 5; k++) L.svg("rect", { x: x + 8, y: y + 8 + k * 4, width: 34, height: 1.8, rx: 0.9, fill: "#2b333a" }, g);
+    L.svg("rect", { x: x + 50, y: y + 9, width: 9, height: 13, rx: 1.5, fill: "#1b1e21" }, g);
+    L.svg("rect", { x: x + 51.5, y: y + 10, width: 6, height: 6, rx: 1, fill: "#c62828" }, g);
+    L.svg("circle", { cx: x + 66, cy: y + 12, r: 2, fill: "#7dff9a", stroke: "#1b3d22", "stroke-width": 0.5 }, g);
+    L.svg("rect", { x: x + 28, y: y - 5, width: 12, height: 6, rx: 1, fill: "url(#acier)", stroke: "#333", "stroke-width": 0.5 }, g);
+    L.texte(g, x + 38, y + 29, "SOUFFLERIE", { "font-size": 5, "font-weight": 700, fill: "#e6ebef" });
+  }
+
+  L.pieces_banc = { mobile, palette, aimant, surcharge, soufflerie };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : dessin du banc à coussin d'air horizontal vu de côté (échelle 0,4 px/mm) avec son oscillateur : rail gradué de 1,20 m
        sur ses pieds, soufflerie (cordon jusqu'à la prise murale de gauche), butée fixe, ressorts (longueur à vide 30 cm),
        mobile de 200 g (drapeau réflecteur, surcharges de 100 g, palette ou aimant de freinage), capteur de position à
@@ -2919,7 +3002,7 @@ Rôle : dessin du banc à coussin d'air horizontal vu de côté (échelle 0,4 px
 Reçoit : le groupe SVG ; la position du mobile (px de sa face gauche), le nombre de surcharges, l'amortisseur, les ressorts.
 Produit : Labo.banc_ressort_dessin = { fond(g, excitateur, avec_capteur), ressort(g, x1, x2, couleur), mobile(g, x, n, amortisseur),
           excitateur(g, angle, e_px, a_px), X0, MM, HAUT, TABLE, X_EQ (face gauche du mobile à l'équilibre), LONG, X_CAPTEUR, PRISE }.
-Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (2e année du bac).
+Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (2e année du bac) ; pièces : banc_ressort_pieces.js.
 */
 (function (L) {
   const X0 = 210, MM = 0.4, HAUT = 482, TABLE = 556, L0 = 300 * MM, LONG = 120 * MM, X_EQ = X0 + 14 + L0, X_CAPTEUR = 676;
@@ -2938,10 +3021,8 @@ Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (
     // Soufflerie sous le rail, tuyau jusqu'à l'embout du rail, cordon secteur jusqu'à la prise murale de gauche.
     L.svg("rect", { x: PRISE.x - 22, y: PRISE.y - 22, width: 44, height: 44, rx: 4, fill: "#f7f7f4", stroke: "#b8bbb4" }, g);
     L.cordon_secteur(g, { x: 262, y: 530 }, PRISE);
-    L.svg("path", { d: `M${X0 + 2} ${HAUT + 8} C${X0 - 26} ${HAUT + 30} 250 ${TABLE - 60} 290 ${TABLE - 34}`, fill: "none", stroke: "#2b2f33", "stroke-width": 7 }, g);
-    L.ombre_sol(g, 300, TABLE + 1, 44, 4, 0.35);
-    L.svg("rect", { x: 262, y: TABLE - 34, width: 76, height: 34, rx: 4, fill: "#5a6b78", stroke: "#222" }, g);
-    L.texte(g, 300, TABLE - 14, "soufflerie", { "font-size": 7, fill: "#eef" });
+    L.svg("path", { d: `M${X0 + 2} ${HAUT + 8} C${X0 - 26} ${HAUT + 30} 296 ${TABLE - 80} 296 ${TABLE - 40}`, fill: "none", stroke: "#2b2f33", "stroke-width": 7 }, g);
+    L.pieces_banc.soufflerie(g, 262, TABLE - 35);
   }
 
   function capteur(g) {
@@ -2967,15 +3048,8 @@ Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (
   }
 
   function mobile(g, x, n, amortisseur) {
-    // Mobile en U renversé (12 cm), crochets, drapeau réflecteur, surcharges ; palette en carton ou aimant de freinage.
-    const gr = L.svg("g", { class: "mobile-ressort", role: "button", "aria-label": "Mobile" }, g);
-    if (amortisseur === "palette") L.svg("rect", { x: x + 6, y: HAUT - 78, width: 4, height: 56, fill: "#c9a46a", stroke: "#7a5a2a", "stroke-width": 0.6 }, gr);
-    L.svg("path", { d: `M${x} ${HAUT + 6} V${HAUT - 22} H${x + LONG} V${HAUT + 6} h-5 V${HAUT - 16} H${x + 5} V${HAUT + 6} Z`, fill: "#c7362f", stroke: "#6b1813" }, gr);
-    L.svg("rect", { x: x + LONG / 2 - 2, y: HAUT - 52, width: 4, height: 30, fill: "#cfd3d6", stroke: "#555" }, gr);
-    for (let k = 0; k < n; k++) { const c = x + (k ? LONG - 10 : 15); L.svg("rect", { x: c - 7, y: HAUT - 31, width: 14, height: 9, rx: 1.5, fill: "url(#laiton)", stroke: "#8a6a1e", "stroke-width": 0.5 }, gr); }
-    if (amortisseur === "aimant") L.svg("rect", { x: x + 14, y: HAUT + 1, width: 20, height: 12, rx: 1, fill: "#b0302a", stroke: "#4a1210" }, gr);
-    L.svg("rect", { x: x - 4, y: HAUT - 80, width: LONG + 8, height: 96, fill: "#000", opacity: 0.001 }, gr);
-    return gr;
+    // Mobile de 12 cm (pièces détaillées dans banc_ressort_pieces.js).
+    return L.pieces_banc.mobile(g, x, HAUT, LONG, n, amortisseur);
   }
 
   function excitateur(g, angle, e, a) {
@@ -3086,9 +3160,9 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     L.glissable(p, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: action });
   }
 
-  const surcharge = (p, x) => L.svg("rect", { x: x - 7, y: Y - 5, width: 14, height: 9, rx: 1.5, fill: "url(#laiton)", stroke: "#8a6a1e", "stroke-width": 0.5 }, p);
-  const palette = (p, x) => L.svg("rect", { x: x - 18, y: Y - 2, width: 36, height: 6, rx: 1, fill: "#c9a46a", stroke: "#7a5a2a", "stroke-width": 0.6 }, p);
-  const aimant = (p, x) => L.svg("rect", { x: x - 10, y: Y - 5, width: 20, height: 10, rx: 1, fill: "#b0302a", stroke: "#4a1210" }, p);
+  const surcharge = (p, x) => L.pieces_banc.surcharge(p, x, Y + 4);
+  const palette = (p, x) => L.pieces_banc.palette(p, x, Y, true);
+  const aimant = (p, x) => L.pieces_banc.aimant(p, x, Y - 6);
 
   function ressort(p, x, k) {
     // Ressort de rechange couché sur le plateau, avec son étiquette de raideur.
@@ -3121,10 +3195,13 @@ Rôle : chaîne d'acquisition d'une position : interface posée sur la paillasse
        « Acquérir » (l'acquisition démarre quand on lâche le mobile ; un point toutes les 10 ms), « Effacer ». Graphique
        x (cm) en fonction de t (s) ; les deux acquisitions précédentes restent affichées en clair, chacune avec sa légende ;
        curseur vertical que l'on fait glisser, qui affiche t et x.
-Reçoit : le groupe SVG et { x, y (coin de l'écran), boitier { x, y } (interface), durees, etiquette() (légende de la courbe) } ;
+       Options (désactivées par défaut) : grandeur { nom, unite, facteur, decimales } (ex. θ en degrés) ; energies(p, v) ->
+       [Ec, Ep] en J et noms [« Ec », « Epe »] : la touche « Énergies » montre Ec, Ep et Em = Ec + Ep (mJ) de la dernière courbe.
+Reçoit : le groupe SVG et { x, y (coin de l'écran), boitier { x, y } (interface), durees, etiquette() (légende de la courbe),
+         grandeur, energies, noms } ;
          puis mesurer(t, position brute en m) à chaque pas de calcul et depart() au lâcher.
 Produit : Labo.logiciel_xt(g, reglage) -> { mesurer(t, p), depart(), s } (aussi dans Labo.logiciel_xt.actif, pour les tests) ; fait « acquisition » = { duree, etat, n,
-          zero (m), courbes [{ etiquette, x0 (cm) }], curseur { t (s), x (cm) } }.
+          zero (m), courbes [{ etiquette, x0 (cm) }], vue, curseur { t (s), x (cm) (ou Ec, Ep, Em en mJ, vue « énergies ») } }.
 Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
 */
 (function (L) {
@@ -3145,7 +3222,7 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
 
   function touches(g, x, y, a) {
     // Touches du logiciel (petits boutons gris).
-    [["Durée", a.duree], ["Zéro", a.zero], ["Acquérir", a.acquerir], ["Effacer", a.effacer]].forEach(([t, f], k) => {
+    [["Durée", a.duree], ["Zéro", a.zero], ["Acquérir", a.acquerir], ["Effacer", a.effacer], ...(a.energies ? [["Énergies", a.energies]] : [])].forEach(([t, f], k) => {
       const b = L.svg("g", { class: `xt-${k}`, role: "button", "aria-label": t }, g);
       L.svg("rect", { x: x + 16 + k * 66, y: y + 14, width: 60, height: 17, rx: 3, fill: "#e4e8ec", stroke: "#8a96a0" }, b);
       L.texte(b, x + 46 + k * 66, y + 26, t, { "font-size": 8, "font-weight": 700, fill: "#23315a" });
@@ -3159,7 +3236,7 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     const X = (t) => x0 + (t / s.duree) * P.l, Y = (v) => y0 + P.h / 2 - (v / m) * (P.h / 2);
     for (let k = 0; k <= 10; k++) { L.svg("line", { x1: X((k * s.duree) / 10), y1: y0, x2: X((k * s.duree) / 10), y2: y0 + P.h, stroke: "#e2e2dc", "stroke-width": 0.6 }, g); if (k % 2 === 0) L.texte(g, X((k * s.duree) / 10), y0 + P.h + 11, fr((k * s.duree) / 10, 1), { "font-size": 6.5, fill: "#333" }); }
     for (const v of [-m, -m / 2, 0, m / 2, m]) { L.svg("line", { x1: x0, y1: Y(v), x2: x0 + P.l, y2: Y(v), stroke: v ? "#e2e2dc" : "#999", "stroke-width": 0.6 }, g); L.texte(g, x0 - 6, Y(v) + 2.5, fr(v, 1), { "font-size": 6.5, fill: "#333", "text-anchor": "end" }); }
-    L.texte(g, x0 - 6, y0 - 6, "x (cm)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "start" });
+    L.texte(g, x0 - 6, y0 - 6, `${s.grandeur.nom} (${s.grandeur.unite})`, { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "start" });
     L.texte(g, x0 + P.l, y0 + P.h + 22, "t (s)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "end" });
     s.courbes.forEach((c, n) => {
       const col = COULEURS[n + 3 - s.courbes.length], d = c.pts.map((p, k) => `${k ? "L" : "M"}${X(p[0]).toFixed(1)} ${Y(p[1]).toFixed(1)}`).join(" ");
@@ -3169,47 +3246,79 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     L.svg("line", { x1: X(s.curseur), y1: y0, x2: X(s.curseur), y2: y0 + P.h, stroke: "#2e7d32", "stroke-width": 1 }, g);
   }
 
+  function energies(s) {
+    // Ec, Ep et Em (mJ) aux points de la dernière courbe ; vitesse par la méthode des points voisins.
+    const p = s.courbes[s.courbes.length - 1]?.pts || [];
+    return p.slice(1, -1).map((q, i) => { const v = (p[i + 2][2] - p[i][2]) / (p[i + 2][3] - p[i][3]), [ec, ep] = s.energies(q[2], v); return [q[0], ec * 1000, ep * 1000, (ec + ep) * 1000]; });
+  }
+
+  function graphique_energies(g, s, x, y) {
+    // Diagramme des énergies : Ec (bleu), Ep (orange), Em (vert), en mJ, et curseur.
+    const x0 = x + P.dx, y0 = y + P.dy, e = energies(s), m = Math.max(1, Math.ceil(Math.max(0, ...e.map((q) => q[3])) * 1.1));
+    const X = (t) => x0 + (t / s.duree) * P.l, Y = (v) => y0 + P.h - (v / m) * P.h;
+    for (let k = 0; k <= 10; k++) { L.svg("line", { x1: X((k * s.duree) / 10), y1: y0, x2: X((k * s.duree) / 10), y2: y0 + P.h, stroke: "#e2e2dc", "stroke-width": 0.6 }, g); if (k % 2 === 0) L.texte(g, X((k * s.duree) / 10), y0 + P.h + 11, fr((k * s.duree) / 10, 1), { "font-size": 6.5, fill: "#333" }); }
+    for (let k = 0; k <= 4; k++) { const v = (k * m) / 4; L.svg("line", { x1: x0, y1: Y(v), x2: x0 + P.l, y2: Y(v), stroke: k ? "#e2e2dc" : "#999", "stroke-width": 0.6 }, g); L.texte(g, x0 - 6, Y(v) + 2.5, fr(v, m < 4 ? 2 : 1), { "font-size": 6.5, fill: "#333", "text-anchor": "end" }); }
+    L.texte(g, x0 - 6, y0 - 6, "E (mJ)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "start" });
+    L.texte(g, x0 + P.l, y0 + P.h + 22, "t (s)", { "font-size": 7, "font-weight": 700, fill: "#333", "text-anchor": "end" });
+    [[1, "#1565c0", s.noms[0]], [2, "#f29d0b", s.noms[1]], [3, "#2e7d32", "Em"]].forEach(([k, col, nom], i) => {
+      if (e.length) L.svg("path", { d: e.map((q, j) => `${j ? "L" : "M"}${X(q[0]).toFixed(1)} ${Y(q[k]).toFixed(1)}`).join(" "), fill: "none", stroke: col, "stroke-width": 1.4 }, g);
+      L.texte(g, x0 + P.l - i * 40, y + 42, nom, { "font-size": 7, "font-weight": 700, fill: col, "text-anchor": "end" });
+    });
+    L.svg("line", { x1: X(s.curseur), y1: y0, x2: X(s.curseur), y2: y0 + P.h, stroke: "#555", "stroke-width": 1 }, g);
+    return e;
+  }
+
   function lecture(s) {
     // Point de la dernière courbe le plus proche du curseur.
     const d = s.courbes[s.courbes.length - 1];
     return d && d.pts.length ? d.pts.reduce((m, q) => (Math.abs(q[0] - s.curseur) < Math.abs(m[0] - s.curseur) ? q : m)) : null;
   }
 
-  L.logiciel_xt = function (g, { x, y, boitier, durees = [2, 5, 10], etiquette = () => "" }) {
+  const GRANDEUR = { nom: "x", unite: "cm", facteur: 100, decimales: 1 };
+
+  L.logiciel_xt = function (g, { x, y, boitier, durees = [2, 5, 10], etiquette = () => "", grandeur = GRANDEUR, energies: en = null, noms = ["Ec", "Epe"] }) {
     // Matériel, touches, graphique redessiné à chaque changement ; enregistrement des mesures du capteur.
-    const s = { duree: durees[1], etat: "prête", courbes: [], curseur: 0, zero: 0, brut: 0, n: 0, t0: 0, dernier: 0 };
+    const s = { duree: durees[1], etat: "prête", courbes: [], curseur: 0, zero: 0, brut: 0, n: 0, t0: 0, dernier: 0, grandeur, energies: en, noms, vue: "position" };
     materiel(g, x, y, boitier);
     const gg = L.svg("g", { "pointer-events": "none" }, g);
     const zone = L.svg("rect", { x: x + P.dx, y: y + P.dy, width: P.l, height: P.h, fill: "#000", opacity: 0, class: "curseur-xt", role: "slider", "aria-label": "Curseur" }, g);
     L.glissable(zone, { soulever: false, debut: () => ({ x: x + P.dx + (s.curseur / s.duree) * P.l, y: 0 }), deplacer: (p) => { s.curseur = Math.max(0, Math.min(1, (p.x - x - P.dx) / P.l)) * s.duree; maj(); } });
-    const noter = (p) => L.missions.noter("acquisition", { duree: s.duree, etat: s.etat, n: s.n, zero: Math.round(s.zero * 10000) / 10000, courbes: s.courbes.map((c) => ({ etiquette: c.etiquette, x0: c.pts.length ? c.pts[0][1] : null })), curseur: p ? { t: p[0], x: p[1] } : null });
+    const r2 = (v) => Math.round(v * 100) / 100;
+    const noter = (p, q) => L.missions.noter("acquisition", { duree: s.duree, etat: s.etat, n: s.n, zero: Math.round(s.zero * 10000) / 10000, vue: s.vue, courbes: s.courbes.map((c) => ({ etiquette: c.etiquette, x0: c.pts.length ? c.pts[0][1] : null })), curseur: q ? { t: q[0], Ec: r2(q[1]), Ep: r2(q[2]), Em: r2(q[3]) } : p ? { t: p[0], x: p[1] } : null });
     const maj = () => {
-      gg.replaceChildren(); graphique(gg, s, x, y);
-      const p = lecture(s);
-      L.texte(gg, x + 290, y + 26, `${s.duree} s · ${s.etat}`, { "font-size": 7.5, fill: "#23315a", "text-anchor": "start" });
-      L.texte(gg, x + 220, y + 248, p ? `curseur : t = ${fr(p[0], 2)} s ; x = ${fr(p[1], 1)} cm` : "curseur : pas de mesure", { "font-size": 8.5, "font-weight": 700, fill: "#2e7d32" });
-      noter(p);
+      // Graphique de la vue choisie, état, lecture du curseur.
+      gg.replaceChildren();
+      const p = lecture(s), e = s.vue === "energies" ? graphique_energies(gg, s, x, y) : (graphique(gg, s, x, y), null), G = s.grandeur;
+      const q = e && e.length ? e.reduce((m, r) => (Math.abs(r[0] - s.curseur) < Math.abs(m[0] - s.curseur) ? r : m)) : null;
+      L.texte(gg, x + 356, y + 26, `${s.duree} s · ${s.etat}`, { "font-size": 7.5, fill: "#23315a", "text-anchor": "start" });
+      const texte = q ? `t = ${fr(q[0], 2)} s ; ${s.noms[0]} = ${fr(q[1], 2)} ; ${s.noms[1]} = ${fr(q[2], 2)} ; Em = ${fr(q[3], 2)} mJ` : p && !e ? `curseur : t = ${fr(p[0], 2)} s ; ${G.nom} = ${fr(p[1], G.decimales)} ${G.unite}` : "curseur : pas de mesure";
+      L.texte(gg, x + 220, y + 248, texte, { "font-size": 8.5, "font-weight": 700, fill: "#2e7d32" });
+      noter(p, q);
     };
     touches(g, x, y, {
       duree: () => { if (s.etat !== "en cours") s.duree = durees[(durees.indexOf(s.duree) + 1) % durees.length]; maj(); },
       zero: () => { if (s.etat !== "en cours") s.zero = s.brut; maj(); },
       acquerir: () => { if (s.etat !== "en cours") s.etat = "en attente"; maj(); },
       effacer: () => { if (s.etat !== "en cours") { s.courbes = []; s.etat = "prête"; } maj(); },
+      energies: en && (() => { s.vue = s.vue === "energies" ? "position" : "energies"; maj(); }),
     });
-    const api = { s, mesurer: (t, p) => {
+    const api = (L.logiciel_xt.actif = mesures(s, maj, etiquette));
+    setInterval(() => { if (s.etat === "en cours") maj(); }, 100);
+    maj(); return api;
+  };
+
+  function mesures(s, maj, etiquette) {
+    // Ce que reçoit le logiciel : chaque mesure du capteur (un point toutes les 10 ms en acquisition) et le départ au lâcher.
+    return { s, mesurer: (t, p) => {
       s.brut = p;
       if (s.etat !== "en cours" || t - s.dernier < 0.01 - 1e-9) return;
-      s.dernier = t; s.courbes[s.courbes.length - 1].pts.push([Math.round((t - s.t0) * 1000) / 1000, Math.round((p - s.zero) * 1000) / 10]);
+      s.dernier = t; s.courbes[s.courbes.length - 1].pts.push([Math.round((t - s.t0) * 1000) / 1000, Math.round((p - s.zero) * s.grandeur.facteur * 10 ** s.grandeur.decimales) / 10 ** s.grandeur.decimales, p - s.zero, t - s.t0]);
       if (t - s.t0 >= s.duree - 1e-9) { s.etat = "terminée"; s.n++; maj(); }
     }, depart: (t) => {
       if (s.etat !== "en attente") return;
       Object.assign(s, { etat: "en cours", t0: t, dernier: t - 0.01 }); s.courbes.push({ etiquette: etiquette(), pts: [] }); if (s.courbes.length > 3) s.courbes.shift();
     } };
-    L.logiciel_xt.actif = api;
-    setInterval(() => { if (s.etat === "en cours") maj(); }, 100);
-    maj();
-    return api;
-  };
+  }
 })(window.Labo);
 </script>
   <script>
@@ -3239,6 +3348,42 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     setInterval(() => { if (c.en_marche) { c.t = performance.now() / 1000 - c.depart; afficher(); } }, 33);
     noter();
     return c;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : potence de laboratoire (socle lourd, tige verticale, noix de serrage, tige horizontale terminée par un crochet)
+       et coffret en bois de masses marquées, avec un logement par masse.
+Reçoit : le groupe SVG ; la position de la tige et du crochet ; les places du coffret.
+Produit : Labo.potence(groupe, { x, haut, bras }) -> point du crochet ; Labo.coffret_masses(groupe, places, x1, x2, base).
+Utilisé par : poste_poids.js (tc_meca1_o3_poids), les postes du chapitre « Équilibre d'un solide ».
+*/
+(function (L) {
+  L.potence = function (g, { x = 478, haut = 14, bras = 126, socle = 504 } = {}) {
+    // Socle vu un peu d'en haut, tige, noix, bras horizontal et crochet au bout ; renvoie le point d'accroche.
+    L.ombre_sol(g, x + 7, socle + 26, 92, 10, 0.5);
+    L.svg("path", { d: `M${x - 66} ${socle} H${x + 86} L${x + 78} ${socle + 16} H${x - 74} Z`, fill: "#3a3f45" }, g);
+    L.svg("rect", { x: x - 74, y: socle + 16, width: 152, height: 13, rx: 2, fill: "url(#acier)" }, g);
+    L.svg("ellipse", { cx: x, cy: socle + 8, rx: 9, ry: 3, fill: "#22262a" }, g);
+    L.svg("rect", { x: x - 5, y: haut, width: 10, height: socle + 8 - haut, fill: "url(#metal)" }, g);
+    L.svg("rect", { x, y: haut + 8, width: bras + 8, height: 7, fill: "url(#metal-h)" }, g);
+    L.svg("rect", { x: x - 12, y: haut, width: 24, height: 22, rx: 3, fill: "url(#acier)" }, g);
+    L.svg("rect", { x: x + 10, y: haut + 6, width: 12, height: 5, rx: 2, fill: "#1b1e21" }, g);
+    const c = { x: x + bras, y: haut + 15 };
+    L.svg("path", { d: `M${c.x} ${c.y} V${c.y + 7} a5 5 0 1 1 -5 5`, fill: "none", stroke: "url(#metal)", "stroke-width": 2.2, "stroke-linecap": "round" }, g);
+    return { x: c.x, y: c.y + 7 };
+  };
+
+  L.coffret_masses = function (g, places, x1, x2, base) {
+    // Coffret en bois ouvert, un logement par masse marquée (L.MASSES_MARQUEES), étiquette sur la face avant.
+    const cx = (x1 + x2) / 2;
+    L.ombre_sol(g, cx, base + 40, (x2 - x1) / 2 + 8, 9, 0.5);
+    L.svg("path", { d: `M${x1 + 10} ${base - 12} H${x2 - 10} L${x2} ${base + 4} H${x1} Z`, fill: "url(#bois)" }, g);
+    places.forEach((x, i) => L.svg("ellipse", { cx: x, cy: base - 1, rx: L.MASSES_MARQUEES[i].largeur / 2 + 2, ry: 3.5, fill: "#4a2f14" }, g));
+    L.svg("rect", { x: x1, y: base + 4, width: x2 - x1, height: 34, fill: "url(#bois-face)" }, g);
+    L.svg("rect", { x: x1, y: base + 4, width: x2 - x1, height: 2, fill: "#e2bb85" }, g);
+    L.texte(g, cx, base + 22, "Masses marquées", { class: "etiquette-carton", fill: "#f3e3c7", "font-size": 18 });
   };
 })(window.Labo);
 </script>

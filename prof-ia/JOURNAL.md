@@ -1201,3 +1201,26 @@ Problèmes restants, à faire par l'enseignant :
 - Le chronomètre à main contient le temps de réaction de l'élève : pour le résonateur (T0 = 0,63 s), il faut chronométrer
   10 oscillations ; les tolérances acceptent 4 à 5 %.
 - Les deux masselottes du pendule de torsion se déplacent ensemble ; le cadran ne sert qu'à choisir l'amplitude.
+
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Aspects énergétiques des oscillateurs mécaniques »
+
+Fait (en suivant la compétence « laboratoire-realiste ») :
+- Remarque de l'enseignant : « le design du matériel doit être réaliste, pas des choses bizarres à l'œil ». Règles ajoutées
+  à la compétence (§ 2 bis : forme et proportions réelles, matières, détails, fixations, relecture en gros plan de chaque
+  objet nouveau). Le banc à coussin d'air a été revu en gros plan et redessiné (banc_ressort_pieces.js) : le mobile coiffe
+  le rail (flanc plein en aluminium, plaque anodisée, vis, crochets à œillet), réflecteur et palette en perspective, aimant
+  de freinage avec sa monture vissée sur le flanc, surcharges cylindriques, soufflerie avec grille, interrupteur et voyant.
+- Une simulation à trois paillasses (activité unique de la fiche), inscrite au manifeste : travail de la force d'un ressort
+  (dynamomètre tenu par une noix sur une tige, méthode graphique), énergies du solide-ressort (vue « Énergies » du
+  logiciel), énergies du pendule de torsion (capteur de rotation). Objectifs O1 à O4.
+- Fichiers communs modifiés (signalés) : logiciel_xt.js (options grandeur et énergies, désactivées par défaut ; état
+  affiché plus à droite pour laisser la place à la 5e touche), banc_ressort_dessin.js et banc_ressort_accessoires.js
+  (pièces redessinées), pendule_torsion_dessin.js (déplacé de b2_meca4_a2_torsion, position réglable, capteur en option).
+  Régression : les trois simulations « Systèmes mécaniques oscillants » rejouées.
+- Vérifié : parcours complet (sources et fichier assemblé) ; K mesurée 20 N/m ; Em = 12,4 à 12,2 mJ pour ½·K·x0² = 12,5 mJ
+  (très léger amortissement) ; Em du pendule 0,54 à 0,52 mJ pour ½·C·θ0² = 0,548 mJ.
+
+Problèmes restants, à faire par l'enseignant :
+- Les énergies sont calculées par le logiciel (v par la méthode des points voisins) avec les valeurs de m, K, J et C du
+  montage ; l'élève ne les saisit pas.
+- La palette amortit fortement : Em devient presque nulle en 4 s.

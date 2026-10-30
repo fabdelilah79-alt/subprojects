@@ -680,3 +680,14 @@ différentielle est donnée, l'amortissement est montré par l'expérience sans 
 est comparée à la période propre, et la résonance reste qualitative. Le solide-ressort est horizontal (toutes filières).
 Matériel commun nouveau : banc_ressort_dessin.js, banc_ressort.js, banc_ressort_accessoires.js (banc à coussin d'air avec
 ressorts et excitateur), logiciel_xt.js (capteur, interface et logiciel x(t)), chronometre_manuel.js.
+
+## Chapitre 2e année du bac « Aspects énergétiques des oscillateurs mécaniques » (fiche 2bac/meca5_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca5_a1_energie.html | Établir Epe à partir du travail ; exploiter des enregistrements et diagrammes d'énergie | O1 à O4 | Paillasse 1 : dynamomètre de traction tenu par une noix coulissante, F = f(x) (K = 20 N/m), travail par l'aire sous la courbe (méthode graphique), Epe = ½·K·x². Paillasse 2 : solide-ressort horizontal enregistré, vue « Énergies » du logiciel (Ec, Epe, Em = 12,5 mJ constante), vitesse maximale par le théorème de l'énergie cinétique, non-conservation avec la palette. Paillasse 3 : pendule de torsion et capteur de rotation, Ept = ½·C·θ², Em = ½·J·θ̇² + ½·C·θ². |
+
+Matériel commun nouveau ou modifié (signalé à l'enseignant) : banc_ressort_pieces.js (mobile, palette, aimant de freinage,
+surcharges et soufflerie redessinés comme le matériel réel), logiciel_xt.js (options « grandeur » et vue « Énergies »,
+désactivées par défaut), pendule_torsion_dessin.js (le dessin du pendule de torsion, déplacé de b2_meca4_a2_torsion pour
+servir aux deux chapitres, avec un capteur de rotation en option).

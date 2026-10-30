@@ -18,9 +18,9 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     L.glissable(p, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: action });
   }
 
-  const surcharge = (p, x) => L.svg("rect", { x: x - 7, y: Y - 5, width: 14, height: 9, rx: 1.5, fill: "url(#laiton)", stroke: "#8a6a1e", "stroke-width": 0.5 }, p);
-  const palette = (p, x) => L.svg("rect", { x: x - 18, y: Y - 2, width: 36, height: 6, rx: 1, fill: "#c9a46a", stroke: "#7a5a2a", "stroke-width": 0.6 }, p);
-  const aimant = (p, x) => L.svg("rect", { x: x - 10, y: Y - 5, width: 20, height: 10, rx: 1, fill: "#b0302a", stroke: "#4a1210" }, p);
+  const surcharge = (p, x) => L.pieces_banc.surcharge(p, x, Y + 4);
+  const palette = (p, x) => L.pieces_banc.palette(p, x, Y, true);
+  const aimant = (p, x) => L.pieces_banc.aimant(p, x, Y - 6);
 
   function ressort(p, x, k) {
     // Ressort de rechange couché sur le plateau, avec son étiquette de raideur.

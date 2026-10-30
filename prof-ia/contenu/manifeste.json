@@ -4840,6 +4840,45 @@
         "Plus on excite vite, plus l'amplitude est grande.",
         "L'amortissement ne change pas l'amplitude à la résonance."
       ]
+    },
+    {
+      "id": "b2_meca5_a1_energie",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca5_a1_energie.html",
+      "description": "Trois paillasses. 1 : banc à coussin d'air, ressort de 20 N/m, dynamomètre de traction (2 N) tenu par une noix coulissante, règle d'allongement : F = f(x) droite (K = 20 N/m), travail par l'aire sous la courbe, W(T) = −½·K·x² (−0,036 J pour 6 cm), Epe = ½·K·x². 2 : solide-ressort horizontal (200 g, 10 N/m), capteur, logiciel x(t) et vue « Énergies » : Ec et Epe s'échangent, Em = 12,5 mJ constante (lâcher à 5 cm), vitesse maximale par le théorème de l'énergie cinétique ; avec la palette, Em diminue. 3 : pendule de torsion et capteur de rotation : Ec = ½·J·θ̇², Ept = ½·C·θ², Em = 0,55 mJ (30°).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca5_energie",
+      "activite": "Établir Epe à partir du travail ; exploiter des enregistrements et diagrammes d'énergie.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Travail de la force d'un ressort",
+          "ce_que_fait_l_eleve": "Allonge le ressort avec le dynamomètre, trace F = f(x), en déduit K, le travail de la tension par l'aire sous la courbe et l'expression de Epe.",
+          "conclusion": "La tension du ressort vaut T = K·x et s'oppose à l'allongement. Quand l'allongement passe de 0 à x, son travail est l'opposé de l'aire sous la droite F = K·x : W(T) = −½·K·x² ; entre x1 et x2, W(T) = −(½·K·x2² − ½·K·x1²). On définit l'énergie potentielle élastique Epe = ½·K·x² + cte ; avec l'état de référence Epe = 0 à l'équilibre (x = 0), Epe = ½·K·x², et W(T) = −ΔEpe."
+        },
+        {
+          "titre": "Énergie mécanique du solide-ressort",
+          "ce_que_fait_l_eleve": "Enregistre x(t), affiche les énergies, lit Em, calcule la vitesse maximale, puis montre que Em diminue avec la palette.",
+          "conclusion": "Pour le solide-ressort horizontal, Em = ½·m·v² + ½·K·x². Sans frottement, l'énergie mécanique se conserve : Ec et Epe s'échangent (Ec maximale à l'équilibre, Epe maximale aux élongations extrêmes), Em = ½·K·Xm². Avec des frottements, Em diminue : l'énergie perdue est transférée au milieu extérieur."
+        },
+        {
+          "titre": "Énergie mécanique du pendule de torsion",
+          "ce_que_fait_l_eleve": "Enregistre θ(t) du pendule de torsion, affiche Ec, Ept et Em et reconnaît l'expression de l'énergie potentielle de torsion.",
+          "conclusion": "Le fil tordu d'un angle θ possède l'énergie potentielle de torsion Ept = ½·C·θ² (référence : fil non tordu). L'énergie mécanique du pendule de torsion est Em = ½·J·θ̇² + ½·C·θ² ; sans frottement, elle se conserve : Ec et Ept s'échangent et Em = ½·C·θm²."
+        }
+      ],
+      "duree_min": 70,
+      "conceptions": [
+        "Le travail de la force d'un ressort vaut F·x.",
+        "L'énergie mécanique d'un oscillateur se conserve toujours.",
+        "L'énergie cinétique est maximale quand l'écart est maximal."
+      ]
     }
   ]
 }

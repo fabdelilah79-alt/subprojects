@@ -6,7 +6,7 @@ Rôle : dessin du banc à coussin d'air horizontal vu de côté (échelle 0,4 px
 Reçoit : le groupe SVG ; la position du mobile (px de sa face gauche), le nombre de surcharges, l'amortisseur, les ressorts.
 Produit : Labo.banc_ressort_dessin = { fond(g, excitateur, avec_capteur), ressort(g, x1, x2, couleur), mobile(g, x, n, amortisseur),
           excitateur(g, angle, e_px, a_px), X0, MM, HAUT, TABLE, X_EQ (face gauche du mobile à l'équilibre), LONG, X_CAPTEUR, PRISE }.
-Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (2e année du bac).
+Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (2e année du bac) ; pièces : banc_ressort_pieces.js.
 */
 (function (L) {
   const X0 = 210, MM = 0.4, HAUT = 482, TABLE = 556, L0 = 300 * MM, LONG = 120 * MM, X_EQ = X0 + 14 + L0, X_CAPTEUR = 676;
@@ -25,10 +25,8 @@ Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (
     // Soufflerie sous le rail, tuyau jusqu'à l'embout du rail, cordon secteur jusqu'à la prise murale de gauche.
     L.svg("rect", { x: PRISE.x - 22, y: PRISE.y - 22, width: 44, height: 44, rx: 4, fill: "#f7f7f4", stroke: "#b8bbb4" }, g);
     L.cordon_secteur(g, { x: 262, y: 530 }, PRISE);
-    L.svg("path", { d: `M${X0 + 2} ${HAUT + 8} C${X0 - 26} ${HAUT + 30} 250 ${TABLE - 60} 290 ${TABLE - 34}`, fill: "none", stroke: "#2b2f33", "stroke-width": 7 }, g);
-    L.ombre_sol(g, 300, TABLE + 1, 44, 4, 0.35);
-    L.svg("rect", { x: 262, y: TABLE - 34, width: 76, height: 34, rx: 4, fill: "#5a6b78", stroke: "#222" }, g);
-    L.texte(g, 300, TABLE - 14, "soufflerie", { "font-size": 7, fill: "#eef" });
+    L.svg("path", { d: `M${X0 + 2} ${HAUT + 8} C${X0 - 26} ${HAUT + 30} 296 ${TABLE - 80} 296 ${TABLE - 40}`, fill: "none", stroke: "#2b2f33", "stroke-width": 7 }, g);
+    L.pieces_banc.soufflerie(g, 262, TABLE - 35);
   }
 
   function capteur(g) {
@@ -54,15 +52,8 @@ Utilisé par : banc_ressort.js et les simulations des oscillateurs mécaniques (
   }
 
   function mobile(g, x, n, amortisseur) {
-    // Mobile en U renversé (12 cm), crochets, drapeau réflecteur, surcharges ; palette en carton ou aimant de freinage.
-    const gr = L.svg("g", { class: "mobile-ressort", role: "button", "aria-label": "Mobile" }, g);
-    if (amortisseur === "palette") L.svg("rect", { x: x + 6, y: HAUT - 78, width: 4, height: 56, fill: "#c9a46a", stroke: "#7a5a2a", "stroke-width": 0.6 }, gr);
-    L.svg("path", { d: `M${x} ${HAUT + 6} V${HAUT - 22} H${x + LONG} V${HAUT + 6} h-5 V${HAUT - 16} H${x + 5} V${HAUT + 6} Z`, fill: "#c7362f", stroke: "#6b1813" }, gr);
-    L.svg("rect", { x: x + LONG / 2 - 2, y: HAUT - 52, width: 4, height: 30, fill: "#cfd3d6", stroke: "#555" }, gr);
-    for (let k = 0; k < n; k++) { const c = x + (k ? LONG - 10 : 15); L.svg("rect", { x: c - 7, y: HAUT - 31, width: 14, height: 9, rx: 1.5, fill: "url(#laiton)", stroke: "#8a6a1e", "stroke-width": 0.5 }, gr); }
-    if (amortisseur === "aimant") L.svg("rect", { x: x + 14, y: HAUT + 1, width: 20, height: 12, rx: 1, fill: "#b0302a", stroke: "#4a1210" }, gr);
-    L.svg("rect", { x: x - 4, y: HAUT - 80, width: LONG + 8, height: 96, fill: "#000", opacity: 0.001 }, gr);
-    return gr;
+    // Mobile de 12 cm (pièces détaillées dans banc_ressort_pieces.js).
+    return L.pieces_banc.mobile(g, x, HAUT, LONG, n, amortisseur);
   }
 
   function excitateur(g, angle, e, a) {

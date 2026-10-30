@@ -534,11 +534,14 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/banc_ressort_dessin.js | Dessin du banc à coussin d'air avec ressorts, mobile, accessoires, capteur et excitateur. |
 | contenu/ressources/laboratoires/commun/banc_ressort.js | Oscillateur solide-ressort horizontal (amorti, éventuellement excité), calcul pas à pas et geste de lâcher. |
 | contenu/ressources/laboratoires/commun/banc_ressort_accessoires.js | Plateau d'accessoires : surcharges, palette, aimant de freinage, ressort de rechange. |
-| contenu/ressources/laboratoires/commun/logiciel_xt.js | Interface et logiciel d'acquisition x(t) : zéro, durée, acquisition au lâcher, curseur, trois courbes. |
+| contenu/ressources/laboratoires/commun/banc_ressort_pieces.js | Pièces détaillées du banc : mobile, réflecteur, palette, aimant de freinage, surcharge, soufflerie. |
+| contenu/ressources/laboratoires/commun/pendule_torsion_dessin.js | Dessin du pendule de torsion (potence, fil, barre, masselottes, cadran, capteur de rotation en option). |
+| contenu/ressources/laboratoires/commun/logiciel_xt.js | Interface et logiciel d'acquisition x(t) (ou θ(t)) : zéro, durée, acquisition au lâcher, curseur, trois courbes, vue « Énergies ». |
 | contenu/ressources/laboratoires/commun/chronometre_manuel.js | Chronomètre à main au centième (marche/arrêt, zéro). |
 | contenu/ressources/laboratoires/sources/b2_meca4_a1_ressort/ | Tri des oscillateurs ; solide-ressort enregistré : T0, masse, raideur, amortissement (poste_oscillateurs.js, poste_ressort.js, simulation.js). |
-| contenu/ressources/laboratoires/sources/b2_meca4_a2_torsion/ | Pendule de torsion : moment d'inertie, constante de torsion, isochronisme (torsion_dessin.js, poste_torsion.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a2_torsion/ | Pendule de torsion : moment d'inertie, constante de torsion, isochronisme (poste_torsion.js, simulation.js ; dessin commun). |
 | contenu/ressources/laboratoires/sources/b2_meca4_a3_resonance/ | Résonance : excitateur, résonateur, témoins d'amplitude, amortissement (temoins.js, poste_resonance.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca5_a1_energie/ | Travail de la force d'un ressort, énergies du solide-ressort et du pendule de torsion (poste_travail.js, poste_energie_ressort.js, poste_energie_torsion.js, missions_energie.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

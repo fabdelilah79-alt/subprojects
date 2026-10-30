@@ -2800,5 +2800,28 @@
    "Change la fréquence de l'excitateur, lit l'amplitude établie avec les témoins et trouve la résonance près de f0.",
    "Compare l'amplitude à la résonance sans amortisseur, avec la palette et avec l'aimant."
   ]
+ },
+ {
+  "id": "b2_meca5_a1_energie",
+  "chapitre": "2bac/meca5_energie",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 70,
+  "description": "Trois paillasses. 1 : banc à coussin d'air, ressort de 20 N/m, dynamomètre de traction (2 N) tenu par une noix coulissante, règle d'allongement : F = f(x) droite (K = 20 N/m), travail par l'aire sous la courbe, W(T) = −½·K·x² (−0,036 J pour 6 cm), Epe = ½·K·x². 2 : solide-ressort horizontal (200 g, 10 N/m), capteur, logiciel x(t) et vue « Énergies » : Ec et Epe s'échangent, Em = 12,5 mJ constante (lâcher à 5 cm), vitesse maximale par le théorème de l'énergie cinétique ; avec la palette, Em diminue. 3 : pendule de torsion et capteur de rotation : Ec = ½·J·θ̇², Ept = ½·C·θ², Em = 0,55 mJ (30°).",
+  "conceptions": [
+   "Le travail de la force d'un ressort vaut F·x.",
+   "L'énergie mécanique d'un oscillateur se conserve toujours.",
+   "L'énergie cinétique est maximale quand l'écart est maximal."
+  ],
+  "faire": [
+   "Allonge le ressort avec le dynamomètre, trace F = f(x), en déduit K, le travail de la tension par l'aire sous la courbe et l'expression de Epe.",
+   "Enregistre x(t), affiche les énergies, lit Em, calcule la vitesse maximale, puis montre que Em diminue avec la palette.",
+   "Enregistre θ(t) du pendule de torsion, affiche Ec, Ept et Em et reconnaît l'expression de l'énergie potentielle de torsion."
+  ]
  }
 ]

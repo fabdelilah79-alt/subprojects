@@ -27,7 +27,7 @@ Utilisé par : simulation.js.
 
   L.poste_torsion = function (g) {
     // Pendule, chronomètre, fil de rechange ; θ(t) calculé à chaque image depuis le lâcher.
-    const P = L.torsion_dessin, pense_bete = L.decor.pense_bete(g, 24, 52, 230), lachers = [];
+    const P = L.pendule_torsion_dessin(), pense_bete = L.decor.pense_bete(g, 24, 52, 230), lachers = [];
     fiche(g); P.fond(g);
     const gb = L.svg("g", {}, g), gr = L.svg("g", { class: "fil-rechange", role: "button", "aria-label": "Fil de rechange" }, g), zones = L.svg("g", {}, g);
     const e = { fil: "A", d: 0.08, th: 0, th0: 0, t0: 0, oscille: false };

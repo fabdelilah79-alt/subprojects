@@ -42,6 +42,24 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 - Les éléments réglables montrent leur état (cale posée sous la table, cale prise sur la paillasse estompée…).
 - Unités et nombres écrits à la française (virgule, espaces fines), symboles corrects (µ, Ω, ⏚, ², indices).
 
+## 2 bis. Dessin du matériel (remarque de l'enseignant : « pas des choses bizarres à l'œil »)
+
+Chaque objet doit ressembler au **vrai matériel d'un laboratoire de lycée** (catalogues de fournisseurs scolaires), pas à
+un pictogramme ni à une forme abstraite.
+- Forme reconnaissable et **proportions réelles** (échelle commune de la scène : un chronomètre n'est pas plus grand
+  qu'une potence, une masse de 100 g n'est pas un gros bloc) ; épaisseurs, volumes, arêtes visibles en 2,5D.
+- Matières rendues : métal (dégradés `url(#metal)`, `url(#acier)`, `url(#laiton)`), plastique mat, bois, verre ; reflets
+  légers ; pas d'aplat de couleur vive sans relief (un « rectangle rouge » n'est pas un aimant : un aimant de freinage a
+  une monture, des pôles, une vis de fixation).
+- Détails qui rendent l'objet crédible : vis, noix de serrage, molettes, poignées, prises femelles, plaques
+  signalétiques, graduations, pieds en caoutchouc ; mais pas de surcharge.
+- Chaque pièce est **tenue par quelque chose** (fixation, support, noix) et les liaisons mécaniques sont plausibles
+  (un fil s'accroche à un crochet, une tige passe dans un guide, une règle est vissée sur un montant).
+- **Relecture en gros plan** : pour chaque objet nouveau, capture recadrée et agrandie (×3) avant de l'intégrer ;
+  se demander « un professeur reconnaîtrait-il cet objet au premier coup d'œil ? ». Sinon, le redessiner.
+- Réutiliser les objets communs déjà validés (potence, masses marquées, boîtiers, portable, chronomètre) plutôt que d'en
+  inventer d'autres.
+
 ## 3. Justesse physique
 
 - Le modèle doit être juste dans son domaine (lois, conservation de l'énergie, régimes) ; s'il est simplifié, le dire
@@ -110,7 +128,8 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 
 1. Fiche lue, plan par activité (matériel, valeurs, ce qui est mesuré, missions), réutilisation de `commun/`.
 2. Code (poste, simulation), page (`pages.py`), scénario de test de **tout le parcours**.
-3. **Relire chaque capture** avec la liste du § 2 et corriger avant d'aller plus loin ; comparer les mesures à la théorie.
+3. **Relire chaque capture** avec les listes des § 2 et 2 bis (gros plans des objets nouveaux) et corriger avant d'aller
+   plus loin ; comparer les mesures à la théorie.
 4. Régression si `commun/` a changé ; assembler (nouvelles simulations et celles touchées par les changements communs) ;
    rejouer les scénarios sur les fichiers assemblés.
 5. Manifeste (`ajouter.py`), `LISEZMOI.md` des laboratoires, `ARCHITECTURE.md`, `JOURNAL.md` (problèmes restants honnêtes).

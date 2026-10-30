@@ -8,8 +8,9 @@ ONDES = ['documents_mur.js', 'tri.js', 'oscilloscope_ecran.js', 'milieu_1d.js', 
 ELEC = [s for s in re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + 'sources/b1_elec2_a4_generateur/page.html').read()) if 'electrolyseur' not in s]
 RC = ['circuit_temps.js', 'condensateur.js', 'commutateur.js', 'boite_resistances.js', 'source_courant.js', 'ecran_acquisition.js', 'interface_acquisition.js', 'documents_mur.js', 'lewis_dessin.js', 'gbf.js', 'gbf_temps.js', 'bobine.js', 'entretien_rlc.js', 'poste_rlc.js', 'circuit_sinus.js', 'oscilloscope_ecran.js', 'oscilloscope.js', 'poste_rlc_force.js', 'modulation.js']
 MECA = [x for x in re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + 'sources/tc_meca4_a1_quantite/page.html').read())] + ['../../commun/documents_mur.js', '../../commun/tri.js']
-OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_dessin.js', 'banc_ressort.js', 'banc_ressort_accessoires.js', 'logiciel_xt.js', 'chronometre_manuel.js', 'potence.js']
+OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dessin.js', 'banc_ressort.js', 'banc_ressort_accessoires.js', 'logiciel_xt.js', 'chronometre_manuel.js', 'potence.js', 'pendule_torsion_dessin.js', 'dynamometre_traction.js']
 SIMS = {
+ 'b2_meca5_a1_energie': ("Laboratoire : énergie des oscillateurs mécaniques", "simulation de l'activité du chapitre « Aspects énergétiques des oscillateurs mécaniques » (2e année du bac) : travail de la force d'un ressort (dynamomètre, aire sous F = f(x)), Epe = ½·K·x², diagrammes d'énergie du solide-ressort et du pendule de torsion, conservation et non-conservation de Em."),
  'b2_meca4_a1_ressort': ("Laboratoire : l'oscillateur solide-ressort", "simulation de l'activité 1 du chapitre « Systèmes mécaniques oscillants » (2e année du bac) : oscillateurs mécaniques (tri), enregistrement x(t) d'un solide-ressort horizontal (capteur, logiciel), période propre, influence de la masse, de la raideur et de l'amortissement."),
  'b2_meca4_a2_torsion': ("Laboratoire : le pendule de torsion", "simulation de l'activité 2 du chapitre « Systèmes mécaniques oscillants » (2e année du bac) : pendule de torsion, chronomètre ; influence du moment d'inertie et de la constante de torsion, T0 = 2π·√(J/C), isochronisme."),
  'b2_meca4_a3_resonance': ("Laboratoire : la résonance mécanique", "simulation de l'activité 3 du chapitre « Systèmes mécaniques oscillants » (2e année du bac) : excitateur (moteur à excentrique) et résonateur (solide-ressort), amplitude selon la fréquence, résonance, influence de l'amortissement."),
@@ -65,7 +66,7 @@ for sid, (titre, role) in SIMS.items():
     tri = ['../../commun/tri.js'] if sid == 'b2_elec5_a1_histoire' else []
     scripts = base + ['../../commun/' + f for f in plus + extra if '../../commun/' + f not in base] + locaux
     if sid.startswith('b2_elec'): scripts = ELEC + ['../../commun/' + f for f in RC] + tri + locaux
-    if sid.startswith('b2_meca'): scripts = MECA + (['../../commun/pointage_video.js'] if sid.startswith(('b2_meca2', 'b2_meca3_a1')) else []) + (['../../commun/circuit_decor.js'] if sid.startswith('b2_meca3') else []) + (['../../commun/' + f for f in OSCILLATEURS] if sid.startswith('b2_meca4') else []) + locaux
+    if sid.startswith('b2_meca'): scripts = MECA + (['../../commun/pointage_video.js'] if sid.startswith(('b2_meca2', 'b2_meca3_a1')) else []) + (['../../commun/circuit_decor.js'] if sid.startswith('b2_meca3') else []) + (['../../commun/' + f for f in OSCILLATEURS] if sid.startswith(('b2_meca4', 'b2_meca5')) else []) + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux
     html = f'''<!doctype html>
 <!--
