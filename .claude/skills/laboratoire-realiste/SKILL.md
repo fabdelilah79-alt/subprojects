@@ -20,7 +20,8 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
    éclateur, feuille, règle, `vecteurs_vitesse.js`, `surcharge.js`), circuits (`circuit.js` et composants, multimètre,
    oscilloscope, GBF, interface d'acquisition), mouvements filmés (`pointage_video.js` : caméra + portable + logiciel de
    pointage, étalonnage, origine, export vers le tableur), chimie (verrerie, réactifs), documents (`documents_mur.js`),
-   tri (`tri.js`), tableur, courbe, carnet. Lire l'en-tête « Reçoit / Produit » du fichier avant de l'utiliser.
+   tri (`tri.js`), tableur, courbe, carnet, ordinateur portable (`portable.js`), niveaux d'énergie (`niveaux_energie.js`),
+   bouton de réglage avec afficheur (`bouton_reglage.js`), bec Bunsen (`bec_bunsen.js`, contexte `{ fond, objets }`). Lire l'en-tête « Reçoit / Produit » du fichier avant de l'utiliser.
 4. Choisir des **valeurs réalistes** (matériel courant d'un lycée marocain : bobine 1 000 spires, GBF 50 Ω, multimètre
    2 000 points, éclateur 20/40/60 ms…) et **vérifier la physique sur le papier** : ordres de grandeur, ce que verra
    l'élève, ce qu'il mesurera, avec quelle précision. Les nombres attendus doivent sortir de la simulation elle-même.
@@ -113,6 +114,12 @@ un pictogramme ni à une forme abstraite.
 - Solide en rotation filmé : `L.pointage_video(g, { …, polaire: true })` donne θ = (Ox, OM) sans saut d'un tour (origine
   sur l'axe) ; la vérification contrôle `origine_m` (position de l'origine dans le champ filmé).
 - Un fil clair (#e9e2cf) disparaît devant le mur carrelé : fil tendu en gris-brun (#7d735c).
+- Les fichiers locaux sont chargés **par ordre alphabétique** : un fichier qui lit `L.quelque_chose` dès son chargement
+  (`const D = L.tubes_dessin`) doit être nommé pour passer avant (ex. `dessin_tubes.js` avant `poste_tubes.js`).
+- `L.documents_mur` place la vue « document ouvert » au moment de l'appel : l'appeler tôt (affiches derrière le matériel),
+  puis, à la fin du poste, `g.append(g.querySelector(".document-ouvert"))` pour que le document ouvert passe devant tout.
+- Un objet fin (fil, anse, aiguille) se touche mal : lui ajouter une zone invisible (`opacity: 0.001`) autour de lui.
+- Une fenêtre de logiciel où un objet peut sortir (orbite, échappement) : découper le dessin au cadre (`clipPath`).
 
 ## 7. Outils (dossier `outils/` de cette compétence)
 

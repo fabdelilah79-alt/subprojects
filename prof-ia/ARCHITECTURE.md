@@ -542,6 +542,10 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_meca4_a2_torsion/ | Pendule de torsion : moment d'inertie, constante de torsion, isochronisme (poste_torsion.js, simulation.js ; dessin commun). |
 | contenu/ressources/laboratoires/sources/b2_meca4_a3_resonance/ | Résonance : excitateur, résonateur, témoins d'amplitude, amortissement (temoins.js, poste_resonance.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_meca5_a1_energie/ | Travail de la force d'un ressort, énergies du solide-ressort et du pendule de torsion (poste_travail.js, poste_energie_ressort.js, poste_energie_torsion.js, missions_energie.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/portable.js | Ordinateur portable de la taille voulue (écran, clavier, souris en option) ; renvoie la dalle où se dessine le logiciel. |
+| contenu/ressources/laboratoires/commun/niveaux_energie.js | Diagramme des niveaux d'énergie d'un atome, à l'échelle, étiquettes décalées si elles sont trop proches. |
+| contenu/ressources/laboratoires/sources/b2_meca6_a1_astres_atomes/ | Astres et atomes : documents, simulateur d'orbites (orbites_modele.js, orbites_ecran.js, orbites_panneau.js, logiciel_orbites.js), poste_astres.js, verifications_astres.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca6_a2_spectres/ | Quantification : Franck et Hertz (fh_modele.js, fh_dessin.js, fh_logiciel.js, fh_boucle.js, poste_franck_hertz.js), tubes spectraux (dessin_tubes.js, poste_tubes.js), sodium (dessin_sodium.js, poste_sodium.js), spectroscope.js, spectres_donnees.js, missions_spectres.js, simulation.js. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

@@ -691,3 +691,17 @@ Matériel commun nouveau ou modifié (signalé à l'enseignant) : banc_ressort_p
 surcharges et soufflerie redessinés comme le matériel réel), logiciel_xt.js (options « grandeur » et vue « Énergies »,
 désactivées par défaut), pendule_torsion_dessin.js (le dessin du pendule de torsion, déplacé de b2_meca4_a2_torsion pour
 servir aux deux chapitres, avec un capteur de rotation en option).
+
+## Chapitre 2e année du bac « L'atome et la mécanique de Newton » (fiche 2bac/meca6_atome)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca6_a1_astres_atomes.html | A1 : comparer systèmes astronomiques et atomiques | O1, O2 | Documents (gravitation, Coulomb, données, niveaux de l'hydrogène) ; Fe et Fg entre proton et électron au tableur : toutes deux en 1/d², rapport 2,3 × 10³⁹ ; simulateur d'orbites sur le portable : satellites (chute, ellipse, échappement, orbites circulaires de tout rayon, T²/r³ = 4π²/(G·M), masse de la Terre) ; électron autour du proton (toutes les énergies possibles selon Newton, chute en 1,6 × 10⁻¹¹ s s'il rayonne) : limites de la mécanique de Newton. |
+| b2_meca6_a2_spectres.html | A2 : documents sur la quantification ; étude de spectres | O2, O3, O4 | Expérience de Franck et Hertz au mercure (four, rampe 0-30 V, logiciel IA = f(U2)) : maximums tous les 4,9 V, énergie échangée 4,9 eV, comparaison à 140 °C et au photon UV de 253,7 nm ; tubes spectraux et spectroscope à échelle : raies de l'hydrogène, E = h·ν, transitions vers n = 2, autres gaz, tube X à identifier ; sodium : raie d'émission à 589 nm et raie noire d'absorption à la même place. |
+
+Comme le demandent les orientations, les deux forces en 1/r² sont comparées et c'est la différence des structures (orbites
+quelconques d'un côté, atomes identiques et énergie quantifiée de l'autre) qui montre les limites de la mécanique de Newton ;
+les échanges d'énergie sont étudiés avec un faisceau d'électrons de même énergie cinétique (Franck et Hertz) et avec la
+lumière (raies d'émission et d'absorption). Matériel commun nouveau : portable.js (ordinateur portable de toute taille),
+niveaux_energie.js (diagramme des niveaux d'énergie). Fichier commun modifié (signalé) : documents_mur.js (marge à droite
+du texte des affiches : le texte touchait ou dépassait le bord sur 12 simulations ; aucune ne déborde plus).

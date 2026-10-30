@@ -2787,7 +2787,7 @@ Utilisé par : les simulations de chimie (industrie chimique, techniques traditi
     if (d.chaine) chaine(g, d, x, y + taille * 4, l, taille);
     const debut = y + taille * (d.chaine ? 7.2 : 3.6), place = d.dessin ? 0.6 : 1;
     if (d.dessin) d.dessin(g, x + l * 0.8, y + h * 0.5, taille / 6.2);
-    lignes(d.texte, Math.floor((l * place) / (taille * 0.52))).forEach((t, i) => L.texte(g, x + 10, debut + i * taille * 1.35, t, { "text-anchor": "start", "font-size": taille, fill: "#222" }));
+    lignes(d.texte, Math.floor((l * place - 20) / (taille * 0.52))).forEach((t, i) => L.texte(g, x + 10, debut + i * taille * 1.35, t, { "text-anchor": "start", "font-size": taille, fill: "#222" }));
   }
 
   L.documents_mur = function (g, documents, fait) {

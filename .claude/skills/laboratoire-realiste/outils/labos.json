@@ -2823,5 +2823,48 @@
    "Enregistre x(t), affiche les énergies, lit Em, calcule la vitesse maximale, puis montre que Em diminue avec la palette.",
    "Enregistre θ(t) du pendule de torsion, affiche Ec, Ept et Em et reconnaît l'expression de l'énergie potentielle de torsion."
   ]
+ },
+ {
+  "id": "b2_meca6_a1_astres_atomes",
+  "chapitre": "2bac/meca6_atome",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 55,
+  "description": "Une paillasse : quatre documents au mur (interaction gravitationnelle, loi de Coulomb, données, ce que montrent les expériences sur l'atome d'hydrogène avec le diagramme de ses niveaux d'énergie) et un portable avec un simulateur d'orbites (mécanique de Newton, orbites de Kepler exactes). Forces électrostatique et gravitationnelle entre proton et électron au tableur : toutes deux en 1/d², rapport 2,3 × 10³⁹ quelle que soit la distance. Satellites de la Terre : chute, ellipses, échappement, orbites circulaires de tout rayon, T²/r³ = 4π²/(G·M) (pente 9,9 × 10⁻¹⁴ s²/m³, M = 5,97 × 10²⁴ kg). Électron autour du proton : orbites circulaires de tout rayon (E = −13,6 eV à 53 pm, −7,2 eV à 100 pm), chute en spirale en 1,6 × 10⁻¹¹ s si l'électron rayonne ; comparaison avec l'énergie quantifiée et la stabilité de l'atome : limites de la mécanique de Newton.",
+  "conceptions": [
+   "L'électron tourne autour du noyau comme une planète autour du Soleil.",
+   "Dans l'atome, la gravitation retient l'électron.",
+   "L'énergie d'un atome peut prendre n'importe quelle valeur."
+  ],
+  "faire": [
+   "Lit les lois de gravitation et de Coulomb, calcule au tableur Fe, Fg et leur rapport pour trois distances et conclut que la gravitation est négligeable dans l'atome.",
+   "Lance des satellites (chute, ellipse, échappement), obtient trois orbites circulaires, trace T² en fonction de r³ et en déduit la masse de la Terre.",
+   "Obtient des orbites circulaires de l'électron, lit leur énergie, la compare aux niveaux quantifiés de l'hydrogène, puis voit l'électron qui rayonne tomber sur le noyau."
+  ]
+ },
+ {
+  "id": "b2_meca6_a2_spectres",
+  "chapitre": "2bac/meca6_atome",
+  "activite": 2,
+  "objectifs": [
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 80,
+  "description": "Trois paillasses. 1 : expérience de Franck et Hertz au mercure (four réglable, appareil d'alimentation et de mesure, mode manuel et rampe 0-30 V, logiciel d'acquisition IA = f(U2)) : maximums tous les 4,9 V, droite U2 max = f(k) de pente 4,85 V, énergie cédée 4,9 eV = 7,8 × 10⁻¹⁹ J, chutes moins marquées à 140 °C, même énergie que le photon UV de 253,7 nm. 2 : alimentation 5 kV et tubes spectraux (H₂, He, Hg, Ne et un tube X), spectroscope à échelle graduée : quatre raies de l'hydrogène, ν, E = h·ν en J et en eV au tableur, transitions 3 → 2 (1,89 eV) et 4 → 2 (2,55 eV), identification du gaz du tube X. 3 : bec Bunsen et anse trempée dans l'eau salée, lanterne de lumière blanche : raie jaune d'émission à 589 nm (2,11 eV), spectre continu, raie noire d'absorption à la même longueur d'onde.",
+  "conceptions": [
+   "Un atome peut absorber n'importe quelle quantité d'énergie.",
+   "Les raies d'un spectre sont des couleurs filtrées par l'appareil.",
+   "Le spectre d'absorption n'a rien à voir avec le spectre d'émission."
+  ],
+  "faire": [
+   "Chauffe le four, explore IA en faisant varier U2, enregistre la courbe, mesure les tensions des maximums, en déduit ΔU = 4,9 V et l'énergie échangée, compare à 140 °C et au photon UV du mercure.",
+   "Observe le spectre de raies de l'hydrogène, calcule au tableur la fréquence et l'énergie des photons, relie les raies aux niveaux d'énergie, observe les spectres d'autres gaz et identifie le gaz du tube X.",
+   "Observe la raie jaune du sodium dans la flamme, calcule l'énergie de ses photons, puis la raie noire d'absorption à la même longueur d'onde dans le spectre de la lumière blanche."
+  ]
  }
 ]

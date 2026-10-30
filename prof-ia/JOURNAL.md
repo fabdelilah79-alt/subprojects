@@ -1234,3 +1234,27 @@ Problèmes restants, à faire par l'enseignant :
   cordelette accrochés au centre des œillets (banc_ressort.js, poste_travail.js) ; option deplacable du banc (vraie par
   défaut), fausse quand le dynamomètre tient le mobile. Règle ajoutée à la compétence. Simulations rejouées : énergie,
   solide-ressort, résonance (sources et fichiers assemblés).
+
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « L'atome et la mécanique de Newton »
+
+- Deux simulations, une par activité de la fiche, inscrites au manifeste (149 ressources).
+- b2_meca6_a1_astres_atomes (O1, O2) : documents au mur ; tableur Fe, Fg, Fe/Fg ; simulateur d'orbites sur le portable
+  (orbites de Kepler exactes, échappement calculé pas à pas, chute en spirale de l'électron qui rayonne, Terre réaliste
+  de espace.js). Mesuré : Fe/Fg = 2,27 × 10³⁹ ; pente de T² = f(r³) 9,895 × 10⁻¹⁴ s²/m³ (théorie 9,904 × 10⁻¹⁴),
+  M = 5,98 × 10²⁴ kg ; E = −13,58 eV à 53 pm ; chute en 1,56 × 10⁻¹¹ s.
+- b2_meca6_a2_spectres (O2, O3, O4) : Franck et Hertz (modèle : chocs inélastiques de 4,9 eV, probabilité liée à la
+  pression de vapeur du mercure, énergies étalées de 0,3 eV, contre-tension 1,5 V) ; tubes spectraux H₂, He, Hg, Ne, X
+  sur alimentation 5 kV, spectroscope à échelle graduée (raies du NIST) ; sodium en émission et en absorption (bec
+  Bunsen commun, lanterne sur support élévateur, anse en nichrome). Mesuré : maximums à 6,38 / 11,16 / 16,04 / 20,88 /
+  25,74 V, pente 4,84 V ; raies de l'hydrogène lues à 2 nm près ; 1,89 eV pour la raie rouge.
+- Nouveaux fichiers communs : portable.js, niveaux_energie.js. Fichier commun modifié (signalé) : documents_mur.js, marge
+  de 20 px à droite du texte des affiches (le texte touchait ou dépassait le bord dans 12 simulations). Contrôle
+  automatique sur les 22 simulations qui affichent des documents : plus aucun texte ne déborde, ni sur l'affiche ni sur le
+  document ouvert ; elles ont été réassemblées.
+- Vérifié : parcours complets sur les sources et sur les fichiers assemblés, sans erreur ; pytest ; contrôle de structure.
+
+Problèmes restants, à faire par l'enseignant :
+- Le four de Franck et Hertz chauffe en quelques secondes (constante de temps 6 s) au lieu de 10 à 15 minutes.
+- La pente mesurée (4,84 V) est un peu inférieure à 4,9 V, comme dans les vraies mesures ; la tolérance est de ± 0,15 V.
+- La chute de l'électron en spirale est montrée en 8 s avec quelques tours (en réalité environ 200 000 tours).
+- Le spectroscope de poche ne sépare pas le doublet du sodium (589,0 et 589,6 nm) : une seule raie est vue.
