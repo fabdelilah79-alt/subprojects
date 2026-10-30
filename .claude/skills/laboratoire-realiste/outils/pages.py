@@ -12,6 +12,8 @@ OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dess
 ORBITES = ['continents.js', 'espace.js', 'portable.js', 'orbites_modele.js', 'orbites_ecran.js', 'orbites_panneau.js', 'logiciel_orbites.js']
 MECA6 = ORBITES + [ 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
 SIMS = {
+ 'b2_chim4_a1_qr_constant': ("Laboratoire : quotient de réaction à l'équilibre", "simulation de l'activité 1 du chapitre « État d'équilibre d'un système chimique » (2e année du bac) : conductimétrie de quatre solutions d'acide éthanoïque, Qr,éq constant (constante d'équilibre K), taux d'avancement final selon l'état initial."),
+ 'b2_chim4_a2_taux_acides': ("Laboratoire : taux d'avancement final de quatre acides", "simulation de l'activité 2 du chapitre « État d'équilibre d'un système chimique » (2e année du bac) : conductimétrie de quatre acides carboxyliques de même concentration, taux d'avancement final et constante d'équilibre."),
  'b2_chim3_s1_equilibre_dynamique': ("Laboratoire : l'équilibre dynamique", "simulation de la partie propre aux filières PC et SM du chapitre « Transformations chimiques qui se produisent dans les deux sens » (2e année du bac) : logiciel de simulation de A + B ⇌ C + D, chocs efficaces dans les deux sens, équilibre dynamique."),
  'b2_chim3_a1_ph_deux_sens': ("Laboratoire : le pH et les deux sens d'une réaction", "simulation de l'activité du chapitre « Transformations chimiques qui se produisent dans les deux sens » (2e année du bac) : pH-mètre étalonné, pH de trois acides, avancement final, taux d'avancement final, ajouts d'acide éthanoïque pur et d'éthanoate de sodium."),
  'b2_chim2_a2_mesures_physiques': ("Laboratoire : suivi par une mesure physique", "simulation de l'activité 2 du chapitre « Suivi temporel d'une transformation, vitesse de réaction » (2e année du bac) : pression du dihydrogène formé par le magnésium dans l'acide, conductivité pendant l'hydrolyse du 2-chloro-2-méthylpropane, relevés, tableur-grapheur, x = f(t), t1/2, choix de la méthode de suivi."),
@@ -91,9 +93,9 @@ for sid, (titre, role) in SIMS.items():
     if sid == 'b1_elec2_s1_bilan_electronique':
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
         scripts = list(dict.fromkeys(lu('tc_elec4_a1_transistor') + lu('tc_elec4_a2_ao') + ['../../commun/capteurs_numeriques.js'])) + locaux
-    if sid.startswith(('b2_chim1', 'b2_chim2', 'b2_chim3')):
+    if sid.startswith(('b2_chim1', 'b2_chim2', 'b2_chim3', 'b2_chim4')):
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
-        scripts = list(dict.fromkeys(lu('b1_chim4_a2_electrons') + ['../../commun/' + f for f in ['chimie_decor.js', 'bain_marie_physique.js', 'chronometre_manuel.js', 'reactions_lentes.js', 'portable.js', 'capteurs_numeriques.js', 'documents_mur.js', 'horloge_releves.js', 'verre_montre.js', 'spatule_physique.js', 'equilibre_acide.js', 'ph_metre.js']])) + locaux
+        scripts = list(dict.fromkeys(lu('b1_chim4_a2_electrons') + ['../../commun/' + f for f in ['chimie_decor.js', 'bain_marie_physique.js', 'chronometre_manuel.js', 'reactions_lentes.js', 'portable.js', 'capteurs_numeriques.js', 'documents_mur.js', 'horloge_releves.js', 'verre_montre.js', 'spatule_physique.js', 'equilibre_acide.js', 'ph_metre.js', 'banc_conductimetrie.js']])) + locaux
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux
     if sid.startswith('b2_meca6'): scripts = MECA + ['../../commun/' + f for f in MECA6 if os.path.exists(B + 'commun/' + f)] + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux

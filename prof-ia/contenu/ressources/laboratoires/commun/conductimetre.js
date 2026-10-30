@@ -6,9 +6,11 @@ Rôle : conductimètre de paillasse aux vraies dimensions : boîtier (140 mm × 
        conductimetrie.js, complétées ici) + 5 × 10⁻⁴ S/m pour l'eau ; 1 S/m = 10 mS/cm. L'affichage rejoint la valeur vraie
        en environ 1 s si la solution est agitée, en plus de 10 s sinon (il faut agiter pour lire une valeur juste).
 Reçoit : le contexte de la paillasse et { x (milieu du boîtier), sol, e, tige (x de la tige), sonde_x, haut, bas (y de la
-         pointe de la sonde, levée et plongée), recipients() (récipients où plonger), agite(r) }.
+         pointe de la sonde, levée et plongée), recipients() (récipients où plonger), agite(r) ; options désactivées par défaut :
+         equilibre (σ calculée sur les ions à l'équilibre des couples faibles : Labo.sigma_equilibre, equilibre_acide.js),
+         micro (sous 2 mS/cm, affichage en µS/cm à une décimale, comme un appareil à changement de calibre) }.
 Produit : Labo.conductimetre(ctx, reglage) -> { etat() -> { plonge, dans (id du récipient), sigma (mS/cm, valeur vraie),
-          affiche (texte de l'afficheur), stable } } ; Labo.sigma_phase(phase) (S/m).
+          affiche (texte de l'afficheur), unite (« mS/cm » ou « µS/cm »), stable } } ; Labo.sigma_phase(phase) (S/m).
 Utilisé par : les postes de titrage conductimétrique.
 */
 (function (L) {
@@ -23,9 +25,9 @@ Utilisé par : les postes de titrage conductimétrique.
     L.svg("rect", { x: x - l / 2, y, width: l, height: h, rx: 5, fill: "#d9dcd8", stroke: "#7f8784" }, g);
     L.svg("rect", { x: x - l / 2 + 10, y: y + 10, width: l - 20, height: 34, rx: 3, fill: "#b7c3a6", stroke: "#1b1e1a" }, g);
     L.texte(g, x, y + 56, "CONDUCTIMÈTRE", { "font-size": 7.5, "font-weight": 700, fill: "#37474f" });
-    L.texte(g, x + l / 2 - 14, y + 38, "mS/cm", { "font-size": 6.5, "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
+    const unite = L.texte(g, x + l / 2 - 14, y + 38, "mS/cm", { "font-size": 6.5, "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
     L.svg("circle", { cx: x + l / 2 - 14, cy: y + h - 14, r: 5, fill: "#2b3035" }, g);
-    return L.texte(g, x + l / 2 - 16, y + 25, "", { "font-size": 20, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
+    return { ecran: L.texte(g, x + l / 2 - 16, y + 25, "", { "font-size": 20, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" }), unite };
   }
 
   function sonde(g, sx, y, e, tige, boite) {
@@ -47,9 +49,9 @@ Utilisé par : les postes de titrage conductimétrique.
     return r.pose.y - r.pr.hauteur_de(r.c.volume()) * e < p.y - FENETRE * e;
   }
 
-  L.conductimetre = function (ctx, { x, sol, e = 1, tige, sonde_x, haut, bas, recipients, agite }) {
+  L.conductimetre = function (ctx, { x, sol, e = 1, tige, sonde_x, haut, bas, recipients, agite, equilibre = false, micro = false }) {
     // Boîtier, sonde à glisser ; mesure 10 fois par seconde, avec le temps de réponse.
-    const ecran = boitier(L.svg("g", { class: "conductimetre" }, ctx.fond), x, sol, e), s = { y: haut, aff: 0, vrai: 0, dans: null, plonge: false };
+    const { ecran, unite } = boitier(L.svg("g", { class: "conductimetre" }, ctx.fond), x, sol, e), s = { y: haut, aff: 0, vrai: 0, dans: null, plonge: false };
     const gs = L.svg("g", { class: "sonde", role: "slider", "aria-label": "Sonde du conductimètre" }, ctx.objets), boite = { x: x - 40 * e, y: sol - 90 * e };
     const dessiner = () => { sonde(gs, sonde_x, s.y, e, tige, boite); L.svg("rect", { x: sonde_x - 14, y: s.y - LONG * e, width: 28, height: LONG * e, fill: "#fff", opacity: 0.01 }, gs); };
     L.glissable(gs, { soulever: false, debut: () => ({ x: sonde_x, y: s.y }), deplacer: (p) => { s.y = Math.max(haut, Math.min(bas, p.y)); dessiner(); } });
@@ -59,14 +61,19 @@ Utilisé par : les postes de titrage conductimétrique.
       const r = (recipients() || []).find((k) => !k.tenu && Math.abs(k.pose.x - sonde_x) < k.pr.r(k.pr.H) * e);
       if (r && gs.nextSibling !== r.g) ctx.objets.insertBefore(gs, r.g);
     };
-    const ecrire = (v) => { ecran.textContent = (v < 2 ? v.toFixed(3) : v < 20 ? v.toFixed(2) : v.toFixed(1)).replace(".", ","); };
+    const ecrire = (v) => {
+      // Valeur affichée (mS/cm), ou en µS/cm sous 2 mS/cm avec l'option micro.
+      const us = micro && v < 2;
+      ecran.textContent = (us ? (1000 * v).toFixed(1) : v < 2 ? v.toFixed(3) : v < 20 ? v.toFixed(2) : v.toFixed(1)).replace(".", ",");
+      unite.textContent = us ? "µS/cm" : "mS/cm";
+    };
     setInterval(() => {
       derriere();
       const p = { x: sonde_x, y: s.y }, r = (recipients() || []).find((k) => plongee(k, p, e)), ph = r && r.c.phases.find((q) => q.classe === "aqueuse");
-      s.vrai = ph ? 10 * L.sigma_phase(ph) : 0; s.dans = r ? r.id : null; s.plonge = !!ph;
+      s.vrai = ph ? 10 * (equilibre ? L.sigma_equilibre(ph) : L.sigma_phase(ph)) : 0; s.dans = r ? r.id : null; s.plonge = !!ph;
       s.aff += (s.vrai - s.aff) * (1 - Math.exp(-0.1 / (r && agite(r) ? 0.35 : 9)));
       ecrire(s.aff * (1 + (Math.random() - 0.5) * 0.002));
     }, 100);
-    return { etat: () => ({ plonge: s.plonge, dans: s.dans, sigma: s.vrai, affiche: ecran.textContent, stable: Math.abs(s.aff - s.vrai) <= 0.003 * s.vrai + 1e-4 }) };
+    return { etat: () => ({ plonge: s.plonge, dans: s.dans, sigma: s.vrai, affiche: ecran.textContent, unite: unite.textContent, stable: Math.abs(s.aff - s.vrai) <= 0.003 * s.vrai + 1e-4 }) };
   };
 })(window.Labo);

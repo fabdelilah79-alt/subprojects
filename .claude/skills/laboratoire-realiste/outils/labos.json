@@ -3193,5 +3193,46 @@
   "faire": [
    "Lance la simulation depuis les réactifs puis depuis les produits, constate le même état final non total et que les chocs efficaces continuent autant dans les deux sens."
   ]
+ },
+ {
+  "id": "b2_chim4_a1_qr_constant",
+  "chapitre": "2bac/chim4_equilibre",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 45,
+  "description": "Banc de conductimétrie : agitateur magnétique, sonde sur sa tige, conductimètre à calibre automatique (µS/cm), conductivité calculée sur les ions à l'équilibre ; quatre béchers d'acide éthanoïque à 1,0 × 10⁻², 5,0 × 10⁻³, 2,0 × 10⁻³ et 1,0 × 10⁻³ mol/L : σ = 160, 113, 70 et 49 µS/cm. Au tableur : [H₃O⁺]éq = σ / (λ(H₃O⁺) + λ(CH₃CO₂⁻)), Qr,éq ≈ 1,8 × 10⁻⁵ pour les quatre états initiaux (K) ; τ passe de 0,04 à 0,13 quand l'acide est dilué.",
+  "conceptions": [
+   "Le quotient de réaction à l'équilibre dépend des quantités initiales.",
+   "Un acide plus concentré réagit davantage avec l'eau (τ plus grand).",
+   "À l'équilibre, plus aucune réaction n'a lieu."
+  ],
+  "faire": [
+   "Mesure la conductivité de quatre solutions d'acide éthanoïque, calcule [H₃O⁺]éq et Qr,éq au tableur, constate que Qr,éq ne dépend pas de l'état initial (K) alors que τ en dépend."
+  ]
+ },
+ {
+  "id": "b2_chim4_a2_taux_acides",
+  "chapitre": "2bac/chim4_equilibre",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O3",
+   "O5"
+  ],
+  "duree_min": 35,
+  "description": "Même banc de conductimétrie ; quatre acides à 1,0 × 10⁻² mol/L : méthanoïque (505 µS/cm), benzoïque (293), éthanoïque (160), propanoïque (140). Au tableur : [H₃O⁺]éq = σ / (λ(H₃O⁺) + λ(A⁻)) et τ = 0,125 ; 0,077 ; 0,041 ; 0,036 ; même classement que les constantes d'équilibre K ; K de l'acide éthanoïque retrouvé à partir de τ.",
+  "conceptions": [
+   "Tous les acides de même concentration ont le même taux d'avancement final.",
+   "Le taux d'avancement final ne dépend pas de la constante d'équilibre."
+  ],
+  "faire": [
+   "Mesure la conductivité de quatre acides de même concentration, calcule τ au tableur, relie le classement des τ à celui des constantes d'équilibre K et retrouve K à partir de τ."
+  ]
  }
 ]

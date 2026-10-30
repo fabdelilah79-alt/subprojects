@@ -5501,6 +5501,63 @@
         "Une réaction ne peut avoir lieu que des réactifs vers les produits.",
         "À l'équilibre, il y a autant de réactifs que de produits."
       ]
+    },
+    {
+      "id": "b2_chim4_a1_qr_constant",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim4_a1_qr_constant.html",
+      "description": "Banc de conductimétrie : agitateur magnétique, sonde sur sa tige, conductimètre à calibre automatique (µS/cm), conductivité calculée sur les ions à l'équilibre ; quatre béchers d'acide éthanoïque à 1,0 × 10⁻², 5,0 × 10⁻³, 2,0 × 10⁻³ et 1,0 × 10⁻³ mol/L : σ = 160, 113, 70 et 49 µS/cm. Au tableur : [H₃O⁺]éq = σ / (λ(H₃O⁺) + λ(CH₃CO₂⁻)), Qr,éq ≈ 1,8 × 10⁻⁵ pour les quatre états initiaux (K) ; τ passe de 0,04 à 0,13 quand l'acide est dilué.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim4_equilibre",
+      "activite": "Conductimétrie : Qr,éq constant pour différents états initiaux (acides carboxyliques).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Qr,éq pour différents états initiaux",
+          "ce_que_fait_l_eleve": "Mesure la conductivité de quatre solutions d'acide éthanoïque, calcule [H₃O⁺]éq et Qr,éq au tableur, constate que Qr,éq ne dépend pas de l'état initial (K) alors que τ en dépend.",
+          "conclusion": "Dans chaque solution, l'équilibre CH₃CO₂H + H₂O ⇌ CH₃CO₂⁻ + H₃O⁺ est atteint. La conductivité donne [H₃O⁺]éq = [CH₃CO₂⁻]éq = σ / (λ(H₃O⁺) + λ(CH₃CO₂⁻)). Le quotient de réaction à l'équilibre, Qr,éq = [CH₃CO₂⁻]éq·[H₃O⁺]éq / [CH₃CO₂H]éq ≈ 1,8 × 10⁻⁵, est le même pour les quatre concentrations initiales : c'est la constante d'équilibre K (à 25 °C). Le taux d'avancement final, lui, dépend de l'état initial : 4 % à 1,0 × 10⁻² mol/L, 12 % à 1,0 × 10⁻³ mol/L. À l'équilibre, les deux réactions inverses continuent à la même vitesse (équilibre dynamique)."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Le quotient de réaction à l'équilibre dépend des quantités initiales.",
+        "Un acide plus concentré réagit davantage avec l'eau (τ plus grand).",
+        "À l'équilibre, plus aucune réaction n'a lieu."
+      ]
+    },
+    {
+      "id": "b2_chim4_a2_taux_acides",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim4_a2_taux_acides.html",
+      "description": "Même banc de conductimétrie ; quatre acides à 1,0 × 10⁻² mol/L : méthanoïque (505 µS/cm), benzoïque (293), éthanoïque (160), propanoïque (140). Au tableur : [H₃O⁺]éq = σ / (λ(H₃O⁺) + λ(A⁻)) et τ = 0,125 ; 0,077 ; 0,041 ; 0,036 ; même classement que les constantes d'équilibre K ; K de l'acide éthanoïque retrouvé à partir de τ.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim4_equilibre",
+      "activite": "Taux d'avancement final d'acides de même concentration.",
+      "objectifs": [
+        "O1",
+        "O3",
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Taux d'avancement final et constante d'équilibre",
+          "ce_que_fait_l_eleve": "Mesure la conductivité de quatre acides de même concentration, calcule τ au tableur, relie le classement des τ à celui des constantes d'équilibre K et retrouve K à partir de τ.",
+          "conclusion": "À la même concentration (1,0 × 10⁻² mol/L), les quatre acides ne réagissent pas autant avec l'eau : τ ≈ 0,12 (méthanoïque), 0,08 (benzoïque), 0,04 (éthanoïque), 0,04 (propanoïque). Le classement est celui des constantes d'équilibre K : plus K est grande, plus le taux d'avancement final est grand. Le taux d'avancement final dépend donc de K (et de l'état initial) ; à partir de τ, on retrouve K = C·τ² / (1 − τ)."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "Tous les acides de même concentration ont le même taux d'avancement final.",
+        "Le taux d'avancement final ne dépend pas de la constante d'équilibre."
+      ]
     }
   ]
 }

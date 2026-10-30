@@ -767,3 +767,13 @@ Activité 2 : fichier commun nouveau `horloge_releves.js` (horloge murale et feu
 
 Fichiers communs nouveaux : `equilibre_acide.js` (pH exact par l'électroneutralité) et `ph_metre.js` (pH-mètre à étalonner, électrode
 combinée). La fiche du chapitre a reçu l'activité de la partie PC/SM.
+
+## Chapitre 2e année du bac « État d'équilibre d'un système chimique » (fiche 2bac/chim4_equilibre)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim4_a1_qr_constant.html | Conductimétrie : Qr,éq constant pour différents états initiaux | O1 à O5 | σ de l'acide éthanoïque à 1,0 × 10⁻², 5,0 × 10⁻³, 2,0 × 10⁻³, 1,0 × 10⁻³ mol/L (160, 113, 70, 49 µS/cm) ; tableur : [H₃O⁺]éq et Qr,éq ≈ 1,8 × 10⁻⁵ pour les quatre (K) ; τ de 0,04 à 0,13 selon la dilution ; équilibre dynamique. |
+| b2_chim4_a2_taux_acides.html | Taux d'avancement final d'acides de même concentration | O1, O3, O5 | σ de quatre acides à 1,0 × 10⁻² mol/L ; τ = 0,125 (méthanoïque), 0,077 (benzoïque), 0,041 (éthanoïque), 0,036 (propanoïque), même ordre que K ; K retrouvé à partir de τ. |
+
+Fichier commun nouveau : `banc_conductimetrie.js`. Fichiers communs modifiés : `conductimetre.js` (options `equilibre` et `micro`,
+désactivées par défaut) ; `equilibre_acide.js` (acides benzoïque et propanoïque, solutions diluées, `Labo.sigma_equilibre`).

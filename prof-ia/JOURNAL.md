@@ -1467,3 +1467,17 @@ Problèmes restants : activités assimilées aux concentrations (pH de HCl 2,00 
 pas rincée entre deux solutions (pas de contamination simulée) ; dans le logiciel, l'énergie de réaction n'est pas comptée
 (parois à température fixe) et les petits nombres de particules font fluctuer l'état final (17 à 21 C).
 
+## 2026-10-30 — État d'équilibre d'un système chimique (b2_chim4_a1_qr_constant, b2_chim4_a2_taux_acides)
+
+- Banc commun banc_conductimetrie.js ; conductimètre : options equilibre (σ sur les ions à l'équilibre des couples faibles,
+  equilibre_acide.js) et micro (affichage en µS/cm sous 2 mS/cm), désactivées par défaut.
+- Activité 1 : σ mesurées 160,5 / 112,8 / 70,5 / 49,2 µS/cm (théorie identique) ; Qr,éq = 1,76 ; 1,77 ; 1,79 ;
+  1,81 × 10⁻⁵ (Ka = 1,74 × 10⁻⁵ : la légère dérive vient de σ(eau distillée) = 1 µS/cm, comme en vrai) ; τ = 0,04 à 0,13.
+- Activité 2 : σ = 505 / 293 / 160 / 140 µS/cm ; τ = 0,125 / 0,077 / 0,041 / 0,036 ; K(CH₃COOH) retrouvé : 1,8 × 10⁻⁵.
+- Un bécher déplacé vite déborde dans le bécher voisin (physique des liquides) : les tests déplacent les béchers doucement ;
+  la consigne le conseille.
+- Régression : titrage conductimétrique de 1re année, suivi par conductimétrie (chim2), pH-mètre (chim3) rejoués.
+
+Problèmes restants : la conductivité de l'eau distillée n'est pas soustraite (l'élève pourrait la mesurer : à proposer) ;
+λ à 25 °C, activités assimilées aux concentrations ; la sonde n'est pas rincée entre deux solutions.
+
