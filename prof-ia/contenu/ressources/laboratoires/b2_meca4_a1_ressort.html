@@ -2918,11 +2918,13 @@ Rôle : pièces détaillées du banc à coussin d'air, dessinées comme le maté
        (monture en acier, deux pastilles aimantées, vis moletée), surcharge cylindrique en laiton, soufflerie (grille,
        interrupteur à voyant, embout du tuyau, pieds en caoutchouc).
 Reçoit : le groupe SVG et la position de chaque pièce (px) ; HAUT = haut du rail.
-Produit : Labo.pieces_banc = { mobile(g, x, haut, long, n, amortisseur), palette(g, x, y, couchee), aimant(g, x, y),
+Produit : Labo.pieces_banc = { OEILLET (centre des œillets à 5,4 px des faces du mobile), mobile(g, x, haut, long, n, amortisseur), palette(g, x, y, couchee), aimant(g, x, y),
           surcharge(g, x, y), soufflerie(g, x, y) }.
 Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
 */
 (function (L) {
+  const OEILLET = 5.4;
+
   function surcharge(g, x, y) {
     // Masse de 100 g en laiton (cylindre de 14 mm vu un peu d'en haut) posée sur y.
     L.svg("rect", { x: x - 7, y: y - 9, width: 14, height: 9, fill: "url(#laiton)", stroke: "#7a5a14", "stroke-width": 0.5 }, g);
@@ -2968,7 +2970,11 @@ Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
     L.svg("rect", { x, y: haut - 22, width: long, height: 7, rx: 1.5, fill: "#b9352c", stroke: "#6b1813", "stroke-width": 0.7 }, gr);
     L.svg("rect", { x: x + 1.5, y: haut - 21.5, width: long - 3, height: 1.6, fill: "#fff", opacity: 0.3 }, gr);
     for (const dx of [5, long - 5]) L.svg("circle", { cx: x + dx, cy: haut - 18.5, r: 1.3, fill: "#d9dde0", stroke: "#555", "stroke-width": 0.4 }, gr);
-    for (const [cx, s] of [[x, -1], [x + long, 1]]) L.svg("path", { d: `M${cx} ${haut - 14} h${3 * s} a2.2 2.2 0 1 ${s > 0 ? 1 : 0} 0 0.1`, fill: "none", stroke: "url(#acier)", "stroke-width": 1.4 }, gr);
+    for (const [cx, s] of [[x, -1], [x + long, 1]]) {
+      L.svg("rect", { x: Math.min(cx, cx + 3.2 * s), y: haut - 15, width: 3.2, height: 2, fill: "#cfd4d8", stroke: "#5b636b", "stroke-width": 0.4 }, gr);
+      L.svg("circle", { cx: cx + OEILLET * s, cy: haut - 14, r: 2.4, fill: "none", stroke: "#d9dde0", "stroke-width": 1.5 }, gr);
+      L.svg("circle", { cx: cx + OEILLET * s, cy: haut - 14, r: 3.2, fill: "none", stroke: "#4b5258", "stroke-width": 0.4 }, gr);
+    }
     reflecteur(gr, x + long / 2, haut);
     for (let k = 0; k < n; k++) surcharge(gr, x + (k ? long - 11 : 11), haut - 22);
     if (amortisseur === "aimant") aimant(gr, x + 24, haut - 7, true);
@@ -2990,7 +2996,7 @@ Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
     L.texte(g, x + 38, y + 29, "SOUFFLERIE", { "font-size": 5, "font-weight": 700, fill: "#e6ebef" });
   }
 
-  L.pieces_banc = { mobile, palette, aimant, surcharge, soufflerie };
+  L.pieces_banc = { mobile, palette, aimant, surcharge, soufflerie, OEILLET };
 })(window.Labo);
 </script>
   <script>
@@ -3075,7 +3081,8 @@ Rôle : oscillateur « solide-ressort horizontal » sur le banc à coussin d'air
        (e(t) = a·cos(2π·f·t)). Frottement fluide −h·v (h = h_base, plus 0,25 kg/s avec la palette, 5 kg/s avec l'aimant de
        freinage). Calcul pas à pas (0,5 ms) : m·ẍ = −k·x − k2·(x − e) − h·ẋ. On écarte le mobile à la main (±8 cm) et on
        le lâche sans vitesse ; le capteur mesure la position (x vers la droite, en m, 0 à l'équilibre).
-Reçoit : le groupe SVG et { k (N/m), k2 (0 sans excitateur), h_base (kg/s), a_exc (m), capteur (vrai : capteur de position dessiné),
+Reçoit : le groupe SVG et { k (N/m), k2 (0 sans excitateur), h_base (kg/s), a_exc (m), capteur (vrai : capteur de position dessiné), deplacable
+         (vrai : on peut saisir le mobile ; faux quand un autre appareil le tient),
          sur_lacher(x0), sur_pas(t, x) }.
 Produit : Labo.banc_ressort(g, reglage) -> banc { e (état : n, k, k2, amortisseur, x, v, tenu, f, marche, t), masse(), h(),
           T0() (2π·√(m/(k + k2))), regler(changement) (arrête le mobile), dessiner() }.
@@ -3106,7 +3113,7 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     });
   }
 
-  L.banc_ressort = function (g, { k = 10, k2 = 0, h_base = 0.04, a_exc = 0.015, capteur = true, sur_lacher = () => {}, sur_pas = () => {} } = {}) {
+  L.banc_ressort = function (g, { k = 10, k2 = 0, h_base = 0.04, a_exc = 0.015, capteur = true, deplacable = true, sur_lacher = () => {}, sur_pas = () => {} } = {}) {
     // Banc, ressorts, mobile et excitateur dessinés ; boucle d'animation en temps réel.
     const D = L.banc_ressort_dessin, px = 1000 * D.MM;
     D.fond(g, k2 > 0, capteur);
@@ -3120,10 +3127,10 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
       // Ressorts (bleu : 10 N/m ; vert : 20 N/m), excitateur, mobile à sa position.
       const xm = D.X_EQ + b.e.x * px, couleur = (kk) => (kk > 15 ? "#2e8b57" : "#2f6db3");
       gr.replaceChildren(); gm.replaceChildren();
-      D.ressort(gr, D.X0 + 14, xm, couleur(b.e.k));
-      if (b.e.k2) D.ressort(gr, xm + D.LONG, D.excitateur(gx, b.e.phase, b.excitation() * px, a_exc * px), couleur(b.e.k2));
+      D.ressort(gr, D.X0 + 14, xm - L.pieces_banc.OEILLET, couleur(b.e.k));
+      if (b.e.k2) D.ressort(gr, xm + D.LONG + L.pieces_banc.OEILLET, D.excitateur(gx, b.e.phase, b.excitation() * px, a_exc * px), couleur(b.e.k2));
       b.vue.mobile = D.mobile(gm, xm, b.e.n, b.e.amortisseur);
-      geste(b);
+      if (deplacable) geste(b);
     };
     b.regler = (changement) => { Object.assign(b.e, changement, { x: 0, v: 0 }); b.dessiner(); };
     let avant = null;
@@ -3384,6 +3391,135 @@ Utilisé par : poste_poids.js (tc_meca1_o3_poids), les postes du chapitre « Éq
     L.svg("rect", { x: x1, y: base + 4, width: x2 - x1, height: 34, fill: "url(#bois-face)" }, g);
     L.svg("rect", { x: x1, y: base + 4, width: x2 - x1, height: 2, fill: "#e2bb85" }, g);
     L.texte(g, cx, base + 22, "Masses marquées", { class: "etiquette-carton", fill: "#f3e3c7", "font-size": 18 });
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : dessin du pendule de torsion vu un peu d'en haut (600 px/m) : potence et mandrin qui serre le fil d'acier vertical,
+       barre horizontale (30 cm) fixée au fil en son milieu, deux masselottes de 100 g à la distance d de l'axe, aiguille au
+       bout de la barre devant un cadran horizontal gradué en degrés (sur son pied) ; bobine du fil de rechange. Option :
+       capteur de rotation (potentiomètre) sous la barre, sur le cadran, et son câble jusqu'à une prise.
+Reçoit : { cx (axe du fil, px), socle (haut du socle de la potence, px), capteur { x, y } (prise où arrive le câble) ou null } ;
+         puis l'angle de torsion θ (rad), la distance d (m), le fil monté (A ou B).
+Produit : Labo.pendule_torsion_dessin(reglage) -> { fond(g), barre(g, theta, d, fil), rechange(g, fil), C, R_CADRAN, PX, K, BAS }
+          (le dernier créé est aussi Labo.torsion_dessin, pour les tests).
+Utilisé par : b2_meca4_a2_torsion (poste_torsion.js), b2_meca5_a1_energie (poste_energie_torsion.js).
+*/
+(function (L) {
+  L.pendule_torsion_dessin = function ({ cx = 510, socle = 504, capteur = null } = {}) {
+    // Crée le dessin pour un pendule dont l'axe est en cx.
+    const C = { x: cx, y: 310 }, PX = 600, K = 0.3, R_CADRAN = 104, HAUT_FIL = 72, BAS = 44;
+    const pt = (r, a) => ({ x: C.x + r * Math.cos(a), y: C.y + K * r * Math.sin(a) });
+
+    function fond(g) {
+      // Potence et mandrin, pied et cadran gradué (traits tous les 5°, nombres tous les 30°, 0 en face de l'aiguille au repos).
+      L.potence(g, { x: C.x - 170, haut: 50, bras: 170, socle });
+      L.svg("rect", { x: C.x - 6, y: HAUT_FIL - 2, width: 12, height: 14, rx: 2, fill: "url(#acier)", stroke: "#333" }, g);
+      L.ombre_sol(g, C.x, 534, 40, 5, 0.35);
+      L.svg("path", { d: `M${C.x - 34} 522 h68 l6 10 h-80 Z`, fill: "#3b4046", stroke: "#1e2226" }, g);
+      L.tige(g, `M${C.x} 522 V${C.y + BAS + 5}`, 6);
+      L.svg("ellipse", { cx: C.x, cy: C.y + BAS + 3, rx: R_CADRAN + 10, ry: K * (R_CADRAN + 10) + 3, fill: "#5b6268" }, g);
+      L.svg("ellipse", { cx: C.x, cy: C.y + BAS, rx: R_CADRAN + 10, ry: K * (R_CADRAN + 10), fill: "#f4f1e8", stroke: "#8d8a80" }, g);
+      for (let d = -90; d <= 90; d += 5) {
+        const a = (d * Math.PI) / 180, p = { x: C.x + R_CADRAN * Math.cos(a), y: C.y + BAS + K * R_CADRAN * Math.sin(a) }, q = { x: C.x + (R_CADRAN + (d % 30 ? 4 : 8)) * Math.cos(a), y: C.y + BAS + K * (R_CADRAN + (d % 30 ? 4 : 8)) * Math.sin(a) };
+        L.svg("line", { x1: p.x, y1: p.y, x2: q.x, y2: q.y, stroke: "#2b2416", "stroke-width": d % 30 ? 0.4 : 0.8 }, g);
+        if (d % 30 === 0) L.texte(g, C.x + (R_CADRAN - 10) * Math.cos(a), C.y + BAS + 2 + K * (R_CADRAN - 10) * Math.sin(a), String(Math.abs(d)), { "font-size": 6, fill: "#2b2416" });
+      }
+      if (capteur) capteur_rotation(g);
+    }
+
+    function capteur_rotation(g) {
+      // Capteur de rotation : boîtier cylindrique noir posé au centre du cadran, axe relié à la barre, câble vers la prise.
+      L.svg("path", { d: `M${C.x + 8} ${C.y + BAS - 4} C${C.x + 40} ${C.y + BAS + 30} ${C.x + 10} 520 ${capteur.x} ${capteur.y}`, fill: "none", stroke: "#222", "stroke-width": 2 }, g);
+      L.tige(g, `M${C.x} ${C.y + 2} V${C.y + 16}`, 2.5);
+      L.svg("rect", { x: C.x - 10, y: C.y + 16, width: 20, height: BAS - 18, fill: "#24282c", stroke: "#000", "stroke-width": 0.6 }, g);
+      L.svg("ellipse", { cx: C.x, cy: C.y + 16, rx: 10, ry: 3, fill: "#3b4046", stroke: "#000", "stroke-width": 0.6 }, g);
+      L.texte(g, C.x, C.y + 31, "ROT", { "font-size": 4.5, "font-weight": 700, fill: "#c9ced2" });
+    }
+
+    function masselotte(g, p, s) {
+      // Masselotte cylindrique en laiton, plus grande quand elle est plus près de l'élève.
+      L.svg("rect", { x: p.x - 7 * s, y: p.y - 14 * s, width: 14 * s, height: 19 * s, rx: 2, fill: "url(#laiton)", stroke: "#6d4a0e", "stroke-width": 0.6 }, g);
+      L.svg("ellipse", { cx: p.x, cy: p.y - 14 * s, rx: 7 * s, ry: 2.3 * s, fill: "#e2c374", stroke: "#6d4a0e", "stroke-width": 0.5 }, g);
+    }
+
+    function barre(g, th, d, fil) {
+      // Fil (plus épais pour le fil B), barre, masselottes (la plus lointaine d'abord), aiguille rouge coudée jusqu'au cadran.
+      g.replaceChildren();
+      L.svg("line", { x1: C.x, y1: HAUT_FIL + 12, x2: C.x, y2: C.y, stroke: "#8d949a", "stroke-width": fil === "B" ? 1.6 : 1 }, g);
+      const a = pt(0.15 * PX, th), b = pt(0.15 * PX, th + Math.PI), bout = pt(R_CADRAN, th);
+      const m = [pt(d * PX, th), pt(d * PX, th + Math.PI)].sort((u, v) => u.y - v.y);
+      masselotte(g, m[0], 1 + (m[0].y - C.y) / 300);
+      L.svg("line", { x1: b.x, y1: b.y, x2: a.x, y2: a.y, stroke: "#9aa3a9", "stroke-width": 6, "stroke-linecap": "round" }, g);
+      L.svg("path", { d: `M${a.x} ${a.y} L${bout.x} ${bout.y} v${BAS - 3}`, fill: "none", stroke: "#c62828", "stroke-width": 1.2 }, g);
+      L.svg("circle", { cx: C.x, cy: C.y, r: 4, fill: "url(#acier)", stroke: "#333" }, g);
+      masselotte(g, m[1], 1 + (m[1].y - C.y) / 300);
+    }
+
+    function rechange(g, fil) {
+      // Bobine du fil de rechange posée sur la paillasse, avec son étiquette.
+      g.replaceChildren();
+      L.ombre_sol(g, C.x - 40, 572, 24, 4, 0.35);
+      L.svg("ellipse", { cx: C.x - 40, cy: 562, rx: 20, ry: 8, fill: "#6b4a2a", stroke: "#3b2a15" }, g);
+      for (const r of [15, 11, 7]) L.svg("ellipse", { cx: C.x - 40, cy: 561, rx: r, ry: r * 0.4, fill: "none", stroke: "#a9b0b5", "stroke-width": 0.8 }, g);
+      L.texte(g, C.x - 40, 582, `fil ${fil}`, { "font-size": 7, "font-weight": 700, fill: "#f4f1e6" });
+    }
+
+    const o = { fond, barre, rechange, C, R_CADRAN, PX, K, BAS };
+    L.torsion_dessin = o;
+    return o;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : dynamomètre de traction tenu à la main par son anneau, relié à l'objet tiré par une cordelette : le corps gradué
+       suit l'anneau, la tige du crochet sort du corps quand on tire (l'index rouge glisse le long de l'échelle). Il se
+       dessine dans n'importe quelle direction (horizontale, inclinée, verticale) ; la cordelette pend quand on ne tire pas.
+Reçoit : le groupe SVG, le point d'attache H sur l'objet, la position R de l'anneau et { calibre (N), px_n (px par N),
+         corps (longueur du corps, px), corde (longueur de la cordelette, px), pas (N entre deux traits) }.
+Produit : Labo.dynamometre_traction(g, H, R, reglage) -> { F (N), D (distance H-R), angle (rad, vers le haut positif) } ;
+          Labo.dynamometre_traction.longueur(F, reglage) -> distance H-R pour une force F ; Labo.DYN_TRACTION (réglages).
+Utilisé par : les simulations du chapitre « Travail et puissance d'une force ».
+*/
+(function (L) {
+  L.DYN_TRACTION = { calibre: 4, px_n: 30, corps: 150, corde: 18, pas: 0.1 };
+
+  function corps(g, r, x0, e) {
+    // Tube transparent gradué (0 du côté de l'anneau), index rouge au bout de la tige, nombres tous les newtons.
+    const zero = r.calibre * r.px_n + 10;
+    L.svg("rect", { x: x0, y: -8, width: r.corps - 9, height: 16, rx: 4, fill: "url(#plastique)", stroke: "#8e9aa1" }, g);
+    const n = Math.round(r.calibre / r.pas), tous = Math.round(1 / r.pas);
+    for (let i = 0; i <= n; i++) {
+      const x = x0 + zero - i * r.pas * r.px_n, grand = i % tous === 0;
+      L.svg("line", { x1: x, y1: -8, x2: x, y2: -8 + (grand ? 7 : i % (tous / 2) ? 3 : 5), stroke: "#1d1d1d", "stroke-width": grand ? 0.8 : 0.45 }, g);
+      if (grand) L.texte(g, x, 6, String(i / tous), { "font-size": 7, "font-weight": 700, fill: "#1d2a33" });
+    }
+    L.texte(g, x0 + zero + 12, 6, "N", { "font-size": 7, "font-weight": 700, fill: "#1d2a33" });
+    L.svg("rect", { x: x0 + zero - e - 1.5, y: -7, width: 3, height: 14, fill: "#e0251b" }, g);
+  }
+
+  L.dynamometre_traction = function (g, H, R, reglage = {}) {
+    // Cordelette (tendue ou pendante), tige du crochet, corps gradué, anneau ; renvoie la force lue.
+    const r = { ...L.DYN_TRACTION, ...reglage }, dx = R.x - H.x, dy = R.y - H.y, D = Math.hypot(dx, dy);
+    const e = Math.max(0, Math.min(r.calibre * r.px_n, D - r.corde - r.corps)), x0 = D - r.corps, xc = x0 - e;
+    const gr = L.svg("g", { transform: `translate(${H.x} ${H.y}) rotate(${(Math.atan2(dy, dx) * 180) / Math.PI})` }, g);
+    const mou = Math.sqrt(Math.max(0, r.corde * r.corde - xc * xc)) * 0.8 * Math.sign(dx || 1);
+    L.svg("path", { d: `M0 0 Q${xc / 2} ${mou} ${xc} 0`, fill: "none", stroke: "#e9e4d2", "stroke-width": 1.6 }, gr);
+    L.svg("path", { d: `M${xc} 0 h-4 a3 3 0 1 0 0 0.1`, fill: "none", stroke: "url(#metal)", "stroke-width": 1.6 }, gr);
+    L.tige(gr, `M${xc} 0 H${xc + r.calibre * r.px_n + 10}`, 2.4);
+    corps(gr, r, x0, e);
+    L.tige(gr, `M${D - 10} 0 H${D - 6}`, 3);
+    L.svg("circle", { cx: D, cy: 0, r: 6, fill: "none", stroke: "url(#metal)", "stroke-width": 2.6 }, gr);
+    L.svg("circle", { cx: D, cy: 0, r: 18, fill: "#000", opacity: 0.001, class: "anneau-dyn" }, gr);
+    return { F: e / r.px_n, D, angle: Math.atan2(-dy, dx) };
+  };
+
+  L.dynamometre_traction.longueur = function (F, reglage = {}) {
+    // Distance entre le point d'attache et l'anneau quand le dynamomètre indique la force F.
+    const r = { ...L.DYN_TRACTION, ...reglage };
+    return r.corde + r.corps + Math.max(0, Math.min(r.calibre, F)) * r.px_n;
   };
 })(window.Labo);
 </script>

@@ -37,17 +37,17 @@ Utilisé par : simulation.js (paillasse 1).
   L.poste_travail = function (g) {
     // Banc (sans capteur), support et noix, dynamomètre ; l'allongement se calcule à chaque déplacement de la noix.
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), D = L.banc_ressort_dessin, px = 1000 * D.MM;
-    const banc = L.banc_ressort(g, { k: K, capteur: false });
+    const banc = L.banc_ressort(g, { k: K, capteur: false, deplacable: false }), O = L.pieces_banc.OEILLET;
     support(g, D);
     const gd = L.svg("g", {}, g), gn = L.svg("g", { class: "noix", role: "button", "aria-label": "Noix" }, g), e = { xn: 600, x: 0, F: 0, xmax: 0 };
     const regler = () => {
       // Équilibre : l'anneau est au crochet de la noix ; x = 0 tant que la cordelette est lâche.
-      const libre = D.X_EQ + D.LONG + REG.corde + REG.corps + 5, x = Math.max(0, (e.xn - libre) / (px + K * REG.px_n));
+      const libre = D.X_EQ + D.LONG + O + REG.corde + REG.corps + 3, x = Math.max(0, (e.xn - libre) / (px + K * REG.px_n));
       Object.assign(e, { x, F: K * x, xmax: Math.max(e.xmax, x) }); Object.assign(banc.e, { x, v: 0, tenu: true });
-      gd.replaceChildren(); L.svg("line", { x1: D.X_EQ + D.LONG / 2 + x * px, y1: D.HAUT + 8, x2: D.X_EQ + D.LONG / 2 + x * px, y2: D.HAUT + 21, stroke: "#c62828", "stroke-width": 1 }, gd); L.dynamometre_traction(gd, { x: D.X_EQ + D.LONG + x * px + 2, y: D.HAUT - 14 }, { x: e.xn - 3, y: Y_TIGE + 40 }, REG);
+      gd.replaceChildren(); L.svg("line", { x1: D.X_EQ + D.LONG / 2 + x * px, y1: D.HAUT + 8, x2: D.X_EQ + D.LONG / 2 + x * px, y2: D.HAUT + 21, stroke: "#c62828", "stroke-width": 1 }, gd); L.dynamometre_traction(gd, { x: D.X_EQ + D.LONG + O + x * px, y: D.HAUT - 14 }, { x: e.xn - 3, y: Y_TIGE + 40 }, REG);
       noix(gn, e.xn); L.missions.noter("traction", { x: Math.round(x * 10000) / 10000, F: Math.round(e.F * 1000) / 1000, xmax: Math.round(e.xmax * 1000) / 1000 });
     };
-    L.glissable(gn, { soulever: false, debut: () => ({ x: e.xn, y: Y_TIGE }), deplacer: (p) => { e.xn = Math.max(560, Math.min(665, p.x)); regler(); } });
+    L.glissable(gn, { soulever: false, debut: () => ({ x: e.xn, y: Y_TIGE }), deplacer: (p) => { e.xn = Math.max(560, Math.min(670, p.x)); regler(); } });
     setInterval(() => { banc.e.tenu = true; banc.e.x = e.x; banc.e.v = 0; }, 50);
     regler();
     return { pense_bete };

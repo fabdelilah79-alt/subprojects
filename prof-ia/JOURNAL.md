@@ -1224,3 +1224,13 @@ Problèmes restants, à faire par l'enseignant :
 - Les énergies sont calculées par le logiciel (v par la méthode des points voisins) avec les valeurs de m, K, J et C du
   montage ; l'élève ne les saisit pas.
 - La palette amortit fortement : Em devient presque nulle en 4 s.
+
+## 2026-10-30 — Correction : attache du fil et du ressort au mobile
+
+- Remarque de l'enseignant : un petit vide entre le fil et le solide, et le solide peut se séparer du fil. Les œillets du
+  mobile étaient sombres (invisibles sur la paillasse) et décalés de l'axe ; la cordelette du dynamomètre partait 2 px
+  après le mobile ; sur la paillasse 1, on pouvait encore saisir le mobile et l'écarter du dynamomètre.
+- Corrigé : œillets clairs centrés sur l'axe des ressorts (banc_ressort_pieces.js, constante OEILLET) ; ressorts et
+  cordelette accrochés au centre des œillets (banc_ressort.js, poste_travail.js) ; option deplacable du banc (vraie par
+  défaut), fausse quand le dynamomètre tient le mobile. Règle ajoutée à la compétence. Simulations rejouées : énergie,
+  solide-ressort, résonance (sources et fichiers assemblés).

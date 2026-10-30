@@ -55,6 +55,10 @@ un pictogramme ni à une forme abstraite.
   signalétiques, graduations, pieds en caoutchouc ; mais pas de surcharge.
 - Chaque pièce est **tenue par quelque chose** (fixation, support, noix) et les liaisons mécaniques sont plausibles
   (un fil s'accroche à un crochet, une tige passe dans un guide, une règle est vissée sur un montant).
+- **Attaches sans vide** (remarque de l'enseignant : « un petit vide entre le fil et le solide, le solide peut se séparer
+  de lui ») : un fil ou un ressort part exactement du centre de l'œillet ou du crochet (constantes partagées, ex.
+  `L.pieces_banc.OEILLET`), l'œillet est visible sur le fond ; un objet tenu par un appareil (dynamomètre, fil) ne doit
+  pas pouvoir être déplacé seul à la main (option `deplacable: false`).
 - **Relecture en gros plan** : pour chaque objet nouveau, capture recadrée et agrandie (×3) avant de l'intégrer ;
   se demander « un professeur reconnaîtrait-il cet objet au premier coup d'œil ? ». Sinon, le redessiner.
 - Réutiliser les objets communs déjà validés (potence, masses marquées, boîtiers, portable, chronomètre) plutôt que d'en

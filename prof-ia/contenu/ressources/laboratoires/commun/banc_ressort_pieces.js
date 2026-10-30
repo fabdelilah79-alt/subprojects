@@ -5,11 +5,13 @@ Rôle : pièces détaillées du banc à coussin d'air, dessinées comme le maté
        (monture en acier, deux pastilles aimantées, vis moletée), surcharge cylindrique en laiton, soufflerie (grille,
        interrupteur à voyant, embout du tuyau, pieds en caoutchouc).
 Reçoit : le groupe SVG et la position de chaque pièce (px) ; HAUT = haut du rail.
-Produit : Labo.pieces_banc = { mobile(g, x, haut, long, n, amortisseur), palette(g, x, y, couchee), aimant(g, x, y),
+Produit : Labo.pieces_banc = { OEILLET (centre des œillets à 5,4 px des faces du mobile), mobile(g, x, haut, long, n, amortisseur), palette(g, x, y, couchee), aimant(g, x, y),
           surcharge(g, x, y), soufflerie(g, x, y) }.
 Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
 */
 (function (L) {
+  const OEILLET = 5.4;
+
   function surcharge(g, x, y) {
     // Masse de 100 g en laiton (cylindre de 14 mm vu un peu d'en haut) posée sur y.
     L.svg("rect", { x: x - 7, y: y - 9, width: 14, height: 9, fill: "url(#laiton)", stroke: "#7a5a14", "stroke-width": 0.5 }, g);
@@ -55,7 +57,11 @@ Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
     L.svg("rect", { x, y: haut - 22, width: long, height: 7, rx: 1.5, fill: "#b9352c", stroke: "#6b1813", "stroke-width": 0.7 }, gr);
     L.svg("rect", { x: x + 1.5, y: haut - 21.5, width: long - 3, height: 1.6, fill: "#fff", opacity: 0.3 }, gr);
     for (const dx of [5, long - 5]) L.svg("circle", { cx: x + dx, cy: haut - 18.5, r: 1.3, fill: "#d9dde0", stroke: "#555", "stroke-width": 0.4 }, gr);
-    for (const [cx, s] of [[x, -1], [x + long, 1]]) L.svg("path", { d: `M${cx} ${haut - 14} h${3 * s} a2.2 2.2 0 1 ${s > 0 ? 1 : 0} 0 0.1`, fill: "none", stroke: "url(#acier)", "stroke-width": 1.4 }, gr);
+    for (const [cx, s] of [[x, -1], [x + long, 1]]) {
+      L.svg("rect", { x: Math.min(cx, cx + 3.2 * s), y: haut - 15, width: 3.2, height: 2, fill: "#cfd4d8", stroke: "#5b636b", "stroke-width": 0.4 }, gr);
+      L.svg("circle", { cx: cx + OEILLET * s, cy: haut - 14, r: 2.4, fill: "none", stroke: "#d9dde0", "stroke-width": 1.5 }, gr);
+      L.svg("circle", { cx: cx + OEILLET * s, cy: haut - 14, r: 3.2, fill: "none", stroke: "#4b5258", "stroke-width": 0.4 }, gr);
+    }
     reflecteur(gr, x + long / 2, haut);
     for (let k = 0; k < n; k++) surcharge(gr, x + (k ? long - 11 : 11), haut - 22);
     if (amortisseur === "aimant") aimant(gr, x + 24, haut - 7, true);
@@ -77,5 +83,5 @@ Utilisé par : banc_ressort_dessin.js, banc_ressort_accessoires.js.
     L.texte(g, x + 38, y + 29, "SOUFFLERIE", { "font-size": 5, "font-weight": 700, fill: "#e6ebef" });
   }
 
-  L.pieces_banc = { mobile, palette, aimant, surcharge, soufflerie };
+  L.pieces_banc = { mobile, palette, aimant, surcharge, soufflerie, OEILLET };
 })(window.Labo);

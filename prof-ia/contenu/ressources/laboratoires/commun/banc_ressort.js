@@ -4,7 +4,8 @@ Rôle : oscillateur « solide-ressort horizontal » sur le banc à coussin d'air
        (e(t) = a·cos(2π·f·t)). Frottement fluide −h·v (h = h_base, plus 0,25 kg/s avec la palette, 5 kg/s avec l'aimant de
        freinage). Calcul pas à pas (0,5 ms) : m·ẍ = −k·x − k2·(x − e) − h·ẋ. On écarte le mobile à la main (±8 cm) et on
        le lâche sans vitesse ; le capteur mesure la position (x vers la droite, en m, 0 à l'équilibre).
-Reçoit : le groupe SVG et { k (N/m), k2 (0 sans excitateur), h_base (kg/s), a_exc (m), capteur (vrai : capteur de position dessiné),
+Reçoit : le groupe SVG et { k (N/m), k2 (0 sans excitateur), h_base (kg/s), a_exc (m), capteur (vrai : capteur de position dessiné), deplacable
+         (vrai : on peut saisir le mobile ; faux quand un autre appareil le tient),
          sur_lacher(x0), sur_pas(t, x) }.
 Produit : Labo.banc_ressort(g, reglage) -> banc { e (état : n, k, k2, amortisseur, x, v, tenu, f, marche, t), masse(), h(),
           T0() (2π·√(m/(k + k2))), regler(changement) (arrête le mobile), dessiner() }.
@@ -35,7 +36,7 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
     });
   }
 
-  L.banc_ressort = function (g, { k = 10, k2 = 0, h_base = 0.04, a_exc = 0.015, capteur = true, sur_lacher = () => {}, sur_pas = () => {} } = {}) {
+  L.banc_ressort = function (g, { k = 10, k2 = 0, h_base = 0.04, a_exc = 0.015, capteur = true, deplacable = true, sur_lacher = () => {}, sur_pas = () => {} } = {}) {
     // Banc, ressorts, mobile et excitateur dessinés ; boucle d'animation en temps réel.
     const D = L.banc_ressort_dessin, px = 1000 * D.MM;
     D.fond(g, k2 > 0, capteur);
@@ -49,10 +50,10 @@ Utilisé par : les simulations des oscillateurs mécaniques (2e année du bac).
       // Ressorts (bleu : 10 N/m ; vert : 20 N/m), excitateur, mobile à sa position.
       const xm = D.X_EQ + b.e.x * px, couleur = (kk) => (kk > 15 ? "#2e8b57" : "#2f6db3");
       gr.replaceChildren(); gm.replaceChildren();
-      D.ressort(gr, D.X0 + 14, xm, couleur(b.e.k));
-      if (b.e.k2) D.ressort(gr, xm + D.LONG, D.excitateur(gx, b.e.phase, b.excitation() * px, a_exc * px), couleur(b.e.k2));
+      D.ressort(gr, D.X0 + 14, xm - L.pieces_banc.OEILLET, couleur(b.e.k));
+      if (b.e.k2) D.ressort(gr, xm + D.LONG + L.pieces_banc.OEILLET, D.excitateur(gx, b.e.phase, b.excitation() * px, a_exc * px), couleur(b.e.k2));
       b.vue.mobile = D.mobile(gm, xm, b.e.n, b.e.amortisseur);
-      geste(b);
+      if (deplacable) geste(b);
     };
     b.regler = (changement) => { Object.assign(b.e, changement, { x: 0, v: 0 }); b.dessiner(); };
     let avant = null;
