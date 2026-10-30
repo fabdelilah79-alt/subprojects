@@ -3042,5 +3042,28 @@
    "Étudie une usine et un atelier, classe les préoccupations du chimiste, calcule un rendement et une masse de déchets.",
    "Range huit situations sous les quatre questions de l'année : rapidité, avancement, sens et contrôle des transformations."
   ]
+ },
+ {
+  "id": "b2_chim1_a1_rapides_lentes",
+  "chapitre": "2bac/chim1_rapides_lentes",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3"
+  ],
+  "duree_min": 55,
+  "description": "Paillasse 1 : quatre tubes et flacons compte-gouttes : Fe²⁺ + MnO₄⁻ et I₂ + S₂O₃²⁻ (décoloration immédiate : rapides) ; I⁻ acidifié + H₂O₂ 0,10 mol/L (le diiode jaunit puis brunit en quelques minutes) et S₂O₃²⁻ + HCl 2 mol/L (soufre laiteux en une demi-minute) : lentes ; équation H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O, couples, oxydant et réducteur. Paillasse 2 : même transformation à 20 °C et dans un bain-marie à 70 °C (brun en quelques secondes) ; liqueur de Fehling et glucose : rien à 20 °C, précipité rouge brique à 70 °C. Paillasse 3 : thiosulfate à 0,10, 0,050 et 0,025 mol/L, une croix derrière chaque tube, acide chlorhydrique, chronomètre : la croix disparaît après environ 35, 70 et 140 s. Modèle cinétique (loi de vitesse et loi d'Arrhenius).",
+  "conceptions": [
+   "Toutes les transformations chimiques sont instantanées.",
+   "Une transformation qu'on ne voit pas n'a pas lieu.",
+   "La température ne change que l'état physique, pas la vitesse des transformations.",
+   "La quantité de réactif change le produit obtenu, pas la durée de la transformation."
+  ],
+  "faire": [
+   "Mélange les réactifs de quatre tubes, classe les transformations en rapides et lentes, écrit l'équation de l'oxydation des ions iodure et identifie les couples.",
+   "Compare la même transformation à 20 °C et à 70 °C, puis teste la liqueur de Fehling à froid et au bain-marie : la température est un facteur cinétique.",
+   "Mesure au chronomètre la durée de disparition d'une croix pour trois concentrations de thiosulfate : la concentration est un facteur cinétique."
+  ]
  }
 ]

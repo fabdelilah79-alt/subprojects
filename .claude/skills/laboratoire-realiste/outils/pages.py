@@ -12,6 +12,7 @@ OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dess
 ORBITES = ['continents.js', 'espace.js', 'portable.js', 'orbites_modele.js', 'orbites_ecran.js', 'orbites_panneau.js', 'logiciel_orbites.js']
 MECA6 = ORBITES + [ 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
 SIMS = {
+ 'b2_chim1_a1_rapides_lentes': ("Laboratoire : transformations rapides et lentes", "simulation de l'activité 1 du chapitre « Transformations rapides et transformations lentes » (2e année du bac) : transformations rapides et lentes en tubes, équation d'oxydoréduction et couples, température (bain-marie, liqueur de Fehling) et concentration (croix derrière les tubes de thiosulfate), facteurs cinétiques."),
  'b2_intro_a1_chimiste': ("Laboratoire : les questions du chimiste", "simulation de l'activité du chapitre « Les questions que se pose le chimiste » (2e année du bac) : article d'une chimiste (extraire, analyser, synthétiser, recycler), préoccupations d'une usine et d'un atelier de médicaments (rendement, durée, coût, déchets), questions de l'année."),
  'b1_elec2_s1_bilan_electronique': ("Laboratoire : bilan énergétique d'un circuit électronique", "simulation de la partie propre à la filière SM du chapitre « Transfert d'énergie dans un circuit électrique, puissance électrique » (1re année du bac) : bilan des puissances d'un circuit à transistor, échauffement et radiateur ; rôle de l'alimentation d'un montage à AO et bilan alimentation → charge + AO."),
  'b2_meca5_s1_pendule_pesant': ("Laboratoire : énergie mécanique du pendule pesant", "simulation de la partie « Énergie mécanique du pendule pesant » du chapitre « Aspects énergétiques des oscillateurs mécaniques » (2e année du bac, PC et SM) : capteur de rotation et logiciel (vue des énergies), Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ), conservation de Em sans frottement notable, diminution de Em avec la palette."),
@@ -84,6 +85,9 @@ for sid, (titre, role) in SIMS.items():
     if sid == 'b1_elec2_s1_bilan_electronique':
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
         scripts = list(dict.fromkeys(lu('tc_elec4_a1_transistor') + lu('tc_elec4_a2_ao') + ['../../commun/capteurs_numeriques.js'])) + locaux
+    if sid.startswith('b2_chim1'):
+        lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
+        scripts = list(dict.fromkeys(lu('b1_chim4_a2_electrons') + ['../../commun/' + f for f in ['chimie_decor.js', 'bain_marie_physique.js', 'chronometre_manuel.js', 'reactions_lentes.js']])) + locaux
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux
     if sid.startswith('b2_meca6'): scripts = MECA + ['../../commun/' + f for f in MECA6 if os.path.exists(B + 'commun/' + f)] + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux

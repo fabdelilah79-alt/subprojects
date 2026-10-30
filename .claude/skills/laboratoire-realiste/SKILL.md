@@ -129,6 +129,9 @@ un pictogramme ni à une forme abstraite.
 - Bilan d'énergie avec un AO : `L.ao(c, { …, bilan: true })` fait passer les courants réels par l'alimentation (sinon les
   ampèremètres sur ±15 V lisent 0). Tests de circuit : `deplacer_fil(page, A, B)` déplace le bout **qui est en A** ; pour
   déplacer un voltmètre, retirer son fil par la borne du voltmètre (`deplacer_fil(page, V, null)`) puis rebrancher.
+- Transformation lente (cinétique) : `commun/reactions_lentes.js` (`L.reaction_lente`, `L.avancer_lent(contenu, dt)` à appeler
+  dans `ctx.ecoulement.sur_pas`, puis `t.sig = null` pour redessiner). Compte-gouttes dans un test : saisir la pipette par
+  sa poire (pos.y − 75·e) ; tenue, appuyer sur la poire (pos.y − 80·e) ; elle contient 1 mL (20 gouttes), puis la ranger.
 - Une fenêtre de logiciel où un objet peut sortir (orbite, échappement) : découper le dessin au cadre (`clipPath`).
 
 ## 7. Outils (dossier `outils/` de cette compétence)

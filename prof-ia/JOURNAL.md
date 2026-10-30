@@ -1384,3 +1384,19 @@ l'alimentation) ; l'échauffement du boîtier suit un modèle simple (Rth = 180 
 
 Problèmes restants : chapitre d'introduction sans manipulation (comme le demande la fiche : analyser un document) ;
 l'usine et l'atelier sont des exemples génériques, sans nom d'entreprise.
+
+## 2026-10-30 — 2e année du bac : transformations rapides et lentes, activité 1 (b2_chim1_a1_rapides_lentes)
+
+- PDF (p. 137) : expériences qualitatives montrant des transformations rapides et lentes et les facteurs cinétiques
+  (température, concentration) avec H₂O₂ + I⁻, S₂O₃²⁻ + H⁺, liqueurs de Fehling et de Tollens ; appareils de mesure ;
+  exemples de la vie courante (activité 2, à faire).
+- Nouveau fichier commun reactions_lentes.js : v = k(T)·Π[X]ⁿ, k(T) par la loi d'Arrhenius ; H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O
+  (k20 = 0,020 L·mol⁻¹·s⁻¹, Ea = 56 kJ/mol) ; S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O (k20 = 7,0 × 10⁻⁴ s⁻¹, Ea = 50 kJ/mol) ; soufre
+  colloïdal laiteux. Aucun fichier commun existant modifié. Les réactions totales (permanganate, thiosulfate) sont celles
+  d'oxydoreduction.js.
+- Vérifié : parcours complet (sources et fichier assemblé). Diiode après une minute : 1,7 mmol/L à 20 °C, 13,2 mmol/L à
+  70 °C ; croix cachée après 33, 66 et 135 s (modèle : 32, 65, 130 s, plus les 3 s des 20 gouttes).
+
+Problèmes restants : la liqueur de Tollens n'est pas proposée (Fehling suffit pour la température) ; le manomètre et le
+conductimètre viendront avec le suivi temporel (chapitre suivant) ; la durée de la croix suppose une solution lue de côté
+(carte derrière le tube), pas par-dessus comme dans un bécher.

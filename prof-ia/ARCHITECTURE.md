@@ -466,6 +466,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b1_chim6_a3_benzoique/ | Synthèse de l'acide benzoïque : espèces et réactions (especes_benzoique.js), reflux, filtrations, précipitation (postes_benzoique.js), pesée (poste_pesee_benzoique.js), missions (missions_benzoique.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_intro_a1_physicien/ | Article d'une physicienne, questions rangées par partie du programme, démarche sur le problème du satellite GPS (documents_physicien.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_intro_a1_chimiste/ | Activités et préoccupations du chimiste, questions de la chimie de l'année (donnees_chimiste.js : documents et étiquettes ; postes_chimiste.js ; simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_chim1_a1_rapides_lentes/ | Transformations rapides et lentes, température et concentration (postes_rapides_lentes.js : trois paillasses ; simulation.js). |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
@@ -537,6 +538,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/banc_ressort_accessoires.js | Plateau d'accessoires : surcharges, palette, aimant de freinage, ressort de rechange. |
 | contenu/ressources/laboratoires/commun/banc_ressort_pieces.js | Pièces détaillées du banc : mobile, réflecteur, palette, aimant de freinage, surcharge, soufflerie. |
 | contenu/ressources/laboratoires/commun/pendule_torsion_dessin.js | Dessin du pendule de torsion (potence, fil, barre, masselottes, cadran, capteur de rotation en option). |
+| contenu/ressources/laboratoires/commun/reactions_lentes.js | Transformations lentes en solution : loi de vitesse et loi d'Arrhenius (H₂O₂ + I⁻, S₂O₃²⁻ + H⁺), solutions, trouble du soufre colloïdal. |
 | contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
 | contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
 | contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |

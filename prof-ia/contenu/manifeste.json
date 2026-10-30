@@ -5264,6 +5264,45 @@
         "Une espèce de synthèse est différente de la même espèce extraite de la nature.",
         "Le seul but du chimiste industriel est de produire vite."
       ]
+    },
+    {
+      "id": "b2_chim1_a1_rapides_lentes",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim1_a1_rapides_lentes.html",
+      "description": "Paillasse 1 : quatre tubes et flacons compte-gouttes : Fe²⁺ + MnO₄⁻ et I₂ + S₂O₃²⁻ (décoloration immédiate : rapides) ; I⁻ acidifié + H₂O₂ 0,10 mol/L (le diiode jaunit puis brunit en quelques minutes) et S₂O₃²⁻ + HCl 2 mol/L (soufre laiteux en une demi-minute) : lentes ; équation H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O, couples, oxydant et réducteur. Paillasse 2 : même transformation à 20 °C et dans un bain-marie à 70 °C (brun en quelques secondes) ; liqueur de Fehling et glucose : rien à 20 °C, précipité rouge brique à 70 °C. Paillasse 3 : thiosulfate à 0,10, 0,050 et 0,025 mol/L, une croix derrière chaque tube, acide chlorhydrique, chronomètre : la croix disparaît après environ 35, 70 et 140 s. Modèle cinétique (loi de vitesse et loi d'Arrhenius).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim1_rapides_lentes",
+      "activite": "H2O2 + I- ; S2O3 2- + H+ ; liqueurs de Fehling et de Tollens ; manomètre, conductimètre.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Transformations rapides et lentes",
+          "ce_que_fait_l_eleve": "Mélange les réactifs de quatre tubes, classe les transformations en rapides et lentes, écrit l'équation de l'oxydation des ions iodure et identifie les couples.",
+          "conclusion": "Les ions permanganate sont décolorés dès qu'ils tombent dans la solution d'ions fer II, et le diiode dès qu'on ajoute le thiosulfate : ces transformations sont rapides (elles semblent achevées dès le mélange). L'eau oxygénée oxyde les ions iodure en quelques minutes (H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O : la solution jaunit puis brunit) et l'acide transforme le thiosulfate en soufre en une demi-minute : ces transformations sont lentes, on suit leur évolution à l'œil."
+        },
+        {
+          "titre": "La température, facteur cinétique",
+          "ce_que_fait_l_eleve": "Compare la même transformation à 20 °C et à 70 °C, puis teste la liqueur de Fehling à froid et au bain-marie : la température est un facteur cinétique.",
+          "conclusion": "À 70 °C, l'eau oxygénée oxyde les ions iodure beaucoup plus vite qu'à 20 °C : la solution brunit en quelques secondes. À 20 °C, la liqueur de Fehling ne réagit pas visiblement avec le glucose ; à 70 °C, le précipité rouge brique apparaît en une minute. Plus la température est élevée, plus une transformation est rapide : la température est un facteur cinétique."
+        },
+        {
+          "titre": "La concentration, facteur cinétique",
+          "ce_que_fait_l_eleve": "Mesure au chronomètre la durée de disparition d'une croix pour trois concentrations de thiosulfate : la concentration est un facteur cinétique.",
+          "conclusion": "L'acide transforme le thiosulfate en soufre (S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O) ; le soufre, très fin, trouble la solution et cache la croix. La croix disparaît d'autant plus tôt que la solution de thiosulfate est concentrée (environ 35 s, 70 s et 140 s pour 0,10, 0,050 et 0,025 mol/L) : la concentration des réactifs est un facteur cinétique."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Toutes les transformations chimiques sont instantanées.",
+        "Une transformation qu'on ne voit pas n'a pas lieu.",
+        "La température ne change que l'état physique, pas la vitesse des transformations.",
+        "La quantité de réactif change le produit obtenu, pas la durée de la transformation."
+      ]
     }
   ]
 }
