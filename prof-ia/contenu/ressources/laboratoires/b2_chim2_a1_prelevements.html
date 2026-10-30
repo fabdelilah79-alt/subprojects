@@ -4495,8 +4495,8 @@ Utilisé par : les simulations de titrage.
     const b = cree(becher, 0), recipients = [b, ...autres.map((k, i) => cree(k, i + 1))];
     agit.suivre(b);
     gouttes.forEach((k, i) => L.flacon_gouttes(ctx, { id: k.liquide, x: 700 + i * 70, sol: SOL, e: E, liquide: k.liquide, texte: k.texte }));
-    if (conductimetre) cond = L.conductimetre(ctx, { x: 790, sol: SOL, e: E, tige: 610, sonde_x: 535, haut: 360, bas: 506, recipients: () => recipients, agite: agit.agite });
-    if (conductimetre) L.pied_support(ctx.fond, 610, SOL, 330);
+    if (conductimetre) cond = L.conductimetre(ctx, { x: 760, sol: SOL, e: E, tige: 610, sonde_x: 535, haut: 360, bas: 506, recipients: () => recipients, agite: agit.agite });
+    if (conductimetre) L.pied_support(ctx.fond, 610, SOL, 200);
     L.bouton_texte(g, 140, 250, "Remplir la burette", burette.remplir);
     L.bouton_texte(g, 140, 285, "Bécher neuf", () => { b.c = L.contenu(becher.contenu); b.sig = null; b.dessiner(); });
     reactions(ctx, recipients, agit);
@@ -4623,13 +4623,15 @@ Rôle : transformations lentes en solution aqueuse, avec leur vitesse : v = k(T)
        d'Arrhenius (k20 à 20 °C, énergie d'activation Ea). Réactions déclarées : H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O
        (v = k·[H₂O₂]·[I⁻], k20 = 0,020 L·mol⁻¹·s⁻¹, Ea = 56 kJ/mol) ; S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O (v = k·[S₂O₃²⁻],
        k20 = 7,0 × 10⁻⁴ s⁻¹, Ea = 50 kJ/mol ; le soufre colloïdal trouble la solution : blanc-jaune laiteux, opaque vers
-       2 × 10⁻³ mol/L) ; S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂ (v = k·[S₂O₈²⁻]·[I⁻], k20 = 7,7 × 10⁻³ L·mol⁻¹·s⁻¹, Ea = 52 kJ/mol).
-       Solutions : eau oxygénée 0,10 mol/L, acide chlorhydrique 2,0 mol/L, iodure de potassium acidifié et à 1,0 mol/L,
-       peroxodisulfate de potassium 0,020 mol/L, thiosulfate de sodium 0,010 mol/L, eau glacée.
+       2 × 10⁻³ mol/L) ; S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂ (v = k·[S₂O₈²⁻]·[I⁻], k20 = 7,7 × 10⁻³ L·mol⁻¹·s⁻¹, Ea = 52 kJ/mol) ;
+       hydrolyse (CH₃)₃C–Cl + 2 H₂O → (CH₃)₃C–OH + H₃O⁺ + Cl⁻ (v = k·[RCl], k20 = 0,025 s⁻¹ dans un mélange riche en eau,
+       Ea = 95 kJ/mol). Solutions : eau oxygénée 0,10 mol/L, acide chlorhydrique 2,0 mol/L, iodure de potassium acidifié et à
+       1,0 mol/L, peroxodisulfate de potassium 0,020 mol/L, thiosulfate de sodium 0,010 mol/L, eau glacée,
+       2-chloro-2-méthylpropane 0,10 mol/L dans l'acétone (il ne réagit qu'une fois versé dans l'eau).
 Reçoit : le contenu d'un récipient (liquide_contenu.js : phases, dissous en mmol, volume en mL, T en °C) et la durée dt (s).
 Produit : Labo.reaction_lente({ equation, reactifs, produits, k20, Ea, ordres }) ; Labo.avancer_lent(contenu, dt) -> vrai si le
           contenu a changé (contenu.lentes : avancement en mmol de chaque équation) ; Labo.k_arrhenius(k20, Ea, T) ;
-          liquides cin_peroxyde, cin_hcl, cin_ki_acide, cin_ki_1, cin_peroxodisulfate, cin_thiosulfate, eau_glacee ; règle de
+          liquides cin_peroxyde, cin_hcl, cin_ki_acide, cin_ki_1, cin_peroxodisulfate, cin_thiosulfate, eau_glacee, cin_rcl ; règle de
           couleur du soufre.
 Utilisé par : les simulations de cinétique chimique (2e année du bac).
 */
@@ -4642,6 +4644,7 @@ Utilisé par : les simulations de cinétique chimique (2e année du bac).
     cin_ki_1: aq("iodure de potassium 1,0 mol/L", { "K+": 1, "I-": 1 }),
     cin_peroxodisulfate: aq("peroxodisulfate de potassium 0,020 mol/L", { "K+": 0.04, "S2O8--": 0.02 }),
     cin_thiosulfate: aq("thiosulfate de sodium 0,010 mol/L", { "Na+": 0.02, "S2O3--": 0.01 }),
+    cin_rcl: { ...aq("2-chloro-2-méthylpropane 0,10 mol/L dans l'acétone", { RCl: 0.1 }), d: 0.79 },
     eau_glacee: { nom: "eau glacée", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse", pH: null },
   });
   L.LIQUIDES.cin_hcl.pH = 0;
@@ -4672,6 +4675,7 @@ Utilisé par : les simulations de cinétique chimique (2e année du bac).
 
   L.reaction_lente({ equation: "H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O", reactifs: { H2O2: 1, "I-": 2, "H3O+": 2 }, produits: { I2: 1 }, k20: 0.02, Ea: 56000, ordres: { H2O2: 1, "I-": 1 } });
   L.reaction_lente({ equation: "S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂", reactifs: { "S2O8--": 1, "I-": 2 }, produits: { "SO4--": 2, I2: 1 }, k20: 7.7e-3, Ea: 52000, ordres: { "S2O8--": 1, "I-": 1 } });
+  L.reaction_lente({ equation: "(CH₃)₃C–Cl + 2 H₂O → (CH₃)₃C–OH + H₃O⁺ + Cl⁻", reactifs: { RCl: 1 }, produits: { ROH: 1, "H3O+": 1, "Cl-": 1 }, k20: 0.025, Ea: 95000, ordres: { RCl: 1 } });
   L.reaction_lente({ equation: "S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O", reactifs: { "S2O3--": 1, "H3O+": 2 }, produits: { S: 1, SO2: 1 }, k20: 7e-4, Ea: 50000, ordres: { "S2O3--": 1 } });
 
   L.REGLES_COULEUR = L.REGLES_COULEUR || [];
@@ -4838,6 +4842,137 @@ Utilisé par : les simulations de chimie (industrie chimique, techniques traditi
 </script>
   <script>
 /*
+Rôle : objets du suivi temporel d'une transformation : horloge murale à grands chiffres (minutes et secondes écoulées depuis
+       le début de la transformation) et feuille de relevés sur un porte-bloc accroché au mur (date et mesure de chaque
+       relevé, écrites à la main dans deux colonnes, quatorze lignes au plus).
+Reçoit : le groupe SVG ; horloge { x, y (coin haut gauche, 170 × 70), legende } ; feuille { x, y, titre, colonnes [deux
+         en-têtes] }.
+Produit : Labo.horloge_murale(g, reglage) -> afficher(t en s, ou null : « --:-- ») ;
+          Labo.feuille_releves(g, reglage) -> { ajouter([texte1, texte2]) (faux si la feuille est pleine), vider(), n() }.
+Utilisé par : les simulations de suivi temporel (2e année du bac).
+*/
+(function (L) {
+  const mm_ss = (t) => `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+  const LIGNES = 14, PAS = 13;
+
+  L.horloge_murale = function (g, { x, y, legende = "HORLOGE — depuis le mélange" }) {
+    // Boîtier noir, écran vert à chiffres lumineux, légende sous l'écran.
+    L.svg("rect", { x, y, width: 170, height: 70, rx: 6, fill: "#2b2f33", stroke: "#111", filter: "url(#ombre)" }, g);
+    L.svg("rect", { x: x + 12, y: y + 10, width: 146, height: 36, rx: 3, fill: "#10251a" }, g);
+    L.texte(g, x + 85, y + 60, legende, { "font-size": 6.5, fill: "#dfe6ec", "font-weight": 700 });
+    const ecran = L.svg("g", {}, g);
+    return (t) => { ecran.replaceChildren(); L.texte(ecran, x + 85, y + 37, t === null ? "--:--" : mm_ss(t), { "font-size": 24, "font-weight": 700, fill: "#7dff9a", "font-family": "monospace" }); };
+  };
+
+  function porte_bloc(g, x, y, l, h, titre, colonnes) {
+    // Planchette brune, pince métallique, feuille quadrillée, titre et en-têtes des deux colonnes.
+    L.svg("rect", { x: x - 8, y: y - 10, width: l + 16, height: h + 18, rx: 5, fill: "#8a5a35", stroke: "#5b3a20", filter: "url(#ombre)" }, g);
+    L.svg("rect", { x, y, width: l, height: h, fill: "#fdfdf8", stroke: "#c9c4b0" }, g);
+    L.svg("rect", { x: x + l / 2 - 30, y: y - 16, width: 60, height: 14, rx: 3, fill: "url(#metal)", stroke: "#555" }, g);
+    L.svg("circle", { cx: x + l / 2, cy: y - 9, r: 3, fill: "#666" }, g);
+    L.texte(g, x + l / 2, y + 16, titre, { "font-size": 9, "font-weight": 700, fill: "#23315a" });
+    colonnes.forEach((c, k) => L.texte(g, x + l * (0.28 + 0.44 * k), y + 31, c, { "font-size": 8, "font-weight": 700, fill: "#23315a" }));
+    L.svg("line", { x1: x + l / 2, y1: y + 22, x2: x + l / 2, y2: y + h - 6, stroke: "#c9c4b0" }, g);
+    for (let k = 0; k <= LIGNES; k++) L.svg("line", { x1: x + 8, y1: y + 36 + k * PAS, x2: x + l - 8, y2: y + 36 + k * PAS, stroke: "#e2ddcc", "stroke-width": 0.8 }, g);
+  }
+
+  L.feuille_releves = function (g, { x, y, titre, colonnes }) {
+    // Feuille vide ; chaque relevé s'écrit à la main sur la ligne suivante.
+    const l = 170, h = 44 + LIGNES * PAS, lignes = [];
+    porte_bloc(g, x, y, l, h, titre, colonnes);
+    const ecrit = L.svg("g", { "pointer-events": "none" }, g);
+    return {
+      ajouter(valeurs) {
+        // Écrit les deux valeurs sur la ligne suivante (police manuscrite, encre bleue).
+        if (lignes.length >= LIGNES) return false;
+        const yl = y + 46 + lignes.length * PAS;
+        valeurs.forEach((v, k) => L.texte(ecrit, x + l * (0.28 + 0.44 * k), yl, v, { "font-size": 12, fill: "#1f3a93", "font-family": "Caveat, cursive" }));
+        lignes.push(valeurs);
+        return true;
+      },
+      vider() { ecrit.replaceChildren(); lignes.length = 0; },
+      n: () => lignes.length,
+    };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : verre de montre (60 ou 80 mm) aux vraies dimensions, posé sur la paillasse (vu un peu d'en haut) ; il peut contenir un
+       échantillon solide (papier, papier filtre, rondelle de pomme de terre, pulpe d'orange), une bande de papier pH, une
+       pointe de sulfate de cuivre anhydre. Les gouttes qui y tombent (ecoulement.js) font une tache à l'endroit où elles
+       tombent : teinte du papier pH selon le pH, eau iodée bleu-noir sur l'amidon, sulfate de cuivre bleu avec l'eau.
+Reçoit : le contexte de la paillasse et { id, x, sol, e (px/mm), diametre (mm, 80 par défaut), solide, bande_ph }.
+Produit : Labo.verre_montre(ctx, reglage) -> { id, c : { solide, poudre, taches, bande_ph, recus }, poudre_bleue() } ;
+          il s'inscrit comme cible des gouttes et de la spatule (ctx.cibles : bouche(), recevoir_poudre()).
+Utilisé par : les simulations de chimie (tests de détection).
+*/
+(function (L) {
+  const BLEU = "#2f86d6", BLANC = "#f1f1ea";
+
+  function solide(g, nom) {
+    // Échantillon posé au centre du verre (mm).
+    const c = L.rgb(L.CHIMIE.solides[nom].rgb);
+    if (nom === "papier") L.svg("path", { d: "M-20 -4 L6 -9 L22 -2 L-4 4 Z", fill: c, stroke: "#c8c8c0", "stroke-width": 0.3 }, g);
+    if (nom === "papier_filtre") L.svg("path", { d: "M-26 -1 A28 8 0 0 1 26 -1 L0 2 Z", fill: c, stroke: "#d4d4cc", "stroke-width": 0.3 }, g);
+    if (nom === "pomme_de_terre") { L.svg("ellipse", { cx: 0, cy: -2, rx: 22, ry: 6, fill: "#9b7a45" }, g); L.svg("ellipse", { cx: 0, cy: -2.6, rx: 20.5, ry: 5.2, fill: c }, g); }
+    if (nom === "pulpe_orange") {
+      L.svg("path", { d: "M-22 0 Q0 -12 22 0 Q0 5 -22 0 Z", fill: c, stroke: "#c96f12", "stroke-width": 0.4 }, g);
+      for (const dx of [-10, -4, 2, 8]) L.svg("path", { d: `M${dx} 1 l${dx / 4} -6`, stroke: "#ffd08a", "stroke-width": 0.6 }, g);
+    }
+  }
+
+  function dessiner(g, v) {
+    // Verre : ombre, coupelle bombée, reflets ; puis le contenu ; le bord passe devant.
+    g.replaceChildren();
+    L.svg("ellipse", { cx: 2, cy: 3, rx: 41, ry: 8, fill: "#000", opacity: 0.25 }, g);
+    L.svg("path", { d: "M-40 -4 Q0 12 40 -4 A40 9 0 0 1 -40 -4 Z", fill: "rgba(200,225,233,0.35)", stroke: "rgba(120,150,160,0.8)", "stroke-width": 0.4 }, g);
+    L.svg("ellipse", { cx: 0, cy: -4, rx: 40, ry: 9, fill: "rgba(214,233,240,0.18)" }, g);
+    if (v.solide) solide(g, v.solide);
+    if (v.bande_ph) {
+      L.svg("path", { d: "M-30 -6 L30 -6 L28 0 L-32 0 Z", fill: L.couleur_ph(null), stroke: "#c9a35a", "stroke-width": 0.3 }, g);
+      for (const t of v.taches) L.svg("ellipse", { cx: t.x, cy: -3, rx: 5, ry: 2.4, fill: t.couleur }, g);
+    } else for (const t of v.taches) L.svg("ellipse", { cx: t.x, cy: -3 + t.dy, rx: t.r, ry: t.r * 0.42, fill: t.couleur, opacity: t.alpha }, g);
+    if (v.poudre) L.svg("path", { d: "M-12 -2 Q0 -12 12 -2 Z", fill: v.poudre, stroke: "#00000022", "stroke-width": 0.3 }, g);
+    L.svg("ellipse", { cx: 0, cy: -4, rx: 40, ry: 9, fill: "none", stroke: "rgba(235,246,250,0.9)", "stroke-width": 0.9 }, g);
+    L.svg("path", { d: "M-30 -9 Q-10 -12 10 -12", stroke: "#fff", "stroke-width": 0.8, opacity: 0.5, fill: "none" }, g);
+  }
+
+  function goutte(v, gt, x_local) {
+    // Effet d'une goutte : liquide majoritaire, puis teinte de la tache.
+    const nom = Object.entries(gt.parts[0]?.liquides || {}).sort((a, b) => b[1] - a[1])[0]?.[0];
+    if (!nom) return;
+    const l = L.LIQUIDES[nom], s = v.solide && L.CHIMIE.solides[v.solide], iode = nom === "eau_iodee";
+    v.recus.push(nom);
+    if (v.poudre && l.classe === "aqueuse") v.poudre = BLEU;
+    const x = Math.max(-26, Math.min(26, x_local));
+    if (v.bande_ph) return void v.taches.push({ x, couleur: L.couleur_ph(l.pH ?? null) });
+    const couleur = iode && s ? (s.amidon ? "#1e1446" : "#a85a16") : iode ? "#b8661c" : L.rgb(l.rgb);
+    const proche = v.taches.find((t) => Math.abs(t.x - x) < 5);
+    if (proche) { proche.r = Math.min(14, proche.r + 1.2); proche.couleur = couleur; } else v.taches.push({ x, dy: 0, r: 4.5, couleur, alpha: iode || l.alpha > 0.5 ? 0.9 : 0.55 });
+  }
+
+  L.verre_montre = function (ctx, { id, x, sol, e: e_reel = 1.6, diametre = 80, solide = null, bande_ph = false }) {
+    // Construit le verre de montre et l'inscrit comme cible (le dessin, prévu pour 80 mm, est mis à l'échelle).
+    const e = (e_reel * diametre) / 80;
+    const v = { id, c: null, g: L.svg("g", { class: `verre-montre verre-${id}` }, ctx.fond) };
+    v.c = { solide, poudre: null, taches: [], bande_ph, recus: [] };
+    const maj = () => { dessiner(v.g, v.c); L.placer(v.g, x, sol, e); ctx.signaler?.(); };
+    ctx.ecoulement.ajouter_cible({
+      contient: (p) => ((p.x - x) / (38 * e)) ** 2 + ((p.y - (sol - 4 * e)) / (8 * e)) ** 2 <= 1,
+      recevoir: (gt) => { goutte(v.c, gt, (gt.x - x) / e); maj(); },
+    });
+    v.bouche = () => ({ x, y: sol - 6 * e });
+    v.recevoir_poudre = () => { v.c.poudre = (solide && L.CHIMIE.solides[solide].eau) || v.c.recus.some((n) => L.LIQUIDES[n].classe === "aqueuse") ? BLEU : BLANC; maj(); };
+    v.poudre_bleue = () => v.c.poudre === BLEU;
+    (ctx.cibles = ctx.cibles || []).push(v);
+    maj();
+    return v;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : paillasses du suivi temporel par prélèvements : (1) banc de titrage : bécher du mélange réactionnel (50 mL d'iodure de
        potassium à 1,0 mol/L ; « Mélanger » y verse 50 mL de peroxodisulfate de potassium à 0,020 mol/L et démarre l'horloge
        murale), pipette graduée de 10 mL, bécher de 40 mL d'eau glacée (trempe, 0 °C), empois d'amidon, burette de
@@ -4853,16 +4988,6 @@ Utilisé par : simulation.js.
   const RESULTATS = [[1, 4.1], [2, 7.4], [4, 11.9], [5, 13.6], [6, 14.9], [8, 16.7], [10, 17.9], [12, 18.7], [15, 19.3], [20, 19.8]];
   L.RESULTATS_CLASSE = RESULTATS;
   const aq = (r) => r.c.phases.find((p) => p.classe === "aqueuse") || { liquides: {}, dissous: {}, V: 0 };
-  const mm_ss = (t) => `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
-
-  function horloge(g) {
-    // Minuterie murale à grands chiffres (temps écoulé depuis le mélange).
-    L.svg("rect", { x: 800, y: 52, width: 170, height: 70, rx: 6, fill: "#2b2f33", stroke: "#111", filter: "url(#ombre)" }, g);
-    L.svg("rect", { x: 812, y: 62, width: 146, height: 36, rx: 3, fill: "#10251a" }, g);
-    L.texte(g, 885, 112, "HORLOGE — depuis le mélange", { "font-size": 6.5, fill: "#dfe6ec", "font-weight": 700 });
-    const ecran = L.svg("g", {}, g);
-    return (t) => { ecran.replaceChildren(); L.texte(ecran, 885, 89, t === null ? "--:--" : mm_ss(t), { "font-size": 24, "font-weight": 700, fill: "#7dff9a", "font-family": "monospace" }); };
-  }
 
   function pinces_pipette(fond) {
     // Deux pinces fixées par des noix à la tige de la potence : la pipette rangée y est tenue debout.
@@ -4894,7 +5019,7 @@ Utilisé par : simulation.js.
     // Banc de titrage, mélange réactionnel, pipette graduée, horloge ; « Mélanger » démarre la transformation.
     const p = L.poste_titrage(g, { titrant: "cin_thiosulfate", texte: "Na₂S₂O₃ 0,010 mol/L", becher: { id: "trempe", contenu: { eau_glacee: 40 }, etiquette: "eau glacée" },
       autres: [{ id: "melange", profil: "becher_250", contenu: { cin_ki_1: 50 }, etiquette: "mélange" }], gouttes: [{ liquide: "ox_amidon", texte: "Empois\nd'amidon" }], places: [250, 335, 620, 790] });
-    const melange = p.recipients[1], afficher = horloge(g);
+    const melange = p.recipients[1], afficher = L.horloge_murale(g, { x: 800, y: 52 });
     pinces_pipette(p.ctx.fond);
     L.pipette_graduee(p.ctx, { support: { x: 400, y: 564 }, e: 1 });
     const s = suivi(p, p.becher, melange, afficher);

@@ -1433,3 +1433,20 @@ l'autre (c'est le hasard des chocs) ; l'interprétation reste qualitative, comme
 Problèmes restants : l'affiche des autres groupes donne des valeurs fixes ; la mesure de l'élève s'ajoute à la courbe,
 mais une seule date par élève est pratique dans le temps d'une séance (on peut refaire un prélèvement avec « Bécher neuf »).
 
+## 2026-10-30 — Suivi temporel par une mesure physique (b2_chim2_a2_mesures_physiques)
+
+- Activité 2 du chapitre « Suivi temporel » : deux paillasses, relevés écrits sur une feuille au mur (touche « Relever »)
+  et horloge murale ; l'élève recopie ses relevés au tableur, calcule x, trace x = f(t).
+- Pression : Mg + 2 H⁺ → Mg²⁺ + H₂ ; 0,024 g de Mg dans 50 mL de HCl à 0,50 mol/L ; erlenmeyer de 250 mL bouché,
+  pressiomètre ; V(gaz) = 225 mL, 293 K. Vitesse k·n(Mg)·[H⁺] (ruban mince : surface proportionnelle à sa masse), 3 s de
+  retard (couche d'oxyde). Mesuré : P de 1 013 à 1 119 hPa (théorie 1 120), t1/2 = 28,8 s (théorie 3 + 25,2 s).
+- Conductimétrie : hydrolyse de (CH₃)₃C–Cl, v = k·[RCl], k = 0,025 s⁻¹ à 20 °C ; 10,0 mL à 0,10 mol/L versés à la pipette
+  graduée dans 140 mL d'eau ; σ jusqu'à 2,8 mS/cm (théorie 2,84) ; t1/2 = 27,8 s (théorie ln 2 / k = 27,7 s).
+- Fichiers communs : horloge_releves.js (nouveau ; l'horloge de l'activité 1 y est déplacée) ; reactions_lentes.js
+  (hydrolyse et solution ; option sans effet sur les autres simulations : la réaction n'agit que si le réactif est présent).
+  Régression : parcours de l'activité 1 et des deux simulations du chapitre précédent rejoués.
+
+Problèmes restants : σ est calculée comme dans l'eau (l'acétone, 7 % du mélange, abaisse un peu les conductivités réelles) ;
+k est choisi pour un mélange riche en eau à 20 °C (t1/2 de l'ordre de la demi-minute) ; la pression ne tient pas compte de
+la vapeur d'eau ni de l'échauffement du mélange.
+

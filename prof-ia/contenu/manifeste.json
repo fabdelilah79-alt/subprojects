@@ -5406,6 +5406,40 @@
         "Le temps de demi-réaction est la moitié de la durée de la transformation.",
         "Le prélèvement continue de réagir pendant le titrage, la trempe ne sert à rien."
       ]
+    },
+    {
+      "id": "b2_chim2_a2_mesures_physiques",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim2_a2_mesures_physiques.html",
+      "description": "Suivi temporel par une mesure physique, avec relevés notés sur une feuille au mur (« Relever ») et horloge murale. Paillasse 1 : 0,024 g de magnésium dans 50 mL d'acide chlorhydrique à 0,50 mol/L, erlenmeyer de 250 mL bouché et relié à un pressiomètre (V gaz = 225 mL, 293 K) : P monte de 1 013 à 1 119 hPa ; x = (P − P0)·V/(RT), x_max = 0,99 mmol, t1/2 ≈ 29 s. Paillasse 2 : 10,0 mL de 2-chloro-2-méthylpropane à 0,10 mol/L dans l'acétone, versés à la pipette graduée dans 140 mL d'eau agitée ; conductimètre à sonde : σ monte jusqu'à 2,8 mS/cm ; x = σ·V/(λ(H₃O⁺) + λ(Cl⁻)), x_max = 1,0 mmol, t1/2 ≈ 28 s. Tableur-grapheur, x = f(t), vitesse comparée sur les tangentes (sans calcul), choix de la méthode de suivi selon t1/2.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim2_suivi_temporel",
+      "activite": "Manomètre ou conductimètre ; tableur-grapheur pour x = f(t).",
+      "objectifs": [
+        "O1",
+        "O3",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Suivi par la mesure de la pression",
+          "ce_que_fait_l_eleve": "Lâche le ruban de magnésium dans l'acide, bouche l'erlenmeyer, relève la pression au cours du temps, calcule x au tableur, trace x = f(t) et lit x_max et t1/2.",
+          "conclusion": "Le dihydrogène formé reste dans l'erlenmeyer bouché : sa quantité n(H₂) = x fait monter la pression, P − P0 = x·R·T/V. Les relevés de P donnent donc x à chaque date, sans arrêter la transformation. x augmente de plus en plus lentement et tend vers x_max ≈ 1,0 mmol (le magnésium est le réactif limitant) ; t1/2 ≈ 30 s. La pente de la tangente, donc la vitesse, diminue au cours du temps, car le ruban s'use."
+        },
+        {
+          "titre": "Suivi par conductimétrie",
+          "ce_que_fait_l_eleve": "Verse 10,0 mL de 2-chloro-2-méthylpropane dans l'eau agitée, relève la conductivité au cours du temps, en déduit x, trace x = f(t), lit t1/2 et justifie le choix d'une mesure physique pour une transformation rapide.",
+          "conclusion": "Le 2-chloro-2-méthylpropane, molécule, ne conduit pas ; son hydrolyse forme des ions H₃O⁺ et Cl⁻ : σ = (λ(H₃O⁺) + λ(Cl⁻))·x/V augmente avec l'avancement. On suit la transformation sans prélever, en continu. x tend vers x_max = 1,0 mmol ; t1/2 ≈ 30 s. Une transformation aussi rapide ne peut pas être suivie par des prélèvements et des titrages, qui demandent chacun plusieurs minutes : on choisit la méthode de suivi selon t1/2."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "La vitesse d'une transformation reste la même jusqu'à la fin.",
+        "On ne peut suivre une transformation qu'en dosant ses réactifs.",
+        "La conductivité d'une solution ne dépend pas de l'avancement de la transformation."
+      ]
     }
   ]
 }

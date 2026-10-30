@@ -14,16 +14,6 @@ Utilisé par : simulation.js.
   const RESULTATS = [[1, 4.1], [2, 7.4], [4, 11.9], [5, 13.6], [6, 14.9], [8, 16.7], [10, 17.9], [12, 18.7], [15, 19.3], [20, 19.8]];
   L.RESULTATS_CLASSE = RESULTATS;
   const aq = (r) => r.c.phases.find((p) => p.classe === "aqueuse") || { liquides: {}, dissous: {}, V: 0 };
-  const mm_ss = (t) => `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
-
-  function horloge(g) {
-    // Minuterie murale à grands chiffres (temps écoulé depuis le mélange).
-    L.svg("rect", { x: 800, y: 52, width: 170, height: 70, rx: 6, fill: "#2b2f33", stroke: "#111", filter: "url(#ombre)" }, g);
-    L.svg("rect", { x: 812, y: 62, width: 146, height: 36, rx: 3, fill: "#10251a" }, g);
-    L.texte(g, 885, 112, "HORLOGE — depuis le mélange", { "font-size": 6.5, fill: "#dfe6ec", "font-weight": 700 });
-    const ecran = L.svg("g", {}, g);
-    return (t) => { ecran.replaceChildren(); L.texte(ecran, 885, 89, t === null ? "--:--" : mm_ss(t), { "font-size": 24, "font-weight": 700, fill: "#7dff9a", "font-family": "monospace" }); };
-  }
 
   function pinces_pipette(fond) {
     // Deux pinces fixées par des noix à la tige de la potence : la pipette rangée y est tenue debout.
@@ -55,7 +45,7 @@ Utilisé par : simulation.js.
     // Banc de titrage, mélange réactionnel, pipette graduée, horloge ; « Mélanger » démarre la transformation.
     const p = L.poste_titrage(g, { titrant: "cin_thiosulfate", texte: "Na₂S₂O₃ 0,010 mol/L", becher: { id: "trempe", contenu: { eau_glacee: 40 }, etiquette: "eau glacée" },
       autres: [{ id: "melange", profil: "becher_250", contenu: { cin_ki_1: 50 }, etiquette: "mélange" }], gouttes: [{ liquide: "ox_amidon", texte: "Empois\nd'amidon" }], places: [250, 335, 620, 790] });
-    const melange = p.recipients[1], afficher = horloge(g);
+    const melange = p.recipients[1], afficher = L.horloge_murale(g, { x: 800, y: 52 });
     pinces_pipette(p.ctx.fond);
     L.pipette_graduee(p.ctx, { support: { x: 400, y: 564 }, e: 1 });
     const s = suivi(p, p.becher, melange, afficher);

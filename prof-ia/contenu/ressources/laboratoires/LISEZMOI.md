@@ -750,7 +750,10 @@ soufre).
 | Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
 |---|---|---|---|
 | b2_chim2_a1_prelevements.html | Prélèvements, trempe et titrage (S₂O₈²⁻ et I⁻) | O1 à O6 | Mélange de 50 mL d'iodure de potassium (1,0 mol/L) et de 50 mL de peroxodisulfate (0,020 mol/L), horloge murale ; prélèvement de 10 mL à la pipette graduée, trempe dans l'eau glacée, titrage du diiode par le thiosulfate à 0,010 mol/L (empois d'amidon) : à 1 min 30 s, VE ≈ 6,0 mL, x ≈ 0,30 mmol ; résultats de la classe au tableur, x = f(t), x_max = 1,0 mmol, t1/2 ≈ 3 min, vitesse comparée sur les tangentes (sans calcul). |
+| b2_chim2_a2_mesures_physiques.html | Suivi au manomètre ou au conductimètre ; tableur-grapheur pour x = f(t) | O1, O3, O5, O6 | Relevés notés sur une feuille au mur, horloge murale. Ruban de magnésium (0,024 g) dans 50 mL de HCl à 0,50 mol/L, erlenmeyer bouché relié au pressiomètre : P monte de 1 013 à 1 119 hPa, x = (P − P0)·V/(RT), x_max = 0,99 mmol, t1/2 ≈ 29 s. 10,0 mL de 2-chloro-2-méthylpropane (0,10 mol/L dans l'acétone) dans 140 mL d'eau agitée, conductimètre : σ monte jusqu'à 2,8 mS/cm, x = σ·V/(λ(H₃O⁺) + λ(Cl⁻)), t1/2 ≈ 28 s ; tangentes comparées sans calcul ; choix de la méthode de suivi selon t1/2. |
 
 Fichiers communs modifiés : `reactions_lentes.js` (réaction S₂O₈²⁻ + 2 I⁻, solutions d'iodure à 1,0 mol/L, de peroxodisulfate,
 de thiosulfate à 0,010 mol/L, eau glacée) ; `poste_titrage.js` (option `places`, désactivée par défaut ; renvoie le contexte ;
 tige du support de la sonde allongée jusqu'à la pince, conductimètre décalé pour ne plus passer sous la tablette).
+Activité 2 : fichier commun nouveau `horloge_releves.js` (horloge murale et feuille de relevés, aussi utilisée par l'activité 1) ;
+`reactions_lentes.js` : hydrolyse du 2-chloro-2-méthylpropane et sa solution dans l'acétone.

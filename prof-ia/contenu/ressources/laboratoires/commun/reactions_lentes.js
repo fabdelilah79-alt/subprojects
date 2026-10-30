@@ -3,13 +3,15 @@ Rôle : transformations lentes en solution aqueuse, avec leur vitesse : v = k(T)
        d'Arrhenius (k20 à 20 °C, énergie d'activation Ea). Réactions déclarées : H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O
        (v = k·[H₂O₂]·[I⁻], k20 = 0,020 L·mol⁻¹·s⁻¹, Ea = 56 kJ/mol) ; S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O (v = k·[S₂O₃²⁻],
        k20 = 7,0 × 10⁻⁴ s⁻¹, Ea = 50 kJ/mol ; le soufre colloïdal trouble la solution : blanc-jaune laiteux, opaque vers
-       2 × 10⁻³ mol/L) ; S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂ (v = k·[S₂O₈²⁻]·[I⁻], k20 = 7,7 × 10⁻³ L·mol⁻¹·s⁻¹, Ea = 52 kJ/mol).
-       Solutions : eau oxygénée 0,10 mol/L, acide chlorhydrique 2,0 mol/L, iodure de potassium acidifié et à 1,0 mol/L,
-       peroxodisulfate de potassium 0,020 mol/L, thiosulfate de sodium 0,010 mol/L, eau glacée.
+       2 × 10⁻³ mol/L) ; S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂ (v = k·[S₂O₈²⁻]·[I⁻], k20 = 7,7 × 10⁻³ L·mol⁻¹·s⁻¹, Ea = 52 kJ/mol) ;
+       hydrolyse (CH₃)₃C–Cl + 2 H₂O → (CH₃)₃C–OH + H₃O⁺ + Cl⁻ (v = k·[RCl], k20 = 0,025 s⁻¹ dans un mélange riche en eau,
+       Ea = 95 kJ/mol). Solutions : eau oxygénée 0,10 mol/L, acide chlorhydrique 2,0 mol/L, iodure de potassium acidifié et à
+       1,0 mol/L, peroxodisulfate de potassium 0,020 mol/L, thiosulfate de sodium 0,010 mol/L, eau glacée,
+       2-chloro-2-méthylpropane 0,10 mol/L dans l'acétone (il ne réagit qu'une fois versé dans l'eau).
 Reçoit : le contenu d'un récipient (liquide_contenu.js : phases, dissous en mmol, volume en mL, T en °C) et la durée dt (s).
 Produit : Labo.reaction_lente({ equation, reactifs, produits, k20, Ea, ordres }) ; Labo.avancer_lent(contenu, dt) -> vrai si le
           contenu a changé (contenu.lentes : avancement en mmol de chaque équation) ; Labo.k_arrhenius(k20, Ea, T) ;
-          liquides cin_peroxyde, cin_hcl, cin_ki_acide, cin_ki_1, cin_peroxodisulfate, cin_thiosulfate, eau_glacee ; règle de
+          liquides cin_peroxyde, cin_hcl, cin_ki_acide, cin_ki_1, cin_peroxodisulfate, cin_thiosulfate, eau_glacee, cin_rcl ; règle de
           couleur du soufre.
 Utilisé par : les simulations de cinétique chimique (2e année du bac).
 */
@@ -22,6 +24,7 @@ Utilisé par : les simulations de cinétique chimique (2e année du bac).
     cin_ki_1: aq("iodure de potassium 1,0 mol/L", { "K+": 1, "I-": 1 }),
     cin_peroxodisulfate: aq("peroxodisulfate de potassium 0,020 mol/L", { "K+": 0.04, "S2O8--": 0.02 }),
     cin_thiosulfate: aq("thiosulfate de sodium 0,010 mol/L", { "Na+": 0.02, "S2O3--": 0.01 }),
+    cin_rcl: { ...aq("2-chloro-2-méthylpropane 0,10 mol/L dans l'acétone", { RCl: 0.1 }), d: 0.79 },
     eau_glacee: { nom: "eau glacée", d: 1.0, rgb: [226, 239, 246], alpha: 0.32, classe: "aqueuse", pH: null },
   });
   L.LIQUIDES.cin_hcl.pH = 0;
@@ -52,6 +55,7 @@ Utilisé par : les simulations de cinétique chimique (2e année du bac).
 
   L.reaction_lente({ equation: "H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O", reactifs: { H2O2: 1, "I-": 2, "H3O+": 2 }, produits: { I2: 1 }, k20: 0.02, Ea: 56000, ordres: { H2O2: 1, "I-": 1 } });
   L.reaction_lente({ equation: "S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂", reactifs: { "S2O8--": 1, "I-": 2 }, produits: { "SO4--": 2, I2: 1 }, k20: 7.7e-3, Ea: 52000, ordres: { "S2O8--": 1, "I-": 1 } });
+  L.reaction_lente({ equation: "(CH₃)₃C–Cl + 2 H₂O → (CH₃)₃C–OH + H₃O⁺ + Cl⁻", reactifs: { RCl: 1 }, produits: { ROH: 1, "H3O+": 1, "Cl-": 1 }, k20: 0.025, Ea: 95000, ordres: { RCl: 1 } });
   L.reaction_lente({ equation: "S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O", reactifs: { "S2O3--": 1, "H3O+": 2 }, produits: { S: 1, SO2: 1 }, k20: 7e-4, Ea: 50000, ordres: { "S2O3--": 1 } });
 
   L.REGLES_COULEUR = L.REGLES_COULEUR || [];

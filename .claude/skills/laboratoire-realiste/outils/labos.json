@@ -3129,5 +3129,27 @@
    "Mélange les réactifs, prélève 10 mL à une date lue sur l'horloge, trempe le prélèvement dans l'eau glacée, le titre par le thiosulfate (empois d'amidon) et en déduit l'avancement x.",
    "Recopie au tableur les résultats de la classe, trace x = f(t), lit x_max et t1/2 et compare la vitesse au début et à la fin grâce aux tangentes."
   ]
+ },
+ {
+  "id": "b2_chim2_a2_mesures_physiques",
+  "chapitre": "2bac/chim2_suivi_temporel",
+  "activite": 2,
+  "objectifs": [
+   "O1",
+   "O3",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 50,
+  "description": "Suivi temporel par une mesure physique, avec relevés notés sur une feuille au mur (« Relever ») et horloge murale. Paillasse 1 : 0,024 g de magnésium dans 50 mL d'acide chlorhydrique à 0,50 mol/L, erlenmeyer de 250 mL bouché et relié à un pressiomètre (V gaz = 225 mL, 293 K) : P monte de 1 013 à 1 119 hPa ; x = (P − P0)·V/(RT), x_max = 0,99 mmol, t1/2 ≈ 29 s. Paillasse 2 : 10,0 mL de 2-chloro-2-méthylpropane à 0,10 mol/L dans l'acétone, versés à la pipette graduée dans 140 mL d'eau agitée ; conductimètre à sonde : σ monte jusqu'à 2,8 mS/cm ; x = σ·V/(λ(H₃O⁺) + λ(Cl⁻)), x_max = 1,0 mmol, t1/2 ≈ 28 s. Tableur-grapheur, x = f(t), vitesse comparée sur les tangentes (sans calcul), choix de la méthode de suivi selon t1/2.",
+  "conceptions": [
+   "La vitesse d'une transformation reste la même jusqu'à la fin.",
+   "On ne peut suivre une transformation qu'en dosant ses réactifs.",
+   "La conductivité d'une solution ne dépend pas de l'avancement de la transformation."
+  ],
+  "faire": [
+   "Lâche le ruban de magnésium dans l'acide, bouche l'erlenmeyer, relève la pression au cours du temps, calcule x au tableur, trace x = f(t) et lit x_max et t1/2.",
+   "Verse 10,0 mL de 2-chloro-2-méthylpropane dans l'eau agitée, relève la conductivité au cours du temps, en déduit x, trace x = f(t), lit t1/2 et justifie le choix d'une mesure physique pour une transformation rapide."
+  ]
  }
 ]
