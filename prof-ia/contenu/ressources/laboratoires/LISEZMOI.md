@@ -744,3 +744,13 @@ les aires de Kepler et le repère de l'équateur qui tourne en un jour sidéral.
 
 Fichier commun nouveau : `reactions_lentes.js` (vitesse v = k(T)·Π[X]ⁿ, loi d'Arrhenius ; H₂O₂ + I⁻, S₂O₃²⁻ + H⁺ ; trouble du
 soufre).
+
+## Chapitre 2e année du bac « Suivi temporel d'une transformation, vitesse de réaction » (fiche 2bac/chim2_suivi_temporel)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim2_a1_prelevements.html | Prélèvements, trempe et titrage (S₂O₈²⁻ et I⁻) | O1 à O6 | Mélange de 50 mL d'iodure de potassium (1,0 mol/L) et de 50 mL de peroxodisulfate (0,020 mol/L), horloge murale ; prélèvement de 10 mL à la pipette graduée, trempe dans l'eau glacée, titrage du diiode par le thiosulfate à 0,010 mol/L (empois d'amidon) : à 1 min 30 s, VE ≈ 6,0 mL, x ≈ 0,30 mmol ; résultats de la classe au tableur, x = f(t), x_max = 1,0 mmol, t1/2 ≈ 3 min, vitesse comparée sur les tangentes (sans calcul). |
+
+Fichiers communs modifiés : `reactions_lentes.js` (réaction S₂O₈²⁻ + 2 I⁻, solutions d'iodure à 1,0 mol/L, de peroxodisulfate,
+de thiosulfate à 0,010 mol/L, eau glacée) ; `poste_titrage.js` (option `places`, désactivée par défaut ; renvoie le contexte ;
+tige du support de la sonde allongée jusqu'à la pince, conductimètre décalé pour ne plus passer sous la tablette).

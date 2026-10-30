@@ -3105,5 +3105,29 @@
    "Double le nombre de particules A et B et compare les chocs par seconde et la formation de C.",
    "Passe de 300 K à 400 K et constate que les chocs efficaces deviennent beaucoup plus fréquents."
   ]
+ },
+ {
+  "id": "b2_chim2_a1_prelevements",
+  "chapitre": "2bac/chim2_suivi_temporel",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 45,
+  "description": "Suivi temporel de S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂ par prélèvements : bécher de 50 mL d'iodure de potassium à 1,0 mol/L où « Mélanger » verse 50 mL de peroxodisulfate de potassium à 0,020 mol/L et démarre une horloge murale ; la transformation lente (vitesse k·[S₂O₈²⁻]·[I⁻], loi d'Arrhenius) brunit le mélange. Pipette graduée de 10 mL à molette, tenue par deux pinces sur la potence ; trempe dans 40 mL d'eau glacée ; empois d'amidon ; burette de thiosulfate de sodium à 0,010 mol/L et agitateur magnétique. Prélèvement à 1 min 30 s : VE ≈ 6,0 mL, x ≈ 0,30 mmol. Affiche des résultats de la classe (10 dates, 1 à 20 min) ; au tableur : x = 0,05·VE, x_max = 1,0 mmol, t1/2 ≈ 3 min ; vitesse comparée sur les tangentes, sans calcul.",
+  "conceptions": [
+   "La vitesse d'une transformation reste la même jusqu'à la fin.",
+   "Le temps de demi-réaction est la moitié de la durée de la transformation.",
+   "Le prélèvement continue de réagir pendant le titrage, la trempe ne sert à rien."
+  ],
+  "faire": [
+   "Mélange les réactifs, prélève 10 mL à une date lue sur l'horloge, trempe le prélèvement dans l'eau glacée, le titre par le thiosulfate (empois d'amidon) et en déduit l'avancement x.",
+   "Recopie au tableur les résultats de la classe, trace x = f(t), lit x_max et t1/2 et compare la vitesse au début et à la fin grâce aux tangentes."
+  ]
  }
 ]

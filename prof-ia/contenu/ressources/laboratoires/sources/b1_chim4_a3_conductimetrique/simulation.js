@@ -15,7 +15,7 @@ Utilisé par : page.html (dernier script).
 
   function poste(g) {
     // Burette d'acide chlorhydrique, bécher du déboucheur dilué, agitateur, conductimètre ; mesures notées quand l'affichage est stable.
-    const p = L.poste_titrage(g, { titrant: "ab_hcl", texte: "HCl 0,100 mol/L", becher: { id: "becher", contenu: { tit_deboucheur: 10, eau: 140 }, etiquette: "déboucheur + eau" }, conductimetre: true });
+    const p = L.poste_titrage(g, { titrant: "ab_hcl", texte: "HCl 0,100 mol/L", becher: { id: "becher", contenu: { tit_deboucheur: 10, eau: 140 }, etiquette: "déboucheur + eau" }, conductimetre: true, places: [250, 335] });
     const mesures = [];
     setInterval(() => {
       const b = p.burette.etat(), c = p.conductimetre.etat(), sur = p.sur_plateau(), agite = !!sur && p.agitateur.agite(sur), s = Number(c.affiche.replace(",", "."));

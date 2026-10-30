@@ -28,14 +28,14 @@ Utilisé par : simulation.js.
 
   L.poste_fer = function (g) {
     // Permanganate et ions fer II ; fin : ions permanganate en excès (la solution reste rose).
-    const p = L.poste_titrage(g, { titrant: "ox_permanganate", texte: "KMnO₄ 0,020 mol/L", becher: { id: "becher", contenu: { ox_mohr: 10, eau: 20 }, etiquette: "ions fer II" }, autres: [{ id: "acide", profil: "becher_100", contenu: { ox_sulfurique: 40 }, etiquette: "acide sulfurique" }] });
+    const p = L.poste_titrage(g, { titrant: "ox_permanganate", texte: "KMnO₄ 0,020 mol/L", becher: { id: "becher", contenu: { ox_mohr: 10, eau: 20 }, etiquette: "ions fer II" }, autres: [{ id: "acide", profil: "becher_100", contenu: { ox_sulfurique: 40 }, etiquette: "acide sulfurique" }], places: [250, 335, 620, 790] });
     suivre(p, "fer", (ph) => L.concentration(ph, "MnO4-") > 5e-6, (ph) => ({ H: ph ? Math.round((ph.dissous["H3O+"] || 0) * 100) / 100 : 0 }));
     return { pense_bete: p.pense_bete };
   };
 
   L.poste_iode = function (g) {
     // Thiosulfate et diiode ; fin : plus de diiode (la teinte bleu-noir disparaît), empois d'amidon présent.
-    const p = L.poste_titrage(g, { titrant: "ox_thiosulfate", texte: "Na₂S₂O₃ 0,100 mol/L", becher: { id: "becher", contenu: { ox_diiode: 10, eau: 20 }, etiquette: "diiode" }, gouttes: [{ liquide: "ox_amidon", texte: "Empois\nd'amidon" }] });
+    const p = L.poste_titrage(g, { titrant: "ox_thiosulfate", texte: "Na₂S₂O₃ 0,100 mol/L", becher: { id: "becher", contenu: { ox_diiode: 10, eau: 20 }, etiquette: "diiode" }, gouttes: [{ liquide: "ox_amidon", texte: "Empois\nd'amidon" }], places: [250, 335, 620, 790] });
     suivre(p, "iode", (ph) => (ph.liquides.ox_amidon || 0) > 0 && L.concentration(ph, "I2") < 2e-6, (ph) => ({ amidon: !!ph && (ph.liquides.ox_amidon || 0) > 0 }));
     return { pense_bete: p.pense_bete };
   };

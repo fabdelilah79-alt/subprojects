@@ -12,6 +12,7 @@ OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dess
 ORBITES = ['continents.js', 'espace.js', 'portable.js', 'orbites_modele.js', 'orbites_ecran.js', 'orbites_panneau.js', 'logiciel_orbites.js']
 MECA6 = ORBITES + [ 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
 SIMS = {
+ 'b2_chim2_a1_prelevements': ("Laboratoire : suivi par prélèvements et titrage", "simulation de l'activité 1 du chapitre « Suivi temporel d'une transformation, vitesse de réaction » (2e année du bac) : peroxodisulfate et iodure, prélèvements, trempe, titrage du diiode par le thiosulfate, résultats de la classe, courbe x = f(t), t1/2, tangentes."),
  'b2_chim1_a2_vie_courante': ("Laboratoire : transformations lentes de la vie courante", "simulation de l'activité 2 du chapitre « Transformations rapides et transformations lentes » (2e année du bac) : autocuiseur (durées de cuisson à 100 °C et à 120 °C), conservation par le froid (même transformation à 20 °C et dans un bain de glace)."),
  'b2_chim1_s1_chocs_efficaces': ("Laboratoire : les chocs efficaces", "simulation de la partie propre aux filières PC et SM du chapitre « Transformations rapides et transformations lentes » (2e année du bac) : logiciel de simulation de la réaction A + B → C, chocs efficaces, influence de la concentration et de la température."),
  'b2_chim1_a1_rapides_lentes': ("Laboratoire : transformations rapides et lentes", "simulation de l'activité 1 du chapitre « Transformations rapides et transformations lentes » (2e année du bac) : transformations rapides et lentes en tubes, équation d'oxydoréduction et couples, température (bain-marie, liqueur de Fehling) et concentration (croix derrière les tubes de thiosulfate), facteurs cinétiques."),
@@ -87,7 +88,7 @@ for sid, (titre, role) in SIMS.items():
     if sid == 'b1_elec2_s1_bilan_electronique':
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
         scripts = list(dict.fromkeys(lu('tc_elec4_a1_transistor') + lu('tc_elec4_a2_ao') + ['../../commun/capteurs_numeriques.js'])) + locaux
-    if sid.startswith('b2_chim1'):
+    if sid.startswith(('b2_chim1', 'b2_chim2')):
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
         scripts = list(dict.fromkeys(lu('b1_chim4_a2_electrons') + ['../../commun/' + f for f in ['chimie_decor.js', 'bain_marie_physique.js', 'chronometre_manuel.js', 'reactions_lentes.js', 'portable.js', 'capteurs_numeriques.js', 'documents_mur.js']])) + locaux
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux

@@ -453,7 +453,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/burette.js | Burette de 25 mL aux vraies dimensions : graduations, robinet (goutte à goutte, filet), écoulement réel, loupe du ménisque. |
 | contenu/ressources/laboratoires/commun/agitateur_magnetique.js | Agitateur magnétique : plateau (support), bouton de vitesse, barreau aimanté vu à travers le verre. |
 | contenu/ressources/laboratoires/commun/conductimetre.js | Conductimètre à sonde plongeante : σ = Σ λi·[Xi], temps de réponse selon l'agitation ; sonde dessinée derrière la paroi du bécher. |
-| contenu/ressources/laboratoires/commun/poste_titrage.js | Paillasse de titrage (1 px/mm) : burette, agitateur, bécher à titrer, récipients et flacons, conductimètre facultatif ; réactions continues. |
+| contenu/ressources/laboratoires/commun/poste_titrage.js | Paillasse de titrage (1 px/mm) : burette, agitateur, bécher à titrer, récipients et flacons, conductimètre facultatif, places choisies (facultatif) ; réactions continues ; renvoie aussi le contexte de la paillasse. |
 | contenu/ressources/laboratoires/sources/b1_chim4_a1_protons/ | Indicateurs colorés et produits courants ; vinaigre + soude, ammoniaque + acide : transfert de protons (postes_protons.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim4_a2_electrons/ | Fer + ions cuivre II, Javel + iodure, diiode + vitamine C : transfert d'électrons (postes_electrons.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim4_a3_conductimetrique/ | Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique (simulation.js). |
@@ -469,6 +469,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_chim1_a1_rapides_lentes/ | Transformations rapides et lentes, température et concentration (postes_rapides_lentes.js : trois paillasses ; simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_chim1_a2_vie_courante/ | Autocuiseur (documents, durées de cuisson) et conservation par le froid (bain de glace, thermomètre) : postes_vie_courante.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_chim1_s1_chocs_efficaces/ | Chocs efficaces (PC, SM) : modele_chocs.js (disques, parois à T, seuil d'énergie), poste_chocs.js (logiciel sur le portable), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim2_a1_prelevements/ | Suivi par prélèvements : postes_prelevements.js (banc de titrage, mélange S₂O₈²⁻ + I⁻, pipette graduée, trempe, horloge ; affiche des résultats de la classe), simulation.js. |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
@@ -540,7 +541,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/banc_ressort_accessoires.js | Plateau d'accessoires : surcharges, palette, aimant de freinage, ressort de rechange. |
 | contenu/ressources/laboratoires/commun/banc_ressort_pieces.js | Pièces détaillées du banc : mobile, réflecteur, palette, aimant de freinage, surcharge, soufflerie. |
 | contenu/ressources/laboratoires/commun/pendule_torsion_dessin.js | Dessin du pendule de torsion (potence, fil, barre, masselottes, cadran, capteur de rotation en option). |
-| contenu/ressources/laboratoires/commun/reactions_lentes.js | Transformations lentes en solution : loi de vitesse et loi d'Arrhenius (H₂O₂ + I⁻, S₂O₃²⁻ + H⁺), solutions, trouble du soufre colloïdal. |
+| contenu/ressources/laboratoires/commun/reactions_lentes.js | Transformations lentes en solution : loi de vitesse et loi d'Arrhenius (H₂O₂ + I⁻, S₂O₃²⁻ + H⁺, S₂O₈²⁻ + I⁻), solutions, eau glacée, trouble du soufre colloïdal. |
 | contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
 | contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
 | contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |

@@ -1415,3 +1415,21 @@ conductimètre viendront avec le suivi temporel (chapitre suivant) ; la durée d
 
 Problèmes restants : simulation à deux dimensions et nombres de particules petits : les compteurs varient d'un essai à
 l'autre (c'est le hasard des chocs) ; l'interprétation reste qualitative, comme le demandent les orientations.
+
+## 2026-10-30 — Suivi temporel par prélèvements (b2_chim2_a1_prelevements)
+
+- Activité 1 du chapitre « Suivi temporel d'une transformation, vitesse de réaction » : S₂O₈²⁻ + 2 I⁻ → 2 SO₄²⁻ + I₂
+  (v = k·[S₂O₈²⁻]·[I⁻], k = 7,7 × 10⁻³ L·mol⁻¹·s⁻¹ à 20 °C, Ea = 52 kJ/mol) ; 50 mL de KI à 1,0 mol/L + 50 mL de K₂S₂O₈ à
+  0,020 mol/L ; horloge murale ; pipette graduée tenue par deux pinces sur la potence ; trempe dans 40 mL d'eau glacée
+  (0 °C, dilution : la transformation y est presque arrêtée) ; titrage du diiode par le thiosulfate à 0,010 mol/L.
+- Mesuré dans le test : prélèvement de 10,0 mL à t = 92 s, VE = 6,03 mL, soit x = 0,30 mmol ; t1/2 du modèle : 182 s
+  (≈ 3 min), cohérent avec l'affiche des résultats de la classe (x = 0,05 × VE ; 0,50 mmol vers 3 min ; x_max = 1,0 mmol).
+- Vitesse lue sur les tangentes et comparée, sans calcul (orientations) ; t1/2 lu sur la courbe.
+- Fichiers communs : reactions_lentes.js (nouvelle réaction et solutions) ; poste_titrage.js (option places, désactivée
+  par défaut ; renvoie le contexte). Régression : titrages conductimétrique et colorimétriques de 1re année (images
+  identiques avant et après). Corrigés au passage dans ces deux simulations : bécher caché par le carnet (places
+  décalées), pince de la sonde au-dessus du haut de sa tige (tige allongée), conductimètre sous la tablette (décalé).
+
+Problèmes restants : l'affiche des autres groupes donne des valeurs fixes ; la mesure de l'élève s'ajoute à la courbe,
+mais une seule date par élève est pratique dans le temps d'une séance (on peut refaire un prélèvement avec « Bécher neuf »).
+
