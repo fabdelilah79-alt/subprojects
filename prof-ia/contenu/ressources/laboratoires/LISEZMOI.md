@@ -666,3 +666,17 @@ Comme le demandent les orientations, on rappelle l'encadrement de 1re année (θ
 translation (θ̇ = dθ/dt, θ̈ = d²θ/dt²) ; les moments d'inertie sont donnés pour des formes simples (tige, masses ponctuelles) ;
 les types de rotation se lisent sur θ̈ (nulle ou constante). Le logiciel de pointage (pointage_video.js) a reçu une option
 « polaire » : l'origine placée sur l'axe, il donne l'abscisse angulaire θ = (Ox, OM) au lieu de x et y.
+
+## Chapitre 2e année du bac « Systèmes mécaniques oscillants » (fiche 2bac/meca4_oscillants)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca4_a1_ressort.html | A1 : enregistrements x = f(t) ; masse, raideur, amortissement | O1 à O4 | Tri des oscillateurs (sans équation) ; banc à coussin d'air, ressort de 10 ou 20 N/m, mobile de 200 à 400 g, capteur de position et logiciel x(t) : amplitude, T0 (0,889 s à 200 g), force de rappel, équation différentielle, solution donnée et phase ; T0 = 2π·√(m/k) au tableur ; palette (pseudo-périodique, T ≈ T0) et aimant (apériodique). |
+| b2_meca4_a2_torsion.html | A2 : pendule de torsion, moment d'inertie et constante de torsion | O1, O3, O4 | Masselottes à 4, 8, 12 cm, fils A et B, chronomètre à main (plusieurs oscillations) : T0² = (4π²/C)·J, C ≈ 4,0 × 10⁻³ N·m/rad ; fil 4 fois plus raide : T0 divisée par 2 ; isochronisme. |
+| b2_meca4_a3_resonance.html | A3 : résonance, excitateur et résonateur bien distincts | O5 | Mobile entre deux ressorts (f0 = 1,59 Hz), moteur à excentrique réglable : oscillations forcées à la fréquence de l'excitateur ; amplitude lue avec deux témoins en régime établi, maximale vers 1,6 Hz ; palette et aimant : résonance amortie. Aucune courbe de résonance tracée. |
+
+Comme le demandent les orientations, les oscillateurs sont d'abord présentés sans équation (tri), la solution de l'équation
+différentielle est donnée, l'amortissement est montré par l'expérience sans expression des frottements, la pseudo-période
+est comparée à la période propre, et la résonance reste qualitative. Le solide-ressort est horizontal (toutes filières).
+Matériel commun nouveau : banc_ressort_dessin.js, banc_ressort.js, banc_ressort_accessoires.js (banc à coussin d'air avec
+ressorts et excitateur), logiciel_xt.js (capteur, interface et logiciel x(t)), chronometre_manuel.js.

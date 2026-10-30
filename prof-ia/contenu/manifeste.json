@@ -4727,6 +4727,119 @@
         "Le moment d'inertie ne dépend que de la masse du solide.",
         "Une force plus grande donne une vitesse angulaire plus grande, pas une accélération angulaire plus grande."
       ]
+    },
+    {
+      "id": "b2_meca4_a1_ressort",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca4_a1_ressort.html",
+      "description": "Deux paillasses. 1 : tableau de tri des oscillateurs mécaniques (sans équation). 2 : banc à coussin d'air, mobile de 200 g (surcharges de 100 g), ressorts de 10 et 20 N/m, palette et aimant de freinage, capteur de position à ultrasons, interface et logiciel x(t) (zéro, durée, acquisition au lâcher, curseur, trois courbes). T0 = 0,889 s (200 g, 10 N/m), 1,088 s (300 g), 1,257 s (400 g), 0,628 s (20 N/m) ; palette : pseudo-périodique (pseudo-période ≈ T0) ; aimant : apériodique.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca4_oscillants",
+      "activite": "Enregistrements x = f(t) : influence de la masse, de la raideur, de l'amortissement.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Des oscillateurs mécaniques",
+          "ce_que_fait_l_eleve": "Range des systèmes en oscillateurs mécaniques ou non, et définit un oscillateur et l'amortissement.",
+          "conclusion": "Un oscillateur mécanique est un système qui effectue un mouvement de va-et-vient autour d'une position d'équilibre stable : pendule simple, pendule pesant, pendule de torsion, solide-ressort. Écarté de l'équilibre puis lâché, il oscille ; la durée d'une oscillation est la période propre T0, le plus grand écart est l'amplitude. Les frottements diminuent l'amplitude : c'est l'amortissement."
+        },
+        {
+          "titre": "Enregistrer x(t) d'un solide-ressort",
+          "ce_que_fait_l_eleve": "Enregistre x(t) d'un solide-ressort, mesure l'amplitude et la période propre, choisit la force de rappel, l'équation différentielle et la phase à l'origine.",
+          "conclusion": "Écarté de sa position d'équilibre puis lâché, le mobile oscille : x(t) est une sinusoïde d'amplitude Xm et de période propre T0. Le ressort exerce la force de rappel F = −k·x ; le poids et la réaction du coussin d'air se compensent, et la deuxième loi de Newton donne m·ẍ = −k·x, soit ẍ + (k/m)·x = 0. Sa solution est x(t) = Xm·cos(2π·t/T0 + φ) ; les conditions initiales fixent Xm et φ (lâché sans vitesse à x = +Xm : φ = 0)."
+        },
+        {
+          "titre": "Influence de la masse et de la raideur",
+          "ce_que_fait_l_eleve": "Mesure T0 pour trois masses et deux ressorts, compare à 2π·√(m/k) au tableur.",
+          "conclusion": "La période propre du solide-ressort ne dépend que de la masse et de la raideur : T0 = 2π·√(m/k). Elle augmente avec la masse et diminue quand le ressort est plus raide ; elle ne dépend pas de l'amplitude."
+        },
+        {
+          "titre": "Amortissement",
+          "ce_que_fait_l_eleve": "Enregistre x(t) avec la palette puis avec l'aimant et reconnaît les régimes pseudo-périodique et apériodique.",
+          "conclusion": "Les frottements amortissent les oscillations. Faiblement amorti, l'oscillateur a un régime pseudo-périodique : l'amplitude diminue et la pseudo-période est presque égale à la période propre. Fortement amorti, il revient à l'équilibre sans osciller : régime apériodique."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "La période d'un oscillateur dépend de l'amplitude.",
+        "Un oscillateur plus lourd oscille plus vite.",
+        "L'amortissement change beaucoup la période."
+      ]
+    },
+    {
+      "id": "b2_meca4_a2_torsion",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca4_a2_torsion.html",
+      "description": "Une paillasse. Pendule de torsion : potence, fil d'acier A (C = 4,0 × 10⁻³ N·m/rad) ou B (1,6 × 10⁻²), barre de 30 cm (J_barre = 9,0 × 10⁻⁴ kg·m²) et deux masselottes de 100 g à 4, 8 ou 12 cm, cadran gradué, chronomètre à main. T0 = 3,47 ; 4,64 ; 6,11 s (fil A) ; T0² = (4π²/C)·J ; fil B : période divisée par 2 ; même période à 20° et à 45° (isochronisme).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca4_oscillants",
+      "activite": "Pendule de torsion : influence du moment d'inertie et de la constante de torsion.",
+      "objectifs": [
+        "O1",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Influence du moment d'inertie",
+          "ce_que_fait_l_eleve": "Chronomètre plusieurs oscillations pour trois positions des masselottes, trace T0² = f(J) et en déduit la constante de torsion.",
+          "conclusion": "Tourné d'un angle θ, le fil de torsion exerce un couple de rappel de moment M = −C·θ (C : constante de torsion, en N·m/rad). La relation fondamentale de la dynamique en rotation donne J·θ̈ = −C·θ, soit θ̈ + (C/J)·θ = 0 ; la solution est θ = θm·cos(2π·t/T0 + φ) avec T0 = 2π·√(J/C). T0² est proportionnel à J : la période augmente quand on éloigne les masselottes de l'axe."
+        },
+        {
+          "titre": "Constante de torsion, isochronisme",
+          "ce_que_fait_l_eleve": "Change de fil, compare les périodes et vérifie l'isochronisme avec deux amplitudes.",
+          "conclusion": "Avec un fil plus raide (constante de torsion C quatre fois plus grande), la période propre est divisée par deux : T0 = 2π·√(J/C). Pour des amplitudes différentes, la période reste la même : les oscillations sont isochrones."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La période d'un pendule de torsion augmente avec l'amplitude.",
+        "Le moment d'inertie ne dépend pas de la position des masses.",
+        "Un fil plus raide donne des oscillations plus lentes."
+      ]
+    },
+    {
+      "id": "b2_meca4_a3_resonance",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca4_a3_resonance.html",
+      "description": "Une paillasse. Résonateur : mobile de 200 g entre deux ressorts de 10 N/m (f0 = 1,59 Hz) sur le banc à coussin d'air ; excitateur : moteur à excentrique (1,5 cm) et son alimentation (0,5 à 3,0 Hz) ; curseurs témoins d'amplitude sur une règle ; palette et aimant de freinage ; chronomètre. Amplitude établie : 1,7 cm à 1,2 Hz, 9,8 cm à 1,6 Hz, 1,3 cm à 2,0 Hz ; à 1,6 Hz : 3,7 cm avec la palette, 0,3 cm avec l'aimant. Aucune courbe de résonance tracée.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca4_oscillants",
+      "activite": "Résonance avec un montage distinguant clairement excitateur et résonateur.",
+      "objectifs": [
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Excitateur et résonateur",
+          "ce_que_fait_l_eleve": "Mesure la période propre du résonateur, puis observe qu'il oscille à la fréquence de l'excitateur.",
+          "conclusion": "Le résonateur (le solide-ressort) écarté puis lâché oscille à sa période propre T0. Relié à un excitateur qui lui impose un mouvement périodique, il effectue des oscillations forcées : il oscille à la fréquence de l'excitateur, et non à sa fréquence propre."
+        },
+        {
+          "titre": "La résonance",
+          "ce_que_fait_l_eleve": "Change la fréquence de l'excitateur, lit l'amplitude établie avec les témoins et trouve la résonance près de f0.",
+          "conclusion": "L'amplitude des oscillations forcées dépend de la fréquence de l'excitateur : elle est faible loin de la fréquence propre, et devient très grande quand la fréquence de l'excitateur est proche de la fréquence propre du résonateur : c'est la résonance."
+        },
+        {
+          "titre": "Résonance et amortissement",
+          "ce_que_fait_l_eleve": "Compare l'amplitude à la résonance sans amortisseur, avec la palette et avec l'aimant.",
+          "conclusion": "L'amortissement diminue l'amplitude à la résonance : faiblement amorti, le résonateur a une résonance aiguë (grande amplitude) ; plus l'amortissement est fort, plus la résonance est floue et l'amplitude faible ; très amorti, il n'y a presque plus de résonance."
+        }
+      ],
+      "duree_min": 50,
+      "conceptions": [
+        "Le résonateur oscille toujours à sa fréquence propre.",
+        "Plus on excite vite, plus l'amplitude est grande.",
+        "L'amortissement ne change pas l'amplitude à la résonance."
+      ]
     }
   ]
 }

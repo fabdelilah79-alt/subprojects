@@ -531,6 +531,14 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_meca2_a3_projectiles/ | Projectiles : lance-projectile, tableau quadrillé, flèche et portée (poste_tir.js, reglages_tir.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_meca3_a1_angulaire/ | Disque entraîné par une masse, filmé et pointé en mode polaire : θ, θ̇, θ̈, types de rotation (disque_dessin.js, poste_disque.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_meca3_a2_relation/ | Tige à masselottes, masse, cellule et chronomètre : ΣM = JΔ·θ̈, rôle du moment d'inertie (tige_dessin.js, poste_tige.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/banc_ressort_dessin.js | Dessin du banc à coussin d'air avec ressorts, mobile, accessoires, capteur et excitateur. |
+| contenu/ressources/laboratoires/commun/banc_ressort.js | Oscillateur solide-ressort horizontal (amorti, éventuellement excité), calcul pas à pas et geste de lâcher. |
+| contenu/ressources/laboratoires/commun/banc_ressort_accessoires.js | Plateau d'accessoires : surcharges, palette, aimant de freinage, ressort de rechange. |
+| contenu/ressources/laboratoires/commun/logiciel_xt.js | Interface et logiciel d'acquisition x(t) : zéro, durée, acquisition au lâcher, curseur, trois courbes. |
+| contenu/ressources/laboratoires/commun/chronometre_manuel.js | Chronomètre à main au centième (marche/arrêt, zéro). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a1_ressort/ | Tri des oscillateurs ; solide-ressort enregistré : T0, masse, raideur, amortissement (poste_oscillateurs.js, poste_ressort.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a2_torsion/ | Pendule de torsion : moment d'inertie, constante de torsion, isochronisme (torsion_dessin.js, poste_torsion.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a3_resonance/ | Résonance : excitateur, résonateur, témoins d'amplitude, amortissement (temoins.js, poste_resonance.js, simulation.js). |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
 | contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |

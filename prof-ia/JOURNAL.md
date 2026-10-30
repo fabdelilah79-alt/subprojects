@@ -1177,3 +1177,27 @@ Problèmes restants, à faire par l'enseignant :
 - Frottements de l'axe négligés : les mesures tombent juste sur la théorie (pas d'ordonnée à l'origine due au frottement).
 - Le chronomètre et la vidéo sont exacts au calcul près ; seule l'erreur de pointage de l'élève (A1) disperse les θ̈.
 - Les masselottes se déplacent toutes les deux ensemble (solide toujours équilibré) ; on ne peut pas les régler séparément.
+
+## 2026-10-30 — Laboratoires virtuels : chapitre 2e année du bac « Systèmes mécaniques oscillants »
+
+Fait (en suivant la compétence « laboratoire-realiste ») :
+- Trois simulations, inscrites au manifeste : A1 tri des oscillateurs, solide-ressort horizontal enregistré (capteur et
+  logiciel x(t)), T0 en fonction de m et k, régimes pseudo-périodique et apériodique ; A2 pendule de torsion (J, C,
+  isochronisme, chronomètre à main) ; A3 résonance avec excitateur et résonateur bien distincts, témoins d'amplitude,
+  influence de l'amortissement, sans courbe de résonance. Objectifs O1 à O5.
+- Matériel commun nouveau : banc_ressort_dessin.js, banc_ressort.js, banc_ressort_accessoires.js, logiciel_xt.js,
+  chronometre_manuel.js. Aucun fichier commun existant modifié.
+- Remarque de l'enseignant prise en compte : le cordon de la soufflerie n'arrivait pas jusqu'à la fiche (espace entre le
+  fil et la prise) ; il utilise maintenant L.cordon_secteur (fiche enfoncée, manchon, cordon continu). Règle ajoutée à
+  la compétence.
+- Vérifié : parcours complets (sources et fichiers assemblés) ; mesures comparées à la théorie : T0 = 0,8888 s pour
+  0,8886 ; 1,0883 pour 1,0883 ; 1,2573 pour 1,2566 ; 0,6284 pour 0,6283 ; pseudo-période du modèle 0,8931 s pour 0,8933 ;
+  C mesurée 3,9 × 10⁻³ pour 4,0 × 10⁻³ (chronomètre à main) ; amplitudes établies 1,7 / 9,8 / 1,3 cm pour 1,72 / 9,85 /
+  1,28 cm ; 3,7 et 0,3 cm avec palette et aimant pour 3,72 et 0,29 cm.
+
+Problèmes restants, à faire par l'enseignant :
+- Amortissement modélisé par un frottement fluide (−h·v), y compris pour la palette ; le frottement de l'air réel et le
+  frottement solide ne sont pas distingués (hors programme).
+- Le chronomètre à main contient le temps de réaction de l'élève : pour le résonateur (T0 = 0,63 s), il faut chronométrer
+  10 oscillations ; les tolérances acceptent 4 à 5 %.
+- Les deux masselottes du pendule de torsion se déplacent ensemble ; le cadran ne sert qu'à choisir l'amplitude.

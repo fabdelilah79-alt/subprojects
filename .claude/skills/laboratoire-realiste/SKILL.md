@@ -30,6 +30,8 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 - Scène 1024 × 640 en perspective 2,5D (`L.boitier`, ombres `L.ombre_sol`) ; **rien ne flotte** : tout est posé sur la
   paillasse ou fixé au mur, avec son ombre ; les objets cachés derrière d'autres le sont dans le bon ordre.
 - **Tout câble est branché jusqu'au bout** : cordon secteur jusqu'à une prise murale (`L.cordon_secteur`, `c.prise()`),
+  toujours avec `L.cordon_secteur` (fiche enfoncée dans la prise, manchon, cordon qui entre dans le manchon) : jamais un
+  trait et un rond dessinés à la main (remarque de l'enseignant : « un espace entre le fil et la prise ») ;
   câble d'un capteur jusqu'à une prise de l'appareil (remarque de l'enseignant : « le fil du capteur n'est pas branché »).
 - Textes lisibles, **sans chevauchement ni débordement** : étiquettes courtes sur les supports, pas de texte sous une
   borne, une fiche, le clavier du portable, le pense-bête (haut gauche), le carnet (bas gauche) ou la tablette (bas droit).
