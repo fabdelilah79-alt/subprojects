@@ -739,6 +739,8 @@ les aires de Kepler et le repère de l'équateur qui tourne en un jour sidéral.
 | Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
 |---|---|---|---|
 | b2_chim1_a1_rapides_lentes.html | H₂O₂ + I⁻ ; S₂O₃²⁻ + H⁺ ; liqueur de Fehling | O1, O2, O3 | Quatre tubes : Fe²⁺ + MnO₄⁻ et I₂ + S₂O₃²⁻ (rapides), I⁻ + H₂O₂ et S₂O₃²⁻ + H⁺ (lentes) ; équation et couples ; même transformation à 20 °C et à 70 °C (bain-marie), Fehling à froid et à chaud ; croix derrière trois tubes de thiosulfate : 33, 66 et 135 s pour 0,10, 0,050 et 0,025 mol/L. |
+| b2_chim1_a2_vie_courante.html | Vie courante : autocuiseur, conservation des aliments par le froid | O3 | Documents sur l'autocuiseur (2 bar, eau bouillante à 120 °C) et durées de cuisson : rapport d'environ 3,5 au tableur ; iodure acidifié + eau oxygénée à 20 °C et dans un bain de glace à 2 °C (presque incolore) ; réfrigérateur et congélateur. |
+| b2_chim1_s1_chocs_efficaces.html | (PC, SMA, SMB) Interprétation microscopique : chocs efficaces | O3 | Logiciel de simulation A + B → C : seule une petite partie des chocs est efficace ; deux fois plus de particules : environ quatre fois plus de chocs par seconde ; 400 K : à peine plus de chocs, mais une part de chocs efficaces environ deux fois plus grande ; courbes du nombre de C. |
 
 Fichier commun nouveau : `reactions_lentes.js` (vitesse v = k(T)·Π[X]ⁿ, loi d'Arrhenius ; H₂O₂ + I⁻, S₂O₃²⁻ + H⁺ ; trouble du
-soufre). Reste à faire : l'activité 2 (autocuiseur, conservation par le froid) et la partie PC/SM (chocs efficaces).
+soufre).

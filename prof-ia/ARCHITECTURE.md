@@ -467,6 +467,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_intro_a1_physicien/ | Article d'une physicienne, questions rangées par partie du programme, démarche sur le problème du satellite GPS (documents_physicien.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_intro_a1_chimiste/ | Activités et préoccupations du chimiste, questions de la chimie de l'année (donnees_chimiste.js : documents et étiquettes ; postes_chimiste.js ; simulation.js). |
 | contenu/ressources/laboratoires/sources/b2_chim1_a1_rapides_lentes/ | Transformations rapides et lentes, température et concentration (postes_rapides_lentes.js : trois paillasses ; simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_chim1_a2_vie_courante/ | Autocuiseur (documents, durées de cuisson) et conservation par le froid (bain de glace, thermomètre) : postes_vie_courante.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim1_s1_chocs_efficaces/ | Chocs efficaces (PC, SM) : modele_chocs.js (disques, parois à T, seuil d'énergie), poste_chocs.js (logiciel sur le portable), simulation.js. |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |

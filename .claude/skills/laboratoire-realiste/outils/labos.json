@@ -3065,5 +3065,45 @@
    "Compare la même transformation à 20 °C et à 70 °C, puis teste la liqueur de Fehling à froid et au bain-marie : la température est un facteur cinétique.",
    "Mesure au chronomètre la durée de disparition d'une croix pour trois concentrations de thiosulfate : la concentration est un facteur cinétique."
   ]
+ },
+ {
+  "id": "b2_chim1_a2_vie_courante",
+  "chapitre": "2bac/chim1_rapides_lentes",
+  "activite": 2,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 35,
+  "description": "Paillasse 1 : documents sur l'autocuiseur (couvercle étanche, soupape, pression d'environ 2 bar, eau bouillante à 120 °C) et durées de cuisson de quatre aliments à 100 °C et à 120 °C ; tableur : rapport d'environ 3,5. Paillasse 2 : même transformation lente (iodure acidifié + eau oxygénée) à 20 °C et dans un bain de glace à 2 °C (bécher, glaçons, thermomètre électronique) : la solution reste presque incolore dans la glace (environ cinq fois plus lente) ; document sur le réfrigérateur et le congélateur.",
+  "conceptions": [
+   "L'autocuiseur cuit plus vite parce que la pression écrase les aliments.",
+   "Le froid arrête complètement les transformations.",
+   "Le froid tue tous les microbes."
+  ],
+  "faire": [
+   "Lit les documents sur l'autocuiseur, calcule au tableur le rapport des durées de cuisson à 100 °C et à 120 °C et l'explique par la température.",
+   "Compare la même transformation lente à 20 °C et dans un bain de glace, puis explique la conservation des aliments au réfrigérateur et au congélateur."
+  ]
+ },
+ {
+  "id": "b2_chim1_s1_chocs_efficaces",
+  "chapitre": "2bac/chim1_rapides_lentes",
+  "activite": 0,
+  "activite_specifique": 1,
+  "objectifs": [
+   "O3"
+  ],
+  "duree_min": 30,
+  "description": "Partie propre aux filières PC, SMA et SMB. Logiciel de simulation sur un ordinateur portable : particules A et B dans une boîte (disques, parois à la température T, loi de Maxwell), choc A–B efficace si l'énergie relative le long de la ligne des centres atteint un seuil (A + B → C) ; réglages : 15, 30 ou 60 particules A et B, 250 à 400 K ; compteurs (chocs et chocs efficaces par seconde au début de l'essai) et courbes du nombre de C. 30 + 30 à 300 K : 70 chocs/s, 1 efficace/s ; 60 + 60 : environ quatre fois plus de chocs ; 400 K : à peine plus de chocs, mais environ trois fois plus de chocs efficaces.",
+  "conceptions": [
+   "Chaque rencontre entre réactifs donne une réaction.",
+   "À température plus élevée, les chocs sont seulement plus nombreux.",
+   "Une transformation garde la même vitesse jusqu'à la fin."
+  ],
+  "faire": [
+   "Lance un essai et constate que seule une petite partie des chocs A–B est efficace.",
+   "Double le nombre de particules A et B et compare les chocs par seconde et la formation de C.",
+   "Passe de 300 K à 400 K et constate que les chocs efficaces deviennent beaucoup plus fréquents."
+  ]
  }
 ]

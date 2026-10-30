@@ -5303,6 +5303,73 @@
         "La température ne change que l'état physique, pas la vitesse des transformations.",
         "La quantité de réactif change le produit obtenu, pas la durée de la transformation."
       ]
+    },
+    {
+      "id": "b2_chim1_a2_vie_courante",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim1_a2_vie_courante.html",
+      "description": "Paillasse 1 : documents sur l'autocuiseur (couvercle étanche, soupape, pression d'environ 2 bar, eau bouillante à 120 °C) et durées de cuisson de quatre aliments à 100 °C et à 120 °C ; tableur : rapport d'environ 3,5. Paillasse 2 : même transformation lente (iodure acidifié + eau oxygénée) à 20 °C et dans un bain de glace à 2 °C (bécher, glaçons, thermomètre électronique) : la solution reste presque incolore dans la glace (environ cinq fois plus lente) ; document sur le réfrigérateur et le congélateur.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim1_rapides_lentes",
+      "activite": "Vie courante : autocuiseur, conservation des aliments par le froid.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "L'autocuiseur",
+          "ce_que_fait_l_eleve": "Lit les documents sur l'autocuiseur, calcule au tableur le rapport des durées de cuisson à 100 °C et à 120 °C et l'explique par la température.",
+          "conclusion": "Dans l'autocuiseur, la vapeur reste enfermée : la pression atteint environ 2 bar et l'eau bout vers 120 °C au lieu de 100 °C. Les transformations chimiques de la cuisson, qui sont lentes, se font environ 3,5 fois plus vite : la cuisson dure environ trois à quatre fois moins longtemps. La température est un facteur cinétique."
+        },
+        {
+          "titre": "Conserver par le froid",
+          "ce_que_fait_l_eleve": "Compare la même transformation lente à 20 °C et dans un bain de glace, puis explique la conservation des aliments au réfrigérateur et au congélateur.",
+          "conclusion": "Dans le bain de glace (2 °C), l'eau oxygénée oxyde les ions iodure environ cinq fois plus lentement qu'à 20 °C : la solution reste presque incolore. De même, au réfrigérateur (4 °C) et au congélateur (−18 °C), les transformations lentes qui altèrent les aliments sont fortement ralenties : on conserve les aliments plus longtemps."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "L'autocuiseur cuit plus vite parce que la pression écrase les aliments.",
+        "Le froid arrête complètement les transformations.",
+        "Le froid tue tous les microbes."
+      ]
+    },
+    {
+      "id": "b2_chim1_s1_chocs_efficaces",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim1_s1_chocs_efficaces.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Logiciel de simulation sur un ordinateur portable : particules A et B dans une boîte (disques, parois à la température T, loi de Maxwell), choc A–B efficace si l'énergie relative le long de la ligne des centres atteint un seuil (A + B → C) ; réglages : 15, 30 ou 60 particules A et B, 250 à 400 K ; compteurs (chocs et chocs efficaces par seconde au début de l'essai) et courbes du nombre de C. 30 + 30 à 300 K : 70 chocs/s, 1 efficace/s ; 60 + 60 : environ quatre fois plus de chocs ; 400 K : à peine plus de chocs, mais environ trois fois plus de chocs efficaces.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim1_rapides_lentes",
+      "activite": "(PC/SMA/SMB) Modéliser au niveau microscopique (chocs efficaces) l'influence de la concentration et de la température, à l'aide d'un logiciel de simulation.",
+      "objectifs": [
+        "O3"
+      ],
+      "missions": [
+        {
+          "titre": "Les chocs efficaces",
+          "ce_que_fait_l_eleve": "Lance un essai et constate que seule une petite partie des chocs A–B est efficace.",
+          "conclusion": "Dans une solution, les entités réactives (molécules, ions) s'agitent sans cesse et se heurtent. Une réaction se produit seulement lors d'un choc efficace : un choc assez énergique (énergie au moins égale à une énergie seuil) et convenablement orienté. Seule une petite partie des chocs est efficace."
+        },
+        {
+          "titre": "Concentration et chocs efficaces",
+          "ce_que_fait_l_eleve": "Double le nombre de particules A et B et compare les chocs par seconde et la formation de C.",
+          "conclusion": "Dans le même volume, deux fois plus de particules A et deux fois plus de particules B donnent environ quatre fois plus de chocs A–B par seconde, donc plus de chocs efficaces par seconde : C se forme plus vite. Plus les réactifs sont concentrés, plus la transformation est rapide. Au cours de l'essai, A et B se raréfient : les chocs efficaces deviennent moins fréquents et la formation de C ralentit."
+        },
+        {
+          "titre": "Température et chocs efficaces",
+          "ce_que_fait_l_eleve": "Passe de 300 K à 400 K et constate que les chocs efficaces deviennent beaucoup plus fréquents.",
+          "conclusion": "À température plus élevée, les particules sont plus rapides : les chocs sont à peine plus nombreux, mais beaucoup plus souvent assez énergiques (environ 5 % de chocs efficaces à 400 K contre 2 % à 300 K). Le nombre de chocs efficaces par seconde augmente nettement : la transformation est plus rapide. C'est l'interprétation de l'effet de la température observé au laboratoire."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "Chaque rencontre entre réactifs donne une réaction.",
+        "À température plus élevée, les chocs sont seulement plus nombreux.",
+        "Une transformation garde la même vitesse jusqu'à la fin."
+      ]
     }
   ]
 }

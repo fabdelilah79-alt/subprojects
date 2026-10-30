@@ -1400,3 +1400,18 @@ l'usine et l'atelier sont des exemples génériques, sans nom d'entreprise.
 Problèmes restants : la liqueur de Tollens n'est pas proposée (Fehling suffit pour la température) ; le manomètre et le
 conductimètre viendront avec le suivi temporel (chapitre suivant) ; la durée de la croix suppose une solution lue de côté
 (carte derrière le tube), pas par-dessus comme dans un bécher.
+
+## 2026-10-30 — Transformations rapides et lentes : vie courante (b2_chim1_a2_vie_courante) et chocs efficaces (b2_chim1_s1_chocs_efficaces)
+
+- Activité 2 (vie courante) : documents sur l'autocuiseur (2 bar, 120 °C) et durées de cuisson (rapport d'environ 3,5) ;
+  bain de glace à 2 °C (bécher de 600 mL, glaçons, thermomètre électronique) : l'oxydation des ions iodure y est environ
+  cinq fois plus lente qu'à 20 °C (diiode : 0,47 mmol/L contre 2,0 mmol/L).
+- Partie PC/SM (activité du PDF ajoutée à la fiche : modéliser au niveau microscopique avec les TIC) : logiciel de
+  simulation A + B → C sur le portable ; disques de même masse, chocs élastiques, parois à T (composante normale de la vitesse
+  selon la loi de Rayleigh, vérifié : vitesse moyenne 196 px/s pour 195 attendus à 300 K) ; choc efficace si l'énergie
+  relative le long de la ligne des centres atteint 3,5 kT(300 K). Mesures : 30 + 30 à 300 K : 61 à 71 chocs/s ;
+  60 + 60 : 280 à 300 chocs/s (environ × 4) ; 400 K : à peine plus de chocs, part des chocs efficaces environ doublée.
+- Vérifié : parcours complets des deux simulations (sources et fichiers assemblés).
+
+Problèmes restants : simulation à deux dimensions et nombres de particules petits : les compteurs varient d'un essai à
+l'autre (c'est le hasard des chocs) ; l'interprétation reste qualitative, comme le demandent les orientations.
