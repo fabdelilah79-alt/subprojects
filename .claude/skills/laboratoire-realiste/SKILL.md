@@ -122,6 +122,10 @@ un pictogramme ni à une forme abstraite.
 - `L.documents_mur` place la vue « document ouvert » au moment de l'appel : l'appeler tôt (affiches derrière le matériel),
   puis, à la fin du poste, `g.append(g.querySelector(".document-ouvert"))` pour que le document ouvert passe devant tout.
 - Un objet fin (fil, anse, aiguille) se touche mal : lui ajouter une zone invisible (`opacity: 0.001`) autour de lui.
+- Pendule (pesant ou simple) : `commun/pendule_pesant.js` (modèle exact en sin θ, période selon l'amplitude) et
+  `pendule_pesant_dessin.js` ; une masse sur un objet qui tourne se saisit dans les deux sens : le geste décide (le long de
+  la tige : glisser ; sur le côté : écarter). Dans un test, arrêter le pendule (appui bref) avant de le saisir.
+- `chronometre_manuel` reprend là où il s'est arrêté : touche « 0 » avant chaque mesure (dans les tests aussi).
 - Une fenêtre de logiciel où un objet peut sortir (orbite, échappement) : découper le dessin au cadre (`clipPath`).
 
 ## 7. Outils (dossier `outils/` de cette compétence)

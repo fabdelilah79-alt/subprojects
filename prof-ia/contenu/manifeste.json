@@ -5099,6 +5099,54 @@
         "Le rayon de la trajectoire ne dépend que du champ magnétique.",
         "La vitesse des électrons change le long du cercle."
       ]
+    },
+    {
+      "id": "b2_meca4_s1_pendule_pesant",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca4_s1_pendule_pesant.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Paillasse 1 : pendule pesant (tige d'aluminium de 50 cm, masse coulissante de 200 g à 10, 20, 30 ou 40 cm de l'axe, palette d'amortissement), capteur de rotation, interface et logiciel θ(t), rapporteur ; modèle sans approximation des petits angles. Périodes égales (1,24 s) de 5° à 20°, 1,30 s à 50° ; équation différentielle J·θ̈ + M·g·a·sin θ = 0, solution donnée, T0 = 2π·√(J/(M·g·a)) (0,95 s à 1,24 s selon d) ; avec la palette, amplitude qui décroît et pseudo-période ≈ période propre. Paillasse 2 : pendule simple (bille d'acier ou d'aluminium, fil réglable de 15 à 80 cm, règle, chronomètre à main) : T² = (4π²/g)·l, g ≈ 9,8 m/s², période indépendante de la masse, pendule simple synchrone de 38 cm.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca4_oscillants",
+      "activite": "(PC/SMA/SMB) Pendule pesant : expériences montrant l'isochronisme des petites oscillations et l'influence de l'amortissement sur l'amplitude.",
+      "objectifs": [
+        "O1",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Isochronisme des petites oscillations",
+          "ce_que_fait_l_eleve": "Enregistre θ(t) pour des lâchers de 5° à 20° puis à 50°, mesure la période sur la courbe et découvre l'isochronisme des petites oscillations.",
+          "conclusion": "Pour les petites oscillations (amplitude de 20° au plus), la période du pendule pesant ne dépend pas de l'amplitude : c'est l'isochronisme des petites oscillations. Aux grandes amplitudes, la période est plus longue (environ 5 % de plus à 50°) : on ne peut plus confondre sin θ et θ."
+        },
+        {
+          "titre": "Équation différentielle et période propre",
+          "ce_que_fait_l_eleve": "Établit l'équation différentielle du pendule pesant, utilise la solution donnée, calcule T0 et la vérifie pour quatre positions de la masse.",
+          "conclusion": "La relation fondamentale de la dynamique en rotation donne J·θ̈ = −M·g·a·sin θ (M·a = m1·a1 + m2·d). Pour les petites oscillations, sin θ ≈ θ : θ̈ + (M·g·a/J)·θ = 0, de solution θ = θm·cos(2π·t/T0 + φ) avec T0 = 2π·√(J/(M·g·a)). Lâché sans vitesse depuis θ0, θm = θ0 et φ = 0. Éloigner la masse de l'axe augmente la période."
+        },
+        {
+          "titre": "Amortissement des oscillations",
+          "ce_que_fait_l_eleve": "Monte la palette, observe la décroissance de l'amplitude, mesure la pseudo-période et la compare à la période propre.",
+          "conclusion": "Avec la palette, les frottements de l'air sont plus grands : l'amplitude diminue au cours du temps (régime pseudo-périodique), car de l'énergie est dissipée. La pseudo-période reste presque égale à la période propre quand l'amortissement est faible. Sans palette, l'amplitude diminue aussi, mais très lentement."
+        },
+        {
+          "titre": "Le pendule simple",
+          "ce_que_fait_l_eleve": "Mesure dix oscillations du pendule simple pour quatre longueurs, trace T² = f(l), en déduit g et vérifie que la masse de la bille ne change pas la période.",
+          "conclusion": "Pour le pendule simple (bille quasi ponctuelle au bout d'un fil inextensible de masse négligeable), T² est proportionnelle à l : T0 = 2π·√(l/g). La pente 4π²/g donne g ≈ 9,8 m/s². La période ne dépend pas de la masse de la bille."
+        },
+        {
+          "titre": "Le pendule simple, modèle du pendule pesant",
+          "ce_que_fait_l_eleve": "Règle le pendule simple à la longueur J/(M·a) et vérifie qu'il a la période du pendule pesant.",
+          "conclusion": "Le pendule pesant (d = 40 cm) et le pendule simple de longueur l = J/(M·a) ≈ 38 cm ont la même période (1,24 s) : ils oscillent ensemble. Le pendule simple est un modèle du pendule pesant ; on dit qu'il est synchrone."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La période d'un pendule dépend de l'amplitude, même pour de petites oscillations.",
+        "Un pendule plus lourd oscille plus vite.",
+        "Sans palette, il n'y a aucun frottement : l'amplitude ne diminue pas.",
+        "Le pendule simple synchrone d'un pendule pesant a la longueur de sa tige."
+      ]
     }
   ]
 }

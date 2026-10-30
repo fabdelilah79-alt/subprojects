@@ -1317,3 +1317,23 @@ quadrillage (tolérance 1,5 mm).
 
 Problèmes restants : la vitesse initiale non perpendiculaire à B (trajectoire en hélice) est hors programme et n'est pas
 proposée ; le tube ne peut donc pas être tourné.
+
+## 2026-10-30 — Partie spécifique PC/SM : pendule pesant et pendule simple (b2_meca4_s1_pendule_pesant)
+
+- Activité du PDF (p. 133-134) : montrer l'isochronisme des petites oscillations et l'effet de l'amortissement sur
+  l'amplitude ; équation différentielle (petites oscillations), solution donnée, période propre ; pendule simple présenté
+  comme modèle (pendule simple synchrone), expression de sa période donnée.
+- Nouveaux fichiers communs (aucun fichier commun existant modifié) : pendule_pesant.js (modèle θ̈ = −ω0²·sin θ − θ̇/τ,
+  Runge-Kutta d'ordre 4 au pas de 1 ms, période exacte par la moyenne arithmético-géométrique) et pendule_pesant_dessin.js
+  (statif, capteur de rotation, rapporteur, tige, masse coulissante, palette). Ils serviront à l'énergie du pendule pesant.
+- Gestes : on écarte le pendule par la tige ou par la masse (geste sur le côté), on fait glisser la masse le long de la
+  tige (geste vers le haut ou le bas) ; un appui bref arrête le pendule. Pendule simple : molette de la pince pour la
+  longueur, règle fixée au bras, chronomètre à main (touche 0 avant chaque mesure).
+- Vérifié : parcours complet (sources et fichier assemblé). Périodes lues sur la courbe : 1,242 / 1,244 / 1,246 / 1,250 s
+  à 5, 10, 15, 20° (théorie 1,243 à 1,248 s), 1,300 s à 50° (théorie 1,305 s) ; d = 10, 20, 30 cm : 0,950 / 1,000 /
+  1,116 s (théorie 0,951 / 1,000 / 1,115 s) ; pseudo-période avec la palette 1,248 s ; pendule simple : g = 9,53 m/s²
+  (le test ajoute environ 0,2 s à chaque mesure de 10 oscillations, comme un temps de réaction) ; l = 38,5 cm :
+  T = 1,26 s au chronomètre (théorie 1,245 s ; période du pendule pesant : 1,244 s).
+
+Problèmes restants : la masse coulissante est traitée comme ponctuelle (son propre moment d'inertie changerait T de 0,2 %) ;
+le frottement de l'air est modélisé par un terme proportionnel à la vitesse.

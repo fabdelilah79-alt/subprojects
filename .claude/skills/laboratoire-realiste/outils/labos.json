@@ -2951,5 +2951,30 @@
    "Règle le courant pour que le cercle passe par les repères de 6 à 12 cm, trace d = f(1/B), en déduit e/m, puis observe l'effet de la tension accélératrice.",
    "Lit les documents sur le spectrographe de masse et le cyclotron et applique r = m·v / (|q|·B)."
   ]
+ },
+ {
+  "id": "b2_meca4_s1_pendule_pesant",
+  "chapitre": "2bac/meca4_oscillants",
+  "activite": 0,
+  "activite_specifique": 1,
+  "objectifs": [
+   "O1",
+   "O6"
+  ],
+  "duree_min": 55,
+  "description": "Partie propre aux filières PC, SMA et SMB. Paillasse 1 : pendule pesant (tige d'aluminium de 50 cm, masse coulissante de 200 g à 10, 20, 30 ou 40 cm de l'axe, palette d'amortissement), capteur de rotation, interface et logiciel θ(t), rapporteur ; modèle sans approximation des petits angles. Périodes égales (1,24 s) de 5° à 20°, 1,30 s à 50° ; équation différentielle J·θ̈ + M·g·a·sin θ = 0, solution donnée, T0 = 2π·√(J/(M·g·a)) (0,95 s à 1,24 s selon d) ; avec la palette, amplitude qui décroît et pseudo-période ≈ période propre. Paillasse 2 : pendule simple (bille d'acier ou d'aluminium, fil réglable de 15 à 80 cm, règle, chronomètre à main) : T² = (4π²/g)·l, g ≈ 9,8 m/s², période indépendante de la masse, pendule simple synchrone de 38 cm.",
+  "conceptions": [
+   "La période d'un pendule dépend de l'amplitude, même pour de petites oscillations.",
+   "Un pendule plus lourd oscille plus vite.",
+   "Sans palette, il n'y a aucun frottement : l'amplitude ne diminue pas.",
+   "Le pendule simple synchrone d'un pendule pesant a la longueur de sa tige."
+  ],
+  "faire": [
+   "Enregistre θ(t) pour des lâchers de 5° à 20° puis à 50°, mesure la période sur la courbe et découvre l'isochronisme des petites oscillations.",
+   "Établit l'équation différentielle du pendule pesant, utilise la solution donnée, calcule T0 et la vérifie pour quatre positions de la masse.",
+   "Monte la palette, observe la décroissance de l'amplitude, mesure la pseudo-période et la compare à la période propre.",
+   "Mesure dix oscillations du pendule simple pour quatre longueurs, trace T² = f(l), en déduit g et vérifie que la masse de la bille ne change pas la période.",
+   "Règle le pendule simple à la longueur J/(M·a) et vérifie qu'il a la période du pendule pesant."
+  ]
  }
 ]
