@@ -1305,3 +1305,15 @@ la tolérance sur vlim est de 8 %.
 
 Problèmes restants : l'écran est vu de face, sans l'inclinaison réelle de l'écran du tube ; la lecture des points se fait au
 quadrillage (tolérance 1,5 mm).
+
+## 2026-10-30 — Partie spécifique PC/SM : particule chargée dans un champ magnétique (b2_meca2_s3_champ_magnetique)
+
+- Activité du PDF : observer la trajectoire d'électrons dans un champ magnétique uniforme perpendiculaire à leur vitesse
+  initiale ; applications citées par les orientations (spectrographe de masse, cyclotron) en documents.
+- Matériel : tube à faisceau filiforme, bobines de Helmholtz (130 spires, R = 15 cm, B = 7,79 × 10⁻⁴ × I), deux
+  alimentations. Modèle : r = √(2·U·m/e) / B, cercle tangent à la sortie du canon, coupé par le verre.
+- Vérifié : parcours complet (sources et fichier assemblé) ; pente de d = f(1/B) 9,526 × 10⁻⁵ m·T (théorie 9,538 × 10⁻⁵),
+  e/m = 1,763 × 10¹¹ C/kg (théorie 1,759 × 10¹¹).
+
+Problèmes restants : la vitesse initiale non perpendiculaire à B (trajectoire en hélice) est hors programme et n'est pas
+proposée ; le tube ne peut donc pas être tourné.

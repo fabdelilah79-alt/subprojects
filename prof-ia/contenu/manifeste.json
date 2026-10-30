@@ -5063,6 +5063,42 @@
         "Entre les plaques, la trajectoire est un arc de cercle.",
         "Le poids de l'électron joue un rôle dans la déviation."
       ]
+    },
+    {
+      "id": "b2_meca2_s3_champ_magnetique",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_s3_champ_magnetique.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Tube à faisceau filiforme (hydrogène, canon à électrons, repères lumineux tous les 2 cm) entre deux bobines de Helmholtz (B = 7,79 × 10⁻⁴ × I), alimentation du tube (chauffage, U de 0 à 300 V) et des bobines (0 à 3 A, inverseur), cordons de sécurité ; ampoule à voir en grand ; documents sur le spectrographe de masse et le cyclotron. Faisceau rectiligne sans champ ; cercle (mouvement circulaire uniforme) dans le champ ; sens changé avec le courant ; diamètres 6, 8, 10 et 12 cm à U = 200 V (I = 2,04 ; 1,53 ; 1,22 ; 1,02 A), droite d = f(1/B), e/m = 1,76 × 10¹¹ C/kg ; rayon plus grand à 300 V ; isotopes séparés (rapport des rayons 1,1), demi-tour du cyclotron indépendant de la vitesse.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "(PC/SMA/SMB) Observer la trajectoire d'électrons dans un champ magnétique uniforme perpendiculaire à leur vitesse initiale.",
+      "objectifs": [
+        "O7"
+      ],
+      "missions": [
+        {
+          "titre": "Le faisceau dans le champ magnétique",
+          "ce_que_fait_l_eleve": "Observe le faisceau sans champ puis dans le champ des bobines, relie la force de Lorentz au mouvement circulaire uniforme et inverse le sens du courant.",
+          "conclusion": "Sans champ, le faisceau d'électrons est rectiligne (poids négligeable). Dans le champ magnétique uniforme B des bobines de Helmholtz, perpendiculaire à v0, chaque électron subit la force de Lorentz F = q·v ∧ B, perpendiculaire à sa vitesse : elle ne change pas la valeur de la vitesse, le mouvement est circulaire uniforme, dans le plan perpendiculaire à B. Le sens de la déviation change avec le sens de B."
+        },
+        {
+          "titre": "Rayon de la trajectoire et e/m",
+          "ce_que_fait_l_eleve": "Règle le courant pour que le cercle passe par les repères de 6 à 12 cm, trace d = f(1/B), en déduit e/m, puis observe l'effet de la tension accélératrice.",
+          "conclusion": "Le rayon de la trajectoire est r = m·v0 / (|q|·B), avec v0 = √(2·e·U/m) : à U fixé, le diamètre est inversement proportionnel à B. La pente de la droite d = f(1/B) vaut 2·√(2·U·m/e) ; on en tire e/m ≈ 1,76 × 10¹¹ C/kg. Le rayon augmente avec la vitesse (U plus grande)."
+        },
+        {
+          "titre": "Spectrographe de masse et cyclotron",
+          "ce_que_fait_l_eleve": "Lit les documents sur le spectrographe de masse et le cyclotron et applique r = m·v / (|q|·B).",
+          "conclusion": "Dans un spectrographe de masse, des ions de même charge et de même vitesse décrivent des cercles de rayon R = m·v / (|q|·B) proportionnel à leur masse : on sépare les isotopes. Dans un cyclotron, la durée d'un demi-tour, π·m / (|q|·B), ne dépend pas de la vitesse : une tension alternative de fréquence fixe accélère les particules à chaque passage."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "La force magnétique accélère les électrons dans le sens du mouvement.",
+        "Le rayon de la trajectoire ne dépend que du champ magnétique.",
+        "La vitesse des électrons change le long du cercle."
+      ]
     }
   ]
 }

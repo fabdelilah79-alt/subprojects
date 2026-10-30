@@ -2930,5 +2930,26 @@
    "Applique une tension UP, observe la déviation vers la plaque positive, lit des points de la trajectoire sur l'écran et montre que y est proportionnelle à x².",
    "Mesure la déviation pour plusieurs tensions UP (proportionnalité au champ), puis augmente UA et relie au principe de l'oscilloscope."
   ]
+ },
+ {
+  "id": "b2_meca2_s3_champ_magnetique",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 0,
+  "activite_specifique": 3,
+  "objectifs": [
+   "O7"
+  ],
+  "duree_min": 55,
+  "description": "Partie propre aux filières PC, SMA et SMB. Tube à faisceau filiforme (hydrogène, canon à électrons, repères lumineux tous les 2 cm) entre deux bobines de Helmholtz (B = 7,79 × 10⁻⁴ × I), alimentation du tube (chauffage, U de 0 à 300 V) et des bobines (0 à 3 A, inverseur), cordons de sécurité ; ampoule à voir en grand ; documents sur le spectrographe de masse et le cyclotron. Faisceau rectiligne sans champ ; cercle (mouvement circulaire uniforme) dans le champ ; sens changé avec le courant ; diamètres 6, 8, 10 et 12 cm à U = 200 V (I = 2,04 ; 1,53 ; 1,22 ; 1,02 A), droite d = f(1/B), e/m = 1,76 × 10¹¹ C/kg ; rayon plus grand à 300 V ; isotopes séparés (rapport des rayons 1,1), demi-tour du cyclotron indépendant de la vitesse.",
+  "conceptions": [
+   "La force magnétique accélère les électrons dans le sens du mouvement.",
+   "Le rayon de la trajectoire ne dépend que du champ magnétique.",
+   "La vitesse des électrons change le long du cercle."
+  ],
+  "faire": [
+   "Observe le faisceau sans champ puis dans le champ des bobines, relie la force de Lorentz au mouvement circulaire uniforme et inverse le sens du courant.",
+   "Règle le courant pour que le cercle passe par les repères de 6 à 12 cm, trace d = f(1/B), en déduit e/m, puis observe l'effet de la tension accélératrice.",
+   "Lit les documents sur le spectrographe de masse et le cyclotron et applique r = m·v / (|q|·B)."
+  ]
  }
 ]
