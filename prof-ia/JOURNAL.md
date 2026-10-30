@@ -1280,3 +1280,16 @@ Problèmes restants, à faire par l'enseignant :
 - La Terre du simulateur est vue de côté (Afrique) alors que l'orbite est vue depuis le pôle Nord ; un repère rouge sur
   l'équateur montre la rotation de la Terre.
 - Le Soleil est grossi (son rayon n'est pas à l'échelle).
+
+## 2026-10-30 — Partie spécifique PC/SM : chute verticale avec frottement (b2_meca2_s1_frottement)
+
+- Activité du PDF : chronophotographies de chutes de billes de même forme et de masses différentes dans deux liquides.
+  Réalisée avec deux colonnes (eau, glycérine), trois balles creuses lestées (4 cm ; 40, 50, 60 g), caméra et pointage vidéo.
+- Modèle : poids, poussée d'Archimède, masse ajoutée, traînée réelle Cd(Re), Runge-Kutta 4 (pas 1 ms). Dans l'eau
+  (Re ≈ 2 × 10⁴), (P − Π)/vlim² = 0,277 kg/m pour les trois balles (F = k·v²) ; dans la glycérine (Re ≈ 7), F ≈ k·v ; la
+  balle de 40 g (1,19 g/cm³) flotte sur la glycérine (1,26 g/cm³).
+- Mesuré au parcours : vlim 0,465 m/s à t = 0,9 s (vraie 0,480), τ estimé 0,42 s (vrai 0,43), k = 0,284 kg/m, vlim dans
+  la glycérine 0,206 m/s ; méthode d'Euler vérifiée (récurrence, pas, constantes A et B).
+
+Problèmes restants : la précision du pointage (environ 6 mm par pixel dans la vidéo) rend les vitesses un peu bruitées ;
+la tolérance sur vlim est de 8 %.

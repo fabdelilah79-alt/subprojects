@@ -4991,6 +4991,42 @@
         "Un satellite plus lourd tourne moins vite.",
         "Un satellite géostationnaire est immobile dans l'espace."
       ]
+    },
+    {
+      "id": "b2_meca2_s1_frottement",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_s1_frottement.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Deux colonnes de 1,10 m (eau, glycérine) sur une potence avec une règle de 1 m, trois balles creuses lestées de même diamètre (4,0 cm ; 40, 50 et 60 g), déclencheur, caméra (10 ou 2 images par seconde) et logiciel de pointage. Physique : poids, poussée d'Archimède, masse ajoutée et traînée réelle Cd(Re) ; dans l'eau F ≈ k·v² (k = 0,277 kg/m), dans la glycérine F ≈ k·v. Balle de 40 g dans l'eau : v = f(t) au tableur, vlim = 0,48 m/s, τ = 0,43 s (tangente à l'origine), régimes initial et permanent ; vlim pour 50 et 60 g (0,76 et 0,97 m/s) et modèle F = k·v² ; la balle de 40 g flotte dans la glycérine, celle de 60 g y atteint vite 0,21 m/s ; méthode d'Euler au tableur (pas de 0,1 s, puis de 0,5 s).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "(PC/SMA/SMB) Exploiter des chronophotographies de chutes verticales de billes de même forme et de masses différentes dans deux liquides : vitesse limite, régimes initial et permanent, temps caractéristique, influence de la masse, modélisation de la force de frottement.",
+      "objectifs": [
+        "O5"
+      ],
+      "missions": [
+        {
+          "titre": "Vitesse limite et temps caractéristique",
+          "ce_que_fait_l_eleve": "Filme la chute de la balle de 40 g dans l'eau, la pointe, calcule v au tableur, trace v = f(t), lit la vitesse limite et le temps caractéristique et distingue les deux régimes.",
+          "conclusion": "Lâchée sans vitesse dans l'eau, la balle accélère (régime initial), puis sa vitesse tend vers une vitesse limite vlim (régime permanent : mouvement rectiligne uniforme). La force de frottement du liquide augmente avec la vitesse jusqu'à compenser le poids diminué de la poussée d'Archimède. Le temps caractéristique τ est l'abscisse du point où la tangente à l'origine de v = f(t) coupe l'asymptote v = vlim (environ 0,43 s pour la balle de 40 g)."
+        },
+        {
+          "titre": "Masse, liquide et modèle du frottement",
+          "ce_que_fait_l_eleve": "Mesure la vitesse limite de trois balles de masses différentes, montre que (P − Π)/vlim² est constant (F = k·v²), puis compare avec la glycérine (balle qui flotte, vitesse limite petite atteinte presque aussitôt).",
+          "conclusion": "La vitesse limite augmente avec la masse de la balle. Dans l'eau, (P − Π)/vlim² a la même valeur pour les trois balles : la force de frottement est de la forme F = k·v² (k ≈ 0,28 kg/m). Dans la glycérine, très visqueuse, la balle de 40 g flotte (elle est moins dense que le liquide) et la balle de 60 g atteint presque aussitôt une vitesse limite bien plus petite (0,21 m/s) ; à faible vitesse, le frottement d'un liquide visqueux est plutôt de la forme F = k·v."
+        },
+        {
+          "titre": "Méthode d'Euler",
+          "ce_que_fait_l_eleve": "Résout l'équation différentielle dv/dt = A − B·v² par la méthode d'Euler au tableur avec un pas de 0,1 s, compare aux mesures, puis montre qu'un pas de 0,5 s donne une solution fausse.",
+          "conclusion": "La deuxième loi de Newton donne l'équation différentielle dv/dt = A − B·v² (modèle F = k·v²), avec A l'accélération initiale et B = A/vlim². La méthode d'Euler la résout pas à pas : a(t) = A − B·v(t)², puis v(t + Δt) = v(t) + a(t)·Δt. Avec un pas petit devant τ (Δt = 0,1 s), la solution approchée suit les mesures ; avec un pas trop grand (0,5 s), elle s'en écarte et oscille : le pas doit être choisi petit devant le temps caractéristique."
+        }
+      ],
+      "duree_min": 75,
+      "conceptions": [
+        "Un corps lourd tombe toujours de plus en plus vite.",
+        "La vitesse limite ne dépend pas de la masse.",
+        "Une méthode numérique donne toujours le bon résultat, quel que soit le pas."
+      ]
     }
   ]
 }

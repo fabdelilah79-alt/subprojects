@@ -2888,5 +2888,26 @@
    "Lance une planète sur une orbite elliptique, observe la loi des aires, vérifie la troisième loi de Kepler au tableur avec les données des planètes et en déduit la masse du Soleil.",
    "Met un satellite en orbite circulaire à 400 km, applique la deuxième loi de Newton (v = √(G·M/r)), lit la période, puis trouve l'orbite géostationnaire et son altitude."
   ]
+ },
+ {
+  "id": "b2_meca2_s1_frottement",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 0,
+  "activite_specifique": 1,
+  "objectifs": [
+   "O5"
+  ],
+  "duree_min": 75,
+  "description": "Partie propre aux filières PC, SMA et SMB. Deux colonnes de 1,10 m (eau, glycérine) sur une potence avec une règle de 1 m, trois balles creuses lestées de même diamètre (4,0 cm ; 40, 50 et 60 g), déclencheur, caméra (10 ou 2 images par seconde) et logiciel de pointage. Physique : poids, poussée d'Archimède, masse ajoutée et traînée réelle Cd(Re) ; dans l'eau F ≈ k·v² (k = 0,277 kg/m), dans la glycérine F ≈ k·v. Balle de 40 g dans l'eau : v = f(t) au tableur, vlim = 0,48 m/s, τ = 0,43 s (tangente à l'origine), régimes initial et permanent ; vlim pour 50 et 60 g (0,76 et 0,97 m/s) et modèle F = k·v² ; la balle de 40 g flotte dans la glycérine, celle de 60 g y atteint vite 0,21 m/s ; méthode d'Euler au tableur (pas de 0,1 s, puis de 0,5 s).",
+  "conceptions": [
+   "Un corps lourd tombe toujours de plus en plus vite.",
+   "La vitesse limite ne dépend pas de la masse.",
+   "Une méthode numérique donne toujours le bon résultat, quel que soit le pas."
+  ],
+  "faire": [
+   "Filme la chute de la balle de 40 g dans l'eau, la pointe, calcule v au tableur, trace v = f(t), lit la vitesse limite et le temps caractéristique et distingue les deux régimes.",
+   "Mesure la vitesse limite de trois balles de masses différentes, montre que (P − Π)/vlim² est constant (F = k·v²), puis compare avec la glycérine (balle qui flotte, vitesse limite petite atteinte presque aussitôt).",
+   "Résout l'équation différentielle dv/dt = A − B·v² par la méthode d'Euler au tableur avec un pas de 0,1 s, compare aux mesures, puis montre qu'un pas de 0,5 s donne une solution fausse."
+  ]
  }
 ]
