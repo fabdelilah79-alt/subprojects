@@ -5027,6 +5027,42 @@
         "La vitesse limite ne dépend pas de la masse.",
         "Une méthode numérique donne toujours le bon résultat, quel que soit le pas."
       ]
+    },
+    {
+      "id": "b2_meca2_s2_champ_electrique",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_meca2_s2_champ_electrique.html",
+      "description": "Partie propre aux filières PC, SMA et SMB. Tube à déviation électronique sur son support (canon à électrons, plaques de 10 cm distantes de 5,0 cm, écran fluorescent quadrillé) et alimentation haute tension 0 – 5 kV (chauffage 6,3 V~, UA, UP, inverseur de polarité), cordons de sécurité ; écran à lire en grand (quadrillage de 1 cm, divisions de 2 mm). Canon : E parallèle à v, v0 = √(2·e·UA/m) = 3,75 × 10⁷ m/s pour 4 000 V, poids négligeable. Plaques : E = UP/d (3,0 × 10⁴ V/m), déviation vers la plaque positive, y = UP·x²/(4·d·UA) (droite y = f(x²) de pente 1,9 m⁻¹) ; déviation proportionnelle à UP, plus faible quand UA augmente ; principe de l'oscilloscope.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/meca2_applications",
+      "activite": "(PC/SMA/SMB) Observer la trajectoire d'électrons dans un champ électrostatique uniforme (E parallèle puis perpendiculaire à la vitesse initiale) ; influence de la valeur de E sur la déviation.",
+      "objectifs": [
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Le canon à électrons",
+          "ce_que_fait_l_eleve": "Allume le canon, règle UA, calcule la vitesse des électrons à la sortie du canon et justifie que leur poids est négligeable.",
+          "conclusion": "Dans le canon, entre la cathode et l'anode, le champ électrostatique est parallèle à la vitesse : l'électron, soumis à F = −e·E, a un mouvement rectiligne accéléré et sort de l'anode avec la vitesse v0 = √(2·e·UA/m) (3,75 × 10⁷ m/s pour UA = 4 000 V). Son poids est négligeable devant la force électrique."
+        },
+        {
+          "titre": "Déviation entre les plaques",
+          "ce_que_fait_l_eleve": "Applique une tension UP, observe la déviation vers la plaque positive, lit des points de la trajectoire sur l'écran et montre que y est proportionnelle à x².",
+          "conclusion": "Entre les plaques, le champ E = UP/d est uniforme et perpendiculaire à v0. La deuxième loi de Newton donne a = e·E/m vers la plaque positive : x = v0·t (mouvement uniforme) et y = ½·(e·E/m)·t², d'où la trajectoire parabolique y = e·E·x²/(2·m·v0²) = UP·x²/(4·d·UA). Les électrons sont déviés vers la plaque positive."
+        },
+        {
+          "titre": "Influence du champ et de la vitesse",
+          "ce_que_fait_l_eleve": "Mesure la déviation pour plusieurs tensions UP (proportionnalité au champ), puis augmente UA et relie au principe de l'oscilloscope.",
+          "conclusion": "À vitesse v0 fixée, la déviation à la sortie des plaques est proportionnelle à UP, donc au champ E. Pour UP fixé, elle diminue quand UA augmente : des électrons plus rapides restent moins longtemps entre les plaques. C'est le principe de l'oscilloscope : la déviation du spot est proportionnelle à la tension appliquée aux plaques."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Le faisceau d'électrons est dévié vers la plaque négative.",
+        "Entre les plaques, la trajectoire est un arc de cercle.",
+        "Le poids de l'électron joue un rôle dans la déviation."
+      ]
     }
   ]
 }

@@ -1293,3 +1293,15 @@ Problèmes restants, à faire par l'enseignant :
 
 Problèmes restants : la précision du pointage (environ 6 mm par pixel dans la vidéo) rend les vitesses un peu bruitées ;
 la tolérance sur vlim est de 8 %.
+
+## 2026-10-30 — Partie spécifique PC/SM : particule chargée dans un champ électrostatique (b2_meca2_s2_champ_electrique)
+
+- Activité du PDF : observer la trajectoire d'électrons dans un champ électrostatique uniforme (E parallèle puis perpendiculaire
+  à v0) ; influence de E sur la déviation. Matériel : tube à déviation électronique, alimentation haute tension 0 – 5 kV.
+- Modèle : v0 = √(2·e·UA/m) ; y = UP·x²/(4·d·UA), d = 5,0 cm ; le faisceau s'arrête sur une plaque s'il l'atteint ; il
+  n'est visible qu'à partir de UA = 1 500 V (chauffage en marche).
+- Vérifié : parcours complet (sources et fichier assemblé) ; pente de y = f(x²) 1,897 m⁻¹ avec les lectures arrondies au mm
+  (théorie 1,875 m⁻¹) ; déviations à 10 cm : 0,63 / 1,25 / 1,88 / 2,50 cm pour UP = 500 à 2 000 V.
+
+Problèmes restants : l'écran est vu de face, sans l'inclinaison réelle de l'écran du tube ; la lecture des points se fait au
+quadrillage (tolérance 1,5 mm).

@@ -1,0 +1,49 @@
+<!doctype html>
+<!--
+Rôle : simulation de la partie « Particule chargée dans un champ électrostatique uniforme » du chapitre « Applications des lois de Newton » (2e année du bac, PC et SM) : tube à déviation électronique, canon à électrons, trajectoire parabolique, influence de E et de la vitesse.
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : mesures, tableur et courbes sur la tablette, missions du carnet ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/b2_meca2_s2_champ_electrique.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : électrons dans un champ électrostatique</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/bouton.js"></script>
+  <script src="../../commun/coussin_air.js"></script>
+  <script src="../../commun/coussin_air_mouvement.js"></script>
+  <script src="../../commun/eclateur.js"></script>
+  <script src="../../commun/feuille_enregistrement.js"></script>
+  <script src="../../commun/outils_mesure.js"></script>
+  <script src="../../commun/vecteurs_vitesse.js"></script>
+  <script src="../../commun/verif_enregistrement.js"></script>
+  <script src="../../commun/poste_coussin_air.js"></script>
+  <script src="../../commun/surcharge.js"></script>
+  <script src="../../commun/documents_mur.js"></script>
+  <script src="../../commun/tri.js"></script>
+  <script src="../../commun/circuit_decor.js"></script>
+  <script src="../../commun/bouton_reglage.js"></script>
+  <script src="dessin_tube.js"></script>
+  <script src="poste_champ_electrique.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

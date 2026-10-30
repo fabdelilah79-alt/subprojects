@@ -716,9 +716,10 @@ spécifique de la fiche).
 | Fichier | Partie (PC, SMA, SMB) | Objectif | Ce que l'élève fait |
 |---|---|---|---|
 | b2_meca2_s1_frottement.html | « Applications des lois de Newton » : chute verticale avec frottement | O5 | Balles creuses de 40, 50 et 60 g (4 cm) dans l'eau et la glycérine, filmées et pointées : v = f(t), vlim = 0,48 m/s, τ = 0,43 s (tangente à l'origine), régimes ; (P − Π)/vlim² constant : F = k·v² dans l'eau ; balle qui flotte dans la glycérine, vlim = 0,21 m/s ; méthode d'Euler au tableur (pas de 0,1 s puis 0,5 s). |
+| b2_meca2_s2_champ_electrique.html | « Applications des lois de Newton » : particule chargée dans un champ électrostatique | O6 | Tube à déviation électronique et alimentation 0 – 5 kV : canon (v0 = √(2·e·UA/m) = 3,75 × 10⁷ m/s), déviation vers la plaque positive, points lus sur l'écran, y = UP·x²/(4·d·UA), déviation proportionnelle à UP, plus faible si UA augmente ; oscilloscope. |
 | b2_meca2_s4_satellites.html | « Applications des lois de Newton » : satellites et planètes | O8 | Documents (référentiels héliocentrique et géocentrique, de Ptolémée à Newton, lois de Kepler, données) ; simulateur d'orbites : ellipse et loi des aires (secteurs de T/10) ; troisième loi avec les données de cinq planètes, MS = 1,99 × 10³⁰ kg ; satellite en orbite circulaire à 400 km (v = √(G·M/r) = 7,67 km/s), orbite géostationnaire (86 164 s, 35 800 km). |
 
-Reste à faire (même chapitre ou chapitres déjà traités) : particule chargée dans un champ électrostatique (O6) et dans un champ magnétique (O7), pendule pesant et pendule simple
+Reste à faire (même chapitre ou chapitres déjà traités) : particule chargée dans un champ magnétique (O7), pendule pesant et pendule simple
 (meca4, O6), énergie mécanique du pendule pesant (meca5, O5), bilan énergétique d'un circuit à transistor ou à AO
 (1re année, SM, elec2 O7). Fission et fusion (nucl2, O6) étaient déjà traitées dans b2_nucl2_a1_energie : l'objectif a été
 ajouté au manifeste. Matériel commun déplacé : le simulateur d'orbites (orbites_modele.js, orbites_ecran.js,

@@ -2909,5 +2909,26 @@
    "Mesure la vitesse limite de trois balles de masses différentes, montre que (P − Π)/vlim² est constant (F = k·v²), puis compare avec la glycérine (balle qui flotte, vitesse limite petite atteinte presque aussitôt).",
    "Résout l'équation différentielle dv/dt = A − B·v² par la méthode d'Euler au tableur avec un pas de 0,1 s, compare aux mesures, puis montre qu'un pas de 0,5 s donne une solution fausse."
   ]
+ },
+ {
+  "id": "b2_meca2_s2_champ_electrique",
+  "chapitre": "2bac/meca2_applications",
+  "activite": 0,
+  "activite_specifique": 2,
+  "objectifs": [
+   "O6"
+  ],
+  "duree_min": 55,
+  "description": "Partie propre aux filières PC, SMA et SMB. Tube à déviation électronique sur son support (canon à électrons, plaques de 10 cm distantes de 5,0 cm, écran fluorescent quadrillé) et alimentation haute tension 0 – 5 kV (chauffage 6,3 V~, UA, UP, inverseur de polarité), cordons de sécurité ; écran à lire en grand (quadrillage de 1 cm, divisions de 2 mm). Canon : E parallèle à v, v0 = √(2·e·UA/m) = 3,75 × 10⁷ m/s pour 4 000 V, poids négligeable. Plaques : E = UP/d (3,0 × 10⁴ V/m), déviation vers la plaque positive, y = UP·x²/(4·d·UA) (droite y = f(x²) de pente 1,9 m⁻¹) ; déviation proportionnelle à UP, plus faible quand UA augmente ; principe de l'oscilloscope.",
+  "conceptions": [
+   "Le faisceau d'électrons est dévié vers la plaque négative.",
+   "Entre les plaques, la trajectoire est un arc de cercle.",
+   "Le poids de l'électron joue un rôle dans la déviation."
+  ],
+  "faire": [
+   "Allume le canon, règle UA, calcule la vitesse des électrons à la sortie du canon et justifie que leur poids est négligeable.",
+   "Applique une tension UP, observe la déviation vers la plaque positive, lit des points de la trajectoire sur l'écran et montre que y est proportionnelle à x².",
+   "Mesure la déviation pour plusieurs tensions UP (proportionnalité au champ), puis augmente UA et relie au principe de l'oscilloscope."
+  ]
  }
 ]
