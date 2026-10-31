@@ -477,6 +477,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_chim4_a2_taux_acides/ | Taux d'avancement final de quatre acides de même concentration (conductimétrie) : simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_chim5_a1_ph_courants/ | pH de produits courants et Ke : produits_courants.js (produits à pH imposé, soude, paillasse « eau et corps humain » avec document), simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_chim5_a2_titrage_ph/ | Titrage pH-métrique du vinaigre : logiciel_ph.js (acquisition sur le portable : pH = f(V), dpH/dV, curseur), poste_vinaigre.js (banc, document des indicateurs, câble USB), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim6_a1_sens_evolution/ | Sens d'évolution spontanée : poste_fer.js (ions fer III et fer II, cuivre, fer, témoin, données), simulation.js (mélanges acide-base sur banc_ph.js, missions). |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |

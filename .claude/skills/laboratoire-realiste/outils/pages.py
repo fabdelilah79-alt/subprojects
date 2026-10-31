@@ -12,6 +12,7 @@ OSCILLATEURS = ['circuit_decor.js', 'banc_ressort_pieces.js', 'banc_ressort_dess
 ORBITES = ['continents.js', 'espace.js', 'portable.js', 'orbites_modele.js', 'orbites_ecran.js', 'orbites_panneau.js', 'logiciel_orbites.js']
 MECA6 = ORBITES + [ 'niveaux_energie.js', 'bouton_reglage.js', 'banc_diffraction.js', 'circuit_decor.js', 'reseau_lumiere.js', 'bec_bunsen.js']
 SIMS = {
+ 'b2_chim6_a1_sens_evolution': ("Laboratoire : sens d'évolution spontanée", "simulation de l'activité du chapitre « Évolution spontanée d'un système chimique » (2e année du bac) : mélanges d'acides et de bases conjugués (Qr,i comparé à K, pH), ions fer III avec le cuivre et le fer, critère d'évolution spontanée."),
  'b2_chim5_a1_ph_courants': ("Laboratoire : pH de produits courants et Ke", "simulation de l'activité 1 du chapitre « Transformations associées aux réactions acide-base en solution aqueuse » (2e année du bac) : pH de produits de la vie courante, [H₃O⁺] et [HO⁻], produit ionique de l'eau, pH des milieux biologiques, KA et espèce prédominante."),
  'b2_chim5_a2_titrage_ph': ("Laboratoire : titrage pH-métrique du vinaigre", "simulation de l'activité 2 du chapitre « Transformations associées aux réactions acide-base en solution aqueuse » (2e année du bac) : titrage du vinaigre par la soude suivi au pH-mètre et à l'ordinateur, courbe pH = f(V), dpH/dV, volume équivalent, pKA, choix de l'indicateur, réaction quasi totale."),
  'b2_chim4_a1_qr_constant': ("Laboratoire : quotient de réaction à l'équilibre", "simulation de l'activité 1 du chapitre « État d'équilibre d'un système chimique » (2e année du bac) : conductimétrie de quatre solutions d'acide éthanoïque, Qr,éq constant (constante d'équilibre K), taux d'avancement final selon l'état initial."),
@@ -95,7 +96,7 @@ for sid, (titre, role) in SIMS.items():
     if sid == 'b1_elec2_s1_bilan_electronique':
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
         scripts = list(dict.fromkeys(lu('tc_elec4_a1_transistor') + lu('tc_elec4_a2_ao') + ['../../commun/capteurs_numeriques.js'])) + locaux
-    if sid.startswith(('b2_chim1', 'b2_chim2', 'b2_chim3', 'b2_chim4', 'b2_chim5')):
+    if sid.startswith(('b2_chim1', 'b2_chim2', 'b2_chim3', 'b2_chim4', 'b2_chim5', 'b2_chim6')):
         lu = lambda i: re.findall(r'src="(\.\./\.\./commun/[^"]+)"', open(B + f'sources/{i}/page.html').read())
         scripts = list(dict.fromkeys(lu('b1_chim4_a2_electrons') + ['../../commun/' + f for f in ['chimie_decor.js', 'bain_marie_physique.js', 'chronometre_manuel.js', 'reactions_lentes.js', 'portable.js', 'capteurs_numeriques.js', 'documents_mur.js', 'horloge_releves.js', 'verre_montre.js', 'spatule_physique.js', 'equilibre_acide.js', 'ph_metre.js', 'banc_conductimetrie.js', 'banc_ph.js']])) + locaux
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux

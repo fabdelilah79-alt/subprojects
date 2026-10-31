@@ -1,7 +1,8 @@
 /*
 Rôle : transformations entre métaux et ions en solution, dans un récipient : un métal plongé dans la solution d'ions d'un
        métal moins réducteur se recouvre de ce métal (Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag ; Fe + Cu²⁺ → Fe²⁺ + Cu ; Fe + 2 Ag⁺ →
-       Fe²⁺ + 2 Ag), et ses ions passent en solution ; la soude précipite les ions : Cu(OH)₂ bleu, Fe(OH)₂ vert, Ag₂O brun.
+       Fe²⁺ + 2 Ag), et ses ions passent en solution ; les ions fer III sont réduits sans dépôt (Cu + 2 Fe³⁺ → Cu²⁺ + 2 Fe²⁺ ;
+       Fe + 2 Fe³⁺ → 3 Fe²⁺ : le métal est rongé) ; la soude précipite les ions : Cu(OH)₂ bleu, Fe(OH)₂ vert, Ag₂O brun.
        Le précipité trouble d'abord le liquide, puis tombe au fond. Quantités en mmol ; le métal plongé est en excès.
 Reçoit : le récipient (recipient_physique.js) avec, s'il y en a un, r.metal = { type (« cuivre », « fer »), Ag, Cu (mmol déposées) }, et la durée du pas.
 Produit : de nouvelles entrées dans Labo.LIQUIDES (nitrate_argent 0,10 mol/L, sulfate_cuivre 0,050 mol/L, soude 1,0 mol/L,
@@ -20,7 +21,7 @@ Utilisé par : metal_tube.js et les simulations de chimie (transformations chimi
   // Précipités : ion, nom, ions métalliques par unité formée (chacune demande 2 HO⁻), volume apparent (mL) d'une mmol
   // de précipité floconneux. Temps (s) des réactions sur le métal.
   const PRECIPITES = [["Cu2+", "hydroxyde_cuivre_ii", 1, 5], ["Fe2+", "hydroxyde_fer_ii", 1, 5], ["Ag+", "oxyde_argent", 2, 2.5]];
-  const TAU = { cuivre: { "Ag+": 25 }, fer: { "Cu2+": 20, "Ag+": 20 } };
+  const TAU = { cuivre: { "Ag+": 25, "Fe3+": 45 }, fer: { "Cu2+": 20, "Ag+": 20, "Fe3+": 25 } };
 
   const aqueuse = (c) => c.phases.find((p) => p.classe === "aqueuse");
   const n = (c, s) => aqueuse(c)?.dissous[s] || 0;
@@ -35,9 +36,9 @@ Utilisé par : metal_tube.js et les simulations de chimie (transformations chimi
     for (const [ion, tau] of Object.entries(TAU[m.type] || {})) {
       const dn = n(c, ion) * (1 - Math.exp(-dt / tau));
       if (dn < 1e-7) continue;
-      const forme = m.type === "cuivre" ? "Cu2+" : "Fe2+", par = ion === "Ag+" ? 0.5 : 1;
+      const forme = m.type === "cuivre" ? "Cu2+" : "Fe2+", par = ion === "Cu2+" ? 1 : 0.5;
       ajouter_ion(c, ion, -dn); ajouter_ion(c, forme, dn * par);
-      if (ion === "Ag+") m.Ag += dn; else m.Cu += dn;
+      if (ion === "Fe3+") { ajouter_ion(c, "Fe2+", dn); m.ronge = (m.ronge || 0) + dn / 2; } else if (ion === "Ag+") m.Ag += dn; else m.Cu += dn;
       change = true;
     }
     return change;

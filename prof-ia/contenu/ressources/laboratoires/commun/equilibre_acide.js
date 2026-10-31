@@ -5,12 +5,14 @@ Rôle : pH exact d'une solution aqueuse à 25 °C : équilibres des couples faib
        son anion (Cl⁻). Une solution tampon (plus de la moitié du volume) impose son pH. Activités assimilées aux concentrations.
        Solutions : acide chlorhydrique, acide méthanoïque et acide éthanoïque à 1,0 × 10⁻² mol/L, tampons pH 4,00 et 7,00,
        acide éthanoïque pur (17,4 mol/L), éthanoate de sodium en cristaux (CH₃CO₂Na, 82 g/mol, compté en mL de solide) ;
-       acide éthanoïque à 5,0 × 10⁻³, 2,0 × 10⁻³ et 1,0 × 10⁻³ mol/L ; acides benzoïque et propanoïque à 1,0 × 10⁻² mol/L.
+       acide éthanoïque à 5,0 × 10⁻³, 2,0 × 10⁻³ et 1,0 × 10⁻³ mol/L ; acides benzoïque et propanoïque à 1,0 × 10⁻² mol/L ;
+       acides éthanoïque et méthanoïque, éthanoate et méthanoate de sodium à 0,10 mol/L.
        Conductivité à l'équilibre : σ = Σ λi·[Xi]éq (ions des couples, H₃O⁺, HO⁻, ions spectateurs) + 1 µS/cm (eau distillée).
 Reçoit : une phase (liquide_contenu.js : liquides en mL, dissous en mmol, V en mL).
 Produit : Labo.pH_exact(phase) -> pH (nombre) ; Labo.sigma_equilibre(phase) -> σ (S/m) ; Labo.COUPLES_FAIBLES ; liquides
           eq_hcl, eq_methanoique, eq_ethanoique, tampon_4, tampon_7, eq_ethanoique_pur, eq_ethanoate_sodium, eq_ethanoique_5,
-          eq_ethanoique_2, eq_ethanoique_1, eq_benzoique, eq_propanoique ; λ des ions méthanoate, benzoate, propanoate.
+          eq_ethanoique_2, eq_ethanoique_1, eq_benzoique, eq_propanoique, eq_ethanoique_01, eq_ethanoate_01, eq_methanoique_01,
+          eq_methanoate_01 (0,10 mol/L) ; λ des ions méthanoate, benzoate, propanoate.
 Utilisé par : ph_metre.js et les simulations des transformations non totales (2e année du bac).
 */
 (function (L) {
@@ -26,6 +28,8 @@ Utilisé par : ph_metre.js et les simulations des transformations non totales (2
     eq_ethanoique_5: aq("acide éthanoïque 5,0 × 10⁻³ mol/L", { CH3CO2H: 0.005 }), eq_ethanoique_2: aq("acide éthanoïque 2,0 × 10⁻³ mol/L", { CH3CO2H: 0.002 }),
     eq_ethanoique_1: aq("acide éthanoïque 1,0 × 10⁻³ mol/L", { CH3CO2H: 0.001 }),
     eq_benzoique: aq("acide benzoïque 1,0 × 10⁻² mol/L", { C6H5CO2H: 0.01 }), eq_propanoique: aq("acide propanoïque 1,0 × 10⁻² mol/L", { C2H5CO2H: 0.01 }),
+    eq_ethanoique_01: aq("acide éthanoïque 0,10 mol/L", { CH3CO2H: 0.1 }), eq_ethanoate_01: aq("éthanoate de sodium 0,10 mol/L", { "Na+": 0.1, "CH3CO2-": 0.1 }),
+    eq_methanoique_01: aq("acide méthanoïque 0,10 mol/L", { HCO2H: 0.1 }), eq_methanoate_01: aq("méthanoate de sodium 0,10 mol/L", { "Na+": 0.1, "HCO2-": 0.1 }),
   });
   if (L.LAMBDA) Object.entries({ "HCO2-": 5.46, "C6H5CO2-": 3.23, "C2H5CO2-": 3.58, "CH3CO2-": 4.09, "NO3-": 7.14 }).forEach(([s, v]) => { L.LAMBDA[s] ??= v; });
   L.COUPLES_FAIBLES = [["CH3CO2H", "CH3CO2-", 4.76], ["HCO2H", "HCO2-", 3.75], ["C6H5CO2H", "C6H5CO2-", 4.2], ["C2H5CO2H", "C2H5CO2-", 4.87], ["NH4+", "NH3", 9.25]];

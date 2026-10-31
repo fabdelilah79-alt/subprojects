@@ -3,7 +3,8 @@ Rôle : banc de pH-métrie (1 px/mm) : agitateur magnétique, électrode combin�
        pH exact : equilibre_acide.js), cinq béchers de 50 mL (40 mL chacun) sur la paillasse ; on pose un bécher sur
        l'agitateur, on agite, on descend l'électrode et on lit le pH quand l'affichage est stable ; arrêter l'agitateur avant
        d'enlever le bécher et le déplacer doucement (secoué, il déborde).
-Reçoit : le groupe SVG de la paillasse et { bechers [{ id, liquide, etiquette }] (cinq au plus), fait (nom du fait noté) }.
+Reçoit : le groupe SVG de la paillasse et { bechers [{ id, liquide, etiquette, contenu (facultatif : mélange { liquide: mL }) }]
+         (cinq au plus), fait (nom du fait noté) }.
 Produit : Labo.banc_ph(g, reglage) -> { pense_bete } ; fait <fait> = { plonge, dans, pH (lu), stable, mesures { id: pH lu (stable) } }.
 Utilisé par : les simulations acide-base (2e année du bac).
 */
@@ -18,8 +19,8 @@ Utilisé par : les simulations acide-base (2e année du bac).
     L.pied_support(ctx.fond, 430, SOL, 200);
     const places = PLACES.slice(0, bechers.length).map((x) => ({ x, y: SOL })), supports = [...places, agit.station];
     let metre = null;
-    const recipients = bechers.map(({ id, liquide, etiquette }, k) => {
-      const r = L.recipient(ctx, { id, profil: "becher_50", x: places[k].x, y: SOL, e: E, contenu: { [liquide]: 40 }, etiquette });
+    const recipients = bechers.map(({ id, liquide, etiquette, contenu }, k) => {
+      const r = L.recipient(ctx, { id, profil: "becher_50", x: places[k].x, y: SOL, e: E, contenu: contenu || { [liquide]: 40 }, etiquette });
       r.place = places[k];
       L.manipuler(ctx, r, { sol: SOL, supports, pose_libre: false, autoriser: () => !(metre && metre.etat().plonge && r.place === agit.station) });
       return r;

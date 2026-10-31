@@ -786,3 +786,12 @@ désactivées par défaut) ; `equilibre_acide.js` (acides benzoïque et propano�
 | b2_chim5_a2_titrage_ph.html | Courbe de titrage pH = f(V) ; choix de l'indicateur | O3, O4, O5 | Titrage pH-métrique d'un vinaigre dilué par la soude, acquisition à l'ordinateur (pH = f(V), dpH/dV) : VE = 8,0 mL, C = 0,080 mol/L, 4,8 g d'acide pour 100 mL de vinaigre, pKA = 4,8 à la demi-équivalence, phénolphtaléine, réaction quasi totale. |
 
 Fichier commun nouveau : `banc_ph.js`. Fichier commun modifié : `poste_titrage.js` (option `ph_metre`, désactivée par défaut).
+
+## Chapitre 2e année du bac « Évolution spontanée d'un système chimique » (fiche 2bac/chim6_evolution_spontanee)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim6_a1_sens_evolution.html | Mélanges éthanoïque/éthanoate et méthanoïque/méthanoate ; Fe²⁺, Fe³⁺, fer et cuivre | O1, O2 | Qr,i = 0, 1 et 0,10 pour trois mélanges (K = 0,10) : prévision du sens, pH mesurés (4,26 ; 4,25 ; 3,91), rapport [CH₃CO₂⁻]/[CH₃CO₂H] avant et après ; ions Fe³⁺ avec un fil de cuivre et un clou en fer (Qr,i = 0 < K) : la teinte jaune-orangé disparaît, pas dans le témoin. |
+
+Fichiers communs modifiés : `ions_metaux.js` (réduction des ions Fe³⁺ par le cuivre et le fer, sans effet sans ions Fe³⁺) ;
+`banc_ph.js` (contenu facultatif d'un bécher : mélange) ; `equilibre_acide.js` (quatre solutions à 0,10 mol/L).

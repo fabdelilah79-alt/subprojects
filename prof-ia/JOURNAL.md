@@ -1495,3 +1495,15 @@ Problèmes restants : les produits courants ont un pH imposé (mélanges trop co
 au 0,05 mL près sur la burette, sans erreur de lecture de l'élève ; pas d'indicateur coloré versé pendant ce titrage
 (choix par la zone de virage : le titrage colorimétrique est fait en 1re année).
 
+## 2026-10-31 — Évolution spontanée d'un système chimique (b2_chim6_a1_sens_evolution)
+
+- Paillasse 1 : trois mélanges (20 + 20 mL ; 4 × 10 mL ; 14 + 14 + 2 + 10 mL) de solutions à 0,10 mol/L ; K = 10^(3,75 − 4,76)
+  = 0,098 ; pH exact : 4,26 / 4,26 / 3,90 (mesuré 4,26 / 4,25 / 3,91) ; rapports [CH₃CO₂⁻]/[CH₃CO₂H] finaux 0,31 / 0,31 / 0,14.
+- Paillasse 2 : ions_metaux.js réduit maintenant les ions Fe³⁺ (Cu + 2 Fe³⁺ → Cu²⁺ + 2 Fe²⁺, τ 45 s ; Fe + 2 Fe³⁺ → 3 Fe²⁺,
+  τ 25 s) ; bilans vérifiés (tube 1 : 0,121 mmol de Fe³⁺ réduits, 0,060 mmol de Cu²⁺ formés).
+- Régression : métaux et ions (tronc commun), transfert d'électrons (1re année), pH de produits courants (chim5).
+
+Problèmes restants : les transformations du fer III sont des cinétiques simples (exponentielles) ; le contraste de teinte entre
+le tube 1 et le témoin reste modéré (ions Fe²⁺ vert pâle dans les deux) ; pas de test des ions (soude, thiocyanate) dans cette
+activité.
+

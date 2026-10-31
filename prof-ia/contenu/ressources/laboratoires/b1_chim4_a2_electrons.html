@@ -1178,15 +1178,16 @@ Utilisé par : toutes les simulations.
 </script>
   <script>
 /*
-Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180)...) sans jamais
-       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire).
+Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180), =LN(B2)...) sans jamais
+       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire),
+       LN (logarithme népérien, d'un nombre positif) et EXP.
 Reçoit : le texte d'une formule et une fonction qui lit la valeur d'une cellule (« A2 » -> nombre).
 Produit : Labo.formules.calculer(texte, lire) -> nombre (ou lève une erreur « #ERREUR ») ;
          Labo.formules.decaler(texte, lignes) -> la formule recopiée plus bas (A2 -> A3).
 Utilisé par : tableur.js.
 */
 (function (L) {
-  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN)|([-+*/^();]))/iy;
+  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN|LN|EXP)|([-+*/^();]))/iy;
 
   function decouper(texte) {
     // Découpe la formule en jetons : nombres, cellules, fonctions, opérateurs.
@@ -1219,7 +1220,8 @@ Utilisé par : tableur.js.
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();
         if (!prendre(")")) throw new Error("#ERREUR");
-        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin }[j.fonction](v);
+        if (j.fonction === "LN" && !(v > 0)) throw new Error("#ERREUR");
+        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin, LN: Math.log, EXP: Math.exp }[j.fonction](v);
       }
       if (j.signe === "(") { const v = somme(); if (!prendre(")")) throw new Error("#ERREUR"); return v; }
       throw new Error("#ERREUR");
@@ -3923,7 +3925,8 @@ Utilisé par : cellule_conductance.js et les simulations de conductimétrie.
 /*
 Rôle : transformations entre métaux et ions en solution, dans un récipient : un métal plongé dans la solution d'ions d'un
        métal moins réducteur se recouvre de ce métal (Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag ; Fe + Cu²⁺ → Fe²⁺ + Cu ; Fe + 2 Ag⁺ →
-       Fe²⁺ + 2 Ag), et ses ions passent en solution ; la soude précipite les ions : Cu(OH)₂ bleu, Fe(OH)₂ vert, Ag₂O brun.
+       Fe²⁺ + 2 Ag), et ses ions passent en solution ; les ions fer III sont réduits sans dépôt (Cu + 2 Fe³⁺ → Cu²⁺ + 2 Fe²⁺ ;
+       Fe + 2 Fe³⁺ → 3 Fe²⁺ : le métal est rongé) ; la soude précipite les ions : Cu(OH)₂ bleu, Fe(OH)₂ vert, Ag₂O brun.
        Le précipité trouble d'abord le liquide, puis tombe au fond. Quantités en mmol ; le métal plongé est en excès.
 Reçoit : le récipient (recipient_physique.js) avec, s'il y en a un, r.metal = { type (« cuivre », « fer »), Ag, Cu (mmol déposées) }, et la durée du pas.
 Produit : de nouvelles entrées dans Labo.LIQUIDES (nitrate_argent 0,10 mol/L, sulfate_cuivre 0,050 mol/L, soude 1,0 mol/L,
@@ -3942,7 +3945,7 @@ Utilisé par : metal_tube.js et les simulations de chimie (transformations chimi
   // Précipités : ion, nom, ions métalliques par unité formée (chacune demande 2 HO⁻), volume apparent (mL) d'une mmol
   // de précipité floconneux. Temps (s) des réactions sur le métal.
   const PRECIPITES = [["Cu2+", "hydroxyde_cuivre_ii", 1, 5], ["Fe2+", "hydroxyde_fer_ii", 1, 5], ["Ag+", "oxyde_argent", 2, 2.5]];
-  const TAU = { cuivre: { "Ag+": 25 }, fer: { "Cu2+": 20, "Ag+": 20 } };
+  const TAU = { cuivre: { "Ag+": 25, "Fe3+": 45 }, fer: { "Cu2+": 20, "Ag+": 20, "Fe3+": 25 } };
 
   const aqueuse = (c) => c.phases.find((p) => p.classe === "aqueuse");
   const n = (c, s) => aqueuse(c)?.dissous[s] || 0;
@@ -3957,9 +3960,9 @@ Utilisé par : metal_tube.js et les simulations de chimie (transformations chimi
     for (const [ion, tau] of Object.entries(TAU[m.type] || {})) {
       const dn = n(c, ion) * (1 - Math.exp(-dt / tau));
       if (dn < 1e-7) continue;
-      const forme = m.type === "cuivre" ? "Cu2+" : "Fe2+", par = ion === "Ag+" ? 0.5 : 1;
+      const forme = m.type === "cuivre" ? "Cu2+" : "Fe2+", par = ion === "Cu2+" ? 1 : 0.5;
       ajouter_ion(c, ion, -dn); ajouter_ion(c, forme, dn * par);
-      if (ion === "Ag+") m.Ag += dn; else m.Cu += dn;
+      if (ion === "Fe3+") { ajouter_ion(c, "Fe2+", dn); m.ronge = (m.ronge || 0) + dn / 2; } else if (ion === "Ag+") m.Ag += dn; else m.Cu += dn;
       change = true;
     }
     return change;
@@ -4382,9 +4385,11 @@ Rôle : conductimètre de paillasse aux vraies dimensions : boîtier (140 mm × 
        conductimetrie.js, complétées ici) + 5 × 10⁻⁴ S/m pour l'eau ; 1 S/m = 10 mS/cm. L'affichage rejoint la valeur vraie
        en environ 1 s si la solution est agitée, en plus de 10 s sinon (il faut agiter pour lire une valeur juste).
 Reçoit : le contexte de la paillasse et { x (milieu du boîtier), sol, e, tige (x de la tige), sonde_x, haut, bas (y de la
-         pointe de la sonde, levée et plongée), recipients() (récipients où plonger), agite(r) }.
+         pointe de la sonde, levée et plongée), recipients() (récipients où plonger), agite(r) ; options désactivées par défaut :
+         equilibre (σ calculée sur les ions à l'équilibre des couples faibles : Labo.sigma_equilibre, equilibre_acide.js),
+         micro (sous 2 mS/cm, affichage en µS/cm à une décimale, comme un appareil à changement de calibre) }.
 Produit : Labo.conductimetre(ctx, reglage) -> { etat() -> { plonge, dans (id du récipient), sigma (mS/cm, valeur vraie),
-          affiche (texte de l'afficheur), stable } } ; Labo.sigma_phase(phase) (S/m).
+          affiche (texte de l'afficheur), unite (« mS/cm » ou « µS/cm »), stable } } ; Labo.sigma_phase(phase) (S/m).
 Utilisé par : les postes de titrage conductimétrique.
 */
 (function (L) {
@@ -4399,9 +4404,9 @@ Utilisé par : les postes de titrage conductimétrique.
     L.svg("rect", { x: x - l / 2, y, width: l, height: h, rx: 5, fill: "#d9dcd8", stroke: "#7f8784" }, g);
     L.svg("rect", { x: x - l / 2 + 10, y: y + 10, width: l - 20, height: 34, rx: 3, fill: "#b7c3a6", stroke: "#1b1e1a" }, g);
     L.texte(g, x, y + 56, "CONDUCTIMÈTRE", { "font-size": 7.5, "font-weight": 700, fill: "#37474f" });
-    L.texte(g, x + l / 2 - 14, y + 38, "mS/cm", { "font-size": 6.5, "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
+    const unite = L.texte(g, x + l / 2 - 14, y + 38, "mS/cm", { "font-size": 6.5, "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
     L.svg("circle", { cx: x + l / 2 - 14, cy: y + h - 14, r: 5, fill: "#2b3035" }, g);
-    return L.texte(g, x + l / 2 - 16, y + 25, "", { "font-size": 20, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
+    return { ecran: L.texte(g, x + l / 2 - 16, y + 25, "", { "font-size": 20, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" }), unite };
   }
 
   function sonde(g, sx, y, e, tige, boite) {
@@ -4423,9 +4428,9 @@ Utilisé par : les postes de titrage conductimétrique.
     return r.pose.y - r.pr.hauteur_de(r.c.volume()) * e < p.y - FENETRE * e;
   }
 
-  L.conductimetre = function (ctx, { x, sol, e = 1, tige, sonde_x, haut, bas, recipients, agite }) {
+  L.conductimetre = function (ctx, { x, sol, e = 1, tige, sonde_x, haut, bas, recipients, agite, equilibre = false, micro = false }) {
     // Boîtier, sonde à glisser ; mesure 10 fois par seconde, avec le temps de réponse.
-    const ecran = boitier(L.svg("g", { class: "conductimetre" }, ctx.fond), x, sol, e), s = { y: haut, aff: 0, vrai: 0, dans: null, plonge: false };
+    const { ecran, unite } = boitier(L.svg("g", { class: "conductimetre" }, ctx.fond), x, sol, e), s = { y: haut, aff: 0, vrai: 0, dans: null, plonge: false };
     const gs = L.svg("g", { class: "sonde", role: "slider", "aria-label": "Sonde du conductimètre" }, ctx.objets), boite = { x: x - 40 * e, y: sol - 90 * e };
     const dessiner = () => { sonde(gs, sonde_x, s.y, e, tige, boite); L.svg("rect", { x: sonde_x - 14, y: s.y - LONG * e, width: 28, height: LONG * e, fill: "#fff", opacity: 0.01 }, gs); };
     L.glissable(gs, { soulever: false, debut: () => ({ x: sonde_x, y: s.y }), deplacer: (p) => { s.y = Math.max(haut, Math.min(bas, p.y)); dessiner(); } });
@@ -4435,15 +4440,20 @@ Utilisé par : les postes de titrage conductimétrique.
       const r = (recipients() || []).find((k) => !k.tenu && Math.abs(k.pose.x - sonde_x) < k.pr.r(k.pr.H) * e);
       if (r && gs.nextSibling !== r.g) ctx.objets.insertBefore(gs, r.g);
     };
-    const ecrire = (v) => { ecran.textContent = (v < 2 ? v.toFixed(3) : v < 20 ? v.toFixed(2) : v.toFixed(1)).replace(".", ","); };
+    const ecrire = (v) => {
+      // Valeur affichée (mS/cm), ou en µS/cm sous 2 mS/cm avec l'option micro.
+      const us = micro && v < 2;
+      ecran.textContent = (us ? (1000 * v).toFixed(1) : v < 2 ? v.toFixed(3) : v < 20 ? v.toFixed(2) : v.toFixed(1)).replace(".", ",");
+      unite.textContent = us ? "µS/cm" : "mS/cm";
+    };
     setInterval(() => {
       derriere();
       const p = { x: sonde_x, y: s.y }, r = (recipients() || []).find((k) => plongee(k, p, e)), ph = r && r.c.phases.find((q) => q.classe === "aqueuse");
-      s.vrai = ph ? 10 * L.sigma_phase(ph) : 0; s.dans = r ? r.id : null; s.plonge = !!ph;
+      s.vrai = ph ? 10 * (equilibre ? L.sigma_equilibre(ph) : L.sigma_phase(ph)) : 0; s.dans = r ? r.id : null; s.plonge = !!ph;
       s.aff += (s.vrai - s.aff) * (1 - Math.exp(-0.1 / (r && agite(r) ? 0.35 : 9)));
       ecrire(s.aff * (1 + (Math.random() - 0.5) * 0.002));
     }, 100);
-    return { etat: () => ({ plonge: s.plonge, dans: s.dans, sigma: s.vrai, affiche: ecran.textContent, stable: Math.abs(s.aff - s.vrai) <= 0.003 * s.vrai + 1e-4 }) };
+    return { etat: () => ({ plonge: s.plonge, dans: s.dans, sigma: s.vrai, affiche: ecran.textContent, unite: unite.textContent, stable: Math.abs(s.aff - s.vrai) <= 0.003 * s.vrai + 1e-4 }) };
   };
 })(window.Labo);
 </script>
@@ -4456,8 +4466,10 @@ Rôle : paillasse de titrage à l'échelle 1 px/mm (la burette entière tient da
        réactions ont lieu dans chaque récipient : tout de suite si la solution est agitée, toutes les 2 s sinon (une goutte
        de réactif colore d'abord le liquide là où elle tombe).
 Reçoit : le groupe SVG et { titrant, texte (étiquette de la burette), becher { id, contenu, etiquette }, autres [{ id, profil,
-         contenu, etiquette }] (posés sur la paillasse), gouttes [{ liquide, texte }] (flacons compte-gouttes), conductimetre }.
-Produit : Labo.poste_titrage(g, reglage) -> { pense_bete, burette, agitateur, conductimetre, becher, recipients,
+         contenu, etiquette }] (posés sur la paillasse), gouttes [{ liquide, texte }] (flacons compte-gouttes), conductimetre, places (x des places sur la
+         paillasse ; par défaut 180, 270, 360 et 620), ph_metre (facultatif, désactivé par défaut : { x (boîtier), sonde_x } ;
+         électrode tenue par une pince sur la tige de la burette, pH-mètre étalonné, ph_metre.js) }.
+Produit : Labo.poste_titrage(g, reglage) -> { pense_bete, ctx, burette, agitateur, conductimetre, ph_metre, becher, recipients,
           sur_plateau() (récipient posé sur l'agitateur, ou null) }.
 Utilisé par : les simulations de titrage.
 */
@@ -4477,27 +4489,28 @@ Utilisé par : les simulations de titrage.
     });
   }
 
-  L.poste_titrage = function (g, { titrant, texte, becher, autres = [], gouttes = [], conductimetre = false }) {
+  L.poste_titrage = function (g, { titrant, texte, becher, autres = [], gouttes = [], conductimetre = false, places = null, ph_metre = null }) {
     // Matériel ; le bécher à titrer et les autres récipients se posent sur la paillasse ou sur le plateau de l'agitateur.
     const pense_bete = L.decor.pense_bete(g, 24, 52, 230), ctx = L.paillasse_chimie(g);
     L.ecoulement(ctx, { sol: SOL, e: E });
     const agit = L.agitateur_magnetique(ctx, { x: X, sol: SOL, e: E });
     const burette = L.burette(ctx, { x: X, bas: 418, e: E, titrant, texte, tige: 430, sol: SOL });
-    const supports = [...PLACES, agit.station], cree = (k, i) => {
-      const r = L.recipient(ctx, { id: k.id, profil: k.profil || "becher_250", x: PLACES[i].x, y: SOL, e: E, contenu: k.contenu, etiquette: k.etiquette });
-      L.manipuler(ctx, r, { sol: SOL, supports, pose_libre: false, autoriser: () => !(cond && r.place === agit.station && cond.etat().plonge) });
+    const P = places ? places.map((x) => ({ x, y: SOL })) : PLACES, supports = [...P, agit.station], cree = (k, i) => {
+      const r = L.recipient(ctx, { id: k.id, profil: k.profil || "becher_250", x: P[i].x, y: SOL, e: E, contenu: k.contenu, etiquette: k.etiquette });
+      L.manipuler(ctx, r, { sol: SOL, supports, pose_libre: false, autoriser: () => !(r.place === agit.station && [cond, metre].some((a) => a && a.etat().plonge)) });
       return r;
     };
-    let cond = null;
+    let cond = null, metre = null;
     const b = cree(becher, 0), recipients = [b, ...autres.map((k, i) => cree(k, i + 1))];
     agit.suivre(b);
     gouttes.forEach((k, i) => L.flacon_gouttes(ctx, { id: k.liquide, x: 700 + i * 70, sol: SOL, e: E, liquide: k.liquide, texte: k.texte }));
-    if (conductimetre) cond = L.conductimetre(ctx, { x: 790, sol: SOL, e: E, tige: 610, sonde_x: 535, haut: 360, bas: 506, recipients: () => recipients, agite: agit.agite });
-    if (conductimetre) L.pied_support(ctx.fond, 610, SOL, 330);
+    if (conductimetre) cond = L.conductimetre(ctx, { x: 760, sol: SOL, e: E, tige: 610, sonde_x: 535, haut: 360, bas: 506, recipients: () => recipients, agite: agit.agite });
+    if (conductimetre) L.pied_support(ctx.fond, 610, SOL, 200);
+    if (ph_metre) metre = L.ph_metre(ctx, { x: ph_metre.x, sol: SOL, e: E, tige: 430, sonde_x: ph_metre.sonde_x, haut: 330, bas: agit.station.y - 4, recipients: () => recipients, agite: agit.agite, etalonne: true });
     L.bouton_texte(g, 140, 250, "Remplir la burette", burette.remplir);
     L.bouton_texte(g, 140, 285, "Bécher neuf", () => { b.c = L.contenu(becher.contenu); b.sig = null; b.dessiner(); });
     reactions(ctx, recipients, agit);
-    return { pense_bete, burette, agitateur: agit, conductimetre: cond, becher: b, recipients, sur_plateau: () => recipients.find((r) => r.place === agit.station && !r.tenu) || null };
+    return { pense_bete, ctx, burette, agitateur: agit, conductimetre: cond, ph_metre: metre, becher: b, recipients, sur_plateau: () => recipients.find((r) => r.place === agit.station && !r.tenu) || null };
   };
 })(window.Labo);
 </script>

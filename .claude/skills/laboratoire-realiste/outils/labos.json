@@ -3276,5 +3276,25 @@
   "faire": [
    "Titre un vinaigre dilué par la soude en relevant le pH à l'ordinateur, trouve VE à l'extremum de dpH/dV, calcule la concentration et le degré du vinaigre, lit le pKA à la demi-équivalence, choisit l'indicateur et montre que la réaction est quasi totale."
   ]
+ },
+ {
+  "id": "b2_chim6_a1_sens_evolution",
+  "chapitre": "2bac/chim6_evolution_spontanee",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 45,
+  "description": "Paillasse 1 (banc de pH-métrie) : trois mélanges de solutions à 0,10 mol/L d'acide éthanoïque, de méthanoate de sodium, d'éthanoate de sodium et d'acide méthanoïque ; pour CH₃CO₂H + HCO₂⁻ ⇌ CH₃CO₂⁻ + HCO₂H, K = 0,10 et Qr,i = 0 (M1), 1 (M2), 0,10 (M3) ; pH mesurés 4,26 / 4,25 / 3,91 ; le rapport [CH₃CO₂⁻]/[CH₃CO₂H] passe de 0 à 0,31 (sens direct), de 1 à 0,31 (sens inverse), reste 0,14 (équilibre). Paillasse 2 : tubes de chlorure de fer III et de sulfate de fer II ; fil de cuivre et clou en fer : Qr,i = 0 < K, la teinte des ions Fe³⁺ disparaît (sens direct) ; tube témoin.",
+  "conceptions": [
+   "Une réaction évolue toujours dans le sens direct.",
+   "Une constante K grande suffit pour prévoir le sens d'évolution.",
+   "Les métaux solides figurent dans le quotient de réaction."
+  ],
+  "faire": [
+   "Calcule Qr,i et K pour trois mélanges d'acides et de bases conjugués, prévoit le sens d'évolution, mesure le pH et vérifie la prévision par le rapport [CH₃CO₂⁻]/[CH₃CO₂H].",
+   "Plonge un fil de cuivre et un clou en fer dans des solutions d'ions fer III, compare Qr,i à K et observe la disparition des ions Fe³⁺ (sens direct)."
+  ]
  }
 ]

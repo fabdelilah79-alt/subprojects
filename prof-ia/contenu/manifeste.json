@@ -5620,6 +5620,38 @@
         "Le point d'équivalence est le point où la courbe commence à monter.",
         "N'importe quel indicateur coloré convient pour un titrage."
       ]
+    },
+    {
+      "id": "b2_chim6_a1_sens_evolution",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim6_a1_sens_evolution.html",
+      "description": "Paillasse 1 (banc de pH-métrie) : trois mélanges de solutions à 0,10 mol/L d'acide éthanoïque, de méthanoate de sodium, d'éthanoate de sodium et d'acide méthanoïque ; pour CH₃CO₂H + HCO₂⁻ ⇌ CH₃CO₂⁻ + HCO₂H, K = 0,10 et Qr,i = 0 (M1), 1 (M2), 0,10 (M3) ; pH mesurés 4,26 / 4,25 / 3,91 ; le rapport [CH₃CO₂⁻]/[CH₃CO₂H] passe de 0 à 0,31 (sens direct), de 1 à 0,31 (sens inverse), reste 0,14 (équilibre). Paillasse 2 : tubes de chlorure de fer III et de sulfate de fer II ; fil de cuivre et clou en fer : Qr,i = 0 < K, la teinte des ions Fe³⁺ disparaît (sens direct) ; tube témoin.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim6_evolution_spontanee",
+      "activite": "Mélanges acide éthanoïque/éthanoate et acide méthanoïque/méthanoate ; Fe2+, Fe3+, poudres de fer et de cuivre.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Mélanges d'acides et de bases",
+          "ce_que_fait_l_eleve": "Calcule Qr,i et K pour trois mélanges d'acides et de bases conjugués, prévoit le sens d'évolution, mesure le pH et vérifie la prévision par le rapport [CH₃CO₂⁻]/[CH₃CO₂H].",
+          "conclusion": "Pour CH₃CO₂H + HCO₂⁻ ⇌ CH₃CO₂⁻ + HCO₂H, K = KA1 / KA2 = 10^(pKA2 − pKA1) ≈ 0,10. M1 : Qr,i = 0 < K, la réaction avance dans le sens direct : le rapport [CH₃CO₂⁻]/[CH₃CO₂H], nul au départ, vaut 10^(pH − 4,76) ≈ 0,31 à la fin. M2 : Qr,i = 1 > K, sens inverse : ce rapport passe de 1 à 0,31. M3 : Qr,i = 0,10 = K, le système est déjà à l'équilibre : le rapport reste 0,14. Au cours d'une évolution spontanée, Qr tend vers K."
+        },
+        {
+          "titre": "Ions fer III, cuivre et fer",
+          "ce_que_fait_l_eleve": "Plonge un fil de cuivre et un clou en fer dans des solutions d'ions fer III, compare Qr,i à K et observe la disparition des ions Fe³⁺ (sens direct).",
+          "conclusion": "Pour 2 Fe³⁺ + Cu ⇌ 2 Fe²⁺ + Cu²⁺, il n'y a pas d'ions Cu²⁺ au départ : Qr,i = [Fe²⁺]²·[Cu²⁺] / [Fe³⁺]² = 0 < K ≈ 10¹⁴ ; la réaction évolue dans le sens direct : le cuivre est oxydé, la teinte jaune-orangé des ions Fe³⁺ disparaît. De même, le fer réduit les ions Fe³⁺ (2 Fe³⁺ + Fe → 3 Fe²⁺). Le tube témoin ne change pas. Les solides ne figurent pas dans Qr. Critère : Qr,i < K, sens direct ; Qr,i > K, sens inverse ; Qr,i = K, pas d'évolution."
+        }
+      ],
+      "duree_min": 45,
+      "conceptions": [
+        "Une réaction évolue toujours dans le sens direct.",
+        "Une constante K grande suffit pour prévoir le sens d'évolution.",
+        "Les métaux solides figurent dans le quotient de réaction."
+      ]
     }
   ]
 }
