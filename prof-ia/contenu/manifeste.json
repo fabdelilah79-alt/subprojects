@@ -5652,6 +5652,78 @@
         "Une constante K grande suffit pour prévoir le sens d'évolution.",
         "Les métaux solides figurent dans le quotient de réaction."
       ]
+    },
+    {
+      "id": "b2_chim7_a1_piles",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim7_a1_piles.html",
+      "description": "Paillasse 1 : fil de cuivre dans une solution de nitrate d'argent (dépôt d'argent, la solution bleuit) et clou en fer dans une solution de sulfate de cuivre (dépôt de cuivre) : transfert direct d'électrons. Paillasses 2 et 3 (circuit vu de dessus) : piles Cu | Cu²⁺ || Ag⁺ | Ag et Fe | Fe²⁺ || Cu²⁺ | Cu (0,10 mol/L, 50 mL), pont salin au nitrate de potassium à poser, résistance de 100 Ω, voltmètre et ampèremètre 2 000 points ; E = 0,43 V et 0,78 V (Nernst), résistance interne 150 Ω : I = 1,7 mA et 3,1 mA ; les concentrations et les masses des lames varient avec la charge débitée.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim7_piles",
+      "activite": "Piles Fe/Fe2+//Cu2+/Cu et Cu/Cu2+//Ag+/Ag (ampèremètre, voltmètre).",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Espèces mélangées",
+          "ce_que_fait_l_eleve": "Plonge un fil de cuivre dans des ions argent et un clou en fer dans des ions cuivre, observe les dépôts et compare Qr,i à K.",
+          "conclusion": "Plongé dans une solution d'ions argent, le cuivre se couvre d'argent et la solution bleuit : Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag. Au départ Qr,i = [Cu²⁺]/[Ag⁺]² = 0 < K : le sens direct est spontané. Les électrons passent directement du cuivre aux ions argent, au contact : on ne peut pas les utiliser. Dans une pile, on sépare les deux couples pour que les électrons passent par un circuit extérieur."
+        },
+        {
+          "titre": "La pile cuivre-argent",
+          "ce_que_fait_l_eleve": "Réalise la pile cuivre-argent, constate le rôle du pont salin, mesure sa f.é.m., trouve sa polarité et écrit les réactions aux électrodes.",
+          "conclusion": "Sans pont salin, le voltmètre lit 0 : le circuit est ouvert. Avec le pont, la pile Cu | Cu²⁺ || Ag⁺ | Ag a une f.é.m. E ≈ 0,43 V ; la lame d'argent est le pôle +, la lame de cuivre le pôle −. Dans le circuit extérieur, les électrons vont du cuivre vers l'argent (le courant de l'argent vers le cuivre) ; dans le pont salin, les ions NO₃⁻ vont vers le compartiment du cuivre et les ions K⁺ vers celui de l'argent. Pôle − (anode) : Cu → Cu²⁺ + 2 e⁻ ; pôle + (cathode) : Ag⁺ + e⁻ → Ag. Bilan : Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag, le sens spontané prévu par Qr,i < K."
+        },
+        {
+          "titre": "La pile fer-cuivre et la quantité d'électricité",
+          "ce_que_fait_l_eleve": "Fait débiter la pile fer-cuivre dans une résistance, mesure le courant et calcule la quantité d'électricité Q = I·Δt et la masse de fer consommée en une heure.",
+          "conclusion": "La pile Fe | Fe²⁺ || Cu²⁺ | Cu a une f.é.m. E ≈ 0,78 V ; le cuivre est le pôle +, le fer le pôle −. Elle débite I = E / (R + r) ≈ 3 mA dans R = 100 Ω. En une heure, elle fait circuler Q = I·Δt ≈ 11 C, soit n(e⁻) = Q / F ; au pôle −, Fe → Fe²⁺ + 2 e⁻ : m(Fe) = Q·M / (2F) ≈ 3 mg de fer consommé. La pile est un système hors d'équilibre ; elle est usée quand Qr atteint K (ou qu'un réactif est épuisé)."
+        }
+      ],
+      "duree_min": 55,
+      "conceptions": [
+        "Le pont salin fait passer les électrons d'un bécher à l'autre.",
+        "Une pile contient de l'électricité qu'elle restitue.",
+        "Le courant sort par le pôle négatif.",
+        "Une pile s'use quand elle n'a plus d'électrons."
+      ]
+    },
+    {
+      "id": "b2_chim7_a2_piles_usuelles",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim7_a2_piles_usuelles.html",
+      "description": "Paillasse 1 : quatre documents au mur (histoire des piles de Volta à Leclanché, piles usuelles et capacité en mAh, accumulateurs et recharge par transformation forcée, dangers et recyclage). Paillasse 2 : tableau blanc magnétique, huit générateurs électrochimiques de la vie courante à ranger en piles (non rechargeables) et accumulateurs (rechargeables).",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim7_piles",
+      "activite": "Documents : histoire et caractéristiques des piles usuelles, dangers, recyclage.",
+      "objectifs": [
+        "O3",
+        "O4"
+      ],
+      "missions": [
+        {
+          "titre": "Les piles, d'hier à aujourd'hui",
+          "ce_que_fait_l_eleve": "Lit quatre documents sur les piles, calcule la quantité d'électricité d'une pile alcaline de 2 400 mAh et retient les règles de collecte et de recyclage.",
+          "conclusion": "Depuis la pile de Volta (1800), les piles convertissent de l'énergie chimique en énergie électrique grâce à une transformation spontanée d'oxydoréduction entre deux couples séparés. Une pile usée ne se recharge pas ; un accumulateur se recharge par une transformation forcée. La capacité d'une pile (en mAh) est la quantité d'électricité maximale qu'elle peut débiter : 2 400 mAh = 8 640 C. Piles et accumulateurs contiennent des métaux toxiques : on les dépose dans un point de collecte pour qu'ils soient recyclés."
+        },
+        {
+          "titre": "Pile ou accumulateur ?",
+          "ce_que_fait_l_eleve": "Range huit générateurs électrochimiques en piles et accumulateurs et relie la recharge à une transformation forcée.",
+          "conclusion": "Piles (non rechargeables) : piles alcalines, salines, bouton et au lithium. Accumulateurs (rechargeables) : batterie au plomb, accumulateurs Ni-MH et Ni-Cd, batteries lithium-ion. Recharger un accumulateur, c'est lui imposer une transformation forcée, inverse de la transformation spontanée qui a lieu quand il débite."
+        }
+      ],
+      "duree_min": 30,
+      "conceptions": [
+        "Toutes les piles se rechargent.",
+        "La capacité d'une pile s'exprime en volts.",
+        "Une pile usagée peut être jetée avec les ordures ménagères."
+      ]
     }
   ]
 }

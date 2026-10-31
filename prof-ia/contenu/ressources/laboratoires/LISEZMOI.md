@@ -795,3 +795,13 @@ Fichier commun nouveau : `banc_ph.js`. Fichier commun modifié : `poste_titrage.
 
 Fichiers communs modifiés : `ions_metaux.js` (réduction des ions Fe³⁺ par le cuivre et le fer, sans effet sans ions Fe³⁺) ;
 `banc_ph.js` (contenu facultatif d'un bécher : mélange) ; `equilibre_acide.js` (quatre solutions à 0,10 mol/L).
+
+## Chapitre 2e année du bac « Transformations spontanées dans les piles et production d'énergie » (fiche 2bac/chim7_piles)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim7_a1_piles.html | Transfert spontané d'électrons ; piles cuivre-argent et fer-cuivre | O1 à O4 | Cuivre dans les ions argent, fer dans les ions cuivre (dépôts, Qr,i = 0 < K) ; pile Cu-Ag : voltmètre à 0 sans pont salin, E = 0,43 V avec, polarité, sens du courant et des ions du pont, réactions aux électrodes ; pile Fe-Cu : E = 0,78 V, I = 3,1 mA dans 100 Ω, Q = I·Δt en 1 h et masse de fer consommée. |
+| b2_chim7_a2_piles_usuelles.html | Piles usuelles et accumulateurs (documents) | O3, O4 | Quatre documents (histoire, piles usuelles et capacité, accumulateurs, dangers et recyclage) : 2 400 mAh = 8 640 C, batterie au plomb 6 × 2 V ; tri de huit générateurs en piles et accumulateurs ; recharge = transformation forcée. |
+
+Fichier commun nouveau : `pile_electrochimique.js` (pile composant du circuit, pont salin à poser, f.é.m. par la loi de Nernst,
+débit qui fait varier concentrations et masses). Pour ce chapitre, `pages.py` ajoute aussi les scripts des circuits et `tri.js`.

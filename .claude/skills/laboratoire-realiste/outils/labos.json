@@ -3296,5 +3296,49 @@
    "Calcule Qr,i et K pour trois mélanges d'acides et de bases conjugués, prévoit le sens d'évolution, mesure le pH et vérifie la prévision par le rapport [CH₃CO₂⁻]/[CH₃CO₂H].",
    "Plonge un fil de cuivre et un clou en fer dans des solutions d'ions fer III, compare Qr,i à K et observe la disparition des ions Fe³⁺ (sens direct)."
   ]
+ },
+ {
+  "id": "b2_chim7_a1_piles",
+  "chapitre": "2bac/chim7_piles",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 55,
+  "description": "Paillasse 1 : fil de cuivre dans une solution de nitrate d'argent (dépôt d'argent, la solution bleuit) et clou en fer dans une solution de sulfate de cuivre (dépôt de cuivre) : transfert direct d'électrons. Paillasses 2 et 3 (circuit vu de dessus) : piles Cu | Cu²⁺ || Ag⁺ | Ag et Fe | Fe²⁺ || Cu²⁺ | Cu (0,10 mol/L, 50 mL), pont salin au nitrate de potassium à poser, résistance de 100 Ω, voltmètre et ampèremètre 2 000 points ; E = 0,43 V et 0,78 V (Nernst), résistance interne 150 Ω : I = 1,7 mA et 3,1 mA ; les concentrations et les masses des lames varient avec la charge débitée.",
+  "conceptions": [
+   "Le pont salin fait passer les électrons d'un bécher à l'autre.",
+   "Une pile contient de l'électricité qu'elle restitue.",
+   "Le courant sort par le pôle négatif.",
+   "Une pile s'use quand elle n'a plus d'électrons."
+  ],
+  "faire": [
+   "Plonge un fil de cuivre dans des ions argent et un clou en fer dans des ions cuivre, observe les dépôts et compare Qr,i à K.",
+   "Réalise la pile cuivre-argent, constate le rôle du pont salin, mesure sa f.é.m., trouve sa polarité et écrit les réactions aux électrodes.",
+   "Fait débiter la pile fer-cuivre dans une résistance, mesure le courant et calcule la quantité d'électricité Q = I·Δt et la masse de fer consommée en une heure."
+  ]
+ },
+ {
+  "id": "b2_chim7_a2_piles_usuelles",
+  "chapitre": "2bac/chim7_piles",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4"
+  ],
+  "duree_min": 30,
+  "description": "Paillasse 1 : quatre documents au mur (histoire des piles de Volta à Leclanché, piles usuelles et capacité en mAh, accumulateurs et recharge par transformation forcée, dangers et recyclage). Paillasse 2 : tableau blanc magnétique, huit générateurs électrochimiques de la vie courante à ranger en piles (non rechargeables) et accumulateurs (rechargeables).",
+  "conceptions": [
+   "Toutes les piles se rechargent.",
+   "La capacité d'une pile s'exprime en volts.",
+   "Une pile usagée peut être jetée avec les ordures ménagères."
+  ],
+  "faire": [
+   "Lit quatre documents sur les piles, calcule la quantité d'électricité d'une pile alcaline de 2 400 mAh et retient les règles de collecte et de recyclage.",
+   "Range huit générateurs électrochimiques en piles et accumulateurs et relie la recharge à une transformation forcée."
+  ]
  }
 ]

@@ -1507,3 +1507,15 @@ Problèmes restants : les transformations du fer III sont des cinétiques simple
 le tube 1 et le témoin reste modéré (ions Fe²⁺ vert pâle dans les deux) ; pas de test des ions (soude, thiocyanate) dans cette
 activité.
 
+
+## 2026-10-31 — Transformations spontanées dans les piles (b2_chim7_a1_piles, b2_chim7_a2_piles_usuelles)
+
+- Activité 1 : nouveau composant commun pile_electrochimique.js (deux béchers de 50 mL, lames, pinces crocodiles, pont salin
+  à poser d'un toucher ; f.é.m. de Nernst ; r = 150 Ω ; sans pont, circuit ouvert). Mesuré dans le test : Cu-Ag E = 0,4305 V,
+  I = 1,712 mA dans 100,4 Ω (théorie 0,4305 / 250,4 = 1,719 mA), U en charge 0,174 V ; Fe-Cu E = 0,78 V, I = 3,10 mA ;
+  tubes : 0,127 mmol d'argent et 0,066 mmol de cuivre déposés en 6 s.
+- Activité 2 : quatre documents et tri de huit générateurs (piles, accumulateurs) ; parcours complet sans erreur.
+
+Problèmes restants : résistance interne fixe (150 Ω), sans polarisation des électrodes ; les lames ne se rincent pas et le pont
+salin ne sèche pas ; sans pont le voltmètre lit exactement 0 (un vrai voltmètre peut flotter quelques mV) ; une étiquette
+sous un bécher peut être cachée par un fil.
