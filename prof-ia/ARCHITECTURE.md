@@ -453,7 +453,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/burette.js | Burette de 25 mL aux vraies dimensions : graduations, robinet (goutte à goutte, filet), écoulement réel, loupe du ménisque. |
 | contenu/ressources/laboratoires/commun/agitateur_magnetique.js | Agitateur magnétique : plateau (support), bouton de vitesse, barreau aimanté vu à travers le verre. |
 | contenu/ressources/laboratoires/commun/conductimetre.js | Conductimètre à sonde plongeante : σ = Σ λi·[Xi], temps de réponse selon l'agitation ; sonde dessinée derrière la paroi du bécher. |
-| contenu/ressources/laboratoires/commun/poste_titrage.js | Paillasse de titrage (1 px/mm) : burette, agitateur, bécher à titrer, récipients et flacons, conductimètre facultatif, places choisies (facultatif) ; réactions continues ; renvoie aussi le contexte de la paillasse. |
+| contenu/ressources/laboratoires/commun/poste_titrage.js | Paillasse de titrage (1 px/mm) : burette, agitateur, bécher à titrer, récipients et flacons, conductimètre facultatif, pH-mètre facultatif (électrode sur la tige de la burette), places choisies (facultatif) ; réactions continues ; renvoie aussi le contexte de la paillasse. |
 | contenu/ressources/laboratoires/sources/b1_chim4_a1_protons/ | Indicateurs colorés et produits courants ; vinaigre + soude, ammoniaque + acide : transfert de protons (postes_protons.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim4_a2_electrons/ | Fer + ions cuivre II, Javel + iodure, diiode + vitamine C : transfert d'électrons (postes_electrons.js, simulation.js). |
 | contenu/ressources/laboratoires/sources/b1_chim4_a3_conductimetrique/ | Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique (simulation.js). |
@@ -475,6 +475,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_chim3_s1_equilibre_dynamique/ | Équilibre dynamique (PC, SM) : modele_equilibre.js (A + B ⇌ C + D, chocs efficaces dans les deux sens), poste_equilibre.js (logiciel sur le portable), simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_chim4_a1_qr_constant/ | Qr,éq pour quatre états initiaux (acide éthanoïque, conductimétrie) : simulation.js (missions et paillasse sur banc_conductimetrie.js). |
 | contenu/ressources/laboratoires/sources/b2_chim4_a2_taux_acides/ | Taux d'avancement final de quatre acides de même concentration (conductimétrie) : simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim5_a1_ph_courants/ | pH de produits courants et Ke : produits_courants.js (produits à pH imposé, soude, paillasse « eau et corps humain » avec document), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim5_a2_titrage_ph/ | Titrage pH-métrique du vinaigre : logiciel_ph.js (acquisition sur le portable : pH = f(V), dpH/dV, curseur), poste_vinaigre.js (banc, document des indicateurs, câble USB), simulation.js. |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
@@ -551,6 +553,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/equilibre_acide.js | pH exact à 25 °C (couples faibles, eau, ions spectateurs, électroneutralité), conductivité à l'équilibre, solutions des acides à 1,0 × 10⁻² mol/L, tampons, acide pur, éthanoate de sodium. |
 | contenu/ressources/laboratoires/commun/ph_metre.js | pH-mètre de paillasse : boîtier, touches CAL 7 et CAL 4 (étalonnage), électrode combinée sur sa tige, temps de réponse. |
 | contenu/ressources/laboratoires/commun/banc_conductimetrie.js | Banc de conductimétrie : agitateur, sonde sur tige, conductimètre (ions à l'équilibre, µS/cm), quatre béchers déplaçables, mesures stables notées. |
+| contenu/ressources/laboratoires/commun/banc_ph.js | Banc de pH-métrie : agitateur, électrode sur tige, pH-mètre étalonné, cinq béchers déplaçables, mesures stables notées. |
 | contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
 | contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
 | contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |

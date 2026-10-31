@@ -3234,5 +3234,47 @@
   "faire": [
    "Mesure la conductivité de quatre acides de même concentration, calcule τ au tableur, relie le classement des τ à celui des constantes d'équilibre K et retrouve K à partir de τ."
   ]
+ },
+ {
+  "id": "b2_chim5_a1_ph_courants",
+  "chapitre": "2bac/chim5_acide_base",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4"
+  ],
+  "duree_min": 40,
+  "description": "Banc de pH-métrie (pH-mètre étalonné, électrode sur sa tige, agitateur, cinq béchers). Paillasse 1 : jus de citron (pH 2,3), vinaigre blanc (2,9), lait (6,6), solution de bicarbonate de sodium (8,3), eau de Javel diluée (11,5) ; au tableur [H₃O⁺] = 10⁻ᵖᴴ et [HO⁻] = Ke / [H₃O⁺]. Paillasse 2 : HCl 1,0 × 10⁻² mol/L (pH 2,00), NaOH 1,0 × 10⁻² et 1,0 × 10⁻³ mol/L (12,00 et 11,00) : [H₃O⁺]·[HO⁻] = 1,0 × 10⁻¹⁴ ; document mural sur le pH des liquides du corps ; KA de CO₂,H₂O / HCO₃⁻ et espèce prédominante dans le sang.",
+  "conceptions": [
+   "Une solution acide ne contient pas d'ions HO⁻.",
+   "Le pH d'une solution basique est toujours 14.",
+   "Le sang est une solution acide."
+  ],
+  "faire": [
+   "Mesure le pH de cinq produits courants, calcule [H₃O⁺] et [HO⁻] au tableur et classe les produits en acides et basiques.",
+   "Retrouve Ke avec des solutions d'acide chlorhydrique et d'hydroxyde de sodium, lit le pH des milieux biologiques et détermine l'espèce prédominante du couple CO₂,H₂O / HCO₃⁻ dans le sang."
+  ]
+ },
+ {
+  "id": "b2_chim5_a2_titrage_ph",
+  "chapitre": "2bac/chim5_acide_base",
+  "activite": 2,
+  "objectifs": [
+   "O3",
+   "O4",
+   "O5"
+  ],
+  "duree_min": 50,
+  "description": "Titrage de 10,0 mL de vinaigre dilué dix fois (+ 90 mL d'eau) par NaOH à 0,100 mol/L : burette, agitateur, électrode combinée sur la tige de la burette, pH-mètre relié en USB à un ordinateur ; logiciel d'acquisition (« Mesurer » : V lu au 0,05 mL près et pH), courbe pH = f(V), dpH/dV, curseur. Mesuré : pH 3,44 au départ, saut de pH vers 8 mL, maximum de dpH/dV à 8,1 mL (VE = 8,0 mL), pH 4,77 à VE/2 (pKA 4,76) ; C = 0,080 mol/L, vinaigre commercial à 4,8 g pour 100 mL ; phénolphtaléine ; réaction quasi totale.",
+  "conceptions": [
+   "À l'équivalence, le pH vaut toujours 7.",
+   "Le point d'équivalence est le point où la courbe commence à monter.",
+   "N'importe quel indicateur coloré convient pour un titrage."
+  ],
+  "faire": [
+   "Titre un vinaigre dilué par la soude en relevant le pH à l'ordinateur, trouve VE à l'extremum de dpH/dV, calcule la concentration et le degré du vinaigre, lit le pKA à la demi-équivalence, choisit l'indicateur et montre que la réaction est quasi totale."
+  ]
  }
 ]

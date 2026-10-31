@@ -777,3 +777,12 @@ combinée). La fiche du chapitre a reçu l'activité de la partie PC/SM.
 
 Fichier commun nouveau : `banc_conductimetrie.js`. Fichiers communs modifiés : `conductimetre.js` (options `equilibre` et `micro`,
 désactivées par défaut) ; `equilibre_acide.js` (acides benzoïque et propanoïque, solutions diluées, `Labo.sigma_equilibre`).
+
+## Chapitre 2e année du bac « Transformations associées aux réactions acide-base en solution aqueuse » (fiche 2bac/chim5_acide_base)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim5_a1_ph_courants.html | pH de produits courants et de milieux biologiques | O1 à O4 | pH de cinq produits (citron 2,3 ; vinaigre 2,9 ; lait 6,6 ; bicarbonate 8,3 ; Javel diluée 11,5), [H₃O⁺] et [HO⁻] au tableur ; HCl et NaOH : Ke = 1,0 × 10⁻¹⁴ ; document sur le pH du corps ; KA et prédominance de HCO₃⁻ dans le sang. |
+| b2_chim5_a2_titrage_ph.html | Courbe de titrage pH = f(V) ; choix de l'indicateur | O3, O4, O5 | Titrage pH-métrique d'un vinaigre dilué par la soude, acquisition à l'ordinateur (pH = f(V), dpH/dV) : VE = 8,0 mL, C = 0,080 mol/L, 4,8 g d'acide pour 100 mL de vinaigre, pKA = 4,8 à la demi-équivalence, phénolphtaléine, réaction quasi totale. |
+
+Fichier commun nouveau : `banc_ph.js`. Fichier commun modifié : `poste_titrage.js` (option `ph_metre`, désactivée par défaut).

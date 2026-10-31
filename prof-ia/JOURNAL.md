@@ -1481,3 +1481,17 @@ pas rincée entre deux solutions (pas de contamination simulée) ; dans le logic
 Problèmes restants : la conductivité de l'eau distillée n'est pas soustraite (l'élève pourrait la mesurer : à proposer) ;
 λ à 25 °C, activités assimilées aux concentrations ; la sonde n'est pas rincée entre deux solutions.
 
+## 2026-10-31 — Réactions acide-base en solution aqueuse (b2_chim5_a1_ph_courants, b2_chim5_a2_titrage_ph)
+
+- Activité 1 : banc commun banc_ph.js (pH-mètre étalonné) ; produits courants à pH imposé (valeurs typiques mesurées sur
+  de vrais produits) ; HCl 2,00, NaOH 12,00 et 11,00 (pH exact) : Ke = 1,0 × 10⁻¹⁴ ; document sur le pH du corps humain.
+- Activité 2 : poste_titrage.js reçoit l'option ph_metre (électrode sur la tige de la burette, pH-mètre étalonné),
+  désactivée par défaut ; logiciel d'acquisition local sur le portable (pH = f(V), dpH/dV au milieu de chaque intervalle,
+  curseur). Mesuré dans le test : 23 points, maximum de dpH/dV à 8,1 mL (VE théorique 8,0 mL) ; pH 4,77 à 4,05 mL
+  (pKA 4,76) ; pH final 11,78.
+- Régression : titrages conductimétrique et colorimétriques de 1re année.
+
+Problèmes restants : les produits courants ont un pH imposé (mélanges trop complexes pour être calculés) ; le volume est lu
+au 0,05 mL près sur la burette, sans erreur de lecture de l'élève ; pas d'indicateur coloré versé pendant ce titrage
+(choix par la zone de virage : le titrage colorimétrique est fait en 1re année).
+
