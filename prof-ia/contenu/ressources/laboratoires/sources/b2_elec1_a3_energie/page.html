@@ -1,0 +1,54 @@
+<!doctype html>
+<!--
+Rôle : simulation de l'activité 3 du chapitre « Dipôle RC » (2e année du bac) : énergie stockée E = ½·C·u², décharge dans une lampe (modèle de flash), flash et défibrillateur.
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : mesures, tableur et courbes sur la tablette, missions du carnet ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/b2_elec1_a3_energie.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : énergie d'un condensateur</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/bouton.js"></script>
+  <script src="../../commun/circuit_solveur.js"></script>
+  <script src="../../commun/circuit.js"></script>
+  <script src="../../commun/circuit_fils.js"></script>
+  <script src="../../commun/circuit_decor.js"></script>
+  <script src="../../commun/circuit_generateur.js"></script>
+  <script src="../../commun/circuit_recepteurs.js"></script>
+  <script src="../../commun/circuit_resistances.js"></script>
+  <script src="../../commun/circuit_pile.js"></script>
+  <script src="../../commun/multimetre_mesure.js"></script>
+  <script src="../../commun/multimetre.js"></script>
+  <script src="../../commun/circuit_temps.js"></script>
+  <script src="../../commun/condensateur.js"></script>
+  <script src="../../commun/commutateur.js"></script>
+  <script src="../../commun/boite_resistances.js"></script>
+  <script src="../../commun/source_courant.js"></script>
+  <script src="../../commun/ecran_acquisition.js"></script>
+  <script src="../../commun/interface_acquisition.js"></script>
+  <script src="../../commun/documents_mur.js"></script>
+  <script src="../../commun/lewis_dessin.js"></script>
+  <script src="poste_flash.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

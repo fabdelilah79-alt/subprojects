@@ -1,0 +1,63 @@
+<!doctype html>
+<!--
+Rôle : simulation de l'activité 3 du chapitre « Grandeurs physiques liées aux quantités de matière » (1re année du bac) : gaz produit par une transformation, mesure de pression, avancement.
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : mesures, tableur et courbes sur la tablette, missions du carnet ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/b1_chim2_a3_gaz_produit.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : gaz produit par une transformation</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/circuit_decor.js"></script>
+  <script src="../../commun/chimie_gouttes.js"></script>
+  <script src="../../commun/liquide_geometrie.js"></script>
+  <script src="../../commun/liquide_contenu.js"></script>
+  <script src="../../commun/chimie_reactions.js"></script>
+  <script src="../../commun/verrerie_profils.js"></script>
+  <script src="../../commun/verrerie_rendu.js"></script>
+  <script src="../../commun/verrerie_accessoires.js"></script>
+  <script src="../../commun/recipient_physique.js"></script>
+  <script src="../../commun/recipient_gestes.js"></script>
+  <script src="../../commun/ecoulement.js"></script>
+  <script src="../../commun/pipette_physique.js"></script>
+  <script src="../../commun/porte_tubes.js"></script>
+  <script src="../../commun/chimie_plaque.js"></script>
+  <script src="../../commun/pictogrammes.js"></script>
+  <script src="../../commun/equipement.js"></script>
+  <script src="../../commun/balance_electronique.js"></script>
+  <script src="../../commun/spatule_physique.js"></script>
+  <script src="../../commun/pesee_poudre.js"></script>
+  <script src="../../commun/coupelle_versement.js"></script>
+  <script src="../../commun/pipette_graduee.js"></script>
+  <script src="../../commun/lewis_dessin.js"></script>
+  <script src="../../commun/dissolution.js"></script>
+  <script src="../../commun/agitateur.js"></script>
+  <script src="../../commun/pissette.js"></script>
+  <script src="../../commun/fiole_accessoires.js"></script>
+  <script src="../../commun/fiole_jaugee.js"></script>
+  <script src="../../commun/optique_materiel.js"></script>
+  <script src="../../commun/capteurs_numeriques.js"></script>
+  <script src="poste_pression_gaz.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

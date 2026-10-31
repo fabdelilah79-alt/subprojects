@@ -1,0 +1,41 @@
+<!doctype html>
+<!--
+Rôle : simulation de l'activité 2 du chapitre « Le travail, mode de transfert d'énergie » (1re année du bac) : théorème de l'énergie cinétique sur la table à coussin d'air inclinée.
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : mesures, tableur et courbes sur la tablette, missions du carnet ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/b1_meca3_a2_theoreme.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : théorème de l'énergie cinétique</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/bouton.js"></script>
+  <script src="../../commun/coussin_air.js"></script>
+  <script src="../../commun/coussin_air_mouvement.js"></script>
+  <script src="../../commun/eclateur.js"></script>
+  <script src="../../commun/feuille_enregistrement.js"></script>
+  <script src="../../commun/outils_mesure.js"></script>
+  <script src="../../commun/verif_enregistrement.js"></script>
+  <script src="../../commun/poste_coussin_air.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

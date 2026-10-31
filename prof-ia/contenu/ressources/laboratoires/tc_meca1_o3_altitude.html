@@ -270,8 +270,9 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur-barre,
 .courbe-barre {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px 8px;
   margin-bottom: 6px;
   font-size: 15px;
 }
@@ -339,6 +340,10 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur input:focus {
   outline: 2px solid #1f6f4a;
   outline-offset: -2px;
+}
+
+.courbe-barre .tablette-bouton {
+  white-space: nowrap;
 }
 
 .courbe-barre select {
@@ -1173,14 +1178,15 @@ Utilisé par : toutes les simulations.
 </script>
   <script>
 /*
-Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2...) sans jamais exécuter de code.
+Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180)...) sans jamais
+       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire).
 Reçoit : le texte d'une formule et une fonction qui lit la valeur d'une cellule (« A2 » -> nombre).
 Produit : Labo.formules.calculer(texte, lire) -> nombre (ou lève une erreur « #ERREUR ») ;
          Labo.formules.decaler(texte, lignes) -> la formule recopiée plus bas (A2 -> A3).
 Utilisé par : tableur.js.
 */
 (function (L) {
-  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI)|([-+*/^();]))/iy;
+  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN)|([-+*/^();]))/iy;
 
   function decouper(texte) {
     // Découpe la formule en jetons : nombres, cellules, fonctions, opérateurs.
@@ -1208,12 +1214,12 @@ Utilisé par : tableur.js.
       const j = jetons[i++] || {};
       if (j.nombre !== undefined) return j.nombre;
       if (j.cellule) return lire(j.cellule);
-      if (j.fonction === "PI") return Math.PI;
+      if (j.fonction === "PI") { if (voir().signe === "(" && (jetons[i + 1] || {}).signe === ")") i += 2; return Math.PI; }
       if (j.fonction) {
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();
         if (!prendre(")")) throw new Error("#ERREUR");
-        return j.fonction === "RACINE" ? Math.sqrt(v) : Math.abs(v);
+        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin }[j.fonction](v);
       }
       if (j.signe === "(") { const v = somme(); if (!prendre(")")) throw new Error("#ERREUR"); return v; }
       throw new Error("#ERREUR");
@@ -1392,9 +1398,10 @@ Utilisé par : tablette.js (une feuille par mission), courbe.js, missions.js.
   <script>
 /*
 Rôle : application « Graphique » de la tablette : l'élève choisit l'abscisse et l'ordonnée parmi les colonnes
-       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b).
+       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b) ;
+       une deuxième ordonnée (facultative) superpose une seconde courbe, en orange (pour lire une intersection).
 Reçoit : le conteneur HTML et une fonction qui donne la feuille de calcul de la mission en cours.
-Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, n, modele, a, b }.
+Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, y2, n, n2, modele, a, b }.
 Utilisé par : tablette.js, missions.js (vérification des étapes).
 */
 (function (L) {
@@ -1415,11 +1422,13 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
   L.Courbe = function (conteneur, feuille) {
     // Construit les choix d'axes, les boutons de modélisation et la zone de tracé.
     this.feuille = feuille;
-    this.etat = { x: "A", y: "B", modele: "aucun", n: 0, a: null, b: null };
+    this.etat = { x: "A", y: "B", y2: "", modele: "aucun", n: 0, n2: 0, a: null, b: null };
     const barre = L.html("div", { class: "courbe-barre" }, conteneur);
     this.choix_y = this.selecteur(barre, "Ordonnée", "y");
     L.html("span", { class: "courbe-en-fonction" }, barre, "en fonction de");
     this.choix_x = this.selecteur(barre, "Abscisse", "x");
+    L.html("span", { class: "courbe-en-fonction" }, barre, "et");
+    this.choix_y2 = this.selecteur(barre, "Ordonnée 2", "y2");
     L.html("span", { class: "courbe-en-fonction" }, barre, "Modéliser :");
     for (const [modele, texte] of [["lineaire", "y = a·x"], ["affine", "y = a·x + b"]]) {
       const bouton = L.html("button", { type: "button", class: "tablette-bouton" }, barre, texte);
@@ -1446,6 +1455,10 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
       for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, choix, this.feuille().entete(lettre));
       choix.value = this.etat[axe];
     }
+    this.choix_y2.replaceChildren();
+    L.html("option", { value: "" }, this.choix_y2, "(2e courbe : aucune)");
+    for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, this.choix_y2, this.feuille().entete(lettre));
+    this.choix_y2.value = this.etat.y2;
   };
 
   C.modeliser = function (points) {
@@ -1489,8 +1502,11 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     this.equation.textContent = points.length ? "" : "Remplissez d'abord le tableur : les points apparaîtront ici.";
     Object.assign(this.etat, { n: points.length, a: null, b: null });
     if (!points.length) return L.annoncer("courbe", { ...this.etat });
-    const max_x = Math.max(...points.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...points.map((p) => p.y), 1e-9) * 1.1;
+    const points2 = this.etat.y2 ? feuille.lignes([this.etat.x, this.etat.y2]).map((l) => ({ x: l[this.etat.x], y: l[this.etat.y2] })) : [];
+    this.etat.n2 = points2.length;
+    const tous = [...points, ...points2], max_x = Math.max(...tous.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...tous.map((p) => p.y), 1e-9) * 1.1;
     const { px, py } = this.axes(this.dessin, max_x, max_y, feuille);
+    this.seconde_serie(points2, px, py, feuille);
     points.forEach((p, i) => {
       const x = ZONE.g + p.x * px, y = ZONE.b - p.y * py;
       const croix = L.svg("path", { d: `M${x - 6} ${y}h12M${x} ${y - 6}v12`, class: "courbe-point" }, this.dessin);
@@ -1498,6 +1514,15 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     });
     if (this.etat.modele !== "aucun") this.tracer_modele(points, px, py, feuille, anime);
     L.annoncer("courbe", { ...this.etat });
+  };
+
+  C.seconde_serie = function (points, px, py, feuille) {
+    // Deuxième courbe (même abscisse) : ronds orange reliés, et son nom en légende.
+    if (!points.length) return;
+    const xy = points.map((p) => [ZONE.g + p.x * px, ZONE.b - p.y * py]).sort((a, b) => a[0] - b[0]);
+    L.svg("polyline", { points: xy.map((q) => q.join(",")).join(" "), fill: "none", stroke: "#e07b00", "stroke-width": 1.2, opacity: 0.7 }, this.dessin);
+    for (const [x, y] of xy) L.svg("circle", { cx: x, cy: y, r: 3.5, fill: "none", stroke: "#e07b00", "stroke-width": 1.6 }, this.dessin);
+    L.texte(this.dessin, ZONE.d, ZONE.h + 4, `○ ${feuille.entete(this.etat.y2)}`, { class: "courbe-nom", "text-anchor": "end", fill: "#e07b00" });
   };
 
   C.tracer_modele = function (points, px, py, feuille, anime) {
@@ -1836,8 +1861,9 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       const m = mission();
       const q = m.etapes[m.etape]?.question;
       if (!q || m.accomplie) return;
-      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(q.attendu) : q.tolerance;
-      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), q.attendu, tolerance);
+      const attendu = typeof q.attendu === "function" ? q.attendu(etat.faits) : q.attendu;
+      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(attendu) : q.tolerance;
+      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), attendu, tolerance);
       prevenir_parent("reponse", { mission: m.id, etape: m.etape + 1, reponse: String(valeur), juste });
       if (juste) avancer(m, etat.vue);
       etat.messages[m.id] = { texte: juste ? q.bravo || "Exact." : q.aide, juste };
@@ -1862,7 +1888,8 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 /*
 Rôle : tableau blanc magnétique accroché au mur : des étiquettes aimantées à ranger dans des colonnes
        (classer des forces, des espèces, des transformations...). On les fait glisser ; elles se rangent d'elles-mêmes.
-Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait }.
+Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait,
+         par_ligne (étiquettes par ligne à classer, 3 par défaut) }.
 Produit : Labo.tableau_tri(parent, reglages) ; note le fait reglages.fait = { id_etiquette: numéro de colonne }.
 Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1_a3_force_pressante).
 */
@@ -1901,7 +1928,7 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
     cadre(g, r);
     const largeur_colonne = r.largeur / r.colonnes.length;
     const place = {};
-    const depart = (i) => ({ x: r.x + 6 + ETIQUETTE.l / 2 + (i % 3) * (ETIQUETTE.l + 6), y: r.bas_colonnes + 24 + Math.floor(i / 3) * (ETIQUETTE.h + 4) + ETIQUETTE.h / 2 });
+    const n = r.par_ligne || 3, depart = (i) => ({ x: r.x + 6 + ETIQUETTE.l / 2 + (i % n) * (ETIQUETTE.l + 6), y: r.bas_colonnes + 24 + Math.floor(i / n) * (ETIQUETTE.h + 4) + ETIQUETTE.h / 2 });
 
     function ranger() {
       // Range les étiquettes : les unes sous les autres dans leur colonne, ou à leur place de départ.
@@ -1943,7 +1970,7 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
 /*
 Rôle : démarrer une simulation de laboratoire : scène, matières, paillasses, tablette, carnet, missions ;
        le pense-bête de chaque paillasse montre l'étape en cours de sa mission.
-Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet (facultatif),
+Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet et repos_tablette (facultatifs),
          paillasses: [fabrique, ...], missions: [...] }.
          Chaque fabrique reçoit le groupe SVG de sa paillasse et renvoie { pense_bete }.
 Produit : Labo.demarrer(simulation) : le laboratoire prêt à manipuler.
@@ -1951,11 +1978,12 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
 */
 (function (L) {
   function pense_betes(postes) {
-    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission.
+    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission (la dernière mission ouverte).
     L.ecouter("missions", (e) => {
-      e.missions.forEach((m) => {
+      e.missions.forEach((m, i) => {
         const feuille = postes[m.paillasse]?.pense_bete;
-        if (!feuille) return;
+        const suivante = e.missions.slice(i + 1).some((x, j) => x.paillasse === m.paillasse && i + 1 + j <= e.courante);
+        if (!feuille || i > e.courante || suivante) return;
         if (m.accomplie) return feuille.ecrire("Mission accomplie", m.conclusion_courte || "Ouvrez le carnet pour la suite.");
         const etape = m.etapes[m.etape];
         feuille.ecrire(`Étape ${m.etape + 1} sur ${m.etapes.length}`, etape.court || etape.consigne);
@@ -1971,12 +1999,14 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
     etage.prepend(dessin);
     L.materiaux(dessin);
     const camera = L.svg("g", {}, dessin);
+    const cadre = L.svg("clipPath", { id: "cadre-paillasse" }, dessin.querySelector("defs"));
+    L.svg("rect", { width: L.LARGEUR, height: L.HAUTEUR }, cadre);
     const postes = simulation.paillasses.map((fabrique, numero) => {
-      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)` }, camera);
+      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)`, "clip-path": "url(#cadre-paillasse)" }, camera);
       if (simulation.decor !== "aucun") L.decor.paillasse(g, numero);
       return fabrique(g);
     });
-    L.tablette.creer(etage, simulation.missions);
+    L.tablette.creer(etage, simulation.missions, simulation.repos_tablette);
     L.carnet.creer(etage, simulation.repos_carnet);
     pense_betes(postes);
     L.missions.demarrer(simulation, camera);

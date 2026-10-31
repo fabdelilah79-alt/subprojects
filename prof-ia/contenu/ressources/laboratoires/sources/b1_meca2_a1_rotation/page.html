@@ -1,0 +1,42 @@
+<!doctype html>
+<!--
+Rôle : simulation du chapitre « Travail et puissance d'une force » (1re année du bac) : travail d'une force de moment constant (poulie à deux gorges), couple moteur et puissance (treuil électrique).
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : missions du carnet, tablette ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/b1_meca2_a1_rotation.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : travail et puissance en rotation</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/circuit_decor.js"></script>
+  <script src="../../commun/lewis_dessin.js"></script>
+  <script src="../../commun/bouton_reglage.js"></script>
+  <script src="../../commun/dynamometre_traction.js"></script>
+  <script src="poulie_dessin.js"></script>
+  <script src="poste_poulie.js"></script>
+  <script src="treuil_dessin.js"></script>
+  <script src="treuil_commandes.js"></script>
+  <script src="poste_treuil.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

@@ -270,8 +270,9 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur-barre,
 .courbe-barre {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px 8px;
   margin-bottom: 6px;
   font-size: 15px;
 }
@@ -339,6 +340,10 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur input:focus {
   outline: 2px solid #1f6f4a;
   outline-offset: -2px;
+}
+
+.courbe-barre .tablette-bouton {
+  white-space: nowrap;
 }
 
 .courbe-barre select {
@@ -1173,14 +1178,15 @@ Utilisé par : toutes les simulations.
 </script>
   <script>
 /*
-Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2...) sans jamais exécuter de code.
+Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180)...) sans jamais
+       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire).
 Reçoit : le texte d'une formule et une fonction qui lit la valeur d'une cellule (« A2 » -> nombre).
 Produit : Labo.formules.calculer(texte, lire) -> nombre (ou lève une erreur « #ERREUR ») ;
          Labo.formules.decaler(texte, lignes) -> la formule recopiée plus bas (A2 -> A3).
 Utilisé par : tableur.js.
 */
 (function (L) {
-  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI)|([-+*/^();]))/iy;
+  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN)|([-+*/^();]))/iy;
 
   function decouper(texte) {
     // Découpe la formule en jetons : nombres, cellules, fonctions, opérateurs.
@@ -1208,12 +1214,12 @@ Utilisé par : tableur.js.
       const j = jetons[i++] || {};
       if (j.nombre !== undefined) return j.nombre;
       if (j.cellule) return lire(j.cellule);
-      if (j.fonction === "PI") return Math.PI;
+      if (j.fonction === "PI") { if (voir().signe === "(" && (jetons[i + 1] || {}).signe === ")") i += 2; return Math.PI; }
       if (j.fonction) {
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();
         if (!prendre(")")) throw new Error("#ERREUR");
-        return j.fonction === "RACINE" ? Math.sqrt(v) : Math.abs(v);
+        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin }[j.fonction](v);
       }
       if (j.signe === "(") { const v = somme(); if (!prendre(")")) throw new Error("#ERREUR"); return v; }
       throw new Error("#ERREUR");
@@ -1392,9 +1398,10 @@ Utilisé par : tablette.js (une feuille par mission), courbe.js, missions.js.
   <script>
 /*
 Rôle : application « Graphique » de la tablette : l'élève choisit l'abscisse et l'ordonnée parmi les colonnes
-       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b).
+       du tableur, les points se dessinent un à un, puis il peut modéliser par une droite (y = a·x ou y = a·x + b) ;
+       une deuxième ordonnée (facultative) superpose une seconde courbe, en orange (pour lire une intersection).
 Reçoit : le conteneur HTML et une fonction qui donne la feuille de calcul de la mission en cours.
-Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, n, modele, a, b }.
+Produit : new Labo.Courbe(conteneur, feuille) ; annonce « courbe » avec { x, y, y2, n, n2, modele, a, b }.
 Utilisé par : tablette.js, missions.js (vérification des étapes).
 */
 (function (L) {
@@ -1415,11 +1422,13 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
   L.Courbe = function (conteneur, feuille) {
     // Construit les choix d'axes, les boutons de modélisation et la zone de tracé.
     this.feuille = feuille;
-    this.etat = { x: "A", y: "B", modele: "aucun", n: 0, a: null, b: null };
+    this.etat = { x: "A", y: "B", y2: "", modele: "aucun", n: 0, n2: 0, a: null, b: null };
     const barre = L.html("div", { class: "courbe-barre" }, conteneur);
     this.choix_y = this.selecteur(barre, "Ordonnée", "y");
     L.html("span", { class: "courbe-en-fonction" }, barre, "en fonction de");
     this.choix_x = this.selecteur(barre, "Abscisse", "x");
+    L.html("span", { class: "courbe-en-fonction" }, barre, "et");
+    this.choix_y2 = this.selecteur(barre, "Ordonnée 2", "y2");
     L.html("span", { class: "courbe-en-fonction" }, barre, "Modéliser :");
     for (const [modele, texte] of [["lineaire", "y = a·x"], ["affine", "y = a·x + b"]]) {
       const bouton = L.html("button", { type: "button", class: "tablette-bouton" }, barre, texte);
@@ -1446,6 +1455,10 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
       for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, choix, this.feuille().entete(lettre));
       choix.value = this.etat[axe];
     }
+    this.choix_y2.replaceChildren();
+    L.html("option", { value: "" }, this.choix_y2, "(2e courbe : aucune)");
+    for (const lettre of L.Tableur.LETTRES) L.html("option", { value: lettre }, this.choix_y2, this.feuille().entete(lettre));
+    this.choix_y2.value = this.etat.y2;
   };
 
   C.modeliser = function (points) {
@@ -1489,8 +1502,11 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     this.equation.textContent = points.length ? "" : "Remplissez d'abord le tableur : les points apparaîtront ici.";
     Object.assign(this.etat, { n: points.length, a: null, b: null });
     if (!points.length) return L.annoncer("courbe", { ...this.etat });
-    const max_x = Math.max(...points.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...points.map((p) => p.y), 1e-9) * 1.1;
+    const points2 = this.etat.y2 ? feuille.lignes([this.etat.x, this.etat.y2]).map((l) => ({ x: l[this.etat.x], y: l[this.etat.y2] })) : [];
+    this.etat.n2 = points2.length;
+    const tous = [...points, ...points2], max_x = Math.max(...tous.map((p) => p.x), 1e-9) * 1.1, max_y = Math.max(...tous.map((p) => p.y), 1e-9) * 1.1;
     const { px, py } = this.axes(this.dessin, max_x, max_y, feuille);
+    this.seconde_serie(points2, px, py, feuille);
     points.forEach((p, i) => {
       const x = ZONE.g + p.x * px, y = ZONE.b - p.y * py;
       const croix = L.svg("path", { d: `M${x - 6} ${y}h12M${x} ${y - 6}v12`, class: "courbe-point" }, this.dessin);
@@ -1498,6 +1514,15 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
     });
     if (this.etat.modele !== "aucun") this.tracer_modele(points, px, py, feuille, anime);
     L.annoncer("courbe", { ...this.etat });
+  };
+
+  C.seconde_serie = function (points, px, py, feuille) {
+    // Deuxième courbe (même abscisse) : ronds orange reliés, et son nom en légende.
+    if (!points.length) return;
+    const xy = points.map((p) => [ZONE.g + p.x * px, ZONE.b - p.y * py]).sort((a, b) => a[0] - b[0]);
+    L.svg("polyline", { points: xy.map((q) => q.join(",")).join(" "), fill: "none", stroke: "#e07b00", "stroke-width": 1.2, opacity: 0.7 }, this.dessin);
+    for (const [x, y] of xy) L.svg("circle", { cx: x, cy: y, r: 3.5, fill: "none", stroke: "#e07b00", "stroke-width": 1.6 }, this.dessin);
+    L.texte(this.dessin, ZONE.d, ZONE.h + 4, `○ ${feuille.entete(this.etat.y2)}`, { class: "courbe-nom", "text-anchor": "end", fill: "#e07b00" });
   };
 
   C.tracer_modele = function (points, px, py, feuille, anime) {
@@ -1836,8 +1861,9 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       const m = mission();
       const q = m.etapes[m.etape]?.question;
       if (!q || m.accomplie) return;
-      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(q.attendu) : q.tolerance;
-      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), q.attendu, tolerance);
+      const attendu = typeof q.attendu === "function" ? q.attendu(etat.faits) : q.attendu;
+      const tolerance = q.tolerance_relative ? q.tolerance_relative * Math.abs(attendu) : q.tolerance;
+      const juste = q.type === "choix" ? valeur === q.bonne : L.proche(L.lire_nombre(valeur), attendu, tolerance);
       prevenir_parent("reponse", { mission: m.id, etape: m.etape + 1, reponse: String(valeur), juste });
       if (juste) avancer(m, etat.vue);
       etat.messages[m.id] = { texte: juste ? q.bravo || "Exact." : q.aide, juste };
@@ -1862,7 +1888,8 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 /*
 Rôle : tableau blanc magnétique accroché au mur : des étiquettes aimantées à ranger dans des colonnes
        (classer des forces, des espèces, des transformations...). On les fait glisser ; elles se rangent d'elles-mêmes.
-Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait }.
+Reçoit : le groupe SVG et { x, y, largeur, hauteur, titre, colonnes: [nom ou [ligne 1, ligne 2]], etiquettes: [{ id, texte: [l1, l2], colonne }], fait,
+         par_ligne (étiquettes par ligne à classer, 3 par défaut) }.
 Produit : Labo.tableau_tri(parent, reglages) ; note le fait reglages.fait = { id_etiquette: numéro de colonne }.
 Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1_a3_force_pressante).
 */
@@ -1901,7 +1928,7 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
     cadre(g, r);
     const largeur_colonne = r.largeur / r.colonnes.length;
     const place = {};
-    const depart = (i) => ({ x: r.x + 6 + ETIQUETTE.l / 2 + (i % 3) * (ETIQUETTE.l + 6), y: r.bas_colonnes + 24 + Math.floor(i / 3) * (ETIQUETTE.h + 4) + ETIQUETTE.h / 2 });
+    const n = r.par_ligne || 3, depart = (i) => ({ x: r.x + 6 + ETIQUETTE.l / 2 + (i % n) * (ETIQUETTE.l + 6), y: r.bas_colonnes + 24 + Math.floor(i / n) * (ETIQUETTE.h + 4) + ETIQUETTE.h / 2 });
 
     function ranger() {
       // Range les étiquettes : les unes sous les autres dans leur colonne, ou à leur place de départ.
@@ -1943,7 +1970,7 @@ Utilisé par : les simulations qui demandent un classement (par exemple tc_meca1
 /*
 Rôle : démarrer une simulation de laboratoire : scène, matières, paillasses, tablette, carnet, missions ;
        le pense-bête de chaque paillasse montre l'étape en cours de sa mission.
-Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet (facultatif),
+Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet et repos_tablette (facultatifs),
          paillasses: [fabrique, ...], missions: [...] }.
          Chaque fabrique reçoit le groupe SVG de sa paillasse et renvoie { pense_bete }.
 Produit : Labo.demarrer(simulation) : le laboratoire prêt à manipuler.
@@ -1951,11 +1978,12 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
 */
 (function (L) {
   function pense_betes(postes) {
-    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission.
+    // Écrit sur le pense-bête de chaque paillasse l'étape en cours de sa mission (la dernière mission ouverte).
     L.ecouter("missions", (e) => {
-      e.missions.forEach((m) => {
+      e.missions.forEach((m, i) => {
         const feuille = postes[m.paillasse]?.pense_bete;
-        if (!feuille) return;
+        const suivante = e.missions.slice(i + 1).some((x, j) => x.paillasse === m.paillasse && i + 1 + j <= e.courante);
+        if (!feuille || i > e.courante || suivante) return;
         if (m.accomplie) return feuille.ecrire("Mission accomplie", m.conclusion_courte || "Ouvrez le carnet pour la suite.");
         const etape = m.etapes[m.etape];
         feuille.ecrire(`Étape ${m.etape + 1} sur ${m.etapes.length}`, etape.court || etape.consigne);
@@ -1971,12 +1999,14 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
     etage.prepend(dessin);
     L.materiaux(dessin);
     const camera = L.svg("g", {}, dessin);
+    const cadre = L.svg("clipPath", { id: "cadre-paillasse" }, dessin.querySelector("defs"));
+    L.svg("rect", { width: L.LARGEUR, height: L.HAUTEUR }, cadre);
     const postes = simulation.paillasses.map((fabrique, numero) => {
-      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)` }, camera);
+      const g = L.svg("g", { transform: `translate(${numero * L.LARGEUR} 0)`, "clip-path": "url(#cadre-paillasse)" }, camera);
       if (simulation.decor !== "aucun") L.decor.paillasse(g, numero);
       return fabrique(g);
     });
-    L.tablette.creer(etage, simulation.missions);
+    L.tablette.creer(etage, simulation.missions, simulation.repos_tablette);
     L.carnet.creer(etage, simulation.repos_carnet);
     pense_betes(postes);
     L.missions.demarrer(simulation, camera);
@@ -1992,32 +2022,35 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
 </script>
   <script>
 /*
-Rôle : dynamomètre à ressort (calibre 10 N) : tube transparent gradué, ressort qui s'allonge, index rouge,
+Rôle : dynamomètre à ressort (calibre 10 N par défaut) : tube transparent gradué, ressort qui s'allonge, index rouge,
        crochet ; le ressort oscille puis s'immobilise (oscillation amortie), en butée au-delà du calibre.
-Reçoit : le groupe SVG, la position de l'anneau, le poids accroché (en N) à chaque changement.
-Produit : new Dynamometre(groupe, x, y) avec charger(poids_N), crochet() -> point d'accroche, et sur_mouvement().
-Utilisé par : poste_poids.js.
+Reçoit : le groupe SVG, la position de l'anneau, { calibre (N), px_par_n, pas (N entre deux traits), nombres (N entre
+         deux nombres) } ; la force exercée (en N) à chaque changement.
+Produit : new Dynamometre(groupe, x, y, reglages) avec charger(force_N), crochet() -> point d'accroche, sur_mouvement(),
+          calibre ; Labo.Dynamometre.CALIBRE_N (calibre par défaut).
+Utilisé par : poste_poids.js (tc_meca1_o3_poids), les simulations d'équilibre (tc_meca5_*).
 */
 (function (L) {
-  const PX_PAR_N = 12;
   const CALIBRE_N = 10;
   const ZERO = 44;
   const OMEGA = 2 * Math.PI * 1.4;
   const AMORTISSEMENT = 4.5;
 
-  function graduer(g, x) {
-    // Graduations : un trait tous les 0,2 N, un nombre tous les 1 N.
-    for (let i = 0; i <= CALIBRE_N * 5; i++) {
-      const y = ZERO + (i * PX_PAR_N) / 5;
-      const grand = i % 5 === 0;
+  function graduer(g, x, r) {
+    // Graduations : un trait tous les « pas » newtons, un nombre tous les « nombres » newtons.
+    const n = Math.round(r.calibre / r.pas), tous = Math.round(r.nombres / r.pas);
+    for (let i = 0; i <= n; i++) {
+      const y = ZERO + i * r.pas * r.px_par_n, grand = i % tous === 0;
       L.svg("line", { x1: x - 13, y1: y, x2: x - 13 + (grand ? 9 : 5), y2: y, stroke: "#1d1d1d", "stroke-width": grand ? 0.9 : 0.5 }, g);
-      if (grand) L.texte(g, x + 9, y, String(i / 5), { class: "graduation", "font-size": 8 });
+      if (grand) L.texte(g, x + 9, y, L.nombre(i * r.pas, r.nombres < 1 ? 1 : 0), { class: "graduation", "font-size": 8 });
     }
-    L.texte(g, x + 21, ZERO + CALIBRE_N * PX_PAR_N + 8, "N", { class: "graduation", "font-size": 8 });
+    L.texte(g, x + 21, ZERO + r.calibre * r.px_par_n + 8, "N", { class: "graduation", "font-size": 8 });
   }
 
-  function Dynamometre(parent, x, y) {
+  function Dynamometre(parent, x, y, { calibre = CALIBRE_N, px_par_n = 12, pas = 0.2, nombres = 1 } = {}) {
     // Dessine le dynamomètre ; l'origine du groupe est son anneau de suspension.
+    const r = { calibre, px_par_n, pas, nombres }, CALIBRE = calibre, PX = px_par_n;
+    Object.assign(this, { calibre, px_par_n });
     this.g = L.svg("g", { transform: `translate(${x} ${y})` }, parent);
     this.origine = { x, y };
     this.ext = 0;
@@ -2029,10 +2062,10 @@ Utilisé par : poste_poids.js.
     this.ressort = L.svg("path", { fill: "none", stroke: "#8b949c", "stroke-width": 1.6 }, this.g);
     this.tige = L.svg("rect", { x: -2, width: 4, fill: "url(#metal)" }, this.g);
     this.index = L.svg("rect", { x: -11, width: 22, height: 3, fill: "#e0251b" }, this.g);
-    L.svg("rect", { x: -14, y: 13, width: 28, height: ZERO + CALIBRE_N * PX_PAR_N + 4 - 13, fill: "url(#plastique)", stroke: "#9aa6ac", "stroke-width": 0.8 }, this.g);
-    L.svg("rect", { x: -11, y: 14, width: 4, height: CALIBRE_N * PX_PAR_N + 8, fill: "#fff", opacity: 0.55 }, this.g);
-    graduer(this.g, 0);
-    this.bas = ZERO + CALIBRE_N * PX_PAR_N + 4;
+    L.svg("rect", { x: -14, y: 13, width: 28, height: ZERO + CALIBRE * PX + 4 - 13, fill: "url(#plastique)", stroke: "#9aa6ac", "stroke-width": 0.8 }, this.g);
+    L.svg("rect", { x: -11, y: 14, width: 4, height: CALIBRE * PX + 8, fill: "#fff", opacity: 0.55 }, this.g);
+    graduer(this.g, 0, r);
+    this.bas = ZERO + CALIBRE * PX + 4;
     L.svg("rect", { x: -15, y: this.bas, width: 30, height: 7, rx: 2, fill: "#d23b2e" }, this.g);
     this.crochet_svg = L.svg("path", { fill: "none", stroke: "url(#metal)", "stroke-width": 2.4, "stroke-linecap": "round" }, this.g);
     this.dessiner();
@@ -2061,8 +2094,8 @@ Utilisé par : poste_poids.js.
   };
 
   D.charger = function (poids_N) {
-    // Nouveau poids accroché : le ressort va osciller vers son nouvel allongement (butée à 10 N).
-    this.cible = Math.min(CALIBRE_N, poids_N) * PX_PAR_N + (poids_N > CALIBRE_N ? 2 : 0);
+    // Nouvelle force : le ressort va osciller vers son nouvel allongement (butée au calibre).
+    this.cible = Math.max(0, Math.min(this.calibre, poids_N)) * this.px_par_n + (poids_N > this.calibre ? 2 : 0);
   };
 
   D.au_repos = function () {
@@ -2079,7 +2112,7 @@ Utilisé par : poste_poids.js.
       if (!this.au_repos()) {
         const acceleration = -OMEGA * OMEGA * (this.ext - this.cible) - AMORTISSEMENT * this.vitesse;
         this.vitesse += acceleration * dt;
-        this.ext = Math.max(-2, Math.min(CALIBRE_N * PX_PAR_N + 2, this.ext + this.vitesse * dt));
+        this.ext = Math.max(-2, Math.min(this.calibre * this.px_par_n + 2, this.ext + this.vitesse * dt));
         if (this.au_repos()) { this.ext = this.cible; this.vitesse = 0; }
         this.dessiner();
         for (const f of this.ecouteurs) f(this.au_repos());
@@ -2104,7 +2137,7 @@ Rôle : objets que l'on accroche au dynamomètre : masses marquées en laiton à
        et caillou de masse inconnue tenu par une ficelle. Chaque objet sait se dessiner, debout ou suspendu.
 Reçoit : le groupe SVG et la description de l'objet (masse, taille, inscription).
 Produit : new ObjetSuspendu(parent, description) avec placer(x, y), pendre(oui), hauteur_debout, hauteur_pendu.
-Utilisé par : poste_poids.js.
+Utilisé par : accrochage.js, poste_poids.js (tc_meca1_o3_poids), les simulations d'équilibre (tc_meca5_*).
 */
 (function (L) {
   function masse_marquee(g, largeur, hauteur, inscription) {
@@ -2188,15 +2221,16 @@ Utilisé par : poste_poids.js.
 /*
 Rôle : règles du glisser-déposer de la paillasse du poids : on accroche les objets en chaîne sous le dynamomètre
        (seul le dernier se décroche), on les repose sur la paillasse ou dans le coffret ; on note les mesures faites.
-Reçoit : le dynamomètre, les objets, les calques SVG, les places du coffret.
+Reçoit : le dynamomètre (ou tout objet qui a crochet(), charger(N), sur_mouvement(), calibre), les objets, les calques SVG,
+         les places du coffret et sa zone { x1, x2, base }, le préfixe des faits notés (plusieurs paillasses).
 Produit : Labo.accrochage(reglages) ; faits notés : poids_accroche, poids_mesures (masses en kg), poids_surcharge, caillou_pese.
-Utilisé par : poste_poids.js.
+Utilisé par : poste_poids.js (tc_meca1_o3_poids), le poste du ressort (tc_meca5_a1_ressort).
 */
 (function (L) {
   const G = 9.81;
   const PRISE_PX = 34;
 
-  L.accrochage = function ({ dyn, objets, calques, places, cible }) {
+  L.accrochage = function ({ dyn, objets, calques, places, cible, coffret = { x1: 140, x2: 380, base: 490 }, prefixe = "" }) {
     // Branche le glisser-déposer de chaque objet et la mise à jour de la chaîne suspendue.
     const chaine = [];
     const mesures = new Set();
@@ -2217,13 +2251,13 @@ Utilisé par : poste_poids.js.
     function noter_mesure() {
       // Ressort immobile : on note ce qui a été pesé.
       const poids = chaine.reduce((s, o) => s + o.masse_kg * G, 0);
-      L.missions.noter("poids_surcharge", poids > L.Dynamometre.CALIBRE_N);
+      L.missions.noter(prefixe + "poids_surcharge", poids > dyn.calibre);
       if (!chaine.length) return;
-      L.missions.noter("poids_accroche", true);
-      if (chaine.some((o) => o.type === "caillou")) L.missions.noter("caillou_pese", true);
-      else if (poids <= L.Dynamometre.CALIBRE_N) {
+      L.missions.noter(prefixe + "poids_accroche", true);
+      if (chaine.some((o) => o.type === "caillou")) L.missions.noter(prefixe + "caillou_pese", true);
+      else if (poids <= dyn.calibre) {
         mesures.add(Math.round(chaine.reduce((s, o) => s + o.masse_kg, 0) * 1000) / 1000);
-        L.missions.noter("poids_mesures", [...mesures]);
+        L.missions.noter(prefixe + "poids_mesures", [...mesures]);
       }
     }
 
@@ -2261,7 +2295,7 @@ Utilisé par : poste_poids.js.
         return recharger();
       }
       const base = p.y + o.hauteur_debout;
-      if (o.place !== undefined && p.x > 140 && p.x < 380 && base > 430 && base < 545) return poser(o, places[o.place], 490, true);
+      if (o.place !== undefined && p.x > coffret.x1 && p.x < coffret.x2 && base > coffret.base - 60 && base < coffret.base + 55) return poser(o, places[o.place], coffret.base, true);
       if (base > 440 && base < 578) return poser(o, p.x, base, false);
       poser(o, Math.max(30, Math.min(1000, p.x)), 545, true);
     }
@@ -2286,11 +2320,47 @@ Utilisé par : poste_poids.js.
     }
 
     objets.forEach((o) => {
-      if (o.place !== undefined) poser(o, places[o.place], 490, false);
+      if (o.place !== undefined) poser(o, places[o.place], coffret.base, false);
       rendre_mobile(o);
     });
     dyn.sur_mouvement((repos) => { suivre_ressort(); if (repos) noter_mesure(); });
     return { poser };
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : potence de laboratoire (socle lourd, tige verticale, noix de serrage, tige horizontale terminée par un crochet)
+       et coffret en bois de masses marquées, avec un logement par masse.
+Reçoit : le groupe SVG ; la position de la tige et du crochet ; les places du coffret.
+Produit : Labo.potence(groupe, { x, haut, bras }) -> point du crochet ; Labo.coffret_masses(groupe, places, x1, x2, base).
+Utilisé par : poste_poids.js (tc_meca1_o3_poids), les postes du chapitre « Équilibre d'un solide ».
+*/
+(function (L) {
+  L.potence = function (g, { x = 478, haut = 14, bras = 126, socle = 504 } = {}) {
+    // Socle vu un peu d'en haut, tige, noix, bras horizontal et crochet au bout ; renvoie le point d'accroche.
+    L.ombre_sol(g, x + 7, socle + 26, 92, 10, 0.5);
+    L.svg("path", { d: `M${x - 66} ${socle} H${x + 86} L${x + 78} ${socle + 16} H${x - 74} Z`, fill: "#3a3f45" }, g);
+    L.svg("rect", { x: x - 74, y: socle + 16, width: 152, height: 13, rx: 2, fill: "url(#acier)" }, g);
+    L.svg("ellipse", { cx: x, cy: socle + 8, rx: 9, ry: 3, fill: "#22262a" }, g);
+    L.svg("rect", { x: x - 5, y: haut, width: 10, height: socle + 8 - haut, fill: "url(#metal)" }, g);
+    L.svg("rect", { x, y: haut + 8, width: bras + 8, height: 7, fill: "url(#metal-h)" }, g);
+    L.svg("rect", { x: x - 12, y: haut, width: 24, height: 22, rx: 3, fill: "url(#acier)" }, g);
+    L.svg("rect", { x: x + 10, y: haut + 6, width: 12, height: 5, rx: 2, fill: "#1b1e21" }, g);
+    const c = { x: x + bras, y: haut + 15 };
+    L.svg("path", { d: `M${c.x} ${c.y} V${c.y + 7} a5 5 0 1 1 -5 5`, fill: "none", stroke: "url(#metal)", "stroke-width": 2.2, "stroke-linecap": "round" }, g);
+    return { x: c.x, y: c.y + 7 };
+  };
+
+  L.coffret_masses = function (g, places, x1, x2, base) {
+    // Coffret en bois ouvert, un logement par masse marquée (L.MASSES_MARQUEES), étiquette sur la face avant.
+    const cx = (x1 + x2) / 2;
+    L.ombre_sol(g, cx, base + 40, (x2 - x1) / 2 + 8, 9, 0.5);
+    L.svg("path", { d: `M${x1 + 10} ${base - 12} H${x2 - 10} L${x2} ${base + 4} H${x1} Z`, fill: "url(#bois)" }, g);
+    places.forEach((x, i) => L.svg("ellipse", { cx: x, cy: base - 1, rx: L.MASSES_MARQUEES[i].largeur / 2 + 2, ry: 3.5, fill: "#4a2f14" }, g));
+    L.svg("rect", { x: x1, y: base + 4, width: x2 - x1, height: 34, fill: "url(#bois-face)" }, g);
+    L.svg("rect", { x: x1, y: base + 4, width: x2 - x1, height: 2, fill: "#e2bb85" }, g);
+    L.texte(g, cx, base + 22, "Masses marquées", { class: "etiquette-carton", fill: "#f3e3c7", "font-size": 18 });
   };
 })(window.Labo);
 </script>
@@ -2304,29 +2374,6 @@ Utilisé par : simulation.js.
 */
 (function (L) {
   const PLACES = [170, 198, 228, 262, 298, 342];
-
-  function potence(g) {
-    // Socle lourd vu un peu d'en haut, tige verticale, noix de serrage, tige horizontale et crochet.
-    L.ombre_sol(g, 485, 530, 92, 10, 0.5);
-    L.svg("path", { d: "M412 504 H564 L556 520 H404 Z", fill: "#3a3f45" }, g);
-    L.svg("rect", { x: 404, y: 520, width: 152, height: 13, rx: 2, fill: "url(#acier)" }, g);
-    L.svg("ellipse", { cx: 478, cy: 512, rx: 9, ry: 3, fill: "#22262a" }, g);
-    L.svg("rect", { x: 473, y: 14, width: 10, height: 498, fill: "url(#metal)" }, g);
-    L.svg("rect", { x: 478, y: 22, width: 134, height: 7, fill: "url(#metal-h)" }, g);
-    L.svg("rect", { x: 466, y: 14, width: 24, height: 22, rx: 3, fill: "url(#acier)" }, g);
-    L.svg("rect", { x: 488, y: 20, width: 12, height: 5, rx: 2, fill: "#1b1e21" }, g);
-    L.svg("path", { d: "M604 29 V36 a5 5 0 1 1 -5 5", fill: "none", stroke: "url(#metal)", "stroke-width": 2.2, "stroke-linecap": "round" }, g);
-  }
-
-  function coffret(g) {
-    // Coffret en bois ouvert, avec un logement par masse.
-    L.ombre_sol(g, 262, 530, 118, 9, 0.5);
-    L.svg("path", { d: "M160 478 H362 L372 494 H150 Z", fill: "url(#bois)" }, g);
-    PLACES.forEach((x, i) => L.svg("ellipse", { cx: x, cy: 489, rx: L.MASSES_MARQUEES[i].largeur / 2 + 2, ry: 3.5, fill: "#4a2f14" }, g));
-    L.svg("rect", { x: 150, y: 494, width: 222, height: 34, fill: "url(#bois-face)" }, g);
-    L.svg("rect", { x: 150, y: 494, width: 222, height: 2, fill: "#e2bb85" }, g);
-    L.texte(g, 261, 512, "Masses marquées", { class: "etiquette-carton", fill: "#f3e3c7", "font-size": 18 });
-  }
 
   function etiquette_caillou(g) {
     // Petit carton posé à plat devant le caillou.
@@ -2345,8 +2392,8 @@ Utilisé par : simulation.js.
     // Construit la paillasse du poids et branche ses gestes.
     const fond = L.svg("g", {}, g);
     L.decor.etagere(fond, 730, 196, 240);
-    potence(fond);
-    coffret(fond);
+    L.potence(fond);
+    L.coffret_masses(fond, PLACES, 150, 372, 490);
     etiquette_caillou(fond);
     const calques = { poses: L.svg("g", {}, g) };
     const dyn = new L.Dynamometre(L.svg("g", { filter: "url(#ombre)" }, g), 604, 47);

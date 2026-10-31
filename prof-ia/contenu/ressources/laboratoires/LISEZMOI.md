@@ -22,12 +22,50 @@ Pas de panneaux : seulement le laboratoire (ou l'espace, quand les objets étudi
 | Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
 |---|---|---|---|
 | tc_meca1_a1_echelle.html | A1 : documents sur l'Univers, comparer les dimensions | O1 | Convertit 8 longueurs en mètre au tableur, place les étiquettes aimantées sur la frise des puissances de dix, compare (Terre-Soleil / Terre-Lune, ordres de grandeur, durée de la lumière). |
-| tc_meca1_a2_gravitation.html | A2 : mouvement de la Terre autour du Soleil, de la Lune autour de la Terre | O2 | Observe une année (phases, nouvelles lunes), pose les vecteurs-forces F_S/T, F_T/S, F_T/L (actions réciproques). Puis **découvre la loi** avec trois sondes : F proportionnelle à m, à M (Terre / Lune), à 1/d². Constate que F·d²/(m·M) vaut toujours la constante G = 6,67 × 10⁻¹¹ (donnée, jamais modifiée), puis calcule F Terre-Lune. |
+| tc_meca1_a2_gravitation.html | A2 : mouvement de la Terre autour du Soleil, de la Lune autour de la Terre | O2 | Observe une année (phases, nouvelles lunes), arrête le temps avec le bouton « Pause » et pose les vecteurs-forces F_S/T, F_T/S, F_T/L (actions réciproques). Puis **découvre la loi** avec trois sondes : F proportionnelle à m, à M (Terre / Lune), à 1/d². Constate que F·d²/(m·M) vaut toujours la constante G = 6,67 × 10⁻¹¹ (donnée, jamais modifiée), puis calcule F Terre-Lune. |
 | tc_meca1_a3_force_pressante.html | A3 : expériences mettant en évidence la force pressante | O4, O5, O6 | Brique sur la mousse (3 faces, puis 2 briques), mesure de l'enfoncement au réglet, P = F/S au tableur ; classement des actions sur le tableau magnétique ; capsule manométrique dans l'eau (Δh = f(h), orientation) ; baromètre en hPa, bar et cmHg. |
 | tc_meca1_o3_poids.html | (aucune activité dans la fiche : complément) | O3 | Masses marquées au dynamomètre, P = f(m), g ≈ 9,8 N/kg, masse d'un caillou. |
 | tc_meca1_o3_altitude.html | (aucune activité dans la fiche : complément) | O3 | Sonde de 1000 kg de 0 à 36 000 km d'altitude : F = f(h), puis F = f(1/(R+h)²), **découvre** g = g0·R²/(R+h)², ISS. |
 
 Les deux simulations « o3 » sont des propositions : l'objectif O3 de la fiche n'a pas d'activité associée.
+
+## Chapitre tronc commun « Le mouvement » (fiche tronc_commun/meca2_mouvement)
+
+Matériel commun aux activités 2, 3 et 4 : **table à coussin d'air** vue en perspective, mobile autoporteur
+lancé d'un geste du doigt, **éclateur** (τ = 20, 40 ou 60 ms) qui marque un point toutes les τ sur la feuille,
+feuille d'enregistrement que l'on prend en main (points numérotés M0, M1...), **transparent millimétré**,
+**règle** qui pivote, **flèches-vecteurs** dont on tire la pointe (échelle imprimée sur la feuille).
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca2_a1_relativite.html | A1 : exemples de la vie courante sur la relativité du mouvement | O1 | Dans une rue, un cycliste passe. Avec la caméra fixe (référentiel terrestre), le stroboscope montre la valve qui décrit des arches (cycloïde) ; en touchant la caméra du porte-bagages (référentiel du vélo), la même valve décrit un cercle et le casque reste immobile. Bouton « Pause ». Choix du référentiel terrestre ou géocentrique. |
+| tc_meca2_a2_repere.html | A2 : décrire le mouvement d'un point par rapport à un référentiel (repère d'espace et de temps) | O1, O4 | Enregistre un lancer, pose l'origine du transparent millimétré sur M0, relève t, x, y de M0 à M6 au tableur, trace la trajectoire, répond sur le choix du repère et de l'origine des dates. |
+| tc_meca2_a3_vitesse.html | A3 : déterminer expérimentalement une vitesse instantanée | O2, O3, O4 | Table inclinée : mesure M2M4 à la règle, vitesse moyenne ; tableau vi = Mi-1Mi+1 / 2τ pour i = 1 à 8, courbe v = f(t) ; trace les vecteurs v3 et v7 ; conversions km/h ↔ m/s. |
+| tc_meca2_a4_mru_mcu.html | A4 : mettre en évidence les caractéristiques du MRU et du MCU | O4, O5, O6 | Mission MRU : lancer libre, x = M0Mi au tableur, droite x = v·t, utilisation de l'équation horaire (distance, durée). Mission MCU : accroche le fil au clou, enregistre, vérifie que Mi-1Mi+1 est constant, trace v2, v6 et v10 tangents au cercle ; la Lune et les satellites. |
+
+Les vérifications lisent l'enregistrement **réellement obtenu** par l'élève : chaque lancer donne d'autres
+valeurs attendues. Si l'élève reprend le mobile en main pendant l'enregistrement, la feuille repart de zéro.
+
+## Chapitre tronc commun « Principe d'inertie » (fiche tronc_commun/meca3_inertie)
+
+Objectif principal de la fiche : dépasser la conception « une force est nécessaire pour entretenir un mouvement
+rectiligne uniforme ». La table à coussin d'air reçoit une **soufflerie** : sans air, le palet frotte et s'arrête vite ;
+avec l'air, il glisse sans ralentir.
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca3_a1_actions.html | A1 : aimant approché d'une bille en mouvement, bille heurtant un obstacle, palets sur table à coussin d'air | O2 | Lâche une bille d'acier depuis une gouttière ; une photographie à pose multiple montre une droite (léger ralentissement dû aux frottements), une courbe quand il pose l'aimant près du trajet (action à distance), un rebond sur la cale en bois (action de contact). Puis lance le palet sans air (il s'arrête), avec l'air (il glisse) : poids et action de l'air se compensent, le palet est pseudo-isolé. |
+| tc_meca3_a2_principe.html | A2 : vérification expérimentale du principe d'inertie | O1, O2 | Palet posé avec l'air : il reste immobile. Palet lancé : distances MiMi+1 mesurées à la règle au tableur, toutes égales (mouvement rectiligne uniforme), énoncé du principe. Table inclinée : actions non compensées, mouvement non uniforme. Sonde spatiale isolée. |
+| tc_meca3_a3_centre_inertie.html | A3 : centre d'inertie, mouvement d'ensemble et mouvement propre ; barycentre de deux palets solidaires | O3, O4, O5 | Deux palets de 400 g et 200 g reliés par une tige, lancés en tournant : les traces A et B sont des courbes. Sur la feuille, un curseur vert glisse le long de A0B0 et place une croix au même point de chaque segment AiBi : l'élève cherche où les croix sont alignées et régulières (G), mesure GA et GB, découvre mA·GA = mB·GB. Puis colle une gommette au centre d'inertie d'une tige, d'une barre, d'un disque et d'une sphère ; exercice sur la relation barycentrique. |
+
+## Chapitre tronc commun « Quantité de mouvement » (fiche tronc_commun/meca4_quantite_mouvement)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca4_a1_quantite.html | A1 : définition et représentation de p | O1, O2 | Lance un mobile de 300 g sur la table à coussin d'air, mesure sa vitesse, calcule p = m·v (kg·m/s) et trace le vecteur p à l'échelle. Pose une surcharge de 300 g : à vitesse égale, p double. |
+| tc_meca4_a2_conservation.html | A2 : expériences de conservation, puis généralisation | O3 | « Explosion » : deux mobiles serrés contre un ressort, retenus par un fil que l'élève coupe. Avec la surcharge sur A, mA·vA = mB·vB et pA + pB = 0 ; sans surcharge, vA = vB. Loi de conservation, exercice des patineurs. |
+| tc_meca4_a3_applications.html | A3 : applications (recul d'une arme, choc, barque) | O3 | Choc de deux mobiles qui se collent (mA·vA = (mA + mB)·v') ; enfant qui saute d'une barque sur un lac (bouées graduées) ; canon à ressort sur un chariot qui recule (rail gradué, barrière lumineuse) ; recul d'un fusil. |
+| tc_meca4_a4_force.html | A4 : vérification expérimentale de F = Δp/Δt | O4 | Chronophotographie d'une bille lâchée devant une règle (fils de lecture rouges) : t et y au tableur, v3, v7, Δp/Δt = m·g = P, Δp vertical vers le bas. Bille lancée horizontalement devant un quadrillage : vx constante, Δp vertical. |
 
 ## Modifier ou ajouter une simulation
 
@@ -43,8 +81,746 @@ python -m outils.assembler_laboratoire tc_meca1_a3_force_pressante
 
 Pour essayer pendant l'écriture, ouvrez directement `sources/<nom>/page.html` dans le navigateur.
 
+## Chapitre tronc commun « Équilibre d'un solide » (fiche tronc_commun/meca5_equilibre)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_meca5_a1_ressort.html | A1 : relation tension/allongement d'un ressort | O1 | Accroche des masses marquées sous un ressort, lit sa longueur sur la règle, trace T en fonction de Δl : T = K·Δl (K ≈ 25 N/m). Avec un ressort plus raide, mesure K en une mesure ; étalonnage d'un dynamomètre. |
+| tc_meca5_a2_archimede.html | A2 : mesure de la poussée d'Archimède | O2 | Cylindre accroché à un dynamomètre fin, plongé dans un bécher posé sur un support élévateur : F = P − P' ; immersion à moitié ; cylindre de même volume mais de masse différente ; eau salée ; F = ρ·V·g. |
+| tc_meca5_a3_trois_forces.html | A3 : vecteurs des trois forces à l'équilibre | O3 | Table à forces : anneau tenu par trois fils et des porte-masses chargés de masses à fente ; angles au rapporteur, projections (méthode analytique) ; vecteurs mis bout à bout : triangle fermé (méthode graphique). |
+| tc_meca5_a4_frottement.html | A4 : mise en évidence du frottement | O4 | Plan inclinable : angle de démarrage φ du pavé, k = tan φ, bois puis caoutchouc. Traction horizontale au dynamomètre (index du maximum) : F_max = k·P, avec et sans surcharge. |
+| tc_meca5_a5_moments.html | A5 : effet de rotation, moment d'un couple, théorème des moments, M = −C·θ | O5, O6, O7 | Barre à trous et masses marquées : rotation, force sur l'axe, équilibres à deux et trois masses, ΣM = 0. Pendule de torsion : couple de deux forces, M en fonction de θ, constante de torsion C. |
+
+## Chapitre tronc commun « Courant électrique continu » (fiche tronc_commun/elec1_courant_continu)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec1_a1_electrisation.html | A1 : expériences simples (électrisation par frottement) | O1, O2 | Frotte une baguette de PVC (laine) ou de verre (soie) et l'approche de petits papiers ; pose un PVC frotté sur un étrier suspendu, approche un autre PVC (répulsion) puis le verre (attraction) ; loupe « modèle » : électrons en excès ou en manque ; n = |Q|/e. |
+| tc_elec1_a2_nature_courant.html | A2 : nature du courant dans les métaux et les électrolytes | O3, O4 | Pose lui-même les fils : circuit en série avec une DEL (le courant a un sens, sens conventionnel) ; loupe sur un fil (électrons libres en sens inverse de I) ; multimètre en ampèremètre, Q = I·Δt, n = Q/e ; tube en U d'électrolyse (migration des ions colorés, inversion du générateur). |
+| tc_elec1_a3_loi_noeuds.html | A3 : loi des nœuds en série et en dérivation | O5 | Deux lampes différentes en série, ampèremètre déplacé à trois endroits (même intensité), calibre 20 mA dépassé, choix du calibre ; deux lampes en dérivation avec A, A1, A2 : I = I1 + I2 dans le tableur ; conservation de la charge. |
+
+Le matériel électrique est commun (dossier `commun/`, fichiers `circuit*.js` et `multimetre.js`) : on tire un fil
+depuis une borne et on le lâche sur une autre ; on tire un fil posé pour le débrancher. Les fiches s'empilent sur une
+borne (c'est alors un nœud). Les courants sont calculés à chaque changement (méthode des nœuds). Le générateur limite
+son courant en cas de court-circuit (voyant LIMIT) ; il a un bouton Marche/Arrêt et son cordon est branché dans la prise.
+
+## Chapitre tronc commun « Tension électrique » (fiche tronc_commun/elec2_tension)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec2_a1_tensions_continues.html | A1 : mesures de tensions continues | O1, O3, O4 | Voltmètre en dérivation aux bornes du générateur (P, N) ; U_NP = −U_PN ; flèche de U_PN vers P ; dépassement du calibre 2 V ; incertitude de la notice : U_PN = (6,00 ± 0,05) V. Deux lampes en série : U_PN = U_AB + U_CD (tableur) ; interrupteur ouvert : U_EF = U_PN sans courant. En dérivation : U_AB = U_CD = U_PN. |
+| tc_elec2_a2_potentiel.html | A2 : différence de potentiel | O2 | Plaquette de trois résistances au code des couleurs (A, B, C, D) ; masse en D : potentiels V_A, V_B, V_C ; U_AB mesurée = V_A − V_B ; masse en C : les potentiels changent, les tensions non. |
+| tc_elec2_a3_oscilloscope.html | A3 : tensions variables à l'oscilloscope | O1, O5, O6 | Pile sur l'oscilloscope : U = Sv·y. GBF sinusoïdal : réglage de Sv et b, T = b·x, f = 1/T, Umax = Sv·y ; voltmètre TRMS en V~ : U = Umax/√2. Triangle et carré : même période ; en carré U = Umax, donc U = Umax/√2 seulement en sinusoïdal. |
+
+Matériel ajouté dans `commun/` : multimètre complet (`multimetre.js`, `multimetre_mesure.js` : V⎓, V~ TRMS, A⎓, quatre bornes,
+fusible de la borne mA), `mesure_tension.js` (quelle tension mesure le voltmètre), `circuit_resistances.js` (code des couleurs),
+`circuit_pile.js`, `gbf.js`, `oscilloscope.js` et `oscilloscope_ecran.js`. Les appareils branchés sur le secteur (générateur,
+GBF, oscilloscope) ont chacun leur cordon et leur fiche dans une prise du bloc mural.
+
+## Chapitre tronc commun « Montages électriques » (fiche tronc_commun/elec3_montages_electriques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec3_a1_associations.html | A1 : associations série/dérivation (ohmmètre), diviseur de tension | O1, O2, O3 | Ohmmètre et choix du calibre ; code des couleurs et tolérance (valeurs réelles légèrement différentes) ; Req en série (R1 + R2) et en parallèle (G = G1 + G2) ; fils résistants : R = ρ·l/S, ρ du constantan ; diviseur de tension U = R2/(R1 + R2)·U0. |
+| tc_elec3_a2_caracteristiques.html | A2 : caractéristiques de dipôles passifs | O4, O5 | Alimentation réglable ; caractéristiques d'une résistance (droite, U = R·I), d'une lampe (U/I croît : le filament chauffe), d'une diode (seuil vers 0,6 V, bloquée en inverse) ; Zener 5,1 V à l'oscilloscope (écrêtage) ; CTN dans trois béchers et photorésistance (lampe de poche, cache) à l'ohmmètre. |
+| tc_elec3_a2_dipoles_actifs.html | A2 (suite) : pile et électrolyseur, dans la même séance | O6 | Pile 4,5 V débitant dans un rhéostat : U = E − r·I, Icc = E/r ; électrolyseur : pas de courant sous E', puis U = E' + r'·I (bulles deux fois plus abondantes à la cathode). Conventions générateur et récepteur, sans algébriser I. |
+| tc_elec3_a3_point_fonctionnement.html | A3 : point de fonctionnement | O7 | Problème d'adaptation lampe 6 V – 0,1 A / pile 4,5 V : point mesuré, puis intersection des deux caractéristiques (deux courbes sur la tablette) ; loi de Pouillet (avec R, puis R et électrolyseur) ; deux piles en série, résistance d'adaptation de 27 Ω. |
+
+Calcul des circuits renforcé pour ce chapitre : dipôles non linéaires (méthode de Newton amortie) — lampe à filament
+de tungstène (résistance à froid ≈ 12 % de la résistance à chaud), diode 1N4007, Zener 5,1 V, électrolyseur ; circuit
+alimenté par un GBF calculé instant par instant (72 instants par période), ce qui permet de voir l'écrêtage de la Zener.
+Nouveau matériel commun : `circuit_semiconducteurs.js`, `thermistance.js`, `photoresistance.js`, `rheostat.js`,
+`electrolyseur.js`, `caracteristique.js` (relevé des points I, U) ; ohmmètre dans le multimètre ; alimentation réglable ;
+deuxième courbe facultative sur le graphique de la tablette.
+
+## Chapitre tronc commun « Montages électroniques » (fiche tronc_commun/elec4_montages_electroniques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_elec4_a1_transistor.html | A1 : comportement d'un transistor NPN ; montages à transistor | O1, O2, O3, O6 | Effet transistor : un faible courant de base commande la lampe du collecteur ; régimes bloqué, linéaire, saturé ; trois ampèremètres : I_C = β·I_B (β ≈ 150) et I_E = I_B + I_C au tableur ; détecteur d'obscurité câblé (photorésistance, transistor, DEL) : capteur, traitement, sortie. |
+| tc_elec4_a2_ao.html | A2 : AO, suiveur, inverseur, non-inverseur (oscilloscope bicourbe) | O4, O5, O6 | AO 741 alimenté en ±15 V ; caractéristique de transfert Us = f(ε) au voltmètre (±13,5 V, ε = 0 en régime linéaire) ; suiveur (Us = Ue) ; inverseur R1 = 10 kΩ, R2 = 22 kΩ (Us = −2,2·Ue, opposition de phase, écrêtage) ; non-inverseur (Us = 3,2·Ue) ; l'AO dans une chaîne électronique. |
+
+Nouveau matériel commun : `transistor.js` (BC547, brochage C-B-E du boîtier TO-92), `amplificateur_operationnel.js`
+(alimentation symétrique et AO avec une tension de décalage de 1 mV, comme un vrai 741) ; sources commandées dans le
+calcul des circuits ; oscilloscope à deux voies (Y1, Y2, masse commune) ; calibre 2 mA du multimètre (13 positions).
+
+## Chapitre tronc commun « Espèces chimiques » (fiche tronc_commun/chim1_especes_chimiques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim1_a1_sens.html | A1 : les cinq sens sur un fruit et sur du papier | O1 | Cartes des sens et loupe sur une orange (entière, coupée, pressée) et une feuille de papier ; la carte du goût est refusée (on ne goûte jamais au laboratoire) ; les sens donnent des indices, pas des preuves ; définition d'une espèce chimique. |
+| tc_chim1_a2_tests.html | A2 : tests de détection | O1 | Sulfate de cuivre anhydre (eau), papier pH et phénolphtaléine (pH au tableur), eau iodée (amidon), liqueur de Fehling au bain-marie (glucose), toujours avec un témoin ; l'élève propose le test qui vérifie une hypothèse. |
+| tc_chim1_a3_classement.html | A3 : inventaire, classement, documents sur l'industrie chimique | O1 | Inventaire des espèces trouvées ; étiquettes de six produits ; classement en naturelle, synthétique identique à une espèce naturelle, synthétique artificielle (synthétique ≠ artificiel) ; documents : phosphates du Maroc, vanilline de synthèse. |
+
+Nouveau matériel commun de chimie : `chimie_melange.js` (contenus et couleurs des tests), `chimie_verrerie.js`,
+`chimie_gouttes.js` (pipettes compte-gouttes, une par produit), `chimie_objets.js`, `chimie_poudre.js`,
+`chimie_chauffage.js` (bain-marie), `chimie_decor.js` (affiche de sécurité).
+
+Matériel physique (depuis le chapitre « Extraction ») : la verrerie est dessinée à ses vraies dimensions (1,6 px par mm)
+et les liquides respectent la physique : surface horizontale, ballottement quand on bouge le récipient (secoué trop
+fort, il déborde), filet qui tombe en chute libre là où l'on verse, flaques, robinet de l'ampoule (loi de Torricelli),
+phases non miscibles rangées par densité, émulsion puis décantation, partage du diiode, température des mélanges.
+Fichiers : `liquide_geometrie.js`, `liquide_contenu.js`, `chimie_reactions.js`, `verrerie_profils.js`,
+`verrerie_rendu.js`, `verrerie_accessoires.js`, `recipient_physique.js`, `ecoulement.js`, `recipient_gestes.js`,
+`pipette_physique.js`, `verre_montre.js`, `porte_tubes.js`, `bain_marie_physique.js`, `plaque_ccm.js`.
+Les quatre simulations de chimie (chim1 A2, chim2 A1, A2, A3) l'utilisent ; chim1 A1 et A3 ont été mises à la taille réelle.
+
+## Chapitre tronc commun « Extraction, séparation et identification » (fiche tronc_commun/chim2_extraction)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim2_a1_traditionnelles.html | A1 : documents historiques ; macération, infusion, décoction | O1 | Quatre documents (enfleurage, macération, infusion et décoction, distillation et eau de rose) ; feuilles de thé dans l'eau froide, l'eau de la bouilloire, l'eau qui bout sur la plaque (temps accéléré) ; classement de préparations. |
+| tc_chim2_a2_extraction.html | A2 : hydrodistillation, extraction par solvant, filtration sous vide, verrerie | O1, O2, O3 | Hydrodistillation de la lavande (pierre ponce, eau du réfrigérant par le bas) ; choix du solvant au tableau de données, ampoule à décanter (verser, boucher, secouer, dégazer, décanter, recueillir) ; filtration sous vide (arrêt dans le bon ordre) ; montage à reflux numéroté. |
+| tc_chim2_a3_ccm.html | A3 : chromatographie sur couche mince, révélation | O4 | Ligne au crayon, dépôts au capillaire, éluant sous la ligne, cuve fermée, front marqué ; colorants d'un sirop de menthe comparés à des références, Rf au tableur ; espèces incolores d'un médicament révélées sous UV et au diiode. |
+
+## Chapitre tronc commun « Synthèse d'espèces chimiques » (fiche tronc_commun/chim3_synthese)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim3_a1_savon.html | A1 : synthétiser une espèce (reflux, filtration, séparation) | O1, O2, O3 | Fiches de sécurité et pictogrammes ; lunettes et gants exigés pour la soude ; huile, soude, éthanol par l'entonnoir, pierre ponce, réfrigérant à boules, reflux de 30 min ; relargage dans l'eau salée ; filtration sous vide ; mousse comparée à un savon du commerce et à un témoin. |
+| tc_chim3_a2_arome.html | A2 : synthétiser une espèce naturelle et vérifier qu'elle est identique | O1, O2, O3 | Acétate d'isoamyle (arôme de banane) au reflux avec un catalyseur ; lavage à l'eau salée à l'ampoule (ester en phase supérieure, odeur par déplacement d'air) ; chromatographie du produit, de l'arôme naturel et de la référence, révélée sous UV. |
+
+Matériel commun ajouté : `pictogrammes.js` (SGH), `equipement.js` (lunettes, gants), `chauffe_ballon.js`,
+`pierre_ponce.js`, `refrigerant_boules.js`, `montage_reflux.js` et `reflux_gestes.js` (montage à reflux que l'on
+assemble), `poste_synthese.js` (paillasse de synthèse), `buchner.js` et `buchner_poste.js` (filtration sous vide),
+`ampoule_support.js` (ampoule à décanter), `ccm_materiel.js`, `ccm_gestes.js`, `ccm_poste.js`, `ccm_missions.js`
+(chromatographie). Plusieurs de ces fichiers étaient avant dans les dossiers de chim2 : ils ont été déplacés sans changer
+leur rôle.
+
+## Chapitre tronc commun « Modèle de l'atome » (fiche tronc_commun/chim4_atome)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim4_a1_rutherford.html | A1 : recherche historique ; expérience de Rutherford | O1, O2, O3 | Cinq documents illustrés (Démocrite et Dalton, Thomson, Rutherford, Bohr, Chadwick) ; prévision avec le modèle de Thomson ; chambre de diffusion (source alpha, feuille d'or de 2 µm, détecteur tournant), vide à la pompe, comptages N(θ) avec et sans feuille, tableur et courbe ; ordres de grandeur ; classement des découvertes par époque. |
+| tc_chim4_a2_masse.html | A2 : calcul de la masse d'atomes | O2, O3, O4, O5 | Tableau magnétique : construire ¹²₆C, ²³₁₁Na, l'ion Na⁺, ¹⁶₈O, ³⁵₁₇Cl (couches K, L, M remplies dans l'ordre), isotopes ; masse de quatre atomes et rapport noyau / atome au tableur ; pesée d'un cylindre de cuivre et nombre d'atomes. |
+| tc_chim4_a3_cuivre.html | A3 : conservation de l'élément cuivre | O4 | Sous la hotte, lunettes et gants : cuivre + acide nitrique (gaz roux, ions Cu²⁺ bleus), soude (Cu(OH)₂ bleu), bain-marie (CuO noir), acide sulfurique (Cu²⁺), poudre de fer (cuivre métal rouge), dans le même tube. |
+| tc_chim4_a4_carbone.html | A4 : conservation du carbone ; cycle du carbone ; abondance des éléments | O1, O4 | Bec Bunsen, têt à combustion : charbon chauffé au rouge puis plongé dans le dioxygène ; eau de chaux versée, flacon fermé et agité (trouble) ; documents (cycle du carbone, abondance, Soleil) et classement des phénomènes qui retirent ou rejettent du CO₂. |
+
+On dit « nombre de nucléons » A, jamais « nombre de masse » (orientation de la fiche). Les réactions nucléaires du
+Soleil sont seulement évoquées dans un document.
+
+Matériel commun ajouté : `balance_electronique.js` (balance au centième, tare), `echantillons_metal.js` (cylindres de
+cuivre, aluminium, fer, zinc), `spatule_physique.js` (pot de poudre et microspatule), `bec_bunsen.js` (robinet de gaz,
+allume-gaz, virole, chaleur de la flamme). Petits ajouts signalés : `documents_mur.js` accepte une illustration,
+`verrerie_profils.js` a un flacon à gaz de 600 mL fermé par une plaque de verre (`verrerie_accessoires.js`), et
+`recipient_gestes.js` ne verse pas dans un récipient fermé par un objet (`q.ferme`).
+
+## Chapitre tronc commun « Géométrie de quelques molécules » (fiche tronc_commun/chim5_molecules)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim5_a1_lewis.html | A1 : formules développées, semi-développées, brutes | O1, O2, O3 | Tableau de l'atome : former Na⁺ et Cl⁻ (duet, octet ; affiche des gaz nobles) ; tableau magnétique de Lewis : H₂O, NH₃, CH₄, CO₂, N₂, C₂H₄ (doublets liants et non liants ; message quand une règle n'est pas respectée) ; deux isomères de C₂H₆O, une molécule C₄H₁₀ ; formules semi-développées ; limites du modèle (NO₂). |
+| tc_chim5_a2_cram.html | A2 : modèles moléculaires ; représentation de Cram | O4 | Boîte de modèles moléculaires et modèle en 3D que l'on tourne : CH₄ (109,5°), NH₃ (107°), H₂O (104,5°), C₂H₄ plane, CO₂ linéaire ; méthane tourné (deux liaisons dans le plan) puis dessiné en Cram au tableau (trait, triangle plein, triangle hachuré). |
+
+La géométrie des modèles vient de la répulsion des doublets (liaisons, trous libres, doublets non liants) autour de
+chaque atome ; une liaison double compte pour une seule direction. Le modèle de démonstration est 1,8 fois plus grand
+qu'un modèle de boîte d'élève, pour qu'on le manipule facilement.
+
+Matériel commun ajouté : `lewis_regles.js`, `lewis_dessin.js`, `tableau_lewis.js` (tableau de Lewis), `molecule_3d.js`
+(géométrie), `modele_dessin.js` (rendu 3D), `modele_atelier.js` (assemblage, rotation, liaisons doubles),
+`boite_modeles.js` (boîte de modèles). `tableau_atome.js` a été déplacé de tc_chim4_a2_masse vers commun (il sert aussi
+aux ions de chim5).
+
+## Chapitre tronc commun « Classification périodique des éléments » (fiche tronc_commun/chim6_classification)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim6_a1_familles.html | A1 : documents sur l'histoire de la découverte des éléments et la méthode de Mendeleïev | O1, O3 | Trois documents (de l'Antiquité à Lavoisier, Mendeleïev et l'éka-silicium, la classification par Z) ; 16 cartes à ranger comme Mendeleïev (masse, formules des composés) ; Li, Na, K dans l'eau avec phénolphtaléine, derrière un écran ; NaCl, KBr, KI et nitrate d'argent (précipités). |
+| tc_chim6_a2_tableau.html | A2 : nombre de liaisons d'un élément à partir de sa position | O1 à O4 | Tableau périodique magnétique (18 cartes : symbole, Z, formule électronique) ; liaisons et ions d'après la colonne ; Lewis de H₂S, PH₃, SiH₄, CCl₄ ; formule de MgCl₂. |
+
+Matériel commun ajouté : `tableau_cartes.js` (tableau magnétique quadrillé et cartes), profil `cristallisoir_90`
+(`verrerie_profils.js`). Le tableau de Lewis accepte maintenant F, Si, P, S (`lewis_regles.js`, `lewis_dessin.js`,
+`tableau_lewis.js` : liste d'éléments au choix) ; `lewis_verif.js` (vérifications des molécules) a été déplacé de
+tc_chim5_a1_lewis vers commun.
+
+## Chapitre tronc commun « La mole et la concentration » (fiche tronc_commun/chim7_quantite_matiere)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim7_a1_mole.html | A1 : comment mesurer une même quantité (mole) d'espèces différentes ? | O1, O2, O3 | Masses molaires de C₁₂H₂₂O₁₁, NaCl, S, Fe au tableur ; pesée de 0,010 mol de chaque solide (coupelle, tare, spatule) ; volume de 0,10 mol d'éthanol prélevé à la pipette graduée et vérifié à la balance ; volume molaire des gaz. |
+| tc_chim7_a2_solutions.html | A2 : dissolution d'espèces moléculaires (sucre, diiode, alcool) | O3, O4, O5 | Saccharose dans l'eau, avec et sans agitateur ; diiode dans l'eau (très peu soluble) et dans l'éthanol ; éthanol et eau miscibles ; solutions moléculaires et ioniques ; 100,0 mL de glucose à 0,100 mol/L en fiole jaugée (pesée, entonnoir, rinçage, dissolution, trait de jauge, homogénéisation) ; dilution dix fois d'une eau iodée. |
+
+Les solides dissous suivent la loi de Noyes-Whitney : la vitesse dépend de la surface des cristaux, de l'agitation et de
+l'écart entre la solubilité et la concentration ; une solution saturée ne dissout plus. Le trait de jauge se lit sur une
+loupe (×4) : le bas du ménisque doit être sur le trait (± 0,2 mL pour la fiole de 100 mL, ± 0,12 mL pour celle de 50 mL).
+Après le dernier ajout d'eau, il faut boucher la fiole et la secouer pour que la solution soit homogène. Si le trait est
+dépassé, le bouton « Nouvelle fiole » vide la fiole : il faut tout recommencer, comme au laboratoire.
+
+Matériel commun ajouté : `pesee_poudre.js`, `pipette_graduee.js` (A1), `coupelle_versement.js`, `dissolution.js`,
+`agitateur.js`, `pissette.js`, `fiole_accessoires.js`, `fiole_jaugee.js` (A2), profils `fiole_jaugee_100` et
+`fiole_jaugee_50` (`verrerie_profils.js`) et leur trait de jauge (`verrerie_accessoires.js`). Le ménisque est dessiné
+dans les cols étroits (`verrerie_rendu.js`) ; la pointe de la pipette graduée entre dans un col étroit lâchée juste
+au-dessus (`pipette_graduee.js`).
+
+## Chapitre tronc commun « Transformation chimique d'un système » (fiche tronc_commun/chim8_transformation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| tc_chim8_a1_transformations.html | A1 : cuivre et nitrate d'argent, fer et sulfate de cuivre, combustions, sodium et dichlore, précipitation de l'hydroxyde de cuivre | O1, O2 | Fil de cuivre dans le nitrate d'argent, clou dans le sulfate de cuivre ; ions formés identifiés à la soude ; Cu(OH)₂ bleu ; soufre et laine de fer dans le dioxygène, sodium dans le dichlore (sous la hotte) ; sept équations à écrire et ajuster au tableau magnétique. |
+| tc_chim8_a2_avancement.html | A2 : influence des quantités de réactifs sur l'avancement maximal (acide éthanoïque et hydrogénocarbonate de sodium) | O3, O4 | Quatre essais (0,10 à 0,75 g d'hydrogénocarbonate, 10,0 mL de vinaigre à 0,50 mol/L) ; CO₂ recueilli sur la cuve à eau ; graphique n(CO₂) = f(n(NaHCO₃)) ; tableau d'avancement et bilan de matière au tableur. |
+
+Les quantités suivent les équations : par exemple 0,10 g de soufre consomment 0,10 g de dioxygène et donnent 0,20 g de
+SO₂ ; le métal plongé est en excès, les ions sont entièrement consommés. Dans l'activité 2, l'ampoule de coulée est
+isobare (son tube d'égalisation évite que le vinaigre versé chasse de l'air) : le volume lu est celui du CO₂ formé
+(Vm = 24 L/mol). Le volume plafonne à 120 mL (xmax = 5,0 mmol) dès que l'acide est le réactif limitant (m > 0,42 g).
+
+Matériel commun ajouté : `ions_metaux.js`, `metal_tube.js`, `flacon_gaz.js`, `cuillere_combustion.js`,
+`equation_regles.js`, `tableau_equation.js` (A1) ; `degagement_gaz.js`, `recueil_gaz.js` (A2). `coupelle_versement.js`
+accepte une poudre qui colle moins à la coupelle (`collant`).
+
+## Chapitre 1re année du bac « Rotation d'un solide autour d'un axe fixe » (fiche 1bac/meca1_rotation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca1_a1_rotation.html | A1 : documents et exemples du vécu | O1 | Fait tourner une maquette de grande roue au doigt ; chronophotographie (10 images) : le rayon [AB] change de direction, la nacelle [CD] garde la sienne ; classe huit mouvements du vécu (rotation, translation circulaire, translation rectiligne). |
+| b1_meca1_a2_enregistrement.html | A2 : enregistrements du mouvement d'un point d'un solide en rotation | O2 à O6 | Solide qui pivote autour du clou de la table à coussin d'air ; points A (6 cm) et B (12 cm) ; θ au rapporteur, s_A et s_B à la règle ; courbe θ(t), ω, s = R·θ, v = R·ω. |
+| b1_meca1_a3_uniforme.html | A3 : caractéristiques de la rotation uniforme | O3 à O6 | Disque entraîné par un moteur (f = 0,8 tr/s par volt) ; stroboscope dans la salle obscure : un trait immobile pour fe = f, deux pour fe = 2f ; capteur à fourche : T et durée de passage de fentes à 4, 6 et 8 cm ; graphique v = f(R). |
+
+Au stroboscope, l'œil garde les images des éclairs pendant au moins un dixième de seconde (et au moins un tour du disque) :
+on voit donc toutes les positions éclairées pendant un tour. Le compteur ajoute un bruit de ±0,1 % aux mesures.
+
+Matériel commun ajouté : `bouton_reglage.js`, `rapporteur.js`. Modifiés, sans changer les simulations existantes :
+`tri.js` (nombre d'étiquettes par ligne réglable, 3 par défaut), `coussin_air.js` (donne la conversion vers la table),
+`feuille_enregistrement.js` (dessine la croix de l'axe quand le mobile tourne autour du clou).
+
+## Chapitre 1re année du bac « Travail et puissance d'une force » (fiche 1bac/meca2_travail_puissance)
+
+La fiche ne propose qu'une activité (documents, logiciels ou expériences simples sur l'effet d'actions mécaniques dont le
+point d'application se déplace) : elle est réalisée par deux simulations, l'une en translation, l'autre en rotation.
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca2_a1_translation.html | A1 (translation) | O1, O2, O3 | Tire un pavé de 500 g de A à B (40 cm) à vitesse constante, fil horizontal puis incliné de 30° et 60° (rapporteur) : W = F·AB·cos α au tableur, travail du frottement, du poids et de la réaction ; classe neuf situations (moteur, résistant, nul) ; monte un chariot de 500 g jusqu'au faisceau d'un niveau laser (h = 20 cm) sur un plan incliné à trois angles : F·L = m·g·h. |
+| b1_meca2_a1_rotation.html | A1 (rotation) | O4, O5 | Tire au dynamomètre le fil de la grande gorge d'une poulie (R = 5 cm, r = 1,5 cm) : une masse de 600 g monte ; θ lu sur la poulie graduée, h sur une règle : W(F) = M·Δθ = −W(P) ; monte une masse de 500 g avec un treuil électrique à 4, 6 et 9 V : chronomètre à deux cellules, compte-tours, P = m·g·Δh/Δt = M·ω. |
+
+Le pavé glisse avec μ = 0,40 (F = μ·m·g / (cos α + μ·sin α)) : la force nécessaire est la plus petite vers 22°. Sur le plan
+incliné et sur la poulie, les frottements sont négligés. Le moteur du treuil suit ω = 3·U − 60·M (rad/s, M en N·m).
+
+Matériel commun ajouté : `dynamometre_traction.js`. Modifié, sans changer les simulations existantes : `formules.js`
+(fonctions COS et SIN du tableur, angle en radians : =COS(A2*PI()/180)).
+
+## Chapitre 1re année du bac « Le travail, mode de transfert d'énergie » (fiche 1bac/meca3_travail_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca3_a1_cinetique.html | A1 : approche de Ec (translation, rotation) | O1 | Lance un mobile (200 à 400 g) sur un banc à coussin d'air avec un ressort ; v mesurée par une cellule ; un curseur à frottement l'arrête sur la distance d : d ∝ m·v². Lance puis freine un volant d'inertie (disques A et B, J donné) : n tours ∝ J·ω². |
+| b1_meca3_a2_theoreme.html | A2 : glissement sans frottement, ΔEc et travaux | O2 | Enregistre la descente du mobile autoporteur (600 g) sur la table inclinée (sin α = 0,050) ; M1Mi et vi à la règle ; ΔEc = f(W(P)) : droite de pente 1 ; généralisation à la rotation. |
+| b1_meca3_a3_potentielle.html | A3 : Epp à partir du travail du poids | O3 | Lâche une bille d'acier (33,0 g) avec un électroaimant ; deux cellules (v = d/Δt) ; ΔEc = f(m·g·z2) : pente −1, Epp = m·g·z + cte ; changement d'état de référence. |
+| b1_meca3_a4_mecanique.html | A4 : conservation de Em, non-conservation avec frottement | O4, O5 | Ec, Epp et Em de la bille à six hauteurs (Em constante) ; rail à coussin d'air incliné (sin α = 0,100) : débit normal, Em se conserve ; débit faible (f = 0,080 N), ΔEm = W(f) = −Q. |
+
+Dans l'activité 1, le ressort du lanceur (k = 40 N/m) donne au mobile l'énergie ½·k·c² : à compression égale, la distance
+de freinage ne dépend pas de la masse (m·v² est le même), ce qui confirme Ec = ½·m·v². Le curseur exerce f = 0,25 N, le
+frein du volant un couple de 0,020 N·m. Les durées des cellules sont exactes à ±0,1 % (frottements de l'air négligés).
+
+Matériel commun ajouté : `chute_dessin.js`, `chute_libre.js` (activités 3 et 4).
+
+## Chapitre 1re année du bac « Travail et énergie interne » (fiche 1bac/meca4_energie_interne, filière SM)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca4_a1_energie_interne.html | A1 : effets du travail et modes de transfert | O1 à O4 | Retourne 60 fois un tube contenant 500 g de grenaille de plomb (chute de 1,00 m) : T monte d'environ 4 °C ; n·m·g·h ≈ m·c·ΔT (énergie interne) ; classe neuf situations selon l'effet du travail ; pose 1, 2 puis 3 kg sur le piston d'une seringue à gaz (S = 4,00 cm²) : W = p·(V1 − V2), le gaz s'échauffe puis revient à 20 °C : Q = −W, ΔU = W + Q. |
+
+À chaque chute, la grenaille s'échauffe de g·h/c ≈ 0,076 K ; le plomb se refroidit lentement vers 20 °C (constante de temps
+15 min), d'où un léger écart entre n·m·g·h et m·c·ΔT. Dans la seringue, la compression brusque échauffe le gaz d'environ
+30 K × (p/p_avant − 1) (valeur adoucie, la sonde ne suit pas les pointes), puis le gaz revient à 20 °C en 5 s environ.
+
+## Chapitre 1re année du bac « Énergie thermique, transfert thermique » (fiche 1bac/meca5_thermique)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_meca5_a1_parametres.html | A1 : paramètres dont dépend Q | O1, O2 | Chauffe dans un gobelet, avec un thermoplongeur de 100 W, 200 g d'eau 60 s, 400 g 60 s, 200 g 120 s, puis 200 g d'huile : Q/(m·Δθ) est constant pour l'eau (≈ 4180 J·kg⁻¹·K⁻¹) et différent pour l'huile (≈ 2000). |
+| b1_meca5_a2_calorimetrie.html | A2 : capacité d'un calorimètre, chaleur massique d'un métal, chaleur latente de fusion | O3, O4, O5 | Mélange eau froide (18 °C) et eau chaude (60 °C) : C ≈ 150 J/K ; cylindre de 100 g sorti de l'eau bouillante : c ≈ 900 J·kg⁻¹·K⁻¹ (aluminium) ; glaçons (≈ 30 g) dans l'eau à 30 °C : Lf ≈ 3,34×10⁵ J/kg. |
+| b1_meca5_a3_rayonnement.html | A3 : rayonnement | O1, O6 | Lampe de 100 W au-dessus d'une plaque noire et d'une plaque brillante : relevés de 0 à 5 min, la plaque noire s'échauffe beaucoup plus ; lampe rapprochée à 15 cm ; tableau des modes de transfert. |
+
+Le modèle thermique (`vase_modele.js`) est conservatif : chaque corps échange avec le liquide jusqu'à l'équilibre, la somme
+des chaleurs échangées est nulle (pertes vers l'air très lentes). L'agitateur accélère l'équilibre. Les temps sont accélérés
+(× 5 pour le chauffage, × 3 pour la calorimétrie, × 10 pour le rayonnement), c'est écrit sur les appareils.
+
+Matériel commun ajouté : `vase_modele.js`, `vase_dessin.js`, `becher_verseur.js`.
+
+## Chapitre 1re année du bac « Énergie potentielle électrostatique » (fiche 1bac/elec1_energie_electrostatique, SM)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_elec1_a1_electrisation.html | A1 : électrisation par frottement, contact, influence | O1 | Pendule électrostatique : boule neutre attirée, contact, répulsion, attraction par la charge opposée ; électroscope : influence sans contact, charge par contact, charge par influence (doigt relié à la Terre). |
+| b1_elec1_a2_champ.html | A2 : lignes de champ, champ uniforme (et loi de Coulomb) | O1, O2 | Balance de Coulomb : F pour cinq distances (F·d² constant, k ≈ 9×10⁹ SI), puis charge de B divisée par 2 ; semoule dans l'huile de ricin : deux pointes, puis deux plaques (champ uniforme) ; E = F/q. |
+| b1_elec1_a3_potentiel.html | A3 : travail de la force électrostatique, ddp, Epe | O3, O4 | Cuve rhéographique (0 V et 12,0 V, d = 10 cm) : V(x) sur une ligne, E = 120 V/m, équipotentielle à 6,00 V ; potentiels de deux points A et B : W = q·(VA − VB), Epe = q·V ; électron accéléré : Ec = e·U. |
+
+Les baguettes et chiffons viennent de la simulation du tronc commun (`sources/tc_elec1_a1_electrisation/frottement.js`, inclus
+tel quel). Une baguette lâchée près du support isolant y reste posée (« Reprendre » la rend) : on peut ainsi garder une
+baguette près de l'électroscope pendant qu'on pose et retire le doigt. Sur la balance de Coulomb, Δm = F/g, avec
+F = k·qA·qB/d² (k = 8,99×10⁹ SI, q = 5,56 nC après la sonde : 11,3 mg à 5 cm).
+
+## Chapitre 1re année du bac « Transfert d'énergie dans un circuit électrique » (fiche 1bac/elec2_transfert_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_elec2_a1_transferts.html | A1 : lampe et moteur, transfert d'énergie | O1 | Générateur 6 V, interrupteur ; lampe, moteur à treuil (200 g) puis électrolyseur branchés tour à tour : rayonnement, travail mécanique, énergie chimique, et toujours de la chaleur ; tableau magnétique : forme principale de l'énergie utile de huit appareils. |
+| b1_elec2_a2_puissance.html | A2 : mesures de U et I pendant Δt | O2, O4, O5 | Moteur à treuil, ampèremètre en série, voltmètre à ses bornes ; montée chronométrée de 40 cm : W = U·I·Δt, P = U·I, W_u = m·g·Δh = 0,785 J, Q = W − W_u ; rendement à 4, 5 et 6 V au tableur (environ 34 %, 41 %, 45 %). |
+| b1_elec2_a3_joule.html | A3 : loi de Joule (calorimétrie), effet Joule dans la vie courante | O3 | Résistance chauffante R = 4,0 Ω dans un calorimètre (C = 150 J/K, 200 g d'eau), chauffes de 300 s (temps accéléré × 10) à 6, 8 et 10 V : Q = 986·Δθ comparée à R·I²·Δt ; tableau magnétique : effet Joule utile ou nuisible ; haute tension, lampe à incandescence. |
+| b1_elec2_a4_generateur.html | A4 : énergie fournie par le générateur ; influence de E et des résistances | O5, O6 | Pile 4,5 V (r = 1,5 Ω) : E à vide, U_PN et I avec 22 Ω ; P_g = E·I, P_e = U·I, r, rendement U/E ; I pour 22, 47 et 69 Ω comparée à E/(R + r) ; deux piles en série (E = 9 V). |
+
+Le moteur à treuil (`commun/moteur_treuil.js`) est un vrai récepteur : U = k·ω + r'·I (k = 0,30 V·s/rad, r' = 25 Ω) ; au
+démarrage, I = U/r' reste sous le fusible de 0,25 A de la borne mA jusqu'à 6 V. Un contact de fin de course l'arrête en
+haut ; « ↓ » redescend la masse. Les touches de réglage des alimentations (±1 V, ±0,1 V) sont maintenant sur le dessus
+du boîtier : les câbles, qui pendent vers l'avant, ne les cachent plus.
+
+## Chapitre 1re année du bac « Magnétisme : champ magnétique et forces électromagnétiques » (fiche 1bac/elec3_magnetisme)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_elec3_a1_champ.html | A1 : document d'Œrsted, aimant brisé, superposition, champ terrestre | O1, O2 | Barreau aimanté sur une feuille : boussole loin de l'aimant puis devant ses pôles, limaille, B à 2 et 4 cm du pôle nord ; aimant cassé en deux ; deux aimants à angle droit : B mesuré ≈ √(B1² + B2²) ; champ terrestre : B_H, B_V, B_T ≈ 0,042 mT, inclinaison ≈ 46° ; fil nord-sud au-dessus d'une boussole (Œrsted), courant inversé. |
+| b1_elec3_a2_courants.html | A2 : champ d'un fil, d'une spire, d'une bobine | O3 | Fil vertical à travers une plaque (20 A pour la limaille) : cercles, sens du champ, B à 2 cm pour 2 à 10 A (B/I = 0,01 mT/A), B à 1, 2, 3, 4 cm (B·d constant) ; spire de 20 tours (≈ 1,0 mT à 4 A) ; bobine de 200 spires sur 16 cm : champ uniforme, faces nord et sud, B ≈ 2,9 mT à 2 A (μ0·n·I = 3,1 mT). |
+| b1_elec3_a3_laplace.html | A3 : force de Laplace ; haut-parleur, moteur | O4, O5, O6 | Rails de Laplace (sens selon I et B, tige immobile à 1 A, W = F·d) ; balance de Laplace : |Δm| pour I = 1 à 5 A, l = 1, 2, 4 cm, α = 90°, 60°, 30°, 0° (F = I·l·B·sin α) ; rubans parallèles (attraction, répulsion) ; faisceau d'électrons et aimant ; haut-parleur en coupe ; moteur avec et sans collecteur ; aimant dans une bobine (courant induit). |
+
+Le champ est calculé par superposition (`commun/champ_magnetique.js`) : champ terrestre (B_H = 2,9×10⁻⁵ T, B_V = 3,0×10⁻⁵ T),
+pôles d'aimants (B = q·r/r³) et courants (loi de Biot et Savart, exacte pour chaque segment). La touche « zéro » du
+teslamètre retranche le champ terrestre ; les mesures de B créé par un courant ne sont notées qu'après un zéro fait circuit
+ouvert. Sur la balance de Laplace, le cadre exerce sur l'aimant une force opposée à la force de Laplace : l'indication varie
+de Δm = F/g (1,63 g pour 5 A, 4 cm, 0,080 T).
+
+## Chapitre 1re année du bac « Conditions de visibilité d'un objet » (fiche 1bac/opt1_visibilite)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_opt1_a1_vision.html | A1 : peut-on voir la lumière ? conditions de vision | O1, O2 | Caisse vitrée à fond noir : laser sans fumée (seule la tache est vue), puis bâton d'encens (le faisceau apparaît) ; salle obscure : lampe d'architecte, livre, élève assis, carton qui coupe la lumière ; trois écrans percés à aligner (la lumière passe par les trous) ; tri sources primaires / objets diffusants ; règle sur l'illusion de Müller-Lyer, triangle de Kanizsa. |
+| b1_opt1_a2_lois.html | A2 : réflexion et réfraction | O3, O4 | Disque optique sur pied, laser sur curseur : miroir (r = i pour cinq angles, retour inverse) ; demi-cylindre de plexiglas (sin i1 / sin i2 = 1,50 au tableur, retour inverse, angle limite ≈ 41,8°, réflexion totale) ; paille dans l'eau, reflet d'un arbre. |
+| b1_opt1_a3_lentilles.html | A3 : lentilles face à un faisceau parallèle | O4 | Tableau magnétique, boîte à cinq rayons, lentilles profil L1 à L4 : foyer image réel ou virtuel (repère F', prolongements) ; f' mesurée (42, 28, 31 mm) comparée à R/(2(n − 1)) (40, 25, 29 mm : lentilles épaisses) ; loupes A et B au-dessus d'un texte. |
+
+Les rayons traversant les lentilles sont calculés exactement, face par face (lois de Descartes en vecteurs, faces sphériques) :
+on voit donc l'épaisseur et l'aberration des bords, et f' mesurée depuis le centre dépasse un peu la valeur de la lentille mince.
+
+## Chapitre 1re année du bac « Obtention de l'image d'un objet » (fiche 1bac/opt2_images)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_opt2_a1_miroir.html | A1 : miroir plan, deux bougies, champ de vision | O1 | Vitre sur une feuille graduée en perspective : la bougie éteinte, glissée derrière, paraît allumée quand elle est à la place de l'image (distances égales au tableur, image virtuelle) ; vue de dessus : figurine œil, six pions, champ de vision qui se rétrécit quand l'œil s'éloigne. |
+| b1_opt2_a2_lentille.html | A2 : caractéristiques d'une lentille, construction | O2, O3, O4 | Banc d'optique : image nette d'une maison lointaine (f' = 10 et 20 cm, C = 10 et 5 δ au tableur) ; « F » de la lanterne avec et sans diaphragme (conditions de Gauss) ; image réduite, agrandie, puis aucune image (objet entre F et O). Planche à dessin : aimants F et F', objet AB mobile, rayons 1, 2, 3, prolongements, aimant B' (image réelle ou virtuelle). |
+| b1_opt2_a3_conjugaison.html | A3 : relations de conjugaison et de grandissement, loupe | O5, O6 | Banc et vue rapprochée de l'écran : OA, OA', 1/OA, 1/OA' pour quatre images (D − C = 0,1 cm⁻¹, f' = 10 cm) ; A'B' lu sur le quadrillage, comparé à OA'/OA. Loupe sur pied devant une coccinelle : ce que voit l'œil (droite, grossie jusqu'à × 5, nette ou floue), rayons et prolongements jusqu'à B', C = 20 δ. |
+
+Au banc, l'image est calculée par la relation de conjugaison ; son flou vient du cercle de flou (diamètre utile × écart /
+OA') et d'un flou d'aberration sans diaphragme. Une image est notée quand l'élève lâche un cavalier et qu'elle est nette.
+La loupe calcule l'angle sous lequel l'œil (fixe, à 22 cm de la carte) voit l'image ; l'œil voit net de 25 cm à l'infini.
+
+## Chapitre 1re année du bac « Quelques instruments d'optique » (fiche 1bac/opt3_instruments)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_opt3_a1_lunette.html | A1 : activités documentaires et expérimentales sur la lunette | O1, O2, O3 | Quatre documents au mur et tri des rôles de l'objectif et de l'oculaire ; maquette au banc tournée vers la Lune : image intermédiaire sur l'écran à f'1 = 40 cm, oculaire (f'2 = 5 cm) réglé pour une lunette afocale, Lune vue renversée et 8 fois plus grande (vues à l'œil nu et dans la lunette) ; cercle oculaire (plus petite tache), œil qu'on y place ; marche d'un faisceau incliné. |
+| b1_opt3_a2_microscope.html | A2 : principe du microscope | O1 à O4 | Microscope en volume : lampe, lame d'oignon ou micromètre objet glissée sur la platine, vis macrométrique et micrométrique, revolver × 4, × 10, × 40 ; champ (0,45 mm à × 40), longueur d'une cellule (0,25 mm), grossissement commercial 400 ; oculaire × 20 : grossissement à vide ; documents sur les limites. Modèle au banc : A1B1 sur l'écran (γ1 = −2,5), oculaire, G ≈ 6, faisceau issu de B. |
+
+L'œil voit net de 25 cm à l'infini : la vue est floue si l'image finale est plus près ou si les rayons qui sortent
+convergent. Le grossissement affiché est l'angle de l'image finale divisé par celui de l'objet (à l'œil nu, ou à 25 cm).
+Au microscope, le flou de mise au point dépend de la profondeur de champ de chaque objectif ; le flou « à vide »
+au-delà d'un grossissement de 450 environ est un modèle qualitatif.
+
+## Chapitre 1re année du bac « Importance de la mesure des quantités de matière dans la vie courante » (fiche 1bac/chim1_importance_mesure)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim1_a1_mesure.html | Nécessité de la mesure par des exemples | O1 | Cinq documents (santé, environnement, agroalimentaire, sécurité, techniques de mesure), tri de huit exemples par domaine ; glycémie comparée aux valeurs de référence. Bandelettes « nitrates » trempées dans trois eaux : 25, 100 et 0 mg/L lus sur l'échelle colorée ; l'eau du puits dépasse 50 mg/L. Échelle de teintes de E131 (2 à 10 mg/L) : la boisson se range entre 4 et 6 mg/L ; sirop à 50 mg/L ; 5 mg bus pour 1 L, contre une DJA de 150 mg pour un enfant de 30 kg. |
+
+La teinte des tubes vient du moteur de chimie (espèce dissoute E131) : elle fonce avec la concentration.
+
+## Chapitre 1re année du bac « Grandeurs physiques liées aux quantités de matière » (fiche 1bac/chim2_grandeurs_quantite_matiere)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim2_a1_gaz.html | A1 : vérifier PV = cte (expérience et logiciel) | O1, O3 | Seringue de 60 mL, robinet à trois voies, pressiomètre : 40 mL d'air enfermés, six volumes, P × V constant au tableur, courbe P = f(1/V) ; ballon de 250 mL dans un bain thermostaté (0 à 80 °C), droite P = f(θ) prolongée jusqu'à −273 °C ; n = PV/RT, Vm = 24,1 L/mol. |
+| b1_chim2_a2_electrolytes.html | A2 : préparer des solutions électrolytiques, détecter les ions, migration | O1, O2, O4 à O7 | Filet d'eau attiré par une baguette frottée, cyclohexane non ; maquette du cristal NaCl ; 2,50 g de sulfate de cuivre dans une fiole jaugée de 100 mL (lunettes, gants, pictogrammes) ; tests à la soude, au nitrate d'argent et au chlorure de baryum ; migration des ions Cu²⁺ et MnO₄⁻ vers les électrodes, inversion. |
+| b1_chim2_a3_gaz_produit.html | A3 : transformation produisant un gaz, mesure de la pression | O2, O3, O8, O9 | Ruban de magnésium dans 20 mL d'acide chlorhydrique à 0,50 mol/L, erlenmeyer bouché relié au pressiomètre ; n(H₂) = ΔP·V/(RT) au tableur pour quatre rubans ; réactif limitant (Mg, puis H⁺ pour 0,24 g : x_max = 5 mmol) ; pression finale prévue (1 152 hPa) puis vérifiée. |
+
+Les gaz suivent PV = nRT (R = 8,314 SI). Dans le bain thermostaté, l'eau puis l'air du ballon rejoignent la consigne en
+quelques secondes. Les précipités sont calculés à partir des ions apportés par chaque goutte (mmol). La réaction du
+magnésium commence après 3 s (couche d'oxyde) ; le gaz produit avant que l'on bouche est perdu.
+
+## Chapitre 1re année du bac « La conductance » (fiche 1bac/chim3_conductance)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim3_a1_conductance.html | A1 : mesurer R et G (GBF, ampèremètre, voltmètre, électrodes planes) | O1, O2, O3 | Eau distillée, eau sucrée, NaCl : il faut des ions ; trois tensions : G = I/U constante (2,41 mS pour 10 mmol/L, L = 1 cm, S = 2 cm²), R = 1/G ; L, S et C variés ; σ ≈ 0,12 S/m. |
+| b1_chim3_a2_etalonnage.html | A2 : courbe d'étalonnage avec NaCl | O4 | Six étalons (1 à 10 mmol/L), droite G = k·C ; sérum physiologique dilué 20 fois : 7,7 mmol/L, soit 154 mmol/L et 9,0 g/L ; NaCl 0,10 mol/L sous la droite prolongée. |
+| b1_chim3_a3_ion_commun.html | A3 : comparer NaOH, KOH, HCl, NH₄Cl, NaCl, KCl de même concentration | O3, O5, O6 | Six solutions à 5 mmol/L : G et σ ; σ(KCl) − σ(NaCl) = σ(KOH) − σ(NaOH), λ(K⁺) − λ(Na⁺) ≈ 2,3 mS·m²/mol ; HCl et NaOH très conducteurs ; σ(NaCl) calculée avec les tables (0,0632 S/m). |
+
+La conductivité est calculée par σ = Σ λi·[Xi] (λ des tables, à 25 °C), multipliée par (1 − 0,5·√C) pour rendre compte de
+la gêne entre ions (C en mol/L) ; l'eau distillée a σ = 5 × 10⁻⁴ S/m. G = σ·S/L.
+
+Le matériel est celui des simulations d'électricité : GBF (500 Hz, amplitude réglable, résistance de sortie 50 Ω) et deux
+multimètres. L'élève câble le circuit (sortie du GBF → borne mA de l'ampèremètre, COM → cellule → masse du GBF ; voltmètre
+VΩ et COM aux bornes de la cellule) et choisit les calibres alternatifs (20 mA~ ou 200 mA~, 2 V~ ou 20 V~). Une mesure est
+notée quand le montage est juste : U et I sont ceux des afficheurs, G = I/U. La cellule est un composant du circuit
+(`poste_conductance.js`, `cellule_conductance.js`) ; les béchers sont la verrerie physique commune.
+
+## Chapitre 1re année du bac « Titrages » (fiche 1bac/chim4_titrages)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim4_a1_protons.html | A1 : transfert de protons, indicateurs colorés, acides et bases de la vie courante | O1, O2 | BBT dans six produits (acides jaunes, eau verte, basiques bleus) ; vinaigre + soude (jaune → bleu), ammoniaque + acide chlorhydrique (bleu → jaune) ; couples, eau ampholyte. |
+| b1_chim4_a2_electrons.html | A2 : transfert d'électrons, eau de Javel, acide ascorbique | O3, O4 | Clou de fer dans le sulfate de cuivre, ions Fe²⁺ révélés par la soude ; Javel + iodure → diiode (bleu-noir avec l'amidon) ; vitamine C qui réduit le diiode ; demi-équations. |
+| b1_chim4_a3_conductimetrique.html | A3 : titrage conductimétrique d'un déboucheur par l'acide chlorhydrique | O2, O5, O6 | Bécher sur l'agitateur, sonde plongée ; 11 mesures σ = f(V) ; deux droites, VE = 8,45 mL ; Cb = 8,45 × 10⁻² mol/L ; déboucheur commercial ≈ 4,2 mol/L ; chiffres significatifs. |
+| b1_chim4_a4_colorimetrique.html | A4 : titrage des ions fer II par le permanganate, du diiode par le thiosulfate | O3, O4, O5, O6 | Acidifier, titrer jusqu'au rose persistant (VE = 9,60 mL, [Fe²⁺] = 0,0960 mol/L) ; diiode, empois d'amidon, décoloration (VE = 8,50 mL, [I₂] = 0,0425 mol/L). |
+
+Les réactions sont totales (une seule réaction, flèche simple) et instantanées si la solution est agitée ; sinon elles se font
+toutes les 2 s (une goutte colore d'abord le liquide). Les quantités sont en mmol (`reactions_totales.js`). Le pH est calculé
+à partir des espèces : acide ou base forte en excès, sinon couple CH₃CO₂H/CH₃CO₂⁻ ou NH₄⁺/NH₃ (`acide_base.js`). La scène de
+titrage est à 1 px/mm pour que la burette de 25 mL tienne entière ; la loupe grossit cinq fois le ménisque (lecture à 0,05 mL).
+Robinet : un toucher sur la clé ouvre au goutte à goutte ou ferme ; glisser la clé vers le haut donne un filet, vers le bas ferme.
+
+## Chapitre 1re année du bac « Expansion de la chimie organique » (fiche 1bac/chim5_chimie_organique)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim5_a1_organique.html | Documents : composition des espèces organiques, histoire, diversité, importance économique | O1, O2 | Quatre documents au mur ; bécher retourné au-dessus d'une bougie (buée : H ; eau de chaux troublée : C ; la flamme s'éteint sans dioxygène) ; modèles de l'éthane, de l'éthène et de l'éthyne (liaisons simple, double, triple ; tétraèdre, plan, linéaire). |
+
+La boîte de modèles moléculaires (commun : molecule_3d.js, modele_dessin.js, modele_atelier.js) fait maintenant aussi la
+liaison triple : un toucher sur une liaison la fait passer de simple à double, puis à triple, puis de nouveau à simple.
+
+## Chapitre 1re année du bac « Lecture d'une formule chimique » (fiche 1bac/chim6_formule_chimique)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b1_chim6_a1_squelette.html | A1 : influence du squelette carboné ; tests des groupes caractéristiques | O1, O4, O5 | Eau ajoutée à la pissette dans l'hexane, le cyclohexane, l'éthanol (deux phases ou mélange) ; pentane, hexane, cyclohexane au bain-marie à 50 °C (seul le pentane bout), tableur et courbe Téb = f(n) ; tubes inconnus A à E testés au 2,4-DNPH, à la liqueur de Fehling (bain-marie), au BBT, au permanganate acidifié. |
+| b1_chim6_a2_modeles.html | A2 : modèles moléculaires, isomérie, noms ; pétrochimie et polymérisation | O1, O2, O3 | Butane et 2-méthylpropane, (Z)- et (E)-but-2-ène construits avec la boîte de modèles (le nom officiel du modèle s'affiche) ; quatre documents (distillation fractionnée, craquage et reformage, polyaddition, polymères courants) ; motifs du PVC et du polypropylène. |
+| b1_chim6_a3_benzoique.html | A3 : synthèse de l'acide benzoïque | O5, O6, O7 | Reflux de l'alcool benzylique avec le permanganate en milieu basique (violet → brun) ; filtration sous vide du MnO₂ ; acidification du filtrat (précipité blanc) et filtration des cristaux ; pesée du produit sec (coupelle tarée), n(max), n(obtenu), rendement ; chromatographie révélée sous UV (pureté). |
+
+Fichiers communs nouveaux : `chimie_organique.js` (espèces organiques et tests), `nomenclature.js` (nom officiel d'un
+modèle). `modele_atelier.js` ajoute ce nom au bilan du modèle.
+
+## Chapitre 2e année du bac « Les questions que se pose le physicien » (fiche 2bac/intro_physicien)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_intro_a1_physicien.html | Analyser un article ou une intervention de physicien | O1 | Cinq documents (télécommunications, noyau, circuits, satellites et horloges, démarche) ; huit questions rangées par partie du programme (ondes, transformations nucléaires, électricité, mécanique) ; problème du satellite GPS : étapes de la démarche rangées au tableau, d = c·Δt ≈ 20 200 km, effet d'une erreur sur Δt. |
+
+## Chapitre 2e année du bac « Ondes mécaniques progressives » (fiche 2bac/ondes1_mecaniques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes1_a1_exemples.html | A1 : exemples familiers (vagues, sons, séismes) | O1, O2 | Vague dans une cuve (cale enfoncée puis relâchée), bouchon qui monte et redescend sans avancer, célérité ; long ressort secoué (onde transversale) ou poussé (onde longitudinale), spire rouge ; documents son et séismes, tri transversale / longitudinale, distance d'un foyer. |
+| b2_ondes1_a2_retard.html | A2 : corde, ressort, ondes sonores : retard et célérité | O3, O4, O5 | Retard d'une bosse le long du ressort entre deux cellules (chronomètre électronique), Δt = f(d) ; retard d'un son entre deux micros à l'oscilloscope à mémoire (claquoir), τ = f(d), v ≈ 343 m/s. |
+| b2_ondes1_a3_milieu.html | A3 : influence de l'inertie et de la rigidité du milieu | O4, O5 | Corde tendue par des masses sur une poulie ; coup sec réglable, caméra rapide (ralenti × 20) et chronophotographie toutes les 0,05 s ; v² = f(T) ; trois cordes (50, 100, 200 g/m) à la même tension ; documents sur le son dans différents milieux et selon la température. |
+
+Le milieu à une dimension (`milieu_1d.js`) calcule l'élongation en 201 points avec un pas de temps égal à dx / v : la
+perturbation avance exactement à la célérité v, sans se déformer ; elle se réfléchit sur une extrémité fixe (ressort,
+poulie) et disparaît sur la plage de la cuve.
+
+## Chapitre 2e année du bac « Ondes mécaniques progressives périodiques » (fiche 2bac/ondes2_periodiques)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes2_a1_sinusoidale.html | A1 : onde sinusoïdale le long d'une corde (stroboscope) ; onde sonore (oscilloscope) | O1, O2 | Corde reliée à un vibreur : bande floue en lumière ordinaire ; au stroboscope, immobilisation (fe = f), mouvement apparent ralenti (fe un peu plus petite) ; λ aux curseurs, tableur f, λ, v ; haut-parleur et deux micros : période, cinq positions en phase, λ et v du son. |
+| b2_ondes2_a2_diffraction.html | A2 : diffraction (cuve à ondes, ultrasons) ; dispersion | O3, O4, O5 | Cuve à ondes : fente de 60 mm puis 10 mm, obstacle ; λ pour 10 à 30 Hz, v = λ·f variable (milieu dispersif) ; ultrasons à travers une fente de 40 mm puis 10 mm, amplitude selon l'angle ; documents et classement des situations. |
+
+L'image de la cuve à ondes est calculée par le principe de Huygens (sources réparties dans la fente) et dessinée dans un
+`canvas` du navigateur, transformé en image de la scène ; la relation de dispersion des ondes à la surface de l'eau
+(pesanteur et tension superficielle, 5 mm d'eau) donne λ pour chaque fréquence.
+
+## Chapitre 2e année du bac « Propagation d'une onde lumineuse » (fiche 2bac/ondes3_lumiere)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes3_a1_diffraction.html | A1 : diffraction par une fente, un fil ou un obstacle ; vérifier θ = λ/a | O1, O2, O3 | Laser rouge et fentes de 40 à 150 µm, écran à 2,00 m : largeur L de la tache centrale aux curseurs, tableur et courbe θ = f(1/a), λ ≈ 650 nm, ν ≈ 4,6 × 10¹⁴ Hz ; fil et fente, laser vert, lumière blanche ; épaisseur d'un cheveu. |
+| b2_ondes3_a2_prisme.html | A2 : dispersion de la lumière blanche par un prisme | O3, O4, O5 | Goniomètre : D = f(i), minimum de déviation, n(rouge) ≈ 1,619 et n(vert) ≈ 1,630, spectre de la lumière blanche ; fréquence inchangée, λ dans le verre. |
+
+La figure de diffraction est calculée (intensité sinc², somme de quinze radiations pour la lumière blanche) et dessinée
+dans un `canvas` ; le trajet dans le prisme suit les lois de Descartes avec un indice de Cauchy.
+
+## Chapitre 2e année du bac « Diffraction de la lumière par un réseau » (fiche 2bac/ondes4_reseau)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_ondes4_a1_reseau.html | A1 : modèles de réseau (CD…) ; questions guidées (fente qui rétrécit, nombre de traits par mm) | O1, O2, O3, O4 | Paillasse 1 : photographies au microscope de réseaux de 100, 300 et 600 traits/mm, d'un CD et d'un DVD ; pas a aux curseurs, a = 1/n. Paillasse 2 : banc vu de dessus (faisceaux visibles) et écran vu de face ; fente de 100 puis 50 µm, réseau de 100 traits/mm, tableur et courbe sin θk = f(k) (pente λ/a = 0,065) ; pas du CD par diffraction (1,6 µm) ; 5 maximums avec 600 traits/mm, 3 avec le DVD. |
+| b2_ondes4_a2_incidence.html | A2 : incidence normale et non normale ; lumière blanche ; nature ondulatoire | O2, O3, O4 | Plateau tournant (i de 0 à 40°) : figure dissymétrique, sin θ±1 − sin i = ±λ/a = ±0,195 ; spectres de la lumière blanche (violet le moins dévié, ordres 2 et 3 qui se chevauchent) ; λ du laser vert ≈ 532 nm. |
+
+Les directions des maximums suivent sin θk − sin i = k·λ / a (θk mesuré depuis la normale au réseau) ; l'éclat de chaque
+ordre vient de la largeur des fentes (b = 0,15·a). L'écran vu de face (70 cm, 1 px par mm) est calculé dans un `canvas`.
+Le dessin des photographies au microscope est schématique (fentes, sillons et cuvettes à l'échelle de la règle).
+
+## Chapitre 2e année du bac « Décroissance radioactive » (fiche 2bac/nucl1_decroissance)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_nucl1_a1_becquerel.html | A1 : diagramme (N,Z) ; découverte de la radioactivité (Becquerel) | O1, O2, O3 | Paillasse 1 : plaque photographique dans du papier noir, croix de cuivre et sel d'uranium, au soleil ou dans le tiroir, 3 jours, développement ; uranium métal et sulfate de sodium ; documents (Becquerel, Curie, taille des noyaux). Paillasse 2 : six cartes ᴬ_Z X à placer dans le diagramme (N, Z) des noyaux légers ; affiche de tous les noyaux (vallée de stabilité) ; équations α, β−, β+, émission γ. |
+| b2_nucl1_a2_datation.html | A2 : radioactivité dans l'environnement ; exemples de datation | O4, O5, O6 | Paillasse 1 : quatre documents (radioactivité naturelle, carbone 14, effets biologiques, dater des roches) ; tri : quel radioélément pour dater huit objets. Paillasse 2 : compteur à scintillation, fioles de carbone actuel, d'une grotte et d'un os de mammouth ; tableur et courbe a(t), âges par lecture graphique et par le calcul (17 000 et 28 000 ans). |
+| b2_nucl1_a3_compteur.html | A3 : compteur, caractère aléatoire, courbes, radioactivité naturelle | O3, O4, O5, O7 | Compteur et tube de Geiger-Müller : bruit de fond, dix comptages de 10 s (moyenne, variance, écart-type) ; granite, engrais, sel ; Am 241, Sr 90, Cs 137 derrière papier, aluminium ou plomb ; générateur Cs 137 / Ba 137m : série de comptages de 30 s (horloge × 20), ln N = f(t), λ ≈ 4,5 × 10⁻³ s⁻¹, t½ ≈ 153 s, τ ≈ 221 s. |
+
+Les comptages sont tirés au hasard (loi de Poisson) à partir du taux d'impulsions : bruit de fond 0,4 par seconde, plus le
+rayonnement de l'échantillon que laisse passer l'écran. Au-delà de Z = 8, l'affiche du diagramme (N, Z) est un schéma
+calculé (vallée de stabilité Z₀ = A / (1,98 + 0,0155·A^(2/3))) ; les noyaux légers du tableau sont exacts.
+
+## Chapitre 2e année du bac « Noyaux, masse et énergie » (fiche 2bac/nucl2_masse_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_nucl2_a1_energie.html | Documents sur les applications des réactions nucléaires | O1 à O5 | Paillasse 1 : balance de précision (modèle), noyau contre nucléons séparés : Δm (0,030377 u pour ⁴He), El = 28,3 MeV, conversions J ↔ eV, E = m·c² pour 1 u, équation aux dimensions ; El/A du fer (8,79 MeV). Paillasse 2 : affiche des masses de 21 noyaux ; courbe d'Aston au tableur ; bilans α (4,87 MeV), β− (0,157 MeV), β+ (0,635 MeV), fission (185 MeV), fusion (17,6 MeV), 1 g d'uranium 235 (7,6 × 10¹⁰ J). Paillasse 3 : quatre documents et tri des applications (fission, fusion, désintégration). |
+
+Les masses de l'affiche sont des masses de noyaux (masse atomique moins Z masses d'électrons), comme le demande la fiche ;
+les énergies calculées concordent avec les valeurs de référence. La balance est un modèle : on ne pèse pas un noyau,
+ses masses viennent de la spectrométrie de masse.
+
+## Chapitre 2e année du bac « Dipôle RC » (fiche 2bac/elec1_dipole_rc)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec1_a1_courant.html | A1 : charge par un générateur de courant idéal (u = f(t)) | O1, O2, O3 | Générateur de courant 0,10 mA, C₁ = 100 µF, voltmètre, fiche de relevés avec chronomètre : u augmente proportionnellement à t ; tableur q = I·t, courbe q = f(u), C₁ = 100 µF ; série (32 µF) et parallèle (147 µF). |
+| b2_elec1_a2_echelon.html | A2 : réponse RC à un échelon, à l'ordinateur ; influence de R et C ; mesure de τ | O4, O5, O6 | Générateur 6 V, commutateur K, boîtes de résistances et de condensateurs, interface d'acquisition et ordinateur : charge, continuité de uC, τ à 63 % et par la tangente (1,0 s), τ = R·C pour quatre couples au tableur, décharge, équation uC + RC·duC/dt = E et sa solution. |
+| b2_elec1_a3_energie.html | A3 : énergie stockée ; applications (flash) | O5, O7 | Décharge du condensateur dans une lampe (éclair), pour 2,2 et 4,7 mF, sous 6 et 12 V ; E = ½·C·u² ; documents : flash (6,75 J en 1 ms), défibrillateur (200 J). |
+
+Le circuit avance dans le temps par petits pas (0,25 à 1 ms, horloge circuit_temps.js) : pendant un pas, le condensateur
+est une conductance C/dt en parallèle avec une source qui garde sa tension précédente (méthode d'Euler implicite, stable,
+même quand on relie ses bornes par un fil). L'interface d'acquisition démarre seule quand la tension EA0 change.
+
+## Chapitre 2e année du bac « Dipôle RL » (fiche 2bac/elec2_dipole_rl)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec2_a1_bobine.html | A1 : bobine en courant continu et variable | O1, O4 | Ohmmètre : r = 10 Ω ; en continu, la bobine agit comme r (di/dt = 0) ; deux lampes identiques, L₁ avec la bobine et L₂ avec R = 10 Ω : L₁ s'allume en retard (11 ms avec le noyau, 1 ms sans) et s'éteint progressivement. Temps ralenti 100 fois. |
+| b2_elec2_a2_inductance.html | A2 : inductance par une tension triangulaire | O1, O2 | GBF triangulaire (500 Hz), bobine et boîte de résistances, interface (voie 2 : −EA1) : uL en créneaux, pente de uR, L = uL / (di/dt) = 50 mH, 0,5 H avec le noyau ; 1 H = 1 V·s/A. Temps ralenti 40 fois. |
+| b2_elec2_a3_echelon.html | A3 : réponse RL à un échelon ; mesure de τ | O3, O4, O5, O6 | Générateur 6 V, commutateur K, bobine, boîte de résistances, interface : établissement (I₀ = 54 mA, τ = 4,5 ms), τ = L/(R + r) pour quatre couples au tableur et à la courbe, rupture, équation différentielle et solution, énergie ½·L·I₀² = 0,74 mJ. Temps ralenti 40 fois. |
+
+La bobine (bobine.js) suit le même principe que le condensateur : pendant un pas dt, elle est une conductance
+(dt/L)/(1 + r·dt/L) en parallèle avec une source qui garde son courant précédent ; i est donc continue. Toucher la
+bobine enfonce ou retire son noyau de fer doux (L multipliée par 10). Le GBF de l'activité 2 (gbf_temps.js) donne sa
+tension instant par instant, au rythme de l'horloge.
+
+## Chapitre 2e année du bac « Oscillations libres d'un circuit RLC série » (fiche 2bac/elec3_rlc_libre)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec3_a1_decharge.html | A1 : décharge oscillante amortie (ordinateur) | O1, O2, O3, O6 | Générateur 6 V, commutateur K, boîte de condensateurs (1 à 10 µF), bobine (0,05 ou 0,5 H, r = 10 Ω), boîte de résistances, interface : oscillations amorties (T = 14,06 ms pour 0,5 H et 10 µF), régime apériodique (1 kΩ), régime critique ; T pour quatre couples (L, C) au tableur, T ≈ 2π√(LC) ; équation différentielle, q(t), i(t). |
+| b2_elec3_a2_energies.html | A2 : évolution graphique des énergies | O4 | Même circuit, EA1 sur R ; touche « Voie 2 » → « Énergies » : Ee, Em, E (µJ) ; échanges, E(0) = 180 µJ, 43 % perdus en une pseudo-période ; régime apériodique ; cas idéal Im = Um·√(C/L). |
+| b2_elec3_a3_entretien.html | A3 : entretien par un circuit intégré | O5, O6, O3 | Dispositif d'entretien (résistance négative −R₀, 0 à 40 Ω) : amorties pour R₀ = 0, sinusoïdales pour R₀ = R + r = 20 Ω, amplitude limitée par la saturation pour R₀ = 40 Ω ; tension sinusoïdale de 150 Hz (C = 2,2 µF). |
+
+Le circuit suit la méthode des trapèzes (option trapeze de circuit_temps.js) : un circuit LC sans résistance garde son
+énergie, sans amortissement artificiel du calcul ; les pseudo-périodes mesurées concordent avec la théorie à 0,1 %
+près. Le dispositif d'entretien (entretien_rlc.js) n'est vu que par son rôle : u = −R₀·i, et au-delà de 40 mA
+l'amplificateur sature (le dispositif se comporte alors comme une résistance de 100 Ω).
+
+## Chapitre 2e année du bac « Oscillations forcées d'un circuit RLC série » (fiche 2bac/elec4_rlc_force)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec4_a1_forcees.html | A1 : oscillations forcées, observer u et i | O1, O2, O3 | GBF sinusoïdal (pas de 5 Hz, ou 50 Hz en touchant l'afficheur), C = 1 µF, bobine 0,5 H (r = 10 Ω), R = 100 Ω, oscilloscope bicourbe (u, uR), voltmètre, feuille de Fresnel : i à la fréquence du GBF ; Z = Um/Im = 600 Ω à 150 Hz ; Fresnel ; U = Um/√2 ; i en avance (150 Hz), en retard (400 Hz), u et i ensemble à N₀ = 225 Hz. |
+| b2_elec4_a2_resonance.html | A2 : résonance, I = f(N) pour deux valeurs de R | O3, O4 | Ampèremètre et voltmètre (V~), U ≈ 1,06 V : courbes I = f(N) pour 47 Ω et 220 Ω (tableur, deux courbes) ; N₀, I₀ = 18 mA, ΔN ≈ 19 Hz, Q ≈ 12 ; surtension UC = Q·U ≈ 12,8 V ; P = (R + r)·I², facteur de puissance. |
+
+Le circuit est calculé en régime sinusoïdal forcé (circuit_sinus.js) : le condensateur et la bobine donnent leur
+admittance complexe, et les potentiels des nœuds sont calculés pour la fréquence du GBF (ou ses harmoniques pour un
+triangle ou un carré). L'oscilloscope et le multimètre lisent ces tensions comme pour un circuit résistif. Comme le
+demandent les orientations, on parle d'avance ou de retard de i sur u (une durée), jamais de déphasage.
+
+## Chapitre 2e année du bac « Modulation d'amplitude » (fiche 2bac/elec5_modulation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_elec5_a1_histoire.html | A1 : histoire de la transmission de l'information | O1, O2 | Paillasse 1 : quatre documents (Chappe, Morse et Bell, Maxwell et Hertz, TSF et après), tri selon ce qui porte l'information. Paillasse 2 : bandes de fréquences (document, tri de huit services, λ = c/f). Paillasse 3 : GBF et antenne émettrice, antenne réceptrice sur un chariot, oscilloscope : même fréquence, amplitude qui diminue avec la distance. |
+| b2_elec5_a2_modulation.html | A2 : modulation avec un multiplieur ; démodulation par détecteur d'enveloppe | O2, O3, O4 | Deux GBF (porteuse 100 kHz, signal 500 Hz), maquette (AD633 avec U₀, diode + R₁∥C₁, passe-haut), oscilloscope : m = Sm/U₀ = 0,5, surmodulation, Fp ≫ Fs ; C₁ = 1 nF (porteuse redressée), 100 nF (enveloppe non suivie), 47 nF (bonne) ; filtre : on retrouve le signal. |
+| b2_elec5_a3_recepteur.html | A3 : réaliser un récepteur radio AM simple | O4, O5 | Montage libre : antenne, terre, bobine 1 mH ∥ condensateur variable, diode, R∥C, écouteur (on l'écoute en le touchant). Trois émetteurs (171, 207, 252 kHz) : accord à 870, 590 et 400 pF ; f₀ = 1/(2π√(LC)) ; oscilloscope ; rôle des éléments. |
+
+Les tensions de ce chapitre (deux fréquences très différentes, diode) ne passent pas par le solveur du circuit : le poste
+les calcule sur une période commune (modulation.js) d'après les fils posés, et l'oscilloscope les lit (option « lire »).
+Quand la porteuse varie trop vite pour les points de l'écran, la trace devient une bande pleine, comme sur un vrai écran.
+Le son de l'écouteur passe par l'interface audio du navigateur (aucune bibliothèque) ; sans elle, l'oscilloscope reste le témoin.
+
+## Chapitre 2e année du bac « Lois de Newton » (fiche 2bac/meca1_newton)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca1_a1_vecteurs.html | A1 : vecteurs vitesse et accélération à partir d'enregistrements | O1, O2, O3 | Paillasse 1 : table inclinée (sin α = 0,050), mobile lancé vers le haut : v₂, v₄, Δv opposé à v, v(t) au tableur, aG = 0,49 m/s², a·v < 0 à la montée, > 0 à la descente. Paillasse 2 : mouvement circulaire uniforme (fil) : v₄, v₆, Δv vers le centre O (marqué sur la feuille), R, v, aN = v²/R, repère de Frenet. |
+| b2_meca1_a2_newton.html | A2 : vérification de ΣF = m·ΔvG/Δt en faisant varier m, ΣF ou ΔvG/Δt | O4, O5, O6, O7 | Paillasse 1 : trois cales (sin α = 0,030 ; 0,050 ; 0,080) et une surcharge de 300 g : quatre essais au moins, tableur m, ΣF, ΔvG/Δt, m·ΔvG/Δt, courbe de coefficient directeur 1 ; rôle de la masse ; application. Paillasse 2 : référentiels galiléens (documents, tri), troisième loi. |
+
+La table à coussin d'air, l'éclateur, la feuille, la règle, les flèches et la surcharge sont ceux du tronc commun. Seule
+nouveauté locale : les cales (poste_newton.js), qui règlent la pente de la table pendant la séance.
+
+## Chapitre 2e année du bac « Applications des lois de Newton » (fiche 2bac/meca2_applications)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca2_a1_chute.html | A1 : bille en chute libre | O1, O2 | Électroaimant, règle de 1 m, caméra 25 images/s, logiciel de pointage : étalonnage, origine, pointage, export ; vy(t) au tableur, droite de pente −9,8 m/s² ; d²y/dt² = −g ; bille d'acier (33 g) et bille de verre (5 g) : même accélération. |
+| b2_meca2_a2_plans.html | A2 : solide sur plan horizontal ou incliné | O2, O3 | Planche articulée (0° à 30°), chariot et pavé de bois de 200 g, lanceur à ressort, caméra inclinée comme la planche : vx(t) ; chariot uniforme, pavé a ≈ −2,9 m/s² (f ≈ 0,59 N) ; à 25° : a = g·sin α ≈ 4,1 m/s² sans frottement, 1,5 m/s² avec (f ≈ 0,53 N) ; à 10°, le pavé ne glisse pas. |
+| b2_meca2_a3_projectiles.html | A3 : projectiles de masses différentes (logiciel, vidéo) | O4 | Lance-projectile (30°, 45°, 60° ; 2,5 à 3,5 m/s), bille d'acier et balle de bois, tableau quadrillé : x(t) (v0x = 2,12 m/s), vy(t) (pente −g) ; équations horaires, parabole ; flèche 0,23 m, portée 0,92 m ; 30° et 60° : même portée ; même trajectoire pour les deux masses. |
+
+Comme le demandent les orientations, l'ordinateur et la caméra sont utilisés : le logiciel de pointage (pointage_video.js)
+montre la vidéo image par image ; l'élève étalonne lui-même l'échelle sur l'étalon filmé, choisit l'origine et pointe
+l'objet ; les coordonnées viennent de ses clics, puis « Exporter » les copie dans le tableur.
+
+## Inscription au manifeste
+
+Chaque simulation a sa fiche dans `contenu/manifeste.json` : chapitre (niveau/chapitre), activité de la fiche officielle,
+objectifs, missions (titre, ce que fait l'élève, conclusion), durée estimée. Les agents ne reçoivent que les ressources
+du chapitre du cours choisi dans `config/application.json`. Un test vérifie que chaque simulation de `sources/` est inscrite.
+
 ## Ce que la simulation envoie à la page du professeur
 
 Quand elle est ouverte dans le cadre des médias, la simulation envoie (postMessage) :
 `laboratoire_ouvert`, `etape_reussie`, `reponse` (avec juste / faux), `mission_terminee` (avec la durée),
 `laboratoire_termine`. Ces messages ne sont pas encore enregistrés par le journal de recherche.
+
+## Chapitre 2e année du bac « Relation entre la somme des moments et l'accélération angulaire » (fiche 2bac/meca3_rotation)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca3_a1_angulaire.html | A1 : abscisse et accélération angulaires par encadrement | O1, O2, O4 | Disque (J = 2,0 × 10⁻³ kg·m²) entraîné par une masse de 200 g, filmé à 25 images/s ; logiciel de pointage en mode polaire (θ du repère M) ; θ̇ et θ̈ par encadrement au tableur, θ̇(t) droite de pente 18,9 rad/s² ; équations horaires ; aT = OM·θ̈ et aN = OM·θ̇² ; fil décroché : rotation uniforme (27,5 rad/s) ; patin : θ̈ = −10 rad/s² (uniformément retardée). |
+| b2_meca3_a2_relation.html | A2 : vérification de la relation fondamentale, rôle du moment d'inertie | O3, O5 | Tige à masselottes (d = 5 à 20 cm), tambour r = 2,5 cm, porte-masse et disques de 50 g, cellule à 50 cm et chronomètre : θ̈ = 2h/(r·t²), T = m·(g − r·θ̈), ΣM = T·r ; ΣM = f(θ̈) droite de pente J = 5,4 × 10⁻³ kg·m² ; J = J_tige + 2·m'·d² (1,44 × 10⁻² kg·m² à 20 cm). |
+
+Comme le demandent les orientations, on rappelle l'encadrement de 1re année (θ̇i = (θi+1 − θi−1)/(2Δt)) et l'analogie avec la
+translation (θ̇ = dθ/dt, θ̈ = d²θ/dt²) ; les moments d'inertie sont donnés pour des formes simples (tige, masses ponctuelles) ;
+les types de rotation se lisent sur θ̈ (nulle ou constante). Le logiciel de pointage (pointage_video.js) a reçu une option
+« polaire » : l'origine placée sur l'axe, il donne l'abscisse angulaire θ = (Ox, OM) au lieu de x et y.
+
+## Chapitre 2e année du bac « Systèmes mécaniques oscillants » (fiche 2bac/meca4_oscillants)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca4_a1_ressort.html | A1 : enregistrements x = f(t) ; masse, raideur, amortissement | O1 à O4 | Tri des oscillateurs (sans équation) ; banc à coussin d'air, ressort de 10 ou 20 N/m, mobile de 200 à 400 g, capteur de position et logiciel x(t) : amplitude, T0 (0,889 s à 200 g), force de rappel, équation différentielle, solution donnée et phase ; T0 = 2π·√(m/k) au tableur ; palette (pseudo-périodique, T ≈ T0) et aimant (apériodique). |
+| b2_meca4_a2_torsion.html | A2 : pendule de torsion, moment d'inertie et constante de torsion | O1, O3, O4 | Masselottes à 4, 8, 12 cm, fils A et B, chronomètre à main (plusieurs oscillations) : T0² = (4π²/C)·J, C ≈ 4,0 × 10⁻³ N·m/rad ; fil 4 fois plus raide : T0 divisée par 2 ; isochronisme. |
+| b2_meca4_a3_resonance.html | A3 : résonance, excitateur et résonateur bien distincts | O5 | Mobile entre deux ressorts (f0 = 1,59 Hz), moteur à excentrique réglable : oscillations forcées à la fréquence de l'excitateur ; amplitude lue avec deux témoins en régime établi, maximale vers 1,6 Hz ; palette et aimant : résonance amortie. Aucune courbe de résonance tracée. |
+
+Comme le demandent les orientations, les oscillateurs sont d'abord présentés sans équation (tri), la solution de l'équation
+différentielle est donnée, l'amortissement est montré par l'expérience sans expression des frottements, la pseudo-période
+est comparée à la période propre, et la résonance reste qualitative. Le solide-ressort est horizontal (toutes filières).
+Matériel commun nouveau : banc_ressort_dessin.js, banc_ressort.js, banc_ressort_accessoires.js (banc à coussin d'air avec
+ressorts et excitateur), logiciel_xt.js (capteur, interface et logiciel x(t)), chronometre_manuel.js.
+
+## Chapitre 2e année du bac « Aspects énergétiques des oscillateurs mécaniques » (fiche 2bac/meca5_energie)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca5_a1_energie.html | Établir Epe à partir du travail ; exploiter des enregistrements et diagrammes d'énergie | O1 à O4 | Paillasse 1 : dynamomètre de traction tenu par une noix coulissante, F = f(x) (K = 20 N/m), travail par l'aire sous la courbe (méthode graphique), Epe = ½·K·x². Paillasse 2 : solide-ressort horizontal enregistré, vue « Énergies » du logiciel (Ec, Epe, Em = 12,5 mJ constante), vitesse maximale par le théorème de l'énergie cinétique, non-conservation avec la palette. Paillasse 3 : pendule de torsion et capteur de rotation, Ept = ½·C·θ², Em = ½·J·θ̇² + ½·C·θ². |
+
+Matériel commun nouveau ou modifié (signalé à l'enseignant) : banc_ressort_pieces.js (mobile, palette, aimant de freinage,
+surcharges et soufflerie redessinés comme le matériel réel), logiciel_xt.js (options « grandeur » et vue « Énergies »,
+désactivées par défaut), pendule_torsion_dessin.js (le dessin du pendule de torsion, déplacé de b2_meca4_a2_torsion pour
+servir aux deux chapitres, avec un capteur de rotation en option).
+
+## Chapitre 2e année du bac « L'atome et la mécanique de Newton » (fiche 2bac/meca6_atome)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca6_a1_astres_atomes.html | A1 : comparer systèmes astronomiques et atomiques | O1, O2 | Documents (gravitation, Coulomb, données, niveaux de l'hydrogène) ; Fe et Fg entre proton et électron au tableur : toutes deux en 1/d², rapport 2,3 × 10³⁹ ; simulateur d'orbites sur le portable : satellites (chute, ellipse, échappement, orbites circulaires de tout rayon, T²/r³ = 4π²/(G·M), masse de la Terre) ; électron autour du proton (toutes les énergies possibles selon Newton, chute en 1,6 × 10⁻¹¹ s s'il rayonne) : limites de la mécanique de Newton. |
+| b2_meca6_a2_spectres.html | A2 : documents sur la quantification ; étude de spectres | O2, O3, O4 | Expérience de Franck et Hertz au mercure (four, rampe 0-30 V, logiciel IA = f(U2)) : maximums tous les 4,9 V, énergie échangée 4,9 eV, comparaison à 140 °C et au photon UV de 253,7 nm ; tubes spectraux et spectroscope à échelle : raies de l'hydrogène, E = h·ν, transitions vers n = 2, autres gaz, tube X à identifier ; sodium : raie d'émission à 589 nm et raie noire d'absorption à la même place. |
+
+Comme le demandent les orientations, les deux forces en 1/r² sont comparées et c'est la différence des structures (orbites
+quelconques d'un côté, atomes identiques et énergie quantifiée de l'autre) qui montre les limites de la mécanique de Newton ;
+les échanges d'énergie sont étudiés avec un faisceau d'électrons de même énergie cinétique (Franck et Hertz) et avec la
+lumière (raies d'émission et d'absorption). Matériel commun nouveau : portable.js (ordinateur portable de toute taille),
+niveaux_energie.js (diagramme des niveaux d'énergie). Fichier commun modifié (signalé) : documents_mur.js (marge à droite
+du texte des affiches : le texte touchait ou dépassait le bord sur 12 simulations ; aucune ne déborde plus).
+
+## Parties propres aux filières PC, SMA et SMB (vérification du PDF des orientations)
+
+La comparaison avec le PDF (pages 112 à 135) a montré que les **parties spécifiques** aux filières PC, SMA et SMB n'avaient
+pas encore de simulation : leurs activités proposées n'avaient pas été recopiées dans les fiches JSON (c'est corrigé pour
+2bac/meca2_applications et 2bac/meca4_oscillants). Les simulations de ces parties ont un identifiant en « s » (s4 = 4e activité
+spécifique de la fiche).
+
+| Fichier | Partie (PC, SMA, SMB) | Objectif | Ce que l'élève fait |
+|---|---|---|---|
+| b2_meca2_s1_frottement.html | « Applications des lois de Newton » : chute verticale avec frottement | O5 | Balles creuses de 40, 50 et 60 g (4 cm) dans l'eau et la glycérine, filmées et pointées : v = f(t), vlim = 0,48 m/s, τ = 0,43 s (tangente à l'origine), régimes ; (P − Π)/vlim² constant : F = k·v² dans l'eau ; balle qui flotte dans la glycérine, vlim = 0,21 m/s ; méthode d'Euler au tableur (pas de 0,1 s puis 0,5 s). |
+| b2_meca2_s2_champ_electrique.html | « Applications des lois de Newton » : particule chargée dans un champ électrostatique | O6 | Tube à déviation électronique et alimentation 0 – 5 kV : canon (v0 = √(2·e·UA/m) = 3,75 × 10⁷ m/s), déviation vers la plaque positive, points lus sur l'écran, y = UP·x²/(4·d·UA), déviation proportionnelle à UP, plus faible si UA augmente ; oscilloscope. |
+| b2_meca2_s3_champ_magnetique.html | « Applications des lois de Newton » : particule chargée dans un champ magnétique | O7 | Tube à faisceau filiforme et bobines de Helmholtz : cercle (force de Lorentz, mouvement circulaire uniforme), sens changé avec le courant, diamètres de 6 à 12 cm, d = f(1/B), e/m = 1,76 × 10¹¹ C/kg ; documents sur le spectrographe de masse et le cyclotron. |
+| b2_meca2_s4_satellites.html | « Applications des lois de Newton » : satellites et planètes | O8 | Documents (référentiels héliocentrique et géocentrique, de Ptolémée à Newton, lois de Kepler, données) ; simulateur d'orbites : ellipse et loi des aires (secteurs de T/10) ; troisième loi avec les données de cinq planètes, MS = 1,99 × 10³⁰ kg ; satellite en orbite circulaire à 400 km (v = √(G·M/r) = 7,67 km/s), orbite géostationnaire (86 164 s, 35 800 km). |
+| b2_meca4_s1_pendule_pesant.html | « Systèmes mécaniques oscillants » : pendule pesant et pendule simple | O1, O6 | Pendule pesant (tige d'aluminium, masse coulissante, palette), capteur de rotation et logiciel θ(t) : même période (1,24 s) de 5° à 20°, 1,30 s à 50° (isochronisme des petites oscillations) ; équation différentielle, solution donnée, T0 = 2π·√(J/(M·g·a)) vérifiée pour d = 10 à 40 cm ; palette : amplitude qui décroît, pseudo-période ≈ période propre ; pendule simple et chronomètre : T² = f(l), g ≈ 9,8 m/s², période indépendante de la masse, pendule simple synchrone de 38 cm. |
+| b2_meca5_s1_pendule_pesant.html | « Aspects énergétiques des oscillateurs mécaniques » : énergie mécanique du pendule pesant | O3, O5 | Pendule pesant, capteur de rotation et vue « Énergies » du logiciel : Ec = ½·J·θ̇², Epp = M·g·a·(1 − cos θ) ; lâché à 30°, Em = 137 mJ constante, Ec et Epp s'échangent, θ̇max = 2,6 rad/s ; avec la palette, Em diminue (37 % après 4 s), surtout au passage par l'équilibre. |
+| b1_elec2_s1_bilan_electronique.html | « Transfert d'énergie dans un circuit électrique » (1re année, SM) : bilan d'un circuit à transistor ou à AO | O2, O5, O7 | Circuit à transistor câblé, voltmètre libre : U, I et P des six dipôles, 351 mW fournis = puissances reçues (transistor 222 mW) ; thermomètre à sonde (65 °C) et radiateur à clipser (38 °C). Montage non inverseur : Us = 0 sans alimentation, 7,95 V avec ; ampèremètres sur ±15 V : 174 mW fournis, 63 mW pour la charge, 109 mW dissipés dans l'AO. |
+
+Toutes les parties propres aux filières des chapitres déjà traités sont faites. Fission et fusion (nucl2, O6) étaient déjà traitées dans b2_nucl2_a1_energie : l'objectif a été
+ajouté au manifeste. Matériel commun déplacé : le simulateur d'orbites (orbites_modele.js, orbites_ecran.js,
+orbites_panneau.js, logiciel_orbites.js) passe de b2_meca6_a1_astres_atomes à commun/, avec l'onglet « Soleil – planète »,
+les aires de Kepler et le repère de l'équateur qui tourne en un jour sidéral.
+
+## Chapitre 2e année du bac « Les questions que se pose le chimiste » (fiche 2bac/intro_chimiste)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_intro_a1_chimiste.html | Analyser un article ou une intervention de chimiste | O1 | Article d'une chimiste (extraire, analyser, synthétiser, recycler ; chimie lourde et fine) : huit activités rangées ; usine d'acide phosphorique et atelier d'aspirine : préoccupations rangées (rendement, durée, coût, déchets et santé), rendement 85 %, 20 Mt de phosphogypse par an ; huit situations rangées sous les questions de l'année (rapide ? totale ? sens ? contrôle ?). |
+
+## Chapitre 2e année du bac « Transformations rapides et transformations lentes » (fiche 2bac/chim1_rapides_lentes)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim1_a1_rapides_lentes.html | H₂O₂ + I⁻ ; S₂O₃²⁻ + H⁺ ; liqueur de Fehling | O1, O2, O3 | Quatre tubes : Fe²⁺ + MnO₄⁻ et I₂ + S₂O₃²⁻ (rapides), I⁻ + H₂O₂ et S₂O₃²⁻ + H⁺ (lentes) ; équation et couples ; même transformation à 20 °C et à 70 °C (bain-marie), Fehling à froid et à chaud ; croix derrière trois tubes de thiosulfate : 33, 66 et 135 s pour 0,10, 0,050 et 0,025 mol/L. |
+| b2_chim1_a2_vie_courante.html | Vie courante : autocuiseur, conservation des aliments par le froid | O3 | Documents sur l'autocuiseur (2 bar, eau bouillante à 120 °C) et durées de cuisson : rapport d'environ 3,5 au tableur ; iodure acidifié + eau oxygénée à 20 °C et dans un bain de glace à 2 °C (presque incolore) ; réfrigérateur et congélateur. |
+| b2_chim1_s1_chocs_efficaces.html | (PC, SMA, SMB) Interprétation microscopique : chocs efficaces | O3 | Logiciel de simulation A + B → C : seule une petite partie des chocs est efficace ; deux fois plus de particules : environ quatre fois plus de chocs par seconde ; 400 K : à peine plus de chocs, mais une part de chocs efficaces environ deux fois plus grande ; courbes du nombre de C. |
+
+Fichier commun nouveau : `reactions_lentes.js` (vitesse v = k(T)·Π[X]ⁿ, loi d'Arrhenius ; H₂O₂ + I⁻, S₂O₃²⁻ + H⁺ ; trouble du
+soufre).
+
+## Chapitre 2e année du bac « Suivi temporel d'une transformation, vitesse de réaction » (fiche 2bac/chim2_suivi_temporel)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim2_a1_prelevements.html | Prélèvements, trempe et titrage (S₂O₈²⁻ et I⁻) | O1 à O6 | Mélange de 50 mL d'iodure de potassium (1,0 mol/L) et de 50 mL de peroxodisulfate (0,020 mol/L), horloge murale ; prélèvement de 10 mL à la pipette graduée, trempe dans l'eau glacée, titrage du diiode par le thiosulfate à 0,010 mol/L (empois d'amidon) : à 1 min 30 s, VE ≈ 6,0 mL, x ≈ 0,30 mmol ; résultats de la classe au tableur, x = f(t), x_max = 1,0 mmol, t1/2 ≈ 3 min, vitesse comparée sur les tangentes (sans calcul). |
+| b2_chim2_a2_mesures_physiques.html | Suivi au manomètre ou au conductimètre ; tableur-grapheur pour x = f(t) | O1, O3, O5, O6 | Relevés notés sur une feuille au mur, horloge murale. Ruban de magnésium (0,024 g) dans 50 mL de HCl à 0,50 mol/L, erlenmeyer bouché relié au pressiomètre : P monte de 1 013 à 1 119 hPa, x = (P − P0)·V/(RT), x_max = 0,99 mmol, t1/2 ≈ 29 s. 10,0 mL de 2-chloro-2-méthylpropane (0,10 mol/L dans l'acétone) dans 140 mL d'eau agitée, conductimètre : σ monte jusqu'à 2,8 mS/cm, x = σ·V/(λ(H₃O⁺) + λ(Cl⁻)), t1/2 ≈ 28 s ; tangentes comparées sans calcul ; choix de la méthode de suivi selon t1/2. |
+
+Fichiers communs modifiés : `reactions_lentes.js` (réaction S₂O₈²⁻ + 2 I⁻, solutions d'iodure à 1,0 mol/L, de peroxodisulfate,
+de thiosulfate à 0,010 mol/L, eau glacée) ; `poste_titrage.js` (option `places`, désactivée par défaut ; renvoie le contexte ;
+tige du support de la sonde allongée jusqu'à la pince, conductimètre décalé pour ne plus passer sous la tablette).
+Activité 2 : fichier commun nouveau `horloge_releves.js` (horloge murale et feuille de relevés, aussi utilisée par l'activité 1) ;
+`reactions_lentes.js` : hydrolyse du 2-chloro-2-méthylpropane et sa solution dans l'acétone.
+
+## Chapitre 2e année du bac « Transformations chimiques qui se produisent dans les deux sens » (fiche 2bac/chim3_deux_sens)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim3_a1_ph_deux_sens.html | Mise en évidence par le pH que la transformation n'est pas totale (exemples acide-base) | O1 à O4 | Étalonne le pH-mètre (tampons pH 7 puis pH 4) ; pH de HCl, HCOOH et CH₃COOH à 1,0 × 10⁻² mol/L : 2,00 ; 2,90 ; 3,39 ; [H₃O⁺]f, xf < xmax, τ = 1 ; 0,13 ; 0,04 au tableur ; acide éthanoïque pur : pH 3,06 (sens direct) ; éthanoate de sodium : pH 5,15 (sens inverse) ; équation avec ⇌ ; couples. |
+| b2_chim3_s1_equilibre_dynamique.html | (PC, SMA, SMB) Interprétation microscopique de l'état d'équilibre | O3, O4 | Logiciel A + B ⇌ C + D : depuis les réactifs ou depuis les produits, environ 19 C sur 30 à la fin (τ ≈ 0,6) ; à l'équilibre, autant de chocs efficaces par seconde dans chaque sens : équilibre dynamique. |
+
+Fichiers communs nouveaux : `equilibre_acide.js` (pH exact par l'électroneutralité) et `ph_metre.js` (pH-mètre à étalonner, électrode
+combinée). La fiche du chapitre a reçu l'activité de la partie PC/SM.
+
+## Chapitre 2e année du bac « État d'équilibre d'un système chimique » (fiche 2bac/chim4_equilibre)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim4_a1_qr_constant.html | Conductimétrie : Qr,éq constant pour différents états initiaux | O1 à O5 | σ de l'acide éthanoïque à 1,0 × 10⁻², 5,0 × 10⁻³, 2,0 × 10⁻³, 1,0 × 10⁻³ mol/L (160, 113, 70, 49 µS/cm) ; tableur : [H₃O⁺]éq et Qr,éq ≈ 1,8 × 10⁻⁵ pour les quatre (K) ; τ de 0,04 à 0,13 selon la dilution ; équilibre dynamique. |
+| b2_chim4_a2_taux_acides.html | Taux d'avancement final d'acides de même concentration | O1, O3, O5 | σ de quatre acides à 1,0 × 10⁻² mol/L ; τ = 0,125 (méthanoïque), 0,077 (benzoïque), 0,041 (éthanoïque), 0,036 (propanoïque), même ordre que K ; K retrouvé à partir de τ. |
+
+Fichier commun nouveau : `banc_conductimetrie.js`. Fichiers communs modifiés : `conductimetre.js` (options `equilibre` et `micro`,
+désactivées par défaut) ; `equilibre_acide.js` (acides benzoïque et propanoïque, solutions diluées, `Labo.sigma_equilibre`).
+
+## Chapitre 2e année du bac « Transformations associées aux réactions acide-base en solution aqueuse » (fiche 2bac/chim5_acide_base)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim5_a1_ph_courants.html | pH de produits courants et de milieux biologiques | O1 à O4 | pH de cinq produits (citron 2,3 ; vinaigre 2,9 ; lait 6,6 ; bicarbonate 8,3 ; Javel diluée 11,5), [H₃O⁺] et [HO⁻] au tableur ; HCl et NaOH : Ke = 1,0 × 10⁻¹⁴ ; document sur le pH du corps ; KA et prédominance de HCO₃⁻ dans le sang. |
+| b2_chim5_a2_titrage_ph.html | Courbe de titrage pH = f(V) ; choix de l'indicateur | O3, O4, O5 | Titrage pH-métrique d'un vinaigre dilué par la soude, acquisition à l'ordinateur (pH = f(V), dpH/dV) : VE = 8,0 mL, C = 0,080 mol/L, 4,8 g d'acide pour 100 mL de vinaigre, pKA = 4,8 à la demi-équivalence, phénolphtaléine, réaction quasi totale. |
+
+Fichier commun nouveau : `banc_ph.js`. Fichier commun modifié : `poste_titrage.js` (option `ph_metre`, désactivée par défaut).
+
+## Chapitre 2e année du bac « Évolution spontanée d'un système chimique » (fiche 2bac/chim6_evolution_spontanee)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim6_a1_sens_evolution.html | Mélanges éthanoïque/éthanoate et méthanoïque/méthanoate ; Fe²⁺, Fe³⁺, fer et cuivre | O1, O2 | Qr,i = 0, 1 et 0,10 pour trois mélanges (K = 0,10) : prévision du sens, pH mesurés (4,26 ; 4,25 ; 3,91), rapport [CH₃CO₂⁻]/[CH₃CO₂H] avant et après ; ions Fe³⁺ avec un fil de cuivre et un clou en fer (Qr,i = 0 < K) : la teinte jaune-orangé disparaît, pas dans le témoin. |
+
+Fichiers communs modifiés : `ions_metaux.js` (réduction des ions Fe³⁺ par le cuivre et le fer, sans effet sans ions Fe³⁺) ;
+`banc_ph.js` (contenu facultatif d'un bécher : mélange) ; `equilibre_acide.js` (quatre solutions à 0,10 mol/L).
+
+## Chapitre 2e année du bac « Transformations spontanées dans les piles et production d'énergie » (fiche 2bac/chim7_piles)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim7_a1_piles.html | Transfert spontané d'électrons ; piles cuivre-argent et fer-cuivre | O1 à O4 | Cuivre dans les ions argent, fer dans les ions cuivre (dépôts, Qr,i = 0 < K) ; pile Cu-Ag : voltmètre à 0 sans pont salin, E = 0,43 V avec, polarité, sens du courant et des ions du pont, réactions aux électrodes ; pile Fe-Cu : E = 0,78 V, I = 3,1 mA dans 100 Ω, Q = I·Δt en 1 h et masse de fer consommée. |
+| b2_chim7_a2_piles_usuelles.html | Piles usuelles et accumulateurs (documents) | O3, O4 | Quatre documents (histoire, piles usuelles et capacité, accumulateurs, dangers et recyclage) : 2 400 mAh = 8 640 C, batterie au plomb 6 × 2 V ; tri de huit générateurs en piles et accumulateurs ; recharge = transformation forcée. |
+
+Fichier commun nouveau : `pile_electrochimique.js` (pile composant du circuit, pont salin à poser, f.é.m. par la loi de Nernst,
+débit qui fait varier concentrations et masses). Pour ce chapitre, `pages.py` ajoute aussi les scripts des circuits et `tri.js`.
+
+## Chapitre 2e année du bac « Exemples de transformations forcées : l'électrolyse » (fiche 2bac/chim8_transformations_forcees, PC et SM)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim8_a1_electrolyse.html | Mise en évidence de l'électrolyse ; accumulateur au plomb ; électrolyse d'une solution de chlorure de sodium | O1, O2 | Pile Cu-Ag forcée par un générateur en opposition (courant inversé au-delà de 0,43 V, anode et cathode) ; tube en U de NaCl (195 mA sous 6 V, phénolphtaléine rose à la cathode, papier KI bleu à l'anode, rien sous 1,5 V, volume de H₂) ; charge puis décharge d'un accumulateur au plomb (PbO₂ brun, 1,80 V, lampe). |
+| b2_chim8_a2_respiration.html | Respiration et photosynthèse | O1 | Une pile de 4,5 V alimente l'électrolyse (P = U·I ≈ 0,47 W) : spontanée → forcée ; documents (électrolyses industrielles, dépôts électrolytiques, respiration, photosynthèse) ; tri de huit transformations spontanées ou forcées. |
+
+Fichier commun nouveau : `tube_electrolyse.js` (tube en U sur support, électrodes de graphite, tension seuil, couleurs, papiers à
+l'iodure de potassium). Fichier commun modifié : `commutateur.js` (option `manette_dessus`, désactivée par défaut : la manette reste
+touchable quand des fils passent sur le commutateur). Pour ce chapitre, `pages.py` ajoute `commutateur.js` et `tube_electrolyse.js`.
+
+## Chapitre 2e année du bac « Réactions d'estérification et d'hydrolyse » (fiche 2bac/chim9_esterification)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim9_a1_esterification.html | Mise en évidence de la lenteur et de l'équilibre ; modifier la vitesse ou le taux d'avancement | O1 à O6 | Tri des groupes –COOH, –OH, –COO–, –CO–O–CO– et noms des esters ; titrage par la soude de l'acide restant dans un tube sorti du bain-marie à 60 min (x = 10,4 mmol) ; courbe x = f(t) au tableur (limite 13,3 mmol, rendement 67 %, K = 4), hydrolyse (33 %), température et catalyseur ; titrage d'un mélange avec excès d'éthanol (rendement 90 %, Qr < K). |
+
+Aucun fichier commun nouveau ni modifié (banc de titrage, tri, tableur réutilisés). Pour ce chapitre, `pages.py` ajoute `tri.js`.

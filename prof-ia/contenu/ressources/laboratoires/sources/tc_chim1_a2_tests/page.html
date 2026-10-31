@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+Rôle : simulation de l'activité 2 du chapitre « Espèces chimiques » : tests de l'eau (sulfate de cuivre anhydre), du pH (papier pH, phénolphtaléine), de l'amidon (eau iodée) et du glucose (liqueur de Fehling).
+Reçoit : les gestes de l'élève (glisser-déposer, toucher, zoom à deux doigts) ; scène fixe de 1024 × 640 px mise à l'échelle.
+Produit : mesures, tableur et courbes sur la tablette, missions du carnet ; messages postMessage à la page du professeur.
+Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier autonome : laboratoires/tc_chim1_a2_tests.html.
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Laboratoire : tests de détection</title>
+  <link rel="stylesheet" href="../../commun/labo.css">
+  <link rel="stylesheet" href="../../commun/tablette.css">
+  <link rel="stylesheet" href="../../commun/carnet.css">
+</head>
+<body>
+  <div id="ecran"><div id="etage"></div></div>
+  <script src="../../commun/base.js"></script>
+  <script src="../../commun/materiaux.js"></script>
+  <script src="../../commun/scene.js"></script>
+  <script src="../../commun/glisser.js"></script>
+  <script src="../../commun/decor.js"></script>
+  <script src="../../commun/formules.js"></script>
+  <script src="../../commun/tableur.js"></script>
+  <script src="../../commun/courbe.js"></script>
+  <script src="../../commun/tablette.js"></script>
+  <script src="../../commun/carnet.js"></script>
+  <script src="../../commun/missions.js"></script>
+  <script src="../../commun/demarrage.js"></script>
+  <script src="../../commun/chimie_melange.js"></script>
+  <script src="../../commun/liquide_geometrie.js"></script>
+  <script src="../../commun/liquide_contenu.js"></script>
+  <script src="../../commun/chimie_reactions.js"></script>
+  <script src="../../commun/verrerie_profils.js"></script>
+  <script src="../../commun/verrerie_rendu.js"></script>
+  <script src="../../commun/verrerie_accessoires.js"></script>
+  <script src="../../commun/recipient_physique.js"></script>
+  <script src="../../commun/ecoulement.js"></script>
+  <script src="../../commun/recipient_gestes.js"></script>
+  <script src="../../commun/chimie_gouttes.js"></script>
+  <script src="../../commun/pipette_physique.js"></script>
+  <script src="../../commun/verre_montre.js"></script>
+  <script src="../../commun/chimie_poudre.js"></script>
+  <script src="../../commun/chimie_plaque.js"></script>
+  <script src="../../commun/porte_tubes.js"></script>
+  <script src="../../commun/bain_marie_physique.js"></script>
+  <script src="../../commun/chimie_decor.js"></script>
+  <script src="carreau_ph.js"></script>
+  <script src="postes_eau_ph.js"></script>
+  <script src="postes_amidon_glucose.js"></script>
+  <script src="missions_tests.js"></script>
+  <script src="simulation.js"></script>
+</body>
+</html>

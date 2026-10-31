@@ -30,7 +30,8 @@ Utilisé par : poste_systeme_solaire.js, simulation.js.
     const bout = { x: de.x + ux * f.longueur, y: de.y + uy * f.longueur };
     L.svg("line", { x1: de.x, y1: de.y, x2: bout.x, y2: bout.y, stroke: COULEURS[f.couleur], "stroke-width": 2.6, "marker-end": `url(#fleche-${f.couleur})` }, calque);
     L.svg("circle", { cx: de.x, cy: de.y, r: 2.2, fill: COULEURS[f.couleur] }, calque);
-    L.texte_exposants(calque, bout.x - uy * 16 - 14, bout.y + ux * 16, f.nom, { "font-size": 14, "font-weight": 700, fill: "#ffffff" });
+    const nom = f.longueur > 60 ? { x: bout.x - uy * 16 - 14, y: bout.y + ux * 16 } : { x: de.x - ux * (de.r + 14) - 14, y: de.y - uy * (de.r + 14) };
+    L.texte_exposants(calque, nom.x, nom.y, f.nom, { "font-size": 14, "font-weight": 700, fill: "#ffffff", stroke: "#03050b", "stroke-width": 3, "paint-order": "stroke" });
   }
 
   L.fleches_forces = function (g, calque) {

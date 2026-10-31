@@ -25,7 +25,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | serveur/tests/test_verifier_structure.py | Teste l'outil de vérification de la structure. |
 | contenu/cours/mouvement_rotation.docx | Le cours de l'enseignant (fait foi). |
 | contenu/cours/mouvement_rotation.md | Version texte du cours, extraite automatiquement, lisible par les agents. |
-| contenu/manifeste.json | Une fiche par ressource (documents, animation, enregistrement). |
+| contenu/manifeste.json | Une fiche par ressource (documents, animations, enregistrements, laboratoires virtuels) : chapitre, activité et objectifs officiels, missions. |
 | schemas/manifeste.schema.json | Format du manifeste. |
 | schemas/partition.schema.json | Format de la partition : le contrat entre les agents et le lecteur. |
 | sorties/valide/partie_1.json, partie_2.json, partie_3.json | Les trois parties (brouillons à relire par l'enseignant) : servies en mode figé, et en repli en mode adaptatif. La partie 1 sert aussi de modèle aux agents. |
@@ -81,7 +81,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/js/accueil.js | Remplit les listes de l'accueil ; à l'envoi, inscrit l'élève (pseudonyme) et ouvre le questionnaire. |
 | serveur/cles.py | Lit les clés d'API dans .env (jamais dans le code) ; dit si une clé est présente ; message clair si elle manque. |
 | serveur/agents/appel_ia.py | Seul fichier qui parle à l'API Claude : contexte en cache, sortie JSON imposée par un schéma, effort, repli, nouveaux essais, coût. |
-| serveur/agents/commun.py | Contexte stable partagé par les agents (règles, cours, manifeste, partition modèle) et appel d'un agent. |
+| serveur/agents/commun.py | Contexte stable partagé par les agents (règles, cours, ressources du chapitre du cours, partition modèle) et appel d'un agent. |
 | serveur/agents/pedagogique.py, voix.py, ecriture.py, architecture.py, chef.py, repondeur.py | Les six agents : chacun lit son prompt (prompts/<nom>.md) et répond au format de schemas/agents/<nom>.schema.json. |
 | prompts/commun.md + prompts/<agent>.md | Les consignes des agents, en français. Seul endroit où elles sont écrites. |
 | schemas/plan_pedagogique.schema.json, schemas/agents/*.schema.json | Format imposé à la réponse de chaque agent. |
@@ -258,14 +258,333 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/espace.js | Ciel étoilé, Soleil, Terre et Lune réalistes (nuit du côté opposé au Soleil). |
 | contenu/ressources/laboratoires/commun/continents.js | Contours des continents (latitude, longitude) et projection de la Terre vue de l'espace. |
 | contenu/ressources/laboratoires/commun/sonde.js | Sonde spatiale et afficheur de son capteur. |
-| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, recopie). |
+| contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, ABS, PI, COS, SIN, LN, EXP, recopie). |
 | contenu/ressources/laboratoires/commun/tableur.js | Feuille de calcul de la tablette (une par mission). |
 | contenu/ressources/laboratoires/commun/courbe.js | Application Graphique : points qui se dessinent, modélisation par une droite. |
 | contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
 | contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
 | contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
-| contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes. |
-| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions). |
+| contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes (nombre d'étiquettes par ligne réglable). |
+| contenu/ressources/laboratoires/commun/bouton.js | Bouton-poussoir lumineux (par exemple « Pause / Lecture » du temps), au doigt, à la souris et au clavier. |
+| contenu/ressources/laboratoires/commun/coussin_air.js | Table à coussin d'air en perspective, clou central, mobile lancé d'un geste, fil à accrocher. |
+| contenu/ressources/laboratoires/commun/coussin_air_mouvement.js | Mouvement du mobile image par image : glissement, pente, rotation autour du clou, rebonds. |
+| contenu/ressources/laboratoires/commun/eclateur.js | Éclateur : durée τ, bouton « Enregistrer », un point toutes les τ (30 au plus). |
+| contenu/ressources/laboratoires/commun/feuille_enregistrement.js | Feuille d'enregistrement : points sur la table, feuille relevée à l'échelle, numéros Mi. |
+| contenu/ressources/laboratoires/commun/outils_mesure.js | Transparent millimétré (origine du repère) et règle graduée qui pivote. |
+| contenu/ressources/laboratoires/commun/vecteurs_vitesse.js | Flèches-vecteurs vitesse à tracer sur la feuille, et leur vérification. |
+| contenu/ressources/laboratoires/commun/verif_enregistrement.js | Calculs de vérification sur un enregistrement : alignement, coordonnées, vitesse, distance. |
+| contenu/ressources/laboratoires/commun/soufflerie.js | Soufflerie de la table à coussin d'air : air en marche ou coupé (frottement), observation du palet. |
+| contenu/ressources/laboratoires/commun/dessin_palet.js | Dessin d'un palet autoporteur (surcharge, lettre, câble) pour les systèmes de plusieurs mobiles. |
+| contenu/ressources/laboratoires/commun/surcharge.js | Surcharge en laiton à poser sur un mobile ou à retirer, par glisser-déposer. |
+| contenu/ressources/laboratoires/commun/dynamometre.js | Dynamomètre à ressort réglable (calibre, graduations), oscillation amortie. |
+| contenu/ressources/laboratoires/commun/masses.js | Masses marquées et caillou, dessinés debout ou suspendus. |
+| contenu/ressources/laboratoires/commun/accrochage.js | Accrocher des masses en chaîne sous un dynamomètre ou un ressort ; mesures notées. |
+| contenu/ressources/laboratoires/commun/potence.js | Potence de laboratoire et coffret de masses marquées. |
+| contenu/ressources/laboratoires/commun/circuit_solveur.js | Calcul des potentiels et des courants d'un circuit continu (méthode des nœuds, DEL et limitation itérées, sources commandées par une tension pour le transistor et l'AO). |
+| contenu/ressources/laboratoires/commun/circuit.js | Circuit d'une paillasse : composants, bornes, fils ; recalcul et distribution des courants à chaque changement ; resoudre() sans redessin, pour les pas de temps. |
+| contenu/ressources/laboratoires/commun/circuit_fils.js | Fils de connexion : tirer d'une borne à l'autre, débrancher, fiches banane empilées, câble souple. |
+| contenu/ressources/laboratoires/commun/circuit_decor.js | Paillasse d'électricité vue de haut (mur, bloc de prises, plan de travail), boîtiers, cordons secteur. |
+| contenu/ressources/laboratoires/commun/circuit_generateur.js | Générateur de tension continue : afficheur, Marche/Arrêt, limitation de courant, cordon et fiche secteur ; touches de réglage sur le dessus. |
+| contenu/ressources/laboratoires/commun/circuit_recepteurs.js | Lampe (éclat selon la puissance), DEL avec résistance de protection, interrupteur à couteau. |
+| contenu/ressources/laboratoires/commun/multimetre.js | Multimètre : commutateur à 16 positions (V⎓, V~ 2 et 20 V, A~ 20 et 200 mA, A⎓ 2 mA à 10 A, Ω), quatre bornes, afficheur, fusible de la borne mA. |
+| contenu/ressources/laboratoires/commun/multimetre_mesure.js | Ce que mesure le multimètre selon le calibre : valeur, résolution, dépassement, précision de la notice, TRMS (tension et intensité alternatives). |
+| contenu/ressources/laboratoires/commun/mesure_tension.js | Reconnaît la tension U_XY mesurée par un voltmètre entre deux points nommés. |
+| contenu/ressources/laboratoires/commun/circuit_resistances.js | Résistances au vrai code des couleurs (support, plaquette), planche de fils résistants. |
+| contenu/ressources/laboratoires/commun/circuit_pile.js | Pile plate de 4,5 V dans un boîtier à bornes. |
+| contenu/ressources/laboratoires/commun/gbf.js | Générateur basse fréquence : formes sinus, triangle, carré ; fréquence affichée ; amplitude réglable. |
+| contenu/ressources/laboratoires/commun/oscilloscope.js | Oscilloscope à une ou deux voies : réglages Sv (par voie) et b, entrées Y1, Y2 et masse commune, cordon secteur. |
+| contenu/ressources/laboratoires/commun/oscilloscope_ecran.js | Écran de l'oscilloscope : quadrillage 10 × 8, repère de masse de chaque voie, une ou deux traces déclenchées sur front montant. |
+| contenu/ressources/laboratoires/commun/circuit_semiconducteurs.js | Diode 1N4007 et diode Zener 5,1 V sur support (caractéristiques exponentielles, symbole, bague de cathode). |
+| contenu/ressources/laboratoires/commun/thermistance.js | Thermistance CTN : sonde à plonger dans des béchers, température qui évolue, R(T). |
+| contenu/ressources/laboratoires/commun/photoresistance.js | Photorésistance : éclairement par une lampe de poche déplaçable, cache noir, R(E). |
+| contenu/ressources/laboratoires/commun/rheostat.js | Rhéostat à curseur (bornes A, B, C), résistance variable. |
+| contenu/ressources/laboratoires/commun/electrolyseur.js | Électrolyseur : récepteur E', r' (coude arrondi), bulles plus abondantes à la cathode. |
+| contenu/ressources/laboratoires/commun/caracteristique.js | Relevé des points (I, U) d'un dipôle quand les appareils sont bien branchés ; vérification du tableur. |
+| contenu/ressources/laboratoires/commun/transistor.js | Transistor NPN BC547 sur support (modèle d'Ebers-Moll) : régimes bloqué, linéaire, saturé ; courants I_B, I_C, I_E. |
+| contenu/ressources/laboratoires/commun/amplificateur_operationnel.js | Alimentation symétrique ±15 V et AO 741 sur plaquette : régime linéaire ou saturé (±13,5 V), choisi de façon cohérente ; option « bilan » (courants réels dans l'alimentation, courant de repos). |
+| contenu/ressources/laboratoires/commun/chimie_melange.js | Contenu d'un récipient de chimie (produits, réactifs, solides) et règles des tests : pH, phénolphtaléine, eau iodée, Fehling, sulfate de cuivre anhydre. |
+| contenu/ressources/laboratoires/commun/chimie_verrerie.js | Dessin de la verrerie : tube à essai, bécher, verre de montre, flacon compte-gouttes, pipette, porte-tubes. |
+| contenu/ressources/laboratoires/commun/chimie_gouttes.js | Paillasse de chimie (plans de dessin, cibles) et pipette compte-gouttes : les gouttes tombent une à une. |
+| contenu/ressources/laboratoires/commun/chimie_objets.js | Tube à essai déplaçable, verre de montre, bécher d'échantillon avec sa pipette, flacon de réactif. |
+| contenu/ressources/laboratoires/commun/chimie_poudre.js | Pot de sulfate de cuivre anhydre (pictogrammes) et spatule. |
+| contenu/ressources/laboratoires/commun/chimie_chauffage.js | Bain-marie à 80 °C (plaque chauffante, bécher, thermomètre) ; les tubes plongés chauffent. |
+| contenu/ressources/laboratoires/commun/chimie_decor.js | Affiche de sécurité du laboratoire de chimie (lunettes, blouse, ne jamais goûter). |
+| contenu/ressources/laboratoires/commun/chimie_plaque.js | Plaque chauffante (dessin, et version avec touche Marche/Arrêt). |
+| contenu/ressources/laboratoires/commun/documents_mur.js | Documents affichés au mur, qui s'agrandissent quand on les touche. |
+| contenu/ressources/laboratoires/commun/chronometre.js | Chronomètre de paillasse (temps accéléré) pour les extractions. |
+| contenu/ressources/laboratoires/commun/liquide_geometrie.js | Géométrie des liquides : aire d'un polygone, découpe par une droite, niveau d'une surface libre. |
+| contenu/ressources/laboratoires/commun/liquide_contenu.js | Contenu liquide en phases (miscibles ou non, rangées par densité), espèces dissoutes, émulsion, partage, couleurs. |
+| contenu/ressources/laboratoires/commun/chimie_reactions.js | Réactifs et échantillons des tests (jus, vinaigre, Fehling...), pH d'une phase, phénolphtaléine, réaction de Fehling quand on chauffe. |
+| contenu/ressources/laboratoires/commun/verrerie_profils.js | Verrerie aux vraies dimensions (mm) : béchers 50 à 600 mL, tube, éprouvette, erlenmeyer, ampoule, ballon ; volume ↔ hauteur. |
+| contenu/ressources/laboratoires/commun/verrerie_rendu.js | Dessin réaliste d'une pièce de verrerie et de son liquide (phases, surface, graduations, reflets). |
+| contenu/ressources/laboratoires/commun/verrerie_accessoires.js | Robinet, bouchon, tige, pied, étiquette, col rodé dessinés avec la verrerie. |
+| contenu/ressources/laboratoires/commun/recipient_physique.js | Récipient qui respecte la physique : surface horizontale, ballottement, débordement, robinet (Torricelli). |
+| contenu/ressources/laboratoires/commun/ecoulement.js | Chute libre du liquide qui sort d'un récipient : il entre dans un récipient ou une cible, ou fait une flaque. |
+| contenu/ressources/laboratoires/commun/recipient_gestes.js | Prendre, secouer, poser un récipient, le mettre sur un support, verser en l'inclinant. |
+| contenu/ressources/laboratoires/commun/pipette_physique.js | Flacon compte-gouttes et pipette Pasteur : gouttes de 0,05 mL qui tombent là où on tient la pipette. |
+| contenu/ressources/laboratoires/commun/verre_montre.js | Verre de montre (60 ou 80 mm) : échantillon solide, papier pH, sulfate de cuivre ; taches des gouttes. |
+| contenu/ressources/laboratoires/commun/porte_tubes.js | Porte-tubes en plastique (plateau percé devant les tubes) et ses places. |
+| contenu/ressources/laboratoires/commun/bain_marie_physique.js | Bain-marie à taille réelle (plaque, bécher de 600 mL, thermomètre) ; les tubes plongés chauffent. |
+| contenu/ressources/laboratoires/commun/plaque_ccm.js | Plaque de chromatographie (5 × 10 cm) : ligne, dépôts, montée du front, taches selon Rf, révélation UV et diiode. |
+| contenu/ressources/laboratoires/commun/pictogrammes.js | Pictogrammes de danger SGH (flamme, corrosion, point d'exclamation, environnement). |
+| contenu/ressources/laboratoires/commun/equipement.js | Lunettes et gants accrochés au mur, à mettre avant de manipuler un produit corrosif. |
+| contenu/ressources/laboratoires/commun/chauffe_ballon.js | Chauffe-ballon de 250 mL (cuvette, commandes, voyant). |
+| contenu/ressources/laboratoires/commun/pierre_ponce.js | Flacon de pierre ponce et pincée de grains à lâcher dans un ballon. |
+| contenu/ressources/laboratoires/commun/refrigerant_boules.js | Réfrigérant à boules (eau du manchon, gouttes du reflux) et position de ses embouts. |
+| contenu/ressources/laboratoires/commun/montage_reflux.js | Montage à reflux : ballon, chauffe, ébullition, reflux ou perte des vapeurs, avancement de la réaction. |
+| contenu/ressources/laboratoires/commun/reflux_gestes.js | Gestes du reflux : entonnoir, réfrigérant à poser, robinet, chauffe, tuyaux qui suivent. |
+| contenu/ressources/laboratoires/commun/poste_synthese.js | Paillasse de synthèse au reflux : équipement, réactifs, catalyseur, montage, récepteur. |
+| contenu/ressources/laboratoires/commun/buchner.js | Dessins de la filtration sous vide : Büchner, trompe, tuyau à vide, pissette, papiers. |
+| contenu/ressources/laboratoires/commun/buchner_poste.js | Paillasse de filtration sous vide (papier mouillé, vide, versement, ordre d'arrêt). |
+| contenu/ressources/laboratoires/commun/ampoule_support.js | Ampoule à décanter sur son anneau : boucher, secouer, dégazer, robinet. |
+| contenu/ressources/laboratoires/commun/ccm_materiel.js | Petit matériel de la CCM : crayon, capillaires, règle, couvercle, lampe UV, bocal de diiode, bidon. |
+| contenu/ressources/laboratoires/commun/ccm_gestes.js | Gestes de la CCM : ligne, dépôts, plaque dans la cuve, front, cercles sous UV. |
+| contenu/ressources/laboratoires/commun/ccm_poste.js | Paillasse de chromatographie (cuve, éluant, plaque, chronomètre, faits notés). |
+| contenu/ressources/laboratoires/commun/ccm_missions.js | Étapes communes des missions de CCM et vérification des Rf au tableur. |
+| contenu/ressources/laboratoires/commun/balance_electronique.js | Balance électronique au centième (200 g) : plateau, afficheur qui se stabilise, Marche/Arrêt, tare. |
+| contenu/ressources/laboratoires/commun/echantillons_metal.js | Cylindres de métal de même volume (cuivre, aluminium, fer, zinc) à poser sur la balance. |
+| contenu/ressources/laboratoires/commun/spatule_physique.js | Pot de poudre et microspatule plantée dedans : une pointe de poudre versée dans un récipient. |
+| contenu/ressources/laboratoires/commun/bec_bunsen.js | Bec Bunsen : robinet de gaz, allume-gaz, virole (flamme bleue ou jaune), température de la flamme. |
+| contenu/ressources/laboratoires/sources/tc_chim4_a1_rutherford/ | Histoire du modèle de l'atome et expérience de Rutherford (chambre de diffusion, pompe, compteur). |
+| contenu/ressources/laboratoires/sources/tc_chim4_a2_masse/ | Constituants de l'atome (tableau de l'atome : Z, A, ions, couches K L M), masse des atomes, pesée du cuivre. |
+| contenu/ressources/laboratoires/sources/tc_chim4_a3_cuivre/ | Cycle du cuivre dans un tube, sous la hotte : conservation de l'élément cuivre. |
+| contenu/ressources/laboratoires/sources/tc_chim4_a4_carbone/ | Combustion du carbone dans le dioxygène, eau de chaux ; cycle du carbone, abondance des éléments. |
+| contenu/ressources/laboratoires/commun/tableau_atome.js | Tableau magnétique de l'atome (noyau, couches K, L, M, aimants protons, neutrons, électrons). |
+| contenu/ressources/laboratoires/commun/lewis_regles.js | Règles de Lewis : duet, octet, nombre de liaisons, formule brute, signature des isomères. |
+| contenu/ressources/laboratoires/commun/lewis_dessin.js | Dessins du tableau de Lewis : aimants d'atomes, doublets liants et non liants, réserve, bouton texte. |
+| contenu/ressources/laboratoires/commun/tableau_lewis.js | Tableau magnétique de Lewis : poser des atomes, des liaisons simples, doubles, triples, des doublets non liants. |
+| contenu/ressources/laboratoires/commun/molecule_3d.js | Géométrie d'un modèle moléculaire par répulsion des doublets (180°, 120°, 109,5°, 107°, 104,5°). |
+| contenu/ressources/laboratoires/commun/modele_dessin.js | Rendu 3D des boules et bâtonnets (profondeur, perspective, trous libres). |
+| contenu/ressources/laboratoires/commun/modele_atelier.js | Atelier d'assemblage : accrocher, tourner, liaison double, démonter ; bilan de géométrie. |
+| contenu/ressources/laboratoires/commun/boite_modeles.js | Boîte de modèles moléculaires (casiers C, H, O, N) reliée à l'atelier. |
+| contenu/ressources/laboratoires/sources/tc_chim5_a1_lewis/ | Ions stables (duet, octet), représentation de Lewis, formules et isomères. |
+| contenu/ressources/laboratoires/sources/tc_chim5_a2_cram/ | Modèles moléculaires en 3D, géométrie des molécules, représentation de Cram du méthane. |
+| contenu/ressources/laboratoires/commun/tableau_cartes.js | Tableau magnétique quadrillé et cartes aimantées à ranger (classification des éléments). |
+| contenu/ressources/laboratoires/commun/lewis_verif.js | Vérifications des missions sur les molécules : ions, molécule de Lewis, isomères. |
+| contenu/ressources/laboratoires/sources/tc_chim6_a1_familles/ | Méthode de Mendeleïev (cartes, documents), alcalins dans l'eau, halogénures et ions argent. |
+| contenu/ressources/laboratoires/sources/tc_chim6_a2_tableau/ | Tableau périodique à remplir, liaisons et ions selon la colonne, formules de Lewis. |
+| contenu/ressources/laboratoires/commun/pesee_poudre.js | Pesée d'une poudre : pots et spatules, coupelles de pesée, poudre qui coule de la spatule sur la balance. |
+| contenu/ressources/laboratoires/commun/coupelle_versement.js | Verser la poudre d'une coupelle dans un récipient ou un entonnoir ; rinçage de la coupelle à la pissette. |
+| contenu/ressources/laboratoires/commun/pipette_graduee.js | Pipette graduée de 10 mL et pipeteur à molette : aspirer, lire, délivrer un volume. |
+| contenu/ressources/laboratoires/commun/dissolution.js | Dissolution des solides moléculaires (saccharose, glucose, diiode) : vitesse, agitation, solubilité selon le solvant, cristaux. |
+| contenu/ressources/laboratoires/commun/agitateur.js | Agitateur en verre : remuer un liquide (agitation, ballottement). |
+| contenu/ressources/laboratoires/commun/pissette.js | Pissette d'eau distillée : tenue, bec vers le bas, jet tant qu'on appuie. |
+| contenu/ressources/laboratoires/commun/fiole_accessoires.js | Entonnoir à solide et bouchon d'une fiole jaugée. |
+| contenu/ressources/laboratoires/commun/fiole_jaugee.js | Fiole jaugée avec accessoires, loupe sur le trait de jauge, suivi de l'homogénéisation. |
+| contenu/ressources/laboratoires/sources/tc_chim7_a1_mole/ | Masses molaires au tableur, pesée de 0,010 mol de solides, éthanol à la pipette graduée, volume molaire. |
+| contenu/ressources/laboratoires/sources/tc_chim7_a2_solutions/ | Dissolution (saccharose, diiode, éthanol), solution de glucose en fiole jaugée, dilution d'une eau iodée. |
+| contenu/ressources/laboratoires/commun/ions_metaux.js | Métaux et ions en solution (Cu + Ag⁺, Fe + Cu²⁺), précipités à la soude (Cu(OH)₂, Fe(OH)₂, Ag₂O). |
+| contenu/ressources/laboratoires/commun/metal_tube.js | Fil de cuivre et clou en fer à plonger dans un tube ; dépôts d'argent et de cuivre dessinés. |
+| contenu/ressources/laboratoires/commun/flacon_gaz.js | Flacon de dioxygène ou de dichlore à plaque de verre : gaz restant, produits, fumée, dépôts. |
+| contenu/ressources/laboratoires/commun/cuillere_combustion.js | Têt à combustion et réactifs (soufre, laine de fer, sodium) : chauffage, combustion selon le gaz. |
+| contenu/ressources/laboratoires/commun/equation_regles.js | Composition d'une formule, écriture, bilan des éléments et des charges, vérification d'une équation. |
+| contenu/ressources/laboratoires/commun/tableau_equation.js | Tableau magnétique : aimants des espèces, cases réactifs et produits, coefficients, bilan en direct. |
+| contenu/ressources/laboratoires/commun/degagement_gaz.js | Acide éthanoïque et hydrogénocarbonate de sodium : réactif limitant, effervescence. |
+| contenu/ressources/laboratoires/commun/recueil_gaz.js | Cuve à eau et éprouvette à gaz graduée : volume de gaz recueilli, bulles. |
+| contenu/ressources/laboratoires/sources/tc_chim8_a1_transformations/ | Métaux et ions, précipitation, combustions (soufre, fer, sodium), écriture et ajustement des équations. |
+| contenu/ressources/laboratoires/sources/tc_chim8_a2_avancement/ | Vinaigre et hydrogénocarbonate : volume de CO₂, avancement maximal, tableau d'avancement. |
+| contenu/ressources/laboratoires/commun/bouton_reglage.js | Bouton rotatif d'un appareil avec afficheur et touches + et − (alimentation, stroboscope). |
+| contenu/ressources/laboratoires/commun/rapporteur.js | Rapporteur 360° à poser sur la feuille d'enregistrement, avec fil de visée, centré sur l'axe. |
+| contenu/ressources/laboratoires/sources/b1_meca1_a1_rotation/ | Grande roue et chronophotographie : rotation et translation circulaire ; tri de mouvements du vécu. |
+| contenu/ressources/laboratoires/sources/b1_meca1_a2_enregistrement/ | Solide pivotant sur la table à coussin d'air : θ, s = R·θ, ω, v = R·ω. |
+| contenu/ressources/laboratoires/sources/b1_meca1_a3_uniforme/ | Disque et moteur, stroboscope, capteur à fourche : f, T, ω = 2πf, v = R·ω. |
+| contenu/ressources/laboratoires/commun/dynamometre_traction.js | Dynamomètre tenu par son anneau et tiré dans n'importe quelle direction (cordelette, tige, corps gradué). |
+| contenu/ressources/laboratoires/sources/b1_meca2_a1_translation/ | Pavé tiré (W = F·AB·cos α), tri moteur/résistant/nul, plan incliné et niveau laser (travail du poids). |
+| contenu/ressources/laboratoires/sources/b1_meca2_a1_rotation/ | Poulie à deux gorges (W = M·Δθ), treuil électrique : couple moteur, puissance P = W/Δt = M·ω. |
+| contenu/ressources/laboratoires/commun/chute_dessin.js | Dessin de l'appareil de chute libre : potence, électroaimant, règle, cellules, chronomètre à deux voies. |
+| contenu/ressources/laboratoires/commun/chute_libre.js | Chute libre d'une bille lâchée par un électroaimant ; durées d'occultation de deux cellules déplaçables. |
+| contenu/ressources/laboratoires/sources/b1_meca3_a1_cinetique/ | Banc à coussin d'air et curseur à frottement (d ∝ m·v²) ; volant d'inertie freiné (n ∝ J·ω²). |
+| contenu/ressources/laboratoires/sources/b1_meca3_a2_theoreme/ | Table à coussin d'air inclinée : ΔEc = W(P), théorème de l'énergie cinétique. |
+| contenu/ressources/laboratoires/sources/b1_meca3_a3_potentielle/ | Chute libre : ΔEc = −Δ(m·g·z), énergie potentielle de pesanteur, état de référence. |
+| contenu/ressources/laboratoires/sources/b1_meca3_a4_mecanique/ | Chute libre (Em constante) ; rail incliné à débit d'air faible : ΔEm = −Q. |
+| contenu/ressources/laboratoires/sources/b1_meca4_a1_energie_interne/ | Tube à grenaille (ΔU = m·c·ΔT), effets du travail, seringue à gaz : W = p·(V1 − V2), ΔU = W + Q. |
+| contenu/ressources/laboratoires/commun/vase_modele.js | Modèle thermique d'un vase : liquides versés, solide plongé, glace qui fond, chauffage, équilibre (Σ Q = 0). |
+| contenu/ressources/laboratoires/commun/vase_dessin.js | Calorimètre ou gobelet et son contenu, barrette, sonde et afficheur du thermomètre, agitateur. |
+| contenu/ressources/laboratoires/commun/becher_verseur.js | Bécher de liquide de masse et température connues, que l'on vide dans un vase. |
+| contenu/ressources/laboratoires/sources/b1_meca5_a1_parametres/ | Gobelet et thermoplongeur de 100 W : Q = P·t, Q = m·c·Δθ (eau, huile). |
+| contenu/ressources/laboratoires/sources/b1_meca5_a2_calorimetrie/ | Calorimètre : capacité thermique, chaleur massique d'un métal, chaleur latente de fusion de la glace. |
+| contenu/ressources/laboratoires/sources/b1_meca5_a3_rayonnement/ | Lampe et plaques noire et brillante (rayonnement) ; modes de transfert thermique. |
+| contenu/ressources/laboratoires/sources/b1_elec1_a1_electrisation/ | Pendule électrostatique, électroscope à feuilles d'or, support isolant (baguettes de tc_elec1_a1 réutilisées). |
+| contenu/ressources/laboratoires/sources/b1_elec1_a2_champ/ | Balance de Coulomb (F = k·qA·qB/d²) ; semoule dans l'huile de ricin : lignes de champ. |
+| contenu/ressources/laboratoires/sources/b1_elec1_a3_potentiel/ | Cuve rhéographique : V(x), E = U/d, équipotentielles, W = q·(VA − VB), Epe. |
+| contenu/ressources/laboratoires/commun/moteur_treuil.js | Moteur à courant continu en treuil (f.c.é.m. k·ω, r' = 25 Ω) qui monte 200 g ; cellules et chronomètre de montée (40 cm). |
+| contenu/ressources/laboratoires/sources/b1_elec2_a1_transferts/ | Lampe, moteur à treuil, électrolyseur sur un générateur ; tri des appareils selon l'énergie utile. |
+| contenu/ressources/laboratoires/sources/b1_elec2_a2_puissance/ | Moteur à treuil, ampèremètre, voltmètre : W = U·I·Δt, P = U·I, W_u, Q, rendement à trois tensions. |
+| contenu/ressources/laboratoires/sources/b1_elec2_a3_joule/ | Résistance chauffante dans un calorimètre : Q = R·I²·Δt ; tri effet Joule utile ou nuisible. |
+| contenu/ressources/laboratoires/sources/b1_elec2_a4_generateur/ | Deux piles, deux résistances : E·I = U·I + r·I², rendement U/E, I = E/(R + r), piles en série. |
+| contenu/ressources/laboratoires/commun/champ_magnetique.js | Champ B par superposition : champ terrestre, pôles d'aimants, segments de courant (Biot et Savart) ; barreau, aimant en U, fil, spire, bobine. |
+| contenu/ressources/laboratoires/commun/plan_magnetique.js | Feuille ou plaque vue un peu d'en haut : passage plan ↔ écran, dessin, rose des vents. |
+| contenu/ressources/laboratoires/commun/aimant_dessin.js | Barreau aimanté sur la feuille (entier ou cassé) et ses sources de champ. |
+| contenu/ressources/laboratoires/commun/boussole.js | Boussole que l'on fait glisser ; aiguille amortie orientée par le champ horizontal. |
+| contenu/ressources/laboratoires/commun/limaille.js | Limaille de fer qui dessine les lignes de champ quand on tapote la feuille. |
+| contenu/ressources/laboratoires/commun/teslametre.js | Teslamètre à sonde de Hall : composante horizontale ou verticale, touche zéro, sonde déplaçable. |
+| contenu/ressources/laboratoires/commun/generateur_courant.js | Générateur de courant réglable : intensité, interrupteur, inverseur, deux bornes. |
+| contenu/ressources/laboratoires/sources/b1_elec3_a1_champ/ | Barreau aimanté (boussole, limaille, teslamètre), aimant brisé, superposition, champ terrestre, Œrsted. |
+| contenu/ressources/laboratoires/sources/b1_elec3_a2_courants/ | Champ d'un fil rectiligne, d'une spire, d'une bobine ; B ∝ I, B = 2×10⁻⁷·I/d, μ0·N·I/2R, μ0·n·I. |
+| contenu/ressources/laboratoires/sources/b1_elec3_a3_laplace/ | Rails et balance de Laplace, courants parallèles, faisceau d'électrons, haut-parleur, moteur, induction. |
+| contenu/ressources/laboratoires/commun/rayon_lumineux.js | Rayon de lumière : ligne brisée avec halo et flèches du sens de propagation. |
+| contenu/ressources/laboratoires/commun/optique_materiel.js | Pied et noix, lampe sur douille, module laser, écran de carton percé (en volume). |
+| contenu/ressources/laboratoires/commun/objets_scene.js | Lampe d'architecte, livre à plat, élève assis de profil. |
+| contenu/ressources/laboratoires/sources/b1_opt1_a1_vision/ | Laser dans la fumée, conditions de vision, écrans percés, sources et objets diffusants, illusions. |
+| contenu/ressources/laboratoires/sources/b1_opt1_a2_lois/ | Disque optique gradué : réflexion (r = i, retour inverse), réfraction (n = 1,50, angle limite). |
+| contenu/ressources/laboratoires/sources/b1_opt1_a3_lentilles/ | Tableau magnétique, boîte à rayons, lentilles profil (tracé exact), foyer, f' ; loupes. |
+| contenu/ressources/laboratoires/commun/banc_optique.js | Banc d'optique gradué sur pieds, cavaliers, lanterne avec l'objet « F » (taille réglable), lentille dans sa bague, oculaire, écran quadrillé. |
+| contenu/ressources/laboratoires/commun/image_banc.js | Conjugaison, grandissement, image nette ou floue sur l'écran, faisceau visible du banc. |
+| contenu/ressources/laboratoires/sources/b1_opt2_a1_miroir/ | Deux bougies et vitre (bougie.js, poste_bougies.js), champ de vision d'un miroir vu de dessus (poste_champ.js). |
+| contenu/ressources/laboratoires/sources/b1_opt2_a2_lentille/ | Banc : foyer, f', vergence, diaphragme, images (poste_focale.js) ; planche à dessin et rayons particuliers (construction_rayons.js, poste_construction.js). |
+| contenu/ressources/laboratoires/sources/b1_opt2_a3_conjugaison/ | Banc et vue rapprochée de l'écran : conjugaison, grandissement (poste_conjugaison.js) ; loupe, ce que voit l'œil (vue_loupe.js, poste_observation_loupe.js). |
+| contenu/ressources/laboratoires/commun/instrument_optique.js | Images successives par plusieurs lentilles, grossissement vu par l'œil, marche de rayons, vue « ce que voit l'œil ». |
+| contenu/ressources/laboratoires/sources/b1_opt3_a1_lunette/ | Documents et tri (documents_lunette.js) ; maquette de lunette au banc, Lune, cercle oculaire, faisceau (lunette_banc.js, poste_lunette.js). |
+| contenu/ressources/laboratoires/sources/b1_opt3_a2_microscope/ | Microscope en volume (microscope_dessin.js), lames et vue dans l'oculaire (lames.js), documents, gestes (poste_microscope.js) ; modèle au banc (poste_modele_microscope.js). |
+| contenu/ressources/laboratoires/sources/b1_chim1_a1_mesure/ | Documents et tri des mesures par domaine (documents_mesure.js) ; bandelettes « nitrates » (poste_bandelettes.js) ; échelle de teintes du colorant E131 (poste_echelle_teintes.js). |
+| contenu/ressources/laboratoires/commun/capteurs_numeriques.js | Pressiomètre numérique (embout, écran en hPa) et thermomètre électronique (sonde, écran en °C). |
+| contenu/ressources/laboratoires/sources/b1_chim2_a1_gaz/ | Seringue et robinet à trois voies (seringue_gaz.js), loi de Boyle-Mariotte (poste_boyle.js), ballon dans un bain thermostaté (poste_temperature.js). |
+| contenu/ressources/laboratoires/sources/b1_chim2_a2_electrolytes/ | Filet d'eau dévié et cristal ionique (poste_polarite.js), solution de sulfate de cuivre (poste_preparation.js), tests de précipitation (poste_tests_ions.js), migration des ions (poste_migration.js). |
+| contenu/ressources/laboratoires/sources/b1_chim2_a3_gaz_produit/ | Magnésium et acide chlorhydrique en erlenmeyer bouché relié au pressiomètre (poste_pression_gaz.js). |
+| contenu/ressources/laboratoires/commun/conductimetrie.js | Conductivités molaires ioniques, solutions, σ = Σ λ·[X] (corrigée), G = σ·S/L. |
+| contenu/ressources/laboratoires/commun/cellule_conductance.js | Cellule à plaques parallèles (L réglable) et son bornier (composant du circuit, conductance G), béchers de 100 mL, support élévateur (S). |
+| contenu/ressources/laboratoires/commun/poste_conductance.js | Paillasse de conductance : GBF, deux multimètres, cellule ; vérification du montage câblé par l'élève, mesures U et I lues ; étape « montage et calibres ». |
+| contenu/ressources/laboratoires/sources/b1_chim3_a1_conductance/ | Ions indispensables, G = I/U, facteurs L, S, C, conductivité (simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim3_a2_etalonnage/ | Courbe d'étalonnage au chlorure de sodium, sérum physiologique, limite (simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim3_a3_ion_commun/ | Six solutions à 5 mmol/L, conductivités molaires ioniques (simulation.js). |
+| contenu/ressources/laboratoires/commun/reactions_totales.js | Réactions totales entre espèces dissoutes (avancement jusqu'au réactif limitant), en mmol ; équations observées. |
+| contenu/ressources/laboratoires/commun/acide_base.js | Solutions acides et basiques, réactions de transfert de protons, pH calculé à partir des espèces, BBT et hélianthine. |
+| contenu/ressources/laboratoires/commun/oxydoreduction.js | Solutions et réactions d'oxydoréduction (permanganate, fer II, diiode, thiosulfate, Javel, vitamine C), teintes du permanganate, du diiode et de l'amidon. |
+| contenu/ressources/laboratoires/commun/burette.js | Burette de 25 mL aux vraies dimensions : graduations, robinet (goutte à goutte, filet), écoulement réel, loupe du ménisque. |
+| contenu/ressources/laboratoires/commun/agitateur_magnetique.js | Agitateur magnétique : plateau (support), bouton de vitesse, barreau aimanté vu à travers le verre. |
+| contenu/ressources/laboratoires/commun/conductimetre.js | Conductimètre à sonde plongeante : σ = Σ λi·[Xi], temps de réponse selon l'agitation ; sonde dessinée derrière la paroi du bécher. |
+| contenu/ressources/laboratoires/commun/poste_titrage.js | Paillasse de titrage (1 px/mm) : burette, agitateur, bécher à titrer, récipients et flacons, conductimètre facultatif, pH-mètre facultatif (électrode sur la tige de la burette), places choisies (facultatif) ; réactions continues ; renvoie aussi le contexte de la paillasse. |
+| contenu/ressources/laboratoires/sources/b1_chim4_a1_protons/ | Indicateurs colorés et produits courants ; vinaigre + soude, ammoniaque + acide : transfert de protons (postes_protons.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim4_a2_electrons/ | Fer + ions cuivre II, Javel + iodure, diiode + vitamine C : transfert d'électrons (postes_electrons.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim4_a3_conductimetrique/ | Titrage conductimétrique d'un déboucheur par l'acide chlorhydrique (simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim4_a4_colorimetrique/ | Titrages des ions fer II par le permanganate et du diiode par le thiosulfate (postes_colorimetrie.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim5_a1_organique/ | Documents de la chimie organique, combustion d'une bougie (C et H), modèles de l'éthane, de l'éthène et de l'éthyne (documents_organique.js, poste_bougie.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/chimie_organique.js | Espèces organiques (densité, Téb, miscibilité), réactifs des tests (2,4-DNPH, permanganate acidifié), oxydation ménagée de l'éthanol, ébullition au bain-marie. |
+| contenu/ressources/laboratoires/commun/nomenclature.js | Nom officiel d'un modèle d'alcane ou d'alcène (chaîne principale, ramifications, indices) et isomérie Z/E lue sur sa géométrie. |
+| contenu/ressources/laboratoires/sources/b1_chim6_a1_squelette/ | Solubilité et densité, températures d'ébullition au bain-marie (postes_squelette.js), tests des groupes caractéristiques (poste_groupes.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim6_a2_modeles/ | Isomères de constitution, noms officiels et isomérie Z/E aux modèles ; documents pétrochimie et polymères (documents_petrochimie.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b1_chim6_a3_benzoique/ | Synthèse de l'acide benzoïque : espèces et réactions (especes_benzoique.js), reflux, filtrations, précipitation (postes_benzoique.js), pesée (poste_pesee_benzoique.js), missions (missions_benzoique.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_intro_a1_physicien/ | Article d'une physicienne, questions rangées par partie du programme, démarche sur le problème du satellite GPS (documents_physicien.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_intro_a1_chimiste/ | Activités et préoccupations du chimiste, questions de la chimie de l'année (donnees_chimiste.js : documents et étiquettes ; postes_chimiste.js ; simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_chim1_a1_rapides_lentes/ | Transformations rapides et lentes, température et concentration (postes_rapides_lentes.js : trois paillasses ; simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_chim1_a2_vie_courante/ | Autocuiseur (documents, durées de cuisson) et conservation par le froid (bain de glace, thermomètre) : postes_vie_courante.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim1_s1_chocs_efficaces/ | Chocs efficaces (PC, SM) : modele_chocs.js (disques, parois à T, seuil d'énergie), poste_chocs.js (logiciel sur le portable), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim2_a1_prelevements/ | Suivi par prélèvements : postes_prelevements.js (banc de titrage, mélange S₂O₈²⁻ + I⁻, pipette graduée, trempe, horloge ; affiche des résultats de la classe), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim2_a2_mesures_physiques/ | Suivi par une mesure physique : poste_pression.js (Mg + HCl, erlenmeyer bouché, pressiomètre), poste_conductimetrie.js (hydrolyse du 2-chloro-2-méthylpropane, conductimètre), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim3_a1_ph_deux_sens/ | pH et deux sens d'une réaction : poste_acides.js (pH-mètre à étalonner, trois acides), poste_deux_sens.js (ajouts d'acide pur et d'éthanoate de sodium), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim3_s1_equilibre_dynamique/ | Équilibre dynamique (PC, SM) : modele_equilibre.js (A + B ⇌ C + D, chocs efficaces dans les deux sens), poste_equilibre.js (logiciel sur le portable), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim4_a1_qr_constant/ | Qr,éq pour quatre états initiaux (acide éthanoïque, conductimétrie) : simulation.js (missions et paillasse sur banc_conductimetrie.js). |
+| contenu/ressources/laboratoires/sources/b2_chim4_a2_taux_acides/ | Taux d'avancement final de quatre acides de même concentration (conductimétrie) : simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim5_a1_ph_courants/ | pH de produits courants et Ke : produits_courants.js (produits à pH imposé, soude, paillasse « eau et corps humain » avec document), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim5_a2_titrage_ph/ | Titrage pH-métrique du vinaigre : logiciel_ph.js (acquisition sur le portable : pH = f(V), dpH/dV, curseur), poste_vinaigre.js (banc, document des indicateurs, câble USB), simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_chim6_a1_sens_evolution/ | Sens d'évolution spontanée : poste_fer.js (ions fer III et fer II, cuivre, fer, témoin, données), simulation.js (mélanges acide-base sur banc_ph.js, missions). |
+| contenu/ressources/laboratoires/sources/b2_chim7_a1_piles/ | Piles : poste_melange.js (métaux dans les ions argent et cuivre), poste_piles.js (pile, pont salin, résistance, voltmètre, ampèremètre), simulation.js (missions). |
+| contenu/ressources/laboratoires/sources/b2_chim7_a2_piles_usuelles/ | Piles usuelles : documents_piles.js (quatre documents, tri piles/accumulateurs), simulation.js (missions). |
+| contenu/ressources/laboratoires/sources/b2_chim8_a1_electrolyse/ | Électrolyse : accumulateur_plomb.js (accumulateur de laboratoire, composant du circuit), poste_forcee.js (pile forcée par un générateur), poste_nacl.js (tube en U de chlorure de sodium), poste_accumulateur.js (charge et décharge, commutateur, lampe), simulation.js (missions). |
+| contenu/ressources/laboratoires/sources/b2_chim8_a2_respiration/ | Spontané ou forcé : poste_pile_electrolyse.js (pile qui alimente une électrolyse), documents_forcees.js (quatre documents, tri), simulation.js (missions). |
+| contenu/ressources/laboratoires/sources/b2_chim9_a1_esterification/ | Estérification : donnees_esters.js (modèle x(t), K = 4, résultats de la classe, liquides titrés), postes_esters.js (tri des groupes, banc de titrage à deux béchers, affiches), simulation.js (missions). |
+| contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
+| contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
+| contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
+| contenu/ressources/laboratoires/commun/corde_tendue.js | Corde de 2 m tendue sur une poulie par des masses (T = M·g), trois cordes de masses linéiques différentes, v = √(T/μ) ; coup sec réglable, ralenti × 20, chronophotographie. |
+| contenu/ressources/laboratoires/commun/micro_claquoir.js | Claquoir, règle de 1 m et deux microphones déplaçables reliés à l'oscilloscope à mémoire : retard d'un son. |
+| contenu/ressources/laboratoires/commun/oscilloscope_memoire.js | Oscilloscope numérique à mémoire, deux voies, monocoup déclenché par la voie 1 ; sensibilités et balayage réglables. |
+| contenu/ressources/laboratoires/sources/b2_ondes1_a1_exemples/ | Cuve à vague et bouchon (cuve_vague.js), ressort et documents son/séismes avec tableau de tri (postes_exemples.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes1_a2_retard/ | Retard le long du ressort (cellules, chronomètre) et retard d'un son (micros, oscilloscope) ; thermomètre mural (postes_retard.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes1_a3_milieu/ | Corde tendue (tension, masse linéique), documents sur le son selon le milieu (postes_milieu.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/corde_vibreur.js | Corde, vibreur et GBF, coton absorbant ; lumière ordinaire (bande floue) ou stroboscope (images des éclairs, immobile si f = n·fe) ; règle et curseurs pour λ. |
+| contenu/ressources/laboratoires/commun/banc_haut_parleur.js | Haut-parleur et GBF sinusoïdal, deux micros sur une règle de 1 m, oscilloscope à deux voies : points en phase, λ. |
+| contenu/ressources/laboratoires/commun/cuve_ondes.js | Cuve à ondes : onde plane, fente ou obstacle de largeur réglable, image calculée (Huygens) dans un canvas, dispersion de la surface de l'eau, curseurs. |
+| contenu/ressources/laboratoires/commun/banc_ultrasons.js | Banc de diffraction des ultrasons : émetteur 40 kHz, fente de 10 à 40 mm, récepteur sur bras tournant, rapporteur, amplitude reçue. |
+| contenu/ressources/laboratoires/sources/b2_ondes2_a1_sinusoidale/ | Corde au stroboscope, son reçu par deux micros (postes_sinusoidale.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes2_a2_diffraction/ | Cuve à ondes, ultrasons, documents et tri sur la diffraction (postes_diffraction.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/banc_diffraction.js | Banc de diffraction de la lumière : lasers rouge et vert, lumière blanche, fentes, fils, cheveu, écran mobile, figure calculée vue de face, curseurs. |
+| contenu/ressources/laboratoires/commun/goniometre_prisme.js | Goniomètre à prisme (A = 60°, flint) : incidence, lunette, lois de Descartes, déviation, spectre de la lumière blanche ; Labo.indice_flint. |
+| contenu/ressources/laboratoires/sources/b2_ondes3_a1_diffraction/ | Diffraction par une fente et un fil, θ = λ / a, lumière blanche, cheveu (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes3_a2_prisme/ | Déviation par un prisme, minimum de déviation, indice pour deux couleurs, spectre (simulation.js). |
+| contenu/ressources/laboratoires/commun/reseau_lumiere.js | Physique de la fente et du réseau : objets (fentes, réseaux, CD, DVD), ordres sin θk − sin i = kλ/a, éclat, image de l'écran (taches ou spectres) dans un canvas. |
+| contenu/ressources/laboratoires/commun/ecran_reseau.js | Écran de 70 cm vu de face (salle obscure), règle en mm, deux curseurs qui affichent leur position. |
+| contenu/ressources/laboratoires/commun/banc_reseau.js | Banc à réseau vu de dessus : source, diapositive sur plateau tournant (incidence i), mètre-ruban, écran mobile, faisceaux diffractés. |
+| contenu/ressources/laboratoires/sources/b2_ondes4_a1_reseau/ | Modèles de réseau au microscope (poste_modeles.js), fente et réseau au laser, sin θk = kλ/a, pas d'un CD, nombre de maximums (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_ondes4_a2_incidence/ | Réseau en incidence non normale, spectres de la lumière blanche, λ d'un laser vert (simulation.js). |
+| contenu/ressources/laboratoires/commun/compteur_geiger.js | Compteur d'impulsions (durée, série, horloge × 20, relevé au mur, prise du tube) ; comptages aléatoires (loi de Poisson). |
+| contenu/ressources/laboratoires/commun/banc_comptage.js | Banc de comptage : tube de Geiger-Müller sur potence, plateau, écrans (papier, aluminium, plomb), coffret de sources et d'échantillons naturels. |
+| contenu/ressources/laboratoires/sources/b2_nucl1_a1_becquerel/ | Expérience de Becquerel (poste_becquerel.js, documents_becquerel.js), diagramme (N, Z) des noyaux légers (tableau_nz.js) et de tous les noyaux (affiche_nz.js), équations (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_nucl1_a2_datation/ | Documents et tri des radioéléments (poste_environnement.js), compteur à scintillation et datation au carbone 14 (poste_datation.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_nucl1_a3_compteur/ | Générateur Cs 137 / Ba 137m (generateur_baryum.js) ; aléatoire, rayonnements α β γ, décroissance (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_nucl2_a1_energie/ | Masses des noyaux et énergie de liaison (masses_noyaux.js), balance des noyaux (balance_noyaux.js), affiche des masses (affiche_masses.js), documents et tri des applications (poste_applications.js), missions (simulation.js). |
+| contenu/ressources/laboratoires/commun/circuit_temps.js | Horloge d'un circuit qui évolue dans le temps : petits pas, résolution, validation des états, enregistreurs. |
+| contenu/ressources/laboratoires/commun/condensateur.js | Condensateur (ou boîte de condensateurs) sur support : modèle à pas de temps, charges ±q des armatures. |
+| contenu/ressources/laboratoires/commun/commutateur.js | Commutateur K à deux positions (borne commune, positions 1 et 2). |
+| contenu/ressources/laboratoires/commun/boite_resistances.js | Boîte de résistances (1 à 100 kΩ) : afficheur, touches − et +. |
+| contenu/ressources/laboratoires/commun/source_courant.js | Générateur de courant constant (0,05 à 0,5 mA), limité à 24 V. |
+| contenu/ressources/laboratoires/commun/interface_acquisition.js | Interface d'acquisition (EA0, EA1, GND) : déclenchement automatique, 400 points, résumé (τ à 63 %). |
+| contenu/ressources/laboratoires/commun/ecran_acquisition.js | Ordinateur portable et logiciel d'acquisition : touches, courbes, curseur, tangente à l'origine. |
+| contenu/ressources/laboratoires/sources/b2_elec1_a1_courant/ | Charge à courant constant, relevés, q = C·u, associations (poste_courant.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec1_a2_echelon/ | Réponse RC à un échelon, τ = R·C, décharge, équation différentielle (poste_echelon.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec1_a3_energie/ | Énergie stockée, décharge dans une lampe, flash et défibrillateur (poste_flash.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/bobine.js | Bobine de 1 000 spires (r, L, noyau de fer doux amovible) : modèle à pas de temps, i continue. |
+| contenu/ressources/laboratoires/commun/gbf_temps.js | GBF dont la tension suit l'horloge du circuit (sinus, carré, triangle), pour l'interface d'acquisition. |
+| contenu/ressources/laboratoires/sources/b2_elec2_a1_bobine/ | Bobine en continu (ohmmètre) et en variable (deux lampes, retards) (poste_bobine.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec2_a2_inductance/ | Tension triangulaire, uL = L·di/dt, mesure de L avec et sans noyau (poste_inductance.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec2_a3_echelon/ | Réponse RL à un échelon, τ = L/(R + r), rupture, équation, énergie (poste_echelon_rl.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/entretien_rlc.js | Dispositif d'entretien (AO) : résistance négative −R₀ réglable, saturation à 40 mA. |
+| contenu/ressources/laboratoires/commun/poste_rlc.js | Paillasse du circuit RLC série (commutateur, C, bobine, R, entretien facultatif, interface) ; analyse des enregistrements (régime, pseudo-période). |
+| contenu/ressources/laboratoires/sources/b2_elec3_a1_decharge/ | Décharge oscillante, régimes, pseudo-période et T₀, équation différentielle (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec3_a2_energies/ | Énergies Ee, Em, E à l'ordinateur ; échanges et effet Joule (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec3_a3_entretien/ | Entretien des oscillations, tension sinusoïdale de fréquence donnée (simulation.js). |
+| contenu/ressources/laboratoires/commun/circuit_sinus.js | Régime sinusoïdal forcé : admittances complexes, potentiels des nœuds par harmonique, ondes d'une période. |
+| contenu/ressources/laboratoires/commun/poste_rlc_force.js | Paillasse du circuit RLC forcé (GBF fin, C, bobine, R, oscilloscope ou ampèremètre, voltmètre) ; faits des mesures. |
+| contenu/ressources/laboratoires/sources/b2_elec4_a1_forcees/ | u et i à l'oscilloscope, impédance, construction de Fresnel, retard (fresnel_feuille.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec4_a2_resonance/ | Courbes de résonance pour deux R, bande passante, Q, surtension, puissance (simulation.js). |
+| contenu/ressources/laboratoires/commun/modulation.js | Tensions de la modulation d'amplitude : GBF, multiplieur, détecteur d'enveloppe, passe-haut, enveloppe, ressemblance. |
+| contenu/ressources/laboratoires/sources/b2_elec5_a1_histoire/ | Histoire de la transmission, bandes de fréquences, antennes (documents_transmission.js, poste_antennes.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec5_a2_modulation/ | Maquette de modulation-démodulation, deux GBF, oscilloscope (maquette_am.js, poste_modulation.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_elec5_a3_recepteur/ | Récepteur AM à monter librement, trois émetteurs, écouteur (pieces_recepteur.js, poste_recepteur.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca1_a1_vecteurs/ | Vecteurs vitesse et accélération : pente (montée, descente) et mouvement circulaire (simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca1_a2_newton/ | ΣF = m·ΔvG/Δt (cales, surcharge), référentiels galiléens, troisième loi (poste_newton.js, documents_newton.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/pointage_video.js | Portable et logiciel de pointage vidéo : images, étalonnage, origine, pointage, export vers le tableur ; option polaire (abscisse angulaire θ d'un solide en rotation). |
+| contenu/ressources/laboratoires/sources/b2_meca2_a1_chute/ | Chute libre filmée et pointée (poste_chute.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca2_a2_plans/ | Solide sur plan horizontal ou incliné, avec ou sans frottement (poste_plan.js, reglages_plan.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca2_a3_projectiles/ | Projectiles : lance-projectile, tableau quadrillé, flèche et portée (poste_tir.js, reglages_tir.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca3_a1_angulaire/ | Disque entraîné par une masse, filmé et pointé en mode polaire : θ, θ̇, θ̈, types de rotation (disque_dessin.js, poste_disque.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca3_a2_relation/ | Tige à masselottes, masse, cellule et chronomètre : ΣM = JΔ·θ̈, rôle du moment d'inertie (tige_dessin.js, poste_tige.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/banc_ressort_dessin.js | Dessin du banc à coussin d'air avec ressorts, mobile, accessoires, capteur et excitateur. |
+| contenu/ressources/laboratoires/commun/banc_ressort.js | Oscillateur solide-ressort horizontal (amorti, éventuellement excité), calcul pas à pas et geste de lâcher. |
+| contenu/ressources/laboratoires/commun/banc_ressort_accessoires.js | Plateau d'accessoires : surcharges, palette, aimant de freinage, ressort de rechange. |
+| contenu/ressources/laboratoires/commun/banc_ressort_pieces.js | Pièces détaillées du banc : mobile, réflecteur, palette, aimant de freinage, surcharge, soufflerie. |
+| contenu/ressources/laboratoires/commun/pendule_torsion_dessin.js | Dessin du pendule de torsion (potence, fil, barre, masselottes, cadran, capteur de rotation en option). |
+| contenu/ressources/laboratoires/commun/reactions_lentes.js | Transformations lentes en solution : loi de vitesse et loi d'Arrhenius (H₂O₂ + I⁻, S₂O₃²⁻ + H⁺, S₂O₈²⁻ + I⁻, hydrolyse du 2-chloro-2-méthylpropane), solutions, eau glacée, trouble du soufre colloïdal. |
+| contenu/ressources/laboratoires/commun/horloge_releves.js | Horloge murale du suivi temporel (temps écoulé) et feuille de relevés sur porte-bloc (date et mesure écrites à la main). |
+| contenu/ressources/laboratoires/commun/equilibre_acide.js | pH exact à 25 °C (couples faibles, eau, ions spectateurs, électroneutralité), conductivité à l'équilibre, solutions des acides à 1,0 × 10⁻² mol/L, tampons, acide pur, éthanoate de sodium. |
+| contenu/ressources/laboratoires/commun/ph_metre.js | pH-mètre de paillasse : boîtier, touches CAL 7 et CAL 4 (étalonnage), électrode combinée sur sa tige, temps de réponse. |
+| contenu/ressources/laboratoires/commun/banc_conductimetrie.js | Banc de conductimétrie : agitateur, sonde sur tige, conductimètre (ions à l'équilibre, µS/cm), quatre béchers déplaçables, mesures stables notées. |
+| contenu/ressources/laboratoires/commun/banc_ph.js | Banc de pH-métrie : agitateur, électrode sur tige, pH-mètre étalonné, cinq béchers déplaçables, mesures stables notées. |
+| contenu/ressources/laboratoires/commun/pile_electrochimique.js | Pile électrochimique, composant du circuit : deux demi-piles, pont salin à poser, f.é.m. de Nernst, résistance interne, débit qui consomme les réactifs. |
+| contenu/ressources/laboratoires/commun/tube_electrolyse.js | Électrolyse d'une solution de chlorure de sodium dans un tube en U : récepteur à tension seuil, bulles, phénolphtaléine, papiers à l'iodure de potassium. |
+| contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
+| contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
+| contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |
+| contenu/ressources/laboratoires/commun/logiciel_xt.js | Interface et logiciel d'acquisition x(t) (ou θ(t)) : zéro, durée, acquisition au lâcher, curseur, trois courbes, vue « Énergies ». |
+| contenu/ressources/laboratoires/commun/chronometre_manuel.js | Chronomètre à main au centième (marche/arrêt, zéro). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a1_ressort/ | Tri des oscillateurs ; solide-ressort enregistré : T0, masse, raideur, amortissement (poste_oscillateurs.js, poste_ressort.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a2_torsion/ | Pendule de torsion : moment d'inertie, constante de torsion, isochronisme (poste_torsion.js, simulation.js ; dessin commun). |
+| contenu/ressources/laboratoires/sources/b2_meca4_a3_resonance/ | Résonance : excitateur, résonateur, témoins d'amplitude, amortissement (temoins.js, poste_resonance.js, simulation.js). |
+| contenu/ressources/laboratoires/sources/b2_meca5_a1_energie/ | Travail de la force d'un ressort, énergies du solide-ressort et du pendule de torsion (poste_travail.js, poste_energie_ressort.js, poste_energie_torsion.js, missions_energie.js, simulation.js). |
+| contenu/ressources/laboratoires/commun/portable.js | Ordinateur portable de la taille voulue (écran, clavier, souris en option) ; renvoie la dalle où se dessine le logiciel. |
+| contenu/ressources/laboratoires/commun/niveaux_energie.js | Diagramme des niveaux d'énergie d'un atome, à l'échelle, étiquettes décalées si elles sont trop proches. |
+| contenu/ressources/laboratoires/commun/orbites_modele.js, orbites_ecran.js, orbites_panneau.js, logiciel_orbites.js | Simulateur d'orbites sur le portable : orbites de Kepler exactes (Terre, Soleil, proton), fenêtre, panneau de réglage, animation et faits. |
+| contenu/ressources/laboratoires/sources/b2_meca6_a1_astres_atomes/ | Astres et atomes : poste_astres.js (documents, portable), verifications_astres.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca2_s1_frottement/ | Chute verticale avec frottement (PC, SM) : fluide_modele.js (traînée réelle, masse ajoutée), dessin_frottement.js, poste_frottement.js, verifications_frottement.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca2_s2_champ_electrique/ | Électrons dans un champ électrostatique (PC, SM) : dessin_tube.js (tube, alimentation, cordons), poste_champ_electrique.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca2_s3_champ_magnetique/ | Électrons dans un champ magnétique (PC, SM) : dessin_bobines.js (bobines, tube, alimentations, cordons), poste_champ_magnetique.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca4_s1_pendule_pesant/ | Pendule pesant et pendule simple (PC, SM) : dessin_pendule_simple.js, poste_pendule_simple.js, verifications_pendule.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca5_s1_pendule_pesant/ | Énergie mécanique du pendule pesant (PC, SM) : verifications_energie_pendule.js, simulation.js (poste commun, variante « énergies »). |
+| contenu/ressources/laboratoires/sources/b1_elec2_s1_bilan_electronique/ | Bilan énergétique d'un circuit à transistor ou à AO (1re année, SM) : poste_bilan_transistor.js (circuit, thermomètre, radiateur), poste_bilan_ao.js, verifications_bilan.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca2_s4_satellites/ | Satellites et planètes (PC, SM) : poste_satellites.js, verifications_satellites.js, simulation.js. |
+| contenu/ressources/laboratoires/sources/b2_meca6_a2_spectres/ | Quantification : Franck et Hertz (fh_modele.js, fh_dessin.js, fh_logiciel.js, fh_boucle.js, poste_franck_hertz.js), tubes spectraux (dessin_tubes.js, poste_tubes.js), sodium (dessin_sodium.js, poste_sodium.js), spectroscope.js, spectres_donnees.js, missions_spectres.js, simulation.js. |
+| contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
+| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
 | contenu/ressources/laboratoires/sources/<nom>/ | page.html, un fichier par appareil, simulation.js (missions). |
 | outils/assembler_laboratoire.py | Intègre styles, scripts et polices dans un seul fichier HTML par simulation. |
