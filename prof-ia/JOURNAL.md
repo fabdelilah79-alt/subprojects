@@ -1534,3 +1534,18 @@ sous un bécher peut être cachée par un fil.
 Problèmes restants : couleurs (rose, dichlore) proportionnelles à la charge, sans diffusion ; pas de dégagement d'oxygène ni
 de mesure des volumes de gaz ; l'accumulateur est un modèle simple (f.é.m. qui monte vite, rendement fixe de 70 %, 60 C au
 plus, sans sulfate de plomb blanc visible) ; les fils de la paillasse 3 se croisent beaucoup (le placement est laissé à l'élève).
+
+## 2026-10-31 — Réactions d'estérification et d'hydrolyse (b2_chim9_a1_esterification)
+
+- Fiche lue avec les pages 143-144 du PDF (une activité : lenteur et équilibre, modifier la vitesse ou le taux d'avancement ;
+  catalyseur sans effet sur l'équilibre ; excès de réactif ou élimination d'un produit : Qr < K). Anhydrides et savons : chim10.
+- Modèle : dx/dt = k·[(n₀ − x)² − x²/K]/n₀, K = 4, k = 0,02 min⁻¹ (100 °C sans catalyseur, valeur choisie pour une séance) ;
+  résultats de la classe calculés par la solution exacte, arrondis au 0,05 mL ; hydrolyse avec k/4.
+- Mesuré dans le test : VE(A) = 9,69 mL (théorie 9,64 mL, x = 10,36 mmol à 60 min) ; VE(B) = 1,96 mL (théorie 1,94 mL,
+  rendement 90,3 %) ; courbe x = f(t) qui tend vers 13,3 mmol.
+- Réutilisation : poste_titrage.js, tri.js, tableur, courbe ; aucun fichier commun modifié.
+
+Problèmes restants : les tubes ne sont pas chauffés par l'élève (ils arrivent « sortis du bain » à 60 min : une heure de chauffe
+ne tient pas dans une séance) ; la vitesse sans catalyseur à 100 °C est choisie pour la séance, pas mesurée ; le contenu des tubes
+est versé dans l'eau glacée sans être montré ; la soude ne réagit pas du tout avec l'ester (modèle), ce qui est vrai à froid
+pendant un titrage rapide seulement.

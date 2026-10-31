@@ -5798,6 +5798,53 @@
         "Une pile ne peut pas fournir l'énergie d'une transformation chimique.",
         "Pour chromer un objet, on en fait l'anode."
       ]
+    },
+    {
+      "id": "b2_chim9_a1_esterification",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim9_a1_esterification.html",
+      "description": "Paillasse 1 : tableau magnétique, huit formules semi-développées à ranger en acides carboxyliques, alcools, esters et anhydrides d'acide ; équation et noms des esters. Paillasse 2 : banc de titrage, soude à 1,0 mol/L et phénolphtaléine ; bécher A : tube scellé de 20 mmol d'acide éthanoïque + 20 mmol d'éthanol sorti du bain-marie bouillant à 60 min (VE = 9,64 mL, x = 10,4 mmol) ; bécher B : 20 mmol d'acide + 60 mmol d'éthanol à l'équilibre (VE = 1,94 mL, rendement 90 %). Paillasse 3 : affiches des résultats de la classe (estérification x(t) vers 13,3 mmol, hydrolyse vers 6,7 mmol, influence de la température et de l'acide sulfurique) ; tableur et courbe x = f(t), rendement 67 %, K = 4.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim9_esterification",
+      "activite": "Mise en évidence de la lenteur et de l'équilibre ; modifier la vitesse ou le taux d'avancement.",
+      "objectifs": [
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "missions": [
+        {
+          "titre": "Acides, alcools, esters et anhydrides",
+          "ce_que_fait_l_eleve": "Range des formules selon leur groupe caractéristique, écrit l'équation d'estérification et nomme des esters de cinq atomes de carbone au plus.",
+          "conclusion": "Un acide carboxylique porte le groupe –COOH, un alcool le groupe –OH, un ester le groupe –COO–R et un anhydride d'acide le groupe –CO–O–CO–. Un ester R–COO–R' se forme à partir de l'acide R–COOH et de l'alcool R'–OH : R–COOH + R'–OH ⇌ R–COO–R' + H₂O. Il se nomme « alcanoate d'alkyle » : la partie qui vient de l'acide, puis celle qui vient de l'alcool (CH₃–COO–CH₂–CH₃ : éthanoate d'éthyle)."
+        },
+        {
+          "titre": "L'estérification est lente",
+          "ce_que_fait_l_eleve": "Titre par la soude l'acide restant dans un tube d'estérification sorti du bain-marie à 60 min et en déduit l'avancement.",
+          "conclusion": "Le tube A, chauffé 60 min à 100 °C, puis plongé dans l'eau glacée (trempe), contient encore de l'acide : on le titre par la soude, la phénolphtaléine rosit à l'équivalence. n(acide restant) = C·VE ≈ 9,6 mmol, donc x = 20 − C·VE ≈ 10,4 mmol : après une heure à 100 °C, la transformation n'est pas finie. Elle est lente."
+        },
+        {
+          "titre": "Lente et limitée : un équilibre",
+          "ce_que_fait_l_eleve": "Trace x = f(t) avec les résultats de la classe, détermine le rendement et K, et compare estérification, hydrolyse, température et catalyseur.",
+          "conclusion": "x augmente de plus en plus lentement et tend vers 13,3 mmol : le rendement est limité à 67 % pour un mélange équimolaire. L'état final est un équilibre : K = x²/(20 − x)² = 4. L'hydrolyse de l'ester, transformation inverse, est elle aussi lente et limitée (33 %) et conduit au même état d'équilibre. La température et un catalyseur (acide sulfurique) rendent l'équilibre plus vite atteint, sans changer l'état final."
+        },
+        {
+          "titre": "Déplacer l'équilibre",
+          "ce_que_fait_l_eleve": "Titre un mélange à l'équilibre avec un excès d'alcool et explique, par Qr < K, l'augmentation du rendement.",
+          "conclusion": "Avec 60 mmol d'éthanol pour 20 mmol d'acide, il ne reste à l'équilibre que 1,9 mmol d'acide : le rendement passe à 90 %. Ajouter un réactif rend Qr < K : le système évolue dans le sens direct. On augmente aussi le rendement en éliminant un produit (l'eau, ou l'ester distillé au fur et à mesure). Le chauffage à reflux accélère la transformation sans perte de matière."
+        }
+      ],
+      "duree_min": 90,
+      "conceptions": [
+        "L'estérification est totale, comme une combustion.",
+        "Un catalyseur augmente le rendement.",
+        "Chauffer davantage augmente l'avancement final.",
+        "L'hydrolyse et l'estérification conduisent à deux états finals différents."
+      ]
     }
   ]
 }

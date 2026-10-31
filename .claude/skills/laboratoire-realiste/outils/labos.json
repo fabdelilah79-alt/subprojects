@@ -3382,5 +3382,32 @@
    "Lit quatre documents sur les applications de l'électrolyse, la respiration et la photosynthèse.",
    "Range huit transformations en spontanées et forcées."
   ]
+ },
+ {
+  "id": "b2_chim9_a1_esterification",
+  "chapitre": "2bac/chim9_esterification",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2",
+   "O3",
+   "O4",
+   "O5",
+   "O6"
+  ],
+  "duree_min": 90,
+  "description": "Paillasse 1 : tableau magnétique, huit formules semi-développées à ranger en acides carboxyliques, alcools, esters et anhydrides d'acide ; équation et noms des esters. Paillasse 2 : banc de titrage, soude à 1,0 mol/L et phénolphtaléine ; bécher A : tube scellé de 20 mmol d'acide éthanoïque + 20 mmol d'éthanol sorti du bain-marie bouillant à 60 min (VE = 9,64 mL, x = 10,4 mmol) ; bécher B : 20 mmol d'acide + 60 mmol d'éthanol à l'équilibre (VE = 1,94 mL, rendement 90 %). Paillasse 3 : affiches des résultats de la classe (estérification x(t) vers 13,3 mmol, hydrolyse vers 6,7 mmol, influence de la température et de l'acide sulfurique) ; tableur et courbe x = f(t), rendement 67 %, K = 4.",
+  "conceptions": [
+   "L'estérification est totale, comme une combustion.",
+   "Un catalyseur augmente le rendement.",
+   "Chauffer davantage augmente l'avancement final.",
+   "L'hydrolyse et l'estérification conduisent à deux états finals différents."
+  ],
+  "faire": [
+   "Range des formules selon leur groupe caractéristique, écrit l'équation d'estérification et nomme des esters de cinq atomes de carbone au plus.",
+   "Titre par la soude l'acide restant dans un tube d'estérification sorti du bain-marie à 60 min et en déduit l'avancement.",
+   "Trace x = f(t) avec les résultats de la classe, détermine le rendement et K, et compare estérification, hydrolyse, température et catalyseur.",
+   "Titre un mélange à l'équilibre avec un excès d'alcool et explique, par Qr < K, l'augmentation du rendement."
+  ]
  }
 ]

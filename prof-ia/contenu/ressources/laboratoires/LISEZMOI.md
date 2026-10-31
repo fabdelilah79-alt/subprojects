@@ -816,3 +816,11 @@ débit qui fait varier concentrations et masses). Pour ce chapitre, `pages.py` a
 Fichier commun nouveau : `tube_electrolyse.js` (tube en U sur support, électrodes de graphite, tension seuil, couleurs, papiers à
 l'iodure de potassium). Fichier commun modifié : `commutateur.js` (option `manette_dessus`, désactivée par défaut : la manette reste
 touchable quand des fils passent sur le commutateur). Pour ce chapitre, `pages.py` ajoute `commutateur.js` et `tube_electrolyse.js`.
+
+## Chapitre 2e année du bac « Réactions d'estérification et d'hydrolyse » (fiche 2bac/chim9_esterification)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim9_a1_esterification.html | Mise en évidence de la lenteur et de l'équilibre ; modifier la vitesse ou le taux d'avancement | O1 à O6 | Tri des groupes –COOH, –OH, –COO–, –CO–O–CO– et noms des esters ; titrage par la soude de l'acide restant dans un tube sorti du bain-marie à 60 min (x = 10,4 mmol) ; courbe x = f(t) au tableur (limite 13,3 mmol, rendement 67 %, K = 4), hydrolyse (33 %), température et catalyseur ; titrage d'un mélange avec excès d'éthanol (rendement 90 %, Qr < K). |
+
+Aucun fichier commun nouveau ni modifié (banc de titrage, tri, tableur réutilisés). Pour ce chapitre, `pages.py` ajoute `tri.js`.
