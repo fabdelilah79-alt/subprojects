@@ -805,3 +805,14 @@ Fichiers communs modifiés : `ions_metaux.js` (réduction des ions Fe³⁺ par l
 
 Fichier commun nouveau : `pile_electrochimique.js` (pile composant du circuit, pont salin à poser, f.é.m. par la loi de Nernst,
 débit qui fait varier concentrations et masses). Pour ce chapitre, `pages.py` ajoute aussi les scripts des circuits et `tri.js`.
+
+## Chapitre 2e année du bac « Exemples de transformations forcées : l'électrolyse » (fiche 2bac/chim8_transformations_forcees, PC et SM)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim8_a1_electrolyse.html | Mise en évidence de l'électrolyse ; accumulateur au plomb ; électrolyse d'une solution de chlorure de sodium | O1, O2 | Pile Cu-Ag forcée par un générateur en opposition (courant inversé au-delà de 0,43 V, anode et cathode) ; tube en U de NaCl (195 mA sous 6 V, phénolphtaléine rose à la cathode, papier KI bleu à l'anode, rien sous 1,5 V, volume de H₂) ; charge puis décharge d'un accumulateur au plomb (PbO₂ brun, 1,80 V, lampe). |
+| b2_chim8_a2_respiration.html | Respiration et photosynthèse | O1 | Une pile de 4,5 V alimente l'électrolyse (P = U·I ≈ 0,47 W) : spontanée → forcée ; documents (électrolyses industrielles, dépôts électrolytiques, respiration, photosynthèse) ; tri de huit transformations spontanées ou forcées. |
+
+Fichier commun nouveau : `tube_electrolyse.js` (tube en U sur support, électrodes de graphite, tension seuil, couleurs, papiers à
+l'iodure de potassium). Fichier commun modifié : `commutateur.js` (option `manette_dessus`, désactivée par défaut : la manette reste
+touchable quand des fils passent sur le commutateur). Pour ce chapitre, `pages.py` ajoute `commutateur.js` et `tube_electrolyse.js`.

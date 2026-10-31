@@ -1519,3 +1519,18 @@ activité.
 Problèmes restants : résistance interne fixe (150 Ω), sans polarisation des électrodes ; les lames ne se rincent pas et le pont
 salin ne sèche pas ; sans pont le voltmètre lit exactement 0 (un vrai voltmètre peut flotter quelques mV) ; une étiquette
 sous un bécher peut être cachée par un fil.
+
+## 2026-10-31 — Transformations forcées : l'électrolyse (b2_chim8_a1_electrolyse, b2_chim8_a2_respiration)
+
+- Fiche lue avec les pages 142-143 du PDF (activités : électrolyse, accumulateur au plomb, NaCl ; respiration et photosynthèse,
+  présentées sans connaissances propres aux sciences de la vie ; une pile utilisée comme générateur d'une électrolyse).
+- Nouveau commun tube_electrolyse.js ; accumulateur_plomb.js local. commutateur.js reçoit l'option manette_dessus (désactivée par
+  défaut) : les fils cachaient la manette. Régression : commutateur des simulations RC (b2_elec1_a2, b2_elec1_a3) bascule toujours.
+- Mesuré dans les tests : pile Cu-Ag forcée, I = 1,709 mA à 0 V, 0,121 mA à 0,4 V, −0,276 mA à 0,5 V, −4,25 mA à 1,5 V
+  (théorie (0,4305 − 1,5) / 251,9 Ω = −4,25 mA) ; tube en U : 194,8 mA et 5,71 V sous 6 V (théorie 2,2 + 18 × 0,195 = 5,71 V),
+  0 sous 1,5 V ; accumulateur : 2,86 V en charge, 1,80 V en décharge dans la lampe (théorie ≈ 1,83 V) ; pile 4,5 V + tube :
+  112 mA, 4,22 V.
+
+Problèmes restants : couleurs (rose, dichlore) proportionnelles à la charge, sans diffusion ; pas de dégagement d'oxygène ni
+de mesure des volumes de gaz ; l'accumulateur est un modèle simple (f.é.m. qui monte vite, rendement fixe de 70 %, 60 C au
+plus, sans sulfate de plomb blanc visible) ; les fils de la paillasse 3 se croisent beaucoup (le placement est laissé à l'élève).

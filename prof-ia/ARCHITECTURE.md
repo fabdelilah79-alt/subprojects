@@ -480,6 +480,8 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_chim6_a1_sens_evolution/ | Sens d'évolution spontanée : poste_fer.js (ions fer III et fer II, cuivre, fer, témoin, données), simulation.js (mélanges acide-base sur banc_ph.js, missions). |
 | contenu/ressources/laboratoires/sources/b2_chim7_a1_piles/ | Piles : poste_melange.js (métaux dans les ions argent et cuivre), poste_piles.js (pile, pont salin, résistance, voltmètre, ampèremètre), simulation.js (missions). |
 | contenu/ressources/laboratoires/sources/b2_chim7_a2_piles_usuelles/ | Piles usuelles : documents_piles.js (quatre documents, tri piles/accumulateurs), simulation.js (missions). |
+| contenu/ressources/laboratoires/sources/b2_chim8_a1_electrolyse/ | Électrolyse : accumulateur_plomb.js (accumulateur de laboratoire, composant du circuit), poste_forcee.js (pile forcée par un générateur), poste_nacl.js (tube en U de chlorure de sodium), poste_accumulateur.js (charge et décharge, commutateur, lampe), simulation.js (missions). |
+| contenu/ressources/laboratoires/sources/b2_chim8_a2_respiration/ | Spontané ou forcé : poste_pile_electrolyse.js (pile qui alimente une électrolyse), documents_forcees.js (quatre documents, tri), simulation.js (missions). |
 | contenu/ressources/laboratoires/commun/milieu_1d.js | Milieu à une dimension : élongations calculées pas à pas (pas dx/v : propagation exacte, sans déformation) ; extrémité fixe, libre ou absorbante. |
 | contenu/ressources/laboratoires/commun/detecteurs_onde.js | Règle, deux cellules photoélectriques déplaçables et chronomètre électronique START/STOP : retard d'une perturbation entre A et B. |
 | contenu/ressources/laboratoires/commun/ressort_long.js | Long ressort de 2 m tenu par une poignée : ondes transversale et longitudinale, spire rouge. |
@@ -558,6 +560,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/banc_conductimetrie.js | Banc de conductimétrie : agitateur, sonde sur tige, conductimètre (ions à l'équilibre, µS/cm), quatre béchers déplaçables, mesures stables notées. |
 | contenu/ressources/laboratoires/commun/banc_ph.js | Banc de pH-métrie : agitateur, électrode sur tige, pH-mètre étalonné, cinq béchers déplaçables, mesures stables notées. |
 | contenu/ressources/laboratoires/commun/pile_electrochimique.js | Pile électrochimique, composant du circuit : deux demi-piles, pont salin à poser, f.é.m. de Nernst, résistance interne, débit qui consomme les réactifs. |
+| contenu/ressources/laboratoires/commun/tube_electrolyse.js | Électrolyse d'une solution de chlorure de sodium dans un tube en U : récepteur à tension seuil, bulles, phénolphtaléine, papiers à l'iodure de potassium. |
 | contenu/ressources/laboratoires/commun/pendule_pesant.js | Modèle d'un pendule (pesant ou simple) sans approximation des petits angles, Runge-Kutta d'ordre 4, période exacte selon l'amplitude. |
 | contenu/ressources/laboratoires/commun/pendule_pesant_dessin.js | Dessin du pendule pesant : statif, capteur de rotation, rapporteur, tige graduée, masse coulissante, palette d'amortissement. |
 | contenu/ressources/laboratoires/commun/poste_pendule_pesant.js | Paillasse du pendule pesant (masse coulissante, palette, capteur, logiciel θ(t)) ; variante « énergies » (Ec, Epp, Em). |

@@ -5724,6 +5724,80 @@
         "La capacité d'une pile s'exprime en volts.",
         "Une pile usagée peut être jetée avec les ordures ménagères."
       ]
+    },
+    {
+      "id": "b2_chim8_a1_electrolyse",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim8_a1_electrolyse.html",
+      "description": "Paillasse 1 : pile Cu | Cu²⁺ || Ag⁺ | Ag (E = 0,43 V) en série avec R = 100 Ω, un ampèremètre et une alimentation réglable branchée en opposition : le courant s'annule vers 0,43 V et s'inverse au-delà (−4,25 mA sous 1,5 V). Paillasse 2 : tube en U (NaCl à 1 mol/L + phénolphtaléine, électrodes de graphite, E' = 2,2 V, r' = 18 Ω) : 195 mA sous 6 V, bulles, rose à la cathode, papier à l'iodure de potassium qui bleuit à l'anode, aucun courant sous 1,5 V. Paillasse 3 : accumulateur au plomb de laboratoire (plaques de plomb dans H₂SO₄), commutateur charge/décharge, générateur de 3 V, lampe de 2,5 V : 0 V avant la charge, dépôt brun de PbO₂ sur la plaque reliée au +, 1,80 V pendant que la lampe brille.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim8_transformations_forcees",
+      "activite": "Mise en évidence de l'électrolyse ; accumulateur au plomb ; électrolyse d'une solution de chlorure de sodium.",
+      "objectifs": [
+        "O1",
+        "O2"
+      ],
+      "missions": [
+        {
+          "titre": "Forcer une pile à fonctionner à l'envers",
+          "ce_que_fait_l_eleve": "Branche un générateur en opposition avec une pile cuivre-argent, augmente sa tension jusqu'à inverser le courant et identifie l'anode et la cathode de la transformation forcée.",
+          "conclusion": "Seule, la pile Cu | Cu²⁺ || Ag⁺ | Ag débite un courant qui sort par la lame d'argent : Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag, sens spontané (Qr < K). Un générateur branché en opposition, de tension supérieure à la f.é.m. E ≈ 0,43 V, impose un courant inverse : 2 Ag + Cu²⁺ → 2 Ag⁺ + Cu. Qr = [Cu²⁺]/[Ag⁺]² diminue : le système s'éloigne de l'équilibre ; c'est une transformation forcée. La lame d'argent, reliée à la borne + du générateur, est l'anode (oxydation Ag → Ag⁺ + e⁻) ; la lame de cuivre, reliée à la borne −, est la cathode (réduction Cu²⁺ + 2 e⁻ → Cu)."
+        },
+        {
+          "titre": "Électrolyse d'une solution de chlorure de sodium",
+          "ce_que_fait_l_eleve": "Réalise l'électrolyse d'une solution de chlorure de sodium, repère la cathode (phénolphtaléine) et l'anode (papier à l'iodure de potassium), écrit les réactions, calcule le volume de dihydrogène et constate la tension seuil.",
+          "conclusion": "Sous 6 V, un courant de l'ordre de 0,2 A traverse le tube en U et des gaz se dégagent aux deux électrodes. À la cathode, reliée à la borne − du générateur, la phénolphtaléine rosit : 2 H₂O + 2 e⁻ → H₂ + 2 HO⁻ (réduction). À l'anode, reliée à la borne +, le papier à l'iodure de potassium bleuit : 2 Cl⁻ → Cl₂ + 2 e⁻ (oxydation). Bilan : 2 Cl⁻ + 2 H₂O → Cl₂ + H₂ + 2 HO⁻. Sous 2 V environ, rien ne se passe : cette transformation forcée exige que le générateur lui fournisse de l'énergie. n(H₂) = I·Δt / (2F)."
+        },
+        {
+          "titre": "Charge et décharge d'un accumulateur au plomb",
+          "ce_que_fait_l_eleve": "Charge un accumulateur au plomb avec un générateur, puis le fait débiter dans une lampe et compare charge forcée et décharge spontanée.",
+          "conclusion": "Neuf, l'accumulateur (deux plaques de plomb dans l'acide sulfurique) ne donne aucune tension. Pendant la charge, le générateur impose une transformation forcée : la plaque reliée à sa borne + (anode) s'oxyde et se couvre de dioxyde de plomb brun : PbSO₄ + 2 H₂O → PbO₂ + SO₄²⁻ + 4 H⁺ + 2 e⁻ ; à la cathode, PbSO₄ + 2 e⁻ → Pb + SO₄²⁻. Chargé, il fonctionne comme une pile de f.é.m. 2 V environ : sa décharge dans la lampe est spontanée, inverse de la charge ; la plaque de dioxyde de plomb est son pôle +."
+        }
+      ],
+      "duree_min": 60,
+      "conceptions": [
+        "Un système chimique évolue toujours vers l'équilibre, quoi qu'on fasse.",
+        "L'anode est toujours le pôle négatif.",
+        "Un accumulateur stocke de l'électricité, pas de l'énergie chimique.",
+        "L'électrolyse a lieu dès qu'on applique une tension, même faible."
+      ]
+    },
+    {
+      "id": "b2_chim8_a2_respiration",
+      "type": "simulation",
+      "fichier": "laboratoires/b2_chim8_a2_respiration.html",
+      "description": "Paillasse 1 : pile plate de 4,5 V qui alimente le tube en U d'électrolyse du chlorure de sodium (112 mA, 4,22 V aux bornes du tube, P ≈ 0,47 W). Paillasse 2 : quatre documents au mur (électrolyses industrielles, dépôts électrolytiques, respiration, photosynthèse), présentés sans connaissances propres aux sciences de la vie. Paillasse 3 : tableau magnétique, huit transformations à ranger en spontanées et forcées.",
+      "phase_poe": "observation",
+      "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
+      "chapitre": "2bac/chim8_transformations_forcees",
+      "activite": "Respiration et photosynthèse.",
+      "objectifs": [
+        "O1"
+      ],
+      "missions": [
+        {
+          "titre": "Une pile pour forcer une électrolyse",
+          "ce_que_fait_l_eleve": "Alimente une électrolyse avec une pile, mesure la tension et le courant et calcule la puissance que la transformation spontanée de la pile fournit à la transformation forcée.",
+          "conclusion": "La pile de 4,5 V fait passer un courant d'environ 0,11 A dans le tube en U : l'électrolyse de la solution de chlorure de sodium a lieu. Dans la pile, une transformation spontanée convertit de l'énergie chimique en énergie électrique ; dans le tube, l'électrolyse, transformation forcée, reçoit cette énergie (P = U·I ≈ 0,47 W) et la stocke en partie sous forme chimique (dichlore, dihydrogène). Les êtres vivants couplent de la même manière une transformation spontanée (la respiration) à des transformations forcées."
+        },
+        {
+          "titre": "Électrolyse, respiration et photosynthèse",
+          "ce_que_fait_l_eleve": "Lit quatre documents sur les applications de l'électrolyse, la respiration et la photosynthèse.",
+          "conclusion": "L'électrolyse produit l'aluminium, le dichlore, la soude et le cuivre pur, et sert à couvrir les objets d'un métal protecteur (zingage, chromage) : l'objet est la cathode, où les ions métalliques sont réduits. La respiration (glucose + dioxygène → dioxyde de carbone + eau) est spontanée et libère de l'énergie ; la photosynthèse, sa transformation inverse, est forcée par l'énergie lumineuse."
+        },
+        {
+          "titre": "Spontanée ou forcée ?",
+          "ce_que_fait_l_eleve": "Range huit transformations en spontanées et forcées.",
+          "conclusion": "Spontanées : combustion du butane, pile qui débite, rouille, respiration. Forcées : photosynthèse (énergie lumineuse), électrolyse de l'alumine, recharge d'une batterie, chromage (énergie électrique d'un générateur). Une transformation forcée fait évoluer le système dans le sens inverse de son évolution spontanée : il faut lui fournir de l'énergie."
+        }
+      ],
+      "duree_min": 35,
+      "conceptions": [
+        "La photosynthèse et la respiration sont des transformations spontanées toutes les deux.",
+        "Une pile ne peut pas fournir l'énergie d'une transformation chimique.",
+        "Pour chromer un objet, on en fait l'anode."
+      ]
     }
   ]
 }

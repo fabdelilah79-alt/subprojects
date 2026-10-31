@@ -3340,5 +3340,47 @@
    "Lit quatre documents sur les piles, calcule la quantité d'électricité d'une pile alcaline de 2 400 mAh et retient les règles de collecte et de recyclage.",
    "Range huit générateurs électrochimiques en piles et accumulateurs et relie la recharge à une transformation forcée."
   ]
+ },
+ {
+  "id": "b2_chim8_a1_electrolyse",
+  "chapitre": "2bac/chim8_transformations_forcees",
+  "activite": 1,
+  "objectifs": [
+   "O1",
+   "O2"
+  ],
+  "duree_min": 60,
+  "description": "Paillasse 1 : pile Cu | Cu²⁺ || Ag⁺ | Ag (E = 0,43 V) en série avec R = 100 Ω, un ampèremètre et une alimentation réglable branchée en opposition : le courant s'annule vers 0,43 V et s'inverse au-delà (−4,25 mA sous 1,5 V). Paillasse 2 : tube en U (NaCl à 1 mol/L + phénolphtaléine, électrodes de graphite, E' = 2,2 V, r' = 18 Ω) : 195 mA sous 6 V, bulles, rose à la cathode, papier à l'iodure de potassium qui bleuit à l'anode, aucun courant sous 1,5 V. Paillasse 3 : accumulateur au plomb de laboratoire (plaques de plomb dans H₂SO₄), commutateur charge/décharge, générateur de 3 V, lampe de 2,5 V : 0 V avant la charge, dépôt brun de PbO₂ sur la plaque reliée au +, 1,80 V pendant que la lampe brille.",
+  "conceptions": [
+   "Un système chimique évolue toujours vers l'équilibre, quoi qu'on fasse.",
+   "L'anode est toujours le pôle négatif.",
+   "Un accumulateur stocke de l'électricité, pas de l'énergie chimique.",
+   "L'électrolyse a lieu dès qu'on applique une tension, même faible."
+  ],
+  "faire": [
+   "Branche un générateur en opposition avec une pile cuivre-argent, augmente sa tension jusqu'à inverser le courant et identifie l'anode et la cathode de la transformation forcée.",
+   "Réalise l'électrolyse d'une solution de chlorure de sodium, repère la cathode (phénolphtaléine) et l'anode (papier à l'iodure de potassium), écrit les réactions, calcule le volume de dihydrogène et constate la tension seuil.",
+   "Charge un accumulateur au plomb avec un générateur, puis le fait débiter dans une lampe et compare charge forcée et décharge spontanée."
+  ]
+ },
+ {
+  "id": "b2_chim8_a2_respiration",
+  "chapitre": "2bac/chim8_transformations_forcees",
+  "activite": 2,
+  "objectifs": [
+   "O1"
+  ],
+  "duree_min": 35,
+  "description": "Paillasse 1 : pile plate de 4,5 V qui alimente le tube en U d'électrolyse du chlorure de sodium (112 mA, 4,22 V aux bornes du tube, P ≈ 0,47 W). Paillasse 2 : quatre documents au mur (électrolyses industrielles, dépôts électrolytiques, respiration, photosynthèse), présentés sans connaissances propres aux sciences de la vie. Paillasse 3 : tableau magnétique, huit transformations à ranger en spontanées et forcées.",
+  "conceptions": [
+   "La photosynthèse et la respiration sont des transformations spontanées toutes les deux.",
+   "Une pile ne peut pas fournir l'énergie d'une transformation chimique.",
+   "Pour chromer un objet, on en fait l'anode."
+  ],
+  "faire": [
+   "Alimente une électrolyse avec une pile, mesure la tension et le courant et calcule la puissance que la transformation spontanée de la pile fournit à la transformation forcée.",
+   "Lit quatre documents sur les applications de l'électrolyse, la respiration et la photosynthèse.",
+   "Range huit transformations en spontanées et forcées."
+  ]
  }
 ]
