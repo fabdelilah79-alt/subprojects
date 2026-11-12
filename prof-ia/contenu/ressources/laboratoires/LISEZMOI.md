@@ -824,3 +824,13 @@ touchable quand des fils passent sur le commutateur). Pour ce chapitre, `pages.p
 | b2_chim9_a1_esterification.html | Mise en évidence de la lenteur et de l'équilibre ; modifier la vitesse ou le taux d'avancement | O1 à O6 | Tri des groupes –COOH, –OH, –COO–, –CO–O–CO– et noms des esters ; titrage par la soude de l'acide restant dans un tube sorti du bain-marie à 60 min (x = 10,4 mmol) ; courbe x = f(t) au tableur (limite 13,3 mmol, rendement 67 %, K = 4), hydrolyse (33 %), température et catalyseur ; titrage d'un mélange avec excès d'éthanol (rendement 90 %, Qr < K). |
 
 Aucun fichier commun nouveau ni modifié (banc de titrage, tri, tableur réutilisés). Pour ce chapitre, `pages.py` ajoute `tri.js`.
+
+## Chapitre 2e année du bac « Contrôle de l'évolution des systèmes chimiques » (fiche 2bac/chim10_controle)
+
+| Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
+|---|---|---|---|
+| b2_chim10_a1_aspirine.html | Synthèse de l'aspirine | O1, O4 | Reflux de l'acide salicylique avec l'anhydride éthanoïque et l'acide sulfurique (catalyseur), cristallisation dans l'eau glacée, filtration sous vide, pesée (3,20 g, rendement 82 %) ; titrage direct d'un comprimé à froid (VE = 13,9 mL, 500 mg) : on favorise la réaction acide-base, pas la saponification. |
+| b2_chim10_a2_savon.html | Préparation d'un savon et étude de ses propriétés | O2, O3, O4 | Saponification à reflux et relargage (paillasse du tronc commun) ; tubes secoués : mousse, eau calcaire (précipité), émulsion de l'huile comparée à un témoin ; documents : ion carboxylate, micelles, eau calcaire, catalyse sélective. |
+
+Aucun fichier commun nouveau ni modifié. `pages.py` donne à ce chapitre les scripts de la synthèse de l'acide benzoïque
+(reflux, Büchner, pesée, titrage) et, pour le savon, deux fichiers de `sources/tc_chim3_a1_savon/` (réactions et paillasse de reflux).

@@ -1549,3 +1549,20 @@ Problèmes restants : les tubes ne sont pas chauffés par l'élève (ils arriven
 ne tient pas dans une séance) ; la vitesse sans catalyseur à 100 °C est choisie pour la séance, pas mesurée ; le contenu des tubes
 est versé dans l'eau glacée sans être montré ; la soude ne réagit pas du tout avec l'ester (modèle), ce qui est vrai à froid
 pendant un titrage rapide seulement.
+
+## 2026-11-12 — Contrôle de l'évolution des systèmes chimiques (b2_chim10_a1_aspirine, b2_chim10_a2_savon)
+
+- Activité 1 : synthèse de l'aspirine avec poste_synthese.js (reflux), buchner_poste.js, pesee_poudre.js, poste_titrage.js.
+  Mesuré dans le test : 8,1 mL de mélange réactionnel après 15 min de reflux avec catalyseur ; 24 mL de suspension dans l'eau
+  glacée ; 3,20 g pesés (rendement 3,20/180 ÷ 3,00/138 = 81,8 %) ; titrage du comprimé : VE = 13,93 mL (théorie 13,89 mL,
+  2,78 mmol, 501 mg). Seuil de la teinte rose : [HO⁻] > 2 × 10⁻⁵ mol/L (pH ≈ 9,3), adapté à la soude à 0,20 mol/L.
+- Activité 2 : paillasse de reflux du tronc commun réutilisée (sans copie : pages.py charge deux fichiers de
+  sources/tc_chim3_a1_savon/) ; tubes secoués : mousse 0,9 (eau distillée), 0 (eau calcaire) ; huile dispersée à 80 % avec
+  savon et stable, 40 % sans savon puis 0 après 8 s (l'huile remonte).
+- Outil de test ajouté à la compétence : outils_verser.js (verser en tournant la poignée ; aller à une paillasse).
+
+Problèmes restants : l'acide salicylique est versé d'un bécher (comme un liquide) au lieu d'être pesé puis introduit ; la
+température du reflux (120 °C) est celle d'une ébullition du mélange, alors que beaucoup de protocoles chauffent à 60–80 °C au
+bain-marie ; l'anhydride en excès n'est pas suivi séparément ; une fois rangé, le réfrigérant couché passe devant le bécher
+récepteur (déjà le cas pour le savon et l'acide benzoïque : à corriger dans montage_reflux.js avec une option) ; la mousse et
+l'émulsion sont des modèles simples (pas de dépendance à la quantité de savon).
