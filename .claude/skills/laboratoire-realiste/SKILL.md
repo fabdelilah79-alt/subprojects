@@ -144,6 +144,8 @@ un pictogramme ni à une forme abstraite.
   `outils_pointage.js` (pointer(page, images, { origine }) : étalonnage, origine, pointage d'après objet(k), export).
   `outils_verser.js` (verser un récipient tenu en tournant sa poignée ; aller(page, n) : voir une paillasse pour mettre au
   point les gestes ; le ballon de 250 mL ne coule qu'incliné presque à 135°).
+- `regression_reflux.js` : rejoue le montage à reflux d'une paillasse de poste_synthese.js (réactifs, reflux, réfrigérant
+  rangé derrière le récepteur, versement) ; à lancer après toute modification de montage_reflux.js ou poste_synthese.js.
   Pour lire les faits : remplacer `Labo.missions.noter` pour copier dans `window.notes` (voir `exemple_scenario.js`).
 - `python3 -m outils.assembler_laboratoire <ids>` (dans `prof-ia/`) : fichier autonome `laboratoires/<id>.html`.
 - `ajouter.py labos.json` (le `labos.json` de ce dossier est la source à jour) : ajouter une entrée par simulation (id, chapitre, activite, objectifs,

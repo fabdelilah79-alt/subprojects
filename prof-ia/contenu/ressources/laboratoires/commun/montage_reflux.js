@@ -6,7 +6,8 @@ Rôle : montage de chauffage à reflux aux vraies dimensions, que l'élève asse
        (reflux) ; sinon elles s'échappent (perte de matière, vapeurs souvent inflammables). Pendant la chauffe, la
        réaction avance (cfg.reagir) ; arrêté, le ballon refroidit.
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { T_eb (°C), duree (min de reflux), reagir(contenu, d_avance),
-         dire(texte), autoriser_ballon(), ponce_x (place du flacon de pierre ponce) }.
+         dire(texte), autoriser_ballon(), ponce_x (place du flacon de pierre ponce), refrigerant_derriere (faux par défaut : le
+         réfrigérant rangé sur la paillasse passe derrière les récipients au lieu de devant) }.
 Produit : Labo.montage_reflux(ctx, cfg) -> s { ballon, avance, T, ebullition, perte, ponce, entonnoir, refrigerant, eau,
           chauffe, tic(dt_min), etat() } (le temps est donné par le chronomètre de la paillasse).
 Utilisé par : les simulations de synthèse (savon, arôme).
@@ -51,7 +52,7 @@ Utilisé par : les simulations de synthèse (savon, arôme).
 
   L.montage_reflux = function (ctx, cfg) {
     // Construit le montage ; les gestes sont dans reflux_gestes.js.
-    const s = { ...S0, PONCE_X: cfg.ponce_x, avance: 0, perte: 0, ponce: false, entonnoir: "col", refrigerant: "repos", ref_pos: { ...S0.REPOS }, eau: false, chauffe: false, dire: cfg.dire };
+    const s = { ...S0, PONCE_X: cfg.ponce_x, REF_DERRIERE: !!cfg.refrigerant_derriere, avance: 0, perte: 0, ponce: false, entonnoir: "col", refrigerant: "repos", ref_pos: { ...S0.REPOS }, eau: false, chauffe: false, dire: cfg.dire };
     support(ctx.fond); ctx.obstacles = (ctx.obstacles || []).concat([[130, 450]]);
     s.g_tuyaux = L.svg("g", { "pointer-events": "none" }, ctx.fond);
     const chauffe = L.chauffe_ballon(ctx.fond, ctx.devant, S0.CH);

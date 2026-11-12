@@ -13,6 +13,7 @@ Utilisé par : simulation.js.
   const SOL = 576, E = 1.6, A = L.AROME, S = A.somme;
 
   L.poste_reflux_arome = L.poste_synthese({
+    refrigerant_derriere: true,
     fait: "reflux_arome", T_eb: 100, duree: 30, reagir: A.esterifier, suivis: ["alcool_isoamylique", "acide_acetique", "acide_sulfurique"],
     reactifs: [
       { id: "alcool", x: 490, contenu: { alcool_isoamylique: 15 }, texte: "alcool isoamylique", pictos: ["SGH02", "SGH07"] },

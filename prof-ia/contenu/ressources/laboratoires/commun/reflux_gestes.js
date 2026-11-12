@@ -39,7 +39,7 @@ Utilisé par : montage_reflux.js.
       lacher: (p) => {
         const ok = pres(p, s.COL, 40, 70) && s.entonnoir !== "col";
         if (pres(p, s.COL, 40, 70) && !ok) s.dire("Ôtez d'abord l'entonnoir du col.");
-        s.refrigerant = ok ? "monte" : "repos"; s.ref_pos = ok ? { ...s.COL } : { ...s.REPOS }; ctx.objets.append(g); s.maj();
+        s.refrigerant = ok ? "monte" : "repos"; s.ref_pos = ok ? { ...s.COL } : { ...s.REPOS }; if (ok || !s.REF_DERRIERE) ctx.objets.append(g); else ctx.objets.prepend(g); s.maj();
       },
     });
     return g;

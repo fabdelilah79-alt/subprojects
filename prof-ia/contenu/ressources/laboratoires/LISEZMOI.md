@@ -834,3 +834,10 @@ Aucun fichier commun nouveau ni modifié (banc de titrage, tri, tableur réutili
 
 Aucun fichier commun nouveau ni modifié. `pages.py` donne à ce chapitre les scripts de la synthèse de l'acide benzoïque
 (reflux, Büchner, pesée, titrage) et, pour le savon, deux fichiers de `sources/tc_chim3_a1_savon/` (réactions et paillasse de reflux).
+
+## Correction : réfrigérant rangé derrière les récipients
+
+Fichiers communs modifiés : `montage_reflux.js`, `reflux_gestes.js` et `poste_synthese.js` reçoivent l'option `refrigerant_derriere`
+(désactivée par défaut) : une fois rangé sur la paillasse, le réfrigérant couché passe derrière les récipients au lieu de
+devant le bécher récepteur. Elle est activée dans les quatre synthèses à reflux : tc_chim3_a1_savon, tc_chim3_a2_arome,
+b1_chim6_a3_benzoique, b2_chim10_a1_aspirine (et b2_chim10_a2_savon, qui reprend la paillasse du savon).

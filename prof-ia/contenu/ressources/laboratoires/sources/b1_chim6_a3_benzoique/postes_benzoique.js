@@ -14,6 +14,7 @@ Utilisé par : simulation.js.
   const SOL = 576, E = 1.6, B = L.BENZOIQUE, S = B.somme;
 
   L.poste_reflux_benzoique = L.poste_synthese({
+    refrigerant_derriere: true,
     fait: "reflux_benzoique", T_eb: 100, duree: 20, reagir: B.oxyder, suivis: ["alcool_benzylique", "permanganate_basique"],
     reactifs: [
       { id: "alcool", x: 490, contenu: { alcool_benzylique: 2 }, texte: "alcool benzylique 2,0 mL", pictos: ["SGH07"] },

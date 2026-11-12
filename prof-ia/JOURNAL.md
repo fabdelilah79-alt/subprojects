@@ -1563,6 +1563,15 @@ pendant un titrage rapide seulement.
 
 Problèmes restants : l'acide salicylique est versé d'un bécher (comme un liquide) au lieu d'être pesé puis introduit ; la
 température du reflux (120 °C) est celle d'une ébullition du mélange, alors que beaucoup de protocoles chauffent à 60–80 °C au
-bain-marie ; l'anhydride en excès n'est pas suivi séparément ; une fois rangé, le réfrigérant couché passe devant le bécher
-récepteur (déjà le cas pour le savon et l'acide benzoïque : à corriger dans montage_reflux.js avec une option) ; la mousse et
+bain-marie ; l'anhydride en excès n'est pas suivi séparément ; la mousse et
 l'émulsion sont des modèles simples (pas de dépendance à la quantité de savon).
+
+## 2026-11-12 — Réfrigérant rangé derrière les récipients (synthèses à reflux)
+
+- Option `refrigerant_derriere` (désactivée par défaut) dans montage_reflux.js, reflux_gestes.js et poste_synthese.js ;
+  activée dans tc_chim3_a1_savon, tc_chim3_a2_arome, b1_chim6_a3_benzoique et b2_chim10_a1_aspirine.
+- Régression : nouveau scénario de la compétence regression_reflux.js (réactifs, reflux, réfrigérant rangé, versement), joué
+  sur les trois anciennes synthèses (pages sources et fichiers assemblés) : réfrigérant « derrière » le récepteur, reflux
+  terminé, mélange versé, aucune erreur ; parcours complets des deux simulations du chapitre 10 rejoués : tout passe.
+
+Problème restant : le ballon tenu au-dessus du récepteur, une fois vidé, reste tenu tant qu'on ne le touche pas.

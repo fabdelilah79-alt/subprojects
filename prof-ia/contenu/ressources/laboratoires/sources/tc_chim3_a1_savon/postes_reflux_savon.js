@@ -9,6 +9,7 @@ Utilisé par : simulation.js.
 (function (L) {
   const S = L.SAVON;
   L.poste_reflux_savon = L.poste_synthese({
+    refrigerant_derriere: true,
     fait: "reflux_savon", T_eb: 82, duree: 30, reagir: S.saponifier, suivis: ["huile", "soude", "ethanol"],
     reactifs: [
       { id: "huile", x: 500, contenu: { huile: 20 }, texte: "huile", pictos: [] },

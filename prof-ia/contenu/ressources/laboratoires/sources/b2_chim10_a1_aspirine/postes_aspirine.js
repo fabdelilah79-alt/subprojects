@@ -14,6 +14,7 @@ Utilisé par : simulation.js.
   const DONNEES = ["Acide salicylique C₇H₆O₃ : m = 3,00 g ; M = 138 g/mol", "Anhydride éthanoïque C₄H₆O₃ : V = 6,0 mL ; d = 1,08 ; M = 102 g/mol", "Aspirine C₉H₈O₄ : M = 180 g/mol", "Rendement : r = n(obtenu) / n(max)"];
 
   L.poste_reflux_aspirine = L.poste_synthese({
+    refrigerant_derriere: true,
     fait: "reflux_aspirine", T_eb: 120, duree: 15, reagir: A.acetyler, suivis: ["acide_salicylique", "anhydride_acetique", "ox_sulfurique", "brut_aspirine"],
     reactifs: [
       { id: "salicylique", x: 490, contenu: { acide_salicylique: 2.1 }, texte: "acide salicylique 3,00 g", pictos: ["SGH07"] },
