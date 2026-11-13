@@ -1627,7 +1627,7 @@ Problèmes restants : 1re année du bac et tronc commun encore à réécrire (la
 
 ## 2026-11-13 — Questions du carnet : réponses de longueur égale (1re année du bac)
 
-- 243 questions à choix réécrites dans les 47 laboratoires de 1re année du bac (chimie, électricité, mécanique, optique,
+- 243 questions à choix réécrites dans 44 des 47 laboratoires de 1re année du bac (chimie, électricité, mécanique, optique,
   y compris la partie spécifique d'électronique) : bonne réponse réduite à l'essentiel, mauvaises réponses de même forme
   (signe ou sens inversé, puissance ou facteur faux, image réelle/virtuelle échangée, oxydant/réducteur échangés...).
 - Erreur corrigée (b1_chim4_a1_protons) : la bonne réponse disait « orange pour le vinaigre ». Or le vinaigre dilué de la
