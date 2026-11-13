@@ -48,8 +48,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "En D (à partir de D3), calculez vy = (y suivant − y précédent) / (2 × 0,04).", court: "Tableur : vy en D.", verifier: tableau },
       { consigne: "Tracez vy (D) en fonction de t (A), modèle y = a·x + b.", court: "Courbe vy = f(t).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "D" && courbe.n >= 6 && courbe.modele === "affine") || "Abscisse : A ; ordonnée : D ; modèle y = a·x + b." },
       { consigne: "Valeur de l'accélération |a| (m/s²) ?", court: "|a| (m/s²) ?", question: nombre("m/s²", G, 0.6, "Coefficient directeur de vy(t).", "Exact : g.") },
-      { consigne: "Les équations horaires du mouvement sont…", court: "Répondez dans le carnet.", question: choix(["x = v0·cos α·t et y = −½·g·t² + v0·sin α·t", "x = ½·g·t² et y = v0·t", "x = v0·t et y = v0·t"], "ẍ = 0 et ÿ = −g, avec les conditions initiales.", "Exact.") },
-      { consigne: "En éliminant t, la trajectoire est…", court: "Répondez dans le carnet.", question: choix(["une parabole : y = −g·x²/(2·v0²·cos²α) + x·tan α", "une droite", "un cercle"], "t = x / (v0·cos α).", "Exact.") },
+      { consigne: "Les équations horaires du mouvement sont…", court: "Répondez dans le carnet.", question: choix(["x = v0·cos α·t ; y = −½·g·t² + v0·sin α·t", "x = v0·sin α·t ; y = −½·g·t² + v0·cos α·t", "x = v0·cos α·t ; y = −g·t² + v0·sin α·t"], "ẍ = 0 et ÿ = −g, avec les conditions initiales.", "Exact.") },
+      { consigne: "En éliminant t, la trajectoire est…", court: "Répondez dans le carnet.", question: choix(["une parabole : y = −g·x²/(2·v0²·cos²α) + x·tan α", "une droite : y = −g·x/(2·v0·cos α) + x·tan α", "une parabole : y = −g·x²/(2·v0²·sin²α) + x·tan α"], "t = x / (v0·cos α).", "Exact.") },
     ],
   };
 
@@ -65,10 +65,10 @@ Utilisé par : page.html (dernier script).
       { consigne: "Portée de ce tir (m) ?", court: "Portée (m) ?", question: nombre("m", portee(3, 45), 0.02, "D = v0²·sin(2α) / g ; vérifiez sur le tableau quadrillé.", "Exact : environ 0,92 m.") },
       { consigne: "Tirez la bille d'acier à 30°, puis à 60°, toujours avec v0 = 3,0 m/s.", court: "Tirs à 30° et 60°.", verifier: ({ faits }) => (tire(faits, "acier", 30, 3) && tire(faits, "acier", 60, 3)) || false },
       { consigne: "Portée commune des tirs à 30° et à 60° (m) ?", court: "Portée (m) ?", question: nombre("m", portee(3, 30), 0.02, "sin 60° = sin 120°.", "Exact : environ 0,79 m.") },
-      { consigne: "Pour une même vitesse initiale, la portée…", court: "Répondez dans le carnet.", question: choix(["est la même pour deux angles complémentaires et maximale à 45°", "augmente toujours avec l'angle", "ne dépend pas de l'angle"], "Comparez les trois tirs.", "Exact.") },
+      { consigne: "Pour une même vitesse initiale, la portée…", court: "Répondez dans le carnet.", question: choix(["est maximale à 45°", "est maximale à 90°", "augmente toujours avec α"], "Comparez les trois tirs.", "Exact.") },
       { consigne: "Tirez la balle de bois à 45° avec v0 = 3,0 m/s.", court: "Tir de la balle de bois.", verifier: ({ faits }) => tire(faits, "bois", 45, 3) || false },
-      { consigne: "Avec la balle de bois (8 g), la trajectoire…", court: "Répondez dans le carnet.", question: choix(["est la même : elle ne dépend pas de la masse (a = g)", "est plus haute", "est plus courte"], "Où retombe-t-elle ?", "Exact : l'action de l'air est négligeable.") },
-      { consigne: "La trajectoire d'un projectile est fixée par…", court: "Répondez dans le carnet.", question: choix(["les conditions initiales (position, v0, α) et g", "sa masse", "sa couleur"], "Reprenez les équations horaires.", "Exact.") },
+      { consigne: "Avec la balle de bois (8 g), la trajectoire…", court: "Répondez dans le carnet.", question: choix(["est la même : a = g", "est plus haute : elle est plus légère", "est plus courte : elle est plus légère"], "Où retombe-t-elle ?", "Exact : l'action de l'air est négligeable.") },
+      { consigne: "La trajectoire d'un projectile est fixée par…", court: "Répondez dans le carnet.", question: choix(["g et les conditions initiales", "g et la masse du projectile", "la masse et la vitesse initiale"], "Reprenez les équations horaires.", "Exact.") },
     ],
   };
 

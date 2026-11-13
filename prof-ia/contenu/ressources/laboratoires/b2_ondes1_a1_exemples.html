@@ -3099,9 +3099,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Une onde : propagation d'une perturbation, sans transport de matière.",
     etapes: [
       { consigne: "Enfoncez la cale dans l'eau, à gauche de la cuve, puis relâchez-la. Regardez la vague et le bouchon.", court: "Créez une vague.", aide_geste: "Faites glisser la cale vers le bas, puis lâchez-la.", verifier: ({ faits }) => (V(faits).source >= 0.3 && V(faits).arrivee) || false },
-      { consigne: "Quand la vague passe, le bouchon…", court: "Répondez dans le carnet.", question: choix(["monte puis redescend à sa place : il n'est pas emporté", "est emporté par la vague jusqu'à la plage", "ne bouge pas du tout"], "Recommencez et regardez seulement le bouchon.", "Exact : il n'y a pas de transport de matière.") },
+      { consigne: "Quand la vague passe, le bouchon…", court: "Répondez dans le carnet.", question: choix(["monte puis redescend à sa place", "est emporté par la vague vers la plage", "s'enfonce puis reste au fond de l'eau"], "Recommencez et regardez seulement le bouchon.", "Exact : il n'y a pas de transport de matière.") },
       { consigne: "La vague met 0,74 s pour parcourir les 40 cm qui séparent la cale du bouchon. Sa célérité vaut…", court: "v (m/s) ?", question: nombre("m/s", 0.54, 0.03, "v = d / Δt, avec d en mètres.", "Exact : environ 0,54 m/s.") },
-      { consigne: "Une onde mécanique est…", court: "Répondez dans le carnet.", question: choix(["la propagation d'une perturbation dans un milieu matériel, sans transport de matière", "un déplacement de matière d'un point à un autre", "une vibration qui se répète forcément"], "Pensez au bouchon.", "Exact.") },
+      { consigne: "Une onde mécanique est…", court: "Répondez dans le carnet.", question: choix(["une perturbation qui se propage sans transport de matière", "un déplacement de matière qui se propage de proche en proche", "une vibration qui se propage aussi bien dans le vide"], "Pensez au bouchon.", "Exact.") },
     ],
   };
 
@@ -3113,9 +3113,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Transversale : ⊥ ; longitudinale : ∥ à la propagation.",
     etapes: [
       { consigne: "Saisissez la poignée, déplacez-la vivement vers le haut puis ramenez-la : une bosse parcourt le ressort.", court: "Onde transversale.", aide_geste: "Glissez la poignée vers le haut, puis lâchez-la : elle revient seule.", verifier: ({ faits }) => (R(faits).trans >= 0.05 && R(faits).rouge.dy >= 2) || false },
-      { consigne: "Quand la bosse passe, la spire rouge…", court: "Répondez dans le carnet.", question: choix(["se déplace perpendiculairement au ressort puis revient à sa place : l'onde est transversale", "avance avec la bosse jusqu'au bout", "se déplace le long du ressort"], "Regardez seulement la spire rouge.", "Exact.") },
+      { consigne: "Quand la bosse passe, la spire rouge…", court: "Répondez dans le carnet.", question: choix(["bouge perpendiculairement au ressort : onde transversale", "bouge le long du ressort : onde transversale", "avance avec la bosse jusqu'au bout : onde transversale"], "Regardez seulement la spire rouge.", "Exact.") },
       { consigne: "Poussez maintenant la poignée le long du ressort (vers la droite) puis relâchez-la.", court: "Onde longitudinale.", aide_geste: "Glissez la poignée horizontalement vers la droite, puis lâchez-la.", verifier: ({ faits }) => (R(faits).longi >= 0.05 && R(faits).rouge.dx >= 2) || false },
-      { consigne: "Cette fois, la spire rouge…", court: "Répondez dans le carnet.", question: choix(["se déplace le long du ressort, dans la direction de propagation, puis revient : l'onde est longitudinale", "se déplace perpendiculairement au ressort", "reste immobile"], "Les spires se serrent puis s'écartent.", "Exact.") },
+      { consigne: "Cette fois, la spire rouge…", court: "Répondez dans le carnet.", question: choix(["bouge le long du ressort : onde longitudinale", "bouge perpendiculairement au ressort : onde longitudinale", "avance avec la perturbation jusqu'au bout du ressort"], "Les spires se serrent puis s'écartent.", "Exact.") },
     ],
   };
 
@@ -3129,7 +3129,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_ondes || []).length >= 4 },
       { consigne: "Rangez chaque onde dans sa colonne.", court: "Tableau : rangez les ondes.", verifier: ({ faits }) => L.tableau_tri.verifier(L.TRI_ONDES, faits.tri_ondes) },
-      { consigne: "On n'entend plus le réveil placé sous une cloche où l'on a fait le vide parce que…", court: "Répondez dans le carnet.", question: choix(["le son est une onde mécanique : il a besoin d'un milieu matériel pour se propager", "le réveil s'arrête dans le vide", "le verre de la cloche arrête la lumière"], "Relisez le document « Le son ».", "Exact.") },
+      { consigne: "On n'entend plus le réveil placé sous une cloche où l'on a fait le vide parce que…", court: "Répondez dans le carnet.", question: choix(["le son a besoin d'un milieu matériel", "le réveil cesse de sonner dans le vide", "le verre de la cloche absorbe tout le son"], "Relisez le document « Le son ».", "Exact.") },
       { consigne: "Une station reçoit les ondes S 20 s après les ondes P. À quelle distance du foyer est-elle ?", court: "d (km) ?", question: nombre("km", 168, 5, "d / vS − d / vP = Δt, donc d = Δt / (1/vS − 1/vP), avec v en km/s.", "Exact : environ 168 km.") },
     ],
   };

@@ -3264,7 +3264,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       ...etapes_mesure("chariot", 0, "Planche horizontale (α = 0°), chariot, lanceur armé : appuyez sur « Lancer »."),
       { consigne: "Coefficient directeur a de la droite vx = f(t) pour le chariot (m/s²) ?", court: "a (m/s²) ?", question: nombre("m/s²", 0, 0.3, "Lisez a dans l'équation de la droite.", "Exact : ẍ ≈ 0.") },
-      { consigne: "Le chariot a donc un mouvement…", court: "Répondez dans le carnet.", question: choix(["rectiligne uniforme : ẍ = 0, P et R se compensent", "uniformément accéléré", "circulaire"], "vx ne varie pas.", "Exact : c'est le principe d'inertie.") },
+      { consigne: "Le chariot a donc un mouvement…", court: "Répondez dans le carnet.", question: choix(["rectiligne uniforme : ẍ = 0", "uniformément accéléré : ẍ > 0", "uniformément freiné : ẍ < 0"], "vx ne varie pas.", "Exact : c'est le principe d'inertie.") },
       ...etapes_mesure("pave", 0, "Choisissez le pavé de bois (lanceur armé, α = 0°) et lancez-le."),
       { consigne: "Accélération a du pavé (m/s²) ?", court: "a (m/s²) ?", question: nombre("m/s²", -G * 0.3, 0.3, "Coefficient directeur de la droite (négatif : il ralentit).", "Exact.") },
       { consigne: "Intensité de la force de frottement f = m·|a| (N), avec m = 200 g ?", court: "f (N) ?", question: nombre("N", M * G * 0.3, 0.07, "Deuxième loi sur l'axe du mouvement : −f = m·a.", "Exact : environ 0,6 N.") },
@@ -3285,8 +3285,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Accélération a du pavé (m/s²) ?", court: "a (m/s²) ?", question: nombre("m/s²", G * (S25 - 0.3 * C25), 0.25, "Coefficient directeur.", "Exact.") },
       { consigne: "Intensité de la force de frottement f = m·(g·sin α − a) (N) ?", court: "f (N) ?", question: nombre("N", M * G * 0.3 * C25, 0.08, "m = 0,200 kg ; sin 25° = 0,423.", "Exact : environ 0,53 N.") },
       { consigne: "Réglez α = 10° et lâchez le pavé.", court: "Pavé, α = 10°.", verifier: ({ faits }) => (dernier(faits).solide === "pave" && dernier(faits).alpha === 10 && dernier(faits).arret) || false },
-      { consigne: "À 10°, le pavé ne glisse pas parce que…", court: "Répondez dans le carnet.", question: choix(["le frottement compense la composante du poids le long du plan", "son poids est nul", "la planche le repousse vers le haut"], "La composante m·g·sin α est petite.", "Exact.") },
-      { consigne: "Pour un mouvement rectiligne avec ẍ = constante, l'équation horaire est…", court: "Répondez dans le carnet.", question: choix(["x = ½·a·t² + v0·t + x0", "x = a·t + x0", "x = v0·t²"], "Intégrez deux fois ẍ = a.", "Exact : mouvement rectiligne uniformément varié.") },
+      { consigne: "À 10°, le pavé ne glisse pas parce que…", court: "Répondez dans le carnet.", question: choix(["le frottement compense la composante du poids", "la réaction normale compense tout le poids", "la composante du poids le long du plan est nulle"], "La composante m·g·sin α est petite.", "Exact.") },
+      { consigne: "Pour un mouvement rectiligne avec ẍ = constante, l'équation horaire est…", court: "Répondez dans le carnet.", question: choix(["x = ½·a·t² + v0·t + x0", "x = a·t² + v0·t + x0", "x = ½·a·t + v0·t + x0"], "Intégrez deux fois ẍ = a.", "Exact : mouvement rectiligne uniformément varié.") },
     ],
   };
 

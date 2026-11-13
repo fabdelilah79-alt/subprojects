@@ -34,11 +34,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : G+ vers K1, K0 vers la bobine, bobine vers R, R vers G− ; K2 vers G− ; GND au −, EA0 entre la bobine et R, EA1 sur K0.", court: "Câblez le montage.", verifier: ({ faits }) => (M(faits).serie && M(faits).boucle && M(faits).mesure) || false },
       { consigne: "R = 100 Ω, noyau enfoncé, K en position 2. Touchez « Lancer » (durée 50 ms), puis basculez K en position 1.", court: "Enregistrez l'établissement.", verifier: ({ faits }) => vu(faits, "etablissement") || false },
-      { consigne: "Quand on ferme le circuit, l'intensité i (image : uR)…", court: "Répondez dans le carnet.", question: choix(["augmente progressivement : la bobine retarde l'établissement du courant, i est continue", "saute aussitôt à sa valeur finale", "reste nulle"], "Regardez le début de la courbe rouge.", "Exact.") },
+      { consigne: "Quand on ferme le circuit, l'intensité i (image : uR)…", court: "Répondez dans le carnet.", question: choix(["augmente progressivement", "saute à sa valeur finale", "augmente puis redevient nulle"], "Regardez le début de la courbe rouge.", "Exact.") },
       { consigne: "Intensité en régime permanent I₀ = uR / R (mA) ?", court: "I₀ (mA) ?", question: nombre("mA", (f) => ((D(f).u_fin || 5.43) / 100) * 1000, 1, "Fin de la courbe EA0, divisée par R.", "Exact : I₀ = E / (R + r).") },
       { consigne: "Constante de temps τ, lue à 63 % de I₀ (ms) ?", court: "τ (ms) ?", question: nombre("ms", (f) => (D(f).tau || 0.0045) * 1000, 0.25, "Curseur sur la courbe EA0.", "Exact.") },
       { consigne: "Calculez L / (R + r) (ms).", court: "L / (R + r) (ms) ?", question: nombre("ms", 4.55, 0.1, "L = 0,50 H ; R + r = 110 Ω.", "Exact : τ = L / (R + r).") },
-      { consigne: "Touchez « Voie 2 » jusqu'à « EA1 − EA0 » : tension aux bornes de la bobine. À la fermeture, elle…", court: "Répondez dans le carnet.", question: choix(["saute à E, puis diminue jusqu'à r·I₀ en régime permanent", "reste nulle", "augmente comme i"], "u = r·i + L·di/dt : di/dt est grand au début.", "Exact.") },
+      { consigne: "Touchez « Voie 2 » jusqu'à « EA1 − EA0 » : tension aux bornes de la bobine. À la fermeture, elle…", court: "Répondez dans le carnet.", question: choix(["saute à E, puis diminue jusqu'à r·I₀", "part de 0, puis augmente jusqu'à E", "saute à E, puis reste égale à E"], "u = r·i + L·di/dt : di/dt est grand au début.", "Exact.") },
     ],
   };
 
@@ -52,8 +52,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Mesurez τ pour au moins quatre couples (R, L) différents. Tableur : en A : R (Ω) ; en B : L (H) ; en C : τ (ms) ; en D : L / (R + r) (ms).", court: "Tableur : R, L, τ, L/(R+r).", aide_geste: "Boîte de résistances : touches − et + ; touchez la bobine pour enfoncer ou retirer le noyau.", verifier: tableau },
       { consigne: "Tracez τ (C) en fonction de L / (R + r) (D).", court: "Courbe τ = f(L/(R+r)).", verifier: ({ courbe }) => (courbe.x === "D" && courbe.y === "C" && courbe.n >= 4) || "Abscisse : D ; ordonnée : C." },
-      { consigne: "La courbe est une droite de coefficient directeur…", court: "Répondez dans le carnet.", question: choix(["1 : τ = L / (R + r)", "R", "0,63"], "Comparez C et D.", "Exact.") },
-      { consigne: "L'équation aux dimensions de L / R montre que τ est…", court: "Répondez dans le carnet.", question: choix(["un temps : (V·s/A) / (V/A) = s", "une intensité", "sans dimension"], "1 H = 1 V·s/A ; 1 Ω = 1 V/A.", "Exact.") },
+      { consigne: "La courbe est une droite de coefficient directeur…", court: "Répondez dans le carnet.", question: choix(["1", "R", "0,63"], "Comparez C et D.", "Exact.") },
+      { consigne: "L'équation aux dimensions de L / R montre que τ est…", court: "Répondez dans le carnet.", question: choix(["un temps", "une intensité", "sans dimension"], "1 H = 1 V·s/A ; 1 Ω = 1 V/A.", "Exact.") },
     ],
   };
 
@@ -66,11 +66,11 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "i + (L/R)·di/dt = E/R ; énergie ½·L·i².",
     etapes: [
       { consigne: "Courant établi (K en 1), R = 100 Ω, noyau enfoncé : touchez « Lancer », puis basculez K en position 2.", court: "Enregistrez la rupture.", verifier: ({ faits }) => vu(faits, "rupture") || false },
-      { consigne: "À l'ouverture, l'intensité…", court: "Répondez dans le carnet.", question: choix(["diminue progressivement jusqu'à 0 : la bobine retarde la rupture du courant", "s'annule aussitôt", "augmente"], "Regardez la courbe.", "Exact : i est continue.") },
-      { consigne: "Avec R_t = R + r, l'équation différentielle de l'établissement du courant s'écrit…", court: "Répondez dans le carnet.", question: choix(["i + (L/R_t)·di/dt = E/R_t", "i − L·di/dt = E", "L·i + di/dt = E"], "R_t·i + L·di/dt = E, divisé par R_t.", "Exact.") },
-      { consigne: "Sa solution, avec i(0) = 0, est…", court: "Répondez dans le carnet.", question: choix(["i = (E/R_t)·(1 − e^(−t/τ)), avec τ = L/R_t", "i = (E/R_t)·e^(−t/τ)", "i = E·t / L"], "Elle part de 0 et tend vers E/R_t.", "Exact.") },
+      { consigne: "À l'ouverture, l'intensité…", court: "Répondez dans le carnet.", question: choix(["diminue progressivement", "s'annule aussitôt", "augmente un instant"], "Regardez la courbe.", "Exact : i est continue.") },
+      { consigne: "Avec R_t = R + r, l'équation différentielle de l'établissement du courant s'écrit…", court: "Répondez dans le carnet.", question: choix(["i + (L/R_t)·di/dt = E/R_t", "i − (L/R_t)·di/dt = E/R_t", "i + (R_t/L)·di/dt = E/R_t"], "R_t·i + L·di/dt = E, divisé par R_t.", "Exact.") },
+      { consigne: "Sa solution, avec i(0) = 0, est…", court: "Répondez dans le carnet.", question: choix(["i = (E/R_t)·(1 − e^(−t/τ))", "i = (E/R_t)·e^(−t/τ)", "i = (E/R_t)·(1 + e^(−t/τ))"], "Elle part de 0 et tend vers E/R_t.", "Exact.") },
       { consigne: "Énergie stockée dans la bobine parcourue par I₀ = 54,3 mA (mJ) ?", court: "Énergie (mJ) ?", question: nombre("mJ", 0.737, 0.03, "E_m = ½ × 0,50 × (0,0543)².", "Exact : environ 0,74 mJ.") },
-      { consigne: "Pendant la rupture, cette énergie…", court: "Répondez dans le carnet.", question: choix(["est rendue au circuit et dissipée par effet Joule dans les résistances", "disparaît sans effet", "reste dans la bobine"], "Le courant continue de passer dans R.", "Exact.") },
+      { consigne: "Pendant la rupture, cette énergie…", court: "Répondez dans le carnet.", question: choix(["est dissipée par effet Joule", "disparaît sans aucun effet", "reste stockée dans la bobine"], "Le courant continue de passer dans R.", "Exact.") },
     ],
   };
 

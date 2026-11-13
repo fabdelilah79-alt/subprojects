@@ -3675,14 +3675,14 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : GBF (sortie) vers la borne 1 de la bobine, borne 2 vers R, l'autre borne de R vers la masse du GBF ; GND de l'interface sur la borne 2 de la bobine, EA0 sur la borne 1, EA1 à l'autre borne de R.", court: "Câblez le montage.", verifier: ({ faits }) => ((faits.montage_l || {}).serie && faits.montage_l.mesure) || false },
       { consigne: "GBF : triangle, 500 Hz ; R = 470 Ω ; bobine sans noyau. Touchez « Voie 2 » jusqu'à « −EA1 » (uR), puis « Lancer » (durée 20 ms).", court: "Enregistrez uL et uR.", verifier: ({ faits }) => (A(faits).voie2 === "−EA1" && D(faits).forme === "triangle" && D(faits).f === 500 && D(faits).R === 470 && !D(faits).noyau) || false },
-      { consigne: "La tension uR (image de i) est triangulaire. Celle de la bobine…", court: "Répondez dans le carnet.", question: choix(["est en créneaux : elle est constante quand i varie à vitesse constante", "est aussi triangulaire", "est nulle"], "Comparez les deux courbes.", "Exact : elle est liée à di/dt.") },
+      { consigne: "La tension uR (image de i) est triangulaire. Celle de la bobine…", court: "Répondez dans le carnet.", question: choix(["est en créneaux", "est aussi triangulaire", "est sinusoïdale"], "Comparez les deux courbes.", "Exact : elle est liée à di/dt.") },
       { consigne: "Avec le curseur, mesurez la pente de uR sur une montée : ΔuR/Δt (V/s) ?", court: "Pente de uR (V/s) ?", question: relatif("V/s", (f) => pente(ref(f)), "Deux lectures du curseur sur la même montée.", "Exact.") },
       { consigne: "Tension de la bobine au milieu de cette montée, quand uR = 0 (V) ?", court: "uL (V) ?", question: relatif("V", (f) => (ref(f).L * pente(ref(f))) / ref(f).R, "Lisez EA0 au curseur.", "Exact.") },
       { consigne: "Inductance L = uL / (di/dt), avec di/dt = (1/R)·ΔuR/Δt (H) ?", court: "L (H) ?", question: nombre("H", 0.05, 0.006, "di/dt = pente / R.", "Exact : L = 50 mH.") },
       { consigne: "L'équation aux dimensions de u = L·di/dt montre que le henry vaut…", court: "Répondez dans le carnet.", question: choix(["1 H = 1 V·s/A", "1 H = 1 V/A", "1 H = 1 A·s/V"], "L = u / (di/dt).", "Exact.") },
       { consigne: "Enfoncez le noyau de fer doux (touchez la bobine) et refaites un enregistrement (baissez la fréquence à 50 Hz pour que uR reste triangulaire ; durée 50 ms).", court: "Enregistrement avec le noyau.", verifier: ({ faits }) => (D(faits).noyau && D(faits).forme === "triangle") || false },
       { consigne: "Inductance de la bobine avec son noyau (H) ?", court: "L avec noyau (H) ?", question: nombre("H", 0.5, 0.06, "Même méthode.", "Exact : environ dix fois plus grande.") },
-      { consigne: "Le noyau de fer doux…", court: "Répondez dans le carnet.", question: choix(["augmente l'inductance de la bobine ; la relation u = r·i + L·di/dt reste valable", "diminue l'inductance", "ne change rien"], "Comparez les deux valeurs de L.", "Exact.") },
+      { consigne: "Le noyau de fer doux…", court: "Répondez dans le carnet.", question: choix(["augmente l'inductance", "diminue l'inductance", "augmente la résistance r"], "Comparez les deux valeurs de L.", "Exact.") },
     ],
   };
 

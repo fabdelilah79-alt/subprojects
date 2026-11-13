@@ -3973,8 +3973,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Ec = ½·JΔ·θ̇² ; Epp = M·g·a·(1 − cos θ).",
     etapes: [
       { consigne: "Énergie cinétique du pendule, qui tourne autour de l'axe Δ :", court: "Répondez dans le carnet.", question: choix(["Ec = ½·JΔ·θ̇²", "Ec = ½·M·θ̇²", "Ec = JΔ·θ̇"], "Rotation autour d'un axe fixe.", "Exact.") },
-      { consigne: "Avec Epp = 0 à la position d'équilibre (θ = 0), l'énergie potentielle de pesanteur est…", court: "Répondez dans le carnet.", question: choix(["Epp = M·g·a·(1 − cos θ)", "Epp = M·g·a·cos θ", "Epp = M·g·a·sin θ"], "zG − zG(équilibre) = a·(1 − cos θ).", "Exact.") },
-      { consigne: "Pour les petites oscillations (cos θ ≈ 1 − θ²/2, θ en rad), Epp ≈ …", court: "Répondez dans le carnet.", question: choix(["½·M·g·a·θ²", "M·g·a·θ", "0"], "Remplacez cos θ.", "Exact : la même forme que ½·C·θ² pour le pendule de torsion.") },
+      { consigne: "Avec Epp = 0 à la position d'équilibre (θ = 0), l'énergie potentielle de pesanteur est…", court: "Répondez dans le carnet.", question: choix(["Epp = M·g·a·(1 − cos θ)", "Epp = M·g·a·(1 − sin θ)", "Epp = M·g·a·cos θ"], "zG − zG(équilibre) = a·(1 − cos θ).", "Exact.") },
+      { consigne: "Pour les petites oscillations (cos θ ≈ 1 − θ²/2, θ en rad), Epp ≈ …", court: "Répondez dans le carnet.", question: choix(["½·M·g·a·θ²", "M·g·a·θ²", "½·M·g·a·θ"], "Remplacez cos θ.", "Exact : la même forme que ½·C·θ² pour le pendule de torsion.") },
       { consigne: "Masse à 40 cm, sans palette : durée 5 s, « Acquérir », lâchez la tige à 30°, puis touchez « Énergies ».", court: "Lâcher à 30° ; vue « Énergies ».", verifier: V.vue_energies(a30(false), 5) },
       { consigne: "Énergie mécanique au lâcher Em = M·g·a·(1 − cos θ0), en mJ (M·a = m1·a1 + m2·d) ?", court: "Em au lâcher (mJ) ?", question: relatif("mJ", V.em0, 0.03, "M·a = 0,100 × 0,24 + 0,200 × 0,40 ; g = 9,81 m/s².", "Exact : environ 137 mJ, la valeur lue sur la courbe verte.") },
       { consigne: "Sur le diagramme, Em (courbe verte)…", court: "Répondez dans le carnet.", question: choix(["reste constante : Ec et Epp s'échangent", "diminue de moitié à chaque oscillation", "est maximale au passage par l'équilibre"], "Regardez la courbe verte.", "Exact.") },
@@ -3989,10 +3989,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Sans frottement notable : Em constante.",
     etapes: [
       { consigne: "Tableur : placez le curseur à cinq instants (au passage par l'équilibre, aux positions extrêmes, entre les deux) ; t en A, Ec en B, Epp en C, Em en D.", court: "Tableur : t, Ec, Epp, Em.", aide_geste: "Faites glisser le curseur vert sur le graphique.", verifier: V.echanges },
-      { consigne: "Quand Ec est maximale, Epp est…", court: "Répondez dans le carnet.", question: choix(["nulle : le pendule passe par sa position d'équilibre", "maximale aussi", "égale à Ec"], "Comparez les lignes du tableur.", "Exact.") },
+      { consigne: "Quand Ec est maximale, Epp est…", court: "Répondez dans le carnet.", question: choix(["nulle : passage à l'équilibre", "maximale : écart le plus grand", "égale à Ec : moitié de Em"], "Comparez les lignes du tableur.", "Exact.") },
       { consigne: "Vitesse angulaire au passage par l'équilibre : θ̇max = √(2·Em / JΔ), en rad/s ?", court: "θ̇max (rad/s) ?", question: relatif("rad/s", V.omega_max, 0.03, "Em en joules ; JΔ = 3,98 × 10⁻² kg·m².", "Exact : environ 2,6 rad/s.") },
       { consigne: "Vitesse de la masse coulissante à cet instant (m/s) ?", court: "v (m/s) ?", question: relatif("m/s", (f) => 0.4 * V.omega_max(f), 0.03, "v = d·θ̇max, d = 0,40 m.", "Exact : environ 1,05 m/s.") },
-      { consigne: "Lâché à 30°, le pendule remonte de l'autre côté jusqu'à…", court: "Répondez dans le carnet.", question: choix(["30° environ : Em se conserve, Epp reprend sa valeur du départ", "0°", "60°"], "Ec = 0 aux positions extrêmes.", "Exact.") },
+      { consigne: "Lâché à 30°, le pendule remonte de l'autre côté jusqu'à…", court: "Répondez dans le carnet.", question: choix(["30° environ : Em se conserve", "15° environ : Em est divisée par 2", "60° environ : Ec s'ajoute à Epp"], "Ec = 0 aux positions extrêmes.", "Exact.") },
     ],
   };
 
@@ -4004,10 +4004,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Frottements : Em diminue (transfert thermique).",
     etapes: [
       { consigne: "Montez la palette (touchez-la sur la paillasse), durée 10 s, « Acquérir », lâchez la tige à 30°, puis vue « Énergies ».", court: "Palette, 10 s, lâcher à 30°.", verifier: V.vue_energies(a30(true), 10) },
-      { consigne: "Avec la palette, Em…", court: "Répondez dans le carnet.", question: choix(["diminue : le travail des frottements de l'air est négatif", "reste constante", "augmente"], "Regardez la courbe verte.", "Exact.") },
+      { consigne: "Avec la palette, Em…", court: "Répondez dans le carnet.", question: choix(["diminue : frottements de l'air", "reste constante : Em se conserve", "augmente : l'air pousse la palette"], "Regardez la courbe verte.", "Exact.") },
       { consigne: "Placez le curseur vers t = 4 s : quel pourcentage de Em au lâcher reste-t-il ?", court: "Em restante (%) ?", question: { type: "nombre", unite: "%", attendu: 37, tolerance: 6, aide: "Pourcentage = 100 × Em(4 s) / Em(0).", bravo: "Exact : environ 37 %." } },
-      { consigne: "Au cours d'une oscillation, Em diminue surtout…", court: "Répondez dans le carnet.", question: choix(["au passage par l'équilibre, là où la vitesse est grande", "aux positions extrêmes, où la vitesse est nulle", "toujours au même rythme"], "Regardez les « marches » de la courbe verte.", "Exact : le frottement de l'air croît avec la vitesse.") },
-      { consigne: "L'énergie perdue par le pendule…", court: "Répondez dans le carnet.", question: choix(["est transférée à l'air sous forme d'énergie thermique", "disparaît", "est stockée dans la masse coulissante"], "L'énergie se conserve toujours au total.", "Exact.") },
+      { consigne: "Au cours d'une oscillation, Em diminue surtout…", court: "Répondez dans le carnet.", question: choix(["au passage par l'équilibre", "aux positions extrêmes", "toujours au même rythme"], "Regardez les « marches » de la courbe verte.", "Exact : le frottement de l'air croît avec la vitesse.") },
+      { consigne: "L'énergie perdue par le pendule…", court: "Répondez dans le carnet.", question: choix(["est transférée à l'air (chaleur)", "disparaît : elle n'existe plus", "est stockée dans la masse"], "L'énergie se conserve toujours au total.", "Exact.") },
     ],
   };
 

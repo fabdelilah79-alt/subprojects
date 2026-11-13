@@ -37,12 +37,12 @@ Utilisé par : page.html (dernier script).
     conclusion: "Quand la fente est large devant λ (a = 60 mm), l'onde reste plane derrière la fente, limitée à un faisceau à peine élargi. Quand a est du même ordre que λ ou plus petite (a = 10 mm), l'onde qui sort de la fente est circulaire, centrée sur la fente : c'est la diffraction. Elle est d'autant plus marquée que a est petite devant λ. Un obstacle de petite taille est contourné de la même manière. La fréquence et la longueur d'onde ne changent pas après la fente.",
     conclusion_courte: "Diffraction marquée quand a ≈ λ ou a < λ.",
     etapes: [
-      { consigne: "Observez l'image avec une fente de largeur a = 60 mm (environ 5 λ) : derrière la fente, l'onde…", court: "Répondez dans le carnet.", question: choix(["reste presque plane, dans un faisceau un peu élargi sur les bords", "devient circulaire et remplit toute la cuve", "disparaît"], "Regardez les rides sous la barrière.", "Exact.") },
+      { consigne: "Observez l'image avec une fente de largeur a = 60 mm (environ 5 λ) : derrière la fente, l'onde…", court: "Répondez dans le carnet.", question: choix(["reste presque plane, un peu élargie", "devient circulaire, centrée sur la fente", "est presque entièrement réfléchie"], "Regardez les rides sous la barrière.", "Exact.") },
       { consigne: "Réduisez la largeur de la fente à 10 mm (touche −).", court: "Fente de 10 mm.", aide_geste: "Touchez − sous « a = … mm ».", verifier: ({ faits }) => (C(faits).obstacle === "fente" && C(faits).a <= 10) || false },
-      { consigne: "Avec a = 10 mm (proche de λ), l'onde qui sort de la fente…", court: "Répondez dans le carnet.", question: choix(["est circulaire, centrée sur la fente : c'est la diffraction", "reste plane", "est réfléchie vers le vibreur"], "Comparez à l'image précédente.", "Exact.") },
+      { consigne: "Avec a = 10 mm (proche de λ), l'onde qui sort de la fente…", court: "Répondez dans le carnet.", question: choix(["est circulaire, centrée sur la fente", "reste plane, de même largeur que la fente", "est presque entièrement réfléchie"], "Comparez à l'image précédente.", "Exact.") },
       { consigne: "Choisissez « barrière : obstacle » (un obstacle de 10 mm) et observez derrière lui.", court: "Obstacle de 10 mm.", verifier: ({ faits }) => (C(faits).obstacle === "obstacle" && C(faits).a <= 10) || false },
-      { consigne: "Derrière un petit obstacle, l'onde…", court: "Répondez dans le carnet.", question: choix(["le contourne : on retrouve des rides juste derrière lui", "laisse une ombre parfaite derrière lui", "s'arrête"], "Regardez juste sous l'obstacle.", "Exact.") },
-      { consigne: "Après la fente, la longueur d'onde…", court: "Répondez dans le carnet.", question: choix(["est la même qu'avant : la fréquence et le milieu n'ont pas changé", "est plus petite", "est plus grande"], "Comparez l'écart entre les rides avant et après la barrière.", "Exact.") },
+      { consigne: "Derrière un petit obstacle, l'onde…", court: "Répondez dans le carnet.", question: choix(["le contourne", "laisse une ombre nette", "s'arrête complètement"], "Regardez juste sous l'obstacle.", "Exact.") },
+      { consigne: "Après la fente, la longueur d'onde…", court: "Répondez dans le carnet.", question: choix(["est la même qu'avant", "est plus petite qu'avant", "est plus grande qu'avant"], "Comparez l'écart entre les rides avant et après la barrière.", "Exact.") },
     ],
   };
 
@@ -71,7 +71,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Mettez l'émetteur en marche ; fente a = 40 mm ; récepteur sur l'axe (θ = 0°). Lisez U.", court: "U à 0° (a = 40 mm).", aide_geste: "Touchez I/O ; glissez le récepteur le long du rapporteur.", verifier: ({ faits }) => (U(faits).marche && U(faits).a === 40 && U(faits).theta === 0) || false },
       { consigne: "Tournez le récepteur jusqu'à l'angle où le signal devient presque nul (premier minimum).", court: "Premier minimum (a = 40 mm).", verifier: ({ faits }) => { const u = U(faits); return (u.a === 40 && Math.abs(u.theta) >= 11 && Math.abs(u.theta) <= 14 && u.U < 0.2) || false; } },
       { consigne: "Passez à une fente de 10 mm (touche « Largeur a ») et placez le récepteur à θ = 30°. Lisez U.", court: "U à 30° (a = 10 mm).", verifier: ({ faits }) => (U(faits).marche && U(faits).a === 10 && Math.abs(U(faits).theta) === 30) || false },
-      { consigne: "Avec la fente de 10 mm, le faisceau…", court: "Répondez dans le carnet.", question: choix(["s'élargit beaucoup : la diffraction est marquée car a est proche de λ", "reste aussi étroit", "disparaît"], "Comparez U à 30° pour les deux fentes.", "Exact.") },
+      { consigne: "Avec la fente de 10 mm, le faisceau…", court: "Répondez dans le carnet.", question: choix(["s'élargit beaucoup", "reste aussi étroit", "se resserre derrière la fente"], "Comparez U à 30° pour les deux fentes.", "Exact.") },
       { consigne: "Longueur d'onde des ultrasons λ = v / f (mm) ?", court: "λ (mm) ?", question: nombre("mm", 8.5, 0.2, "v = 340 m/s ; f = 40 000 Hz.", "Exact : 8,5 mm.") },
     ],
   };
@@ -85,7 +85,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", verifier: ({ faits }) => (faits.docs_diffraction || []).length >= 4 },
       { consigne: "Rangez chaque situation dans sa colonne.", court: "Tableau : rangez les situations.", verifier: ({ faits }) => L.tableau_tri.verifier(L.TRI_DIFFRACTION, faits.tri_diffraction) },
-      { consigne: "On entend une personne derrière une porte entrouverte, sans la voir, parce que…", court: "Répondez dans le carnet.", question: choix(["la longueur d'onde du son est du même ordre que l'ouverture : il est diffracté ; celle de la lumière est beaucoup plus petite", "le son traverse les murs", "la lumière est plus lente que le son"], "Comparez les longueurs d'onde à 90 cm.", "Exact.") },
+      { consigne: "On entend une personne derrière une porte entrouverte, sans la voir, parce que…", court: "Répondez dans le carnet.", question: choix(["λ du son est proche de l'ouverture, celle de la lumière bien plus petite", "λ de la lumière est proche de l'ouverture, celle du son bien plus petite", "le son traverse les murs alors que la lumière ne les traverse pas"], "Comparez les longueurs d'onde à 90 cm.", "Exact.") },
     ],
   };
 

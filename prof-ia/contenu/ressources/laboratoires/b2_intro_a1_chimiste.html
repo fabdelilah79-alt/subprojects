@@ -5342,7 +5342,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez les cinq documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: lus("docs_chimiste", 5) },
       { consigne: "Rangez chaque activité dans la bonne colonne du tableau.", court: "Tableau : rangez les activités.", aide_geste: "Faites glisser chaque étiquette jaune dans une colonne.", verifier: range(D.activites, "tri_activites") },
       { consigne: "La production d'engrais (des millions de tonnes par an) relève…", court: "Répondez dans le carnet.", question: choix(["de la chimie lourde", "de la chimie fine", "de l'analyse"], "Relisez le document « Synthétiser ».", "Exact : la chimie fine produit de petites quantités très pures.") },
-      { consigne: "L'aspirine que l'on fabrique est…", court: "Répondez dans le carnet.", question: choix(["la même espèce chimique que l'aspirine extraite de l'écorce de saule : seule son origine change", "moins efficace, car elle n'est pas naturelle", "un mélange qui n'a pas de formule"], "Une espèce chimique a les mêmes propriétés, quelle que soit son origine.", "Exact.") },
+      { consigne: "L'aspirine que l'on fabrique est…", court: "Répondez dans le carnet.", question: choix(["la même espèce que celle extraite du saule", "moins efficace, car elle n'est pas naturelle", "une espèce voisine, de formule différente"], "Une espèce chimique a les mêmes propriétés, quelle que soit son origine.", "Exact.") },
     ],
   };
 
@@ -5356,7 +5356,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Rangez chaque étiquette sous la préoccupation qui lui correspond.", court: "Tableau : rangez les étiquettes.", verifier: range(D.preoccupations, "tri_preoccupations") },
       { consigne: "Rendement de la fabrication de l'aspirine (en %) ?", court: "Rendement (%) ?", question: nombre("%", 85, 0.5, "0,85 t obtenue pour 1,00 t attendue.", "Exact : 85 %.") },
       { consigne: "Masse de phosphogypse rejetée en un an par l'usine (en millions de tonnes) ?", court: "Phosphogypse (Mt) ?", question: nombre("Mt", 20, 0.5, "5 t de phosphogypse par tonne de P₂O₅ ; 4 millions de tonnes de P₂O₅.", "Exact : environ 20 millions de tonnes.") },
-      { consigne: "Pour l'industriel, le meilleur procédé est…", court: "Répondez dans le carnet.", question: choix(["un compromis : bon rendement, durée courte, coût faible, peu de déchets et sans danger", "celui qui va le plus vite, quels que soient les déchets", "celui qui coûte le plus cher"], "Relisez « Mes préoccupations ».", "Exact.") },
+      { consigne: "Pour l'industriel, le meilleur procédé est…", court: "Répondez dans le carnet.", question: choix(["un compromis entre rendement, durée, coût et déchets", "celui qui va le plus vite, quels que soient les déchets", "celui qui donne le rendement maximal, quel qu'en soit le coût"], "Relisez « Mes préoccupations ».", "Exact.") },
     ],
   };
 
@@ -5368,8 +5368,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", verifier: lus("docs_situations", 4) },
       { consigne: "Rangez chaque situation sous la question qu'elle pose.", court: "Tableau : rangez les situations.", verifier: range(D.questions, "tri_questions_chimie") },
-      { consigne: "Pour savoir si une transformation est rapide ou lente, le chimiste…", court: "Répondez dans le carnet.", question: choix(["suit l'évolution d'une grandeur (couleur, pression, conductance) au cours du temps", "pèse les réactifs une seule fois", "regarde seulement l'état final"], "Il faut des mesures à différents instants.", "Exact : c'est le suivi temporel.") },
-      { consigne: "Recharger une batterie montre que…", court: "Répondez dans le carnet.", question: choix(["une transformation peut être forcée dans le sens inverse, en lui fournissant de l'énergie", "toutes les transformations sont rapides", "une pile ne s'use jamais"], "Relisez « Dans un téléphone ».", "Exact : c'est une transformation forcée.") },
+      { consigne: "Pour savoir si une transformation est rapide ou lente, le chimiste…", court: "Répondez dans le carnet.", question: choix(["suit une grandeur (couleur, pression…) au cours du temps", "pèse les réactifs avant et après la transformation", "compare l'état initial et l'état final du système"], "Il faut des mesures à différents instants.", "Exact : c'est le suivi temporel.") },
+      { consigne: "Recharger une batterie montre que…", court: "Répondez dans le carnet.", question: choix(["une transformation peut être forcée en sens inverse", "toute transformation spontanée est très rapide", "une pile peut fonctionner sans aucune transformation"], "Relisez « Dans un téléphone ».", "Exact : c'est une transformation forcée.") },
     ],
   };
 

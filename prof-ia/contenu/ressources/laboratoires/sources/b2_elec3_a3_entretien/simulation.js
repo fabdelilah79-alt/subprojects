@@ -28,11 +28,11 @@ Utilisé par : page.html (dernier script).
       { consigne: "R₀ = 0 : touchez « Lancer » (100 ms), puis basculez K en 2.", court: "Enregistrez sans entretien (R₀ = 0).", verifier: ({ faits }) => O(faits).some((o) => o.R0 === 0 && o.regime === "pseudo-periodique") || false },
       { consigne: "Remettez K en 1. Augmentez R₀ et recommencez jusqu'à obtenir des oscillations d'amplitude constante.", court: "Réglez R₀ : amplitude constante.", aide_geste: "Touches − et + du dispositif d'entretien.", verifier: ({ faits }) => entretenue(faits).length > 0 || false },
       { consigne: "Résistance totale R + r du circuit (Ω) ?", court: "R + r (Ω) ?", question: nombre("Ω", 20, 0.5, "R = 10 Ω ; r = 10 Ω.", "Exact : les oscillations sont entretenues quand R₀ = R + r.") },
-      { consigne: "Le rôle du dispositif d'entretien est de…", court: "Répondez dans le carnet.", question: choix(["fournir au circuit l'énergie perdue par effet Joule", "supprimer la résistance de la bobine", "fournir une tension continue"], "D'où vient l'énergie qui compense les pertes ?", "Exact : il puise cette énergie dans son alimentation.") },
+      { consigne: "Le rôle du dispositif d'entretien est de…", court: "Répondez dans le carnet.", question: choix(["compenser l'énergie perdue par effet Joule", "supprimer la résistance de la bobine", "imposer au circuit une tension continue"], "D'où vient l'énergie qui compense les pertes ?", "Exact : il puise cette énergie dans son alimentation.") },
       { consigne: "Période des oscillations entretenues (ms) ?", court: "T (ms) ?", question: relatif("ms", (f) => derniere(f).T * 1000, "Curseur sur plusieurs périodes.", "Exact.") },
-      { consigne: "Cette période est…", court: "Répondez dans le carnet.", question: choix(["la période propre T₀ = 2π√(LC)", "plus grande que T₀", "égale à R₀·C"], "Comparez à 2π√(LC).", "Exact.") },
+      { consigne: "Cette période est…", court: "Répondez dans le carnet.", question: choix(["la période propre T₀", "plus grande que T₀", "égale à R₀·C"], "Comparez à 2π√(LC).", "Exact.") },
       { consigne: "Réglez R₀ = 40 Ω (plus que R + r) et enregistrez.", court: "Enregistrez avec R₀ = 40 Ω.", verifier: ({ faits }) => O(faits).some((o) => o.R0 > 20 && o.regime === "amplifie") || false },
-      { consigne: "Avec R₀ > R + r, l'amplitude…", court: "Répondez dans le carnet.", question: choix(["augmente, puis est limitée par la saturation de l'amplificateur", "diminue", "devient infinie"], "Regardez toute la courbe.", "Exact.") },
+      { consigne: "Avec R₀ > R + r, l'amplitude…", court: "Répondez dans le carnet.", question: choix(["augmente, puis sature", "diminue jusqu'à 0", "reste constante"], "Regardez toute la courbe.", "Exact.") },
     ],
   };
 

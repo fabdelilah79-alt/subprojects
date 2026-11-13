@@ -3546,7 +3546,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : G+ vers K1, K0 vers R, R vers C1, C2 vers G− ; K2 vers C2 (décharge) ; EA0 sur C1, GND sur C2.", court: "Câblez le montage.", aide_geste: "Tirez un fil d'une borne à l'autre.", verifier: ({ faits }) => (M(faits).serie && M(faits).decharge && M(faits).mesure) || false },
       { consigne: "K en position 2 (condensateur déchargé). Touchez « Lancer » sur l'ordinateur (durée 5 s), puis basculez K en position 1.", court: "Enregistrez la charge.", aide_geste: "Touchez le commutateur pour le basculer.", verifier: ({ faits }) => (charge(faits) && D(faits).R === 10000 && D(faits).C === 1e-4) || false },
-      { consigne: "Au moment où l'on bascule K, la tension uC…", court: "Répondez dans le carnet.", question: choix(["part de 0 et augmente progressivement : elle ne fait pas de saut (elle est continue)", "saute aussitôt à 6 V", "reste nulle"], "Regardez le début de la courbe.", "Exact : la charge n'est pas instantanée.") },
+      { consigne: "Au moment où l'on bascule K, la tension uC…", court: "Répondez dans le carnet.", question: choix(["part de 0 sans faire de saut", "saute aussitôt à la valeur E", "reste nulle pendant une durée τ"], "Regardez le début de la courbe.", "Exact : la charge n'est pas instantanée.") },
       { consigne: "Valeur de uC en régime permanent (V) ?", court: "uC finale (V) ?", question: nombre("V", (f) => D(f).u_fin || 6, 0.05, "Fin de la courbe.", "Exact : uC = E.") },
       { consigne: "Placez le curseur où uC = 0,63 × E. Constante de temps τ (s) ?", court: "τ (s) ?", question: nombre("s", (f) => D(f).tau || 1, 0.03, "Glissez le curseur vert sur le graphique.", "Exact.") },
       { consigne: "Touchez « Tangente ». La tangente à l'origine coupe l'asymptote uC = E…", court: "Répondez dans le carnet.", question: choix(["à t = τ", "à t = 2τ", "à t = 5τ"], "Lisez l'abscisse du point bleu.", "Exact : deuxième méthode pour mesurer τ.") },
@@ -3565,8 +3565,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Mesurez τ pour au moins quatre couples (R, C) différents (charges ou décharges). Tableur : en A : R (kΩ) ; en B : C (µF) ; en C : τ (s) ; en D : R·C (s).", court: "Tableur : R, C, τ, R·C.", aide_geste: "Touches − et + de la boîte de résistances ; touchez la boîte de condensateurs pour changer C ; choisissez une durée d'environ 5τ.", verifier: tableau },
       { consigne: "Tracez τ (C) en fonction de R·C (D).", court: "Courbe τ = f(RC).", verifier: ({ courbe }) => (courbe.x === "D" && courbe.y === "C" && courbe.n >= 4) || "Abscisse : D (R·C) ; ordonnée : C (τ)." },
       { consigne: "La courbe est une droite qui passe par l'origine, de coefficient directeur…", court: "Répondez dans le carnet.", question: choix(["1 : τ = R·C", "2 : τ = 2 R·C", "0,63"], "Comparez τ et R·C ligne par ligne.", "Exact.") },
-      { consigne: "Quand R augmente (C fixée), la charge…", court: "Répondez dans le carnet.", question: choix(["est plus lente : τ augmente", "est plus rapide", "ne change pas"], "Comparez deux courbes.", "Exact.") },
-      { consigne: "L'équation aux dimensions de R·C montre que τ est…", court: "Répondez dans le carnet.", question: choix(["un temps : [R]·[C] = (U/I)·(I·T/U) = T", "une tension", "sans dimension"], "R = U/I ; C = q/u = I·t/u.", "Exact.") },
+      { consigne: "Quand R augmente (C fixée), la charge…", court: "Répondez dans le carnet.", question: choix(["est plus lente", "est plus rapide", "ne change pas"], "Comparez deux courbes.", "Exact.") },
+      { consigne: "L'équation aux dimensions de R·C montre que τ est…", court: "Répondez dans le carnet.", question: choix(["un temps", "une tension", "sans dimension"], "R = U/I ; C = q/u = I·t/u.", "Exact.") },
     ],
   };
 
@@ -3581,7 +3581,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "R = 10 kΩ, C = 100 µF. Chargez le condensateur (K en 1), touchez « Lancer », puis basculez K en position 2.", court: "Enregistrez la décharge.", verifier: ({ faits }) => (decharge(faits) && D(faits).R === 10000 && D(faits).C === 1e-4) || false },
       { consigne: "Tension uC à t = τ = 1,0 s (V) ?", court: "uC(τ) (V) ?", question: nombre("V", (f) => (D(f).u_debut || 6) * Math.exp(-1), 0.1, "Placez le curseur à t = 1,00 s.", "Exact : environ 37 % de E.") },
       { consigne: "Pendant la charge, uR + uC = E avec uR = R·i et i = C·duC/dt. L'équation différentielle s'écrit…", court: "Répondez dans le carnet.", question: choix(["uC + R·C·duC/dt = E", "uC − R·C·duC/dt = E", "R·C·uC + duC/dt = E"], "Remplacez uR par R·C·duC/dt.", "Exact.") },
-      { consigne: "Sa solution, avec uC(0) = 0, est…", court: "Répondez dans le carnet.", question: choix(["uC = E·(1 − e^(−t/τ)), avec τ = R·C", "uC = E·e^(−t/τ)", "uC = E·t/τ"], "Elle part de 0 et tend vers E.", "Exact : en la remplaçant dans l'équation, on retrouve E.") },
+      { consigne: "Sa solution, avec uC(0) = 0, est…", court: "Répondez dans le carnet.", question: choix(["uC = E·(1 − e^(−t/τ))", "uC = E·e^(−t/τ)", "uC = E·(1 + e^(−t/τ))"], "Elle part de 0 et tend vers E.", "Exact : en la remplaçant dans l'équation, on retrouve E.") },
       { consigne: "Pendant la décharge, la solution est…", court: "Répondez dans le carnet.", question: choix(["uC = E·e^(−t/τ)", "uC = E·(1 − e^(−t/τ))", "uC = E"], "Elle part de E et tend vers 0.", "Exact.") },
       { consigne: "Intensité du courant au tout début de la charge, i₀ = E / R (mA) ?", court: "i₀ (mA) ?", question: nombre("mA", 0.6, 0.01, "À t = 0, uC = 0 : toute la tension E est aux bornes de R.", "Exact : puis i diminue jusqu'à 0.") },
     ],

@@ -4127,9 +4127,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : SORTIE du GBF vers C, C vers la bobine, bobine vers R, R vers la masse du GBF. Oscilloscope : masse sur la masse du GBF, Y1 sur SORTIE (u), Y2 entre la bobine et R (uR).", court: "Câblez le circuit et l'oscilloscope.", verifier: ({ faits }) => (M(faits).serie && M(faits).oscillo) || false },
       { consigne: "N = 150 Hz : observez les deux courbes (réglez les sensibilités et le balayage).", court: "Observez u et i à 150 Hz.", verifier: ({ faits }) => (O(faits).N === 150 && O(faits).URm > 0.05) || false },
-      { consigne: "L'intensité i…", court: "Répondez dans le carnet.", question: choix(["est sinusoïdale et a la même fréquence que u : le GBF (excitateur) l'impose au circuit (résonateur)", "oscille à la fréquence propre du circuit", "est constante"], "Comparez les périodes des deux courbes.", "Exact : ce sont des oscillations forcées.") },
+      { consigne: "L'intensité i…", court: "Répondez dans le carnet.", question: choix(["a la fréquence imposée par le GBF", "a la fréquence propre du circuit", "a une fréquence qui diminue peu à peu"], "Comparez les périodes des deux courbes.", "Exact : ce sont des oscillations forcées.") },
       { consigne: "Réglez N = 300 Hz et observez à nouveau.", court: "Observez à 300 Hz.", aide_geste: "Touches − et + de la fréquence ; touchez l'afficheur pour des pas de 50 Hz.", verifier: ({ faits }) => O(faits).N === 300 || false },
-      { consigne: "Oscillations libres et oscillations forcées…", court: "Répondez dans le carnet.", question: choix(["libres : le circuit oscille à sa fréquence propre ; forcées : il suit la fréquence de l'excitateur", "elles ont toujours la même fréquence", "les oscillations forcées s'amortissent"], "Rappelez-vous la décharge d'un condensateur dans une bobine.", "Exact.") },
+      { consigne: "Oscillations libres et oscillations forcées…", court: "Répondez dans le carnet.", question: choix(["libres : fréquence propre ; forcées : celle de l'excitateur", "libres : celle de l'excitateur ; forcées : fréquence propre", "libres et forcées : toujours à la fréquence propre"], "Rappelez-vous la décharge d'un condensateur dans une bobine.", "Exact.") },
     ],
   };
 
@@ -4148,7 +4148,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Fresnel : longueur du vecteur L·ω·Im (V) ?", court: "L·ω·Im (V) ?", question: relatif("V", (f) => 0.5 * w(f) * Im(f), 0.06, "ω = 2π × 150 rad/s ; L = 0,50 H.", "Exact.") },
       { consigne: "Fresnel : longueur du vecteur Im/(C·ω) (V) ?", court: "Im/(C·ω) (V) ?", question: relatif("V", (f) => Im(f) / (1e-6 * w(f)), 0.06, "C = 1,0 × 10⁻⁶ F.", "Exact.") },
       { consigne: "Avec (R + r)·Im, la construction donne Um = √(((R + r)·Im)² + (L·ω·Im − Im/(C·ω))²) (V) ?", court: "Um par Fresnel (V) ?", question: relatif("V", (f) => O(f).Um, 0.06, "Théorème de Pythagore sur la figure de la feuille.", "Exact : on retrouve la mesure.") },
-      { consigne: "L'impédance d'un dipôle RLC série s'écrit…", court: "Répondez dans le carnet.", question: choix(["Z = √((R + r)² + (L·ω − 1/(C·ω))²)", "Z = R + r + L·ω + C·ω", "Z = L·ω / (C·ω)"], "Lisez-la sur la construction de Fresnel.", "Exact.") },
+      { consigne: "L'impédance d'un dipôle RLC série s'écrit…", court: "Répondez dans le carnet.", question: choix(["Z = √((R + r)² + (L·ω − 1/(C·ω))²)", "Z = √((R + r)² + (L·ω + 1/(C·ω))²)", "Z = √((R + r)² − (L·ω − 1/(C·ω))²)"], "Lisez-la sur la construction de Fresnel.", "Exact.") },
       { consigne: "Branchez le voltmètre (V~) aux bornes du GBF : tension efficace U lue (V) ?", court: "U (V) ?", question: relatif("V", (f) => O(f).Um / Math.SQRT2, 0.03, "Voltmètre sur V~ : VΩ sur SORTIE, COM sur la masse.", "Exact : U = Um/√2.") },
     ],
   };
@@ -4161,14 +4161,14 @@ Utilisé par : page.html (dernier script).
     conclusion: "Pour N < N₀, i est en avance sur u (le condensateur l'emporte) ; pour N > N₀, i est en retard sur u (la bobine l'emporte). Pour N = N₀ = 1/(2π√(LC)) ≈ 225 Hz, u et i passent ensemble par zéro : L·ω = 1/(C·ω), Z = R + r est minimale et Im est maximale. C'est la résonance d'intensité.",
     conclusion_courte: "N < N₀ : i en avance ; N > N₀ : en retard ; N₀ : ensemble.",
     etapes: [
-      { consigne: "À N = 150 Hz, i…", court: "Répondez dans le carnet.", question: choix(["est en avance sur u : elle passe par zéro avant u", "est en retard sur u", "passe par zéro en même temps que u"], "Comparez les passages par zéro en montant des deux courbes.", "Exact.") },
+      { consigne: "À N = 150 Hz, i…", court: "Répondez dans le carnet.", question: choix(["est en avance sur u", "est en retard sur u", "est en phase avec u"], "Comparez les passages par zéro en montant des deux courbes.", "Exact.") },
       { consigne: "Durée de cette avance (ms) ?", court: "Avance de i (ms) ?", question: relatif("ms", (f) => Math.abs(O(f).tau || 0.00147) * 1000, 0.12, "Nombre de divisions horizontales entre les deux passages par zéro × balayage.", "Exact.") },
       { consigne: "Réglez N = 400 Hz.", court: "N = 400 Hz.", verifier: ({ faits }) => (O(faits).N === 400 && O(faits).tau > 0) || false },
       { consigne: "À N = 400 Hz, i…", court: "Répondez dans le carnet.", question: choix(["est en retard sur u", "est en avance sur u", "passe par zéro en même temps que u"], "Comparez les passages par zéro.", "Exact.") },
       { consigne: "Cherchez la fréquence pour laquelle u et i passent ensemble par zéro.", court: "u et i ensemble.", verifier: ({ faits }) => (Math.abs((O(faits).tau || 1) * (O(faits).N || 0)) < 0.01 && O(faits).L === 0.5 && O(faits).C === 1e-6) || false },
       { consigne: "Cette fréquence N₀ (Hz) ?", court: "N₀ (Hz) ?", question: nombre("Hz", 225, 5, "Lisez l'afficheur du GBF.", "Exact.") },
       { consigne: "Calculez 1 / (2π√(LC)) avec L = 0,50 H et C = 1,0 µF (Hz).", court: "1/(2π√(LC)) (Hz) ?", question: nombre("Hz", 225.1, 1.5, "√(0,50 × 1,0 × 10⁻⁶).", "Exact : c'est la fréquence propre du résonateur.") },
-      { consigne: "À N₀…", court: "Répondez dans le carnet.", question: choix(["L·ω = 1/(C·ω) : Z = R + r est minimale, Im est maximale", "Z est maximale", "i est nulle"], "Regardez la construction de Fresnel.", "Exact : c'est la résonance d'intensité.") },
+      { consigne: "À N₀…", court: "Répondez dans le carnet.", question: choix(["Z = R + r est minimale", "Z = R + r est maximale", "Z est nulle : Im infinie"], "Regardez la construction de Fresnel.", "Exact : c'est la résonance d'intensité.") },
     ],
   };
 

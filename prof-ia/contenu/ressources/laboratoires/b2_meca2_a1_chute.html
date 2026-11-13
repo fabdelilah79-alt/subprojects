@@ -3211,8 +3211,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tracez vy (D) en fonction de t (A) et modélisez par y = a·x + b.", court: "Courbe vy = f(t).", verifier: ({ faits, courbe }) => droite(faits, courbe) },
       { consigne: "Valeur de l'accélération |a| (m/s²) ?", court: "|a| (m/s²) ?", question: nombre("m/s²", G, 0.6, "Coefficient directeur de la droite, en valeur absolue.", "Exact : g ≈ 9,8 m/s².") },
       { consigne: "Vitesse initiale v0y : ordonnée à l'origine de la droite (m/s) ?", court: "v0y (m/s) ?", question: nombre("m/s", 0, 0.25, "Lisez b dans l'équation de la droite.", "Exact : la bille est lâchée sans vitesse.") },
-      { consigne: "vy(t) est une droite : le mouvement est…", court: "Répondez dans le carnet.", question: choix(["rectiligne uniformément varié : l'accélération est constante", "rectiligne uniforme", "circulaire"], "La pente est constante.", "Exact.") },
-      { consigne: "Avec un axe Oy vertical vers le haut, la deuxième loi de Newton donne…", court: "Répondez dans le carnet.", question: choix(["d²y/dt² = −g, d'où y = −½·g·t² + v0y·t + y0", "d²y/dt² = 0, d'où y = v0·t", "dy/dt = −g·t², d'où y = −g·t"], "Seule force : le poids m·g, vertical vers le bas.", "Exact.") },
+      { consigne: "vy(t) est une droite : le mouvement est…", court: "Répondez dans le carnet.", question: choix(["uniformément varié : a constante", "uniforme : vitesse constante", "varié : a de plus en plus grande"], "La pente est constante.", "Exact.") },
+      { consigne: "Avec un axe Oy vertical vers le haut, la deuxième loi de Newton donne…", court: "Répondez dans le carnet.", question: choix(["ÿ = −g, d'où y = −½·g·t² + v0y·t + y0", "ÿ = −g, d'où y = −g·t² + v0y·t + y0", "ÿ = 0, d'où y = v0y·t + y0"], "Seule force : le poids m·g, vertical vers le bas.", "Exact.") },
     ],
   };
 
@@ -3229,7 +3229,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tracez vy (D) en fonction de t (A), modèle y = a·x + b.", court: "Courbe vy = f(t).", verifier: ({ faits, courbe }) => droite(faits, courbe) },
       { consigne: "Accélération de la bille de verre |a| (m/s²) ?", court: "|a| (m/s²) ?", question: nombre("m/s²", G, 0.6, "Coefficient directeur.", "Exact.") },
       { consigne: "En chute libre, l'accélération…", court: "Répondez dans le carnet.", question: choix(["ne dépend pas de la masse : m·a = m·g, d'où a = g", "est plus grande pour la bille la plus lourde", "est plus grande pour la bille la plus légère"], "Comparez vos deux valeurs.", "Exact.") },
-      { consigne: "Un solide est en chute libre quand…", court: "Répondez dans le carnet.", question: choix(["il n'est soumis qu'à son poids", "il tombe verticalement", "sa vitesse est constante"], "Pensez à une feuille de papier qui tombe.", "Exact.") },
+      { consigne: "Un solide est en chute libre quand…", court: "Répondez dans le carnet.", question: choix(["il n'est soumis qu'à son poids", "il tombe selon une verticale", "il tombe sans vitesse initiale"], "Pensez à une feuille de papier qui tombe.", "Exact.") },
     ],
   };
 

@@ -23,7 +23,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Multimètre en ohmmètre (200 Ω) : branchez VΩ et COM aux deux bornes de la bobine, seule (aucun autre fil sur elle).", court: "Mesurez la résistance de la bobine.", verifier: ({ faits }) => (faits.ohmmetre_bobine > 0 && faits.ohmmetre_bobine < 50) || false },
       { consigne: "Résistance r de la bobine (Ω) ?", court: "r (Ω) ?", question: nombre("Ω", (f) => f.ohmmetre_bobine || 10, 0.3, "Lisez l'afficheur du multimètre.", "Exact : r ≈ 10 Ω.") },
       { consigne: "En convention récepteur, la tension aux bornes de la bobine s'écrit…", court: "Répondez dans le carnet.", question: choix(["u = r·i + L·di/dt", "u = L·i", "u = r·i − L·di/dt"], "Le terme résistif plus le terme lié à la variation de i.", "Exact.") },
-      { consigne: "En courant continu (régime permanent), la bobine se comporte comme…", court: "Répondez dans le carnet.", question: choix(["un conducteur ohmique de résistance r, car di/dt = 0", "un interrupteur ouvert", "un fil sans résistance, toujours"], "Que vaut di/dt si i est constante ?", "Exact : u = r·i.") },
+      { consigne: "En courant continu (régime permanent), la bobine se comporte comme…", court: "Répondez dans le carnet.", question: choix(["un conducteur ohmique (r)", "un interrupteur ouvert", "un condensateur chargé"], "Que vaut di/dt si i est constante ?", "Exact : u = r·i.") },
     ],
   };
 
@@ -37,12 +37,12 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : G+ vers K ; après K, deux branches en dérivation vers G− : L₁ puis la bobine ; L₂ puis R.", court: "Câblez les deux branches.", verifier: ({ faits }) => faits.montage_lampes || false },
       { consigne: "Noyau enfoncé : fermez K et observez les deux lampes.", court: "Fermez K (avec noyau).", verifier: ({ faits }) => A(faits, true).some((a) => a.retard1 > a.retard2 + 3) || false },
-      { consigne: "À la fermeture de K…", court: "Répondez dans le carnet.", question: choix(["L₂ s'allume aussitôt, L₁ en retard : la bobine retarde l'établissement du courant", "les deux lampes s'allument en même temps", "L₁ s'allume avant L₂"], "Regardez L₁, en série avec la bobine.", "Exact.") },
-      { consigne: "En régime permanent, les deux lampes brillent de la même façon. Pourquoi ?", court: "Répondez dans le carnet.", question: choix(["di/dt = 0 : la bobine agit comme r = R, les branches sont identiques", "la bobine ne laisse plus passer le courant", "L₁ est plus puissante"], "u = r·i + L·di/dt.", "Exact.") },
+      { consigne: "À la fermeture de K…", court: "Répondez dans le carnet.", question: choix(["L₁ s'allume en retard sur L₂", "L₁ et L₂ s'allument ensemble", "L₁ s'allume avant L₂"], "Regardez L₁, en série avec la bobine.", "Exact.") },
+      { consigne: "En régime permanent, les deux lampes brillent de la même façon. Pourquoi ?", court: "Répondez dans le carnet.", question: choix(["di/dt = 0 : la bobine n'agit que par r = R", "di/dt = 0 : la bobine ne conduit plus", "L = R : les deux branches sont identiques"], "u = r·i + L·di/dt.", "Exact.") },
       { consigne: "Ouvrez K, retirez le noyau (touchez la bobine), puis fermez K à nouveau.", court: "Fermez K (sans noyau).", verifier: ({ faits }) => A(faits, false).length > 0 || false },
-      { consigne: "Sans le noyau (L dix fois plus petite), le retard de L₁…", court: "Répondez dans le carnet.", question: choix(["est plus court : le retard augmente avec L", "est plus long", "ne change pas"], "Comparez les deux fermetures.", "Exact.") },
+      { consigne: "Sans le noyau (L dix fois plus petite), le retard de L₁…", court: "Répondez dans le carnet.", question: choix(["est plus court", "est plus long", "ne change pas"], "Comparez les deux fermetures.", "Exact.") },
       { consigne: "Remettez le noyau, attendez le régime permanent, puis ouvrez K en regardant L₁.", court: "Ouvrez K (avec noyau).", verifier: ({ faits }) => X(faits).some((x) => x.noyau && x.duree > 2) || false },
-      { consigne: "À l'ouverture de K, L₁…", court: "Répondez dans le carnet.", question: choix(["s'éteint progressivement : la bobine retarde la rupture du courant", "s'éteint aussitôt", "reste allumée"], "Le courant de la bobine passe encore par L₁, L₂ et R.", "Exact : i est continue.") },
+      { consigne: "À l'ouverture de K, L₁…", court: "Répondez dans le carnet.", question: choix(["s'éteint progressivement", "s'éteint aussitôt", "reste allumée longtemps"], "Le courant de la bobine passe encore par L₁, L₂ et R.", "Exact : i est continue.") },
     ],
   };
 

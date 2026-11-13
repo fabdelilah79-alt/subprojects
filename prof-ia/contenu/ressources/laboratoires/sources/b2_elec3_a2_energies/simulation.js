@@ -27,8 +27,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "R = 10 Ω, C = 10 µF, noyau enfoncé, K en 1. Touchez « Lancer » (100 ms), puis basculez K en position 2.", court: "Enregistrez la décharge.", verifier: ({ faits }) => vu(faits, (R) => R === 10, "pseudo-periodique") || false },
       { consigne: "Touchez « Voie 2 » jusqu'à « Énergies » : le logiciel calcule Ee (rouge), Em (orange) et E (bleu).", court: "Affichez les énergies.", verifier: ({ faits }) => energies(faits) || false },
       { consigne: "Énergie totale à t = 0 (µJ) ?", court: "E(0) (µJ) ?", question: nombre("µJ", (f) => 0.5 * 1e-5 * ref(f).U0 ** 2 * 1e6, 4, "Curseur à t = 0, ou ½·C·E².", "Exact : ½ × 10 µF × (6,0 V)² ≈ 180 µJ.") },
-      { consigne: "Quand Ee est maximale, Em…", court: "Répondez dans le carnet.", question: choix(["est nulle : i = 0 ; l'énergie passe du condensateur à la bobine, puis revient", "est maximale aussi", "est égale à Ee"], "Comparez les courbes rouge et orange.", "Exact : ce sont des échanges d'énergie.") },
-      { consigne: "L'énergie totale E…", court: "Répondez dans le carnet.", question: choix(["diminue : elle est dissipée par effet Joule dans R + r", "reste constante", "augmente"], "Regardez la courbe bleue.", "Exact : c'est l'amortissement.") },
+      { consigne: "Quand Ee est maximale, Em…", court: "Répondez dans le carnet.", question: choix(["est nulle", "est maximale", "est égale à Ee"], "Comparez les courbes rouge et orange.", "Exact : ce sont des échanges d'énergie.") },
+      { consigne: "L'énergie totale E…", court: "Répondez dans le carnet.", question: choix(["diminue", "reste constante", "augmente"], "Regardez la courbe bleue.", "Exact : c'est l'amortissement.") },
       { consigne: "Placez le curseur à t ≈ T (une pseudo-période). Pourcentage de l'énergie initiale perdu pendant la première pseudo-période (%) ?", court: "Énergie perdue en une pseudo-période (%) ?", question: nombre("%", (f) => 100 * (1 - Math.exp((-(ref(f).R + 10) * ref(f).T) / ref(f).L)), 4, "(E(0) − E(T)) / E(0) × 100.", "Exact : près de la moitié de l'énergie est dissipée à chaque pseudo-période.") },
     ],
   };
@@ -42,8 +42,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Apériodique : dissipation sans échange ; périodique : E constante.",
     etapes: [
       { consigne: "En mode Énergies, enregistrez une décharge avec R = 1 000 Ω.", court: "Énergies avec R = 1 kΩ.", verifier: ({ faits }) => (energies(faits) && vu(faits, (R) => R >= 470, "aperiodique")) || false },
-      { consigne: "En régime apériodique…", court: "Répondez dans le carnet.", question: choix(["l'énergie du condensateur est dissipée par effet Joule presque sans échange : Em reste faible", "l'énergie est échangée plusieurs fois", "l'énergie totale reste constante"], "Comparez la courbe orange aux enregistrements précédents.", "Exact.") },
-      { consigne: "Sans aucune résistance (R + r = 0), l'énergie totale…", court: "Répondez dans le carnet.", question: choix(["resterait constante : les échanges Ee ⇄ Em dureraient sans fin (régime périodique)", "diminuerait quand même", "serait nulle"], "Qu'est-ce qui dissipe l'énergie ?", "Exact.") },
+      { consigne: "En régime apériodique…", court: "Répondez dans le carnet.", question: choix(["l'énergie est dissipée sans être échangée", "l'énergie est échangée plusieurs fois", "l'énergie totale reste constante"], "Comparez la courbe orange aux enregistrements précédents.", "Exact.") },
+      { consigne: "Sans aucune résistance (R + r = 0), l'énergie totale…", court: "Répondez dans le carnet.", question: choix(["resterait constante", "diminuerait quand même", "augmenterait sans fin"], "Qu'est-ce qui dissipe l'énergie ?", "Exact.") },
       { consigne: "Dans ce cas idéal, avec C = 10 µF, Um = 6,0 V et L = 0,50 H, intensité maximale Im (mA) ?", court: "Im (mA) ?", question: nombre("mA", 26.8, 0.6, "½·C·Um² = ½·L·Im².", "Exact : Im = Um·√(C/L) ≈ 27 mA.") },
     ],
   };

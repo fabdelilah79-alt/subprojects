@@ -1612,3 +1612,15 @@ est une phrase (« durée à 120 °C ») n'est posée qu'avec son premier mot au
 - Outils de la compétence : extraire_questions.js, appliquer_choix.py.
 
 Reste à faire : physique de 2e année du bac (environ 330 questions), puis 1re année et tronc commun.
+
+## 2026-11-13 — Questions du carnet : réponses de longueur égale (physique de 2e année du bac)
+
+- 263 questions à choix réécrites dans les 48 laboratoires de physique de 2e année du bac (introduction, ondes, nucléaire,
+  électricité, mécanique, y compris les parties spécifiques) et quelques retouches en chimie (aspirine, introduction) :
+  bonne réponse réduite à l'essentiel, mauvaises réponses de même forme, tirées d'erreurs fréquentes (formule voisine
+  fausse d'un facteur ½ ou d'un carré, sens inversé, période qui dépendrait de la masse ou de l'amplitude...).
+- Mesure sur les 423 questions de 2e année : la bonne réponse est la plus longue dans 112 questions (26 %, moins que le
+  hasard avec trois choix), plus courte dans 228. Il reste 14 cas « plus de 1,2 fois plus longue », tous de quelques
+  lettres (« ne change pas » contre « augmente »). Contrôle des 167 laboratoires : aucun ne plante.
+
+Problèmes restants : 1re année du bac et tronc commun encore à réécrire (la bonne réponse y est souvent la plus longue).

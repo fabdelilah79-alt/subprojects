@@ -25,9 +25,9 @@ Utilisé par : page.html (dernier script).
       { consigne: "Réglez le condensateur variable pour entendre nettement la station B (touchez l'écouteur pour écouter).", court: "Accordez sur la station B.", aide_geste: "Touches « et » : 100 pF ; − et + : 10 pF.", verifier: ({ faits }) => nette(faits, "B") || false },
       { consigne: "Capacité du condensateur variable quand la station B est nette (pF) ?", court: "C (pF) ?", question: nombre("pF", (f) => E(f).CV || 590, 1, "Lisez l'afficheur du condensateur variable.", "Exact.") },
       { consigne: "Calculez f₀ = 1/(2π√(LC)) avec L = 1,0 mH et votre capacité (kHz).", court: "f₀ (kHz) ?", question: nombre("kHz", (f) => (E(f).f0 || 207000) / 1000, 3, "C en farads : 1 pF = 10⁻¹² F.", "Exact : f₀ est proche de 207 kHz, la fréquence de la station B.") },
-      { consigne: "Le circuit d'accord L∥C (circuit bouchon)…", court: "Répondez dans le carnet.", question: choix(["sélectionne l'émetteur dont la fréquence est égale à sa fréquence propre f₀", "démodule le signal", "produit l'onde porteuse"], "Que se passe-t-il quand on tourne le condensateur variable ?", "Exact.") },
+      { consigne: "Le circuit d'accord L∥C (circuit bouchon)…", court: "Répondez dans le carnet.", question: choix(["sélectionne l'émetteur de fréquence f₀", "démodule le signal reçu par l'antenne", "amplifie le signal pour le haut-parleur"], "Que se passe-t-il quand on tourne le condensateur variable ?", "Exact.") },
       { consigne: "Accordez le récepteur sur les stations A et C.", court: "Écoutez A et C.", verifier: ({ faits }) => ["A", "C"].every((s) => (E(faits).entendues || []).includes(s)) || false },
-      { consigne: "Pour passer de la station A (171 kHz) à la station C (252 kHz), on a…", court: "Répondez dans le carnet.", question: choix(["diminué la capacité C : f₀ = 1/(2π√(LC)) augmente", "augmenté la capacité C", "changé la diode"], "Comparez les capacités.", "Exact.") },
+      { consigne: "Pour passer de la station A (171 kHz) à la station C (252 kHz), on a…", court: "Répondez dans le carnet.", question: choix(["diminué la capacité C", "augmenté la capacité C", "augmenté l'inductance L"], "Comparez les capacités.", "Exact.") },
     ],
   };
 
@@ -40,9 +40,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Antenne → accord → démodulation → écouteur.",
     etapes: [
       { consigne: "Branchez l'oscilloscope : masse à la terre, voie 1 sur l'antenne, voie 2 sur la sortie de la diode (détecteur). Observez les deux tensions.", court: "Observez à l'oscilloscope.", verifier: ({ faits }) => { const o = faits.oscillo || {}; return (o.u_max > 0.5 && o.ch2 && o.ch2.u_max > 0.3) || false; } },
-      { consigne: "Le rôle de l'antenne est…", court: "Répondez dans le carnet.", question: choix(["de capter les ondes électromagnétiques de tous les émetteurs et de les transformer en tensions électriques", "de choisir un émetteur", "de démoduler le signal"], "Sans circuit d'accord, entend-on une station ?", "Exact.") },
-      { consigne: "Le détecteur d'enveloppe…", court: "Répondez dans le carnet.", question: choix(["extrait l'enveloppe de la tension modulée : il démodule", "sélectionne la station", "émet l'onde"], "Comparez les voies 1 et 2.", "Exact.") },
-      { consigne: "Dans l'ordre, la chaîne d'un récepteur AM est…", court: "Répondez dans le carnet.", question: choix(["antenne → circuit d'accord → démodulateur → amplificateur → haut-parleur", "haut-parleur → antenne → démodulateur → accord", "démodulateur → antenne → accord → écouteur"], "Suivez le trajet du signal.", "Exact.") },
+      { consigne: "Le rôle de l'antenne est…", court: "Répondez dans le carnet.", question: choix(["de capter les ondes et les changer en tensions", "de choisir un seul émetteur parmi tous les autres", "de démoduler la tension avant le haut-parleur"], "Sans circuit d'accord, entend-on une station ?", "Exact.") },
+      { consigne: "Le détecteur d'enveloppe…", court: "Répondez dans le carnet.", question: choix(["démodule le signal", "sélectionne la station", "amplifie la porteuse"], "Comparez les voies 1 et 2.", "Exact.") },
+      { consigne: "Dans l'ordre, la chaîne d'un récepteur AM est…", court: "Répondez dans le carnet.", question: choix(["antenne → accord → démodulateur → amplificateur → haut-parleur", "antenne → démodulateur → accord → amplificateur → haut-parleur", "accord → antenne → amplificateur → démodulateur → haut-parleur"], "Suivez le trajet du signal.", "Exact.") },
     ],
   };
 

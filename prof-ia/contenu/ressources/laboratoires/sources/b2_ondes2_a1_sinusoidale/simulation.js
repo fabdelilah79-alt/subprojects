@@ -28,15 +28,15 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "λ = v·T = v / f ; double périodicité.",
     etapes: [
       { consigne: "Mettez le GBF en marche (f = 50 Hz) et regardez la corde en lumière ordinaire.", court: "GBF en marche.", aide_geste: "Touchez la touche I/O du GBF.", verifier: ({ faits }) => C(faits).marche || false },
-      { consigne: "En lumière ordinaire, on ne voit qu'une bande floue parce que…", court: "Répondez dans le carnet.", question: choix(["la corde vibre trop vite (50 fois par seconde) : l'œil superpose ses positions", "la corde est cassée", "la lumière est trop faible"], "Combien d'oscillations par seconde ?", "Exact.") },
+      { consigne: "En lumière ordinaire, on ne voit qu'une bande floue parce que…", court: "Répondez dans le carnet.", question: choix(["la corde vibre trop vite pour l'œil", "la corde est trop fine pour être vue", "la lumière ambiante est trop faible"], "Combien d'oscillations par seconde ?", "Exact.") },
       { consigne: "Allumez le stroboscope et réglez sa fréquence fe pour que la corde paraisse immobile, avec la plus grande fe possible.", court: "Corde immobile, fe la plus grande.", aide_geste: "Tournez le bouton fe (glissez vers le haut ou le bas) ; touches + et − pour le réglage fin.", verifier: ({ faits }) => { const c = C(faits); if (!c.strobo) return false; if (Math.abs(c.rapport - Math.round(c.rapport)) < 0.0015 && c.rapport >= 1.5) return "La corde paraît immobile, mais il existe une fréquence d'éclairs plus grande qui l'immobilise aussi."; return Math.abs(c.rapport - 1) < 0.0015 || false; } },
-      { consigne: "Avec fe = f / 2, la corde paraît aussi immobile parce que…", court: "Répondez dans le carnet.", question: choix(["entre deux éclairs, chaque point fait exactement deux oscillations et revient à la même position", "le stroboscope est en panne", "la corde s'arrête"], "Comparez la durée entre deux éclairs à la période T.", "Exact.") },
+      { consigne: "Avec fe = f / 2, la corde paraît aussi immobile parce que…", court: "Répondez dans le carnet.", question: choix(["chaque point fait 2 oscillations entre deux éclairs", "chaque point fait ½ oscillation entre deux éclairs", "la corde vibre deux fois moins vite qu'avant"], "Comparez la durée entre deux éclairs à la période T.", "Exact.") },
       { consigne: "Placez les deux curseurs rouges sur deux sommets consécutifs de la corde immobile.", court: "Curseurs sur deux sommets.", aide_geste: "Glissez chaque curseur le long de la règle.", verifier: ({ faits }) => (C(faits).strobo && Math.abs(C(faits).ecart - C(faits).lambda) <= 0.6) || false },
       { consigne: "Longueur d'onde λ lue sur la règle (cm) ?", court: "λ (cm) ?", question: nombre("cm", (f) => C(f).lambda || 20, 0.6, "Distance entre deux sommets consécutifs.", "Exact.") },
       { consigne: "Calculez la célérité v = λ·f (m/s).", court: "v (m/s) ?", question: nombre("m/s", 10, 0.4, "λ en mètres, f en hertz.", "Exact : environ 10 m/s.") },
       { consigne: "Tableur : pour quatre fréquences du GBF (immobilisez la corde à chaque fois), mesurez λ. En A : f (Hz) ; en B : λ (m) ; en C : =A2*B2.", court: "Tableur : f, λ, v.", verifier: tableau },
-      { consigne: "Quand la fréquence augmente, la longueur d'onde…", court: "Répondez dans le carnet.", question: choix(["diminue : λ = v / f, et la célérité v reste la même", "augmente", "ne change pas"], "Regardez la colonne C.", "Exact.") },
-      { consigne: "Réglez fe un peu au-dessous de f (par exemple 49 Hz). L'onde semble…", court: "Répondez dans le carnet.", question: choix(["avancer lentement vers le coton : c'est un mouvement apparent, au ralenti", "reculer très vite", "rester immobile"], "Regardez la corde quelques secondes.", "Exact.") },
+      { consigne: "Quand la fréquence augmente, la longueur d'onde…", court: "Répondez dans le carnet.", question: choix(["diminue", "augmente", "ne change pas"], "Regardez la colonne C.", "Exact.") },
+      { consigne: "Réglez fe un peu au-dessous de f (par exemple 49 Hz). L'onde semble…", court: "Répondez dans le carnet.", question: choix(["avancer lentement", "reculer lentement", "rester immobile"], "Regardez la corde quelques secondes.", "Exact.") },
     ],
   };
 
@@ -53,7 +53,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Continuez : éloignez M2 jusqu'à la cinquième position où les courbes sont en phase.", court: "M1M2 = 5λ.", verifier: ({ faits }) => { const s = S(faits); return (s.marche && s.x1 === 0.1 && s.en_phase && Math.abs(s.d * 100 - 5 * s.lambda) < 2) || false; } },
       { consigne: "Longueur d'onde du son (cm) ?", court: "λ (cm) ?", question: nombre("cm", 17.2, 0.5, "λ = M1M2 / 5.", "Exact.") },
       { consigne: "Célérité du son v = λ·f (m/s) ?", court: "v (m/s) ?", question: nombre("m/s", 343, 10, "λ en mètres, f = 2 000 Hz.", "Exact.") },
-      { consigne: "La longueur d'onde est…", court: "Répondez dans le carnet.", question: choix(["la distance parcourue par l'onde pendant une période : λ = v·T", "la hauteur des courbes", "la distance entre le haut-parleur et le micro"], "λ = v / f = v·T.", "Exact.") },
+      { consigne: "La longueur d'onde est…", court: "Répondez dans le carnet.", question: choix(["la distance parcourue pendant une période", "la hauteur entre une crête et un creux", "la durée d'une oscillation complète"], "λ = v / f = v·T.", "Exact.") },
     ],
   };
 

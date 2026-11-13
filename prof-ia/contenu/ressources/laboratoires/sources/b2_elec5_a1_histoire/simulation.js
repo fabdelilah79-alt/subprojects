@@ -22,8 +22,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_histoire || []).length >= 4 || false },
       { consigne: "Rangez chaque moyen de communication selon ce qui porte l'information.", court: "Tableau : rangez les étiquettes.", aide_geste: "Faites glisser chaque étiquette jaune dans une colonne.", verifier: ({ faits }) => L.tableau_tri.verifier(T.histoire, faits.tri_histoire) },
-      { consigne: "Une onde électromagnétique…", court: "Répondez dans le carnet.", question: choix(["transporte de l'énergie et de l'information, sans transport de matière", "transporte de la matière", "a besoin d'un fil pour se propager"], "Document « Les ondes de Hertz ».", "Exact.") },
-      { consigne: "On n'émet pas directement le son (20 Hz à 20 kHz) parce que…", court: "Répondez dans le carnet.", question: choix(["il faudrait des antennes immenses et tous les émetteurs se brouilleraient : on le confie à une porteuse de haute fréquence", "le son ne contient pas d'information", "les ondes de basse fréquence n'existent pas"], "Document « De la TSF à nos jours » ; pensez à λ = c/f.", "Exact.") },
+      { consigne: "Une onde électromagnétique…", court: "Répondez dans le carnet.", question: choix(["transporte de l'énergie, pas de matière", "transporte de la matière, pas d'énergie", "a besoin d'un milieu matériel pour avancer"], "Document « Les ondes de Hertz ».", "Exact.") },
+      { consigne: "On n'émet pas directement le son (20 Hz à 20 kHz) parce que…", court: "Répondez dans le carnet.", question: choix(["il faudrait des antennes immenses", "le son ne porte aucune information", "ces ondes se propagent bien trop vite"], "Document « De la TSF à nos jours » ; pensez à λ = c/f.", "Exact.") },
     ],
   };
 
@@ -53,11 +53,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Reliez le GBF à l'antenne émettrice (SORTIE sur « antenne », masse sur « masse »). Oscilloscope : masse sur la masse de l'antenne réceptrice, voie 1 sur l'antenne réceptrice, voie 2 sur la SORTIE du GBF.", court: "Câblez l'émetteur et le récepteur.", verifier: ({ faits }) => (A(faits).emission && A(faits).reception && A(faits).voie2_gbf) || false },
       { consigne: "Mesurez la période de la tension reçue (voie 1) : fréquence f (kHz) ?", court: "f (kHz) ?", question: { ...nombre("kHz", (f) => (A(f).f || 100000) / 1000, null, "Nombre de divisions d'une période × balayage, puis f = 1/T.", "Exact."), tolerance_relative: 0.04 } },
-      { consigne: "La tension reçue par l'antenne réceptrice…", court: "Répondez dans le carnet.", question: choix(["a la même fréquence que la tension du GBF", "a une fréquence plus petite", "est continue"], "Comparez les deux voies.", "Exact : une antenne reçoit à la fréquence de l'onde émise.") },
+      { consigne: "La tension reçue par l'antenne réceptrice…", court: "Répondez dans le carnet.", question: choix(["a la même fréquence que celle du GBF", "a une fréquence plus petite que celle du GBF", "a une fréquence plus grande que celle du GBF"], "Comparez les deux voies.", "Exact : une antenne reçoit à la fréquence de l'onde émise.") },
       { consigne: "Changez la fréquence du GBF (500 kHz) et observez de nouveau.", court: "f = 500 kHz.", verifier: ({ faits }) => (A(faits).f === 500000 && A(faits).reception) || false },
       { consigne: "Placez l'antenne réceptrice à 0,2 m, puis à 0,8 m de l'antenne émettrice.", court: "Éloignez l'antenne réceptrice.", aide_geste: "Faites glisser le chariot de l'antenne réceptrice.", verifier: ({ faits }) => (A(faits).d >= 0.8 && A(faits).reception) || false },
-      { consigne: "Quand la distance augmente, l'amplitude de la tension reçue…", court: "Répondez dans le carnet.", question: choix(["diminue : l'énergie de l'onde se répartit dans l'espace", "augmente", "ne change pas"], "Lisez l'amplitude de la voie 1 aux deux distances.", "Exact.") },
-      { consigne: "Entre les deux antennes, l'onde transporte…", court: "Répondez dans le carnet.", question: choix(["de l'énergie, sans transport de matière", "de la matière", "un courant dans l'air"], "Y a-t-il un fil entre les deux antennes ?", "Exact.") },
+      { consigne: "Quand la distance augmente, l'amplitude de la tension reçue…", court: "Répondez dans le carnet.", question: choix(["diminue", "augmente", "ne change pas"], "Lisez l'amplitude de la voie 1 aux deux distances.", "Exact.") },
+      { consigne: "Entre les deux antennes, l'onde transporte…", court: "Répondez dans le carnet.", question: choix(["de l'énergie", "de la matière", "des électrons"], "Y a-t-il un fil entre les deux antennes ?", "Exact.") },
     ],
   };
 

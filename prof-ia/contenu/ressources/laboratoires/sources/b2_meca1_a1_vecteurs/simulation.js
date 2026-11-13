@@ -59,13 +59,13 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Appuyez sur « Enregistrer », puis lancez le mobile depuis le bas vers le fond de la table : il monte, s'arrête, redescend.", court: "Enregistrez une montée et une descente.", aide_geste: "Un geste vif, droit vers le fond de la table.", verifier: lancer },
       { consigne: "Prenez la feuille ; tracez les vecteurs vitesse v₂ et v₄ (échelle 1 cm ↔ 0,1 m/s).", court: "Tracez v₂ et v₄.", aide_geste: "Faites glisser la pointe de chaque flèche ; mesurez à la règle.", verifier: vecteurs },
-      { consigne: "Le vecteur Δv = v₄ − v₂ est…", court: "Répondez dans le carnet.", question: choix(["parallèle à la pente, dirigé vers le bas : de sens contraire à la vitesse", "dans le sens de la vitesse", "nul"], "Placez v₄ et −v₂ bout à bout.", "Exact.") },
+      { consigne: "Le vecteur Δv = v₄ − v₂ est…", court: "Répondez dans le carnet.", question: choix(["dirigé vers le bas de la pente", "dirigé vers le haut de la pente", "perpendiculaire à la pente"], "Placez v₄ et −v₂ bout à bout.", "Exact.") },
       { consigne: "Tableur, pour au moins six points de la montée : en A, t = i·τ (s) ; en B, vi (m/s).", court: "Tableur : t, v (montée).", verifier: tableau },
       { consigne: "Tracez v (B) en fonction de t (A) et modélisez par une droite y = a·x + b.", court: "Courbe v = f(t).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 6 && courbe.modele === "affine") || "Abscisse : A ; ordonnée : B ; modèle y = a·x + b." },
       { consigne: "Valeur de l'accélération aG = |Δv/Δt| (m/s²) ?", court: "aG (m/s²) ?", question: nombre("m/s²", G * SIN, 0.05, "Valeur absolue du coefficient directeur de la droite.", "Exact : aG = g·sin α ≈ 0,49 m/s².") },
-      { consigne: "L'unité de l'accélération est…", court: "Répondez dans le carnet.", question: choix(["le m/s² : une variation de vitesse (m/s) par unité de temps (s)", "le m/s", "le N"], "Équation aux dimensions : [v]/[t].", "Exact.") },
+      { consigne: "L'unité de l'accélération est…", court: "Répondez dans le carnet.", question: choix(["le m/s²", "le m/s", "le N/s"], "Équation aux dimensions : [v]/[t].", "Exact.") },
       { consigne: "Pendant la montée aG·vG < 0, pendant la descente aG·vG > 0. Donc le mouvement est…", court: "Répondez dans le carnet.", question: choix(["ralenti à la montée, accéléré à la descente", "accéléré à la montée, ralenti à la descente", "uniforme"], "Comparez les sens de aG et de vG.", "Exact.") },
-      { consigne: "Dans un repère cartésien (O, i, j), les coordonnées de l'accélération sont…", court: "Répondez dans le carnet.", question: choix(["ax = dvx/dt = d²x/dt² et ay = dvy/dt = d²y/dt²", "ax = x/t² et ay = y/t²", "ax = vx·t et ay = vy·t"], "L'accélération est la dérivée de la vitesse.", "Exact.") },
+      { consigne: "Dans un repère cartésien (O, i, j), les coordonnées de l'accélération sont…", court: "Répondez dans le carnet.", question: choix(["ax = d²x/dt² et ay = d²y/dt²", "ax = dx/dt et ay = dy/dt", "ax = x/t² et ay = y/t²"], "L'accélération est la dérivée de la vitesse.", "Exact.") },
     ],
   };
 

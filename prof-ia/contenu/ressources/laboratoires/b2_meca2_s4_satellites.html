@@ -3557,7 +3557,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez les documents « Référentiels » et « De Ptolémée à Newton » : touchez-les.", court: "Lisez les documents 1 et 2.", verifier: ({ faits }) => V.lu(faits, 1, 2) || false },
       { consigne: "Pour étudier le mouvement de Mars autour du Soleil, on choisit le référentiel…", court: "Répondez dans le carnet.", question: choix(["héliocentrique", "géocentrique", "terrestre (lié au laboratoire)"], "Quel est le centre du mouvement ?", "Exact.") },
       { consigne: "Pour étudier un satellite de télécommunication, on choisit le référentiel…", court: "Répondez dans le carnet.", question: choix(["géocentrique", "héliocentrique", "terrestre (lié au laboratoire)"], "Le satellite tourne autour de la Terre.", "Exact.") },
-      { consigne: "Le référentiel géocentrique…", court: "Répondez dans le carnet.", question: choix(["est en translation par rapport au référentiel héliocentrique : ses axes gardent la même direction", "tourne avec la Terre en un jour", "est lié au sol du laboratoire"], "Relisez le document « Référentiels ».", "Exact.") },
+      { consigne: "Le référentiel géocentrique…", court: "Répondez dans le carnet.", question: choix(["est en translation par rapport à l'héliocentrique", "tourne avec la Terre en un jour sidéral", "est lié au sol du laboratoire, sur la Terre"], "Relisez le document « Référentiels ».", "Exact.") },
     ],
   };
 
@@ -3570,14 +3570,14 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Ellipse, loi des aires, T²/a³ = 4π²/(G·MS).",
     etapes: [
       { consigne: "Onglet « Soleil – planète », r0 = 1 UA : lancez une planète avec v0 = 25 km/s.", court: "Lancez une planète (25 km/s).", aide_geste: "Glissez le curseur bleu ou touchez − et +, puis « Lancer ».", verifier: ({ faits }) => V.lance(faits, soleil) || false },
-      { consigne: "La trajectoire de la planète est…", court: "Répondez dans le carnet.", question: choix(["une ellipse dont le Soleil occupe un foyer", "un cercle centré sur le Soleil", "une ellipse centrée sur le Soleil"], "Le Soleil est-il au centre de la courbe ?", "Exact : c'est la première loi de Kepler.") },
+      { consigne: "La trajectoire de la planète est…", court: "Répondez dans le carnet.", question: choix(["une ellipse, le Soleil à un foyer", "un cercle, le Soleil au centre", "une ellipse, le Soleil au centre"], "Le Soleil est-il au centre de la courbe ?", "Exact : c'est la première loi de Kepler.") },
       { consigne: "Cochez « Aires balayées en des durées égales », relancez et observez les secteurs balayés pendant chaque dixième de période.", court: "Cochez les aires, relancez.", verifier: ({ faits }) => V.lance(faits, (l) => soleil(l) && l.aires) || false },
       { consigne: "Pendant des durées égales, le segment Soleil-planète balaie…", court: "Répondez dans le carnet.", question: choix(["des aires égales", "des longueurs d'orbite égales", "des angles égaux"], "Comparez la forme des secteurs.", "Exact : c'est la deuxième loi de Kepler.") },
       { consigne: "La planète va le plus vite…", court: "Répondez dans le carnet.", question: choix(["quand elle est le plus près du Soleil", "quand elle est le plus loin du Soleil", "toujours à la même vitesse"], "Où les secteurs sont-ils courts et larges ?", "Exact.") },
       { consigne: "Lisez le document « Données » ; tableur : a (m) en A, T (s) en B, a³ en C, T² en D, pour quatre planètes au moins.", court: "Tableur : a, T, a³, T².", verifier: V.kepler },
       { consigne: "Tracez T² (D) en fonction de a³ (C), modèle y = a·x.", court: "Courbe T² = f(a³).", verifier: ({ courbe: c }) => (c.x === "C" && c.y === "D" && c.n >= 4 && c.modele === "lineaire") || "Abscisse : C ; ordonnée : D ; modèle y = a·x." },
       { consigne: "Le coefficient directeur vaut 4π² / (G·MS) : déduisez-en la masse du Soleil MS (kg).", court: "MS (kg) ?", question: relatif("kg", 1.99e30, 0.03, "MS = 4π² / (G × coefficient directeur).", "Exact : MS ≈ 2,0 × 10³⁰ kg.") },
-      { consigne: "La troisième loi de Kepler dit que…", court: "Répondez dans le carnet.", question: choix(["T² / a³ a la même valeur pour toutes les planètes", "T / a est le même pour toutes les planètes", "T est proportionnelle à a"], "La courbe est une droite qui passe par l'origine.", "Exact.") },
+      { consigne: "La troisième loi de Kepler dit que…", court: "Répondez dans le carnet.", question: choix(["T² / a³ est le même pour toutes les planètes", "T / a est le même pour toutes les planètes", "T² / a² est le même pour toutes les planètes"], "La courbe est une droite qui passe par l'origine.", "Exact.") },
     ],
   };
 
@@ -3589,14 +3589,14 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "v = √(G·M/r) ; géostationnaire : T = 86 164 s, h ≈ 35 800 km.",
     etapes: [
       { consigne: "Onglet « Terre – satellite » : lancez un satellite à l'altitude de la Station spatiale (h = 400 km) et réglez v0 pour obtenir une orbite circulaire.", court: "Orbite circulaire à 400 km.", aide_geste: "r0 = R + h = 6 771 km ; touchez − et + pour régler v0 à 0,01 km/s près.", verifier: ({ faits }) => V.lance(faits, iss) || false },
-      { consigne: "Dans le référentiel géocentrique, la seule force qui s'exerce sur le satellite est…", court: "Répondez dans le carnet.", question: choix(["l'attraction de la Terre, F = G·M·m/r², dirigée vers le centre de la Terre", "une force dans le sens du mouvement", "aucune force"], "Pas d'air à 400 km (presque).", "Exact.") },
-      { consigne: "D'après la deuxième loi de Newton, a = G·M/r², dirigée vers le centre ; pour un mouvement circulaire, aN = v²/r. Donc…", court: "Répondez dans le carnet.", question: choix(["le mouvement est circulaire uniforme et v = √(G·M/r)", "v = G·M/r", "la vitesse augmente à chaque tour"], "L'accélération n'a pas de composante tangentielle.", "Exact.") },
+      { consigne: "Dans le référentiel géocentrique, la seule force qui s'exerce sur le satellite est…", court: "Répondez dans le carnet.", question: choix(["l'attraction de la Terre, vers son centre", "une force dans le sens du mouvement", "l'attraction de la Lune, vers son centre"], "Pas d'air à 400 km (presque).", "Exact.") },
+      { consigne: "D'après la deuxième loi de Newton, a = G·M/r², dirigée vers le centre ; pour un mouvement circulaire, aN = v²/r. Donc…", court: "Répondez dans le carnet.", question: choix(["v = √(G·M/r) : mouvement uniforme", "v = G·M/r : mouvement uniforme", "v = √(G·M/r) : v augmente à chaque tour"], "L'accélération n'a pas de composante tangentielle.", "Exact.") },
       { consigne: "Calculez v = √(G·M/(R + h)) pour h = 400 km (km/s) et comparez au réglage du logiciel.", court: "v (km/s) ?", question: nombre("km/s", Math.sqrt(MU / (R + 4e5)) / 1000, 0.04, "r = R + h en mètres.", "Exact : environ 7,67 km/s.") },
       { consigne: "Période de ce satellite (s), lue dans les résultats du logiciel ?", court: "T (s) ?", question: relatif("s", (f) => V.dernier(f, iss)?.T ?? 5545, 0.01, "Vérifiez T = 2π·r / v.", "Exact : environ 1 h 32 min.") },
       { consigne: "La vitesse d'un satellite en orbite circulaire dépend-elle de sa masse ?", court: "Répondez dans le carnet.", question: choix(["non : v = √(G·M/r) ne dépend que de M et de r", "oui : un satellite plus lourd va moins vite", "oui : un satellite plus lourd va plus vite"], "La masse m se simplifie dans la deuxième loi de Newton.", "Exact.") },
       { consigne: "Trouvez l'orbite circulaire dont la période vaut un jour sidéral (86 164 s) : le satellite et le point rouge de l'équateur tournent alors ensemble.", court: "Orbite géostationnaire.", aide_geste: "Augmentez r0, puis cherchez la vitesse de l'orbite circulaire.", verifier: ({ faits }) => V.lance(faits, geo) || false },
       { consigne: "Altitude du satellite géostationnaire (km) ?", court: "h (km) ?", question: nombre("km", 35786, 250, "h = r − R, lue dans les résultats.", "Exact : environ 35 800 km.") },
-      { consigne: "Un satellite géostationnaire…", court: "Répondez dans le carnet.", question: choix(["tourne dans le plan de l'équateur, dans le sens de rotation de la Terre, en un jour sidéral : il reste au-dessus du même point", "est immobile dans le référentiel géocentrique", "peut passer au-dessus du pôle Nord"], "Il doit suivre la rotation de la Terre.", "Exact : antennes paraboliques fixes, télévision, météorologie.") },
+      { consigne: "Un satellite géostationnaire…", court: "Répondez dans le carnet.", question: choix(["tourne dans le plan de l'équateur en un jour sidéral", "est immobile dans le référentiel géocentrique", "tourne au-dessus des pôles en un jour sidéral"], "Il doit suivre la rotation de la Terre.", "Exact : antennes paraboliques fixes, télévision, météorologie.") },
     ],
   };
 

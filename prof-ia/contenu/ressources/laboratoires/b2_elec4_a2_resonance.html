@@ -4096,7 +4096,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Intensité à la résonance I₀ pour R = 47 Ω (mA) ?", court: "I₀ (mA) ?", question: relatif("mA", (f) => max47(f).I, 0.03, "Maximum de la courbe B.", "Exact.") },
       { consigne: "Largeur de la bande passante à −3 dB pour R = 47 Ω, ΔN (Hz) ?", court: "ΔN (Hz) ?", question: nombre("Hz", 18.6, 4, "Fréquences où I = I₀/√2, de part et d'autre de N₀ ; mesurez près du maximum.", "Exact : ΔN = (R + r)/(2πL).") },
       { consigne: "Facteur de qualité Q = N₀/ΔN pour R = 47 Ω ?", court: "Q ?", question: nombre("", 12.1, 2.5, "Q = N₀ / ΔN.", "Exact : Q = L·ω₀/(R + r).") },
-      { consigne: "Quand R augmente…", court: "Répondez dans le carnet.", question: choix(["I₀ diminue, ΔN augmente, Q diminue : la résonance est plus floue", "N₀ augmente", "la résonance devient plus aiguë"], "Comparez les deux courbes.", "Exact : N₀ ne change pas.") },
+      { consigne: "Quand R augmente…", court: "Répondez dans le carnet.", question: choix(["la résonance est plus floue", "la résonance est plus aiguë", "N₀ augmente nettement"], "Comparez les deux courbes.", "Exact : N₀ ne change pas.") },
     ],
   };
 
@@ -4110,10 +4110,10 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "N = 225 Hz, R = 47 Ω : branchez le voltmètre (V~) aux bornes du condensateur.", court: "Mesurez UC à la résonance.", verifier: ({ faits }) => !!UC(faits) || false },
       { consigne: "Surtension UC / U (U : tension du GBF relevée à 225 Hz) ?", court: "UC / U ?", question: relatif("", (f) => (UC(f) || { UC: 12.9 }).UC / max47(f).U, 0.05, "UC sur le voltmètre ; U dans vos mesures précédentes.", "Exact : environ Q.") },
-      { consigne: "Cette surtension…", court: "Répondez dans le carnet.", question: choix(["peut être dangereuse : UC est bien plus grande que la tension du générateur", "est toujours plus petite que U", "n'existe que hors résonance"], "Comparez UC et U.", "Exact.") },
+      { consigne: "Cette surtension…", court: "Répondez dans le carnet.", question: choix(["peut être dangereuse : UC ≫ U", "est sans danger : UC < U", "n'existe que loin de la résonance"], "Comparez UC et U.", "Exact.") },
       { consigne: "Puissance moyenne consommée à la résonance, P = (R + r)·I₀² avec R + r = 57 Ω (mW) ?", court: "P (mW) ?", question: relatif("mW", (f) => 57 * (max47(f).I / 1000) ** 2 * 1000, 0.05, "I₀ en ampères.", "Exact.") },
       { consigne: "Facteur de puissance k = P / (U·I₀) à la résonance ?", court: "k ?", question: nombre("", (f) => (57 * max47(f).I) / 1000 / max47(f).U, 0.03, "P en W, U en V, I₀ en A.", "Exact : presque 1 (la résistance de l'ampèremètre consomme le reste).") },
-      { consigne: "La puissance moyenne est consommée…", court: "Répondez dans le carnet.", question: choix(["seulement par effet Joule dans les résistances : P = (R + r)·I²", "par le condensateur", "par la bobine idéale"], "Que font le condensateur et la bobine de l'énergie ?", "Exact : k = (R + r)/Z ≤ 1, égal à 1 à la résonance.") },
+      { consigne: "La puissance moyenne est consommée…", court: "Répondez dans le carnet.", question: choix(["par effet Joule dans R + r", "par le condensateur", "par la bobine idéale"], "Que font le condensateur et la bobine de l'énergie ?", "Exact : k = (R + r)/Z ≤ 1, égal à 1 à la résonance.") },
     ],
   };
 

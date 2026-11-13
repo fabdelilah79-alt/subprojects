@@ -35,13 +35,13 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : G+ vers K1, K0 vers C, C vers G− ; K2 vers la bobine, bobine vers R, R vers la deuxième borne de C ; GND sur cette borne, EA0 sur l'autre borne de C.", court: "Câblez le montage.", verifier: ({ faits }) => (M(faits).charge && M(faits).decharge && M(faits).mesure) || false },
       { consigne: "R = 10 Ω, C = 10 µF, noyau enfoncé, K en 1. Touchez « Lancer » (100 ms), puis basculez K en position 2.", court: "Enregistrez la décharge (R = 10 Ω).", aide_geste: "Touchez le condensateur pour changer C, la bobine pour le noyau.", verifier: ({ faits }) => vu(faits, (R) => R === 10, "pseudo-periodique") || false },
-      { consigne: "La tension uC…", court: "Répondez dans le carnet.", question: choix(["oscille autour de 0 avec une amplitude qui diminue : oscillations libres amorties (régime pseudo-périodique)", "diminue jusqu'à 0 sans changer de signe", "oscille avec une amplitude constante"], "Regardez la courbe rouge.", "Exact.") },
+      { consigne: "La tension uC…", court: "Répondez dans le carnet.", question: choix(["oscille avec une amplitude qui diminue", "diminue jusqu'à 0 sans changer de signe", "oscille avec une amplitude constante"], "Regardez la courbe rouge.", "Exact.") },
       { consigne: "Remettez K en 1, réglez R = 100 Ω, puis enregistrez une nouvelle décharge.", court: "Enregistrez avec R = 100 Ω.", verifier: ({ faits }) => vu(faits, (R) => R === 100, "pseudo-periodique") || false },
-      { consigne: "Quand R augmente…", court: "Répondez dans le carnet.", question: choix(["l'amplitude diminue plus vite : l'amortissement augmente", "l'amplitude reste la même", "les oscillations durent plus longtemps"], "Comparez avec la courbe en clair.", "Exact.") },
+      { consigne: "Quand R augmente…", court: "Répondez dans le carnet.", question: choix(["l'amortissement augmente", "l'amortissement diminue", "la pseudo-période diminue"], "Comparez avec la courbe en clair.", "Exact.") },
       { consigne: "Enregistrez une décharge avec R = 1 000 Ω.", court: "Enregistrez avec R = 1 kΩ.", verifier: ({ faits }) => vu(faits, (R) => R >= 470, "aperiodique") || false },
-      { consigne: "Avec R = 1 000 Ω, uC…", court: "Répondez dans le carnet.", question: choix(["tend vers 0 sans osciller : régime apériodique", "oscille plus vite", "reste égale à E"], "uC change-t-elle de signe ?", "Exact.") },
-      { consigne: "Le régime critique…", court: "Répondez dans le carnet.", question: choix(["sépare les deux régimes : uC revient à 0 le plus vite, sans osciller", "est le régime le plus oscillant", "n'existe que sans résistance"], "Essayez R = 220 Ω puis 470 Ω.", "Exact.") },
-      { consigne: "L'amortissement des oscillations est dû…", court: "Répondez dans le carnet.", question: choix(["à la résistance totale R + r : effet Joule", "au condensateur seul", "au générateur"], "Que se passe-t-il quand R diminue ?", "Exact.") },
+      { consigne: "Avec R = 1 000 Ω, uC…", court: "Répondez dans le carnet.", question: choix(["tend vers 0 sans osciller", "oscille plus rapidement", "reste égale à E"], "uC change-t-elle de signe ?", "Exact.") },
+      { consigne: "Le régime critique…", court: "Répondez dans le carnet.", question: choix(["ramène uC à 0 le plus vite, sans osciller", "est le régime qui oscille le plus longtemps", "n'existe que si la résistance est nulle"], "Essayez R = 220 Ω puis 470 Ω.", "Exact.") },
+      { consigne: "L'amortissement des oscillations est dû…", court: "Répondez dans le carnet.", question: choix(["à l'effet Joule dans R + r", "à la décharge du condensateur", "à l'inductance de la bobine"], "Que se passe-t-il quand R diminue ?", "Exact.") },
     ],
   };
 
@@ -56,8 +56,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Pseudo-période T de la décharge avec R = 10 Ω, L = 0,50 H, C = 10 µF (ms) ?", court: "T (ms) ?", question: { ...nombre("ms", T_ref, null, "Curseur sur deux maxima séparés de plusieurs pseudo-périodes.", "Exact."), tolerance_relative: 0.03 } },
       { consigne: "Mesurez T pour au moins quatre couples (L, C), avec R = 10 Ω. Tableur : en A : L (H) ; en B : C (µF) ; en C : T (ms) ; en D : 2π√(LC) (ms).", court: "Tableur : L, C, T, 2π√(LC).", aide_geste: "Touchez le condensateur (C) ou la bobine (noyau) ; choisissez une durée adaptée.", verifier: tableau },
       { consigne: "Tracez T (C) en fonction de 2π√(LC) (D).", court: "Courbe T = f(2π√(LC)).", verifier: ({ courbe }) => (courbe.x === "D" && courbe.y === "C" && courbe.n >= 4) || "Abscisse : D ; ordonnée : C." },
-      { consigne: "Les points sont sur une droite de coefficient directeur 1 : la pseudo-période…", court: "Répondez dans le carnet.", question: choix(["est presque égale à la période propre T₀ = 2π√(LC)", "est proportionnelle à R", "ne dépend pas de C"], "Comparez C et D.", "Exact.") },
-      { consigne: "L'équation aux dimensions de √(LC) montre que T₀ est…", court: "Répondez dans le carnet.", question: choix(["une durée : √((V·s/A)·(A·s/V)) = s", "une fréquence", "sans dimension"], "1 H = 1 V·s/A ; 1 F = 1 A·s/V.", "Exact.") },
+      { consigne: "Les points sont sur une droite de coefficient directeur 1 : la pseudo-période…", court: "Répondez dans le carnet.", question: choix(["est presque égale à T₀ = 2π√(LC)", "est proportionnelle à la résistance R", "est égale à τ = R·C"], "Comparez C et D.", "Exact.") },
+      { consigne: "L'équation aux dimensions de √(LC) montre que T₀ est…", court: "Répondez dans le carnet.", question: choix(["une durée", "une fréquence", "sans dimension"], "1 H = 1 V·s/A ; 1 F = 1 A·s/V.", "Exact.") },
     ],
   };
 
@@ -70,9 +70,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "d²q/dt² + q/(LC) = 0 ; T₀ = 2π√(LC).",
     etapes: [
       { consigne: "Avec R + r négligeable, la loi d'additivité des tensions donne…", court: "Répondez dans le carnet.", question: choix(["L·d²q/dt² + q/C = 0", "L·dq/dt + q/C = 0", "L·q + C·d²q/dt² = 0"], "uL = L·di/dt et i = dq/dt.", "Exact.") },
-      { consigne: "La solution de d²q/dt² + q/(LC) = 0 est…", court: "Répondez dans le carnet.", question: choix(["q(t) = Qm·cos(2πt/T₀ + φ), avec T₀ = 2π√(LC)", "q(t) = Qm·e^(−t/τ)", "q(t) = Qm·t/T₀"], "Une fonction dont la dérivée seconde est proportionnelle à elle-même, au signe près.", "Exact.") },
+      { consigne: "La solution de d²q/dt² + q/(LC) = 0 est…", court: "Répondez dans le carnet.", question: choix(["q(t) = Qm·cos(2πt/T₀ + φ)", "q(t) = Qm·e^(−t/τ)", "q(t) = Qm·(1 − e^(−t/τ))"], "Une fonction dont la dérivée seconde est proportionnelle à elle-même, au signe près.", "Exact.") },
       { consigne: "Charge maximale Qm = C·E, avec C = 10 µF et E = 6,0 V (µC) ?", court: "Qm (µC) ?", question: nombre("µC", 60, 0.5, "Qm = 10 × 10⁻⁶ × 6,0.", "Exact : φ = 0 car q(0) = Qm.") },
-      { consigne: "L'intensité i = dq/dt s'écrit…", court: "Répondez dans le carnet.", question: choix(["i(t) = −(2π/T₀)·Qm·sin(2πt/T₀) : nulle quand q est maximale", "i(t) = Qm·cos(2πt/T₀)", "i(t) = 0"], "Dérivez q(t).", "Exact.") },
+      { consigne: "L'intensité i = dq/dt s'écrit…", court: "Répondez dans le carnet.", question: choix(["i(t) = −(2π/T₀)·Qm·sin(2πt/T₀)", "i(t) = (2π/T₀)·Qm·cos(2πt/T₀)", "i(t) = −(T₀/2π)·Qm·sin(2πt/T₀)"], "Dérivez q(t).", "Exact.") },
       { consigne: "Période propre pour L = 0,50 H et C = 10 µF (ms) ?", court: "T₀ (ms) ?", question: nombre("ms", 14.05, 0.1, "T₀ = 2π√(0,50 × 10 × 10⁻⁶).", "Exact : environ 14 ms, comme la pseudo-période mesurée.") },
     ],
   };

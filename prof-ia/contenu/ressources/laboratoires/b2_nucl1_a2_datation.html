@@ -3992,10 +3992,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Demi-vie du même ordre que l'âge à mesurer.",
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_radio || []).length >= 4 || false },
-      { consigne: "La radioactivité de notre corps vient surtout…", court: "Répondez dans le carnet.", question: choix(["du potassium 40 et du carbone 14 qu'il contient", "des téléphones portables", "de la lumière du Soleil"], "Document « La radioactivité autour de nous ».", "Exact : environ 8 000 Bq pour un adulte.") },
-      { consigne: "Les effets biologiques d'un rayonnement dépendent…", court: "Répondez dans le carnet.", question: choix(["de l'activité, de la durée d'exposition, du rayonnement et de l'énergie déposée dans le corps", "seulement de la couleur de la source", "de rien : la radioactivité est sans effet"], "Document « Effets biologiques ».", "Exact.") },
+      { consigne: "La radioactivité de notre corps vient surtout…", court: "Répondez dans le carnet.", question: choix(["du potassium 40 et du carbone 14", "des ondes des téléphones portables", "des rayons ultraviolets du Soleil"], "Document « La radioactivité autour de nous ».", "Exact : environ 8 000 Bq pour un adulte.") },
+      { consigne: "Les effets biologiques d'un rayonnement dépendent…", court: "Répondez dans le carnet.", question: choix(["de l'énergie déposée dans le corps", "seulement de la distance à la source", "seulement de la demi-vie de la source"], "Document « Effets biologiques ».", "Exact.") },
       { consigne: "Rangez chaque objet dans la colonne du radioélément qui permet de le dater.", court: "Tableau : quel radioélément ?", aide_geste: "Faites glisser chaque étiquette jaune dans une colonne.", verifier: ({ faits }) => L.tableau_tri.verifier(L.TRI_DATATION, faits.tri_datation) },
-      { consigne: "Pour dater un objet, on choisit un radioélément…", court: "Répondez dans le carnet.", question: choix(["dont la demi-vie est du même ordre de grandeur que l'âge cherché", "de demi-vie la plus courte possible", "de demi-vie la plus longue possible"], "Document « Dater des roches ».", "Exact.") },
+      { consigne: "Pour dater un objet, on choisit un radioélément…", court: "Répondez dans le carnet.", question: choix(["de demi-vie proche de l'âge cherché", "de demi-vie la plus courte possible", "de demi-vie la plus longue possible"], "Document « Dater des roches ».", "Exact.") },
       { consigne: "Au bout de 10 demi-vies, quelle fraction des noyaux reste-t-il (en ‰) ?", court: "Fraction (‰) ?", question: nombre("‰", 1000 / 1024, 0.03, "1/2¹⁰ = 1/1024.", "Exact : moins d'un millième : la datation au carbone 14 s'arrête vers 50 000 ans.") },
     ],
   };
@@ -4017,7 +4017,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Par le calcul : t = (1/λ)·ln(a₀ / a) (ans) ?", court: "Âge calculé (grotte) ?", question: nombre("ans", (f) => age(f, "grotte"), 200, "λ = 1,21 × 10⁻⁴ an⁻¹.", "Exact : environ 17 000 ans.") },
       { consigne: "Mesurez l'activité du carbone de l'os de mammouth.", court: "Mesure : os de mammouth.", verifier: ({ faits }) => !!M(faits).os || false },
       { consigne: "Âge de l'os de mammouth, par le calcul (ans) ?", court: "Âge de l'os ?", question: nombre("ans", (f) => age(f, "os"), 400, "Même calcul avec l'activité de l'os.", "Exact : environ 28 000 ans.") },
-      { consigne: "Tant qu'il vit, un être vivant garde une activité constante en carbone 14 parce que…", court: "Répondez dans le carnet.", question: choix(["il échange du carbone avec l'atmosphère : le carbone 14 désintégré est remplacé", "le carbone 14 ne se désintègre pas dans un être vivant", "il fabrique du carbone 14"], "Document « Le carbone 14 ».", "Exact : après la mort, les échanges cessent.") },
+      { consigne: "Tant qu'il vit, un être vivant garde une activité constante en carbone 14 parce que…", court: "Répondez dans le carnet.", question: choix(["il échange du carbone avec l'atmosphère", "le carbone 14 ne se désintègre pas en lui", "il fabrique lui-même son carbone 14"], "Document « Le carbone 14 ».", "Exact : après la mort, les échanges cessent.") },
     ],
   };
 

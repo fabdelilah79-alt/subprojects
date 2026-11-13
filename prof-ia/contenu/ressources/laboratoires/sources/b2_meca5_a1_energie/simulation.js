@@ -18,9 +18,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "« Acquérir » (10 s), tournez la barre d'environ 30° par son aiguille et lâchez-la.", court: "Enregistrez θ(t).", aide_geste: "Faites glisser l'aiguille rouge le long du cadran, puis lâchez.", verifier: ({ faits }) => (LA(faits) && Math.abs(LA(faits).theta0) >= 15 && faits.acquisition?.etat === "terminée") || false },
       { consigne: "Touchez « Énergies ».", court: "Vue « Énergies ».", verifier: ({ faits }) => faits.acquisition?.vue === "energies" || false },
-      { consigne: "L'énergie potentielle de torsion du fil tordu de θ s'écrit…", court: "Répondez dans le carnet.", question: choix(["Ept = ½·C·θ² (θ en radians)", "Ept = C·θ", "Ept = ½·J·θ²"], "Analogie avec Epe = ½·K·x².", "Exact.") },
+      { consigne: "L'énergie potentielle de torsion du fil tordu de θ s'écrit…", court: "Répondez dans le carnet.", question: choix(["Ept = ½·C·θ²", "Ept = C·θ²", "Ept = ½·C·θ"], "Analogie avec Epe = ½·K·x².", "Exact.") },
       { consigne: "Énergie mécanique Em (mJ), lue au curseur ?", court: "Em (mJ) ?", question: relatif("mJ", (f) => (LA(f)?.Em0 || 0) * 1000, 0.08, "Courbe verte ; vérifiez avec ½·C·θm².", "Exact.") },
-      { consigne: "Au cours des oscillations, Ec et Ept…", court: "Répondez dans le carnet.", question: choix(["s'échangent : Em = ½·J·θ̇² + ½·C·θ² reste constante", "augmentent ensemble", "restent constantes chacune"], "Comparez les trois courbes.", "Exact.") },
+      { consigne: "Au cours des oscillations, Ec et Ept…", court: "Répondez dans le carnet.", question: choix(["s'échangent : Em reste constante", "augmentent ensemble : Em augmente", "restent constantes chacune"], "Comparez les trois courbes.", "Exact.") },
       { consigne: "L'énergie cinétique est maximale quand…", court: "Répondez dans le carnet.", question: choix(["la barre passe par θ = 0", "la barre est à l'élongation maximale", "jamais"], "Où θ̇ est-elle la plus grande ?", "Exact.") },
     ],
   };

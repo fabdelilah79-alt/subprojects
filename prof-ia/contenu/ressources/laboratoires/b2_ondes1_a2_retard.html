@@ -3038,9 +3038,9 @@ Utilisé par : page.html (dernier script).
       { consigne: "Calculez la célérité v = AB / Δt.", court: "v (m/s) ?", question: nombre("m/s", (f) => 1 / (C(f).dt || 0.5), 0.06, "AB = 1,00 m.", "Exact : environ 2,0 m/s.") },
       { consigne: "Tableur : mesurez Δt pour quatre distances AB différentes (déplacez B ; touchez RAZ si besoin). En A : d (m) ; en B : Δt (s).", court: "Tableur : d et Δt.", verifier: tableau(2, false, 0.012) },
       { consigne: "Tracez Δt (B) en fonction de d (A).", court: "Courbe Δt = f(d).", verifier: courbe },
-      { consigne: "La courbe est une droite qui passe par l'origine. Son coefficient directeur vaut…", court: "Répondez dans le carnet.", question: choix(["1 / v : le retard est proportionnel à la distance, Δt = d / v", "v", "d × v"], "Δt = d / v.", "Exact.") },
+      { consigne: "La courbe est une droite qui passe par l'origine. Son coefficient directeur vaut…", court: "Répondez dans le carnet.", question: choix(["1 / v", "v", "d × v"], "Δt = d / v.", "Exact.") },
       { consigne: "Le point B reproduit le mouvement du point A…", court: "Répondez dans le carnet.", question: choix(["avec un retard τ = AB / v", "en même temps que A", "avec une amplitude doublée"], "Pensez à la bosse qui passe d'abord en A puis en B.", "Exact.") },
-      { consigne: "Recommencez avec une bosse plus petite (mais qui coupe les faisceaux). Le retard…", court: "Répondez dans le carnet.", question: choix(["ne change pas : la célérité ne dépend pas de la forme de la perturbation", "augmente", "diminue"], "Comparez les deux mesures.", "Exact : elle dépend du milieu.") },
+      { consigne: "Recommencez avec une bosse plus petite (mais qui coupe les faisceaux). Le retard…", court: "Répondez dans le carnet.", question: choix(["ne change pas", "augmente", "diminue"], "Comparez les deux mesures.", "Exact : elle dépend du milieu.") },
     ],
   };
 
@@ -3057,7 +3057,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tableur : mesurez τ pour quatre distances M1M2 différentes. En A : d (m) ; en B : τ (ms).", court: "Tableur : d et τ.", aide_geste: "Si besoin, changez le balayage (TIME/DIV) pour lire plus précisément.", verifier: tableau(V_SON, true, 0.09) },
       { consigne: "Tracez τ (B) en fonction de d (A).", court: "Courbe τ = f(d).", verifier: courbe },
       { consigne: "Déduisez du coefficient directeur la célérité du son dans l'air (m/s).", court: "v (m/s) ?", question: nombre("m/s", V_SON, 15, "Coefficient directeur a = 1/v, en ms par m : v = 1000 / a.", "Exact : environ 343 m/s.") },
-      { consigne: "Si l'on claque plus fort, le retard τ…", court: "Répondez dans le carnet.", question: choix(["ne change pas : seule l'amplitude du signal change", "diminue", "augmente"], "La célérité dépend du milieu, pas de l'amplitude.", "Exact.") },
+      { consigne: "Si l'on claque plus fort, le retard τ…", court: "Répondez dans le carnet.", question: choix(["ne change pas", "diminue", "augmente"], "La célérité dépend du milieu, pas de l'amplitude.", "Exact.") },
     ],
   };
 

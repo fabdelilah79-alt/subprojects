@@ -22,12 +22,12 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Câblez : G+ vers K1, K0 vers C1, C2 vers G− ; K2 vers la lampe, l'autre borne de la lampe vers C2 ; EA0 sur C1, GND sur C2.", court: "Câblez le montage.", verifier: ({ faits }) => (M(faits).charge && M(faits).eclair && M(faits).mesure) || false },
       { consigne: "E = 6 V, C = 2,2 mF : basculez K en 1 (charge), touchez « Lancer » (durée 1 s), puis basculez K en 2.", court: "Éclair : 2,2 mF sous 6 V.", aide_geste: "Réglez la durée du logiciel sur 1 s.", verifier: ({ faits }) => !!eclair(faits, 2.2e-3, 6) || false },
-      { consigne: "La lampe s'allume brièvement parce que…", court: "Répondez dans le carnet.", question: choix(["le condensateur chargé avait stocké de l'énergie, qu'il rend à la lampe en se déchargeant", "le générateur alimente la lampe", "la lampe stocke de l'énergie"], "Le générateur n'est plus relié à la lampe.", "Exact.") },
+      { consigne: "La lampe s'allume brièvement parce que…", court: "Répondez dans le carnet.", question: choix(["le condensateur lui rend l'énergie stockée", "le générateur l'alimente encore un instant", "la lampe a stocké de l'énergie pendant la charge"], "Le générateur n'est plus relié à la lampe.", "Exact.") },
       { consigne: "Énergie stockée E = ½·C·u² (mJ) ?", court: "E (mJ) ?", question: nombre("mJ", 39.6, 1, "C = 2,2 × 10⁻³ F ; u = 6 V.", "Exact : environ 40 mJ.") },
       { consigne: "Recommencez avec C = 4,7 mF sous 6 V. L'éclair…", court: "Éclair : 4,7 mF.", verifier: ({ faits }) => !!eclair(faits, 4.7e-3, 6) || false },
-      { consigne: "Avec une capacité plus grande, l'éclair dure…", court: "Répondez dans le carnet.", question: choix(["plus longtemps : l'énergie stockée est plus grande et τ = R·C aussi", "moins longtemps", "pareil"], "Comparez les courbes de décharge.", "Exact.") },
+      { consigne: "Avec une capacité plus grande, l'éclair dure…", court: "Répondez dans le carnet.", question: choix(["plus longtemps", "moins longtemps", "aussi longtemps"], "Comparez les courbes de décharge.", "Exact.") },
       { consigne: "Revenez à C = 2,2 mF et réglez E = 12 V. Faites un éclair.", court: "Éclair : 2,2 mF sous 12 V.", verifier: ({ faits }) => !!eclair(faits, 2.2e-3, 12) || false },
-      { consigne: "En doublant la tension, l'énergie stockée est multipliée par…", court: "Répondez dans le carnet.", question: choix(["4 : E est proportionnelle à u²", "2", "1"], "E = ½·C·u².", "Exact : 158 mJ.") },
+      { consigne: "En doublant la tension, l'énergie stockée est multipliée par…", court: "Répondez dans le carnet.", question: choix(["4", "2", "1"], "E = ½·C·u².", "Exact : 158 mJ.") },
     ],
   };
 
@@ -42,7 +42,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez les deux documents.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_flash || []).length >= 2 || false },
       { consigne: "Énergie stockée dans le condensateur du flash (150 µF sous 300 V), en J ?", court: "E flash (J) ?", question: nombre("J", 6.75, 0.05, "E = ½ × 150 × 10⁻⁶ × 300².", "Exact.") },
       { consigne: "Puissance moyenne de l'éclair, libéré en 1 ms (W) ?", court: "P flash (W) ?", question: nombre("W", 6750, 60, "P = E / Δt, Δt = 10⁻³ s.", "Exact : plusieurs kilowatts.") },
-      { consigne: "On utilise un condensateur dans un flash parce que…", court: "Répondez dans le carnet.", question: choix(["il stocke l'énergie lentement et peut la rendre en un temps très court", "il produit de l'énergie", "il remplace la lampe"], "Comparez à une pile.", "Exact.") },
+      { consigne: "On utilise un condensateur dans un flash parce que…", court: "Répondez dans le carnet.", question: choix(["il rend très vite l'énergie stockée lentement", "il produit de l'énergie à partir de la pile", "il stocke l'énergie sans jamais la perdre"], "Comparez à une pile.", "Exact.") },
       { consigne: "Défibrillateur : C = 32 µF ; pour E = 200 J, sous quelle tension faut-il le charger (V) ?", court: "U défibrillateur (V) ?", question: nombre("V", 3536, 30, "u = √(2E / C).", "Exact : environ 3 500 V.") },
     ],
   };

@@ -3762,8 +3762,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Oscillateur : va-et-vient autour d'un équilibre ; amplitude, période propre.",
     etapes: [
       { consigne: "Rangez les neuf systèmes du tableau : oscillateur mécanique ou pas.", court: "Rangez les systèmes.", aide_geste: "Faites glisser chaque étiquette dans sa colonne.", verifier: ({ faits }) => L.tableau_tri.verifier(L.SYSTEMES_OSCILLANTS.map(([id, , colonne]) => ({ id, colonne })), faits.tri_oscillateurs) },
-      { consigne: "Ce qu'ont en commun les oscillateurs mécaniques :", court: "Répondez dans le carnet.", question: choix(["un mouvement de va-et-vient répété autour d'une position d'équilibre", "un mouvement toujours rectiligne", "un mouvement qui ne s'arrête jamais"], "Une balançoire et un balancier d'horloge.", "Exact.") },
-      { consigne: "Une balançoire qu'on ne pousse plus oscille de moins en moins loin. On dit que ses oscillations sont…", court: "Répondez dans le carnet.", question: choix(["amorties (par les frottements)", "entretenues", "forcées"], "Que devient l'amplitude ?", "Exact.") },
+      { consigne: "Ce qu'ont en commun les oscillateurs mécaniques :", court: "Répondez dans le carnet.", question: choix(["un va-et-vient autour d'un équilibre", "un mouvement toujours rectiligne", "un mouvement qui ne s'arrête jamais"], "Une balançoire et un balancier d'horloge.", "Exact.") },
+      { consigne: "Une balançoire qu'on ne pousse plus oscille de moins en moins loin. On dit que ses oscillations sont…", court: "Répondez dans le carnet.", question: choix(["amorties", "entretenues", "forcées"], "Que devient l'amplitude ?", "Exact.") },
     ],
   };
 
@@ -3779,7 +3779,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Le mobile oscille autour de…", court: "Répondez dans le carnet.", question: choix(["sa position d'équilibre (x = 0)", "l'extrémité du ressort", "la position où on l'a lâché"], "Où x(t) passe-t-il d'un côté à l'autre ?", "Exact.") },
       { consigne: "Amplitude Xm (cm) ? Lisez le plus grand x avec le curseur.", court: "Xm (cm) ?", question: nombre("cm", (f) => Math.abs(dernier(f).x0 || 0) * 100, 0.3, "Le curseur donne t et x.", "Exact : c'est l'écart initial (lâché sans vitesse).") },
       { consigne: "Période propre T0 (s) ? Mesurez la durée de 5 oscillations au curseur, puis divisez par 5.", court: "T0 (s) ?", question: nombre("s", (f) => essai(f, 0.2, 10, "aucun")?.T0 || 0, 0.03, "Deux crêtes séparées de 5 oscillations.", "Exact.") },
-      { consigne: "La force exercée par le ressort sur le mobile est…", court: "Répondez dans le carnet.", question: choix(["F = −k·x : dirigée vers l'équilibre, proportionnelle à l'écart", "F = k·x : dans le sens de l'écart", "constante"], "Le ressort ramène le mobile.", "Exact : c'est une force de rappel.") },
+      { consigne: "La force exercée par le ressort sur le mobile est…", court: "Répondez dans le carnet.", question: choix(["F = −k·x : vers l'équilibre", "F = k·x : dans le sens de l'écart", "F = −k : constante, vers l'équilibre"], "Le ressort ramène le mobile.", "Exact : c'est une force de rappel.") },
       { consigne: "Avec la deuxième loi de Newton (poids et réaction se compensent), l'équation différentielle du mouvement est…", court: "Répondez dans le carnet.", question: choix(["ẍ + (k/m)·x = 0", "ẍ = −g", "ẋ + (k/m)·x = 0"], "m·ẍ = −k·x.", "Exact.") },
       { consigne: "Sa solution est x(t) = Xm·cos(2π·t/T0 + φ). Lâché sans vitesse à x = +Xm, la phase à l'origine φ vaut…", court: "Répondez dans le carnet.", question: choix(["0", "π/2", "π"], "x(0) = Xm·cos φ = Xm.", "Exact : x(t) = Xm·cos(2π·t/T0).") },
     ],
@@ -3795,8 +3795,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Ressort bleu (10 N/m) : enregistrez x(t) avec 200 g, puis 300 g et 400 g (surcharges du plateau) ; mesurez T0 à chaque fois.", court: "200, 300, 400 g.", aide_geste: "Touchez une surcharge du plateau pour la poser sur le mobile.", verifier: ({ faits }) => ([0.2, 0.3, 0.4].every((m) => essai(faits, m, 10, "aucun")) && enregistre(faits, dernier(faits).m, dernier(faits).k, "aucun")) || false },
       { consigne: "Échangez le ressort (ressort vert de 20 N/m, sur le plateau) ; enregistrez avec 200 g.", court: "Ressort de 20 N/m.", verifier: ({ faits }) => enregistre(faits, 0.2, 20, "aucun") },
       { consigne: "Tableur : m (kg) en A, k (N/m) en B, T0 mesurée en C, =2*PI()*RACINE(A2/B2) en D (quatre lignes).", court: "Tableur : m, k, T0.", verifier: tableau },
-      { consigne: "La période propre…", court: "Répondez dans le carnet.", question: choix(["augmente avec m et diminue quand k augmente", "augmente avec m et avec k", "ne dépend ni de m ni de k"], "Comparez les lignes.", "Exact : T0 = 2π·√(m/k).") },
-      { consigne: "Si on double la masse, T0 est…", court: "Répondez dans le carnet.", question: choix(["multipliée par √2 ≈ 1,41", "multipliée par 2", "inchangée"], "Comparez 200 g et 400 g.", "Exact.") },
+      { consigne: "La période propre…", court: "Répondez dans le carnet.", question: choix(["augmente avec m, diminue avec k", "augmente avec m et avec k", "diminue avec m, augmente avec k"], "Comparez les lignes.", "Exact : T0 = 2π·√(m/k).") },
+      { consigne: "Si on double la masse, T0 est…", court: "Répondez dans le carnet.", question: choix(["multipliée par √2", "multipliée par 2", "divisée par √2"], "Comparez 200 g et 400 g.", "Exact.") },
     ],
   };
 
@@ -3811,7 +3811,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "L'amplitude diminue et le mobile oscille encore : le régime est…", court: "Répondez dans le carnet.", question: choix(["pseudo-périodique", "apériodique", "périodique"], "Le mouvement se répète-t-il ?", "Exact.") },
       { consigne: "Pseudo-période (s) ? Comparez-la à T0 sans amortisseur.", court: "Pseudo-période (s) ?", question: nombre("s", T(0.2, 10), 0.03, "Durée de plusieurs oscillations au curseur.", "Exact : pour un amortissement faible, la pseudo-période est presque égale à T0.") },
       { consigne: "Remplacez la palette par l'aimant de freinage, puis enregistrez de nouveau.", court: "Enregistrez avec l'aimant.", verifier: ({ faits }) => enregistre(faits, 0.2, 10, "aimant") },
-      { consigne: "Avec l'aimant, le mobile…", court: "Répondez dans le carnet.", question: choix(["revient à l'équilibre sans osciller : régime apériodique", "oscille plus longtemps", "oscille avec une période plus courte"], "Regardez la courbe.", "Exact.") },
+      { consigne: "Avec l'aimant, le mobile…", court: "Répondez dans le carnet.", question: choix(["revient sans osciller : apériodique", "oscille plus longtemps : périodique", "oscille encore : pseudo-périodique"], "Regardez la courbe.", "Exact.") },
     ],
   };
 

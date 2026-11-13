@@ -5319,7 +5319,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez les cinq documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_physicien || []).length >= 5 },
       { consigne: "Rangez chaque question du physicien dans la partie du programme qui y répond.", court: "Tableau : rangez les questions.", aide_geste: "Faites glisser chaque étiquette jaune dans une colonne.", verifier: ({ faits }) => L.tableau_tri.verifier(T.questions, faits.tri_questions) },
       { consigne: "Pour transmettre la voix par radio, on la confie à une onde de haute fréquence. Ce procédé s'appelle…", court: "Répondez dans le carnet.", question: choix(["la modulation", "la diffraction", "la fission"], "Relisez le document « Communiquer avec les ondes ».", "Exact.") },
-      { consigne: "Un satellite ne tombe pas sur la Terre parce que…", court: "Répondez dans le carnet.", question: choix(["il tombe sans cesse, mais sa vitesse est assez grande pour qu'il tourne autour de la Terre", "il n'est plus attiré par la Terre", "il est porté par l'air"], "Relisez le document « Satellites et horloges ».", "Exact : la Terre l'attire toujours.") },
+      { consigne: "Un satellite ne tombe pas sur la Terre parce que…", court: "Répondez dans le carnet.", question: choix(["il tombe sans cesse, mais va assez vite pour tourner", "il est trop loin pour être encore attiré par la Terre", "il est porté par l'air très léger de la haute altitude"], "Relisez le document « Satellites et horloges ».", "Exact : la Terre l'attire toujours.") },
     ],
   };
 
@@ -5334,8 +5334,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez le document du problème.", court: "Lisez le document.", verifier: ({ faits }) => (faits.docs_gps || []).length >= 1 },
       { consigne: "Rangez chaque étiquette dans l'étape de la démarche à laquelle elle appartient.", court: "Tableau : rangez les étapes.", verifier: ({ faits }) => L.tableau_tri.verifier(T.demarche, faits.tri_demarche) },
       { consigne: "Calculez la distance d = c × Δt entre le satellite et le récepteur (en km).", court: "d (km) ?", question: nombre("km", 20190, 150, "Δt = 67,3 ms = 0,0673 s ; d = 3,00 × 10⁸ × 0,0673 m, puis divisez par 1000.", "Exact : environ 20 200 km, l'altitude des satellites GPS.") },
-      { consigne: "Une erreur d'un millionième de seconde (10⁻⁶ s) sur Δt donnerait une erreur sur d de…", court: "Répondez dans le carnet.", question: choix(["300 m : il faut des horloges très précises", "3 mm", "3 000 km"], "Erreur sur d = c × erreur sur Δt.", "Exact.") },
-      { consigne: "Si la distance calculée était très différente de la valeur publiée, le physicien…", court: "Répondez dans le carnet.", question: choix(["vérifierait sa mesure, puis remettrait en cause son modèle", "changerait la valeur publiée", "garderait son résultat sans rien vérifier"], "Relisez « Comment je travaille ».", "Exact.") },
+      { consigne: "Une erreur d'un millionième de seconde (10⁻⁶ s) sur Δt donnerait une erreur sur d de…", court: "Répondez dans le carnet.", question: choix(["300 m", "3 mm", "3 000 km"], "Erreur sur d = c × erreur sur Δt.", "Exact.") },
+      { consigne: "Si la distance calculée était très différente de la valeur publiée, le physicien…", court: "Répondez dans le carnet.", question: choix(["vérifierait sa mesure, puis son modèle", "corrigerait la valeur publiée à sa place", "garderait son résultat sans rien vérifier"], "Relisez « Comment je travaille ».", "Exact.") },
     ],
   };
 

@@ -39,7 +39,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Les nucléons séparés sont plus lourds que le noyau. Défaut de masse Δm (u) ?", court: "Δm (u) ?", question: nombre("u", 0.030377, 0.00003, "Lisez « gauche − droite » sur l'écran.", "Exact : Δm ≈ 0,030377 u.") },
       { consigne: "Énergie de liaison El = Δm·c² (MeV) ?", court: "El (MeV) ?", question: nombre("MeV", 28.30, 0.08, "1 u = 931,5 MeV/c².", "Exact : environ 28,3 MeV.") },
       { consigne: "La même énergie en joules (en unités de 10⁻¹² J) ?", court: "El (10⁻¹² J) ?", question: nombre("× 10⁻¹² J", 4.533, 0.02, "1 MeV = 10⁶ × 1,602 × 10⁻¹⁹ J.", "Exact : environ 4,53 × 10⁻¹² J.") },
-      { consigne: "L'énergie de liaison d'un noyau est…", court: "Répondez dans le carnet.", question: choix(["l'énergie à fournir à un noyau au repos pour le séparer en nucléons isolés au repos", "l'énergie d'un nucléon", "l'énergie libérée par une désintégration"], "Pensez à la balance.", "Exact.") },
+      { consigne: "L'énergie de liaison d'un noyau est…", court: "Répondez dans le carnet.", question: choix(["l'énergie à fournir pour le séparer en nucléons", "l'énergie libérée quand il se désintègre", "l'énergie de masse d'un de ses nucléons"], "Pensez à la balance.", "Exact.") },
       { consigne: "Énergie équivalente à une masse de 1 u : E = m·c² (en unités de 10⁻¹⁰ J) ?", court: "1 u (10⁻¹⁰ J) ?", question: nombre("× 10⁻¹⁰ J", 1.4925, 0.004, "m = 1,66054 × 10⁻²⁷ kg ; c = 2,998 × 10⁸ m/s.", "Exact : 1,4925 × 10⁻¹⁰ J, soit 931,5 MeV.") },
       { consigne: "L'équation aux dimensions de E = m·c² donne pour le joule…", court: "Répondez dans le carnet.", question: choix(["1 J = 1 kg·m²·s⁻²", "1 J = 1 kg·m·s⁻¹", "1 J = 1 kg·m²·s⁻¹"], "[c] = L·T⁻¹.", "Exact : [E] = M·L²·T⁻².") },
       { consigne: "Touchez « Noyau » jusqu'au fer 56 et mettez à gauche ses nucléons séparés.", court: "⁵⁶Fe : 26 p + 30 n.", verifier: ({ faits }) => compose(faits, "Fe56") || false },
@@ -57,11 +57,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Tableur : au moins dix noyaux de l'affiche, légers, moyens et lourds. En A : A ; en B : Z ; en C : Δm (u) ; en D : El/A (MeV).", court: "Tableur : A, Z, Δm, El/A.", aide_geste: "Pour ⁴He, en C : =B2*1,007276+(A2-B2)*1,008665-4,001505 (la masse du noyau lue sur l'affiche) ; en D2 : =C2*931,5/A2.", verifier: tableau },
       { consigne: "Tracez El/A (D) en fonction de A (A).", court: "Courbe El/A = f(A).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "D" && courbe.n >= 10) || "Abscisse : A ; ordonnée : D (El/A)." },
-      { consigne: "Quand A augmente, El/A…", court: "Répondez dans le carnet.", question: choix(["augmente vite, passe par un maximum vers A ≈ 60, puis diminue lentement", "augmente toujours", "reste constante"], "Regardez la forme de la courbe.", "Exact.") },
+      { consigne: "Quand A augmente, El/A…", court: "Répondez dans le carnet.", question: choix(["passe par un maximum vers A ≈ 60", "augmente toujours avec A", "diminue toujours avec A"], "Regardez la forme de la courbe.", "Exact.") },
       { consigne: "Plus grande valeur de El/A dans votre tableau (MeV par nucléon) ?", court: "El/A maximale ?", question: nombre("MeV", 8.79, 0.02, "Le noyau de fer 56.", "Exact : les noyaux vers A ≈ 60 sont les plus stables.") },
-      { consigne: "Un noyau lourd (A > 200) se casse en deux noyaux moyens. Les noyaux formés…", court: "Répondez dans le carnet.", question: choix(["sont plus liés (El/A plus grande) : de l'énergie est libérée, c'est la fission", "sont moins liés : il faut fournir de l'énergie", "ont la même énergie de liaison"], "Comparez El/A pour A = 235 et A ≈ 120.", "Exact.") },
-      { consigne: "Deux noyaux très légers s'unissent en un noyau plus lourd. C'est…", court: "Répondez dans le carnet.", question: choix(["la fusion : le noyau formé est plus lié, de l'énergie est libérée", "la fission", "une désintégration α"], "Comparez El/A de ²H, ³H et ⁴He.", "Exact.") },
-      { consigne: "La courbe d'Aston représente −El/A en fonction de A. Les noyaux les plus stables sont…", court: "Répondez dans le carnet.", question: choix(["au fond du creux, vers A ≈ 60", "aux deux extrémités", "en haut de la courbe"], "−El/A est le plus petit quand El/A est le plus grand.", "Exact.") },
+      { consigne: "Un noyau lourd (A > 200) se casse en deux noyaux moyens. Les noyaux formés…", court: "Répondez dans le carnet.", question: choix(["sont plus liés : de l'énergie est libérée", "sont moins liés : de l'énergie est libérée", "sont moins liés : il faut fournir de l'énergie"], "Comparez El/A pour A = 235 et A ≈ 120.", "Exact.") },
+      { consigne: "Deux noyaux très légers s'unissent en un noyau plus lourd. C'est…", court: "Répondez dans le carnet.", question: choix(["la fusion", "la fission", "la désintégration α"], "Comparez El/A de ²H, ³H et ⁴He.", "Exact.") },
+      { consigne: "La courbe d'Aston représente −El/A en fonction de A. Les noyaux les plus stables sont…", court: "Répondez dans le carnet.", question: choix(["au fond du creux, vers A ≈ 60", "aux deux extrémités de la courbe", "en haut de la courbe, vers A ≈ 4"], "−El/A est le plus petit quand El/A est le plus grand.", "Exact.") },
     ],
   };
 
@@ -78,7 +78,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "¹⁸₉F → ¹⁸₈O + ⁰₊₁e. Énergie libérée (MeV) ?", court: "E (β+, F 18) ?", question: nombre("MeV", Q(["F18"], ["O18"], 1), 0.004, "Le positon a la masse d'un électron.", "Exact : environ 0,635 MeV.") },
       { consigne: "Fission : ²³⁵₉₂U + ¹₀n → ⁹⁴₃₈Sr + ¹⁴⁰₅₄Xe + 2 ¹₀n. Énergie libérée (MeV) ?", court: "E (fission) ?", question: nombre("MeV", Q(["U235", "n"], ["Sr94", "Xe140", "n", "n"]), 1, "Réactifs : U + n ; produits : Sr + Xe + 2 n.", "Exact : environ 185 MeV.") },
       { consigne: "Fusion : ²₁H + ³₁H → ⁴₂He + ¹₀n. Énergie libérée (MeV) ?", court: "E (fusion) ?", question: nombre("MeV", Q(["H2", "H3"], ["He4", "n"]), 0.05, "Réactifs : ²H + ³H ; produits : ⁴He + n.", "Exact : environ 17,6 MeV.") },
-      { consigne: "Par nucléon des réactifs, quelle réaction libère le plus d'énergie ?", court: "Répondez dans le carnet.", question: choix(["la fusion : 17,6 / 5 ≈ 3,5 MeV contre 185 / 236 ≈ 0,78 MeV pour la fission", "la fission", "elles libèrent autant"], "Divisez par le nombre de nucléons.", "Exact.") },
+      { consigne: "Par nucléon des réactifs, quelle réaction libère le plus d'énergie ?", court: "Répondez dans le carnet.", question: choix(["la fusion (≈ 3,5 MeV par nucléon)", "la fission (≈ 3,5 MeV par nucléon)", "elles libèrent autant l'une que l'autre"], "Divisez par le nombre de nucléons.", "Exact.") },
       { consigne: "Énergie libérée par la fission de 1,00 g d'uranium 235 (en unités de 10¹⁰ J) ?", court: "E (1 g, 10¹⁰ J) ?", question: nombre("× 10¹⁰ J", 7.58, 0.12, "Nombre de noyaux : 6,022 × 10²³ / 235 ; 1 MeV = 1,602 × 10⁻¹³ J.", "Exact : environ 7,6 × 10¹⁰ J, l'énergie de 2 tonnes de pétrole.") },
     ],
   };
@@ -93,9 +93,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_applications || []).length >= 4 || false },
       { consigne: "Rangez chaque application selon la transformation nucléaire qu'elle utilise.", court: "Tableau : fission, fusion, désintégration.", verifier: ({ faits }) => L.tableau_tri.verifier(L.TRI_APPLICATIONS, faits.tri_applications) },
-      { consigne: "Dans une centrale, la réaction en chaîne est…", court: "Répondez dans le carnet.", question: choix(["contrôlée par des barres qui absorbent une partie des neutrons", "impossible à arrêter", "une fusion"], "Document « La centrale nucléaire ».", "Exact.") },
-      { consigne: "Avaler ou respirer une substance radioactive, c'est…", court: "Répondez dans le carnet.", question: choix(["une contamination, plus grave qu'une irradiation de même durée", "une irradiation", "sans danger"], "Document « Dangers et déchets ».", "Exact.") },
-      { consigne: "En imagerie médicale, on injecte un radioélément de courte demi-vie parce que…", court: "Répondez dans le carnet.", question: choix(["son activité devient vite négligeable : le patient est peu exposé", "il est moins cher", "il émet de la lumière visible"], "Fluor 18 : 110 min.", "Exact.") },
+      { consigne: "Dans une centrale, la réaction en chaîne est…", court: "Répondez dans le carnet.", question: choix(["contrôlée par des barres absorbant des neutrons", "contrôlée par des barres absorbant des protons", "entretenue sans contrôle jusqu'à l'arrêt"], "Document « La centrale nucléaire ».", "Exact.") },
+      { consigne: "Avaler ou respirer une substance radioactive, c'est…", court: "Répondez dans le carnet.", question: choix(["une contamination", "une irradiation", "une fission"], "Document « Dangers et déchets ».", "Exact.") },
+      { consigne: "En imagerie médicale, on injecte un radioélément de courte demi-vie parce que…", court: "Répondez dans le carnet.", question: choix(["son activité devient vite négligeable", "il est moins cher à produire", "il émet de la lumière visible"], "Fluor 18 : 110 min.", "Exact.") },
     ],
   };
 

@@ -3559,8 +3559,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tableur : en A : t (s) ; en B : U (V) ; en C : q = I·t (mC).", court: "Tableur : t, U, q.", verifier: tableau },
       { consigne: "Tracez q (C) en fonction de U (B) et modélisez par une droite.", court: "Courbe q = f(U).", aide_geste: "Si le chronomètre est parti un peu avant le générateur, choisissez y = a·x + b.", verifier: ({ courbe }) => (courbe.x === "B" && courbe.y === "C" && courbe.n >= 6 && courbe.modele !== "aucun") || "Abscisse : B (U) ; ordonnée : C (q) ; choisissez un modèle." },
       { consigne: "Le coefficient directeur est la capacité C (en mC/V = mF). Capacité de C₁ (µF) ?", court: "C₁ (µF) ?", question: nombre("µF", 100, 4, "1 mF = 1 000 µF.", "Exact : C₁ = 100 µF = 1,00 × 10⁻⁴ F.") },
-      { consigne: "La relation entre la charge et la tension est…", court: "Répondez dans le carnet.", question: choix(["q = C·u, C (capacité) en farads", "q = u / C", "q = C + u"], "q est proportionnelle à u.", "Exact.") },
-      { consigne: "Avec un courant constant, q augmente proportionnellement au temps parce que…", court: "Répondez dans le carnet.", question: choix(["i = dq/dt : si i = I est constant, q = I·t", "le condensateur est une résistance", "u est constante"], "Définition de l'intensité.", "Exact.") },
+      { consigne: "La relation entre la charge et la tension est…", court: "Répondez dans le carnet.", question: choix(["q = C·u", "q = u / C", "q = C / u"], "q est proportionnelle à u.", "Exact.") },
+      { consigne: "Avec un courant constant, q augmente proportionnellement au temps parce que…", court: "Répondez dans le carnet.", question: choix(["i = dq/dt est constant", "u = q/C est constant", "q = C·u est constant"], "Définition de l'intensité.", "Exact.") },
     ],
   };
 
@@ -3574,7 +3574,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Montez C₁ et C₂ en série (déchargés) et faites au moins quatre relevés en 6 s (la tension monte vite : restez sous 20 V).", court: "Série : quatre relevés.", verifier: ({ faits }) => serie(faits, "serie", 4, 4) || false },
       { consigne: "Capacité équivalente en série (µF) ?", court: "C série (µF) ?", question: nombre("µF", 32, 1.5, "C = I·Δt / ΔU.", "Exact : environ 32 µF.") },
-      { consigne: "En série…", court: "Répondez dans le carnet.", question: choix(["1/C_éq = 1/C₁ + 1/C₂", "C_éq = C₁ + C₂", "C_éq = C₁ − C₂"], "1/100 + 1/47 = ?", "Exact : C_éq est plus petite que chacune.") },
+      { consigne: "En série…", court: "Répondez dans le carnet.", question: choix(["1/C_éq = 1/C₁ + 1/C₂", "C_éq = C₁ + C₂", "1/C_éq = 1/C₁ − 1/C₂"], "1/100 + 1/47 = ?", "Exact : C_éq est plus petite que chacune.") },
       { consigne: "Montez C₁ et C₂ en parallèle (déchargés) et faites au moins quatre relevés en 20 s (I = 0,10 mA).", court: "Parallèle : quatre relevés.", verifier: ({ faits }) => serie(faits, "parallele", 4) || false },
       { consigne: "Capacité équivalente C = I·Δt / ΔU (µF) ?", court: "C parallèle (µF) ?", question: nombre("µF", 147, 5, "Prenez deux relevés éloignés.", "Exact : 147 µF.") },
       { consigne: "En parallèle…", court: "Répondez dans le carnet.", question: choix(["C_éq = C₁ + C₂", "1/C_éq = 1/C₁ + 1/C₂", "C_éq = C₁ × C₂"], "100 + 47 = ?", "Exact.") },

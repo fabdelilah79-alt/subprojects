@@ -3397,13 +3397,13 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Appuyez sur « Lâcher » : le frein se desserre, la masse descend et la caméra filme le disque pendant 1,6 s.", court: "Lâchez le disque.", verifier: ({ faits }) => !!film(faits, "lacher").id || false },
       { consigne: `${POINTER} sur les images 0 à 10.`, court: "Étalonnez, origine, pointez M.", aide_geste: "Le logiciel est réglé en mode polaire : il donne θ = (Ox, OM).", verifier: ({ faits }) => pointe(faits, "lacher", 11) },
-      { consigne: "L'abscisse angulaire θ donnée par le logiciel est…", court: "Répondez dans le carnet.", question: choix(["l'angle (Ox, OM) en radians, compté dans le sens de rotation", "la distance OM en mètres", "le nombre de tours"], "Regardez la colonne θ du logiciel.", "Exact : s = OM·θ est l'abscisse curviligne de M.") },
+      { consigne: "L'abscisse angulaire θ donnée par le logiciel est…", court: "Répondez dans le carnet.", question: choix(["l'angle (Ox, OM), en radians", "la longueur de l'arc parcouru, en mètres", "l'angle (Ox, OM), en tours"], "Regardez la colonne θ du logiciel.", "Exact : s = OM·θ est l'abscisse curviligne de M.") },
       { consigne: "« Exporter » ; en C (à partir de C3), calculez θ̇ par encadrement : θ̇ = (θ suivant − θ précédent) / (2 × 0,04).", court: "Tableur : θ̇ en C.", verifier: tableau(8, 0) },
       { consigne: "En D (à partir de D4), calculez de même θ̈ = (θ̇ suivant − θ̇ précédent) / (2 × 0,04).", court: "Tableur : θ̈ en D.", verifier: tableau(8, 6) },
       { consigne: "Les valeurs de θ̈ (colonne D) sont…", court: "Répondez dans le carnet.", question: choix(["à peu près constantes", "nulles", "de plus en plus grandes"], "Comparez-les (les écarts viennent du pointage).", "Exact : la rotation est uniformément variée.") },
       { consigne: "Tracez θ̇ (C) en fonction de t (A), modèle y = a·x + b.", court: "Courbe θ̇ = f(t).", verifier: graphique },
       { consigne: "Accélération angulaire θ̈ du disque (coefficient directeur) ?", court: "θ̈ (rad/s²) ?", question: relatif("rad/s²", (f) => film(f, "lacher").alpha, "Coefficient directeur de θ̇(t).", "Exact.") },
-      { consigne: "θ̇(0) ≈ 0 (disque lâché sans vitesse) et θ0 est en B2. Les équations horaires sont…", court: "Répondez dans le carnet.", question: choix(["θ̇ = θ̈·t et θ = ½·θ̈·t² + θ0", "θ = θ̈·t + θ0", "θ̇ = ½·θ̈·t²"], "Analogie avec x = ½·a·t² + x0.", "Exact.") },
+      { consigne: "θ̇(0) ≈ 0 (disque lâché sans vitesse) et θ0 est en B2. Les équations horaires sont…", court: "Répondez dans le carnet.", question: choix(["θ̇ = θ̈·t et θ = ½·θ̈·t² + θ0", "θ̇ = θ̈·t et θ = θ̈·t² + θ0", "θ̇ = ½·θ̈·t² et θ = θ̈·t + θ0"], "Analogie avec x = ½·a·t² + x0.", "Exact.") },
       { consigne: "Avec ces équations, calculez θ à t = 0,40 s (θ0 = 0,50 rad), puis comparez à B12.", court: "θ (0,40 s) en rad ?", question: nombre("rad", (f) => 0.5 + 0.5 * film(f, "lacher").alpha * 0.16, 0.06, "θ = ½·θ̈·t² + θ0.", "Exact : l'équation horaire prévoit bien la mesure.") },
       { consigne: "À t = 0,20 s, accélération tangentielle du point M : aT = OM·θ̈ (m/s²) ?", court: "aT (m/s²) ?", question: relatif("m/s²", (f) => OM * film(f, "lacher").alpha, "OM = 0,080 m.", "Exact : aT ne change pas, θ̈ est constante.") },
       { consigne: "À t = 0,20 s, accélération normale de M : aN = OM·θ̇² (m/s²) ?", court: "aN (m/s²) ?", question: relatif("m/s²", (f) => OM * (film(f, "lacher").alpha * 0.2) ** 2, "θ̇ = θ̈·t à t = 0,20 s.", "Exact : aN = v²/R augmente avec la vitesse.") },
@@ -3428,7 +3428,7 @@ Utilisé par : page.html (dernier script).
       { consigne: `${POINTER} sur les images 0 à 8 du nouveau film.`, court: "Pointez M (freinage).", verifier: ({ faits }) => pointe(faits, "frein", 9) },
       { consigne: "« Exporter » ; recalculez θ̇ en C (à partir de C3).", court: "Tableur : θ̇ en C.", verifier: tableau(7, 0) },
       { consigne: "Accélération angulaire pendant le freinage (coefficient directeur de θ̇(t), avec son signe) ?", court: "θ̈ (rad/s²) ?", question: nombre("rad/s²", (f) => film(f, "frein").alpha, 0.8, "Le graphique s'est mis à jour.", "Exact : θ̈ est constante et négative.") },
-      { consigne: "Pendant le freinage, la rotation est…", court: "Répondez dans le carnet.", question: choix(["uniformément retardée : θ̈ constante, de signe contraire à θ̇", "uniforme", "uniformément accélérée"], "Signe de θ̇·θ̈ ?", "Exact.") },
+      { consigne: "Pendant le freinage, la rotation est…", court: "Répondez dans le carnet.", question: choix(["uniformément retardée", "uniforme", "uniformément accélérée"], "Signe de θ̇·θ̈ ?", "Exact.") },
     ],
   };
 

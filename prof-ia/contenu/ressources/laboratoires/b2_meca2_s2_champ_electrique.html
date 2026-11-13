@@ -3290,7 +3290,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Mettez le chauffage du filament, puis réglez la tension accélératrice UA à 4 000 V : observez le faisceau sur l'écran.", court: "Chauffage, UA = 4 000 V.", aide_geste: "Interrupteur « Chauffage », puis bouton UA (glissez vers le haut ou touchez +).", verifier: ({ faits }) => (TU(faits).faisceau && TU(faits).UA === 4000) || false },
       { consigne: "Entre la cathode et l'anode, le champ est parallèle à la vitesse de l'électron. Son mouvement y est…", court: "Répondez dans le carnet.", question: choix(["rectiligne accéléré", "rectiligne uniforme", "circulaire"], "La force électrique a la direction du mouvement.", "Exact.") },
       { consigne: "Vitesse des électrons à la sortie du canon pour UA = 4 000 V (m/s) ?", court: "v0 (m/s) ?", question: relatif("m/s", Math.sqrt((2 * E_CH * 4000) / ME), 0.03, "½·m·v0² = e·UA.", "Exact : environ 3,75 × 10⁷ m/s.") },
-      { consigne: "Sans tension entre les plaques, le faisceau reste horizontal, car…", court: "Répondez dans le carnet.", question: choix(["le poids de l'électron est négligeable : aucune force notable ne s'exerce sur lui", "le poids de l'électron est compensé par la poussée de l'air", "l'électron n'a pas de masse"], "Comparez m·g (≈ 10⁻²⁹ N) aux forces électriques (≈ 10⁻¹⁴ N).", "Exact : le mouvement est rectiligne uniforme entre les plaques.") },
+      { consigne: "Sans tension entre les plaques, le faisceau reste horizontal, car…", court: "Répondez dans le carnet.", question: choix(["le poids de l'électron est négligeable", "le poids de l'électron est compensé par l'air", "l'électron n'a pas de masse"], "Comparez m·g (≈ 10⁻²⁹ N) aux forces électriques (≈ 10⁻¹⁴ N).", "Exact : le mouvement est rectiligne uniforme entre les plaques.") },
     ],
   };
 
@@ -3303,12 +3303,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Trajectoire parabolique : y = UP·x² / (4·d·UA).",
     etapes: [
       { consigne: "UA = 4 000 V : réglez UP à 1 500 V, plaque positive en haut. Touchez l'écran du tube pour le voir en grand.", court: "UP = 1 500 V ; écran en grand.", verifier: ({ faits }) => lu(faits, (v) => v.UA === 4000 && v.UP === 1500 && v.sens === 1) || false },
-      { consigne: "Le faisceau est dévié…", court: "Répondez dans le carnet.", question: choix(["vers la plaque positive : la force F = −e·E est opposée au champ", "vers la plaque négative", "il n'est pas dévié"], "Inversez la polarité et regardez.", "Exact.") },
+      { consigne: "Le faisceau est dévié…", court: "Répondez dans le carnet.", question: choix(["vers la plaque positive : F = −e·E", "vers la plaque négative : F = e·E", "vers le bas, par son poids"], "Inversez la polarité et regardez.", "Exact.") },
       { consigne: "Valeur du champ entre les plaques E = UP / d (V/m) ?", court: "E (V/m) ?", question: relatif("V/m", 1500 / D, 0.02, "d = 5,0 cm = 0,050 m.", "Exact : 3,0 × 10⁴ V/m.") },
       { consigne: "Tableur : lisez sur l'écran y pour x = 2, 4, 6, 8 et 10 cm ; x (m) en A, y (m) en B, x² en C.", court: "Tableur : x, y, x².", aide_geste: "Écran en grand : un carreau = 1 cm, une petite division = 2 mm.", verifier: trajectoire },
       { consigne: "Tracez y (B) en fonction de x² (C), modèle y = a·x.", court: "Courbe y = f(x²).", verifier: ({ courbe: c }) => (c.x === "C" && c.y === "B" && c.n >= 4 && c.modele === "lineaire") || "Abscisse : C ; ordonnée : B ; modèle y = a·x." },
       { consigne: "Coefficient directeur (m⁻¹) ? Comparez à UP / (4·d·UA).", court: "Coefficient (m⁻¹) ?", question: relatif("m⁻¹", 1500 / (4 * D * 4000), 0.1, "Lisez a dans l'équation de la droite.", "Exact : 1,9 m⁻¹ environ.") },
-      { consigne: "Avec x = v0·t et y = ½·(e·E/m)·t², la trajectoire s'écrit…", court: "Répondez dans le carnet.", question: choix(["y = e·E·x² / (2·m·v0²) : une parabole", "y = e·E·x / (m·v0) : une droite", "x² + y² = R² : un cercle"], "Éliminez t entre les deux équations.", "Exact.") },
+      { consigne: "Avec x = v0·t et y = ½·(e·E/m)·t², la trajectoire s'écrit…", court: "Répondez dans le carnet.", question: choix(["y = e·E·x² / (2·m·v0²) : une parabole", "y = e·E·x / (2·m·v0) : une droite", "y = e·E·x² / (m·v0²) : une parabole"], "Éliminez t entre les deux équations.", "Exact.") },
     ],
   };
 
@@ -3322,10 +3322,10 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "UA = 4 000 V : pour quatre tensions UP (entre 500 et 2 000 V), regardez l'écran en grand et lisez la déviation y à x = 10 cm. UP en A, y (m) en B.", court: "Tableur : UP, déviation.", verifier: deviations },
       { consigne: "Tracez B en fonction de A, modèle y = a·x.", court: "Courbe y = f(UP).", verifier: ({ courbe: c }) => (c.x === "A" && c.y === "B" && c.n >= 4 && c.modele === "lineaire") || "Abscisse : A ; ordonnée : B ; modèle y = a·x." },
-      { consigne: "La déviation à la sortie des plaques est…", court: "Répondez dans le carnet.", question: choix(["proportionnelle à UP, donc au champ E", "indépendante de UP", "proportionnelle à UP²"], "La courbe est une droite passant par l'origine.", "Exact.") },
+      { consigne: "La déviation à la sortie des plaques est…", court: "Répondez dans le carnet.", question: choix(["proportionnelle à UP", "proportionnelle à UP²", "indépendante de UP"], "La courbe est une droite passant par l'origine.", "Exact.") },
       { consigne: "UP = 1 500 V : augmentez UA jusqu'à 5 000 V et regardez l'écran en grand.", court: "UA = 5 000 V.", verifier: ({ faits }) => lu(faits, (v) => v.UA === 5000 && v.UP === 1500) || false },
-      { consigne: "Quand UA augmente, la déviation…", court: "Répondez dans le carnet.", question: choix(["diminue : les électrons, plus rapides, restent moins longtemps entre les plaques", "augmente", "ne change pas"], "y = UP·x² / (4·d·UA).", "Exact.") },
-      { consigne: "Dans un oscilloscope, la déviation du spot sert à…", court: "Répondez dans le carnet.", question: choix(["mesurer une tension : la déviation est proportionnelle à la tension appliquée aux plaques", "mesurer la masse des électrons", "chauffer l'écran"], "Pensez à la sensibilité verticale (V/div).", "Exact.") },
+      { consigne: "Quand UA augmente, la déviation…", court: "Répondez dans le carnet.", question: choix(["diminue : les électrons vont plus vite", "augmente : les électrons vont plus vite", "ne change pas : seule UP compte"], "y = UP·x² / (4·d·UA).", "Exact.") },
+      { consigne: "Dans un oscilloscope, la déviation du spot sert à…", court: "Répondez dans le carnet.", question: choix(["mesurer la tension appliquée aux plaques", "mesurer l'intensité du faisceau d'électrons", "mesurer la vitesse des électrons du canon"], "Pensez à la sensibilité verticale (V/div).", "Exact.") },
     ],
   };
 
