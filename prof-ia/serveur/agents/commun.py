@@ -30,15 +30,22 @@ def partition_modele():
     return json.dumps(nettoyer(modele), ensure_ascii=False, sort_keys=True)
 
 
+def manifeste_du_cours():
+    """Le manifeste réduit aux ressources du chapitre du cours (une ressource sans chapitre est gardée)."""
+    manifeste = json.loads(lire_texte(chemin_projet("contenu") / "manifeste.json"))
+    chapitre = orientations.cours()["orientations"]
+    return {"ressources": [r for r in manifeste["ressources"] if r.get("chapitre", chapitre) == chapitre]}
+
+
 @lru_cache(maxsize=1)
 def contexte_stable():
-    """Assemble le contexte commun : règles, cours, programme officiel du chapitre, manifeste, partition modèle."""
+    """Assemble le contexte commun : règles, cours, programme officiel du chapitre, ressources du chapitre, partition modèle."""
     contenu = chemin_projet("contenu")
     morceaux = [
         lire_texte(chemin_projet("prompts") / "commun.md"),
         "# Le cours\n\n" + "\n\n".join(lire_texte(f) for f in sorted((contenu / "cours").glob("*.md"))),
         "# Programme officiel (orientations pédagogiques nationales)\n\n" + orientations.texte_pour_agents(),
-        "# Manifeste des ressources\n\n" + json.dumps(json.loads(lire_texte(contenu / "manifeste.json")), ensure_ascii=False, sort_keys=True),
+        "# Manifeste des ressources du chapitre\n\n" + json.dumps(manifeste_du_cours(), ensure_ascii=False, sort_keys=True),
         "# Partition modèle (exemple validé par l'enseignant)\n\n" + partition_modele(),
     ]
     return "\n\n".join(morceaux)

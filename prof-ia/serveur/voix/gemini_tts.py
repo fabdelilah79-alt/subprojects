@@ -4,22 +4,27 @@ Reçoit : le texte, la consigne de jeu (style + ton), les réglages « gemini »
          l'usage (« cours » ou « repondeur », qui choisit le modèle).
 Produit : un fichier WAV (24 kHz, 16 bits, mono) et sa durée ; pas de temps des mots (Gemini ne les donne pas).
 Utilisé par : serveur/voix/synthese.py, quand « fournisseur » vaut « gemini ».
-Écrit d'après la documentation de la bibliothèque google-genai ; à vérifier sur un vrai appel quand la clé sera là.
+Vérifié sur un vrai appel (13/11/2026) : le modèle lit à voix haute toute consigne placée avant le texte, et refuse
+l'instruction système ; config/voix.json n'envoie donc que le texte (« gabarit_demande » : « {texte} »), et le ton n'est
+pas transmis à la voix. Clé gratuite : 10 demandes par jour et par modèle.
 """
+import threading
 import wave
 
 from serveur.cles import exiger
 
 _client = None
+_verrou = threading.Lock()  # les audios sont produits par plusieurs fils à la fois : un seul client
 
 
 def client():
     """Crée (une seule fois) le client Gemini ; il lit la clé GEMINI_API_KEY."""
     global _client
-    if _client is None:
-        exiger("GEMINI_API_KEY")
-        from google import genai
-        _client = genai.Client()
+    with _verrou:  # sans verrou, chaque fil créait son client et les clients remplacés se fermaient en plein envoi
+        if _client is None:
+            exiger("GEMINI_API_KEY")
+            from google import genai
+            _client = genai.Client()
     return _client
 
 

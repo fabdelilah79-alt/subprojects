@@ -89,3 +89,11 @@ def test_cle_anthropic_absente(monkeypatch, capsys):
     monkeypatch.setattr("serveur.cles.cle_presente", lambda nom: False)
     with pytest.raises(ErreurIA, match="ANTHROPIC_API_KEY"):
         appel_ia.appeler("voix", ("a", "b"), "c", {"type": "object"})
+
+
+def test_manifeste_du_cours_filtre_le_chapitre():
+    """Les agents ne reçoivent que les ressources du chapitre du cours (ici la rotation, pas les laboratoires du tronc commun)."""
+    from serveur.agents.commun import manifeste_du_cours
+    ids = {r["id"] for r in manifeste_du_cours()["ressources"]}
+    assert "grande_roue" in ids
+    assert "tc_meca2_a1_relativite" not in ids
