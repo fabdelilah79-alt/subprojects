@@ -73,7 +73,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/attente.html + js/attente.js | Page d'attente : suit la vraie préparation de la partie 1, puis « Entrer en classe ». |
 | client/js/session_eleve.js | Garde le pseudonyme pendant la séance (sessionStorage). |
 | client/css/parcours.css | Style du QCM et de la page d'attente. |
-| client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». |
+| client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». | Relaie au journal de recherche les messages d'un laboratoire (préfixe « laboratoire_ ») ; mission demandée réussie : la consigne invite à revenir au cours.
 | client/css/medias.css | Style du cadre des médias. |
 | contenu/ressources/animations/ | Simulations interactives : grande_roue, reperage, coussin_air, rotation_uniforme (+ commun/style.css, commun/outils.js, LISEZMOI.md). |
 | serveur/routes/parties.py | Routes /api/tableau (réglages du tableau), /api/manifeste et /api/parties/<n> (partition validée). |
@@ -263,6 +263,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/courbe.js | Application Graphique : points qui se dessinent, modélisation par une droite. |
 | contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
 | contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
+| contenu/ressources/laboratoires/commun/carnet_ecriture.js | Écriture des textes du carnet comme dans un cahier (indices, exposants, fractions posées, unités en ligne) ; ordre des choix mélangé, stable. |
 | contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
 | contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes (nombre d'étiquettes par ligne réglable). |
 | contenu/ressources/laboratoires/commun/bouton.js | Bouton-poussoir lumineux (par exemple « Pause / Lecture » du temps), au doigt, à la souris et au clavier. |

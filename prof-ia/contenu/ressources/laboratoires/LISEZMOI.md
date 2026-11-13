@@ -848,3 +848,15 @@ Fichiers communs modifiés : `montage_reflux.js` et `poste_synthese.js` reçoive
 `T_consigne` (le chauffe-ballon maintient cette température, sans ébullition si elle est sous T_eb) et `ballon_initial`
 (contenu déjà dans le ballon). Seule b2_chim10_a1_aspirine les utilise : l'acide salicylique est pesé (nouvelle paillasse 1),
 puis le ballon sec le contient ; le chauffage se fait à 65 °C pendant 20 min.
+
+## Missions séparées, formules du carnet, ordre des choix
+
+- Chaque mission s'ouvre seule avec l'adresse `<id>.html#mission=<id de la mission>` : un seul marque-page, la caméra sur sa
+  paillasse, pas de « mission suivante ». Le manifeste a maintenant **une ressource par mission** (id `<laboratoire>__<mission>`,
+  champ `laboratoire`, durée estimée d'après le nombre d'étapes) : l'agent pédagogique choisit une mission courte pour
+  l'observation, pas le laboratoire entier.
+- Le cadre média de l'application (`client/js/medias/cadre_media.js`) écoute les messages du laboratoire (ouverture, étape,
+  réponse, mission terminée) et les envoie au journal de recherche ; la mission réussie, la consigne invite à revenir au cours.
+- Fichier commun nouveau : `carnet_ecriture.js` (formules écrites comme dans un cahier, choix mélangés). Fichiers communs
+  modifiés : `carnet.js` (choix dans l'ordre mélangé, mode mission seule), `missions.js` (mode mission seule), `carnet.css`
+  (fractions). Changements appliqués à tous les laboratoires, à la demande de l'enseignant.

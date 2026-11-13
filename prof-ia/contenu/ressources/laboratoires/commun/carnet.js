@@ -3,7 +3,7 @@ Rôle : carnet de laboratoire posé sur la paillasse : un toucher l'ouvre ; il m
        l'objectif, les étapes cochées au fur et à mesure, la question à laquelle répondre et le tampon de réussite.
 Reçoit : l'étage de la scène ; les annonces « missions » ; les réponses de l'élève (choix ou nombre).
 Produit : Labo.carnet : creer(), ouvrir(), fermer() ; appelle Labo.missions.repondre() et Labo.missions.aller().
-Utilisé par : la page de chaque simulation.
+Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules, ordre des choix).
 */
 (function (L) {
   const TAILLE = { l: 410, h: 576 };
@@ -22,10 +22,10 @@ Utilisé par : la page de chaque simulation.
   function question(zone, q) {
     // Champs de réponse de la question en cours : choix à entourer, ou nombre avec son unité.
     if (q.type === "choix") {
-      q.options.forEach((texte, i) => {
-        const b = L.ecrire_riche(L.html("button", { type: "button", class: "carnet-choix" }, zone), texte);
+      for (const i of L.ordre_choix(q)) {
+        const b = L.ecrire_riche(L.html("button", { type: "button", class: "carnet-choix", "data-indice": i }, zone), q.options[i]);
         b.addEventListener("click", () => L.missions.repondre(i));
-      });
+      }
       return;
     }
     const ligne = L.html("div", { class: "carnet-reponse" }, zone);
@@ -40,7 +40,8 @@ Utilisé par : la page de chaque simulation.
     // Un marque-page par mission ; les missions pas encore ouvertes sont grisées.
     const rangee = L.html("div", { class: "carnet-marques" }, page);
     e.missions.forEach((m, i) => {
-      const b = L.html("button", { type: "button", class: "carnet-marque" + (m.accomplie ? " accomplie" : "") }, rangee, `Mission ${i + 1}`);
+      if (e.seule !== null && i !== e.seule) return;
+      const b = L.html("button", { type: "button", class: "carnet-marque" + (m.accomplie ? " accomplie" : "") }, rangee, e.seule !== null ? "Mission" : `Mission ${i + 1}`);
       b.setAttribute("aria-pressed", String(i === e.vue));
       if (i > e.courante) b.disabled = true;
       b.addEventListener("click", () => L.missions.aller(i));
@@ -65,7 +66,9 @@ Utilisé par : la page de chaque simulation.
     L.html("div", { class: "carnet-tampon" }, page, "Mission accomplie");
     const m = e.missions[e.vue];
     if (m.conclusion) L.ecrire_riche(L.html("p", { class: "carnet-conclusion" }, page), m.conclusion);
-    if (e.vue + 1 < e.missions.length) {
+    if (e.seule !== null) {
+      L.html("p", { class: "carnet-conclusion" }, page, "Vous pouvez revenir au cours.");
+    } else if (e.vue + 1 < e.missions.length) {
       const suite = L.html("button", { type: "button", class: "carnet-bouton" }, page, `Passer à la mission ${e.vue + 2}`);
       suite.addEventListener("click", () => L.missions.aller(e.vue + 1));
     } else if (e.missions.every((x) => x.accomplie)) {
@@ -82,7 +85,7 @@ Utilisé par : la page de chaque simulation.
     c.signature = signature;
     c.page.replaceChildren();
     marque_pages(c.page, e);
-    L.html("h2", { class: "carnet-titre" }, c.page, `Mission ${e.vue + 1} — ${m.titre}`);
+    L.html("h2", { class: "carnet-titre" }, c.page, e.seule !== null ? m.titre : `Mission ${e.vue + 1} — ${m.titre}`);
     L.ecrire_riche(L.html("p", { class: "carnet-objectif" }, c.page), m.objectif);
     if (m.donnees) {
       const fiche = L.html("div", { class: "carnet-donnees" }, c.page);

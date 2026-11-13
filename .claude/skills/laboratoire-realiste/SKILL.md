@@ -85,6 +85,15 @@ un pictogramme ni à une forme abstraite.
 - Vérifier par des **faits** notés par le poste (`L.missions.noter`), jamais par l'apparence.
 - Conceptions de la fiche visées par les questions ; `conclusion` claire et juste (elle va au manifeste).
 - Missions : `id: "x", paillasse: N, titre: "…"` sur une ligne, puis `\n    conclusion: "…"` (lu par `ajouter.py`).
+- Une mission doit pouvoir être faite **seule** : l'application ouvre `…/<id>.html#mission=<mission>` (observation courte
+  dans une partie du cours ; une ressource du manifeste par mission). Pas de dépendance à une autre mission sans valeur de
+  repli (`?? valeur par défaut`), consignes qui se comprennent sans avoir fait la mission précédente.
+- Questions à choix : `bonne: 0` reste la convention d'écriture, le carnet **mélange l'ordre** affiché (carnet_ecriture.js) ;
+  les distracteurs doivent avoir **la même longueur et le même niveau de détail** que la bonne réponse (sinon la plus
+  longue se devine : 86 % des questions écrites jusqu'ici ont ce défaut).
+- Formules dans le carnet (carnet_ecriture.js) : indices `x_max`, `U_G`, `F_{S/T}`, exposants `10^{8}` ; `VE`, `Vm`, `Qr,i`,
+  `t1/2`, `pKA`, `KA`, `Ke` s'écrivent seuls en indice ; « a / b » (espaces autour de la barre) est posé en fraction quand un
+  « = » le précède dans la proposition ; « (1/V) », « dx/dt » aussi ; les unités « (m/s) » restent en ligne.
 
 ## 5. Code (règles de prof-ia/CLAUDE.md)
 
@@ -107,7 +116,8 @@ un pictogramme ni à une forme abstraite.
   plusieurs secondes au bas d'une pente avant d'être « immobile ».
 - Corrélation d'un son avec une note : comparer au sinus **et** au cosinus.
 - `pages.py` régénère les pages de **tous** les identifiants de SIMS sans argument : toujours lui passer l'identifiant.
-- Tests : avant de taper dans une cellule déjà remplie, `outils_test.js` sélectionne son contenu (Ctrl+A) ; l'équation
+- Tests : `repondre(page, '#k')` clique l'option k **de la liste écrite** (data-indice), pas la k-ième affichée ;
+  `node lancer.js "<id>.html#mission=<m>" …` ouvre une seule mission. Avant de taper dans une cellule déjà remplie, `outils_test.js` sélectionne son contenu (Ctrl+A) ; l'équation
   d'une courbe se lit dans `.courbe-equation` (le fait « courbe » n'est pas noté) ; une vidéo de pointage donne
   `objet(k)` (position vraie) pour pointer juste ; `L.pointages[nom]` donne l'écran du logiciel.
 - Un bouton dessiné par `L.bouton_poussoir` est large (≈ 120 px) : prévoir un boîtier assez grand pour que son titre

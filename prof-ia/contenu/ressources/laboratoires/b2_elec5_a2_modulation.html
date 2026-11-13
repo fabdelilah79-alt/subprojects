@@ -580,6 +580,11 @@ Utilisé par : la page de chaque simulation (avec labo.css).
   font: 500 19px var(--main);
   cursor: pointer;
 }
+
+/* Fractions posées dans le carnet (carnet_ecriture.js). */
+.frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; font-size: 0.88em; margin: 0 0.15em; line-height: 1.15; }
+.frac-haut { border-bottom: 1px solid currentColor; padding: 0 0.2em; }
+.frac-bas { padding: 0 0.2em; }
 </style>
 </head>
 <body>
@@ -1655,7 +1660,7 @@ Rôle : carnet de laboratoire posé sur la paillasse : un toucher l'ouvre ; il m
        l'objectif, les étapes cochées au fur et à mesure, la question à laquelle répondre et le tampon de réussite.
 Reçoit : l'étage de la scène ; les annonces « missions » ; les réponses de l'élève (choix ou nombre).
 Produit : Labo.carnet : creer(), ouvrir(), fermer() ; appelle Labo.missions.repondre() et Labo.missions.aller().
-Utilisé par : la page de chaque simulation.
+Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules, ordre des choix).
 */
 (function (L) {
   const TAILLE = { l: 410, h: 576 };
@@ -1674,10 +1679,10 @@ Utilisé par : la page de chaque simulation.
   function question(zone, q) {
     // Champs de réponse de la question en cours : choix à entourer, ou nombre avec son unité.
     if (q.type === "choix") {
-      q.options.forEach((texte, i) => {
-        const b = L.ecrire_riche(L.html("button", { type: "button", class: "carnet-choix" }, zone), texte);
+      for (const i of L.ordre_choix(q)) {
+        const b = L.ecrire_riche(L.html("button", { type: "button", class: "carnet-choix", "data-indice": i }, zone), q.options[i]);
         b.addEventListener("click", () => L.missions.repondre(i));
-      });
+      }
       return;
     }
     const ligne = L.html("div", { class: "carnet-reponse" }, zone);
@@ -1692,7 +1697,8 @@ Utilisé par : la page de chaque simulation.
     // Un marque-page par mission ; les missions pas encore ouvertes sont grisées.
     const rangee = L.html("div", { class: "carnet-marques" }, page);
     e.missions.forEach((m, i) => {
-      const b = L.html("button", { type: "button", class: "carnet-marque" + (m.accomplie ? " accomplie" : "") }, rangee, `Mission ${i + 1}`);
+      if (e.seule !== null && i !== e.seule) return;
+      const b = L.html("button", { type: "button", class: "carnet-marque" + (m.accomplie ? " accomplie" : "") }, rangee, e.seule !== null ? "Mission" : `Mission ${i + 1}`);
       b.setAttribute("aria-pressed", String(i === e.vue));
       if (i > e.courante) b.disabled = true;
       b.addEventListener("click", () => L.missions.aller(i));
@@ -1717,7 +1723,9 @@ Utilisé par : la page de chaque simulation.
     L.html("div", { class: "carnet-tampon" }, page, "Mission accomplie");
     const m = e.missions[e.vue];
     if (m.conclusion) L.ecrire_riche(L.html("p", { class: "carnet-conclusion" }, page), m.conclusion);
-    if (e.vue + 1 < e.missions.length) {
+    if (e.seule !== null) {
+      L.html("p", { class: "carnet-conclusion" }, page, "Vous pouvez revenir au cours.");
+    } else if (e.vue + 1 < e.missions.length) {
       const suite = L.html("button", { type: "button", class: "carnet-bouton" }, page, `Passer à la mission ${e.vue + 2}`);
       suite.addEventListener("click", () => L.missions.aller(e.vue + 1));
     } else if (e.missions.every((x) => x.accomplie)) {
@@ -1734,7 +1742,7 @@ Utilisé par : la page de chaque simulation.
     c.signature = signature;
     c.page.replaceChildren();
     marque_pages(c.page, e);
-    L.html("h2", { class: "carnet-titre" }, c.page, `Mission ${e.vue + 1} — ${m.titre}`);
+    L.html("h2", { class: "carnet-titre" }, c.page, e.seule !== null ? m.titre : `Mission ${e.vue + 1} — ${m.titre}`);
     L.ecrire_riche(L.html("p", { class: "carnet-objectif" }, c.page), m.objectif);
     if (m.donnees) {
       const fiche = L.html("div", { class: "carnet-donnees" }, c.page);
@@ -1778,15 +1786,122 @@ Utilisé par : la page de chaque simulation.
 </script>
   <script>
 /*
+Rôle : écriture des textes du carnet de laboratoire comme dans un cahier de physique-chimie : indices et exposants
+       (x_max, U_G, F_{S/T}, 10^{8}, VE, Vm, Qr,i, t1/2, pKA, KA, Ke), fractions posées (« a / b » quand une égalité les
+       précède dans la même proposition, « (1/V) » et « dx/dt », mais pas les unités comme « (m/s) ») ; ordre des choix d'une question mélangé, le même à chaque
+       affichage, pour que la bonne réponse ne soit pas toujours la première.
+Reçoit : un élément HTML et un texte ; une question à choix { options }.
+Produit : Labo.ecrire_riche(element, texte) (remplace celle de base.js) ; Labo.ordre_choix(question) -> indices des options
+          dans l'ordre d'affichage.
+Utilisé par : carnet.js.
+*/
+(function (L) {
+  const MOTS = [[/^VE$/, "V", "E"], [/^Vm$/, "V", "m"], [/^Qr,(i|éq)$/, "Q", "r,$1"], [/^Qr$/, "Q", "r"], [/^t1\/2$/, "t", "1/2"], [/^pKA$/, "pK", "A"], [/^KA$/, "K", "A"], [/^Ke$/, "K", "e"]];
+  const JETON = /([\^_]\{[^}]*\})|\b([A-Za-zΔ])_([A-Za-z0-9]+(?:,[a-zé]+)?)\b|(?<![\w])(VE|Vm|Qr,(?:i|éq)|Qr|t1\/2|pKA|KA|Ke)(?![\w/])/u;
+
+  function morceaux(parent, texte) {
+    // Texte simple : indices, exposants et grandeurs usuelles (VE -> V indice E).
+    let reste = String(texte);
+    while (reste) {
+      const m = reste.match(JETON);
+      if (!m) { parent.append(reste); return; }
+      if (m.index > 0) parent.append(reste.slice(0, m.index));
+      if (m[1]) L.html(m[1][0] === "^" ? "sup" : "sub", {}, parent, m[1].slice(2, -1));
+      else if (m[2]) { parent.append(m[2]); L.html("sub", {}, parent, m[3]); }
+      else { const [re, base, indice] = MOTS.find(([r]) => r.test(m[4])); parent.append(base); L.html("sub", {}, parent, m[4].replace(re, indice)); }
+      reste = reste.slice(m.index + m[0].length);
+    }
+  }
+
+  function operande(t, i, sens) {
+    // Bornes de l'opérande à gauche (sens -1) ou à droite (sens 1) d'une barre de fraction en i, parenthèses comprises.
+    const ouvre = sens > 0 ? "([" : ")]", ferme = sens > 0 ? ")]" : "([";
+    let j = i, prof = 0;
+    while (j >= 0 && j < t.length) {
+      const ch = t[j];
+      if (ouvre.includes(ch)) prof++;
+      else if (ferme.includes(ch)) { if (prof === 0) break; prof--; } else if (ch === " " && prof === 0) break;
+      j += sens;
+    }
+    return j;
+  }
+
+  // Parenthèses qui entourent tout l'opérande : on les ôte, sauf autour d'un petit quotient « (m/180) », écrit lui aussi posé.
+  function gauche(t, i) {
+    // Début du numérateur d'une fraction « … / » : juste après le signe =, ou après la parenthèse ouvrante qui la contient.
+    let j = i, prof = 0;
+    while (j >= 0) {
+      const ch = t[j];
+      if (")]".includes(ch)) prof++;
+      else if ("([".includes(ch)) { if (prof === 0) break; prof--; } else if (prof === 0 && "=;:".includes(ch)) break;
+      j--;
+    }
+    j++;
+    while (t[j] === " ") j++;
+    return j;
+  }
+
+  // Unité (m/s, mol/L, mS·m²/mol, rad/s...) : écrite en ligne, jamais posée en fraction.
+  const UNITE = /^(?:[µmkcdn]?(?:mol|rad|div|min|Hz|m|g|s|L|V|A|N|J|W|Ω|S|C|T|h)[²³]?(?:·(?!$)|$))+$/u;
+  const sans_parentheses = (s) => (/^\([^()\s/]{1,12}\/[^()\s/]{1,12}\)$/.test(s) ? s : /^\(.*\)$/.test(s) && operande(s, 1, 1) === s.length - 1 ? s.slice(1, -1) : s);
+
+  function fraction(parent, haut, bas) {
+    // Fraction posée : numérateur, trait, dénominateur.
+    const f = L.html("span", { class: "frac" }, parent);
+    ecrire(L.html("span", { class: "frac-haut" }, f), sans_parentheses(haut));
+    ecrire(L.html("span", { class: "frac-bas" }, f), sans_parentheses(bas));
+  }
+
+  function ecrire(parent, texte) {
+    // Cherche la première fraction « a / b » précédée d'une égalité dans sa proposition (ou « (a/b) ») et l'écrit posée.
+    const t = String(texte);
+    for (let i = t.indexOf(" / "); i >= 0; i = t.indexOf(" / ", i + 1)) {
+      const debut = Math.max(t.lastIndexOf(";", i), t.lastIndexOf(":", i), 0);
+      if (!t.slice(debut, i).includes("=")) continue;
+      const g = gauche(t, i - 1);
+      let d = operande(t, i + 3, 1);
+      while (d > i + 3 && ".,;?!".includes(t[d - 1])) d--;
+      if (g >= i || d <= i + 3) continue;
+      ecrire(parent, t.slice(0, g)); fraction(parent, t.slice(g, i), t.slice(i + 3, d)); ecrire(parent, t.slice(d));
+      return;
+    }
+    const m = t.match(/\(([^()\s/]{1,12})\/([^()\s/]{1,12})\)|\b(d[A-Za-zθ]{1,2})\/(d[a-z]{1,2})\b/);
+    if (m && !(UNITE.test(m[1] || "") && UNITE.test(m[2] || ""))) {
+      ecrire(parent, t.slice(0, m.index)); fraction(parent, m[1] || m[3], m[2] || m[4]); ecrire(parent, t.slice(m.index + m[0].length));
+      return;
+    }
+    morceaux(parent, t);
+  }
+
+  L.ecrire_riche = function (element, texte) {
+    // Remplit un élément HTML avec un texte écrit comme une formule de cahier.
+    element.replaceChildren();
+    ecrire(element, texte);
+    return element;
+  };
+
+  L.ordre_choix = function (q) {
+    // Ordre d'affichage des options, tiré d'après leur texte : le même à chaque fois, différent d'une question à l'autre.
+    let h = 2166136261;
+    for (const ch of q.options.join("|")) h = Math.imul(h ^ ch.codePointAt(0), 16777619) >>> 0;
+    const ordre = q.options.map((_, i) => i);
+    for (let i = ordre.length - 1; i > 0; i--) { h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0; const j = h % (i + 1); [ordre[i], ordre[j]] = [ordre[j], ordre[i]]; }
+    return ordre;
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : moteur des missions du laboratoire : étape en cours, vérification automatique (gestes, tableur, courbe),
        questions du carnet, passage d'une paillasse à l'autre, messages envoyés à la page du professeur.
-Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra.
+Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra ; l'adresse
+         de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours).
 Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), etat() ;
          annonce « missions » à chaque changement ; postMessage { source: "laboratoire", type, ... } au parent.
 Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 */
 (function (L) {
-  const etat = { labo: null, missions: [], courante: 0, vue: 0, faits: {}, courbes: {}, messages: {}, debut: {} };
+  const etat = { labo: null, missions: [], courante: 0, vue: 0, seule: null, faits: {}, courbes: {}, messages: {}, debut: {} };
   let camera = null;
 
   function prevenir_parent(type, donnees = {}) {
@@ -1806,7 +1921,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     // La dernière étape est réussie : la mission est accomplie, la suivante s'ouvre.
     m.accomplie = true;
     prevenir_parent("mission_terminee", { mission: m.id, duree_s: Math.round((performance.now() - etat.debut[m.id]) / 1000) });
-    if (numero === etat.courante && numero + 1 < etat.missions.length) etat.courante = numero + 1;
+    if (etat.seule === null && numero === etat.courante && numero + 1 < etat.missions.length) etat.courante = numero + 1;
     if (etat.missions.every((x) => x.accomplie)) prevenir_parent("laboratoire_termine");
   }
 
@@ -1821,7 +1936,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
   function verifier() {
     // Vérifie l'étape en cours de chaque mission ouverte, tant que les étapes automatiques sont réussies.
     etat.missions.forEach((m, numero) => {
-      if (numero > etat.courante) return;
+      if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
       while (!m.accomplie && m.etapes[m.etape].verifier) {
         const resultat = m.etapes[m.etape].verifier(contexte(m));
         if (resultat !== true) { etat.messages[m.id] = typeof resultat === "string" ? { texte: resultat, juste: false } : etat.messages[m.id]; break; }
@@ -1829,6 +1944,15 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       }
     });
     L.annoncer("missions", L.missions.etat());
+  }
+
+  function mission_seule() {
+    // Mission demandée par l'adresse (#mission=<id>) : on l'ouvre directement, sans les autres ; caméra posée sur sa paillasse.
+    const id = (window.location.hash.match(/mission=([a-z0-9_]+)/) || [])[1], n = etat.missions.findIndex((m) => m.id === id);
+    if (n < 0) return;
+    Object.assign(etat, { seule: n, courante: n, vue: n });
+    camera.dataset.x = -L.LARGEUR * mission(n).paillasse;
+    camera.setAttribute("transform", `translate(${camera.dataset.x} 0)`);
   }
 
   function deplacer_camera(numero) {
@@ -1847,10 +1971,11 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       etat.labo = labo;
       camera = groupe_camera;
       etat.missions = labo.missions.map((m) => ({ ...m, etape: 0, accomplie: false }));
-      etat.debut[etat.missions[0].id] = performance.now();
+      mission_seule();
+      etat.debut[mission().id] = performance.now();
       L.ecouter("tableur", verifier);
       L.ecouter("courbe", (c) => { etat.courbes[mission().id] = c; verifier(); });
-      prevenir_parent("laboratoire_ouvert");
+      prevenir_parent("laboratoire_ouvert", { mission: etat.seule === null ? null : mission().id });
       verifier();
     },
     noter(cle, valeur) {
@@ -1873,7 +1998,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     },
     aller(numero) {
       // Ouvre une mission déjà accessible et va à sa paillasse.
-      if (numero > etat.courante) return;
+      if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
       etat.vue = numero;
       etat.debut[mission(numero).id] ??= performance.now();
       deplacer_camera(numero);
@@ -1881,7 +2006,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     },
     etat() {
       // Résumé pour le carnet, la tablette et les pense-bêtes.
-      return { missions: etat.missions, courante: etat.courante, vue: etat.vue, messages: etat.messages };
+      return { missions: etat.missions, courante: etat.courante, vue: etat.vue, seule: etat.seule, messages: etat.messages };
     },
   };
 })(window.Labo);
@@ -2936,27 +3061,30 @@ Utilisé par : les simulations des dipôles RC, du circuit RLC (libre et forcé)
 Rôle : commutateur (inverseur) K à deux positions sur son support : une borne commune « 0 » au milieu, deux bornes « 1 » et
        « 2 » ; la lame relie la borne commune à la position 1 ou à la position 2 ; un toucher la fait basculer.
        Sert à charger un condensateur (position 1) puis à le décharger (position 2).
-Reçoit : le circuit et { id, x, y, position (1 ou 2), nom }.
+Reçoit : le circuit et { id, x, y, position (1 ou 2), nom, manette_dessus (faux par défaut : lame et poignée dessinées au-dessus
+         des fils, dans le calque des bornes, pour rester touchables quand des fils passent sur le commutateur) }.
 Produit : Labo.commutateur(c, reglage) -> comp { position } ; bornes « 0 », « 1 », « 2 » ; fait « <id> » = position.
 Utilisé par : les simulations du dipôle RC.
 */
 (function (L) {
-  L.commutateur = function (c, { id = "K", x, y, position = 2, nom = "K" }) {
+  L.commutateur = function (c, { id = "K", x, y, position = 2, nom = "K", manette_dessus = false }) {
     // Support à trois bornes, plots de contact, lame et poignée ; toucher : changement de position.
     const comp = { id, position, g: L.svg("g", { class: `commutateur commutateur-${id}`, role: "button", "aria-label": `Commutateur ${nom}` }, c.calque_composants) };
     L.boitier(comp.g, x, y, 120, 50, 12, { dessus: "#e3e1da", face: "#a8a59b" });
     L.texte(comp.g, x + 60, y + 54, `${nom} (positions 1 et 2)`, { "font-size": 8, "font-weight": 700, fill: "#2a2a28" });
     const P = { 0: { x: x + 60, y: y + 40 }, 1: { x: x + 16, y: y + 14 }, 2: { x: x + 104, y: y + 14 } };
     for (const k of ["1", "2"]) { L.svg("rect", { x: P[k].x - 5, y: P[k].y + 6, width: 10, height: 8, fill: "url(#laiton)" }, comp.g); L.texte(comp.g, P[k].x + (k === "1" ? 14 : -14), P[k].y + 3, k, { "font-size": 10, "font-weight": 700, fill: "#1a3d7c" }); }
-    const lame = L.svg("g", {}, comp.g);
+    const lame = L.svg("g", manette_dessus ? { role: "button", "aria-label": `Manette de ${nom}` } : {}, manette_dessus ? c.calque_bornes : comp.g);
     const dessiner = () => {
       lame.replaceChildren(); const b = P[comp.position], dx = comp.position === 1 ? 8 : -8;
       L.svg("line", { x1: P[0].x, y1: P[0].y - 10, x2: b.x + dx, y2: b.y + 10, stroke: "url(#laiton)", "stroke-width": 4, "stroke-linecap": "round" }, lame);
       L.svg("circle", { cx: (P[0].x + b.x) / 2, cy: (P[0].y + b.y) / 2, r: 5, fill: "#b71c1c", stroke: "#5e0d0d" }, lame);
+      if (manette_dessus) L.svg("circle", { cx: (P[0].x + b.x) / 2, cy: (P[0].y + b.y) / 2, r: 13, fill: "#fff", opacity: 0.001 }, lame);
     };
     for (const k of ["0", "1", "2"]) c.borne(comp, k, P[k].x, k === "0" ? P[k].y : P[k].y + 22, "#4a4f55");
     dessiner();
-    L.glissable(comp.g, { soulever: false, debut: () => ({ x, y }), toucher: () => { comp.position = comp.position === 1 ? 2 : 1; dessiner(); L.missions.noter(id, comp.position); c.calculer(); } });
+    const basculer = () => { comp.position = comp.position === 1 ? 2 : 1; dessiner(); L.missions.noter(id, comp.position); c.calculer(); };
+    for (const el of manette_dessus ? [comp.g, lame] : [comp.g]) L.glissable(el, { soulever: false, debut: () => ({ x, y }), toucher: basculer });
     comp.dipoles = () => [{ a: "0", b: String(comp.position), g: 1000, j: 0 }];
     L.missions.noter(id, comp.position);
     return c.ajouter(comp);
@@ -3239,7 +3367,7 @@ Utilisé par : les simulations de chimie (industrie chimique, techniques traditi
     if (d.chaine) chaine(g, d, x, y + taille * 4, l, taille);
     const debut = y + taille * (d.chaine ? 7.2 : 3.6), place = d.dessin ? 0.6 : 1;
     if (d.dessin) d.dessin(g, x + l * 0.8, y + h * 0.5, taille / 6.2);
-    lignes(d.texte, Math.floor((l * place) / (taille * 0.52))).forEach((t, i) => L.texte(g, x + 10, debut + i * taille * 1.35, t, { "text-anchor": "start", "font-size": taille, fill: "#222" }));
+    lignes(d.texte, Math.floor((l * place - 20) / (taille * 0.52))).forEach((t, i) => L.texte(g, x + 10, debut + i * taille * 1.35, t, { "text-anchor": "start", "font-size": taille, fill: "#222" }));
   }
 
   L.documents_mur = function (g, documents, fait) {

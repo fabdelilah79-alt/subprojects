@@ -99,7 +99,7 @@
           }
         },
         "missions": {
-          "description": "Pour un laboratoire virtuel : ses missions, dans l'ordre, et ce que l'élève y fait.",
+          "description": "Pour un laboratoire virtuel : la ou les missions que la ressource ouvre, dans l'ordre, et ce que l'élève y fait.",
           "type": "array",
           "minItems": 1,
           "items": {
@@ -140,6 +140,11 @@
         "a_completer": {
           "description": "Ce que l'enseignant doit encore préciser ou fournir (facultatif).",
           "type": "string"
+        },
+        "laboratoire": {
+          "description": "Pour une mission de laboratoire virtuel : l'id du laboratoire dont elle fait partie (fichier laboratoires/<id>.html ; le fichier de la ressource l'ouvre sur cette seule mission avec « #mission=<id> »).",
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
         }
       }
     }

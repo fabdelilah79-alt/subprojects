@@ -15,7 +15,7 @@ async function tableur(page, valeurs) {
 }
 async function repondre(page, texte) {
   await page.evaluate(() => Labo.carnet.ouvrir()); await attendre(page, 650);
-  if (texte.startsWith('#')) await page.click(`.carnet-etapes li.courante .carnet-choix >> nth=${texte.slice(1)}`);
+  if (texte.startsWith('#')) await page.click(`.carnet-etapes li.courante .carnet-choix[data-indice="${texte.slice(1)}"]`); // « #k » : option k de la liste écrite dans la simulation (affichée mélangée)
   else { await page.fill('.carnet-reponse input', texte); await page.click('.carnet-reponse .carnet-bouton'); }
   await attendre(page, 300);
   await page.evaluate(() => Labo.carnet.fermer()); await attendre(page, 650);

@@ -1,13 +1,14 @@
 /*
 Rôle : moteur des missions du laboratoire : étape en cours, vérification automatique (gestes, tableur, courbe),
        questions du carnet, passage d'une paillasse à l'autre, messages envoyés à la page du professeur.
-Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra.
+Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra ; l'adresse
+         de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours).
 Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), etat() ;
          annonce « missions » à chaque changement ; postMessage { source: "laboratoire", type, ... } au parent.
 Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 */
 (function (L) {
-  const etat = { labo: null, missions: [], courante: 0, vue: 0, faits: {}, courbes: {}, messages: {}, debut: {} };
+  const etat = { labo: null, missions: [], courante: 0, vue: 0, seule: null, faits: {}, courbes: {}, messages: {}, debut: {} };
   let camera = null;
 
   function prevenir_parent(type, donnees = {}) {
@@ -27,7 +28,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     // La dernière étape est réussie : la mission est accomplie, la suivante s'ouvre.
     m.accomplie = true;
     prevenir_parent("mission_terminee", { mission: m.id, duree_s: Math.round((performance.now() - etat.debut[m.id]) / 1000) });
-    if (numero === etat.courante && numero + 1 < etat.missions.length) etat.courante = numero + 1;
+    if (etat.seule === null && numero === etat.courante && numero + 1 < etat.missions.length) etat.courante = numero + 1;
     if (etat.missions.every((x) => x.accomplie)) prevenir_parent("laboratoire_termine");
   }
 
@@ -42,7 +43,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
   function verifier() {
     // Vérifie l'étape en cours de chaque mission ouverte, tant que les étapes automatiques sont réussies.
     etat.missions.forEach((m, numero) => {
-      if (numero > etat.courante) return;
+      if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
       while (!m.accomplie && m.etapes[m.etape].verifier) {
         const resultat = m.etapes[m.etape].verifier(contexte(m));
         if (resultat !== true) { etat.messages[m.id] = typeof resultat === "string" ? { texte: resultat, juste: false } : etat.messages[m.id]; break; }
@@ -50,6 +51,15 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       }
     });
     L.annoncer("missions", L.missions.etat());
+  }
+
+  function mission_seule() {
+    // Mission demandée par l'adresse (#mission=<id>) : on l'ouvre directement, sans les autres ; caméra posée sur sa paillasse.
+    const id = (window.location.hash.match(/mission=([a-z0-9_]+)/) || [])[1], n = etat.missions.findIndex((m) => m.id === id);
+    if (n < 0) return;
+    Object.assign(etat, { seule: n, courante: n, vue: n });
+    camera.dataset.x = -L.LARGEUR * mission(n).paillasse;
+    camera.setAttribute("transform", `translate(${camera.dataset.x} 0)`);
   }
 
   function deplacer_camera(numero) {
@@ -68,10 +78,11 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       etat.labo = labo;
       camera = groupe_camera;
       etat.missions = labo.missions.map((m) => ({ ...m, etape: 0, accomplie: false }));
-      etat.debut[etat.missions[0].id] = performance.now();
+      mission_seule();
+      etat.debut[mission().id] = performance.now();
       L.ecouter("tableur", verifier);
       L.ecouter("courbe", (c) => { etat.courbes[mission().id] = c; verifier(); });
-      prevenir_parent("laboratoire_ouvert");
+      prevenir_parent("laboratoire_ouvert", { mission: etat.seule === null ? null : mission().id });
       verifier();
     },
     noter(cle, valeur) {
@@ -94,7 +105,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     },
     aller(numero) {
       // Ouvre une mission déjà accessible et va à sa paillasse.
-      if (numero > etat.courante) return;
+      if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
       etat.vue = numero;
       etat.debut[mission(numero).id] ??= performance.now();
       deplacer_camera(numero);
@@ -102,7 +113,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     },
     etat() {
       // Résumé pour le carnet, la tablette et les pense-bêtes.
-      return { missions: etat.missions, courante: etat.courante, vue: etat.vue, messages: etat.messages };
+      return { missions: etat.missions, courante: etat.courante, vue: etat.vue, seule: etat.seule, messages: etat.messages };
     },
   };
 })(window.Labo);

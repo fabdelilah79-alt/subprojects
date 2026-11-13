@@ -3,7 +3,10 @@ Rôle : montrer une ressource du manifeste (simulation, image, vidéo, document)
 Reçoit : la planche du tableau, les réglages (zone cadre_media), le manifeste, la fonction signaler, puis des actions « media ».
 Produit : le cadre avec la consigne, un bouton « Plein écran » et, si demandé, « J'ai terminé » ;
           la lecture attend ce clic, puis le cadre se ferme (il ne fait pas partie de la trace écrite).
-          Événements signalés : media_ouvert, plein_ecran, media_termine (avec la durée de manipulation).
+          Événements signalés : media_ouvert, plein_ecran, media_termine (avec la durée de manipulation) et, pour un
+          laboratoire virtuel, ses propres messages préfixés « laboratoire_ » (mission ouverte, étape réussie, réponse,
+          mission terminée) ; quand la mission demandée (fichier « …html#mission=<id> ») est réussie, la consigne invite
+          à revenir au cours.
 Utilisé par : client/js/demo_tableau.js (et plus tard la page de classe).
 */
 import { attendre_acceleration } from "../lecteur/horloge.js";
@@ -58,6 +61,21 @@ function attendre_clic(barre) {
   return new Promise((resoudre) => fini.addEventListener("click", resoudre));
 }
 
+function ecouter_laboratoire(cadre, barre, ressource, signaler) {
+  // Relaie les messages du laboratoire affiché dans ce cadre ; renvoie la fonction qui arrête l'écoute.
+  const iframe = cadre.querySelector("iframe"), mission = (ressource.fichier.match(/#mission=([a-z0-9_]+)/) || [])[1];
+  const recevoir = (ev) => {
+    if (!iframe || ev.source !== iframe.contentWindow || ev.data?.source !== "laboratoire") return;
+    const { source, ...donnees } = ev.data;
+    signaler(`laboratoire_${donnees.type}`, { ressource: ressource.id, ...donnees });
+    if (donnees.type !== "mission_terminee" || (mission && donnees.mission !== mission)) return;
+    barre.classList.add("mission-accomplie");
+    barre.querySelector(".cadre-media-consigne").textContent = "Mission accomplie : cliquez sur « J'ai terminé » pour revenir au cours.";
+  };
+  window.addEventListener("message", recevoir);
+  return () => window.removeEventListener("message", recevoir);
+}
+
 async function fermer(cadre) {
   // Sort du plein écran si besoin, puis retire le cadre.
   if (document.fullscreenElement) await document.exitFullscreen().catch(() => {});
@@ -67,13 +85,14 @@ async function fermer(cadre) {
 export function creer_cadre_media(planche, reglages, manifeste, signaler) {
   // Prépare l'exécutant des actions « media » pour le lecteur.
   const ressources = Object.fromEntries(manifeste.ressources.map((r) => [r.id, r]));
-  let ouvert = null;
+  let ouvert = null, arreter = () => {};
   async function executer(action, horloge) {
     // Ouvre la ressource demandée (en fermant la précédente) et attend « J'ai terminé » si besoin.
-    ouvert?.remove();
+    ouvert?.remove(); arreter();
     const { cadre, barre } = construire(action, ressources[action.ressource], reglages.zones.cadre_media, signaler);
     planche.append(cadre);
     ouvert = cadre;
+    arreter = ecouter_laboratoire(cadre, barre, ressources[action.ressource], signaler);
     signaler("media_ouvert", { ressource: action.ressource });
     if (action.attendre !== "clic_termine") return;
     const debut = performance.now();
@@ -81,6 +100,7 @@ export function creer_cadre_media(planche, reglages, manifeste, signaler) {
     await Promise.race([attendre_clic(barre), attendre_acceleration(horloge, suivi)]);
     suivi.fini = true;
     signaler("media_termine", { ressource: action.ressource, duree_s: Math.round((performance.now() - debut) / 100) / 10 });
+    arreter();
     await fermer(cadre);
   }
   return { gere: (type) => type === "media", executer };

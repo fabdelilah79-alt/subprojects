@@ -1585,3 +1585,19 @@ Problème restant : le ballon tenu au-dessus du récepteur, une fois vidé, rest
   savon de 2e année du bac rejoués.
 
 Problème restant : le ballon contient toujours 3,00 g, quelle que soit la masse pesée à 0,05 g près (la masse pesée sert aux calculs).
+
+## 2026-11-13 — Missions séparées, formules du carnet, ordre des choix
+
+- Demande de l'enseignant : laboratoires trop longs pour une observation POE ; formules mal écrites dans le carnet ; bonne
+  réponse toujours la première.
+- Missions : `#mission=<id>` ouvre une seule mission (missions.js, carnet.js) ; manifeste : une ressource par mission
+  (430 ressources de missions pour 167 laboratoires ; ajouter.py, schéma : champ `laboratoire`) ; test du manifeste adapté.
+- Application : cadre_media.js relaie les messages des laboratoires au journal (événements « laboratoire_… ») et change la
+  consigne quand la mission demandée est réussie ; testé dans Chromium (ouverture, réponse, étape, mission terminée, J'ai terminé).
+- Carnet : carnet_ecriture.js (indices, exposants, fractions posées, unités en ligne) ; ordre des choix mélangé et stable.
+  Contrôle des 167 laboratoires : aucun ne plante ; 464 textes ont une fraction posée (échantillon relu) ; la bonne réponse est
+  affichée en premier dans 34 % des 1 025 questions à choix.
+
+Problèmes restants : dans 884 questions sur 1 025, la bonne réponse est la plus longue (elle se devine) : à réécrire, chapitre
+par chapitre ; les durées par mission sont des estimations (10 à 20 min le plus souvent) ; une fraction dont le dénominateur
+est une phrase (« durée à 120 °C ») n'est posée qu'avec son premier mot au dénominateur.
