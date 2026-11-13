@@ -2273,8 +2273,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Le graphique est une droite. Son coefficient directeur est la valeur du champ E. Combien vaut-il ?", court: "E (V/m) ?", question: { type: "nombre", unite: "V/m", attendu: 120, tolerance: 4, aide: "E = ΔV / Δx, Δx en mètres.", bravo: "Exact : 120 V/m." } },
       { consigne: "Comparez avec U/d (U = 12,0 V, d = 0,10 m). Entre les plaques, le champ…", court: "Répondez dans le carnet.", question: choix(["est uniforme et vaut E = U/d", "est nul", "est plus fort près de la plaque +"], "La pente est la même partout.", "Exact.") },
       { consigne: "Trouvez trois points où le voltmètre indique 6,00 V, à des hauteurs y bien différentes.", court: "Trois points à 6,00 V.", verifier: ({ faits }) => { const s = rel(faits).filter((r) => Math.abs(r.V - 6) < 0.08).map((r) => r.y); return s.length >= 3 && Math.max(...s) - Math.min(...s) >= 6; } },
-      { consigne: "Ces points de même potentiel (une équipotentielle) forment…", court: "Répondez dans le carnet.", question: choix(["une droite parallèle aux plaques, perpendiculaire aux lignes de champ", "un cercle autour d'une plaque", "une droite perpendiculaire aux plaques"], "Ils ont tous la même abscisse x.", "Exact.") },
-      { consigne: "Le champ électrostatique est orienté…", court: "Répondez dans le carnet.", question: choix(["vers les potentiels décroissants : de la plaque à 12 V vers la plaque à 0 V", "vers les potentiels croissants", "parallèlement aux plaques"], "E = −dV/dx.", "Exact.") },
+      { consigne: "Ces points de même potentiel (une équipotentielle) forment…", court: "Répondez dans le carnet.", question: choix(["une droite parallèle aux plaques", "une droite perpendiculaire aux plaques", "un cercle autour de la plaque à 12 V"], "Ils ont tous la même abscisse x.", "Exact.") },
+      { consigne: "Le champ électrostatique est orienté…", court: "Répondez dans le carnet.", question: choix(["vers les potentiels décroissants", "vers les potentiels croissants", "parallèlement aux plaques"], "E = −dV/dx.", "Exact.") },
     ],
   };
 
@@ -2288,11 +2288,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Mesurez le potentiel au point A (x = 13 cm, y = 3 cm), puis au point B (x = 7 cm, y = 11 cm).", court: "Potentiels en A et en B.", verifier: ({ faits }) => !!(pres(faits, 13, 3, 0.25) && pres(faits, 7, 11, 0.25)) },
       { consigne: "Une petite charge q = 2,0 nC va de A à B. Quel est le travail de la force électrostatique ?", court: "W(A→B) (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => Q * (VA(f) - VB(f)), tolerance_relative: 0.03, aide: "W = q·(VA − VB).", bravo: "Exact : environ 1,4×10⁻⁸ J." } },
-      { consigne: "Si la charge va de A à B par un autre chemin, le travail de la force électrostatique…", court: "Répondez dans le carnet.", question: choix(["est le même : il ne dépend que des potentiels de A et de B", "dépend de la longueur du chemin", "est nul"], "Comme le travail du poids, il ne dépend pas du chemin.", "Exact.") },
+      { consigne: "Si la charge va de A à B par un autre chemin, le travail de la force électrostatique…", court: "Répondez dans le carnet.", question: choix(["est le même", "dépend du chemin", "est nul"], "Comme le travail du poids, il ne dépend pas du chemin.", "Exact.") },
       { consigne: "Avec la référence Epe = 0 sur la plaque à 0 V, quelle est l'énergie potentielle électrostatique de la charge en A ?", court: "Epe(A) (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => Q * VA(f), tolerance_relative: 0.03, aide: "Epe = q·V.", bravo: "Exact." } },
-      { consigne: "Le travail W(A→B) est égal à…", court: "Répondez dans le carnet.", question: choix(["Epe(A) − Epe(B) = −ΔEpe", "Epe(B) − Epe(A)", "Epe(A) + Epe(B)"], "W = q·VA − q·VB.", "Exact.") },
+      { consigne: "Le travail W(A→B) est égal à…", court: "Répondez dans le carnet.", question: choix(["Epe(A) − Epe(B)", "Epe(B) − Epe(A)", "Epe(A) + Epe(B)"], "W = q·VA − q·VB.", "Exact.") },
       { consigne: "Un électron (q = −e) part sans vitesse de la plaque à 0 V et arrive sur la plaque à 12,0 V (seule la force électrostatique travaille). Quelle est son énergie cinétique à l'arrivée ?", court: "Ec (J) ?", question: { type: "nombre", unite: "J", attendu: 1.6e-19 * 12, tolerance_relative: 0.02, aide: "Conservation de Ec + Epe : Ec = (−e)·(0 − 12,0).", bravo: "Exact : 1,92×10⁻¹⁸ J." } },
-      { consigne: "Pendant ce trajet, l'énergie totale Ec + Epe de l'électron…", court: "Répondez dans le carnet.", question: choix(["se conserve : l'énergie potentielle perdue devient énergie cinétique", "augmente", "diminue"], "Seule la force électrostatique travaille.", "Exact.") },
+      { consigne: "Pendant ce trajet, l'énergie totale Ec + Epe de l'électron…", court: "Répondez dans le carnet.", question: choix(["se conserve", "augmente", "diminue"], "Seule la force électrostatique travaille.", "Exact.") },
     ],
   };
 

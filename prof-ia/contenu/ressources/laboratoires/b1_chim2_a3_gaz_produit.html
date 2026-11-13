@@ -4186,7 +4186,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Quantité de magnésium dans le ruban, en mmol ?", court: "n(Mg) (mmol) ?", question: nombre("mmol", 1.98, 0.04, "n = m / M = 0,048 / 24,3.", "Exact.") },
       { consigne: "Quantité d'ions H⁺ apportés, en mmol ?", court: "n(H⁺) (mmol) ?", question: nombre("mmol", 10, 0.1, "n = C × V = 0,50 × 20,0 mL.", "Exact : 10 mmol.") },
       { consigne: "Quantité de dihydrogène formée : n(H₂) = ΔP × V / (R T), en mmol ?", court: "n(H₂) (mmol) ?", question: nombre("mmol", 1.98, 0.08, "ΔP en Pa (1 hPa = 100 Pa), V = 260 × 10⁻⁶ m³, T = 293 K.", "Exact : environ 1,98 mmol.") },
-      { consigne: "Le réactif limitant est…", court: "Répondez dans le carnet.", question: choix(["le magnésium : n(H₂) formé = n(Mg) apporté ; x_max = 1,98 mmol", "les ions H⁺", "aucun des deux"], "Comparez n(H₂) et n(Mg).", "Exact.") },
+      { consigne: "Le réactif limitant est…", court: "Répondez dans le carnet.", question: choix(["le magnésium : x_max = 1,98 mmol", "les ions H⁺ : x_max = 5 mmol", "les ions H⁺ : x_max = 10 mmol"], "Comparez n(H₂) et n(Mg).", "Exact.") },
     ],
   };
 
@@ -4198,8 +4198,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "x_max = plus petite des valeurs n₀ et n(H⁺)/2.",
     etapes: [
       { consigne: "« Nouvel essai » : refaites l'expérience avec les rubans de 0,024 g et de 0,24 g. Une ligne par essai : en A, m ; en B, n(Mg) ; en C, ΔP ; en D, n(H₂).", court: "Tableur : A, B, C, D.", verifier: tableau },
-      { consigne: "Pour le ruban de 0,24 g, la quantité de dihydrogène formée vaut environ…", court: "Répondez dans le carnet.", question: choix(["5 mmol : les ions H⁺ (10 mmol) sont épuisés, x_max = 10 / 2", "9,9 mmol : tout le magnésium réagit", "10 mmol"], "Comparez la colonne D à la colonne B.", "Exact : les ions H⁺ sont limitants.") },
-      { consigne: "Dans le tableau d'avancement, la quantité d'ions H⁺ restante s'écrit…", court: "Répondez dans le carnet.", question: choix(["10 − 2x (mmol)", "10 − x", "10 + 2x"], "Il faut 2 H⁺ pour un Mg.", "Exact.") },
+      { consigne: "Pour le ruban de 0,24 g, la quantité de dihydrogène formée vaut environ…", court: "Répondez dans le carnet.", question: choix(["5 mmol : H⁺ limitant", "9,9 mmol : Mg limitant", "10 mmol : H⁺ limitant"], "Comparez la colonne D à la colonne B.", "Exact : les ions H⁺ sont limitants.") },
+      { consigne: "Dans le tableau d'avancement, la quantité d'ions H⁺ restante s'écrit…", court: "Répondez dans le carnet.", question: choix(["10 − 2x", "10 − x", "10 + 2x"], "Il faut 2 H⁺ pour un Mg.", "Exact.") },
       { consigne: "Avancement maximal pour le ruban de 0,24 g, en mmol ?", court: "x_max (mmol) ?", question: nombre("mmol", 5, 0.15, "x_max est la plus petite des valeurs 9,9 et 10/2.", "Exact.") },
     ],
   };

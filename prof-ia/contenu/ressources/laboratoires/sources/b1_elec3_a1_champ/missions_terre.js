@@ -17,9 +17,9 @@ Utilisé par : simulation.js.
     etapes: [
       { consigne: "Retirez l'aimant 2 et mesurez B1 en O (pointe de la sonde sur la croix). Remettez l'aimant 2, retirez l'aimant 1 : mesurez B2 en O. Remettez les deux aimants : mesurez B en O.", court: "B1, B2, puis B en O.", aide_geste: "« Aimant 1 » et « Aimant 2 » retirent ou remettent les aimants.", verifier: ({ faits }) => ["B1", "B2", "B12"].every((k) => sp(faits)[k] !== undefined) },
       { consigne: "Calculez √(B1² + B2²) avec vos mesures.", court: "√(B1² + B2²) (mT) ?", question: { type: "nombre", unite: "mT", attendu: (f) => Math.hypot(mT(sp(f).B1), mT(sp(f).B2)), tolerance_relative: 0.02, aide: "B1 et B2 en mT.", bravo: "Exact." } },
-      { consigne: "Comparez avec la valeur B mesurée avec les deux aimants :", court: "Répondez dans le carnet.", question: choix(["B ≈ √(B1² + B2²) : les champs s'ajoutent comme des vecteurs (B = B1 + B2), ici perpendiculaires", "B = B1 + B2 (on ajoute les valeurs)", "B = B2 − B1"], "B1 et B2 sont à angle droit.", "Exact.") },
+      { consigne: "Comparez avec la valeur B mesurée avec les deux aimants :", court: "Répondez dans le carnet.", question: choix(["B ≈ √(B1² + B2²)", "B = B1 + B2", "B = B2 − B1"], "B1 et B2 sont à angle droit.", "Exact.") },
       { consigne: "Placez la boussole en O, les deux aimants en place.", court: "Boussole en O.", verifier: ({ faits }) => !!sp(faits).boussole_O },
-      { consigne: "En O, l'aiguille aimantée…", court: "Répondez dans le carnet.", question: choix(["prend la direction du champ total B1 + B2, entre les axes des deux aimants (plus près de l'aimant 2, dont le champ est le plus grand)", "pointe vers l'aimant 1", "pointe vers le nord géographique"], "Comparez à la diagonale du rectangle construit sur B1 et B2.", "Exact.") },
+      { consigne: "En O, l'aiguille aimantée…", court: "Répondez dans le carnet.", question: choix(["prend la direction de B1 + B2", "pointe vers l'aimant 1 seul", "pointe vers le nord géographique"], "Comparez à la diagonale du rectangle construit sur B1 et B2.", "Exact.") },
     ],
   };
 
@@ -33,7 +33,7 @@ Utilisé par : simulation.js.
       { consigne: "Circuit ouvert, sonde loin du fil : mesurez la composante horizontale B_H du champ terrestre, puis (bouton du teslamètre) sa composante verticale B_V.", court: "Mesurez B_H et B_V.", aide_geste: "Touchez le bouton du teslamètre pour changer de composante.", verifier: ({ faits }) => te(faits).BH !== undefined && te(faits).BV !== undefined },
       { consigne: "Valeur du champ terrestre : B_T = √(B_H² + B_V²).", court: "B_T (mT) ?", question: { type: "nombre", unite: "mT", attendu: (f) => Math.hypot(mT(te(f).BH), mT(te(f).BV)), tolerance_relative: 0.03, aide: "B_H et B_V en mT.", bravo: "Exact : environ 0,042 mT, soit 4,2×10⁻⁵ T." } },
       { consigne: "Inclinaison I (angle entre B_T et l'horizontale) : tan I = B_V / B_H.", court: "I (°) ?", question: { type: "nombre", unite: "°", attendu: (f) => (Math.atan2(mT(te(f).BV), mT(te(f).BH)) * 180) / Math.PI, tolerance: 1.5, aide: "I = arctan(B_V / B_H).", bravo: "Exact : comparez avec la boussole d'inclinaison." } },
-      { consigne: "Une boussole ordinaire…", court: "Répondez dans le carnet.", question: choix(["s'oriente selon la composante horizontale B_H, vers le nord magnétique", "s'oriente selon B_V", "indique la valeur de B_T"], "Son aiguille ne tourne que dans un plan horizontal.", "Exact.") },
+      { consigne: "Une boussole ordinaire…", court: "Répondez dans le carnet.", question: choix(["s'oriente selon B_H", "s'oriente selon B_V", "mesure la valeur de B_T"], "Son aiguille ne tourne que dans un plan horizontal.", "Exact.") },
     ],
   };
 
@@ -46,9 +46,9 @@ Utilisé par : simulation.js.
     etapes: [
       { consigne: "Lisez le document d'Œrsted (au mur).", court: "Lisez le document.", aide_geste: "Touchez le document pour l'ouvrir.", verifier: ({ faits }) => (faits.doc_oersted || []).length > 0 },
       { consigne: "Placez la boussole sous le fil (le fil est parallèle à l'aiguille), réglez I = 3 A et fermez le circuit.", court: "Boussole sous le fil, courant.", verifier: ({ faits }) => !!te(faits).devie },
-      { consigne: "Quand le courant passe, l'aiguille dévie, parce que…", court: "Répondez dans le carnet.", question: choix(["le courant électrique crée un champ magnétique qui s'ajoute au champ terrestre", "le fil chauffé attire l'aiguille", "l'aiguille aimante le fil"], "L'aiguille revient au nord quand on coupe le courant.", "Exact.") },
+      { consigne: "Quand le courant passe, l'aiguille dévie, parce que…", court: "Répondez dans le carnet.", question: choix(["le courant crée un champ magnétique", "le fil chauffé attire l'aiguille", "l'aiguille aimante le fil de cuivre"], "L'aiguille revient au nord quand on coupe le courant.", "Exact.") },
       { consigne: "Inversez le sens du courant, circuit fermé.", court: "Inversez le courant.", verifier: ({ faits }) => !!te(faits).inverse },
-      { consigne: "En inversant le courant…", court: "Répondez dans le carnet.", question: choix(["l'aiguille dévie dans l'autre sens : le sens du champ dépend du sens du courant", "l'aiguille ne bouge plus", "rien ne change"], "Comparez les deux déviations.", "Exact.") },
+      { consigne: "En inversant le courant…", court: "Répondez dans le carnet.", question: choix(["l'aiguille dévie dans l'autre sens", "l'aiguille dévie dans le même sens", "l'aiguille ne dévie plus du tout"], "Comparez les deux déviations.", "Exact.") },
     ],
   };
 

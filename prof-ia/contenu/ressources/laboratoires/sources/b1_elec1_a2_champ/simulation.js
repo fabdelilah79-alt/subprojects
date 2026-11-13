@@ -40,7 +40,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tracez F (colonne B) en fonction de 1/d² (colonne C).", court: "Graphique F = f(1/d²).", verifier: ({ courbe: c }) => (c.x === "C" && c.y === "B" && c.n >= 5) || false },
       { consigne: "F·d² est constant : F est inversement proportionnelle à d². Sachant que F·d² = k·q², calculez k.", court: "k (N·m²·C⁻²) ?", question: { type: "nombre", unite: "N·m²·C⁻²", attendu: 8.99e9, tolerance_relative: 0.03, aide: "k = (F·d²) / q², avec q = 5,56×10⁻⁹ C.", bravo: "Exact : k ≈ 9,0×10⁹ N·m²·C⁻²." } },
       { consigne: "Touchez la sphère B avec la sphère C neutre (identique) : B garde la moitié de sa charge. Lisez Δm à la même distance.", court: "B touchée par C.", aide_geste: "Glissez la sphère C jusqu'à B.", verifier: ({ faits }) => (co(faits).releves || []).some((r) => r.qA === Q0 && Math.abs(r.qB - Q0 / 2) < 0.02) },
-      { consigne: "Quand la charge de B est divisée par 2, la force…", court: "Répondez dans le carnet.", question: choix(["est divisée par 2 : F est proportionnelle à qA·qB", "est divisée par 4", "ne change pas"], "Comparez Δm avant et après.", "Exact.") },
+      { consigne: "Quand la charge de B est divisée par 2, la force…", court: "Répondez dans le carnet.", question: choix(["est divisée par 2", "est divisée par 4", "ne change pas"], "Comparez Δm avant et après.", "Exact.") },
     ],
   };
 
@@ -52,10 +52,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "F = q·E ; lignes de champ du + vers le − ; champ uniforme entre deux plaques.",
     etapes: [
       { consigne: "Posez les électrodes « 2 pointes » dans la cuve et mettez la haute tension en marche : observez les grains de semoule.", court: "Deux pointes sous tension.", aide_geste: "Glissez la boîte d'électrodes jusqu'à la cuve.", verifier: ({ faits }) => !!ch(faits).vu.pointes },
-      { consigne: "Les grains dessinent les lignes de champ. Elles…", court: "Répondez dans le carnet.", question: choix(["partent de la pointe + et arrivent à la pointe −", "sont des cercles autour de chaque pointe", "sont toutes parallèles"], "Le champ est orienté du + vers le −.", "Exact.") },
-      { consigne: "Au milieu du segment qui joint les deux pointes, le champ électrostatique est…", court: "Répondez dans le carnet.", question: choix(["la somme des champs des deux pointes, dirigé de + vers −", "nul", "dirigé de − vers +"], "Superposition : E = E1 + E2.", "Exact.") },
+      { consigne: "Les grains dessinent les lignes de champ. Elles…", court: "Répondez dans le carnet.", question: choix(["vont de la pointe + à la pointe −", "vont de la pointe − à la pointe +", "font des cercles autour des pointes"], "Le champ est orienté du + vers le −.", "Exact.") },
+      { consigne: "Au milieu du segment qui joint les deux pointes, le champ électrostatique est…", court: "Répondez dans le carnet.", question: choix(["dirigé de + vers −", "nul : les champs s'annulent", "dirigé de − vers +"], "Superposition : E = E1 + E2.", "Exact.") },
       { consigne: "Remplacez les pointes par les électrodes « 2 plaques », remuez et remettez la tension : observez entre les plaques.", court: "Deux plaques sous tension.", verifier: ({ faits }) => !!ch(faits).vu.plaques },
-      { consigne: "Entre les deux plaques, les lignes de champ sont parallèles et équidistantes. Le champ y est…", court: "Répondez dans le carnet.", question: choix(["uniforme : même direction, même sens, même valeur partout", "nul", "plus fort près de chaque plaque"], "Regardez l'orientation des grains entre les plaques.", "Exact : champ uniforme.") },
+      { consigne: "Entre les deux plaques, les lignes de champ sont parallèles et équidistantes. Le champ y est…", court: "Répondez dans le carnet.", question: choix(["uniforme", "nul", "plus fort près des plaques"], "Regardez l'orientation des grains entre les plaques.", "Exact : champ uniforme.") },
       { consigne: "Une petite boule portant q = 2,0 nC, placée entre les plaques, subit une force F = 4,0×10⁻⁵ N. Quelle est la valeur du champ E ?", court: "E (N/C) ?", question: { type: "nombre", unite: "N/C", attendu: 2.0e4, tolerance_relative: 0.02, aide: "E = F / q.", bravo: "Exact : 2,0×10⁴ N/C." } },
     ],
   };

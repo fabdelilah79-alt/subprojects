@@ -46,7 +46,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Chaleur reçue par l'eau et le calorimètre pendant cette chauffe : Q = 986 × (θ1 − θ0).", court: "Q (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => K * (dernier(f).theta1 - dernier(f).theta0), tolerance_relative: 0.03, aide: "θ0 : avant la chauffe ; θ1 : après.", bravo: "Exact." } },
       { consigne: "Calculez R·I²·Δt pour cette chauffe.", court: "R·I²·Δt (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => R * dernier(f).I ** 2 * dernier(f).t, tolerance_relative: 0.03, aide: "R = 4,0 Ω, I en A, Δt en s.", bravo: "Exact : c'est presque la même valeur que Q." } },
       { consigne: "Refaites deux chauffes de 300 s, générateur sur 8 V puis sur 10 V (« Eau neuve » si besoin). Pour trois chauffes : I en A, Δt en B, Q = 986 × Δθ en C, R·I²·Δt en D.", court: "Tableur : A, B, C, D.", verifier: tableau },
-      { consigne: "Comparez les colonnes C et D : la chaleur dégagée par la résistance…", court: "Répondez dans le carnet.", question: choix(["est égale à R·I²·Δt : c'est la loi de Joule", "est proportionnelle à I, et non à I²", "ne dépend pas de la durée"], "Comparez C et D, ligne par ligne.", "Exact : Q = R·I²·Δt.") },
+      { consigne: "Comparez les colonnes C et D : la chaleur dégagée par la résistance…", court: "Répondez dans le carnet.", question: choix(["vaut R·I²·Δt", "vaut R·I·Δt", "vaut R·I²"], "Comparez C et D, ligne par ligne.", "Exact : Q = R·I²·Δt.") },
       { consigne: "Même résistance, même durée : si l'intensité double, la chaleur dégagée est multipliée par…", court: "Facteur ?", question: { type: "nombre", unite: "", attendu: 4, tolerance: 0, aide: "Q est proportionnelle à I².", bravo: "Exact : (2I)² = 4 I²." } },
     ],
   };
@@ -59,8 +59,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Utile (chauffage) ou nuisible (pertes) ; haute tension : I faible.",
     etapes: [
       { consigne: "Classez les huit étiquettes : effet Joule utile ou nuisible ?", court: "Classez les étiquettes.", verifier: ({ faits }) => L.tableau_tri.verifier(L.EFFETS_JOULE, faits.tri_joule) },
-      { consigne: "On transporte l'électricité sous très haute tension (400 kV) parce que…", court: "Répondez dans le carnet.", question: choix(["pour une même puissance P = U·I, le courant est plus faible : les pertes R·I² dans les câbles sont plus petites", "le courant va plus vite", "les câbles ont alors une résistance nulle"], "Pertes dans un câble de résistance R : R·I².", "Exact.") },
-      { consigne: "Dans une lampe à incandescence, le filament chauffé par effet Joule (environ 2500 °C) émet de la lumière ; mais l'essentiel de l'énergie électrique reçue est…", court: "Répondez dans le carnet.", question: choix(["cédé sous forme de chaleur : son rendement lumineux est faible (moins de 10 %)", "transformé en lumière", "transformé en énergie chimique"], "Une lampe à incandescence est très chaude.", "Exact : c'est pourquoi on la remplace par des lampes à DEL.") },
+      { consigne: "On transporte l'électricité sous très haute tension (400 kV) parce que…", court: "Répondez dans le carnet.", question: choix(["I est plus faible : moins de pertes R·I²", "U est plus forte : moins de pertes U²/R", "le courant va plus vite dans les câbles"], "Pertes dans un câble de résistance R : R·I².", "Exact.") },
+      { consigne: "Dans une lampe à incandescence, le filament chauffé par effet Joule (environ 2500 °C) émet de la lumière ; mais l'essentiel de l'énergie électrique reçue est…", court: "Répondez dans le carnet.", question: choix(["cédé sous forme de chaleur", "transformé en lumière", "transformé en énergie chimique"], "Une lampe à incandescence est très chaude.", "Exact : c'est pourquoi on la remplace par des lampes à DEL.") },
     ],
   };
 

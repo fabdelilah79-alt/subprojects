@@ -5214,8 +5214,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Hydrocarbures : non miscibles, moins denses que l'eau.",
     etapes: [
       { consigne: "Avec la pissette, ajoutez environ 3 mL d'eau dans chacun des trois tubes et observez.", court: "Eau dans les trois tubes.", aide_geste: "Prenez la pissette, lâchez-la le bec au-dessus d'un tube et appuyez sur son corps ; touchez son bouchon pour la reposer.", verifier: ({ faits }) => [1, 2, 3].every((k) => so(faits, k).eau >= 1) },
-      { consigne: "Dans les tubes d'hexane et de cyclohexane…", court: "Répondez dans le carnet.", question: choix(["deux phases : l'hydrocarbure, moins dense, reste au-dessus de l'eau", "un seul liquide : l'hydrocarbure se dissout", "l'hydrocarbure tombe au fond"], "Regardez où se trouve chaque liquide.", "Exact.") },
-      { consigne: "L'éthanol se mélange à l'eau parce que…", court: "Répondez dans le carnet.", question: choix(["son groupe –OH ressemble à l'eau H–OH", "il est plus dense que l'eau", "il a six atomes de carbone"], "Comparez les formules C₂H₅–OH et H–OH.", "Exact.") },
+      { consigne: "Dans les tubes d'hexane et de cyclohexane…", court: "Répondez dans le carnet.", question: choix(["deux phases : l'hydrocarbure au-dessus", "une seule phase : il se dissout", "deux phases : l'hydrocarbure au fond"], "Regardez où se trouve chaque liquide.", "Exact.") },
+      { consigne: "L'éthanol se mélange à l'eau parce que…", court: "Répondez dans le carnet.", question: choix(["son groupe –OH ressemble à l'eau", "il est plus dense que l'eau", "sa chaîne carbonée est longue"], "Comparez les formules C₂H₅–OH et H–OH.", "Exact.") },
     ],
   };
 
@@ -5227,11 +5227,11 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Téb augmente avec la chaîne, diminue avec la ramification.",
     etapes: [
       { consigne: "Plongez les trois tubes dans le bain-marie à 50 °C et observez.", court: "Tubes au bain-marie.", aide_geste: "Faites glisser chaque tube dans une place du bain-marie.", verifier: ({ faits }) => [1, 2, 3].every((k) => eb(faits, k).bain) && eb(faits, 1).a_bouilli },
-      { consigne: "Seul le pentane bout parce que…", court: "Répondez dans le carnet.", question: choix(["sa température d'ébullition (36 °C) est inférieure à 50 °C, celles de l'hexane et du cyclohexane sont supérieures", "il est plus dense", "il est plus soluble dans l'eau"], "Lisez l'affiche.", "Exact.") },
+      { consigne: "Seul le pentane bout parce que…", court: "Répondez dans le carnet.", question: choix(["il bout à 36 °C, sous 50 °C", "il est le plus dense des trois", "sa chaîne est la plus longue"], "Lisez l'affiche.", "Exact.") },
       { consigne: "Tableur : en A, le nombre n d'atomes de carbone (1 à 6) ; en B, la température d'ébullition de l'alcane linéaire (affiche).", court: "Tableur : A, B.", verifier: tableau },
       { consigne: "Tracez Téb (B) en fonction de n (A).", court: "Courbe Téb = f(n).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 6) || "Abscisse : A (n) ; ordonnée : B (Téb)." },
-      { consigne: "Pour un même nombre d'atomes de carbone (C₅H₁₂), la ramification…", court: "Répondez dans le carnet.", question: choix(["abaisse la température d'ébullition", "l'élève", "ne la change pas"], "Comparez le pentane et ses deux isomères.", "Exact.") },
-      { consigne: "La distillation fractionnée du pétrole sépare ses constituants parce qu'ils ont…", court: "Répondez dans le carnet.", question: choix(["des températures d'ébullition différentes", "des couleurs différentes", "des densités identiques"], "Les plus légers sortent en haut de la colonne.", "Exact.") },
+      { consigne: "Pour un même nombre d'atomes de carbone (C₅H₁₂), la ramification…", court: "Répondez dans le carnet.", question: choix(["abaisse θéb", "élève θéb", "ne change pas θéb"], "Comparez le pentane et ses deux isomères.", "Exact.") },
+      { consigne: "La distillation fractionnée du pétrole sépare ses constituants parce qu'ils ont…", court: "Répondez dans le carnet.", question: choix(["des θéb différentes", "des couleurs différentes", "des densités différentes"], "Les plus légers sortent en haut de la colonne.", "Exact.") },
     ],
   };
 
@@ -5244,12 +5244,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Tests : DNPH, Fehling, BBT, permanganate.",
     etapes: [
       { consigne: "Ajoutez quelques gouttes de 2,4-DNPH dans les cinq tubes (lunettes et gants).", court: "DNPH dans A à E.", verifier: ({ faits }) => ["A", "B", "C", "D", "E"].every((l) => gr(faits, l).dnph !== null) },
-      { consigne: "Le précipité jaune-orangé apparaît dans…", court: "Répondez dans le carnet.", question: choix(["B et C : ils contiennent un groupe carbonyle C=O", "A et E", "D seulement"], "Regardez les cinq tubes.", "Exact.") },
+      { consigne: "Le précipité jaune-orangé apparaît dans…", court: "Répondez dans le carnet.", question: choix(["B et C : groupe C=O", "A et E : groupe –OH", "D seul : groupe –COOH"], "Regardez les cinq tubes.", "Exact.") },
       { consigne: "Touchez « Nouveaux tubes » ; ajoutez de la liqueur de Fehling dans B et C, puis plongez-les dans le bain-marie.", court: "Fehling dans B et C, à chaud.", verifier: ({ faits }) => gr(faits, "B").fehling !== null && gr(faits, "C").fehling !== null && gr(faits, "B").fehling === true },
       { consigne: "Ajoutez du BBT dans A, D et E ; puis, dans des tubes neufs, du permanganate acidifié dans A et E.", court: "BBT, puis permanganate.", verifier: ({ faits }) => ["A", "D", "E"].every((l) => gr(faits, l).bbt !== null) && gr(faits, "A").mno4 !== null && gr(faits, "E").mno4 !== null },
-      { consigne: "Le tube B contient…", court: "Répondez dans le carnet.", question: choix(["l'éthanal (aldéhyde, groupe –CHO)", "la propanone (cétone)", "l'éthanol (alcool)"], "Carbonyle et Fehling positif.", "Exact.") },
-      { consigne: "Le tube D contient…", court: "Répondez dans le carnet.", question: choix(["l'acide éthanoïque (acide carboxylique, groupe –COOH)", "l'éthanal", "le 2-méthylpropan-2-ol"], "BBT jaune : solution acide.", "Exact.") },
-      { consigne: "A décolore le permanganate, E non. A est…", court: "Répondez dans le carnet.", question: choix(["l'éthanol, alcool primaire oxydé en éthanal puis en acide éthanoïque ; E est un alcool tertiaire", "l'alcool tertiaire", "la propanone"], "Un alcool tertiaire ne subit pas d'oxydation ménagée.", "Exact.") },
+      { consigne: "Le tube B contient…", court: "Répondez dans le carnet.", question: choix(["l'éthanal (aldéhyde)", "la propanone (cétone)", "l'éthanol (alcool)"], "Carbonyle et Fehling positif.", "Exact.") },
+      { consigne: "Le tube D contient…", court: "Répondez dans le carnet.", question: choix(["l'acide éthanoïque (–COOH)", "l'éthanal (aldéhyde, –CHO)", "l'éthanol (alcool, –OH)"], "BBT jaune : solution acide.", "Exact.") },
+      { consigne: "A décolore le permanganate, E non. A est…", court: "Répondez dans le carnet.", question: choix(["l'éthanol, alcool primaire", "l'alcool tertiaire", "la propanone, une cétone"], "Un alcool tertiaire ne subit pas d'oxydation ménagée.", "Exact.") },
     ],
   };
 

@@ -4688,7 +4688,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Posez le bécher sur l'agitateur, mettez l'agitation en marche (bouton), puis faites descendre la sonde du conductimètre dans la solution.", court: "Bécher, agitation, sonde.", aide_geste: "Faites glisser le bécher sur le plateau blanc ; touchez le bouton de l'agitateur ; faites glisser la sonde vers le bas.", verifier: ({ faits }) => t(faits).sur === "becher" && t(faits).vitesse > 0 && t(faits).plonge },
       { consigne: "La réaction support de ce titrage est…", court: "Répondez dans le carnet.", question: choix(["H₃O⁺ + HO⁻ → 2 H₂O", "Na⁺ + Cl⁻ → NaCl", "H₂O + HO⁻ → H₃O⁺"], "Quels ions réagissent ? Na⁺ et Cl⁻ sont spectateurs.", "Exact : un transfert de proton de H₃O⁺ vers HO⁻.") },
-      { consigne: "On ajoute 140 mL d'eau distillée au déboucheur parce que…", court: "Répondez dans le carnet.", question: choix(["la sonde doit être immergée, et la dilution par l'acide versé devient presque négligeable", "l'eau réagit avec la soude", "cela change la quantité d'ions HO⁻ à titrer"], "n(HO⁻) ne change pas quand on ajoute de l'eau.", "Exact.") },
+      { consigne: "On ajoute 140 mL d'eau distillée au déboucheur parce que…", court: "Répondez dans le carnet.", question: choix(["la sonde doit être immergée", "l'eau réagit avec la soude", "cela change n(HO⁻) à titrer"], "n(HO⁻) ne change pas quand on ajoute de l'eau.", "Exact.") },
     ],
   };
 
@@ -4701,8 +4701,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Versez l'acide par portions d'environ 1,5 mL, de 0 à 15 mL (11 mesures). À chaque fois : fermez le robinet, attendez que l'affichage soit stable, lisez V sur la burette et σ. Tableur : en A, V (mL) ; en B, σ (mS/cm).", court: "Tableur : A, B.", aide_geste: "Touchez la clé du robinet : goutte à goutte ou fermé ; glissez-la vers le haut pour un filet. Lisez le bas du ménisque dans la loupe, à côté de la burette.", verifier: tableau },
       { consigne: "Tracez σ (B) en fonction de V (A).", court: "Courbe σ = f(V).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 10) || "Abscisse : A (V) ; ordonnée : B (σ)." },
-      { consigne: "Avant l'équivalence, σ diminue parce que…", court: "Répondez dans le carnet.", question: choix(["les ions HO⁻ sont remplacés par des ions Cl⁻, moins conducteurs", "on dilue la solution", "les ions Na⁺ disparaissent"], "Comparez λ(HO⁻) et λ(Cl⁻) ; Na⁺ est spectateur.", "Exact.") },
-      { consigne: "Après l'équivalence, σ augmente parce que…", court: "Répondez dans le carnet.", question: choix(["les ions H₃O⁺ et Cl⁻ versés ne réagissent plus et s'accumulent", "les ions HO⁻ se reforment", "la température monte"], "Il n'y a plus d'ions HO⁻ pour réagir.", "Exact : H₃O⁺ est l'ion le plus conducteur.") },
+      { consigne: "Avant l'équivalence, σ diminue parce que…", court: "Répondez dans le carnet.", question: choix(["HO⁻ est remplacé par Cl⁻, moins conducteur", "on dilue la solution en versant l'acide", "Na⁺ est consommé par la réaction"], "Comparez λ(HO⁻) et λ(Cl⁻) ; Na⁺ est spectateur.", "Exact.") },
+      { consigne: "Après l'équivalence, σ augmente parce que…", court: "Répondez dans le carnet.", question: choix(["H₃O⁺ et Cl⁻ versés s'accumulent", "les ions HO⁻ se reforment", "la température du mélange monte"], "Il n'y a plus d'ions HO⁻ pour réagir.", "Exact : H₃O⁺ est l'ion le plus conducteur.") },
     ],
   };
 
@@ -4715,10 +4715,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Cb·Vb = Ca·VE ; Cb ≈ 0,0845 mol/L.",
     etapes: [
       { consigne: "Volume équivalent VE (mL), à l'intersection des deux droites ?", court: "VE (mL) ?", question: nombre("mL", 8.45, 0.3, "Tracez à la règle les deux droites (avant et après le minimum) ; VE est l'abscisse de leur point commun.", "Exact.") },
-      { consigne: "À l'équivalence…", court: "Répondez dans le carnet.", question: choix(["les réactifs ont été introduits dans les proportions stœchiométriques : n(HO⁻) initiale = n(H₃O⁺) versée", "la solution est neutre parce que σ = 0", "tous les ions ont disparu"], "Pensez au tableau d'avancement : les deux réactifs sont épuisés.", "Exact.") },
+      { consigne: "À l'équivalence…", court: "Répondez dans le carnet.", question: choix(["n(HO⁻) initiale = n(H₃O⁺) versée", "la solution ne conduit plus : σ = 0", "n(Na⁺) initiale = n(Cl⁻) restante"], "Pensez au tableau d'avancement : les deux réactifs sont épuisés.", "Exact.") },
       { consigne: "Concentration Cb du déboucheur dilué (mol/L) ?", court: "Cb (mol/L) ?", question: nombre("mol/L", 0.0845, 0.003, "Cb = Ca × VE / Vb.", "Exact.") },
       { consigne: "Concentration du déboucheur commercial (mol/L) ?", court: "C₀ (mol/L) ?", question: nombre("mol/L", 4.22, 0.15, "Il a été dilué 50 fois.", "Exact : environ 4,2 mol/L.") },
-      { consigne: "Le résultat Cb s'écrit avec…", court: "Répondez dans le carnet.", question: choix(["trois chiffres significatifs, comme les données (10,0 mL ; 0,100 mol/L ; 8,45 mL)", "autant de chiffres que la calculatrice en affiche", "un seul chiffre"], "Le résultat n'est pas plus précis que la donnée la moins précise.", "Exact : Cb = 8,45 × 10⁻² mol/L.") },
+      { consigne: "Le résultat Cb s'écrit avec…", court: "Répondez dans le carnet.", question: choix(["trois chiffres significatifs", "tous les chiffres affichés", "un seul chiffre significatif"], "Le résultat n'est pas plus précis que la donnée la moins précise.", "Exact : Cb = 8,45 × 10⁻² mol/L.") },
     ],
   };
 

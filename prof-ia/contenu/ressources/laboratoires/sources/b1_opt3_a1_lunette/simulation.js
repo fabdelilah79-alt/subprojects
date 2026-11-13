@@ -26,8 +26,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les quatre documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_lunette || []).length >= 4 },
       { consigne: "Rangez chaque étiquette sous la lentille qui convient.", court: "Tableau : rangez les étiquettes.", aide_geste: "Faites glisser chaque étiquette dans une colonne.", verifier: tri },
-      { consigne: "Le diamètre apparent de la Lune est…", court: "Répondez dans le carnet.", question: choix(["l'angle sous lequel on la voit : environ 9 × 10⁻³ rad (un demi-degré)", "son diamètre : 3 474 km", "sa distance à la Terre"], "Relisez le document « Diamètre apparent et grossissement ».", "Exact.") },
-      { consigne: "Le grossissement G d'une lunette est…", court: "Répondez dans le carnet.", question: choix(["G = α' / α : le rapport des diamètres apparents de l'image et de l'objet", "le rapport des tailles A'B' / AB", "la vergence de l'objectif"], "α' : avec la lunette ; α : à l'œil nu.", "Exact.") },
+      { consigne: "Le diamètre apparent de la Lune est…", court: "Répondez dans le carnet.", question: choix(["l'angle sous lequel on la voit", "son diamètre réel : 3 474 km", "sa distance à la Terre en km"], "Relisez le document « Diamètre apparent et grossissement ».", "Exact.") },
+      { consigne: "Le grossissement G d'une lunette est…", court: "Répondez dans le carnet.", question: choix(["G = α' / α", "G = A'B' / AB", "G = α / α'"], "α' : avec la lunette ; α : à l'œil nu.", "Exact.") },
     ],
   };
 
@@ -41,7 +41,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Faites glisser l'écran jusqu'à voir une petite image nette de la Lune.", court: "Image nette de la Lune.", aide_geste: "Faites glisser l'écran par son cavalier.", verifier: ({ faits }) => lu(faits).images.length > 0 },
       { consigne: "Distance de l'objectif à l'écran (lisez les index sur le rail) ?", court: "Distance (cm) ?", question: { type: "nombre", unite: "cm", attendu: 40, tolerance: 1, aide: "Index de l'écran moins index de l'objectif (25 cm).", bravo: "Exact : f'1 = 40 cm." } },
-      { consigne: "L'image A1B1 donnée par l'objectif est…", court: "Répondez dans le carnet.", question: choix(["réelle, petite, dans le plan focal image de l'objectif", "virtuelle", "aussi grande que la Lune"], "On la recueille sur l'écran, à f'1 de l'objectif.", "Exact.") },
+      { consigne: "L'image A1B1 donnée par l'objectif est…", court: "Répondez dans le carnet.", question: choix(["réelle, au foyer F'1", "virtuelle, au foyer F'1", "réelle, contre l'oculaire"], "On la recueille sur l'écran, à f'1 de l'objectif.", "Exact.") },
     ],
   };
 
@@ -53,7 +53,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Lunette afocale : F'1 = F2 ; G = f'1/f'2.",
     etapes: [
       { consigne: "Retirez l'écran (touche « Écran »), posez l'oculaire (« Oculaire ») et faites-le glisser jusqu'à voir la Lune nette.", court: "Lune nette dans la lunette.", verifier: ({ faits }) => lu(faits).nets.length > 0 },
-      { consigne: "La Lune est vue nette quand l'image A1B1 est…", court: "Répondez dans le carnet.", question: choix(["au foyer objet F2 de l'oculaire : F'1 et F2 sont confondus (lunette afocale)", "contre l'oculaire", "au foyer image de l'oculaire"], "Distance objectif-oculaire : f'1 + f'2 = 45 cm.", "Exact.") },
+      { consigne: "La Lune est vue nette quand l'image A1B1 est…", court: "Répondez dans le carnet.", question: choix(["au foyer objet F2 de l'oculaire", "au foyer image F'2 de l'oculaire", "contre la lentille de l'oculaire"], "Distance objectif-oculaire : f'1 + f'2 = 45 cm.", "Exact.") },
       { consigne: "Combien de fois la Lune paraît-elle plus grande dans la lunette (G) ?", court: "G ?", question: { type: "nombre", unite: "", attendu: 8, tolerance: 0.5, aide: "Comparez les deux vues, ou calculez f'1 / f'2.", bravo: "Exact : G = 40 / 5 = 8." } },
       { consigne: "Dans la lunette, la Lune est vue…", court: "Répondez dans le carnet.", question: choix(["renversée", "droite", "de côté"], "Comparez les taches sombres (mers) dans les deux vues.", "Exact : une lunette astronomique renverse les images.") },
     ],
@@ -67,10 +67,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "L'œil se place au cercle oculaire.",
     etapes: [
       { consigne: "Replacez l'écran derrière l'oculaire et cherchez la plus petite tache de lumière.", court: "Plus petite tache.", verifier: ({ faits }) => !!lu(faits).cercle },
-      { consigne: "Cette petite tache est le cercle oculaire. Son intérêt :", court: "Répondez dans le carnet.", question: choix(["toute la lumière entrée dans l'objectif y passe : c'est là qu'on place l'œil", "c'est l'image de la Lune", "c'est le foyer de l'objectif"], "Relisez le document « Le cercle oculaire ».", "Exact.") },
+      { consigne: "Cette petite tache est le cercle oculaire. Son intérêt :", court: "Répondez dans le carnet.", question: choix(["c'est là qu'on place l'œil", "c'est l'image de la Lune", "c'est le foyer de l'objectif"], "Relisez le document « Le cercle oculaire ».", "Exact.") },
       { consigne: "Retirez l'écran et placez l'œil de l'élève au cercle oculaire : le champ vu est le plus large.", court: "Œil au cercle oculaire.", aide_geste: "Faites glisser l'élève le long du banc.", verifier: ({ faits }) => !!lu(faits).oeil_cercle },
       { consigne: "Touchez « Faisceau ».", court: "Faisceau.", verifier: ({ faits }) => !!lu(faits).faisceau },
-      { consigne: "À la sortie d'une lunette afocale, le faisceau venu d'un point de la Lune est…", court: "Répondez dans le carnet.", question: choix(["parallèle, plus incliné sur l'axe qu'à l'entrée", "convergent vers l'œil", "parallèle à l'axe"], "Suivez les trois rayons après l'oculaire.", "Exact : α' > α.") },
+      { consigne: "À la sortie d'une lunette afocale, le faisceau venu d'un point de la Lune est…", court: "Répondez dans le carnet.", question: choix(["parallèle, plus incliné", "parallèle, moins incliné", "convergent vers l'œil"], "Suivez les trois rayons après l'oculaire.", "Exact : α' > α.") },
     ],
   };
 

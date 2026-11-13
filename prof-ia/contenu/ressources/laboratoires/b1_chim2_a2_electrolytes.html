@@ -4327,9 +4327,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Frottez la baguette sur le chiffon de laine, ouvrez la burette d'eau et approchez la baguette du filet.", court: "Filet d'eau et baguette.", aide_geste: "Faites aller et venir la baguette sur le chiffon ; touchez le robinet.", verifier: ({ faits }) => po(faits).eau > 10 },
       { consigne: "Recommencez avec le filet de cyclohexane (baguette chargée).", court: "Filet de cyclohexane.", verifier: ({ faits }) => !!po(faits).approche[1] },
-      { consigne: "Le filet d'eau est attiré, celui de cyclohexane ne l'est pas, parce que…", court: "Répondez dans le carnet.", question: choix(["la molécule d'eau est polaire : les centres de ses charges + et − ne coïncident pas", "l'eau est plus lourde", "le cyclohexane est chargé"], "O est plus électronégatif que H.", "Exact.") },
-      { consigne: "La molécule HCl est…", court: "Répondez dans le carnet.", question: choix(["polaire : le chlore, plus électronégatif, attire les électrons de la liaison", "apolaire", "un ion"], "Cl est à droite de H dans la classification.", "Exact.") },
-      { consigne: "Dans le cristal de chlorure de sodium (maquette), la cohésion est due…", court: "Répondez dans le carnet.", question: choix(["aux attractions électriques entre chaque ion et ses voisins de signe opposé", "à des liaisons covalentes entre molécules NaCl", "au poids des ions"], "Regardez les voisins d'un ion Cl⁻.", "Exact : NaCl n'est qu'une formule statistique.") },
+      { consigne: "Le filet d'eau est attiré, celui de cyclohexane ne l'est pas, parce que…", court: "Répondez dans le carnet.", question: choix(["la molécule d'eau est polaire", "la molécule d'eau est chargée", "l'eau est plus dense que lui"], "O est plus électronégatif que H.", "Exact.") },
+      { consigne: "La molécule HCl est…", court: "Répondez dans le carnet.", question: choix(["polaire : Cl est plus électronégatif", "apolaire : ses deux atomes sont liés", "un ion : H a cédé son électron à Cl"], "Cl est à droite de H dans la classification.", "Exact.") },
+      { consigne: "Dans le cristal de chlorure de sodium (maquette), la cohésion est due…", court: "Répondez dans le carnet.", question: choix(["aux attractions entre ions de signes opposés", "aux liaisons covalentes entre molécules NaCl", "aux répulsions entre ions de même signe"], "Regardez les voisins d'un ion Cl⁻.", "Exact : NaCl n'est qu'une formule statistique.") },
     ],
   };
 
@@ -4358,11 +4358,11 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Précipités : HO⁻, Ag⁺, Ba²⁺ révèlent les ions.",
     etapes: [
       { consigne: "Lunettes et gants. Quelques gouttes de soude dans chaque tube.", court: "Soude.", aide_geste: "Sortez la pipette du flacon, lâchez-la au-dessus d'un tube, appuyez sur la poire.", verifier: ({ faits }) => a(faits, 1, "CuOH2") && a(faits, 4, "FeOH3") },
-      { consigne: "La soude révèle…", court: "Répondez dans le carnet.", question: choix(["les ions Cu²⁺ (précipité bleu) et Fe³⁺ (précipité rouille)", "les ions Na⁺", "les ions Cl⁻"], "Tubes 1 et 4.", "Exact.") },
+      { consigne: "La soude révèle…", court: "Répondez dans le carnet.", question: choix(["les ions Cu²⁺ et Fe³⁺", "les ions Na⁺ et Cl⁻", "les ions SO₄²⁻ et Cl⁻"], "Tubes 1 et 4.", "Exact.") },
       { consigne: "« Nouveaux tubes », puis quelques gouttes de nitrate d'argent dans chaque tube.", court: "Nitrate d'argent.", verifier: ({ faits }) => a(faits, 2, "AgCl") && a(faits, 4, "AgCl") },
       { consigne: "« Nouveaux tubes », puis quelques gouttes de chlorure de baryum dans chaque tube.", court: "Chlorure de baryum.", verifier: ({ faits }) => a(faits, 1, "BaSO4") && a(faits, 3, "BaSO4") },
-      { consigne: "Le chlorure de baryum révèle…", court: "Répondez dans le carnet.", question: choix(["les ions sulfate SO₄²⁻ (précipité blanc)", "les ions Cl⁻", "les ions Na⁺"], "Tubes 1 et 3.", "Exact.") },
-      { consigne: "La solution 4 s'écrit…", court: "Répondez dans le carnet.", question: choix(["Fe³⁺(aq) + 3 Cl⁻(aq)", "FeCl₃(aq)", "Fe(aq) + Cl₃(aq)"], "Une solution électrolytique contient des ions dispersés.", "Exact.") },
+      { consigne: "Le chlorure de baryum révèle…", court: "Répondez dans le carnet.", question: choix(["les ions SO₄²⁻", "les ions Cl⁻", "les ions Cu²⁺"], "Tubes 1 et 3.", "Exact.") },
+      { consigne: "La solution 4 s'écrit…", court: "Répondez dans le carnet.", question: choix(["Fe³⁺(aq) + 3 Cl⁻(aq)", "FeCl₃(aq), sans ions", "Fe³⁺(aq) + Cl₃⁻(aq)"], "Une solution électrolytique contient des ions dispersés.", "Exact.") },
     ],
   };
 
@@ -4375,9 +4375,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Déposez une goutte du mélange au milieu de la bande de papier.", court: "Goutte au milieu.", aide_geste: "Faites glisser la pipette au-dessus du milieu de la bande, puis lâchez-la.", verifier: ({ faits }) => !!mi(faits).depot },
       { consigne: "Mettez le générateur en marche et observez pendant une dizaine de secondes.", court: "Générateur en marche.", verifier: ({ faits }) => mi(faits).cuivre > 30 && mi(faits).permanganate > 25 },
-      { consigne: "La tache bleue (ions Cu²⁺) se déplace vers…", court: "Répondez dans le carnet.", question: choix(["l'électrode reliée à la borne − : les cations vont vers la borne −", "l'électrode reliée à la borne +", "nulle part"], "Lisez les étiquettes des bornes.", "Exact ; les anions MnO₄⁻ vont vers la borne +.") },
+      { consigne: "La tache bleue (ions Cu²⁺) se déplace vers…", court: "Répondez dans le carnet.", question: choix(["l'électrode reliée à la borne −", "l'électrode reliée à la borne +", "aucune électrode : elle reste"], "Lisez les étiquettes des bornes.", "Exact ; les anions MnO₄⁻ vont vers la borne +.") },
       { consigne: "Touchez « Inverser » et observez.", court: "Inverser.", verifier: ({ faits }) => !!mi(faits).inverse && mi(faits).cuivre > -10 },
-      { consigne: "Dans une solution électrolytique, le courant électrique est dû…", court: "Répondez dans le carnet.", question: choix(["au déplacement des ions, cations et anions en sens opposés", "aux électrons libres de l'eau", "aux molécules d'eau"], "Qu'est-ce qui se déplace sur la bande ?", "Exact.") },
+      { consigne: "Dans une solution électrolytique, le courant électrique est dû…", court: "Répondez dans le carnet.", question: choix(["au déplacement des ions", "aux électrons libres", "aux molécules d'eau"], "Qu'est-ce qui se déplace sur la bande ?", "Exact.") },
     ],
   };
 

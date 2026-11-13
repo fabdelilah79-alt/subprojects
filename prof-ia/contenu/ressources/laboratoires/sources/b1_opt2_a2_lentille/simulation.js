@@ -31,10 +31,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "f' = OF' ; C = 1/f' en δ.",
     etapes: [
       { consigne: "Avec L1, déplacez l'écran jusqu'à voir une image nette de la maison lointaine.", court: "Image nette (L1).", aide_geste: "Faites glisser la lentille ou l'écran par son cavalier.", verifier: ({ faits }) => loin(faits, "L1").length > 0 },
-      { consigne: "L'image d'un objet très éloigné se forme…", court: "Répondez dans le carnet.", question: choix(["au foyer image F' : la distance lentille-écran est la distance focale f'", "contre la lentille", "à n'importe quelle distance"], "Lisez les deux index sur le rail.", "Exact.") },
+      { consigne: "L'image d'un objet très éloigné se forme…", court: "Répondez dans le carnet.", question: choix(["au foyer image F'", "au foyer objet F", "contre la lentille"], "Lisez les deux index sur le rail.", "Exact.") },
       { consigne: "Recommencez avec L2 (touche « Lentille »).", court: "Image nette (L2).", verifier: ({ faits }) => loin(faits, "L2").length > 0 },
       { consigne: "Une ligne par lentille : en A, f' (cm) ; en B, la vergence C = 1 / f' (δ, f' en mètres).", court: "Tableur : A, B.", verifier: tableau },
-      { consigne: "La lentille la plus convergente est…", court: "Répondez dans le carnet.", question: choix(["L1 : sa vergence est la plus grande et sa distance focale la plus petite", "L2 : sa distance focale est la plus grande", "elles convergent autant"], "Comparez les colonnes A et B.", "Exact.") },
+      { consigne: "La lentille la plus convergente est…", court: "Répondez dans le carnet.", question: choix(["L1 : f' la plus petite", "L2 : f' la plus grande", "aucune : elles se valent"], "Comparez les colonnes A et B.", "Exact.") },
     ],
   };
 
@@ -48,7 +48,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Prenez la lanterne (touche « Objet ») et la lentille L1 ; cherchez l'image du « F » sur l'écran.", court: "Image du « F ».", verifier: ({ faits }) => lant(faits).some((x) => !x.diaphragme) },
       { consigne: "Mettez le diaphragme et refaites la mise au point.", court: "Avec diaphragme.", verifier: ({ faits }) => lant(faits).some((x) => x.diaphragme) },
       { consigne: "Avec le diaphragme, l'image est…", court: "Répondez dans le carnet.", question: choix(["plus nette mais moins lumineuse", "plus lumineuse et plus floue", "inchangée"], "Comparez le « F » avec et sans diaphragme ; déplacez un peu l'écran.", "Exact.") },
-      { consigne: "Les conditions de Gauss demandent des rayons…", court: "Répondez dans le carnet.", question: choix(["proches de l'axe optique et peu inclinés sur lui", "qui passent par le bord de la lentille", "très inclinés"], "Le diaphragme ne laisse passer que le centre de la lentille.", "Exact.") },
+      { consigne: "Les conditions de Gauss demandent des rayons…", court: "Répondez dans le carnet.", question: choix(["proches de l'axe et peu inclinés", "passant par le bord de la lentille", "très inclinés sur l'axe optique"], "Le diaphragme ne laisse passer que le centre de la lentille.", "Exact.") },
     ],
   };
 
@@ -62,9 +62,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Placez L1 loin de la lanterne (plus de 20 cm) et obtenez une image nette plus petite que l'objet.", court: "Image réduite.", verifier: ({ faits }) => lant(faits).some((x) => x.lentille === "L1" && Math.abs(x.gamma) < 1) },
       { consigne: "Rapprochez L1 de la lanterne (entre 10 et 20 cm) : obtenez une image nette plus grande que l'objet.", court: "Image agrandie.", verifier: ({ faits }) => lant(faits).some((x) => x.lentille === "L1" && Math.abs(x.gamma) > 1) },
-      { consigne: "L'image du « F » sur l'écran est…", court: "Répondez dans le carnet.", question: choix(["réelle et renversée", "droite", "virtuelle"], "Comparez le « F » de la lanterne et celui de l'écran.", "Exact.") },
+      { consigne: "L'image du « F » sur l'écran est…", court: "Répondez dans le carnet.", question: choix(["réelle et renversée", "réelle et droite", "virtuelle et droite"], "Comparez le « F » de la lanterne et celui de l'écran.", "Exact.") },
       { consigne: "Placez L1 à moins de 10 cm de la lanterne et cherchez l'image avec l'écran.", court: "Objet entre F et O.", verifier: ({ faits }) => !!(faits.focale || {}).virtuelle },
-      { consigne: "Aucune image n'apparaît sur l'écran, parce que…", court: "Répondez dans le carnet.", question: choix(["l'objet est entre le foyer et la lentille : l'image est virtuelle", "la lampe est trop faible", "l'écran est trop petit"], "Où est l'objet par rapport au foyer objet F (10 cm avant L1) ?", "Exact : on la voit à travers la lentille.") },
+      { consigne: "Aucune image n'apparaît sur l'écran, parce que…", court: "Répondez dans le carnet.", question: choix(["l'objet est entre F et la lentille", "la lampe éclaire trop faiblement", "l'écran est trop petit pour elle"], "Où est l'objet par rapport au foyer objet F (10 cm avant L1) ?", "Exact : on la voit à travers la lentille.") },
     ],
   };
 
@@ -81,7 +81,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Objet entre 2F et F : construisez de nouveau l'image.", court: "Image agrandie.", verifier: ({ faits }) => co(faits).cas.some((c) => c.reelle && Math.abs(c.gamma) > 1) },
       { consigne: "Objet entre F et O : touchez « Prolonger » et posez B' à l'intersection des prolongements.", court: "Image virtuelle.", verifier: ({ faits }) => co(faits).cas.some((c) => !c.reelle) },
       { consigne: "Le rayon issu de B qui passe par le centre optique O…", court: "Répondez dans le carnet.", question: choix(["n'est pas dévié", "ressort parallèle à l'axe", "passe par F'"], "Regardez le rayon 2 (bleu).", "Exact.") },
-      { consigne: "Quand l'objet est entre F et O, l'image est…", court: "Répondez dans le carnet.", question: choix(["virtuelle, droite et plus grande que l'objet", "réelle et renversée", "au foyer image"], "B' est du même côté que l'objet, au-dessus de l'axe.", "Exact : c'est le principe de la loupe.") },
+      { consigne: "Quand l'objet est entre F et O, l'image est…", court: "Répondez dans le carnet.", question: choix(["virtuelle, droite, agrandie", "réelle, renversée, agrandie", "virtuelle, droite, réduite"], "B' est du même côté que l'objet, au-dessus de l'axe.", "Exact : c'est le principe de la loupe.") },
     ],
   };
 

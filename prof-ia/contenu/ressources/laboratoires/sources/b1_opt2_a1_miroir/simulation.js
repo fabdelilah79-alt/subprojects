@@ -27,9 +27,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Faites glisser la bougie éteinte (derrière la vitre) jusqu'à ce qu'elle paraisse allumée.", court: "Bougie 2 « allumée ».", aide_geste: "Faites glisser les bougies sur la feuille ; les chiffres donnent la distance à la vitre.", verifier: ({ faits }) => es(faits).length > 0 },
       { consigne: "Recommencez pour trois positions différentes de la bougie allumée. En A : distance de la bougie 1 à la vitre ; en B : distance de la bougie 2 à la vitre.", court: "Tableur : A, B.", verifier: tableau },
-      { consigne: "Comparez les deux distances :", court: "Répondez dans le carnet.", question: choix(["elles sont égales : l'image est à la même distance du miroir que l'objet, de l'autre côté", "l'image est deux fois plus loin", "l'image est sur la vitre"], "Comparez A et B, ligne par ligne.", "Exact.") },
-      { consigne: "L'image et l'objet sont…", court: "Répondez dans le carnet.", question: choix(["symétriques par rapport au plan du miroir, et de même taille", "l'un au-dessus de l'autre", "de tailles différentes"], "Les deux bougies ont la même hauteur.", "Exact.") },
-      { consigne: "Si l'on place un écran à l'endroit de l'image…", court: "Répondez dans le carnet.", question: choix(["on n'y voit rien : l'image d'un miroir plan est virtuelle", "on y voit la flamme", "la flamme s'éteint"], "La lumière ne passe pas derrière la vitre pour former l'image.", "Exact.") },
+      { consigne: "Comparez les deux distances :", court: "Répondez dans le carnet.", question: choix(["elles sont égales", "l'image est deux fois plus loin", "l'image est deux fois plus près"], "Comparez A et B, ligne par ligne.", "Exact.") },
+      { consigne: "L'image et l'objet sont…", court: "Répondez dans le carnet.", question: choix(["symétriques par rapport au miroir", "de tailles différentes, inversés", "l'un au-dessus de l'autre, alignés"], "Les deux bougies ont la même hauteur.", "Exact.") },
+      { consigne: "Si l'on place un écran à l'endroit de l'image…", court: "Répondez dans le carnet.", question: choix(["on n'y voit rien : image virtuelle", "on y voit la flamme : image réelle", "on y voit la flamme, renversée"], "La lumière ne passe pas derrière la vitre pour former l'image.", "Exact.") },
     ],
   };
 
@@ -41,8 +41,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Champ de vision : limité par les bords du miroir.",
     etapes: [
       { consigne: "Placez l'œil tout près du miroir (moins de 7 cm), puis loin (plus de 15 cm).", court: "Œil près, puis loin.", aide_geste: "Faites glisser la figurine œil sur la feuille.", verifier: ({ faits }) => ch(faits).pres !== null && ch(faits).pres !== undefined && ch(faits).loin !== null && ch(faits).loin !== undefined },
-      { consigne: "Quand l'œil s'éloigne du miroir, le nombre de pions vus…", court: "Répondez dans le carnet.", question: choix(["diminue : le champ de vision se rétrécit", "augmente", "ne change pas"], "Comparez la bulle, œil près et œil loin.", "Exact.") },
-      { consigne: "Un pion est vu dans le miroir si…", court: "Répondez dans le carnet.", question: choix(["la droite qui joint l'œil à l'image du pion traverse le miroir", "il est devant le miroir", "il est près de l'œil"], "Regardez les rayons tracés en jaune.", "Exact.") },
+      { consigne: "Quand l'œil s'éloigne du miroir, le nombre de pions vus…", court: "Répondez dans le carnet.", question: choix(["diminue", "augmente", "ne change pas"], "Comparez la bulle, œil près et œil loin.", "Exact.") },
+      { consigne: "Un pion est vu dans le miroir si…", court: "Répondez dans le carnet.", question: choix(["la droite œil–image coupe le miroir", "il est placé devant le miroir", "il est assez près de l'œil"], "Regardez les rayons tracés en jaune.", "Exact.") },
     ],
   };
 

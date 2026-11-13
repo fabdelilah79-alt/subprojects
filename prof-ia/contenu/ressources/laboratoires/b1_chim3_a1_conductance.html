@@ -4814,7 +4814,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       L.etape_montage_conductance,
       { consigne: "Pour chaque bécher (eau distillée, eau sucrée, NaCl 10 mmol/L) : posez-le sur le plateau, montez-le pour immerger les plaques, lisez l'intensité.", court: "Trois liquides.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: ({ faits }) => ["eau", "sucre", "nacl10"].every((k) => a(faits, k)) },
-      { consigne: "Le courant passe nettement…", court: "Répondez dans le carnet.", question: choix(["dans la solution de chlorure de sodium seulement : il faut des ions", "dans les trois liquides", "dans l'eau sucrée"], "Comparez les intensités (mA).", "Exact.") },
+      { consigne: "Le courant passe nettement…", court: "Répondez dans le carnet.", question: choix(["dans l'eau salée seulement", "dans les trois liquides", "dans l'eau sucrée aussi"], "Comparez les intensités (mA).", "Exact.") },
     ],
   };
 
@@ -4826,7 +4826,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "G = I/U = 1/R (en S).",
     etapes: [
       { consigne: "NaCl 10 mmol/L, L = 1,0 cm, plaques immergées de 2,0 cm (S = 2,0 cm²). Pour trois tensions (touches AMPL. − et + du GBF) : en A, U (V) lue au voltmètre ; en B, I (mA) lue à l'ampèremètre ; en C, G = I/U ; en D, R = U/I.", court: "Tableur : A, B, C, D.", aide_geste: "Lisez la profondeur immergée (cm) sur les graduations de la plaque de gauche ; montez ou descendez avec la manivelle. Si un afficheur montre « 1 », prenez un calibre plus grand.", verifier: tableau },
-      { consigne: "Quand U augmente, G…", court: "Répondez dans le carnet.", question: choix(["ne change pas : elle caractérise la portion de solution", "augmente comme U", "diminue"], "Regardez la colonne C.", "Exact.") },
+      { consigne: "Quand U augmente, G…", court: "Répondez dans le carnet.", question: choix(["ne change pas", "augmente comme U", "diminue comme 1/U"], "Regardez la colonne C.", "Exact.") },
       { consigne: "Conductance mesurée (mS) ?", court: "G (mS) ?", question: nombre("mS", 2.41, 0.1, "G = I / U.", "Exact.") },
     ],
   };
@@ -4839,12 +4839,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "G = σ·S/L.",
     etapes: [
       { consigne: "NaCl 10 mmol/L, S = 2,0 cm² : mesurez I pour trois distances L (faites glisser la plaque de droite).", court: "Trois distances.", verifier: ({ faits }) => distincts(faits, "nacl10", (m) => m.S === 2, "L") >= 3 },
-      { consigne: "Quand L double, G…", court: "Répondez dans le carnet.", question: choix(["est divisée par deux : G est inversement proportionnelle à L", "double", "ne change pas"], "Comparez L = 1 cm et L = 2 cm.", "Exact.") },
+      { consigne: "Quand L double, G…", court: "Répondez dans le carnet.", question: choix(["est divisée par deux", "est multipliée par deux", "ne change pas du tout"], "Comparez L = 1 cm et L = 2 cm.", "Exact.") },
       { consigne: "L = 1,0 cm : mesurez I pour trois profondeurs d'immersion (S = 1, 2, 3 cm²).", court: "Trois surfaces.", verifier: ({ faits }) => distincts(faits, "nacl10", (m) => m.L === 1, "S") >= 3 },
-      { consigne: "Quand S double, G…", court: "Répondez dans le carnet.", question: choix(["double : G est proportionnelle à S", "est divisée par deux", "ne change pas"], "Comparez S = 1 et S = 2 cm².", "Exact.") },
+      { consigne: "Quand S double, G…", court: "Répondez dans le carnet.", question: choix(["double", "est divisée par deux", "ne change pas"], "Comparez S = 1 et S = 2 cm².", "Exact.") },
       { consigne: "Mêmes L et S : comparez NaCl à 5 mmol/L et à 10 mmol/L.", court: "Deux concentrations.", verifier: ({ faits }) => me(faits).some((m) => m.flacon === "nacl5" && me(faits).some((n) => n.flacon === "nacl10" && n.L === m.L && n.S === m.S)) },
       { consigne: "Conductivité σ = G·L/S de la solution à 10 mmol/L (en S/m) ?", court: "σ (S/m) ?", question: nombre("S/m", 0.12, 0.006, "G en S, L en m, S en m² (1 cm² = 10⁻⁴ m²).", "Exact : σ ≈ 0,12 S/m.") },
-      { consigne: "Pour comparer deux solutions, il faut…", court: "Répondez dans le carnet.", question: choix(["les mêmes L, S et la même température (grandeurs d'influence)", "la même tension seulement", "des béchers de même couleur"], "G dépend de L, S, C et θ.", "Exact.") },
+      { consigne: "Pour comparer deux solutions, il faut…", court: "Répondez dans le carnet.", question: choix(["mêmes L, S et température", "la même tension U seulement", "le même volume de solution"], "G dépend de L, S, C et θ.", "Exact.") },
     ],
   };
 

@@ -22,8 +22,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Allumez la lampe et posez la lame « oignon » sur la platine.", court: "Lampe, lame d'oignon.", aide_geste: "Faites glisser la lame de la boîte jusqu'à la platine.", verifier: ({ faits }) => mi(faits).lampe && mi(faits).lame === "oignon" },
       { consigne: "Avec l'objectif × 4, montez la platine avec la vis macrométrique jusqu'à voir les cellules nettes.", court: "Net à × 4.", aide_geste: "Glissez vers le haut ou le bas sur la grosse molette.", verifier: ({ faits }) => net(faits, "oignon:4:10") },
       { consigne: "Tournez le revolver (× 10 puis × 40) ; refaites la mise au point avec la vis micrométrique.", court: "Net à × 40.", aide_geste: "Touchez le revolver ; glissez sur la petite molette, au centre.", verifier: ({ faits }) => net(faits, "oignon:40:10") },
-      { consigne: "Quand on passe de l'objectif × 4 à l'objectif × 40…", court: "Répondez dans le carnet.", question: choix(["les cellules sont plus grandes, le champ plus petit et l'image plus sombre", "on voit plus de cellules", "rien ne change"], "Comparez le nombre de cellules vues.", "Exact.") },
-      { consigne: "Rôle de l'objectif :", court: "Répondez dans le carnet.", question: choix(["donner de la préparation une image intermédiaire réelle, renversée et agrandie", "éclairer la préparation", "jouer le rôle de loupe pour l'œil"], "Relisez le document « Objectif, oculaire, grossissement ».", "Exact : l'oculaire, lui, est une loupe.") },
+      { consigne: "Quand on passe de l'objectif × 4 à l'objectif × 40…", court: "Répondez dans le carnet.", question: choix(["l'image grandit, le champ rétrécit", "on voit davantage de cellules", "l'image grandit et devient plus claire"], "Comparez le nombre de cellules vues.", "Exact.") },
+      { consigne: "Rôle de l'objectif :", court: "Répondez dans le carnet.", question: choix(["donner une image réelle agrandie", "éclairer la préparation par-dessous", "servir de loupe pour l'œil"], "Relisez le document « Objectif, oculaire, grossissement ».", "Exact : l'oculaire, lui, est une loupe.") },
       { consigne: "Grossissement commercial avec l'objectif × 40 et l'oculaire × 10 ?", court: "Gc ?", question: { type: "nombre", unite: "", attendu: 400, tolerance: 1, aide: "Gc = |γ1| × Gc(oculaire).", bravo: "Exact : 40 × 10 = 400." } },
     ],
   };
@@ -52,9 +52,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "À × 40, remplacez l'oculaire × 10 par l'oculaire × 20 et refaites la mise au point.", court: "Oculaire × 20.", verifier: ({ faits }) => mi(faits).nets.some((c) => c.endsWith(":40:20")) },
       { consigne: "Lisez le document « Les limites du microscope ».", court: "Lisez le document.", verifier: ({ faits }) => (faits.docs_microscope || []).includes(2) },
-      { consigne: "Avec l'oculaire × 20, l'image est…", court: "Répondez dans le carnet.", question: choix(["plus grande, mais plus sombre et sans détail nouveau", "beaucoup plus détaillée", "plus lumineuse"], "Comparez avec l'oculaire × 10.", "Exact : c'est un grossissement « à vide ».") },
-      { consigne: "Ce qui limite les détails visibles au microscope optique :", court: "Répondez dans le carnet.", question: choix(["la diffraction de la lumière : on ne sépare pas deux points à moins de 0,2 µm environ", "la taille de la platine", "la puissance de la lampe seulement"], "Relisez le document.", "Exact.") },
-      { consigne: "À × 40, la mise au point est délicate parce que…", court: "Répondez dans le carnet.", question: choix(["la profondeur de champ est très faible", "l'objectif est trop court", "la lame est trop épaisse"], "Avec × 40, il faut la vis micrométrique.", "Exact.") },
+      { consigne: "Avec l'oculaire × 20, l'image est…", court: "Répondez dans le carnet.", question: choix(["plus grande, sans détail nouveau", "plus grande et bien plus détaillée", "plus grande et plus lumineuse"], "Comparez avec l'oculaire × 10.", "Exact : c'est un grossissement « à vide ».") },
+      { consigne: "Ce qui limite les détails visibles au microscope optique :", court: "Répondez dans le carnet.", question: choix(["la diffraction de la lumière", "la taille de la platine", "la puissance de la lampe"], "Relisez le document.", "Exact.") },
+      { consigne: "À × 40, la mise au point est délicate parce que…", court: "Répondez dans le carnet.", question: choix(["la profondeur de champ est faible", "l'objectif est trop court pour elle", "la lame est trop épaisse pour lui"], "Avec × 40, il faut la vis micrométrique.", "Exact.") },
     ],
   };
 
@@ -71,7 +71,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Retirez l'écran, posez l'oculaire et faites-le glisser jusqu'à voir le « F » net.", court: "« F » net dans le modèle.", verifier: ({ faits }) => mo(faits).nets.length > 0 },
       { consigne: "Grossissement G = |γ1| × 0,25 / f'2 (f'2 en mètres) ?", court: "G ?", question: { type: "nombre", unite: "", attendu: 6.25, tolerance: 0.3, aide: "0,25 / 0,10 = 2,5 ; puis multipliez par |γ1|.", bravo: "Exact : comparez les deux vues." } },
       { consigne: "Touchez « Faisceau » (oculaire en place, écran retiré).", court: "Faisceau.", verifier: ({ faits }) => !!mo(faits).faisceau },
-      { consigne: "Les rayons issus de B, à la sortie de l'oculaire, sont…", court: "Répondez dans le carnet.", question: choix(["parallèles : l'image finale est à l'infini, A1B1 est au foyer objet F2", "convergents vers l'écran", "arrêtés par l'oculaire"], "Suivez les trois rayons.", "Exact.") },
+      { consigne: "Les rayons issus de B, à la sortie de l'oculaire, sont…", court: "Répondez dans le carnet.", question: choix(["parallèles entre eux", "convergents vers l'œil", "divergents depuis F'2"], "Suivez les trois rayons.", "Exact.") },
     ],
   };
 

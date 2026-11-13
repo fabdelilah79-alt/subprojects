@@ -4719,10 +4719,10 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Plongez le clou de fer dans le tube 1 ; attendez que la solution se décolore (comparez au tube témoin).", court: "Clou dans le tube 1.", aide_geste: "Faites glisser le clou au-dessus du tube 1 et lâchez-le ; il faut environ une minute.", verifier: ({ faits }) => m(faits, "t1").metal === "fer" && m(faits, "t1").Cu <= 0.025 },
       { consigne: "Ajoutez quelques gouttes de soude dans le tube 1 (mettez lunettes et gants).", court: "Soude dans le tube 1.", aide_geste: "S'il reste des ions cuivre II, ils précipitent d'abord en bleu : ajoutez encore quelques gouttes.", verifier: ({ faits }) => m(faits, "t1").FeOH2 > 0.005 },
-      { consigne: "Le précipité vert montre que…", court: "Répondez dans le carnet.", question: choix(["des ions fer II Fe²⁺ se sont formés", "il reste des ions cuivre II", "la soude est verte"], "Regardez la fiche : Fe²⁺ donne un précipité vert.", "Exact.") },
-      { consigne: "Que s'est-il passé pour le fer ?", court: "Répondez dans le carnet.", question: choix(["Fe → Fe²⁺ + 2 e⁻ : le fer a cédé deux électrons, c'est un réducteur", "Fe + 2 e⁻ → Fe²⁺ : le fer a capté deux électrons", "le fer a cédé des protons"], "Un atome Fe devient un ion Fe²⁺.", "Exact.") },
+      { consigne: "Le précipité vert montre que…", court: "Répondez dans le carnet.", question: choix(["des ions Fe²⁺ se sont formés", "il reste des ions Cu²⁺", "des ions Fe³⁺ se sont formés"], "Regardez la fiche : Fe²⁺ donne un précipité vert.", "Exact.") },
+      { consigne: "Que s'est-il passé pour le fer ?", court: "Répondez dans le carnet.", question: choix(["Fe → Fe²⁺ + 2 e⁻ : il est réducteur", "Fe + 2 e⁻ → Fe²⁺ : il est oxydant", "Fe → Fe²⁺ + 2 H⁺ : il est acide"], "Un atome Fe devient un ion Fe²⁺.", "Exact.") },
       { consigne: "L'équation de la réaction est…", court: "Répondez dans le carnet.", question: choix(["Fe + Cu²⁺ → Fe²⁺ + Cu", "Fe²⁺ + Cu → Fe + Cu²⁺", "Fe + Cu → Fe²⁺ + Cu²⁺"], "Les deux électrons cédés par le fer sont captés par l'ion Cu²⁺ : ils ne figurent pas dans l'équation.", "Exact.") },
-      { consigne: "Dans cette réaction, l'oxydant est…", court: "Répondez dans le carnet.", question: choix(["l'ion cuivre II Cu²⁺ : il capte des électrons", "le fer Fe", "l'ion sulfate SO₄²⁻"], "Un oxydant capte des électrons ; SO₄²⁻ est spectateur.", "Exact : couple Cu²⁺/Cu.") },
+      { consigne: "Dans cette réaction, l'oxydant est…", court: "Répondez dans le carnet.", question: choix(["l'ion Cu²⁺", "le fer Fe", "l'ion SO₄²⁻"], "Un oxydant capte des électrons ; SO₄²⁻ est spectateur.", "Exact : couple Cu²⁺/Cu.") },
     ],
   };
 
@@ -4736,11 +4736,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Ajoutez quelques gouttes d'eau de Javel dans le tube 1 (iodure de potassium).", court: "Javel dans le tube 1.", verifier: ({ faits }) => vu(faits, "t1", "ClO⁻") },
       { consigne: "Ajoutez une goutte d'empois d'amidon dans le tube 1 : quelle espèce s'est formée ?", court: "Amidon dans le tube 1.", verifier: ({ faits }) => io(faits, "t1").amidon && io(faits, "t1").I2 > 2e-6 },
-      { consigne: "Dans le tube 1, les ions iodure I⁻…", court: "Répondez dans le carnet.", question: choix(["ont cédé des électrons à l'ion hypochlorite (2 I⁻ → I₂ + 2 e⁻) : ce sont des réducteurs", "ont capté des électrons", "ont réagi avec l'amidon"], "Le diiode révélé par l'amidon vient des ions iodure.", "Exact : ClO⁻ est l'oxydant.") },
+      { consigne: "Dans le tube 1, les ions iodure I⁻…", court: "Répondez dans le carnet.", question: choix(["ont cédé des électrons : réducteurs", "ont capté des électrons : oxydants", "ont cédé des protons : acides"], "Le diiode révélé par l'amidon vient des ions iodure.", "Exact : ClO⁻ est l'oxydant.") },
       { consigne: "Ajoutez de la vitamine C goutte à goutte dans le tube 2 (diiode) jusqu'à la décoloration.", court: "Vitamine C dans le tube 2.", verifier: ({ faits }) => vu(faits, "t2", "I₂ + C₆H₈O₆") && io(faits, "t2").I2 < 1e-4 },
-      { consigne: "L'acide ascorbique est…", court: "Répondez dans le carnet.", question: choix(["un réducteur : il cède des électrons au diiode", "un oxydant", "un acide qui neutralise le diiode"], "Le diiode est réduit en ions iodure.", "Exact : c'est pourquoi la vitamine C est un antioxydant.") },
+      { consigne: "L'acide ascorbique est…", court: "Répondez dans le carnet.", question: choix(["un réducteur du diiode", "un oxydant du diiode", "une base du diiode"], "Le diiode est réduit en ions iodure.", "Exact : c'est pourquoi la vitamine C est un antioxydant.") },
       { consigne: "La demi-équation du couple I₂/I⁻ s'écrit…", court: "Répondez dans le carnet.", question: choix(["I₂ + 2 e⁻ ⇌ 2 I⁻", "I₂ ⇌ 2 I⁻ + 2 e⁻", "I⁻ + e⁻ ⇌ I₂"], "L'oxydant capte des électrons ; conservez les atomes d'iode et les charges.", "Exact.") },
-      { consigne: "Dans une réaction d'oxydoréduction, les électrons…", court: "Répondez dans le carnet.", question: choix(["passent directement du réducteur d'un couple à l'oxydant d'un autre couple : ils ne sont pas libres en solution", "restent libres dans l'eau", "sont apportés par l'eau"], "Les électrons ne figurent pas dans l'équation de la réaction.", "Exact.") },
+      { consigne: "Dans une réaction d'oxydoréduction, les électrons…", court: "Répondez dans le carnet.", question: choix(["passent du réducteur à l'oxydant", "passent de l'oxydant au réducteur", "restent libres dans la solution"], "Les électrons ne figurent pas dans l'équation de la réaction.", "Exact.") },
     ],
   };
 

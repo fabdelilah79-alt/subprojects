@@ -20,12 +20,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "W_électrique reçue = W_utile + chaleur.",
     etapes: [
       { consigne: "Réalisez un circuit série : générateur, interrupteur, lampe. Fermez l'interrupteur.", court: "Circuit avec la lampe.", aide_geste: BRANCHER, verifier: ({ faits }) => vu(faits, "lampe") },
-      { consigne: "La lampe reçoit de l'énergie électrique et la transfère au milieu extérieur surtout sous forme…", court: "Répondez dans le carnet.", question: choix(["de rayonnement (lumière) et de chaleur", "de travail mécanique", "d'énergie chimique"], "Elle éclaire et elle chauffe.", "Exact.") },
+      { consigne: "La lampe reçoit de l'énergie électrique et la transfère au milieu extérieur surtout sous forme…", court: "Répondez dans le carnet.", question: choix(["de lumière et de chaleur", "de travail et de chaleur", "d'énergie chimique"], "Elle éclaire et elle chauffe.", "Exact.") },
       { consigne: "Remplacez la lampe par le moteur : il fait monter la masse de 200 g.", court: "Circuit avec le moteur.", verifier: ({ faits }) => vu(faits, "moteur") },
-      { consigne: "Le moteur transforme l'énergie électrique reçue en…", court: "Répondez dans le carnet.", question: choix(["travail mécanique (la masse monte) et un peu de chaleur", "rayonnement", "énergie chimique"], "La masse gagne de l'énergie potentielle de pesanteur.", "Exact.") },
+      { consigne: "Le moteur transforme l'énergie électrique reçue en…", court: "Répondez dans le carnet.", question: choix(["travail et un peu de chaleur", "lumière et un peu de chaleur", "énergie chimique et chaleur"], "La masse gagne de l'énergie potentielle de pesanteur.", "Exact.") },
       { consigne: "Remplacez le moteur par l'électrolyseur : des bulles de gaz apparaissent sur les électrodes.", court: "Circuit avec l'électrolyseur.", verifier: ({ faits }) => vu(faits, "electrolyseur") },
-      { consigne: "L'électrolyseur transforme l'énergie électrique en…", court: "Répondez dans le carnet.", question: choix(["énergie chimique (une réaction a lieu) et un peu de chaleur", "travail mécanique", "rayonnement"], "Une transformation chimique produit du dihydrogène et du dioxygène.", "Exact.") },
-      { consigne: "Pour chaque récepteur, l'énergie électrique reçue est…", court: "Répondez dans le carnet.", question: choix(["égale à la somme de l'énergie utile et de la chaleur cédée : l'énergie se conserve", "plus petite que l'énergie utile", "perdue en totalité"], "Rien ne se crée, rien ne se perd.", "Exact.") },
+      { consigne: "L'électrolyseur transforme l'énergie électrique en…", court: "Répondez dans le carnet.", question: choix(["énergie chimique et chaleur", "travail et un peu de chaleur", "lumière et un peu de chaleur"], "Une transformation chimique produit du dihydrogène et du dioxygène.", "Exact.") },
+      { consigne: "Pour chaque récepteur, l'énergie électrique reçue est…", court: "Répondez dans le carnet.", question: choix(["égale à l'énergie utile + la chaleur", "égale à l'énergie utile seulement", "plus petite que l'énergie utile"], "Rien ne se crée, rien ne se perd.", "Exact.") },
     ],
   };
 
@@ -37,7 +37,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Rayonnement, chaleur, travail mécanique, énergie chimique.",
     etapes: [
       { consigne: "Classez les huit appareils selon la forme principale de l'énergie utile.", court: "Classez les étiquettes.", verifier: ({ faits }) => L.tableau_tri.verifier(L.APPAREILS_ENERGIE, faits.tri_energies) },
-      { consigne: "Dans tous ces appareils, une partie de l'énergie reçue est aussi transférée sous forme…", court: "Répondez dans le carnet.", question: choix(["de chaleur (effet Joule)", "de lumière", "d'énergie chimique"], "Tous les appareils tiédissent quand ils fonctionnent.", "Exact.") },
+      { consigne: "Dans tous ces appareils, une partie de l'énergie reçue est aussi transférée sous forme…", court: "Répondez dans le carnet.", question: choix(["de chaleur", "de lumière", "d'énergie chimique"], "Tous les appareils tiédissent quand ils fonctionnent.", "Exact.") },
     ],
   };
 

@@ -30,7 +30,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Construisez le butane : quatre carbones à la suite, puis des hydrogènes dans tous les trous.", court: "Butane C₄H₁₀.", aide_geste: "Prenez une boule dans un casier et lâchez-la contre un trou libre ; glissez à côté du modèle pour le tourner.", verifier: construit("butane", "Les quatre carbones doivent se suivre.") },
       { consigne: "Touchez « Tout démonter », puis construisez un isomère du butane à chaîne ramifiée.", court: "Isomère ramifié de C₄H₁₀.", verifier: construit("2-méthylpropane", "Accrochez trois carbones au carbone central.") },
-      { consigne: "Le butane et le 2-méthylpropane sont des isomères de constitution parce qu'ils ont…", court: "Répondez dans le carnet.", question: choix(["la même formule brute et des enchaînements d'atomes différents", "la même formule semi-développée", "des formules brutes différentes"], "Comptez les atomes, puis comparez les chaînes.", "Exact.") },
+      { consigne: "Le butane et le 2-méthylpropane sont des isomères de constitution parce qu'ils ont…", court: "Répondez dans le carnet.", question: choix(["même formule brute, chaînes différentes", "même chaîne, formules brutes différentes", "même formule semi-développée exactement"], "Comptez les atomes, puis comparez les chaînes.", "Exact.") },
       { consigne: "La formule semi-développée du 2-méthylpropane est…", court: "Répondez dans le carnet.", question: choix(["CH₃–CH(CH₃)–CH₃", "CH₃–CH₂–CH₂–CH₃", "CH₂=CH–CH₃"], "Le carbone central porte un seul hydrogène.", "Exact.") },
       { consigne: "CH₃–CH(CH₃)–CH₂–CH₃ se nomme…", court: "Répondez dans le carnet.", question: choix(["2-méthylbutane", "3-méthylbutane", "2-méthylpentane"], "Chaîne la plus longue : 4 carbones ; numérotez pour donner le plus petit indice.", "Exact : c'est un isomère du pentane.") },
     ],
@@ -46,8 +46,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Démontez, puis construisez le (Z)-but-2-ène : une liaison double entre deux carbones, un CH₃ sur chacun, du même côté.", court: "(Z)-but-2-ène.", aide_geste: "Lâchez chaque carbone près du trou choisi : il s'y accroche.", verifier: construit("(Z)-but-2-ène", "Les deux CH₃ doivent être du même côté de la liaison double.") },
       { consigne: "Démontez, puis construisez le (E)-but-2-ène : les deux CH₃ de part et d'autre de la liaison double.", court: "(E)-but-2-ène.", verifier: construit("(E)-but-2-ène", "Les deux CH₃ doivent être de part et d'autre de la liaison double.") },
-      { consigne: "On ne peut pas passer de l'isomère Z à l'isomère E en tournant le modèle parce que…", court: "Répondez dans le carnet.", question: choix(["la liaison double empêche la rotation autour de l'axe C=C", "les hydrogènes se gênent", "la molécule est linéaire"], "Essayez de tourner un CH₃ autour de la liaison double.", "Exact.") },
-      { consigne: "Le but-1-ène CH₂=CH–CH₂–CH₃ a-t-il des isomères Z et E ?", court: "Répondez dans le carnet.", question: choix(["non : l'un des carbones de la double liaison porte deux atomes identiques (H)", "oui, comme le but-2-ène", "oui, trois isomères"], "Isomérie Z/E : CHA=CHB.", "Exact.") },
+      { consigne: "On ne peut pas passer de l'isomère Z à l'isomère E en tournant le modèle parce que…", court: "Répondez dans le carnet.", question: choix(["la liaison C=C empêche la rotation", "les atomes d'hydrogène se gênent", "la molécule est linéaire et rigide"], "Essayez de tourner un CH₃ autour de la liaison double.", "Exact.") },
+      { consigne: "Le but-1-ène CH₂=CH–CH₂–CH₃ a-t-il des isomères Z et E ?", court: "Répondez dans le carnet.", question: choix(["non : un carbone porte deux H", "oui, comme le but-2-ène", "oui : il a une double liaison"], "Isomérie Z/E : CHA=CHB.", "Exact.") },
     ],
   };
 
@@ -59,7 +59,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "n CH₂=CHA → –(CH₂–CHA)n–.",
     etapes: [
       { consigne: "Touchez chaque document pour le lire, puis refermez-le.", court: "Lire les quatre documents.", verifier: ({ faits }) => (faits.petrochimie || []).length >= 4 },
-      { consigne: "Le craquage d'une longue chaîne…", court: "Répondez dans le carnet.", question: choix(["la raccourcit (C₁₀H₂₂ → C₈H₁₈ + C₂H₄)", "la ramifie", "la transforme en cycle"], "Document 2.", "Exact.") },
+      { consigne: "Le craquage d'une longue chaîne…", court: "Répondez dans le carnet.", question: choix(["la raccourcit", "la ramifie", "la ferme en cycle"], "Document 2.", "Exact.") },
       { consigne: "Le motif du PVC, obtenu à partir du chlorure de vinyle CH₂=CHCl, est…", court: "Répondez dans le carnet.", question: choix(["–(CH₂–CHCl)–", "–(CH₂=CHCl)–", "–(CH–Cl)–"], "La liaison double s'ouvre ; A = Cl.", "Exact : PVC = –(CH₂–CHCl)n–.") },
       { consigne: "Le polypropylène –(CH₂–CH(CH₃))n– est obtenu à partir du monomère…", court: "Répondez dans le carnet.", question: choix(["propène CH₂=CH–CH₃", "propane CH₃–CH₂–CH₃", "éthène CH₂=CH₂"], "Le monomère est un alcène CH₂=CHA, avec A = CH₃.", "Exact.") },
     ],

@@ -48,10 +48,10 @@ Utilisé par : page.html (dernier script).
       { consigne: "Montez en série le générateur (6 V), l'interrupteur, l'ampèremètre (bornes mA et COM, calibre 200 mA) et le moteur ; branchez le voltmètre (calibre 20 V) aux bornes du moteur. Fermez l'interrupteur et laissez la masse monter.", court: "Circuit et première montée.", aide_geste: "Tirez un fil d'une borne à une autre ; tournez le commutateur des multimètres ; fermez l'interrupteur d'un toucher.", verifier: mesure },
       { consigne: "Énergie électrique reçue par le moteur pendant la montée chronométrée : W = U·I·Δt.", court: "W (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => W(dernier(f)), tolerance_relative: 0.03, aide: "U en V, I en A (1 mA = 0,001 A), Δt en s.", bravo: "Exact." } },
       { consigne: "Puissance électrique reçue par le moteur : P = U·I.", court: "P (W) ?", question: { type: "nombre", unite: "W", attendu: (f) => dernier(f).U * dernier(f).I, tolerance_relative: 0.03, aide: "P = U × I, I en ampères.", bravo: "Exact : P = W/Δt aussi." } },
-      { consigne: "La puissance électrique P = W/Δt représente…", court: "Répondez dans le carnet.", question: choix(["la vitesse à laquelle le moteur reçoit l'énergie (en J/s, c'est-à-dire en watts)", "la quantité totale d'énergie reçue", "la force exercée par le moteur"], "P s'exprime en joules par seconde.", "Exact : la puissance est une vitesse de transfert d'énergie.") },
+      { consigne: "La puissance électrique P = W/Δt représente…", court: "Répondez dans le carnet.", question: choix(["l'énergie reçue par seconde", "l'énergie reçue en tout", "la force du moteur"], "P s'exprime en joules par seconde.", "Exact : la puissance est une vitesse de transfert d'énergie.") },
       { consigne: "Travail utile fourni à la masse (énergie potentielle gagnée) : W_u = m·g·Δh.", court: "W_u (J) ?", question: { type: "nombre", unite: "J", attendu: WU, tolerance_relative: 0.02, aide: "m = 0,200 kg, Δh = 0,40 m.", bravo: "Exact : W_u ≈ 0,785 J." } },
       { consigne: "Chaleur cédée par le moteur pendant la montée : Q = W − W_u.", court: "Q (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => W(dernier(f)) - WU, tolerance_relative: 0.06, aide: "Énergie reçue moins travail utile.", bravo: "Exact : le bobinage chauffe (effet Joule) et il y a des frottements." } },
-      { consigne: "L'énergie électrique reçue par le moteur…", court: "Répondez dans le carnet.", question: choix(["est égale à W_u + Q : elle se conserve, elle change seulement de forme", "est plus petite que W_u", "disparaît en partie"], "Comme en mécanique, l'énergie se conserve.", "Exact.") },
+      { consigne: "L'énergie électrique reçue par le moteur…", court: "Répondez dans le carnet.", question: choix(["est égale à W_u + Q", "est égale à W_u seulement", "est plus petite que W_u"], "Comme en mécanique, l'énergie se conserve.", "Exact.") },
     ],
   };
 
@@ -65,8 +65,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Faites monter la masse avec le générateur réglé à 4 V, 5 V puis 6 V (touche « ↓ » pour la redescendre). Recopiez U, I et Δt de chaque montée dans les colonnes A, B et C.", court: "Trois montées : A, B, C.", aide_geste: "Touches « +1 / −1 » du générateur ; « ↓ » sur le socle du moteur.", verifier: tableau },
       { consigne: "En D, calculez le rendement η = 0,785 / (U·I·Δt) de chaque montée.", court: "Colonne D : η.", verifier: rendements },
-      { consigne: "Quand la tension augmente, le rendement du moteur…", court: "Répondez dans le carnet.", question: choix(["augmente : la montée est plus rapide, la chaleur cédée est plus petite", "diminue", "ne change pas"], "Comparez les valeurs de la colonne D.", "Exact.") },
-      { consigne: "Pour le même travail utile, la montée est plus rapide à 6 V parce que…", court: "Répondez dans le carnet.", question: choix(["la puissance reçue P = U·I est plus grande : l'énergie est transférée plus vite", "l'énergie reçue W est plus grande", "le courant est beaucoup plus fort"], "Comparez U·I pour les trois montées : I change peu.", "Exact.") },
+      { consigne: "Quand la tension augmente, le rendement du moteur…", court: "Répondez dans le carnet.", question: choix(["augmente", "diminue", "ne change pas"], "Comparez les valeurs de la colonne D.", "Exact.") },
+      { consigne: "Pour le même travail utile, la montée est plus rapide à 6 V parce que…", court: "Répondez dans le carnet.", question: choix(["la puissance reçue est plus grande", "l'énergie utile W_u est plus grande", "la masse soulevée est plus petite"], "Comparez U·I pour les trois montées : I change peu.", "Exact.") },
     ],
   };
 

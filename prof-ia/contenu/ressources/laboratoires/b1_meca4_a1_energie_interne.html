@@ -2446,8 +2446,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "À chaque chute, la grenaille perd l'énergie mécanique m·g·h au choc. Quelle énergie a-t-elle perdue en 20 chutes ?", court: "Énergie perdue (J) ?", question: { type: "nombre", unite: "J", attendu: 20 * M * G * H, tolerance: 1, aide: "20 × m × g × h.", bravo: "Exact : environ 98 J." } },
       { consigne: "Continuez jusqu'à 40 puis 60 chutes ; lisez la température à 20, 40 et 60 chutes.", court: "Jusqu'à 60 chutes.", verifier: ({ faits }) => ["20", "40", "60"].every((n) => tu(faits).mesures?.[n] !== undefined) },
       { consigne: "Tableur, quatre lignes (0, 20, 40 et 60 chutes) : n en A, T en B, n·m·g·h en C, m·c·(T − 20,0) en D.", court: "Tableur : n, T, énergies.", verifier: tableau_tube },
-      { consigne: "Les colonnes C et D sont presque égales. L'énergie mécanique perdue par la grenaille…", court: "Répondez dans le carnet.", question: choix(["est passée à l'intérieur du plomb : sa température s'est élevée", "a disparu", "est passée dans l'air de la salle uniquement"], "Comparez C et D.", "Exact.") },
-      { consigne: "L'énergie interne U d'un système est…", court: "Répondez dans le carnet.", question: choix(["l'énergie de ses particules à l'échelle microscopique (agitation et interactions)", "son énergie cinétique de déplacement d'ensemble", "son énergie potentielle de pesanteur"], "Le tube est immobile au début et à la fin.", "Exact.") },
+      { consigne: "Les colonnes C et D sont presque égales. L'énergie mécanique perdue par la grenaille…", court: "Répondez dans le carnet.", question: choix(["est passée dans le plomb", "a disparu en tombant", "est passée dans l'air seul"], "Comparez C et D.", "Exact.") },
+      { consigne: "L'énergie interne U d'un système est…", court: "Répondez dans le carnet.", question: choix(["l'énergie de ses particules", "son énergie cinétique d'ensemble", "son énergie potentielle de pesanteur"], "Le tube est immobile au début et à la fin.", "Exact.") },
     ],
   };
 
@@ -2459,7 +2459,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Effets du travail : température, déformation, changement d'état, transformation chimique.",
     etapes: [
       { consigne: "Classez les neuf situations selon l'effet du travail reçu.", court: "Classez les étiquettes.", verifier: ({ faits }) => L.tableau_tri.verifier(L.EFFETS_TRAVAIL, faits.tri_effets) },
-      { consigne: "Quand on comprime un ressort, le travail reçu est stocké sous forme…", court: "Répondez dans le carnet.", question: choix(["d'énergie potentielle élastique", "d'énergie cinétique", "de chaleur seulement"], "Le ressort comprimé peut rendre ce travail.", "Exact.") },
+      { consigne: "Quand on comprime un ressort, le travail reçu est stocké sous forme…", court: "Répondez dans le carnet.", question: choix(["d'énergie potentielle élastique", "d'énergie cinétique du ressort", "de chaleur, et de chaleur seule"], "Le ressort comprimé peut rendre ce travail.", "Exact.") },
     ],
   };
 
@@ -2487,7 +2487,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "W = p·(V1 − V2) ; ΔU = W + Q.",
     etapes: [
       { consigne: "Posez une masse de 1 kg sur le plateau du piston. Observez le thermomètre et le volume ; attendez que le gaz revienne à 20,0 °C.", court: "1 kg sur le plateau.", aide_geste: "Glissez une masse jusqu'au plateau.", verifier: ({ faits }) => se(faits).some((e) => e.m === 1) },
-      { consigne: "Juste après la compression, la température du gaz monte, puis redescend à 20,0 °C pendant que le volume diminue encore un peu. Le gaz a…", court: "Répondez dans le carnet.", question: choix(["reçu du travail, puis cédé de la chaleur à l'extérieur", "reçu de la chaleur de l'extérieur", "perdu du travail"], "Le gaz chaud se refroidit au contact de la seringue.", "Exact.") },
+      { consigne: "Juste après la compression, la température du gaz monte, puis redescend à 20,0 °C pendant que le volume diminue encore un peu. Le gaz a…", court: "Répondez dans le carnet.", question: choix(["reçu du travail, puis cédé de la chaleur", "reçu de la chaleur, puis cédé du travail", "reçu du travail et reçu de la chaleur"], "Le gaz chaud se refroidit au contact de la seringue.", "Exact.") },
       { consigne: "Quelle est la pression du gaz avec 1 kg sur le plateau ?", court: "p (Pa) ?", question: { type: "nombre", unite: "Pa", attendu: P0 + G / S, tolerance: 400, aide: "p = p0 + m·g/S, avec S = 4,00×10⁻⁴ m².", bravo: "Exact : environ 1258 hPa, comme au manomètre." } },
       { consigne: "Recommencez avec 2 kg puis 3 kg sur le plateau (attendez chaque fois le retour à 20,0 °C).", court: "2 kg, puis 3 kg.", verifier: ({ faits }) => [2, 3].every((m) => se(faits).some((e) => e.m === m)) },
       { consigne: "Tableur, une ligne par charge : m en A, p en B, V2 en C, W = p·(V1 − V2) en D.", court: "Tableur : m, p, V2, W.", verifier: tableau_seringue },

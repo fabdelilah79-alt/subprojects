@@ -24,8 +24,8 @@ Utilisé par : simulation.js.
       { consigne: "Ajoutez quelques grains de pierre ponce par l'entonnoir.", court: "Pierre ponce.", verifier: ({ faits }) => R(faits).ponce || false },
       { consigne: "Rangez l'entonnoir, posez le réfrigérant sur le col du ballon et ouvrez l'eau.", court: "Réfrigérant posé, eau ouverte.", verifier: ({ faits }) => (R(faits).refrigerant === "monte" && R(faits).eau) || false },
       { consigne: "Allumez le chauffe-ballon et chauffez à reflux pendant 20 minutes (chronomètre). Observez la couleur.", court: "Reflux pendant 20 min.", verifier: ({ faits }) => { const r = R(faits); if (r.fuite) return "Des vapeurs s'échappent : le réfrigérant doit être posé et l'eau ouverte."; return r.avance >= 1 || false; } },
-      { consigne: "Le violet disparaît et un solide brun se forme parce que…", court: "Répondez dans le carnet.", question: choix(["l'ion permanganate MnO₄⁻ est réduit en dioxyde de manganèse MnO₂ ; l'alcool est oxydé", "l'alcool brûle", "le permanganate s'évapore"], "MnO₄⁻ est un oxydant : il capte des électrons.", "Exact.") },
-      { consigne: "L'alcool benzylique est un alcool primaire ; son oxydation par un oxydant en excès donne…", court: "Répondez dans le carnet.", question: choix(["un acide carboxylique, l'acide benzoïque C₆H₅–COOH (ici sous forme d'ions benzoate C₆H₅–COO⁻)", "une cétone", "un alcène, par déshydratation"], "Alcool primaire → aldéhyde → acide carboxylique.", "Exact.") },
+      { consigne: "Le violet disparaît et un solide brun se forme parce que…", court: "Répondez dans le carnet.", question: choix(["MnO₄⁻ est réduit en MnO₂", "MnO₄⁻ est oxydé en MnO₂", "l'alcool brûle et forme du carbone"], "MnO₄⁻ est un oxydant : il capte des électrons.", "Exact.") },
+      { consigne: "L'alcool benzylique est un alcool primaire ; son oxydation par un oxydant en excès donne…", court: "Répondez dans le carnet.", question: choix(["un acide carboxylique", "une cétone aromatique", "un aldéhyde seulement"], "Alcool primaire → aldéhyde → acide carboxylique.", "Exact.") },
       { consigne: "Arrêtez le chauffage, laissez refroidir, ôtez le réfrigérant, puis versez le contenu du ballon dans le bécher.", court: "Versez le mélange dans le bécher.", aide_geste: "Prenez le ballon par son col et inclinez-le au-dessus du bécher.", verifier: ({ faits }) => R(faits).recu >= 30 || false },
     ],
   };
@@ -40,7 +40,7 @@ Utilisé par : simulation.js.
       { consigne: "Posez un papier filtre dans le Büchner et mouillez-le avec la pissette.", court: "Papier posé et mouillé.", verifier: papier(F) },
       { consigne: "Ouvrez le robinet de la trompe à eau, puis versez tout le mélange dans le Büchner.", court: "Vide, mélange versé.", aide_geste: "Portez le bécher au-dessus du Büchner et inclinez-le avec la poignée.", verifier: ({ faits }) => (F(faits).vide && F(faits).residu && F(faits).filtrat >= 40) || false },
       { consigne: "Arrêtez : débranchez d'abord le tuyau de la fiole, puis fermez le robinet.", court: "Tuyau débranché, robinet fermé.", verifier: arreter(F) },
-      { consigne: "Le filtrat est incolore. Il contient…", court: "Répondez dans le carnet.", question: choix(["les ions benzoate C₆H₅–COO⁻, solubles dans l'eau", "le dioxyde de manganèse", "de l'acide benzoïque solide"], "Qu'est-ce qui est resté sur le papier ?", "Exact.") },
+      { consigne: "Le filtrat est incolore. Il contient…", court: "Répondez dans le carnet.", question: choix(["les ions benzoate, solubles", "le dioxyde de manganèse", "l'acide benzoïque solide"], "Qu'est-ce qui est resté sur le papier ?", "Exact.") },
     ],
   };
 
@@ -53,11 +53,11 @@ Utilisé par : simulation.js.
     conclusion_courte: "C₆H₅–COO⁻ + H₃O⁺ → C₆H₅–COOH (solide blanc).",
     etapes: [
       { consigne: "Mettez lunettes et gants, puis versez l'acide chlorhydrique dans le filtrat, peu à peu, jusqu'à ce qu'il ne se forme plus de précipité.", court: "Acidifier le filtrat.", aide_geste: "Portez le bécher d'acide au-dessus du filtrat et inclinez-le doucement.", verifier: ({ faits }) => (P(faits).cristaux > 5 && P(faits).benzoate <= 0.5) || false },
-      { consigne: "Le précipité blanc est…", court: "Répondez dans le carnet.", question: choix(["l'acide benzoïque C₆H₅–COOH, peu soluble dans l'eau : C₆H₅–COO⁻ + H₃O⁺ → C₆H₅–COOH + H₂O", "du chlorure de sodium", "du dioxyde de manganèse"], "Les ions H₃O⁺ réagissent avec les ions benzoate.", "Exact.") },
+      { consigne: "Le précipité blanc est…", court: "Répondez dans le carnet.", question: choix(["l'acide benzoïque", "du chlorure de sodium", "du dioxyde de manganèse"], "Les ions H₃O⁺ réagissent avec les ions benzoate.", "Exact.") },
       { consigne: "Posez et mouillez un papier filtre dans le Büchner.", court: "Papier posé et mouillé.", verifier: papier(C) },
       { consigne: "Ouvrez le robinet de la trompe, puis versez tout le mélange dans le Büchner.", court: "Cristaux filtrés.", verifier: ({ faits }) => (C(faits).vide && C(faits).residu && C(faits).filtrat >= 35) || false },
       { consigne: "Arrêtez : tuyau débranché d'abord, puis robinet fermé.", court: "Tuyau débranché, robinet fermé.", verifier: arreter(C) },
-      { consigne: "On rince les cristaux avec de l'eau glacée plutôt qu'avec de l'eau tiède parce que…", court: "Répondez dans le carnet.", question: choix(["l'acide benzoïque est encore moins soluble à froid : on en perd moins", "l'eau glacée sèche plus vite", "l'eau tiède le transformerait en ions benzoate"], "Regardez les données de solubilité.", "Exact.") },
+      { consigne: "On rince les cristaux avec de l'eau glacée plutôt qu'avec de l'eau tiède parce que…", court: "Répondez dans le carnet.", question: choix(["il est moins soluble à froid", "l'eau glacée sèche plus vite", "l'eau tiède le transformerait"], "Regardez les données de solubilité.", "Exact.") },
     ],
   };
 

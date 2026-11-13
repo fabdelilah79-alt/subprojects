@@ -41,7 +41,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Robinet ouvert, amenez le piston à 40 mL, puis fermez le robinet.", court: "40 mL, robinet fermé.", aide_geste: "Faites glisser le poussoir ; touchez la manette du robinet.", verifier: ({ faits }) => !!faits.boyle && !faits.boyle.ouvert && Math.abs(faits.boyle.nRT - 1013 * 40) < 1 },
       { consigne: "Faites varier le volume entre 20 et 60 mL. Pour six volumes : en A, V ; en B, P ; en C, P × V ; en D, 1/V.", court: "Tableur : A, B, C, D.", verifier: tableau_boyle },
       { consigne: "Tracez P (colonne B) en fonction de 1/V (colonne D) et modélisez.", court: "Courbe P = f(1/V).", verifier: ({ courbe }) => (courbe.x === "D" && courbe.y === "B" && courbe.n >= 6 && courbe.modele !== "aucun") || "Abscisse : D (1/V) ; ordonnée : B (P) ; choisissez un modèle." },
-      { consigne: "Que remarquez-vous ?", court: "Répondez dans le carnet.", question: choix(["P × V reste constant : P est proportionnelle à 1/V", "P est proportionnelle à V", "P ne dépend pas de V"], "Regardez la colonne C et la droite.", "Exact : loi de Boyle-Mariotte.") },
+      { consigne: "Que remarquez-vous ?", court: "Répondez dans le carnet.", question: choix(["P × V reste constant", "P / V reste constant", "P + V reste constant"], "Regardez la colonne C et la droite.", "Exact : loi de Boyle-Mariotte.") },
       { consigne: "Quantité de matière d'air enfermée (40 mL sous 1 013 hPa, à 293 K) : n = PV / RT, en mmol ?", court: "n (mmol) ?", question: nombre("mmol", 1.66, 0.05, "P = 101 300 Pa ; V = 40 × 10⁻⁶ m³.", "Exact : n ≈ 1,66 × 10⁻³ mol.") },
     ],
   };
@@ -57,7 +57,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Réglez la consigne à 0, 20, 40, 60 et 80 °C. À chaque fois, attendez que la pression ne change plus : en A, θ ; en B, P.", court: "Tableur : A, B.", aide_geste: "Touchez + ou − à côté du bouton de consigne.", verifier: tableau_temperature },
       { consigne: "Tracez P (B) en fonction de θ (A) et modélisez.", court: "Courbe P = f(θ).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 5 && courbe.modele !== "aucun") || "Abscisse : A (θ) ; ordonnée : B (P) ; choisissez un modèle." },
       { consigne: "Pour quelle température la pression serait-elle nulle (prolongez la droite) ?", court: "θ (°C) ?", question: nombre("°C", -273, 6, "P = a θ + b : cherchez θ = −b / a.", "Exact : c'est le zéro absolu.") },
-      { consigne: "La température absolue T (en kelvins) est…", court: "Répondez dans le carnet.", question: choix(["T = θ + 273,15 : la pression est proportionnelle à T", "T = θ − 273,15", "T = 273,15 × θ"], "Au zéro absolu, T = 0 K.", "Exact.") },
+      { consigne: "La température absolue T (en kelvins) est…", court: "Répondez dans le carnet.", question: choix(["T = θ + 273,15", "T = θ − 273,15", "T = 273,15 × θ"], "Au zéro absolu, T = 0 K.", "Exact.") },
       { consigne: "Quantité d'air dans le ballon : n = PV / RT (en mmol) ?", court: "n (mmol) ?", question: nombre("mmol", 10.4, 0.3, "P = 101 300 Pa ; V = 250 × 10⁻⁶ m³ ; T = 293,15 K.", "Exact : n ≈ 1,04 × 10⁻² mol.") },
       { consigne: "Volume molaire d'un gaz à 20 °C sous 1 013 hPa : Vm = RT / P (en L/mol) ?", court: "Vm (L/mol) ?", question: nombre("L/mol", 24.1, 0.3, "Vm = 8,314 × 293,15 / 101 300 m³/mol.", "Exact : environ 24 L/mol.") },
     ],

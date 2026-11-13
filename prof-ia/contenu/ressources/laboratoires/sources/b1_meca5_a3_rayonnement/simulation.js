@@ -34,9 +34,9 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tableur : t (min) en A, θ de la plaque noire en B, θ de la plaque brillante en C, de 0 à 5 min.", court: "Tableur : t, θ noire, θ brillante.", verifier: tableau },
       { consigne: "Tracez θ de la plaque noire (colonne B) en fonction du temps (colonne A).", court: "Graphique θ = f(t).", verifier: ({ courbe: c }) => (c.x === "A" && c.y === "B" && c.n >= 6) || false },
       { consigne: "Il n'y a aucun contact entre la lampe et les plaques, et l'air entre elles reste presque froid. L'énergie arrive aux plaques par…", court: "Répondez dans le carnet.", question: choix(["rayonnement", "conduction", "convection"], "La lumière et l'infrarouge de la lampe atteignent les plaques.", "Exact.") },
-      { consigne: "Les deux plaques reçoivent le même rayonnement. La plaque noire s'échauffe beaucoup plus, car…", court: "Répondez dans le carnet.", question: choix(["une surface noire mate absorbe mieux le rayonnement qu'une surface brillante", "la plaque noire est plus lourde", "la plaque brillante est plus loin de la lampe"], "La plaque brillante renvoie le rayonnement, comme un miroir.", "Exact.") },
+      { consigne: "Les deux plaques reçoivent le même rayonnement. La plaque noire s'échauffe beaucoup plus, car…", court: "Répondez dans le carnet.", question: choix(["le noir mat absorbe mieux", "le noir mat réfléchit mieux", "la plaque noire est plus lourde"], "La plaque brillante renvoie le rayonnement, comme un miroir.", "Exact.") },
       { consigne: "Rapprochez la lampe à 15 cm des plaques et attendez : la température de la plaque noire…", court: "Lampe à 15 cm.", aide_geste: "Glissez la lampe le long de sa tige ; lisez la distance sur la règle.", verifier: ({ faits }) => (la(faits).allumee && la(faits).d === 15 && la(faits).tn > 46) || false },
-      { consigne: "Plus la source est proche…", court: "Répondez dans le carnet.", question: choix(["plus la puissance reçue par rayonnement est grande", "moins la plaque s'échauffe", "plus la plaque brillante absorbe"], "Comparez les températures atteintes à 20 cm et à 15 cm.", "Exact.") },
+      { consigne: "Plus la source est proche…", court: "Répondez dans le carnet.", question: choix(["plus la puissance reçue est grande", "moins la plaque s'échauffe", "plus la plaque brillante absorbe"], "Comparez les températures atteintes à 20 cm et à 15 cm.", "Exact.") },
     ],
   };
 
@@ -48,8 +48,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Conduction, convection, rayonnement.",
     etapes: [
       { consigne: "Classez les situations selon le mode de transfert thermique principal.", court: "Classez les étiquettes.", verifier: ({ faits }) => L.tableau_tri.verifier(L.TRANSFERTS, faits.tri_transferts) },
-      { consigne: "Le Soleil chauffe la Terre à travers 150 millions de kilomètres de vide. Le rayonnement…", court: "Répondez dans le carnet.", question: choix(["peut se propager dans le vide, sans support matériel", "a besoin d'air pour se propager", "est une forme de convection"], "Il n'y a pas de matière entre le Soleil et la Terre.", "Exact.") },
-      { consigne: "Un calorimètre (vase Dewar) a une double paroi de verre argentée, avec du vide entre les deux parois. Ce vase…", court: "Répondez dans le carnet.", question: choix(["limite les trois modes de transfert : le vide arrête conduction et convection, l'argenture réfléchit le rayonnement", "laisse passer le rayonnement", "conduit bien la chaleur"], "Comparez à la plaque brillante.", "Exact.") },
+      { consigne: "Le Soleil chauffe la Terre à travers 150 millions de kilomètres de vide. Le rayonnement…", court: "Répondez dans le carnet.", question: choix(["se propage dans le vide", "a besoin d'air pour avancer", "est une forme de convection"], "Il n'y a pas de matière entre le Soleil et la Terre.", "Exact.") },
+      { consigne: "Un calorimètre (vase Dewar) a une double paroi de verre argentée, avec du vide entre les deux parois. Ce vase…", court: "Répondez dans le carnet.", question: choix(["limite les trois modes de transfert", "arrête la conduction seulement", "arrête le rayonnement seulement"], "Comparez à la plaque brillante.", "Exact.") },
     ],
   };
 

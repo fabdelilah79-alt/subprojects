@@ -40,7 +40,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tableur, une ligne par essai : α en A, F en B, F·cos α en C (=B2*COS(A2*PI()/180)), W(F) = C × 0,40 en D.", court: "Tableur : α, F, F·cos α, W.", verifier: tableau_pave },
       { consigne: "Pour un même déplacement AB, le travail de F dépend de sa direction : seule compte…", court: "Répondez dans le carnet.", question: choix(["la composante de F parallèle au déplacement", "la composante de F perpendiculaire au déplacement", "la valeur de F, quelle que soit sa direction"], "Comparez les colonnes C et D.", "Exact : W = F·AB·cos α.") },
       { consigne: "À vitesse constante, le frottement f compense la traction. Quel est le travail de f de A à B, pour l'essai à 0° ?", court: "W(f) (J) ?", question: { type: "nombre", unite: "J", attendu: (f) => -F0(f) * 0.4, tolerance: 0.05, aide: "f est opposée au déplacement : α = 180°, cos α = −1.", bravo: "Exact : W(f) < 0, travail résistant." } },
-      { consigne: "De A à B, le travail du poids du pavé et celui de la réaction normale de la paillasse sont…", court: "Répondez dans le carnet.", question: choix(["nuls : ces forces sont perpendiculaires au déplacement", "moteurs", "résistants"], "cos 90° = 0.", "Exact.") },
+      { consigne: "De A à B, le travail du poids du pavé et celui de la réaction normale de la paillasse sont…", court: "Répondez dans le carnet.", question: choix(["nuls", "moteurs", "résistants"], "cos 90° = 0.", "Exact.") },
     ],
   };
 
@@ -53,7 +53,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Classez les neuf situations : le travail de la force citée est-il moteur, résistant ou nul ?", court: "Classez les étiquettes.", verifier: ({ faits }) => L.tableau_tri.verifier(L.SITUATIONS_TRAVAIL, faits.tri_travail) },
       { consigne: "Le travail d'une force est moteur quand l'angle entre la force et le déplacement est…", court: "Répondez dans le carnet.", question: choix(["inférieur à 90°", "supérieur à 90°", "égal à 90°"], "cos α > 0 pour α < 90°.", "Exact.") },
-      { consigne: "Un porteur tient une valise immobile : il se fatigue, mais le travail de sa force est nul, car…", court: "Répondez dans le carnet.", question: choix(["le point d'application de la force ne se déplace pas", "la force est nulle", "la valise est trop lourde"], "W = F·AB·cos α, avec AB = 0.", "Exact.") },
+      { consigne: "Un porteur tient une valise immobile : il se fatigue, mais le travail de sa force est nul, car…", court: "Répondez dans le carnet.", question: choix(["la valise ne se déplace pas", "sa force est nulle", "la valise est trop lourde"], "W = F·AB·cos α, avec AB = 0.", "Exact.") },
     ],
   };
 
@@ -85,7 +85,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tableur, une ligne par essai : α en A, L (m) en B, F (N) en C, W(F) = B × C en D.", court: "Tableur : α, L, F, W.", verifier: tableau_plan },
       { consigne: "Le travail de F est le même pour tous les chemins. Il vaut…", court: "Répondez dans le carnet.", question: choix(["m·g·h", "m·g·L", "F·h"], "Calculez 0,500 × 9,81 × 0,200.", "Exact : environ 0,98 J.") },
       { consigne: "Quel est le travail du poids du chariot, de O jusqu'au faisceau ?", court: "W(P) (J) ?", question: { type: "nombre", unite: "J", attendu: -0.5 * 9.81 * 0.2, tolerance: 0.03, aide: "W(P) = m·g·(zA − zB), avec zB − zA = 0,200 m.", bravo: "Exact : le chariot monte, le travail du poids est résistant." } },
-      { consigne: "Le travail du poids entre deux points dépend…", court: "Répondez dans le carnet.", question: choix(["seulement de la différence d'altitude entre ces points", "de la longueur du chemin suivi", "de l'inclinaison du plan"], "Comparez vos trois chemins.", "Exact : il ne dépend pas du chemin suivi.") },
+      { consigne: "Le travail du poids entre deux points dépend…", court: "Répondez dans le carnet.", question: choix(["de la différence d'altitude", "de la longueur du chemin", "de l'inclinaison du plan"], "Comparez vos trois chemins.", "Exact : il ne dépend pas du chemin suivi.") },
       { consigne: "Le chariot redescend du faisceau jusqu'en O. Quel est le travail de son poids ?", court: "W(P) (J) ?", question: { type: "nombre", unite: "J", attendu: 0.5 * 9.81 * 0.2, tolerance: 0.03, aide: "zA − zB = +0,200 m.", bravo: "Exact : travail moteur." } },
     ],
   };

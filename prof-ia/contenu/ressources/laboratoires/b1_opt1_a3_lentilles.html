@@ -2897,11 +2897,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Allumez la boîte à rayons (« Rayons »).", court: "Allumez les rayons.", verifier: ({ faits }) => !!ta(faits).allume },
       { consigne: "Posez la lentille L1 sur l'axe du tableau.", court: "L1 sur le tableau.", aide_geste: "Faites glisser la lentille du plumier jusqu'au tableau, puis le long de l'axe.", verifier: ({ faits }) => !!ta(faits).vu.conv },
-      { consigne: "Après la lentille L1, les rayons parallèles…", court: "Répondez dans le carnet.", question: choix(["convergent vers un même point de l'axe : le foyer image F'", "restent parallèles", "s'écartent les uns des autres"], "Suivez les rayons après la lentille.", "Exact : L1 est convergente.") },
+      { consigne: "Après la lentille L1, les rayons parallèles…", court: "Répondez dans le carnet.", question: choix(["convergent au foyer image F'", "convergent au foyer objet F", "restent parallèles entre eux"], "Suivez les rayons après la lentille.", "Exact : L1 est convergente.") },
       { consigne: "Placez le repère F' au point où les rayons se croisent.", court: "Repère F' (L1).", aide_geste: "Faites glisser l'aimant rouge.", verifier: ({ faits }) => mes(faits, "L1") !== undefined },
       { consigne: "Distance focale de L1 (du centre de la lentille au repère F') ?", court: "f' (mm) de L1 ?", question: { type: "nombre", unite: "mm", attendu: (f) => mes(f, "L1") || 0, tolerance: 2, aide: "Comptez les carreaux (1 cm) et les graduations de l'axe (1 mm).", bravo: "Exact : environ 4 cm." } },
       { consigne: "Remplacez L1 par la lentille L4.", court: "L4 sur le tableau.", verifier: ({ faits }) => !!ta(faits).vu.div },
-      { consigne: "Après la lentille L4, les rayons…", court: "Répondez dans le carnet.", question: choix(["s'écartent : ils semblent venir d'un point situé avant la lentille", "convergent derrière la lentille", "restent parallèles"], "Touchez « Prolonger » pour tracer leurs prolongements.", "Exact : L4 est divergente ; son foyer image est virtuel.") },
+      { consigne: "Après la lentille L4, les rayons…", court: "Répondez dans le carnet.", question: choix(["s'écartent les uns des autres", "convergent derrière la lentille", "restent parallèles entre eux"], "Touchez « Prolonger » pour tracer leurs prolongements.", "Exact : L4 est divergente ; son foyer image est virtuel.") },
       { consigne: "Avec « Prolonger », placez le repère F' de L4, là où les prolongements se croisent.", court: "Repère F' (L4).", verifier: ({ faits }) => mes(faits, "L4") !== undefined },
     ],
   };
@@ -2915,9 +2915,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "f' dépend de R et de n.",
     etapes: [
       { consigne: "Mesurez f' pour L1, L2 et L3 (repère F'). Une ligne par lentille : en A, R ; en B, n ; en C, f' mesurée ; en D, R / (2(n − 1)).", court: "Tableur : A, B, C, D.", verifier: tableau },
-      { consigne: "Comparez L1 et L2 (même matière) :", court: "Répondez dans le carnet.", question: choix(["la lentille aux faces les plus bombées (R plus petit) a la plus petite distance focale", "f' ne dépend pas de la forme", "la lentille la plus plate converge le plus"], "Comparez C pour L1 et L2.", "Exact.") },
-      { consigne: "Comparez L1 et L3 (même forme) :", court: "Répondez dans le carnet.", question: choix(["la matière la plus réfringente (n plus grand) donne la plus petite distance focale", "f' ne dépend pas de la matière", "le verre flint est divergent"], "Comparez C pour L1 et L3.", "Exact : f' dépend du milieu et des rayons des faces.") },
-      { consigne: "Les valeurs mesurées (colonne C) sont un peu plus grandes que R / (2(n − 1)), parce que…", court: "Répondez dans le carnet.", question: choix(["ces lentilles sont épaisses : la formule n'est exacte que pour une lentille mince", "le tableau est mal gradué", "la lumière ralentit dans l'air"], "Regardez l'épaisseur de L2.", "Exact.") },
+      { consigne: "Comparez L1 et L2 (même matière) :", court: "Répondez dans le carnet.", question: choix(["plus bombée : f' plus petite", "plus bombée : f' plus grande", "f' ne dépend pas de la forme"], "Comparez C pour L1 et L2.", "Exact.") },
+      { consigne: "Comparez L1 et L3 (même forme) :", court: "Répondez dans le carnet.", question: choix(["n plus grand : f' plus petite", "n plus grand : f' plus grande", "f' ne dépend pas de la matière"], "Comparez C pour L1 et L3.", "Exact : f' dépend du milieu et des rayons des faces.") },
+      { consigne: "Les valeurs mesurées (colonne C) sont un peu plus grandes que R / (2(n − 1)), parce que…", court: "Répondez dans le carnet.", question: choix(["ces lentilles sont épaisses", "le tableau est mal gradué", "la lumière ralentit dans l'air"], "Regardez l'épaisseur de L2.", "Exact.") },
     ],
   };
 
@@ -2929,7 +2929,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Bords minces : convergente ; bords épais : divergente.",
     etapes: [
       { consigne: "Placez la lentille A, puis la lentille B, au-dessus du texte.", court: "A puis B sur le texte.", aide_geste: "Faites glisser chaque lentille par son manche.", verifier: ({ faits }) => !!(faits.loupe || {}).A && !!(faits.loupe || {}).B },
-      { consigne: "La lentille A (bords minces) agrandit le texte : elle est…", court: "Répondez dans le carnet.", question: choix(["convergente (on l'utilise comme loupe)", "divergente", "ni l'une ni l'autre"], "Comparez avec L1, L2, L3 du tableau.", "Exact.") },
+      { consigne: "La lentille A (bords minces) agrandit le texte : elle est…", court: "Répondez dans le carnet.", question: choix(["convergente", "divergente", "ni l'une ni l'autre"], "Comparez avec L1, L2, L3 du tableau.", "Exact.") },
       { consigne: "La lentille B (bords épais) montre le texte plus petit : elle est…", court: "Répondez dans le carnet.", question: choix(["divergente", "convergente", "plane"], "Comparez avec L4 du tableau.", "Exact.") },
     ],
   };

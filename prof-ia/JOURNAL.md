@@ -1624,3 +1624,16 @@ Reste à faire : physique de 2e année du bac (environ 330 questions), puis 1re 
   lettres (« ne change pas » contre « augmente »). Contrôle des 167 laboratoires : aucun ne plante.
 
 Problèmes restants : 1re année du bac et tronc commun encore à réécrire (la bonne réponse y est souvent la plus longue).
+
+## 2026-11-13 — Questions du carnet : réponses de longueur égale (1re année du bac)
+
+- 243 questions à choix réécrites dans les 47 laboratoires de 1re année du bac (chimie, électricité, mécanique, optique,
+  y compris la partie spécifique d'électronique) : bonne réponse réduite à l'essentiel, mauvaises réponses de même forme
+  (signe ou sens inversé, puissance ou facteur faux, image réelle/virtuelle échangée, oxydant/réducteur échangés...).
+- Erreur corrigée (b1_chim4_a1_protons) : la bonne réponse disait « orange pour le vinaigre ». Or le vinaigre dilué de la
+  simulation a un pH de 2,9, sous la zone de virage de l'hélianthine (3,1 à 4,4) : elle est rouge pour les deux produits,
+  comme le montre la simulation. Question, aide et message de réussite réécrits.
+- Mesure sur les 282 questions de 1re année : la bonne réponse est la plus longue dans 85 questions (30 %), plus courte
+  dans 139 ; 14 cas « plus de 1,2 fois plus longue », tous de quelques lettres. Contrôle des 167 laboratoires : aucun ne plante.
+
+Problèmes restants : tronc commun encore à réécrire.

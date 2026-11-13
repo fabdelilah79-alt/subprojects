@@ -2442,7 +2442,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Quelle est l'énergie mécanique de la bille immobile contre l'électroaimant (z = 1,100 m) ?", court: "Em (J) au départ ?", question: { type: "nombre", unite: "J", attendu: MB * G * 1.1, tolerance: 0.003, aide: "v = 0 : Em = Epp = m·g·z.", bravo: "Exact." } },
       { consigne: "Faites trois lâchers en déplaçant les cellules entre chacun : vous aurez six hauteurs différentes.", court: "Six hauteurs.", verifier: ({ faits }) => new Set(mesures(faits).map((m) => m.z)).size >= 6 },
       { consigne: "Tableur, une ligne par hauteur : z en A, Ec en B, Epp en C, Em = Ec + Epp en D.", court: "Tableur : z, Ec, Epp, Em.", verifier: tableau_chute },
-      { consigne: "Pendant la chute, l'énergie mécanique de la bille…", court: "Répondez dans le carnet.", question: choix(["reste constante : seul le poids travaille", "augmente", "diminue"], "Comparez la colonne D à l'énergie de départ.", "Exact : Em se conserve.") },
+      { consigne: "Pendant la chute, l'énergie mécanique de la bille…", court: "Répondez dans le carnet.", question: choix(["reste constante", "augmente sans cesse", "diminue sans cesse"], "Comparez la colonne D à l'énergie de départ.", "Exact : Em se conserve.") },
       { consigne: "Pendant la chute…", court: "Répondez dans le carnet.", question: choix(["l'énergie potentielle se transforme en énergie cinétique", "l'énergie cinétique se transforme en énergie potentielle", "Ec et Epp augmentent toutes les deux"], "Comparez les colonnes B et C.", "Exact.") },
     ],
   };
@@ -2471,12 +2471,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Avec frottement : ΔEm = W(f) = −Q.",
     etapes: [
       { consigne: "Débit normal : appuyez sur « Lâcher ». Lisez les durées Δt1 et Δt2.", court: "Lâcher, débit normal.", verifier: ({ faits }) => ra(faits, "normal").length >= 1 },
-      { consigne: "Calculez Em aux deux cellules (z1 = 0,080 m, z2 = 0,020 m). Avec le débit normal, l'énergie mécanique…", court: "Répondez dans le carnet.", question: choix(["est la même aux deux cellules : elle se conserve", "augmente", "diminue nettement"], "Ec = ½·m·(ℓ/Δt)², Epp = m·g·z.", "Exact : sans frottement, Em se conserve.") },
+      { consigne: "Calculez Em aux deux cellules (z1 = 0,080 m, z2 = 0,020 m). Avec le débit normal, l'énergie mécanique…", court: "Répondez dans le carnet.", question: choix(["se conserve", "augmente", "diminue nettement"], "Ec = ½·m·(ℓ/Δt)², Epp = m·g·z.", "Exact : sans frottement, Em se conserve.") },
       { consigne: "Appuyez sur « Remonter », choisissez le débit faible (le mobile frotte sur le rail), puis lâchez-le.", court: "Lâcher, débit faible.", verifier: ({ faits }) => ra(faits, "faible").length >= 1 },
       { consigne: "Tableur, avec ce dernier lâcher : une ligne par cellule (x = 0,20 m puis 0,80 m) : x en A, Ec en B, Epp en C, Em = Ec + Epp en D.", court: "Tableur : x, Ec, Epp, Em.", verifier: tableau_rail },
       { consigne: "Quelle est la variation ΔEm = Em2 − Em1 entre les deux cellules ?", court: "ΔEm (J) ?", question: { type: "nombre", unite: "J", attendu: dEm, tolerance: 0.005, aide: "Différence des deux valeurs de la colonne D.", bravo: "Exact : Em a diminué." } },
       { consigne: "ΔEm est égale au travail de la force de frottement f, constante, sur 60 cm. Quelle est la valeur de f ?", court: "f (N) ?", question: { type: "nombre", unite: "N", attendu: (f) => -dEm(f) / 0.6, tolerance: 0.01, aide: "W(f) = −f × 0,60 m = ΔEm.", bravo: "Exact." } },
-      { consigne: "L'énergie mécanique perdue…", court: "Répondez dans le carnet.", question: choix(["est transférée au rail et à l'air sous forme de chaleur : ΔEm = −Q", "disparaît", "se transforme en énergie potentielle"], "Le frottement échauffe le rail.", "Exact : Q = −W(f).") },
+      { consigne: "L'énergie mécanique perdue…", court: "Répondez dans le carnet.", question: choix(["devient chaleur", "disparaît", "devient Epp"], "Le frottement échauffe le rail.", "Exact : Q = −W(f).") },
     ],
   };
 

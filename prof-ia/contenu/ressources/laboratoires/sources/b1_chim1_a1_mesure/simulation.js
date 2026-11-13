@@ -26,8 +26,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les cinq documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, touchez-le de nouveau pour le refermer.", verifier: ({ faits }) => (faits.docs_mesure || []).length >= 5 },
       { consigne: "Rangez chaque exemple de mesure dans son domaine.", court: "Tableau : rangez les étiquettes.", verifier: tri },
-      { consigne: "Une prise de sang à jeun donne une glycémie de 1,32 g/L. Ce résultat est…", court: "Répondez dans le carnet.", question: choix(["au-dessus des valeurs de référence (0,70 à 1,10 g/L) : il faut consulter un médecin", "normal", "trop faible"], "Relisez le document « Santé ».", "Exact.") },
-      { consigne: "On mesure des quantités de matière dans la vie courante surtout pour…", court: "Répondez dans le carnet.", question: choix(["comparer à des normes ou à des valeurs de référence, et prendre une décision", "remplir des tableaux", "fabriquer des appareils"], "Que fait-on du résultat d'une analyse ?", "Exact.") },
+      { consigne: "Une prise de sang à jeun donne une glycémie de 1,32 g/L. Ce résultat est…", court: "Répondez dans le carnet.", question: choix(["trop élevé : au-dessus de 1,10 g/L", "normal : en dessous de 2 g/L", "trop faible : sous 1,50 g/L"], "Relisez le document « Santé ».", "Exact.") },
+      { consigne: "On mesure des quantités de matière dans la vie courante surtout pour…", court: "Répondez dans le carnet.", question: choix(["comparer à des normes et décider", "remplir des tableaux de résultats", "étalonner les appareils de mesure"], "Que fait-on du résultat d'une analyse ?", "Exact.") },
     ],
   };
 
@@ -41,8 +41,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Trempez une bandelette dans chacune des trois eaux.", court: "Trois bandelettes.", aide_geste: "Faites glisser une bandelette de la boîte jusque dans un bécher, puis lâchez-la.", verifier: ({ faits }) => Object.values(faits.bandelettes || {}).every((v) => v !== null) && Object.keys(faits.bandelettes || {}).length === 3 },
       { consigne: "Teneur en ions nitrate de l'eau du puits (bandelette 2), lue sur l'échelle colorée ?", court: "Nitrates (mg/L) ?", question: nombre("mg/L", 100, 1, "Comparez la zone rose de la bandelette aux cases de l'échelle.", "Exact : environ 100 mg/L.") },
-      { consigne: "Quelle eau n'est pas potable ?", court: "Répondez dans le carnet.", question: choix(["l'eau du puits : plus de 50 mg/L d'ions nitrate", "l'eau du robinet", "l'eau minérale"], "Comparez chaque teneur à la norme.", "Exact.") },
-      { consigne: "La technique utilisée ici consiste à…", court: "Répondez dans le carnet.", question: choix(["comparer une couleur à une échelle colorée (méthode colorimétrique)", "peser l'eau", "mesurer le volume d'eau"], "Comment lit-on le résultat ?", "Exact.") },
+      { consigne: "Quelle eau n'est pas potable ?", court: "Répondez dans le carnet.", question: choix(["l'eau du puits (50 mg/L de nitrate)", "l'eau du robinet (8 mg/L de nitrate)", "l'eau minérale (2 mg/L de nitrate)"], "Comparez chaque teneur à la norme.", "Exact.") },
+      { consigne: "La technique utilisée ici consiste à…", court: "Répondez dans le carnet.", question: choix(["comparer à une échelle de teintes", "peser l'eau sur une balance", "mesurer le pH de l'eau"], "Comment lit-on le résultat ?", "Exact.") },
     ],
   };
 
@@ -58,8 +58,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Concentration en E131 de la boisson ?", court: "C (mg/L) ?", question: nombre("mg/L", 5, 1, "Elle est entre 4 et 6 mg/L.", "Exact : environ 5 mg/L.") },
       { consigne: "Concentration en E131 du sirop pur (la boisson est diluée 10 fois) ?", court: "Sirop (mg/L) ?", question: nombre("mg/L", 50, 10, "Multipliez par 10.", "Exact : environ 50 mg/L.") },
       { consigne: "Masse de E131 dans 1 L de boisson ?", court: "Masse (mg) ?", question: nombre("mg", 5, 1, "m = C × V.", "Exact : environ 5 mg.") },
-      { consigne: "Un enfant de 30 kg boit 1 L de cette boisson dans la journée :", court: "Répondez dans le carnet.", question: choix(["il reste très en dessous de sa DJA (5 × 30 = 150 mg)", "il dépasse sa DJA", "la DJA ne concerne pas les enfants"], "DJA = 5 mg × masse en kg.", "Exact.") },
-      { consigne: "Parmi ces listes, laquelle ne contient que des techniques de mesure ?", court: "Répondez dans le carnet.", question: choix(["pesée, mesure de volume, échelle de teintes, pH-mètre, conductimètre", "goût, odeur, toucher", "filtration, décantation, distillation"], "Relisez le document « Quelques techniques de mesure ».", "Exact.") },
+      { consigne: "Un enfant de 30 kg boit 1 L de cette boisson dans la journée :", court: "Répondez dans le carnet.", question: choix(["il reste sous sa DJA (150 mg)", "il dépasse sa DJA (5 mg)", "la DJA ne vaut pas pour lui"], "DJA = 5 mg × masse en kg.", "Exact.") },
+      { consigne: "Parmi ces listes, laquelle ne contient que des techniques de mesure ?", court: "Répondez dans le carnet.", question: choix(["pesée, échelle de teintes, pH-mètre", "goût, odeur, toucher, couleur", "filtration, décantation, distillation"], "Relisez le document « Quelques techniques de mesure ».", "Exact.") },
     ],
   };
 

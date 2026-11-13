@@ -32,7 +32,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Ec = ½·m·v² (translation).",
     etapes: [
       { consigne: "Reculez le mobile de 2 cm environ contre le ressort du lanceur, puis lâchez-le. Lisez Δt au chronomètre et la distance d dont il pousse le curseur.", court: "Premier lancer.", aide_geste: "Glissez le mobile vers la gauche, puis lâchez.", verifier: ({ faits }) => eb(faits).length >= 1 },
-      { consigne: "Le frottement du curseur arrête le mobile. Plus la distance d est grande…", court: "Répondez dans le carnet.", question: choix(["plus le mobile avait d'énergie au départ", "plus le mobile était léger", "moins le mobile allait vite"], "Le travail résistant du frottement est −f·d.", "Exact.") },
+      { consigne: "Le frottement du curseur arrête le mobile. Plus la distance d est grande…", court: "Répondez dans le carnet.", question: choix(["plus il avait d'énergie", "plus il était léger", "moins il allait vite"], "Le travail résistant du frottement est −f·d.", "Exact.") },
       { consigne: "Faites au moins quatre lancers en changeant la compression : deux avec le mobile seul, deux avec une ou deux surcharges.", court: "Quatre lancers, deux masses.", aide_geste: "Posez une surcharge sur le mobile arrêté.", verifier: ({ faits }) => eb(faits).length >= 4 && new Set(eb(faits).map((e) => e.m)).size >= 2 },
       { consigne: "Tableur, une ligne par lancer : m en A, v = 0,050/Δt en B, d en C, m·v² en D.", court: "Tableur : m, v, d, m·v².", verifier: tableau_banc },
       { consigne: "Tracez d (colonne C) en fonction de m·v² (colonne D).", court: "Graphique d = f(m·v²).", verifier: ({ courbe: c }) => (c.x === "D" && c.y === "C" && c.n >= 4) || false },
@@ -67,7 +67,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tableur, une ligne par essai : J en A, ω = 2π·N/60 en B, n en C, J·ω² en D.", court: "Tableur : J, ω, n, J·ω².", verifier: tableau_volant },
       { consigne: "Tracez n (colonne C) en fonction de J·ω² (colonne D).", court: "Graphique n = f(J·ω²).", verifier: ({ courbe: c }) => (c.x === "D" && c.y === "C" && c.n >= 4) || false },
       { consigne: "n est proportionnel à J·ω² pour les deux disques. L'énergie cinétique d'un solide en rotation est…", court: "Répondez dans le carnet.", question: choix(["Ec = ½·J·ω²", "Ec = ½·J·ω", "Ec = J²·ω"], "Comparez avec Ec = ½·m·v² en translation.", "Exact.") },
-      { consigne: "Le moment d'inertie J d'un solide dépend…", court: "Répondez dans le carnet.", question: choix(["de sa masse et de la répartition de cette masse autour de l'axe", "seulement de sa masse", "de sa vitesse de rotation"], "Les deux disques ont la même masse.", "Exact : J = ½·m·R² pour un disque.") },
+      { consigne: "Le moment d'inertie J d'un solide dépend…", court: "Répondez dans le carnet.", question: choix(["de sa masse et de sa répartition", "seulement de sa masse totale", "de sa vitesse de rotation"], "Les deux disques ont la même masse.", "Exact : J = ½·m·R² pour un disque.") },
       { consigne: "Quelle est l'énergie cinétique du disque A quand il tourne à 200 tr/min ?", court: "Ec (J) ?", question: { type: "nombre", unite: "J", attendu: 0.5 * 0.005 * ((2 * Math.PI * 200) / 60) ** 2, tolerance: 0.03, aide: "ω = 2π × 200 / 60 rad/s.", bravo: "Exact." } },
     ],
   };

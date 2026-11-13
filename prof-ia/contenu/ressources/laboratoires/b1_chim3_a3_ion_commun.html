@@ -4816,7 +4816,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       L.etape_montage_conductance,
       { consigne: "Mesurez G pour les six solutions. Une ligne par solution, dans l'ordre NaCl, KCl, NaOH, KOH, HCl, NH₄Cl : en A, G (mS) ; en B, σ (S/m).", court: "Tableur : A, B.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: tableau },
-      { consigne: "La solution la plus conductrice est…", court: "Répondez dans le carnet.", question: choix(["l'acide chlorhydrique (ions H₃O⁺)", "le chlorure de sodium", "le chlorure d'ammonium"], "Comparez la colonne B.", "Exact.") },
+      { consigne: "La solution la plus conductrice est…", court: "Répondez dans le carnet.", question: choix(["l'acide chlorhydrique", "le chlorure de sodium", "le chlorure d'ammonium"], "Comparez la colonne B.", "Exact.") },
     ],
   };
 
@@ -4828,11 +4828,11 @@ Utilisé par : page.html (dernier script).
     conclusion: "Chaque ion contribue à la conductivité : σ = Σ λi·[Xi]. Les différences σ(KCl) − σ(NaCl) et σ(KOH) − σ(NaOH) sont égales : elles valent (λ(K⁺) − λ(Na⁺))·C. Les ions H₃O⁺ et HO⁻ ont des conductivités molaires ioniques beaucoup plus grandes que les autres ions. Les valeurs mesurées sont un peu plus faibles que celles calculées avec les tables, établies pour une dilution infinie.",
     conclusion_courte: "σ = Σ λi·[Xi] ; λ(H₃O⁺) et λ(HO⁻) très grandes.",
     etapes: [
-      { consigne: "Comparez σ(KCl) − σ(NaCl) et σ(KOH) − σ(NaOH) :", court: "Répondez dans le carnet.", question: choix(["elles sont égales : seul l'ion Na⁺ est remplacé par K⁺", "la première est deux fois plus grande", "elles sont de signes opposés"], "Calculez les deux différences.", "Exact : l'ion K⁺ conduit mieux que Na⁺.") },
+      { consigne: "Comparez σ(KCl) − σ(NaCl) et σ(KOH) − σ(NaOH) :", court: "Répondez dans le carnet.", question: choix(["elles sont égales", "la première est double", "elles sont opposées"], "Calculez les deux différences.", "Exact : l'ion K⁺ conduit mieux que Na⁺.") },
       { consigne: "Déduisez-en λ(K⁺) − λ(Na⁺) = [σ(KCl) − σ(NaCl)] / C (en mS·m²/mol ; C en mol/m³) :", court: "Δλ (mS·m²/mol) ?", question: nombre("mS·m²/mol", 2.3, 0.3, "Δσ (S/m) / 5,0 (mol/m³), puis × 1000.", "Exact : la table donne 7,35 − 5,01 = 2,34.") },
-      { consigne: "σ(NaOH) est plus grande que σ(NaCl) parce que…", court: "Répondez dans le carnet.", question: choix(["λ(HO⁻) est bien plus grande que λ(Cl⁻)", "NaOH est plus concentrée", "Na⁺ conduit mieux dans la soude"], "Ion commun : Na⁺.", "Exact.") },
+      { consigne: "σ(NaOH) est plus grande que σ(NaCl) parce que…", court: "Répondez dans le carnet.", question: choix(["λ(HO⁻) ≫ λ(Cl⁻)", "λ(Na⁺) ≫ λ(Cl⁻)", "NaOH est plus concentrée"], "Ion commun : Na⁺.", "Exact.") },
       { consigne: "Calculez avec les tables σ(NaCl) à 5,0 mmol/L (S/m) :", court: "σ calculée (S/m) ?", question: nombre("S/m", 0.0632, 0.002, "σ = (λ(Na⁺) + λ(Cl⁻)) × C, λ en S·m²/mol, C = 5,0 mol/m³.", "Exact : 0,0632 S/m.") },
-      { consigne: "La valeur mesurée est un peu plus faible, parce que…", court: "Répondez dans le carnet.", question: choix(["les λ des tables valent pour une dilution infinie ; à 5 mmol/L les ions se gênent un peu", "la cellule est mal réglée", "l'eau distillée ne conduit pas"], "Comparez avec la limite de l'étalonnage.", "Exact.") },
+      { consigne: "La valeur mesurée est un peu plus faible, parce que…", court: "Répondez dans le carnet.", question: choix(["les ions se gênent un peu à 5 mmol/L", "la cellule est mal réglée ou sale", "l'eau distillée ne conduit pas du tout"], "Comparez avec la limite de l'étalonnage.", "Exact.") },
     ],
   };
 

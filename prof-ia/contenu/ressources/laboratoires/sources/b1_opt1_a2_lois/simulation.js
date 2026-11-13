@@ -37,10 +37,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "r = i ; retour inverse de la lumière.",
     etapes: [
       { consigne: "Placez le laser pour cinq angles d'incidence différents (de 10° à 70°). En A : i ; en B : r lu sur le disque.", court: "Tableur : A, B.", aide_geste: "Faites glisser le laser sur le bord du disque ; les angles se lisent à partir de la normale.", verifier: tab_reflexion },
-      { consigne: "Comparez i et r :", court: "Répondez dans le carnet.", question: choix(["r = i : l'angle de réflexion est égal à l'angle d'incidence", "r = 2·i", "r = 90° − i"], "Comparez les colonnes A et B.", "Exact.") },
-      { consigne: "Le rayon incident, la normale et le rayon réfléchi…", court: "Répondez dans le carnet.", question: choix(["sont dans le même plan (le plan d'incidence), de part et d'autre de la normale", "sont dans trois plans différents", "sont du même côté de la normale"], "Ils sont tous dans le plan du disque.", "Exact.") },
+      { consigne: "Comparez i et r :", court: "Répondez dans le carnet.", question: choix(["r = i", "r = 2·i", "r = 90° − i"], "Comparez les colonnes A et B.", "Exact.") },
+      { consigne: "Le rayon incident, la normale et le rayon réfléchi…", court: "Répondez dans le carnet.", question: choix(["sont dans un même plan", "sont dans trois plans différents", "sont du même côté de la normale"], "Ils sont tous dans le plan du disque.", "Exact.") },
       { consigne: "Placez le laser à l'endroit où arrivait le rayon réfléchi de votre dernier essai.", court: "Laser sur le rayon réfléchi.", verifier: ({ faits }) => !!rf(faits).retour },
-      { consigne: "La lumière repart alors…", court: "Répondez dans le carnet.", question: choix(["par le chemin de l'ancien rayon incident : c'est le retour inverse de la lumière", "dans une direction au hasard", "en ligne droite à travers le miroir"], "Regardez où arrive le nouveau rayon réfléchi.", "Exact.") },
+      { consigne: "La lumière repart alors…", court: "Répondez dans le carnet.", question: choix(["par le même chemin, en sens inverse", "dans une direction prise au hasard", "en ligne droite à travers le miroir"], "Regardez où arrive le nouveau rayon réfléchi.", "Exact.") },
     ],
   };
 
@@ -53,11 +53,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Laser dans l'air (en haut) : quatre angles d'incidence différents. En A : i1 ; en B : i2 lu sur le disque ; en C : sin i1 ; en D : sin i2.", court: "Tableur : A, B, C, D.", aide_geste: "Dans le tableur, SIN travaille en radians : =SIN(A2*PI()/180).", verifier: tab_refraction },
       { consigne: "Le rapport sin i1 / sin i2 est constant ; il vaut…", court: "n (sans unité) ?", question: { type: "nombre", unite: "", attendu: 1.5, tolerance: 0.04, aide: "Divisez C par D, ligne par ligne.", bravo: "Exact : c'est l'indice du plexiglas, n = 1,50 : sin i1 = n·sin i2." } },
-      { consigne: "En entrant dans le plexiglas, le rayon…", court: "Répondez dans le carnet.", question: choix(["se rapproche de la normale (i2 < i1)", "s'éloigne de la normale", "n'est pas dévié"], "Comparez i1 et i2.", "Exact.") },
+      { consigne: "En entrant dans le plexiglas, le rayon…", court: "Répondez dans le carnet.", question: choix(["se rapproche de la normale", "s'éloigne de la normale", "n'est pas dévié du tout"], "Comparez i1 et i2.", "Exact.") },
       { consigne: "Placez le laser sur le rayon réfracté de votre dernier essai (dans le plexiglas).", court: "Laser sur le rayon réfracté.", verifier: ({ faits }) => !!rr(faits).retour },
       { consigne: "Laser dans le plexiglas, augmentez l'angle d'incidence jusqu'à ce que le rayon réfracté disparaisse.", court: "Cherchez la réflexion totale.", verifier: ({ faits }) => rr(faits).verre.some((e) => e.r === null) && rr(faits).verre.some((e) => e.r !== null) },
       { consigne: "L'angle limite (le dernier angle avec un rayon réfracté) vaut environ…", court: "i_lim (°) ?", question: { type: "nombre", unite: "°", attendu: 41.8, tolerance: 1.2, aide: "sin i_lim = 1/n.", bravo: "Exact : sin i_lim = 1/1,50, i_lim ≈ 41,8°." } },
-      { consigne: "Au-delà de l'angle limite…", court: "Répondez dans le carnet.", question: choix(["toute la lumière est réfléchie dans le plexiglas : c'est la réflexion totale (fibres optiques)", "la lumière traverse sans être déviée", "la lumière disparaît"], "Regardez le rayon réfléchi.", "Exact.") },
+      { consigne: "Au-delà de l'angle limite…", court: "Répondez dans le carnet.", question: choix(["toute la lumière est réfléchie", "toute la lumière est réfractée", "la lumière est absorbée"], "Regardez le rayon réfléchi.", "Exact.") },
     ],
   };
 
@@ -68,8 +68,8 @@ Utilisé par : page.html (dernier script).
     conclusion: "La paille paraît brisée parce que la lumière venant de sa partie immergée est réfractée en sortant de l'eau : le cerveau la « voit » dans le prolongement des rayons reçus. Le lac reflète l'arbre par réflexion : l'image est symétrique par rapport à la surface de l'eau.",
     conclusion_courte: "Réfraction : paille brisée ; réflexion : reflet.",
     etapes: [
-      { consigne: "La paille paraît brisée à la surface de l'eau, parce que…", court: "Répondez dans le carnet.", question: choix(["la lumière venant de la partie dans l'eau est réfractée en passant de l'eau à l'air", "la paille se plie dans l'eau", "l'eau absorbe la lumière"], "La paille est droite : sortez-la de l'eau pour vérifier.", "Exact.") },
-      { consigne: "L'arbre est vu à l'envers dans le lac, parce que…", court: "Répondez dans le carnet.", question: choix(["la surface de l'eau réfléchit la lumière comme un miroir : r = i", "la lumière est réfractée dans l'eau", "le cerveau retourne l'image"], "Un miroir posé à plat donne le même effet.", "Exact.") },
+      { consigne: "La paille paraît brisée à la surface de l'eau, parce que…", court: "Répondez dans le carnet.", question: choix(["la lumière est réfractée", "la lumière est réfléchie", "la paille se plie dans l'eau"], "La paille est droite : sortez-la de l'eau pour vérifier.", "Exact.") },
+      { consigne: "L'arbre est vu à l'envers dans le lac, parce que…", court: "Répondez dans le carnet.", question: choix(["l'eau réfléchit la lumière", "l'eau réfracte la lumière", "le cerveau retourne l'image"], "Un miroir posé à plat donne le même effet.", "Exact.") },
     ],
   };
 

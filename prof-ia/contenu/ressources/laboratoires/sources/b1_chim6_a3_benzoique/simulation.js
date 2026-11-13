@@ -35,10 +35,10 @@ Utilisé par : page.html (dernier script).
       { consigne: "Allumez la balance, posez une coupelle vide sur le plateau et tarez (touche T).", court: "Coupelle tarée.", verifier: ({ faits }) => (P(faits).coupelle && P(faits).lecture === 0) || false },
       { consigne: "Avec la spatule, versez tout le produit sec dans la coupelle, puis lisez la masse.", court: "Pesez tout le produit.", aide_geste: "Sortez la spatule du pot et tenez-la au-dessus de la coupelle ; retournez au pot pour la recharger.", verifier: peser },
       { consigne: "Calculez la quantité de matière d'alcool benzylique introduite (en mmol).", court: "n(alcool) en mmol ?", question: nombre("mmol", N_MAX, 0.4, "m = 1,04 × 2,0 g ; n = m / 108.", "Exact : n(alcool) ≈ 19,3 mmol.") },
-      { consigne: "Le permanganate est en excès. La quantité maximale d'acide benzoïque n(max) est donc…", court: "Répondez dans le carnet.", question: choix(["égale à n(alcool), car une mole d'alcool donne une mole d'acide", "égale à n(permanganate)", "le double de n(alcool)"], "Comparez les coefficients de l'équation (3 et 3).", "Exact.") },
+      { consigne: "Le permanganate est en excès. La quantité maximale d'acide benzoïque n(max) est donc…", court: "Répondez dans le carnet.", question: choix(["égale à n(alcool)", "égale à n(permanganate)", "le double de n(alcool)"], "Comparez les coefficients de l'équation (3 et 3).", "Exact.") },
       { consigne: "Quantité de matière d'acide benzoïque obtenue (en mmol) ?", court: "n(obtenu) en mmol ?", question: nombre("mmol", (f) => ((P(f).lecture || 0) / 122) * 1000 || N_OBT, 0.3, "n = m / M, avec M = 122 g/mol.", "Exact.") },
       { consigne: "Rendement de la synthèse (en %) ?", court: "Rendement (%) ?", question: nombre("%", (f) => ((P(f).lecture || L.BENZOIQUE.M_OBTENUE) / 122 * 1000 / N_MAX) * 100, 2, "r = n(obtenu) / n(max) × 100.", "Exact : environ 69 %.") },
-      { consigne: "Le rendement est inférieur à 100 % parce que…", court: "Répondez dans le carnet.", question: choix(["une partie du produit est perdue (transferts, filtrations, acide resté dissous dans l'eau)", "la balance est fausse", "l'acide benzoïque s'est évaporé à l'étuve"], "Où a-t-on pu perdre du produit ?", "Exact.") },
+      { consigne: "Le rendement est inférieur à 100 % parce que…", court: "Répondez dans le carnet.", question: choix(["une partie du produit est perdue", "la balance donne une masse fausse", "le produit s'est évaporé à l'étuve"], "Où a-t-on pu perdre du produit ?", "Exact.") },
     ],
   };
 
@@ -51,7 +51,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       ...preparation("ccm_benzoique", 3, "cyclohexane et acétone"),
       { consigne: "Allumez la lampe UV et entourez au crayon chaque tache sombre.", court: "Révélation UV, taches entourées.", verifier: ({ faits }) => (C(faits).uv_vu && C(faits).cercles >= 3) || false },
-      { consigne: "Le produit obtenu (1)…", court: "Répondez dans le carnet.", question: choix(["donne une seule tache, au même niveau que l'acide benzoïque pur : c'est de l'acide benzoïque, sans alcool restant", "contient encore de l'alcool benzylique", "n'est pas de l'acide benzoïque"], "Comparez les hauteurs des taches 1, 2 et 3.", "Exact.") },
+      { consigne: "Le produit obtenu (1)…", court: "Répondez dans le carnet.", question: choix(["est de l'acide benzoïque pur", "contient encore de l'alcool", "n'est pas de l'acide benzoïque"], "Comparez les hauteurs des taches 1, 2 et 3.", "Exact.") },
     ],
   };
 

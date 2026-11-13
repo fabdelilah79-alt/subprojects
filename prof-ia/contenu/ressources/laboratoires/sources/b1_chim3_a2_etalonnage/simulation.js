@@ -35,7 +35,7 @@ Utilisé par : page.html (dernier script).
       L.etape_montage_conductance,
       { consigne: "Pour chaque étalon : posez son bécher sur le plateau, montez-le avec la manivelle, lisez U et I. En A, C (mmol/L) ; en B, G = I/U (mS).", court: "Tableur : A, B.", aide_geste: "Faites glisser le bécher sur le plateau du support élévateur, puis la manivelle vers le haut ; descendez le plateau avant de reprendre le bécher.", verifier: tableau },
       { consigne: "Tracez G (B) en fonction de C (A) et modélisez.", court: "Courbe G = f(C).", verifier: ({ courbe }) => (courbe.x === "A" && courbe.y === "B" && courbe.n >= 6 && courbe.modele !== "aucun") || "Abscisse : A (C) ; ordonnée : B (G) ; choisissez un modèle." },
-      { consigne: "Pour ces solutions diluées, G est…", court: "Répondez dans le carnet.", question: choix(["proportionnelle à C (droite passant par l'origine)", "indépendante de C", "proportionnelle à 1/C"], "Regardez la courbe.", "Exact.") },
+      { consigne: "Pour ces solutions diluées, G est…", court: "Répondez dans le carnet.", question: choix(["proportionnelle à C", "indépendante de C", "proportionnelle à 1/C"], "Regardez la courbe.", "Exact.") },
     ],
   };
 
@@ -62,7 +62,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Étalonnage valable pour les solutions diluées.",
     etapes: [
       { consigne: "Mesurez la conductance de la solution de NaCl à 0,10 mol/L.", court: "NaCl 0,10 mol/L.", verifier: ({ faits }) => a(faits, "n100") },
-      { consigne: "Comparée à la valeur donnée par la droite prolongée (10 fois celle de 10 mmol/L), G mesurée est…", court: "Répondez dans le carnet.", question: choix(["plus faible : la droite n'est valable que pour les solutions diluées", "égale", "plus grande"], "Comparez à 10 × G(10 mmol/L).", "Exact : on dilue avant de mesurer.") },
+      { consigne: "Comparée à la valeur donnée par la droite prolongée (10 fois celle de 10 mmol/L), G mesurée est…", court: "Répondez dans le carnet.", question: choix(["plus faible", "égale", "plus grande"], "Comparez à 10 × G(10 mmol/L).", "Exact : on dilue avant de mesurer.") },
     ],
   };
 

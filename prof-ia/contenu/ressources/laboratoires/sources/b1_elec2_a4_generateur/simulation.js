@@ -47,7 +47,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Puissance électrique fournie au circuit extérieur : P_e = U_PN·I.", court: "P_e (W) ?", question: { type: "nombre", unite: "W", attendu: (f) => pt(f, "p1:r22").U * pt(f, "p1:r22").I, tolerance_relative: 0.03, aide: "U_PN : voltmètre, circuit fermé.", bravo: "Exact : P_e < P_g." } },
       { consigne: "La pile perd P_j = P_g − P_e = r·I² par effet Joule. Déduisez sa résistance interne r = (E − U_PN)/I.", court: "r (Ω) ?", question: { type: "nombre", unite: "Ω", attendu: (f) => (E(f) - pt(f, "p1:r22").U) / pt(f, "p1:r22").I, tolerance_relative: 0.05, aide: "r = (E − U_PN) / I.", bravo: "Exact : r ≈ 1,5 Ω." } },
       { consigne: "Rendement de la pile : η = P_e/P_g = U_PN/E (nombre sans unité, par exemple 0,80).", court: "η ?", question: { type: "nombre", unite: "", attendu: (f) => pt(f, "p1:r22").U / E(f), tolerance: 0.01, aide: "η = U_PN / E.", bravo: "Exact." } },
-      { consigne: "L'égalité E·I = U_PN·I + r·I² signifie…", court: "Répondez dans le carnet.", question: choix(["la puissance produite est égale à la puissance fournie au circuit plus la puissance perdue par effet Joule dans la pile", "la pile ne perd pas d'énergie", "la pile reçoit de l'énergie du circuit"], "Conservation de l'énergie.", "Exact.") },
+      { consigne: "L'égalité E·I = U_PN·I + r·I² signifie…", court: "Répondez dans le carnet.", question: choix(["produite = fournie + perdue dans la pile", "fournie = produite + perdue dans la pile", "la pile ne perd aucune énergie"], "Conservation de l'énergie.", "Exact.") },
     ],
   };
 
@@ -60,11 +60,11 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "I = E/Req ; W = E²·Δt/Req.",
     etapes: [
       { consigne: "Pile 1 seule : mesurez I avec R1, puis avec R2, puis avec R1 et R2 en série. En A : R (22, 47, 69) ; en B : I (A) ; en C : E/(R + r) ; en D : P_g = E·I.", court: "Tableur : A, B, C, D.", verifier: tableau },
-      { consigne: "Comparez les colonnes B et C : dans ce circuit résistif…", court: "Répondez dans le carnet.", question: choix(["I = E/Req, avec Req = R + r (résistance totale du circuit)", "I ne dépend pas de R", "I = E × Req"], "Comparez B et C, ligne par ligne.", "Exact.") },
-      { consigne: "Quand la résistance du circuit augmente, l'énergie fournie par la pile pendant une même durée…", court: "Répondez dans le carnet.", question: choix(["diminue : W = E·I·Δt = E²·Δt/Req", "augmente", "ne change pas"], "Regardez la colonne D.", "Exact.") },
+      { consigne: "Comparez les colonnes B et C : dans ce circuit résistif…", court: "Répondez dans le carnet.", question: choix(["I = E/(R + r)", "I = E/R", "I = E·(R + r)"], "Comparez B et C, ligne par ligne.", "Exact.") },
+      { consigne: "Quand la résistance du circuit augmente, l'énergie fournie par la pile pendant une même durée…", court: "Répondez dans le carnet.", question: choix(["diminue", "augmente", "ne change pas"], "Regardez la colonne D.", "Exact.") },
       { consigne: "Associez les deux piles en série (borne P' de la pile 2 sur la borne N de la pile 1) ; mesurez I avec R2 = 47 Ω, voltmètre aux bornes de l'association.", court: "Deux piles en série, R2.", verifier: ({ faits }) => (pt(faits, "p1+p2:r47").U ?? null) !== null || (gen(faits).points["p1+p2:r47"] ? "Branchez aussi le voltmètre aux bornes de l'association des deux piles." : false) },
-      { consigne: "Avec les deux piles en série, l'intensité est presque doublée, car…", court: "Répondez dans le carnet.", question: choix(["les f.é.m. s'additionnent : E = 9,0 V, et I = E/(R2 + r1 + r2)", "les résistances internes disparaissent", "chaque pile débite son propre courant dans R2"], "Comparez U aux bornes de l'association avec 2 × 4,5 V.", "Exact.") },
-      { consigne: "La relation I = E/Req s'applique…", court: "Répondez dans le carnet.", question: choix(["seulement aux circuits qui ne contiennent que des résistances et un générateur de f.é.m. constante", "à tous les circuits, même avec un moteur", "seulement aux circuits sans générateur"], "Un moteur ou un électrolyseur a une f.c.é.m.", "Exact.") },
+      { consigne: "Avec les deux piles en série, l'intensité est presque doublée, car…", court: "Répondez dans le carnet.", question: choix(["les f.é.m. s'additionnent", "les résistances internes s'annulent", "chaque pile débite dans R2"], "Comparez U aux bornes de l'association avec 2 × 4,5 V.", "Exact.") },
+      { consigne: "La relation I = E/Req s'applique…", court: "Répondez dans le carnet.", question: choix(["aux circuits purement résistifs", "à tous les circuits, moteur compris", "aux circuits sans aucun générateur"], "Un moteur ou un électrolyseur a une f.c.é.m.", "Exact.") },
     ],
   };
 

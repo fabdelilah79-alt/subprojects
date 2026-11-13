@@ -25,7 +25,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Agitez et lisez θ1 (eau froide du calorimètre). Lisez θ2 (eau chaude), versez le bécher dans le calorimètre, agitez jusqu'à ce que la température ne change plus : lisez θe.", court: "Mélange eau froide + eau chaude.", aide_geste: AGITER, verifier: ({ faits }) => !!der(faits, "calo_capacite") },
       { consigne: "À l'équilibre thermique, l'eau froide, l'eau chaude et le calorimètre…", court: "Répondez dans le carnet.", question: choix(["ont la même température θe", "gardent chacun leur température", "sont à la température de la salle"], "Le thermomètre ne bouge plus.", "Exact.") },
-      { consigne: "Le système {calorimètre, eau froide, eau chaude} n'échange pas de chaleur avec l'extérieur. On écrit donc…", court: "Répondez dans le carnet.", question: choix(["Q1 + Q2 + Qcal = 0", "Q1 = Q2", "Q1 + Q2 = Qcal"], "L'eau chaude cède de la chaleur (Q2 < 0) ; l'eau froide et le calorimètre en reçoivent.", "Exact : c'est l'équation calorimétrique.") },
+      { consigne: "Le système {calorimètre, eau froide, eau chaude} n'échange pas de chaleur avec l'extérieur. On écrit donc…", court: "Répondez dans le carnet.", question: choix(["Q1 + Q2 + Qcal = 0", "Q1 = Q2 + Qcal", "Q1 + Q2 = Qcal"], "L'eau chaude cède de la chaleur (Q2 < 0) ; l'eau froide et le calorimètre en reçoivent.", "Exact : c'est l'équation calorimétrique.") },
       { consigne: "Calculez la capacité thermique C du calorimètre : m1·c·(θe − θ1) + m2·c·(θe − θ2) + C·(θe − θ1) = 0.", court: "C (J/K) ?", question: { type: "nombre", unite: "J/K", attendu: capacite, tolerance: 8, aide: "C = [m2·c·(θ2 − θe) − m1·c·(θe − θ1)] / (θe − θ1), masses en kg.", bravo: "Exact : environ 150 J/K." } },
     ],
   };
@@ -41,7 +41,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez θ1. Prenez le cylindre par son fil, plongez-le dans le calorimètre, agitez jusqu'à l'équilibre et lisez θe.", court: "Cylindre chaud dans l'eau.", aide_geste: AGITER, verifier: ({ faits }) => !!der(faits, "calo_metal") },
       { consigne: "Calculez la chaleur massique c du métal.", court: "c (J·kg⁻¹·K⁻¹) ?", question: { type: "nombre", unite: "J·kg⁻¹·K⁻¹", attendu: c_metal, tolerance_relative: 0.05, aide: "m·c·(100 − θe) = (0,200 × 4180 + 150) × (θe − θ1).", bravo: "Exact." } },
       { consigne: "Le cylindre est en…", court: "Répondez dans le carnet.", question: choix(["aluminium", "fer", "cuivre", "plomb"], "Comparez avec les valeurs données.", "Exact : c(Al) = 900 J·kg⁻¹·K⁻¹.") },
-      { consigne: "Pour écrire le bilan calorimétrique, il suffit de connaître…", court: "Répondez dans le carnet.", question: choix(["l'état initial et l'état final de chaque corps", "la durée de l'expérience", "la vitesse d'agitation"], "Les échanges intermédiaires s'annulent dans la somme.", "Exact.") },
+      { consigne: "Pour écrire le bilan calorimétrique, il suffit de connaître…", court: "Répondez dans le carnet.", question: choix(["les états initial et final", "la durée de l'expérience", "la vitesse d'agitation"], "Les échanges intermédiaires s'annulent dans la somme.", "Exact.") },
     ],
   };
 
@@ -54,7 +54,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Q = m·Lf ; Lf(glace) ≈ 334 kJ/kg.",
     etapes: [
       { consigne: "Lisez θ1 et la masse de glace sur la balance. Videz la coupelle dans le calorimètre, agitez jusqu'à ce que toute la glace ait fondu et que la température ne change plus : lisez θe.", court: "Glaçons dans l'eau tiède.", aide_geste: AGITER, verifier: ({ faits }) => !!der(faits, "calo_glace") },
-      { consigne: "Pendant sa fusion, la glace…", court: "Répondez dans le carnet.", question: choix(["reçoit de la chaleur sans que sa température change (0 °C)", "cède de la chaleur", "se réchauffe jusqu'à θe en restant solide"], "Un corps pur fond à température constante.", "Exact.") },
+      { consigne: "Pendant sa fusion, la glace…", court: "Répondez dans le carnet.", question: choix(["reçoit de la chaleur à 0 °C", "cède de la chaleur à 0 °C", "se réchauffe en restant solide"], "Un corps pur fond à température constante.", "Exact.") },
       { consigne: "Calculez la chaleur latente de fusion Lf de la glace.", court: "Lf (J/kg) ?", question: { type: "nombre", unite: "J/kg", attendu: lf, tolerance_relative: 0.05, aide: "m_g·Lf + m_g·c·θe + (0,200 × 4180 + 150)(θe − θ1) = 0, m_g en kg.", bravo: "Exact : environ 3,3×10⁵ J/kg." } },
       { consigne: "La chaleur latente de fusion s'exprime en…", court: "Répondez dans le carnet.", question: choix(["J/kg", "J·kg⁻¹·K⁻¹", "J/K"], "Q = m·Lf.", "Exact.") },
     ],
