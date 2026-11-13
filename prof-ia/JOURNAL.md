@@ -1651,3 +1651,26 @@ Problèmes restants : tronc commun encore à réécrire.
 
 Problèmes restants : une question à deux choix (« ne change pas » / « change ») garde une bonne réponse plus longue : le nombre
 de choix n'a pas été changé, pour ne pas casser les scénarios de test qui répondent par position.
+
+## 2026-11-13 — Laboratoires en mode cours : le professeur IA pose les questions, l'élève mesure (étape 1)
+
+Demande de l'enseignant : dans le cours, retirer le carnet des laboratoires (garder la tablette), écrire les consignes des
+expériences sur le ticket jaune, et laisser le professeur IA poser les questions et expliquer avec les mesures et les figures
+de l'élève. Étape 1 : le côté laboratoire et le passage des données à l'application.
+- Mode cours (`#mission=<id>&prof=1`, ajouté par `client/js/medias/cadre_media.js`) ; sans `prof=1`, rien ne change.
+- Pas de carnet ; ticket jaune en haut à gauche : consigne complète, astuce de geste, message de vérification ; pliable
+  (appui bref) et déplaçable (glissé) ; pense-bêtes du mur cachés ; conclusion non montrée (le professeur conclut).
+- Les étapes « question » passent toutes seules ; la mission finit avec les gestes, le tableur et le graphique.
+- Relevé envoyé à l'application (`laboratoire_releve` au journal) en fin de mission et au bouton « Envoyer au professeur » de
+  la tablette : faits, tableau avec les formules de l'élève, courbe (points, modèle, équation), figure SVG autonome.
+- Nouveaux fichiers communs : ticket.js, ticket.css, releve.js (ajoutés aux 167 pages) ; modifiés : missions.js,
+  demarrage.js, decor.js, tablette.js ; compétence : sans_geste.js, missions_sans_geste.json, ajouter.py (6 missions faites
+  seulement de questions retirées du manifeste).
+- Tests : enregistrement de la rotation en mode cours (questions passées, mission accomplie, relevé de 9 lignes et
+  18 formules, figure de 8 ko qui s'affiche seule) ; ticket plié, déplié, déplacé ; 167 laboratoires en mode cours et en mode
+  normal sans erreur ; régression du reflux (savon) : tout passe ; 54 tests ; structure conforme.
+
+Problèmes restants : dans quelques laboratoires, le ticket recouvre au départ un document du mur ou du matériel (atome,
+vidéo du cycliste) : l'élève doit le plier ou le déplacer ; les relevés arrivent au journal, mais les agents ne s'en servent
+pas encore (étape 2 : le serveur range le relevé et la figure de l'élève ; étape 3 : le professeur pose les questions et
+explique avec ces mesures, et montre la figure de l'élève au tableau).

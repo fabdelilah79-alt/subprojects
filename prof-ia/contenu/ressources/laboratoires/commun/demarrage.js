@@ -1,6 +1,8 @@
 /*
 Rôle : démarrer une simulation de laboratoire : scène, matières, paillasses, tablette, carnet, missions ;
        le pense-bête de chaque paillasse montre l'étape en cours de sa mission.
+       En mode cours (Labo.mode_prof) : ni carnet ni pense-bêtes, un ticket jaune (consignes complètes) et le bouton
+       « Envoyer au professeur » sur la tablette.
 Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet et repos_tablette (facultatifs),
          paillasses: [fabrique, ...], missions: [...] }.
          Chaque fabrique reçoit le groupe SVG de sa paillasse et renvoie { pense_bete }.
@@ -38,8 +40,7 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
       return fabrique(g);
     });
     L.tablette.creer(etage, simulation.missions, simulation.repos_tablette);
-    L.carnet.creer(etage, simulation.repos_carnet);
-    pense_betes(postes);
+    if (L.mode_prof) { L.ticket.creer(etage); L.releve.bouton(); } else { L.carnet.creer(etage, simulation.repos_carnet); pense_betes(postes); }
     L.missions.demarrer(simulation, camera);
   }
 

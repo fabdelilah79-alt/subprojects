@@ -3,8 +3,10 @@ import json, re, sys
 from pathlib import Path
 RACINE = Path("/home/user/subprojects/prof-ia")
 LABO = RACINE / "contenu/ressources/laboratoires"
-GESTES = "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire."
+GESTES = "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette. Dans le cours (mode « prof=1 »), pas de carnet : les consignes sont sur le ticket jaune, les questions sont posées par le professeur, les mesures et la figure lui sont envoyées."
 LABOS = json.loads(Path(sys.argv[1]).read_text())
+# Missions faites seulement de questions : pas d'observation en mode cours (c'est le professeur qui les traite).
+SANS_GESTE = set(json.loads((Path(__file__).parent / "missions_sans_geste.json").read_text()))
 # Fiches du programme : celles des chapitres présents dans la liste des laboratoires.
 FICHES = {c: json.loads((RACINE / f"contenu/orientations/{c}.json").read_text()) for c in sorted({l["chapitre"] for l in LABOS})}
 
@@ -15,18 +17,20 @@ def missions(dossier, faire):
     conclusions = re.findall(r'\n    conclusion: "([^"]+)"', texte)
     assert len(titres) == len(conclusions) == len(faire), (dossier, [t.group(2) for t in titres], conclusions)
     bornes = [t.start() for t in titres] + [len(texte)]
-    etapes = [max(1, texte.count("{ consigne:", bornes[k], bornes[k + 1])) for k in range(len(titres))]
-    return [{"id": t.group(1), "titre": t.group(2), "ce_que_fait_l_eleve": f, "conclusion": c, "etapes": n} for t, c, f, n in zip(titres, conclusions, faire, etapes)]
+    lignes = [[l for l in texte[bornes[k]:bornes[k + 1]].splitlines() if "{ consigne:" in l] for k in range(len(titres))]
+    gestes = [f"{dossier}__{t.group(1)}" not in SANS_GESTE for t in titres]  # liste faite par sans_geste.js (navigateur)
+    return [{"id": t.group(1), "titre": t.group(2), "ce_que_fait_l_eleve": f, "conclusion": c, "etapes": max(1, len(ls)), "gestes": g}
+            for t, c, f, ls, g in zip(titres, conclusions, faire, lignes, gestes)]
 
 def fiches(l):
-    # Une ressource par mission : le laboratoire s'ouvre sur cette mission seule (observation courte dans une partie du cours).
+    # Une ressource par mission qui a des gestes : le laboratoire s'ouvre sur cette mission seule, en mode cours.
     activite = FICHES[l["chapitre"]]["activites"][l["activite"] - 1] if l["activite"] else None
     if l.get("activite_specifique"):  # activité d'une partie propre à certaines filières (bloc « specifique » de la fiche)
         bloc = next(b for b in FICHES[l["chapitre"]]["specifique"] if b.get("activites"))
         activite = f"({'/'.join(bloc['filieres'])}) " + bloc["activites"][l["activite_specifique"] - 1]
     assert (LABO / f"{l['id']}.html").exists()
     ms = missions(l["id"], l["faire"]); total = sum(m["etapes"] for m in ms)
-    for m in ms:
+    for m in (x for x in ms if x["gestes"]):  # une mission sans geste (questions seules) n'est pas une observation
         r = {"id": f"{l['id']}__{m['id']}", "type": "simulation", "fichier": f"laboratoires/{l['id']}.html#mission={m['id']}",
              "description": f"Mission « {m['titre']} » : {m['ce_que_fait_l_eleve']} Laboratoire complet : {l['description']}",
              "phase_poe": "observation", "manipulable": GESTES, "chapitre": l["chapitre"], "activite": activite,

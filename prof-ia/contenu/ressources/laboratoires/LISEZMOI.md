@@ -860,3 +860,26 @@ puis le ballon sec le contient ; le chauffage se fait à 65 °C pendant 20 min.
 - Fichier commun nouveau : `carnet_ecriture.js` (formules écrites comme dans un cahier, choix mélangés). Fichiers communs
   modifiés : `carnet.js` (choix dans l'ordre mélangé, mode mission seule), `missions.js` (mode mission seule), `carnet.css`
   (fractions). Changements appliqués à tous les laboratoires, à la demande de l'enseignant.
+
+## Mode cours : le professeur IA pose les questions, le laboratoire mesure
+
+Demande de l'enseignant : dans le cours, l'élève manipule et mesure ; c'est le professeur IA qui pose les questions et
+explique, à partir des mesures et des figures de l'élève.
+- L'application ouvre les laboratoires avec `#mission=<id>&prof=1` (`client/js/medias/cadre_media.js`). Sans `prof=1`
+  (laboratoire ouvert seul), rien ne change : carnet, questions et pense-bêtes comme avant.
+- En mode cours : **pas de carnet** ; il reste la **tablette** (tableur et graphique). Les consignes complètes, l'astuce de
+  geste et les messages de vérification (« Ligne 3 : … ») s'écrivent sur le **ticket jaune** en haut à gauche (`ticket.js`,
+  `ticket.css`) ; un appui bref le plie (il ne reste que son titre), un glissé le déplace s'il cache du matériel. Les
+  pense-bêtes du mur sont cachés. La conclusion n'est pas montrée : c'est le professeur qui conclut.
+- Les étapes « question » passent toutes seules (elles restent écrites dans `simulation.js` : ce sont les questions que le
+  professeur peut poser). La mission est accomplie quand les gestes, le tableur et le graphique demandés sont faits.
+- Relevé (`releve.js`) envoyé à l'application (message `releve`, au journal sous `laboratoire_releve`) en fin de mission et
+  chaque fois que l'élève touche « Envoyer au professeur » sur la tablette : faits notés par la paillasse (nombres à
+  4 chiffres significatifs), tableau (entêtes, valeurs calculées, **formules de l'élève**), courbe (grandeurs, points,
+  modèle, équation) et **figure** (le graphique en SVG autonome, prêt à être montré).
+- Fichiers communs modifiés : `missions.js`, `demarrage.js`, `decor.js`, `tablette.js` (accès à la courbe) ; nouveaux :
+  `ticket.js`, `ticket.css`, `releve.js` (ajoutés aux 167 pages).
+- Les 6 missions faites seulement de questions (exploitation sans geste : `b1_chim3_a3_ion_commun` lambda,
+  `b1_chim4_a3_conductimetrique` équivalence, `b1_opt1_a2_lois` observations, `b2_elec3_a1_decharge` équation,
+  `b2_nucl1_a1_becquerel` désintégrations, `b2_nucl2_a1_energie` bilans) ne sont plus au manifeste : en mode cours, elles
+  finiraient dès l'ouverture ; c'est le professeur qui les traite (433 ressources, dont 424 missions).

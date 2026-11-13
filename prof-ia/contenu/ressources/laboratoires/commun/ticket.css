@@ -1,0 +1,85 @@
+/*
+Rôle : style du ticket jaune du mode cours (consignes de l'expérience) et du bouton « Envoyer au professeur » de la tablette.
+Reçoit : les variables de labo.css (--main, --encre, --stylo-rouge, --interface).
+Produit : une feuille jaune collée en haut à gauche de la scène, écrite à la main ; pliée, il ne reste que son titre.
+Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement visible en mode cours.
+*/
+.ticket {
+  position: absolute;
+  left: 22px;
+  top: 46px;
+  width: 262px;
+  max-height: 330px;
+  padding: 14px 14px 12px;
+  background: #fbe98a;
+  border-top: 22px solid #f3dc6b;
+  box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.22);
+  transform: rotate(-1.2deg);
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--encre);
+}
+
+.ticket-scotch {
+  position: absolute;
+  left: calc(50% - 30px);
+  top: -30px;
+  width: 60px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  transform: rotate(2deg);
+}
+
+.ticket-contenu > p {
+  margin: 0 0 6px;
+}
+
+.ticket-titre {
+  font: 500 17px/1.1 var(--main);
+  color: #6b5300;
+}
+
+.ticket-texte {
+  font: 500 19px/1.12 var(--main);
+}
+
+.ticket-astuce {
+  font: 500 16px/1.1 var(--main);
+  color: #5a4a12;
+}
+
+.ticket-astuce::before {
+  content: "Astuce : ";
+}
+
+.ticket-message {
+  font: 500 17px/1.1 var(--main);
+  color: var(--stylo-rouge);
+}
+
+.ticket-bouton,
+.tablette-envoyer {
+  font: 600 12px var(--interface);
+  border: 1px solid var(--encre);
+  border-radius: 3px;
+  background: #fffdf2;
+  color: var(--encre);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.ticket.plie {
+  max-height: 46px;
+}
+
+.ticket.plie .ticket-contenu > :not(.ticket-titre) {
+  display: none;
+}
+
+.tablette-envoyer {
+  margin-left: auto;
+  margin-right: 8px;
+  background: #e9f4ec;
+  border-color: #1e6b3a;
+  color: #1e6b3a;
+}

@@ -88,6 +88,12 @@ un pictogramme ni à une forme abstraite.
 - Une mission doit pouvoir être faite **seule** : l'application ouvre `…/<id>.html#mission=<mission>` (observation courte
   dans une partie du cours ; une ressource du manifeste par mission). Pas de dépendance à une autre mission sans valeur de
   repli (`?? valeur par défaut`), consignes qui se comprennent sans avoir fait la mission précédente.
+- **Mode cours** (`#mission=<id>&prof=1`, ouvert par l'application) : pas de carnet, consignes sur le ticket jaune
+  (`ticket.js`), étapes « question » passées (le professeur IA les pose), relevé des mesures envoyé (`releve.js`). Donc :
+  la **consigne** de chaque étape de manipulation doit se suffire à elle-même (elle s'affiche en entier sur le ticket,
+  environ 400 caractères au plus avec l'astuce) ; une mission doit se terminer par des gestes, le tableur ou le graphique,
+  jamais par une question seule ; ce qui doit servir au professeur doit être **noté comme fait** (`L.missions.noter`) ou
+  écrit au tableur. Tester les deux modes (avec et sans `prof=1`).
 - Questions à choix : `bonne: 0` reste la convention d'écriture, le carnet **mélange l'ordre** affiché (carnet_ecriture.js) ;
   les distracteurs doivent avoir **la même longueur et le même niveau de détail** que la bonne réponse (sinon la plus
   longue se devine : 86 % des questions écrites jusqu'ici ont ce défaut).
@@ -156,6 +162,8 @@ un pictogramme ni à une forme abstraite.
   point les gestes ; le ballon de 250 mL ne coule qu'incliné presque à 135°).
 - `extraire_questions.js <préfixe>` (liste des questions à choix, avec « longue » quand la bonne réponse est la plus longue) et
   `appliquer_choix.py corrections.json questions.json` (remplace la liste complète des options d'une question : [{l, c, options}]).
+- `sans_geste.js` : liste dans `missions_sans_geste.json` les missions faites seulement de questions ; `ajouter.py` ne les met
+  pas au manifeste (en mode cours, elles finiraient dès l'ouverture). À relancer après l'ajout d'une simulation.
 - `regression_reflux.js` : rejoue le montage à reflux d'une paillasse de poste_synthese.js (réactifs, reflux, réfrigérant
   rangé derrière le récepteur, versement) ; à lancer après toute modification de montage_reflux.js ou poste_synthese.js.
   Pour lire les faits : remplacer `Labo.missions.noter` pour copier dans `window.notes` (voir `exemple_scenario.js`).

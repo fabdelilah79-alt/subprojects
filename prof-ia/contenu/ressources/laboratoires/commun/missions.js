@@ -2,12 +2,16 @@
 Rôle : moteur des missions du laboratoire : étape en cours, vérification automatique (gestes, tableur, courbe),
        questions du carnet, passage d'une paillasse à l'autre, messages envoyés à la page du professeur.
 Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra ; l'adresse
-         de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours).
-Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), etat() ;
+         de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours) ;
+         « &prof=1 » (ajouté par l'application) : mode cours, le professeur IA pose les questions et explique.
+Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), faits(), envoyer_releve(), etat() ;
+         Labo.mode_prof (vrai en mode cours : pas de carnet, les étapes « question » passent toutes seules,
+         les mesures partent au professeur : message « releve ») ;
          annonce « missions » à chaque changement ; postMessage { source: "laboratoire", type, ... } au parent.
 Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 */
 (function (L) {
+  L.mode_prof = /[#&]prof=1(&|$)/.test(window.location.hash);
   const etat = { labo: null, missions: [], courante: 0, vue: 0, seule: null, faits: {}, courbes: {}, messages: {}, debut: {} };
   let camera = null;
 
@@ -27,6 +31,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
   function terminer_mission(m, numero) {
     // La dernière étape est réussie : la mission est accomplie, la suivante s'ouvre.
     m.accomplie = true;
+    if (L.mode_prof) prevenir_parent("releve", L.releve(m));
     prevenir_parent("mission_terminee", { mission: m.id, duree_s: Math.round((performance.now() - etat.debut[m.id]) / 1000) });
     if (etat.seule === null && numero === etat.courante && numero + 1 < etat.missions.length) etat.courante = numero + 1;
     if (etat.missions.every((x) => x.accomplie)) prevenir_parent("laboratoire_termine");
@@ -44,7 +49,8 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     // Vérifie l'étape en cours de chaque mission ouverte, tant que les étapes automatiques sont réussies.
     etat.missions.forEach((m, numero) => {
       if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
-      while (!m.accomplie && m.etapes[m.etape].verifier) {
+      while (!m.accomplie && (m.etapes[m.etape].verifier || (L.mode_prof && m.etapes[m.etape].question))) {
+        if (!m.etapes[m.etape].verifier) { avancer(m, numero); continue; }
         const resultat = m.etapes[m.etape].verifier(contexte(m));
         if (resultat !== true) { etat.messages[m.id] = typeof resultat === "string" ? { texte: resultat, juste: false } : etat.messages[m.id]; break; }
         avancer(m, numero);
@@ -110,6 +116,14 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       etat.debut[mission(numero).id] ??= performance.now();
       deplacer_camera(numero);
       L.annoncer("missions", L.missions.etat());
+    },
+    faits() {
+      // Les faits notés par les paillasses (lecture seule, pour le relevé).
+      return etat.faits;
+    },
+    envoyer_releve() {
+      // Envoie au professeur les mesures de la mission affichée (bouton de la tablette, mode cours).
+      prevenir_parent("releve", L.releve(mission()));
     },
     etat() {
       // Résumé pour le carnet, la tablette et les pense-bêtes.

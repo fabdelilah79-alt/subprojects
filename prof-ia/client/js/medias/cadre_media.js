@@ -4,8 +4,8 @@ Reçoit : la planche du tableau, les réglages (zone cadre_media), le manifeste,
 Produit : le cadre avec la consigne, un bouton « Plein écran » et, si demandé, « J'ai terminé » ;
           la lecture attend ce clic, puis le cadre se ferme (il ne fait pas partie de la trace écrite).
           Événements signalés : media_ouvert, plein_ecran, media_termine (avec la durée de manipulation) et, pour un
-          laboratoire virtuel, ses propres messages préfixés « laboratoire_ » (mission ouverte, étape réussie, réponse,
-          mission terminée) ; quand la mission demandée (fichier « …html#mission=<id> ») est réussie, la consigne invite
+          laboratoire virtuel (ouvert en mode cours), ses propres messages préfixés « laboratoire_ » (mission ouverte,
+          étape réussie, relevé des mesures et de la figure, mission terminée) ; quand la mission demandée (fichier « …html#mission=<id> ») est réussie, la consigne invite
           à revenir au cours.
 Utilisé par : client/js/demo_tableau.js (et plus tard la page de classe).
 */
@@ -22,8 +22,10 @@ function creer(nom, attributs = {}, texte = "") {
 }
 
 function contenu_de(ressource) {
-  // Choisit la bonne balise selon le type de ressource.
-  const source = CHEMIN_RESSOURCES + ressource.fichier;
+  // Choisit la bonne balise selon le type de ressource ; un laboratoire s'ouvre en mode cours (« prof=1 » : sans carnet,
+  // consignes sur le ticket jaune, mesures envoyées au professeur).
+  const fichier = ressource.laboratoire ? ressource.fichier + (ressource.fichier.includes("#") ? "&" : "#") + "prof=1" : ressource.fichier;
+  const source = CHEMIN_RESSOURCES + fichier;
   if (["image", "enregistrement"].includes(ressource.type)) return creer("img", { src: source, alt: ressource.description });
   if (ressource.type === "video") return creer("video", { src: source, controls: "" });
   return creer("iframe", { src: source, title: ressource.description });

@@ -73,7 +73,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/attente.html + js/attente.js | Page d'attente : suit la vraie préparation de la partie 1, puis « Entrer en classe ». |
 | client/js/session_eleve.js | Garde le pseudonyme pendant la séance (sessionStorage). |
 | client/css/parcours.css | Style du QCM et de la page d'attente. |
-| client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». | Relaie au journal de recherche les messages d'un laboratoire (préfixe « laboratoire_ ») ; mission demandée réussie : la consigne invite à revenir au cours.
+| client/js/medias/cadre_media.js | Ouvre une ressource (simulation, image, vidéo, document) dans un cadre sur le tableau ; Plein écran ; attend « J'ai terminé ». | Ouvre un laboratoire en mode cours (« prof=1 ») ; relaie au journal de recherche les messages d'un laboratoire (préfixe « laboratoire_ », dont le relevé des mesures et de la figure) ; mission demandée réussie : la consigne invite à revenir au cours.
 | client/css/medias.css | Style du cadre des médias. |
 | contenu/ressources/animations/ | Simulations interactives : grande_roue, reperage, coussin_air, rotation_uniforme (+ commun/style.css, commun/outils.js, LISEZMOI.md). |
 | serveur/routes/parties.py | Routes /api/tableau (réglages du tableau), /api/manifeste et /api/parties/<n> (partition validée). |
@@ -261,10 +261,13 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/formules.js | Calcul sûr des formules du tableur (=B2/A2, ^, RACINE, ABS, PI, COS, SIN, LN, EXP, recopie). |
 | contenu/ressources/laboratoires/commun/tableur.js | Feuille de calcul de la tablette (une par mission). |
 | contenu/ressources/laboratoires/commun/courbe.js | Application Graphique : points qui se dessinent, modélisation par une droite. |
-| contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique. |
+| contenu/ressources/laboratoires/commun/tablette.js | Tablette posée / prise en main, applications Tableur et Graphique (accès à la courbe pour le relevé). |
 | contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
 | contenu/ressources/laboratoires/commun/carnet_ecriture.js | Écriture des textes du carnet comme dans un cahier (indices, exposants, fractions posées, unités en ligne) ; ordre des choix mélangé, stable. |
-| contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage. |
+| contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage ; mode cours (« &prof=1 ») : étapes « question » passées, relevé envoyé en fin de mission. |
+| contenu/ressources/laboratoires/commun/ticket.js | Mode cours : ticket jaune (consigne complète, astuce, message de vérification), pliable et déplaçable, à la place du carnet. |
+| contenu/ressources/laboratoires/commun/ticket.css | Style du ticket jaune et du bouton « Envoyer au professeur ». |
+| contenu/ressources/laboratoires/commun/releve.js | Mode cours : relevé des mesures pour le professeur IA (faits, tableau avec formules, courbe, figure SVG) ; bouton « Envoyer au professeur » de la tablette. |
 | contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes (nombre d'étiquettes par ligne réglable). |
 | contenu/ressources/laboratoires/commun/bouton.js | Bouton-poussoir lumineux (par exemple « Pause / Lecture » du temps), au doigt, à la souris et au clavier. |
 | contenu/ressources/laboratoires/commun/coussin_air.js | Table à coussin d'air en perspective, clou central, mobile lancé d'un geste, fil à accrocher. |
@@ -587,7 +590,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/sources/b2_meca2_s4_satellites/ | Satellites et planètes (PC, SM) : poste_satellites.js, verifications_satellites.js, simulation.js. |
 | contenu/ressources/laboratoires/sources/b2_meca6_a2_spectres/ | Quantification : Franck et Hertz (fh_modele.js, fh_dessin.js, fh_logiciel.js, fh_boucle.js, poste_franck_hertz.js), tubes spectraux (dessin_tubes.js, poste_tubes.js), sodium (dessin_sodium.js, poste_sodium.js), spectroscope.js, spectres_donnees.js, missions_spectres.js, simulation.js. |
 | contenu/ressources/laboratoires/commun/poste_coussin_air.js | Paillasse complète du chapitre « Le mouvement » : table, éclateur, feuille, outils. |
-| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette). |
+| contenu/ressources/laboratoires/commun/demarrage.js | Démarre une simulation à partir de sa définition (paillasses, missions, place du carnet et de la tablette) ; mode cours : ticket au lieu du carnet et des pense-bêtes. |
 | contenu/ressources/laboratoires/commun/labo.css, tablette.css, carnet.css | Style de la scène, de la tablette et du carnet (police Caveat dans commun/polices/). |
 | contenu/ressources/laboratoires/sources/<nom>/ | page.html, un fichier par appareil, simulation.js (missions). |
 | outils/assembler_laboratoire.py | Intègre styles, scripts et polices dans un seul fichier HTML par simulation. |

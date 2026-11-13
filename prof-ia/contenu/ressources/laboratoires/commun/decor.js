@@ -79,8 +79,9 @@ Utilisé par : toutes les simulations.
       L.svg("text", { x: 1000, y: 30, "text-anchor": "end", class: "numero-paillasse" }, g).textContent = `Paillasse ${numero + 1}`;
     },
     pense_bete(g, x, y, largeur = 250, hauteur = 175) {
-      // Colle au mur une feuille jaune ; ecrire(titre, texte) y écrit la consigne à la main.
+      // Colle au mur une feuille jaune ; ecrire(titre, texte) y écrit la consigne à la main (cachée en mode cours : ticket.js).
       const feuille = L.svg("g", { transform: `translate(${x} ${y}) rotate(-1.5)`, class: "pense-bete" }, g);
+      if (L.mode_prof) feuille.style.display = "none";
       L.svg("rect", { x: 3, y: 4, width: largeur, height: hauteur, fill: "#000", opacity: 0.18, filter: "url(#flou)" }, feuille);
       L.svg("rect", { width: largeur, height: hauteur, fill: "#fbe98a" }, feuille);
       L.svg("rect", { width: largeur, height: 22, fill: "#f3dc6b" }, feuille);

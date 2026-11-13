@@ -129,6 +129,7 @@ Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier auto
   <link rel="stylesheet" href="../../commun/labo.css">
   <link rel="stylesheet" href="../../commun/tablette.css">
   <link rel="stylesheet" href="../../commun/carnet.css">
+  <link rel="stylesheet" href="../../commun/ticket.css">
 </head>
 <body>
   <div id="ecran"><div id="etage"></div></div>

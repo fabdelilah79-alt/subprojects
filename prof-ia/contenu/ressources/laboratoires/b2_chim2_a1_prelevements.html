@@ -586,6 +586,93 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .frac-haut { border-bottom: 1px solid currentColor; padding: 0 0.2em; }
 .frac-bas { padding: 0 0.2em; }
 </style>
+  <style>
+/*
+Rôle : style du ticket jaune du mode cours (consignes de l'expérience) et du bouton « Envoyer au professeur » de la tablette.
+Reçoit : les variables de labo.css (--main, --encre, --stylo-rouge, --interface).
+Produit : une feuille jaune collée en haut à gauche de la scène, écrite à la main ; pliée, il ne reste que son titre.
+Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement visible en mode cours.
+*/
+.ticket {
+  position: absolute;
+  left: 22px;
+  top: 46px;
+  width: 262px;
+  max-height: 330px;
+  padding: 14px 14px 12px;
+  background: #fbe98a;
+  border-top: 22px solid #f3dc6b;
+  box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.22);
+  transform: rotate(-1.2deg);
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--encre);
+}
+
+.ticket-scotch {
+  position: absolute;
+  left: calc(50% - 30px);
+  top: -30px;
+  width: 60px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  transform: rotate(2deg);
+}
+
+.ticket-contenu > p {
+  margin: 0 0 6px;
+}
+
+.ticket-titre {
+  font: 500 17px/1.1 var(--main);
+  color: #6b5300;
+}
+
+.ticket-texte {
+  font: 500 19px/1.12 var(--main);
+}
+
+.ticket-astuce {
+  font: 500 16px/1.1 var(--main);
+  color: #5a4a12;
+}
+
+.ticket-astuce::before {
+  content: "Astuce : ";
+}
+
+.ticket-message {
+  font: 500 17px/1.1 var(--main);
+  color: var(--stylo-rouge);
+}
+
+.ticket-bouton,
+.tablette-envoyer {
+  font: 600 12px var(--interface);
+  border: 1px solid var(--encre);
+  border-radius: 3px;
+  background: #fffdf2;
+  color: var(--encre);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.ticket.plie {
+  max-height: 46px;
+}
+
+.ticket.plie .ticket-contenu > :not(.ticket-titre) {
+  display: none;
+}
+
+.tablette-envoyer {
+  margin-left: auto;
+  margin-right: 8px;
+  background: #e9f4ec;
+  border-color: #1e6b3a;
+  color: #1e6b3a;
+}
+</style>
 </head>
 <body>
   <div id="ecran"><div id="etage"></div></div>
@@ -1160,8 +1247,9 @@ Utilisé par : toutes les simulations.
       L.svg("text", { x: 1000, y: 30, "text-anchor": "end", class: "numero-paillasse" }, g).textContent = `Paillasse ${numero + 1}`;
     },
     pense_bete(g, x, y, largeur = 250, hauteur = 175) {
-      // Colle au mur une feuille jaune ; ecrire(titre, texte) y écrit la consigne à la main.
+      // Colle au mur une feuille jaune ; ecrire(titre, texte) y écrit la consigne à la main (cachée en mode cours : ticket.js).
       const feuille = L.svg("g", { transform: `translate(${x} ${y}) rotate(-1.5)`, class: "pense-bete" }, g);
+      if (L.mode_prof) feuille.style.display = "none";
       L.svg("rect", { x: 3, y: 4, width: largeur, height: hauteur, fill: "#000", opacity: 0.18, filter: "url(#flou)" }, feuille);
       L.svg("rect", { width: largeur, height: hauteur, fill: "#fbe98a" }, feuille);
       L.svg("rect", { width: largeur, height: 22, fill: "#f3dc6b" }, feuille);
@@ -1552,7 +1640,7 @@ Utilisé par : tablette.js, missions.js (vérification des étapes).
 Rôle : tablette numérique posée sur la paillasse : un toucher la prend en main (elle se redresse en 3D),
        le bouton rond la repose ; on la déplace par son bord. Deux applications : Tableur et Graphique.
 Reçoit : l'étage de la scène, les missions (une feuille de calcul par mission), où elle est posée.
-Produit : Labo.tablette : creer(), feuille(id), lever(), poser().
+Produit : Labo.tablette : creer(), feuille(id), courbe(), page_courbe(), lever(), poser().
 Utilisé par : la page de chaque simulation, missions.js (feuille de la mission).
 */
 (function (L) {
@@ -1636,6 +1724,14 @@ Utilisé par : la page de chaque simulation, missions.js (feuille de la mission)
     feuille(id = t.vue) {
       // Feuille de calcul d'une mission (par défaut celle de la mission affichée).
       return t.feuilles[id].feuille;
+    },
+    courbe() {
+      // Application « Graphique » (pour le relevé envoyé au professeur).
+      return t.courbe;
+    },
+    page_courbe() {
+      // Page HTML du graphique (pour copier la figure).
+      return t.pages.courbe;
     },
     lever() {
       // Prend la tablette en main.
@@ -1892,15 +1988,184 @@ Utilisé par : carnet.js.
 </script>
   <script>
 /*
+Rôle : ticket jaune du laboratoire en mode cours (le carnet est retiré) : il montre la consigne complète de l'étape
+       en cours, l'astuce de geste et le message de vérification (ce qu'il faut corriger) ; un toucher le plie ou le déplie,
+       un glissé le déplace (s'il cache du matériel).
+       Les étapes « question » ne sont pas comptées : c'est le professeur IA qui les pose.
+Reçoit : l'étage de la scène ; les annonces « missions » (Labo.missions.etat()).
+Produit : Labo.ticket.creer(etage) : le ticket posé en haut à gauche de la scène, au-dessus du décor.
+Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, quand Labo.mode_prof est vrai).
+*/
+(function (L) {
+  const tk = { element: null, contenu: null, plie: false, signature: "", pos: { x: 22, y: 46 } };
+
+  function gestes(m) {
+    // Les étapes de manipulation (sans les questions) et le rang de l'étape en cours parmi elles.
+    const faites = m.etapes.slice(0, m.etape).filter((e) => !e.question).length;
+    return { total: m.etapes.filter((e) => !e.question).length, rang: faites + 1 };
+  }
+
+  function fin(e, m) {
+    // Mission accomplie : retour au cours, ou passage à la mission suivante (laboratoire complet).
+    L.html("p", { class: "ticket-titre" }, tk.contenu, "Mission accomplie");
+    L.html("p", { class: "ticket-texte" }, tk.contenu, "Revenez au cours : le professeur va exploiter vos mesures.");
+    if (e.seule !== null || e.vue + 1 >= e.missions.length) return;
+    const suite = L.html("button", { type: "button", class: "ticket-bouton" }, tk.contenu, "Mission suivante");
+    suite.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.aller(e.vue + 1); });
+  }
+
+  function etape(e, m) {
+    // Étape en cours : consigne, astuce de geste, message de vérification.
+    const { total, rang } = gestes(m), en_cours = m.etapes[m.etape], message = e.messages[m.id];
+    L.html("p", { class: "ticket-titre" }, tk.contenu, `${m.titre} · étape ${rang} sur ${total}`);
+    L.ecrire_riche(L.html("p", { class: "ticket-texte" }, tk.contenu), en_cours.consigne);
+    if (en_cours.aide_geste) L.ecrire_riche(L.html("p", { class: "ticket-astuce" }, tk.contenu), en_cours.aide_geste);
+    if (message && !message.juste) L.ecrire_riche(L.html("p", { class: "ticket-message", role: "status" }, tk.contenu), message.texte);
+  }
+
+  function ecrire(e) {
+    // Réécrit le ticket quand la mission affichée change d'étape ou reçoit un message.
+    const m = e.missions[e.vue], message = e.messages[m.id];
+    const signature = JSON.stringify([e.vue, m.etape, m.accomplie, message, tk.plie]);
+    if (signature === tk.signature) return;
+    tk.signature = signature;
+    tk.contenu.replaceChildren();
+    tk.element.classList.toggle("plie", tk.plie);
+    if (m.accomplie) fin(e, m);
+    else etape(e, m);
+  }
+
+  L.ticket = {
+    creer(etage) {
+      // Colle le ticket en haut à gauche de la scène ; un toucher le plie (pour voir dessous), un glissé le déplace.
+      tk.element = L.html("section", { class: "ticket", "aria-label": "Consignes de l'expérience", "aria-live": "polite" }, etage);
+      L.html("div", { class: "ticket-scotch" }, tk.element);
+      tk.contenu = L.html("div", { class: "ticket-contenu" }, tk.element);
+      L.glissable(tk.element, {
+        debut: (e) => (e.target.closest("button") ? null : { ...tk.pos }),
+        deplacer: (p) => {
+          tk.pos = { x: Math.max(0, Math.min(760, p.x)), y: Math.max(24, Math.min(560, p.y)) };
+          Object.assign(tk.element.style, { left: `${tk.pos.x}px`, top: `${tk.pos.y}px` });
+        },
+        toucher: () => { tk.plie = !tk.plie; ecrire(L.missions.etat()); },
+      });
+      L.ecouter("missions", ecrire);
+    },
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : relevé des mesures d'une mission pour le professeur IA (mode cours) : faits notés par la paillasse,
+       tableau de la tablette (valeurs et formules de l'élève), courbe (points, modèle, équation) et figure (SVG autonome) ;
+       bouton « Envoyer au professeur » sur la tablette.
+Reçoit : la mission ; la feuille et la courbe de la tablette (Labo.tablette).
+Produit : Labo.releve(mission) -> { mission, titre, faits, tableau, courbe, figure } (données JSON, sans objet de la page) ;
+          Labo.releve.bouton() : ajoute le bouton à la barre de la tablette.
+Utilisé par : missions.js (message « releve » en fin de mission), demarrage.js (bouton, en mode cours).
+*/
+(function (L) {
+  const LIMITE_TEXTE = 12000, LIMITE_LISTE = 60;
+  const STYLES = ["fill", "stroke", "stroke-width", "stroke-dasharray", "opacity", "font-family", "font-size", "font-weight", "text-anchor"];
+
+  function propre(valeur, profondeur = 0) {
+    // Copie JSON d'un fait : nombres à 4 chiffres significatifs, listes et profondeur limitées, ni fonction ni élément.
+    if (typeof valeur === "number") return Number.isFinite(valeur) ? Number(valeur.toPrecision(4)) : null;
+    if (valeur === null || ["string", "boolean"].includes(typeof valeur)) return valeur;
+    if (typeof valeur !== "object" || profondeur > 4 || valeur instanceof Node) return undefined;
+    if (Array.isArray(valeur)) return valeur.slice(0, LIMITE_LISTE).map((v) => propre(v, profondeur + 1) ?? null);
+    const copie = {};
+    for (const [cle, v] of Object.entries(valeur)) { const p = propre(v, profondeur + 1); if (p !== undefined) copie[cle] = p; }
+    return copie;
+  }
+
+  function faits() {
+    // Les faits notés par les paillasses, réduits si le texte est trop long.
+    const tous = propre(L.missions.faits?.() || {});
+    return JSON.stringify(tous).length <= LIMITE_TEXTE ? tous : { note: "relevé réduit", cles: Object.keys(tous) };
+  }
+
+  function tableau(feuille) {
+    // Les entêtes et les lignes remplies de la feuille : valeur calculée et, s'il y en a, formule de l'élève.
+    const entetes = Object.fromEntries([...L.Tableur.LETTRES].map((c) => [c, feuille.entete(c)]));
+    const lignes = [], formules = {};
+    for (let n = 2; n <= feuille.nb_lignes; n++) {
+      const ligne = {};
+      for (const c of [...L.Tableur.LETTRES]) {
+        const brut = (feuille.brut[c + n] || "").trim();
+        if (!brut) continue;
+        ligne[c] = feuille.valeur_sure(c + n) ?? brut;
+        if (brut.startsWith("=")) formules[c + n] = brut;
+      }
+      if (Object.keys(ligne).length) lignes.push({ ligne: n, ...propre(ligne) });
+    }
+    return { entetes, lignes, formules };
+  }
+
+  function figure(conteneur) {
+    // Le graphique de la tablette en SVG autonome (styles recopiés), ou null s'il n'y a pas de point.
+    const original = conteneur.querySelector("svg");
+    if (!original || !original.querySelector(".courbe-point")) return null;
+    const copie = original.cloneNode(true), sources = original.querySelectorAll("*"), cibles = copie.querySelectorAll("*");
+    sources.forEach((el, i) => {
+      const style = getComputedStyle(el);
+      cibles[i].setAttribute("style", STYLES.map((p) => `${p}:${style.getPropertyValue(p)}`).join(";"));
+      cibles[i].removeAttribute("class");
+    });
+    copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    return new XMLSerializer().serializeToString(copie);
+  }
+
+  function courbe() {
+    // Ce que l'élève a tracé : grandeurs choisies, points, modèle et équation affichée.
+    const c = L.tablette.courbe();
+    if (!c) return null;
+    c.dessiner(false);
+    const f = L.tablette.feuille(), e = c.etat;
+    if (!e.n) return null;
+    const points = f.lignes([e.x, e.y]).map((l) => [l[e.x], l[e.y]]);
+    return propre({ abscisse: f.entete(e.x), ordonnee: f.entete(e.y), seconde: e.y2 ? f.entete(e.y2) : null, points,
+      modele: e.modele, a: e.a, b: e.b, equation: c.equation.textContent || null });
+  }
+
+  L.releve = function (m) {
+    // Relevé complet de la mission m ; en cas de problème, un relevé réduit (la fin de mission ne doit jamais bloquer).
+    try {
+      const c = courbe();
+      return { mission: m.id, titre: m.titre, faits: faits(), tableau: tableau(L.tablette.feuille(m.id)),
+        courbe: c, figure: c ? figure(L.tablette.page_courbe()) : null };
+    } catch (erreur) {
+      return { mission: m.id, titre: m.titre, erreur: String(erreur.message || erreur) };
+    }
+  };
+
+  L.releve.bouton = function () {
+    // Bouton de la tablette : l'élève envoie lui-même ses mesures et sa figure au professeur.
+    const barre = document.querySelector(".tablette-statut");
+    const b = L.html("button", { type: "button", class: "tablette-envoyer" }, barre, "Envoyer au professeur");
+    b.addEventListener("click", () => {
+      L.missions.envoyer_releve();
+      b.textContent = "Envoyé";
+      setTimeout(() => { b.textContent = "Envoyer au professeur"; }, 2500);
+    });
+  };
+})(window.Labo);
+</script>
+  <script>
+/*
 Rôle : moteur des missions du laboratoire : étape en cours, vérification automatique (gestes, tableur, courbe),
        questions du carnet, passage d'une paillasse à l'autre, messages envoyés à la page du professeur.
 Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra ; l'adresse
-         de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours).
-Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), etat() ;
+         de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours) ;
+         « &prof=1 » (ajouté par l'application) : mode cours, le professeur IA pose les questions et explique.
+Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), faits(), envoyer_releve(), etat() ;
+         Labo.mode_prof (vrai en mode cours : pas de carnet, les étapes « question » passent toutes seules,
+         les mesures partent au professeur : message « releve ») ;
          annonce « missions » à chaque changement ; postMessage { source: "laboratoire", type, ... } au parent.
 Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 */
 (function (L) {
+  L.mode_prof = /[#&]prof=1(&|$)/.test(window.location.hash);
   const etat = { labo: null, missions: [], courante: 0, vue: 0, seule: null, faits: {}, courbes: {}, messages: {}, debut: {} };
   let camera = null;
 
@@ -1920,6 +2185,7 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
   function terminer_mission(m, numero) {
     // La dernière étape est réussie : la mission est accomplie, la suivante s'ouvre.
     m.accomplie = true;
+    if (L.mode_prof) prevenir_parent("releve", L.releve(m));
     prevenir_parent("mission_terminee", { mission: m.id, duree_s: Math.round((performance.now() - etat.debut[m.id]) / 1000) });
     if (etat.seule === null && numero === etat.courante && numero + 1 < etat.missions.length) etat.courante = numero + 1;
     if (etat.missions.every((x) => x.accomplie)) prevenir_parent("laboratoire_termine");
@@ -1937,7 +2203,8 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
     // Vérifie l'étape en cours de chaque mission ouverte, tant que les étapes automatiques sont réussies.
     etat.missions.forEach((m, numero) => {
       if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
-      while (!m.accomplie && m.etapes[m.etape].verifier) {
+      while (!m.accomplie && (m.etapes[m.etape].verifier || (L.mode_prof && m.etapes[m.etape].question))) {
+        if (!m.etapes[m.etape].verifier) { avancer(m, numero); continue; }
         const resultat = m.etapes[m.etape].verifier(contexte(m));
         if (resultat !== true) { etat.messages[m.id] = typeof resultat === "string" ? { texte: resultat, juste: false } : etat.messages[m.id]; break; }
         avancer(m, numero);
@@ -2004,6 +2271,14 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       deplacer_camera(numero);
       L.annoncer("missions", L.missions.etat());
     },
+    faits() {
+      // Les faits notés par les paillasses (lecture seule, pour le relevé).
+      return etat.faits;
+    },
+    envoyer_releve() {
+      // Envoie au professeur les mesures de la mission affichée (bouton de la tablette, mode cours).
+      prevenir_parent("releve", L.releve(mission()));
+    },
     etat() {
       // Résumé pour le carnet, la tablette et les pense-bêtes.
       return { missions: etat.missions, courante: etat.courante, vue: etat.vue, seule: etat.seule, messages: etat.messages };
@@ -2015,6 +2290,8 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
 /*
 Rôle : démarrer une simulation de laboratoire : scène, matières, paillasses, tablette, carnet, missions ;
        le pense-bête de chaque paillasse montre l'étape en cours de sa mission.
+       En mode cours (Labo.mode_prof) : ni carnet ni pense-bêtes, un ticket jaune (consignes complètes) et le bouton
+       « Envoyer au professeur » sur la tablette.
 Reçoit : la définition de la simulation : { id, titre, decor ("aucun" : pas de paillasse), repos_carnet et repos_tablette (facultatifs),
          paillasses: [fabrique, ...], missions: [...] }.
          Chaque fabrique reçoit le groupe SVG de sa paillasse et renvoie { pense_bete }.
@@ -2052,8 +2329,7 @@ Utilisé par : le fichier « simulation.js » de chaque simulation (dernier scri
       return fabrique(g);
     });
     L.tablette.creer(etage, simulation.missions, simulation.repos_tablette);
-    L.carnet.creer(etage, simulation.repos_carnet);
-    pense_betes(postes);
+    if (L.mode_prof) { L.ticket.creer(etage); L.releve.bouton(); } else { L.carnet.creer(etage, simulation.repos_carnet); pense_betes(postes); }
     L.missions.demarrer(simulation, camera);
   }
 
