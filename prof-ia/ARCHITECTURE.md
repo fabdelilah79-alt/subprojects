@@ -19,7 +19,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | config/voix.json | Fournisseur de voix, modèles, style, tons, contrôle du débit. |
 | serveur/main.py | Démarre le serveur web, branche les routes et sert contenu/ressources/ à l'adresse /ressources. |
 | serveur/configuration.py | Lit les fichiers de config/. Ajouté à l'étape 1 (absent de l'arborescence d'origine). |
-| serveur/routes/eleve.py | Routes /api/accueil, /api/eleve (inscription, pseudonyme) et /api/evenements (enregistrés dans le journal de recherche). |
+| serveur/routes/eleve.py | Routes /api/accueil, /api/eleve (inscription, pseudonyme) et /api/evenements (enregistrés dans le journal de recherche ; le relevé d'un laboratoire est aussi rangé dans le dossier de l'élève). |
 | serveur/tests/test_main.py | Teste la page d'accueil et la route /api/accueil. |
 | serveur/tests/test_configuration.py | Teste la lecture des réglages. |
 | serveur/tests/test_verifier_structure.py | Teste l'outil de vérification de la structure. |
@@ -66,6 +66,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | schemas/qcm.schema.json | Format du QCM. |
 | serveur/eleve/pseudonymes.py | Remplace le nom par un pseudonyme (E001…) ; correspondance gardée dans sorties/prive/. |
 | serveur/eleve/profil.py | Calcule le profil sans IA : réussites par partie, conceptions détectées et leur solidité (selon la certitude). |
+| serveur/eleve/releves.py | Range et relit les relevés de laboratoire de l'élève (mesures, tableau, courbe) et sa figure SVG nettoyée ; version courte pour les agents. |
 | serveur/donnees/stockage.py | Range les fichiers de chaque élève dans sorties/parties/<pseudonyme>/ ; refuse tout pseudonyme mal formé. |
 | serveur/routes/qcm.py | /api/qcm?test=pre|post (sans les bonnes réponses) et /api/qcm/reponses (réponses, profil, journal ; lance la préparation de la partie 1). |
 | serveur/tests/test_qcm.py + conftest.py | Testent le QCM, le pseudonyme et le profil ; les tests écrivent dans un dossier temporaire. |
@@ -91,6 +92,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | serveur/pipeline/file_attente.py | Prépare les parties de chaque élève en arrière-plan (N, puis N+1 pendant qu'il suit N) ; repli sur la partie validée. |
 | serveur/routes/classe.py | /api/eleve/<pseudonyme>/etat (préparation des parties) et /api/eleve/<pseudonyme>/parties/<n> (partition servie, notée au journal). |
 | serveur/routes/questions.py | /api/questions : main levée ; réponse de l'agent répondeur, dite par la voix du professeur ; message prévu sans clé. |
+| serveur/routes/releves.py | /api/eleve/<pseudonyme>/releves (relevés de l'élève) et …/releves/<ressource>/figure.svg (sa figure, à montrer au tableau). |
 | serveur/donnees/journal_recherche.py | Journal de recherche SQLite (sorties/journaux/journal.sqlite) : un événement par ligne, sous pseudonyme, heure du navigateur et du serveur. |
 | serveur/voix/gemini_tts.py | Voix Gemini (clé GEMINI_API_KEY) : seul fichier qui parle à ce fournisseur. |
 | serveur/voix/audio_partition.py | Produit tous les audios d'une partition (plusieurs à la fois), puis les instants debut_s. |
@@ -103,7 +105,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/css/classe.css | Mise en page de la classe (tableau + colonne de l'élève), brouillon, panneau d'attente. |
 | client/fin.html | Remerciement à la fin de la séance. |
 | serveur/tests/faux_claude.py | Faux client Claude pour les tests : jamais d'appel réel ni de clé. |
-| serveur/tests/test_agents.py, test_classe.py, test_questions.py, test_export.py | Testent agents et orchestrateur, file d'attente et classe, main levée, export. |
+| serveur/tests/test_agents.py, test_classe.py, test_questions.py, test_export.py, test_releves.py | Testent agents et orchestrateur, file d'attente et classe, main levée, export, relevés de laboratoire (rangement, figure nettoyée, routes). |
 
 | contenu/orientations/instructionsPC lycee.pdf | Document officiel (2007, en arabe) : orientations pédagogiques et programmes de physique-chimie du lycée. |
 | contenu/orientations/index.json | Niveaux, filières, horaires annuels et liste des 63 chapitres. |

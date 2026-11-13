@@ -1674,3 +1674,19 @@ Problèmes restants : dans quelques laboratoires, le ticket recouvre au départ 
 vidéo du cycliste) : l'élève doit le plier ou le déplacer ; les relevés arrivent au journal, mais les agents ne s'en servent
 pas encore (étape 2 : le serveur range le relevé et la figure de l'élève ; étape 3 : le professeur pose les questions et
 explique avec ces mesures, et montre la figure de l'élève au tableau).
+
+## 2026-11-13 — Relevés de laboratoire rangés par élève (étape 2)
+
+- `serveur/eleve/releves.py` : le relevé envoyé par un laboratoire en mode cours (événement `laboratoire_releve`) est rangé
+  dans `sorties/parties/<pseudonyme>/releves/<ressource>.json` (le dernier envoi d'une mission remplace le précédent) et sa
+  figure dans `<ressource>.svg`, **nettoyée** : seulement des formes, des textes et des styles simples (ni script, ni
+  événement, ni lien, ni url(), ni entité XML). Le journal de recherche garde une copie sans la figure.
+- Routes `GET /api/eleve/<pseudonyme>/releves` et `GET /api/eleve/<pseudonyme>/releves/<ressource>/figure.svg`
+  (`serveur/routes/releves.py`) ; version courte `releves.pour_agents()` (mesures, tableau limité, courbe) pour l'étape 3.
+- Réglages dans `config/application.json` (bloc « releves ») : tailles maximales, balises, attributs et styles permis.
+- Tests : `serveur/tests/test_releves.py` (4 tests) ; essai de bout en bout dans la vraie application (questionnaire, classe,
+  prédiction, laboratoire ouvert en mode cours dans le cadre du tableau, mesures, envoi) : relevé de 9 lignes et 18 formules
+  rangé, figure servie (image/svg+xml), consigne « Mission accomplie » ; données de l'élève d'essai effacées ensuite.
+  58 tests réussis ; structure conforme.
+
+Problème restant : les agents ne lisent pas encore ces relevés (étape 3).
