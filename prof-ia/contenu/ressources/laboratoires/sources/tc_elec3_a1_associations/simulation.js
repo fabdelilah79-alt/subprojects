@@ -23,7 +23,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Tournez le commutateur sur Ω 200 et branchez l'ohmmètre aux deux bornes de R1 (VΩ sur une borne, COM sur l'autre).", court: "Ohmmètre (Ω 200) aux bornes de R1.", verifier: mesurees(["R1"]), aide_geste: "La résistance mesurée doit être seule : aucun autre fil sur ses bornes." },
       { consigne: "Mesurez de même R2 et R3, en choisissant chaque fois le bon calibre.", court: "Mesurez R2 et R3.", verifier: mesurees(["R2", "R3"]), aide_geste: "Si l'écran affiche « 1 », passez au calibre supérieur." },
       { consigne: "Sur le calibre 2 kΩ, l'afficheur donne R2 en kΩ. Écrivez R2 en ohms.", court: "R2 en Ω ?", question: nombre((faits) => R(faits).R2 || 0, 1, "1 kΩ = 1 000 Ω.", "Exact.") },
-      { consigne: "Les anneaux de R2 sont rouge, rouge, marron, or. Ils signifient…", court: "Répondez dans le carnet.", question: choix(["22 × 10¹ Ω = 220 Ω, à 5 % près", "221 Ω exactement", "2 200 Ω, à 1 % près"], "Rouge = 2, marron = 1 zéro, or = 5 %.", "Exact.") },
+      { consigne: "Les anneaux de R2 sont rouge, rouge, marron, or. Ils signifient…", court: "Répondez dans le carnet.", question: choix(["220 Ω à 5 % près", "221 Ω exactement", "2 200 Ω à 1 % près"], "Rouge = 2, marron = 1 zéro, or = 5 %.", "Exact.") },
       { consigne: "La valeur mesurée de R2 et celle du code…", court: "Répondez dans le carnet.", question: choix(["sont compatibles : la mesure est entre 209 Ω et 231 Ω", "sont incompatibles : la résistance est défectueuse", "doivent être exactement égales"], "220 Ω ± 5 % : de 209 Ω à 231 Ω.", "Exact.") },
     ],
   };
@@ -39,7 +39,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Calculez R1 + R2 avec vos mesures (en Ω).", court: "R1 + R2 (Ω) ?", question: nombre((faits) => (R(faits).R1 || 0) + (R(faits).R2 || 0), 1, "Additionnez les deux mesures.", "Exact : c'est la valeur mesurée pour l'association.") },
       { consigne: "Montez R1 et R2 en parallèle (deux fils) et mesurez la résistance de l'ensemble.", court: "R1 et R2 en parallèle : mesurez Req.", verifier: mesurees(["parallele_R1_R2"]) },
       { consigne: "La conductance d'une résistance est G = 1/R (en siemens, S). Calculez G1 + G2 avec vos mesures de R1 et R2 (en S).", court: "G1 + G2 (S) ?", question: nombre((faits) => 1 / (R(faits).R1 || 1) + 1 / (R(faits).R2 || 1), 0.01, "G1 = 1/R1, avec R1 en ohms.", "Exact.", true) },
-      { consigne: "Calculez 1/(G1 + G2) et comparez avec la mesure. En parallèle…", court: "Répondez dans le carnet.", question: choix(["les conductances s'ajoutent : Req = 1/(G1 + G2), plus petite que R1 et que R2", "les résistances s'ajoutent", "Req est la moyenne de R1 et R2"], "1/(G1 + G2) vaut-il la mesure ?", "Exact.") },
+      { consigne: "Calculez 1/(G1 + G2) et comparez avec la mesure. En parallèle…", court: "Répondez dans le carnet.", question: choix(["les conductances s'ajoutent", "les résistances s'ajoutent", "Req est la moyenne de R1 et R2"], "1/(G1 + G2) vaut-il la mesure ?", "Exact.") },
     ],
   };
 
@@ -52,8 +52,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Avec l'ohmmètre (Ω 200), mesurez la résistance des quatre fils F1, F2, F3 et F4.", court: "Mesurez F1, F2, F3, F4.", verifier: mesurees(["F1", "F2", "F3", "F4"]) },
       { consigne: "Comparez F1 et F2 : même fil, mais F2 est deux fois plus court. La résistance…", court: "Répondez dans le carnet.", question: choix(["est proportionnelle à la longueur l", "ne dépend pas de la longueur", "est inversement proportionnelle à la longueur"], "R(F2) = R(F1)/2 ?", "Exact.") },
-      { consigne: "Comparez F1 et F3 : même longueur, mais F3 a une section deux fois plus grande. La résistance…", court: "Répondez dans le carnet.", question: choix(["est inversement proportionnelle à la section S", "est proportionnelle à la section", "ne dépend pas de la section"], "R(F3) = R(F1)/2 ?", "Exact.") },
-      { consigne: "Comparez F1 (constantan) et F4 (cuivre), de mêmes dimensions. La résistance dépend aussi…", court: "Répondez dans le carnet.", question: choix(["du matériau : c'est sa résistivité ρ", "de la couleur du fil", "de rien d'autre"], "Le cuivre conduit bien mieux que le constantan.", "Exact.") },
+      { consigne: "Comparez F1 et F3 : même longueur, mais F3 a une section deux fois plus grande. La résistance…", court: "Répondez dans le carnet.", question: choix(["est proportionnelle à 1/S", "est proportionnelle à S", "ne dépend pas de S"], "R(F3) = R(F1)/2 ?", "Exact.") },
+      { consigne: "Comparez F1 (constantan) et F4 (cuivre), de mêmes dimensions. La résistance dépend aussi…", court: "Répondez dans le carnet.", question: choix(["du matériau", "de la couleur", "de rien d'autre"], "Le cuivre conduit bien mieux que le constantan.", "Exact.") },
       { consigne: "Calculez la résistivité du constantan ρ = R·S/l avec le fil F1 (S = 0,05 mm² = 5 × 10⁻⁸ m²), en Ω·m.", court: "ρ du constantan (Ω·m) ?", question: nombre((faits) => ((R(faits).F1 || 9.8) * 5e-8) / 1, 0.05, "Écrivez par exemple 4,9E-7.", "Exact : ρ ≈ 4,9 × 10⁻⁷ Ω·m.", true) },
     ],
   };

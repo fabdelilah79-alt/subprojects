@@ -3587,9 +3587,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les trois documents affichés au mur.", court: "Lisez les 3 documents.", verifier: ({ faits }) => [1, 2, 3].every((k) => (faits.docs_classification || []).includes(k)) || false },
       { consigne: "Rangez les 16 cartes comme Mendeleïev : par masse croissante, de gauche à droite ; commencez une nouvelle ligne quand le type de formule recommence (Li₂O, puis Na₂O…).", court: "Rangez les 16 cartes.", aide_geste: "Faites glisser chaque carte dans une case.", verifier: cartes },
-      { consigne: "Pour ranger les éléments, Mendeleïev a utilisé…", court: "Répondez dans le carnet.", question: choix(["leur masse atomique et leurs propriétés chimiques", "leur numéro atomique Z", "leur couleur"], "Relisez le document 2 ; Z n'était pas connu en 1869.", "Exact.") },
+      { consigne: "Pour ranger les éléments, Mendeleïev a utilisé…", court: "Répondez dans le carnet.", question: choix(["la masse et les propriétés", "le numéro atomique Z", "la couleur des corps purs"], "Relisez le document 2 ; Z n'était pas connu en 1869.", "Exact.") },
       { consigne: "Quelle masse Mendeleïev avait-il prévue pour l'éka-silicium (le futur germanium) ?", court: "Masse prévue de l'éka-silicium ?", question: { type: "nombre", unite: "", attendu: 72, tolerance: 1, aide: "Relisez le document 2.", bravo: "Exact : le germanium, découvert en 1886, a une masse de 72,6." } },
-      { consigne: "Aujourd'hui, les éléments sont rangés…", court: "Répondez dans le carnet.", question: choix(["par numéro atomique Z croissant ; une colonne regroupe les éléments qui ont le même nombre d'électrons externes", "par masse croissante seulement", "par ordre alphabétique"], "Relisez le document 3.", "Exact.") },
+      { consigne: "Aujourd'hui, les éléments sont rangés…", court: "Répondez dans le carnet.", question: choix(["par numéro atomique Z croissant", "par masse atomique croissante", "par ordre alphabétique de nom"], "Relisez le document 3.", "Exact.") },
     ],
   };
 
@@ -3601,9 +3601,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Alcalins : même réaction, ions M⁺.",
     etapes: [
       { consigne: "Mettez les lunettes. Avec la pince, déposez un grain de lithium dans un cristallisoir, un grain de sodium dans un autre, un grain de potassium dans le troisième. Observez.", court: "Li, Na, K dans l'eau.", aide_geste: "Saisissez la pince au-dessus d'un flacon et lâchez-la au-dessus d'un cristallisoir.", verifier: ({ faits }) => { const a = F(faits, "alcalins"); return ["Li", "Na", "K"].every((m) => a[m] === "fini") || false; } },
-      { consigne: "La phénolphtaléine devient rose : la solution est devenue…", court: "Répondez dans le carnet.", question: choix(["basique (elle contient des ions hydroxyde HO⁻)", "acide", "neutre"], "La phénolphtaléine est rose en milieu basique.", "Exact. Le gaz qui se dégage est du dihydrogène.") },
-      { consigne: "Les trois métaux réagissent de la même façon, de plus en plus vivement du lithium au potassium. On dit qu'ils forment…", court: "Répondez dans le carnet.", question: choix(["une famille chimique : les alcalins (première colonne)", "un seul élément", "des gaz nobles"], "Ils sont dans la même colonne.", "Exact.") },
-      { consigne: "Un atome alcalin a 1 électron sur sa couche externe. Il donne l'ion…", court: "Répondez dans le carnet.", question: choix(["M⁺ (Li⁺, Na⁺, K⁺) : il perd cet électron", "M⁻", "M²⁺"], "Pensez à la règle du duet ou de l'octet.", "Exact.") },
+      { consigne: "La phénolphtaléine devient rose : la solution est devenue…", court: "Répondez dans le carnet.", question: choix(["basique", "acide", "neutre"], "La phénolphtaléine est rose en milieu basique.", "Exact. Le gaz qui se dégage est du dihydrogène.") },
+      { consigne: "Les trois métaux réagissent de la même façon, de plus en plus vivement du lithium au potassium. On dit qu'ils forment…", court: "Répondez dans le carnet.", question: choix(["une famille : les alcalins", "une famille : les halogènes", "une famille : les gaz nobles"], "Ils sont dans la même colonne.", "Exact.") },
+      { consigne: "Un atome alcalin a 1 électron sur sa couche externe. Il donne l'ion…", court: "Répondez dans le carnet.", question: choix(["M⁺", "M⁻", "M²⁺"], "Pensez à la règle du duet ou de l'octet.", "Exact.") },
     ],
   };
 
@@ -3615,8 +3615,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Halogènes : même réaction, ions X⁻.",
     etapes: [
       { consigne: "Mettez lunettes et gants. Versez quelques gouttes de nitrate d'argent dans chacun des trois tubes.", court: "Nitrate d'argent dans les 3 tubes.", verifier: ({ faits }) => { const h = F(faits, "halogenures"); return ["Cl", "Br", "I"].every((x) => h[x] > 0.05) || false; } },
-      { consigne: "Dans les trois tubes, il se forme…", court: "Répondez dans le carnet.", question: choix(["un précipité (blanc, blanc jaunâtre, jaune) : même réaction avec les ions argent", "aucun changement", "un gaz"], "Regardez les tubes.", "Exact : chlorure, bromure et iodure d'argent.") },
-      { consigne: "Le chlore, le brome et l'iode ont 7 électrons sur leur couche externe. Ils forment la famille des…", court: "Répondez dans le carnet.", question: choix(["halogènes : ils donnent des ions X⁻ (Cl⁻, Br⁻, I⁻)", "alcalins", "gaz nobles"], "Il leur manque un électron pour avoir 8 électrons externes.", "Exact.") },
+      { consigne: "Dans les trois tubes, il se forme…", court: "Répondez dans le carnet.", question: choix(["un précipité", "aucun changement", "un gaz"], "Regardez les tubes.", "Exact : chlorure, bromure et iodure d'argent.") },
+      { consigne: "Le chlore, le brome et l'iode ont 7 électrons sur leur couche externe. Ils forment la famille des…", court: "Répondez dans le carnet.", question: choix(["halogènes", "alcalins", "gaz nobles"], "Il leur manque un électron pour avoir 8 électrons externes.", "Exact.") },
     ],
   };
 

@@ -3019,7 +3019,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Appuyez sur « Enregistrer », puis lancez franchement le mobile A droit vers B, depuis le bord gauche de la table.", court: "Enregistrez le choc de A sur B.", verifier: enregistrement_choc },
       { consigne: "Prenez la feuille. Avant le choc, mesurez A0A4 et calculez la vitesse vA (en m/s).", court: "vA avant le choc (m/s) ?", question: { type: "nombre", unite: "m/s", attendu: v_avant, tolerance_relative: 0.06, aide: "vA = A0A4 / (4τ).", bravo: "Exact." } },
       { consigne: "Après le choc, A et B avancent ensemble. Mesurez quatre intervalles de B après le choc et calculez leur vitesse v' (en m/s).", court: "v' après le choc (m/s) ?", question: { type: "nombre", unite: "m/s", attendu: v_apres, tolerance_relative: 0.08, aide: "Choisissez des points de B qui ont bougé ; v' = distance / (4τ).", bravo: "Exact." } },
-      { consigne: "Comparez p avant = mA·vA et p après = (mA + mB)·v'.", court: "Répondez dans le carnet.", question: choix(["elles sont égales : la quantité de mouvement se conserve au cours du choc", "p après est plus grande", "p après est nulle"], `mA = ${CHOC.m_a} kg, mA + mB = ${CHOC.m_a + CHOC.m_b} kg.`, "Exact.") },
+      { consigne: "Comparez p avant = mA·vA et p après = (mA + mB)·v'.", court: "Répondez dans le carnet.", question: choix(["elles sont égales", "p après est plus grande", "p après est plus petite"], `mA = ${CHOC.m_a} kg, mA + mB = ${CHOC.m_a + CHOC.m_b} kg.`, "Exact.") },
     ],
   };
 
@@ -3032,7 +3032,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Touchez « Sauter ! » et observez la photographie à pose multiple.", court: "Faites sauter l'enfant.", verifier: ({ faits }) => !!faits.recul_barque },
       { consigne: "Avec les points rouges du fanion et les bouées (tous les 0,5 m), mesurez la vitesse de la barque (en m/s).", court: "Vitesse de la barque (m/s) ?", question: { type: "nombre", unite: "m/s", attendu: (BARQUE.m_enfant * BARQUE.v_enfant) / BARQUE.m_barque, tolerance_relative: 0.1, aide: "Distance parcourue entre deux points éloignés, divisée par la durée (0,25 s entre deux points).", bravo: "Exact." } },
-      { consigne: `Calculez p(enfant) = ${BARQUE.m_enfant} × ${L.nombre(BARQUE.v_enfant, 1)} et p(barque). La barque recule parce que…`, court: "Répondez dans le carnet.", question: choix(["la quantité de mouvement du système, nulle au départ, reste nulle : p(barque) = − p(enfant)", "l'eau la pousse vers l'arrière", "le vent souffle"], "Les deux quantités de mouvement ont la même valeur.", "Exact.") },
+      { consigne: `Calculez p(enfant) = ${BARQUE.m_enfant} × ${L.nombre(BARQUE.v_enfant, 1)} et p(barque). La barque recule parce que…`, court: "Répondez dans le carnet.", question: choix(["p du système reste nulle", "l'eau la pousse en arrière", "le vent souffle vers l'arrière"], "Les deux quantités de mouvement ont la même valeur.", "Exact.") },
     ],
   };
 
@@ -3045,7 +3045,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Touchez « Tirer » et observez la photographie à pose multiple.", court: "Faites tirer le canon.", verifier: ({ faits }) => !!faits.recul_canon },
       { consigne: "Avec les points bleus et la graduation du rail (en cm), mesurez la vitesse de recul du chariot (en m/s).", court: "Vitesse de recul (m/s) ?", question: { type: "nombre", unite: "m/s", attendu: (CANON.m_bille * CANON.v_bille) / CANON.m_chariot, tolerance_relative: 0.1, aide: "Distance entre deux points éloignés, divisée par la durée (0,1 s entre deux points).", bravo: "Exact." } },
-      { consigne: "La barrière lumineuse a mesuré la vitesse de la bille. Que vaut m_bille·v_bille comparé à m_chariot·v_chariot ?", court: "Répondez dans le carnet.", question: choix(["la même valeur : la quantité de mouvement totale reste nulle", "m_bille·v_bille est beaucoup plus grand", "il n'y a aucun rapport"], `${CANON.m_bille} × ${L.nombre(CANON.v_bille, 1)} et ${CANON.m_chariot} × votre vitesse.`, "Exact.") },
+      { consigne: "La barrière lumineuse a mesuré la vitesse de la bille. Que vaut m_bille·v_bille comparé à m_chariot·v_chariot ?", court: "Répondez dans le carnet.", question: choix(["la même valeur", "une valeur bien plus grande", "une valeur bien plus petite"], `${CANON.m_bille} × ${L.nombre(CANON.v_bille, 1)} et ${CANON.m_chariot} × votre vitesse.`, "Exact.") },
       { consigne: "Un fusil de 4 kg tire une balle de 10 g à 400 m/s. Quelle est sa vitesse de recul (en m/s) ?", court: "Vitesse de recul du fusil (m/s) ?", question: { type: "nombre", unite: "m/s", attendu: 1, tolerance: 0.02, aide: "0,010 × 400 = 4 × v.", bravo: "Exact : 1 m/s, c'est pourquoi on cale la crosse contre l'épaule." } },
     ],
   };

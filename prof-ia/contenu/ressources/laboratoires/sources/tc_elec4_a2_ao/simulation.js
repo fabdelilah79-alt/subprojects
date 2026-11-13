@@ -30,7 +30,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "AO déjà alimenté. SORTIE du GBF → R1 → e− ; R2 entre e− et s ; e+ → 0 ; masse du GBF → 0. Oscilloscope : Y1 sur la SORTIE du GBF (Ue), Y2 sur s (Us), masse ⏚ sur 0.", court: "Montez l'inverseur et l'oscilloscope.", verifier: ({ faits }) => (I(faits).monte && I(faits).ue_max > 0.3) || false },
       { consigne: "Réglez la sensibilité de chaque voie : les deux courbes entières dans l'écran.", court: "Réglez Sv de chaque voie.", verifier: bien_regle("inverseur") },
-      { consigne: "Comparez les deux courbes : quand Ue est maximale, Us est…", court: "Répondez dans le carnet.", question: choix(["minimale : Us et Ue sont en opposition de phase", "maximale aussi : elles sont en phase", "nulle"], "Regardez le même instant sur les deux courbes.", "Exact : le montage inverse le signe de la tension.") },
+      { consigne: "Comparez les deux courbes : quand Ue est maximale, Us est…", court: "Répondez dans le carnet.", question: choix(["minimale", "maximale", "nulle"], "Regardez le même instant sur les deux courbes.", "Exact : le montage inverse le signe de la tension.") },
       { consigne: "Faites varier l'amplitude du GBF (Ue max de 1 V à 5 V) : pour au moins 5 réglages, lisez Ue max (Y1) et Us au même instant (Y2).", court: "Au moins 5 lectures (Ue max, Us).", verifier: ({ faits }) => (I(faits).points || []).length >= 5 || false, aide_geste: "Réajustez les sensibilités si une courbe sort de l'écran." },
       { consigne: "Tableur : Ue max en A, Us (négative) en B, Us/Ue en C. Tracez Us en fonction de Ue et modélisez par une fonction linéaire.", court: "Tableur, puis Us en fonction de Ue.", verifier: feuille_inverseur },
       { consigne: "Que vaut le coefficient Us/Ue ?", court: "Us/Ue ?", question: { type: "nombre", unite: "", attendu: -2.2, tolerance: 0.1, aide: "C'est le coefficient directeur de la droite (il est négatif).", bravo: "Exact : −2,2." } },
@@ -49,12 +49,12 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "AO déjà alimenté. SORTIE du GBF → e+ ; R1 entre e− et 0 ; R2 entre e− et s ; masse du GBF → 0. Oscilloscope : Y1 sur la SORTIE du GBF (Ue), Y2 sur s (Us), masse ⏚ sur 0.", court: "Montez le non-inverseur et l'oscilloscope.", verifier: ({ faits }) => (N(faits).monte && N(faits).ue_max > 0.3) || false },
       { consigne: "Réglez la sensibilité de chaque voie : les deux courbes entières dans l'écran.", court: "Réglez Sv de chaque voie.", verifier: bien_regle("non_inverseur") },
-      { consigne: "Comparez les deux courbes : Us et Ue sont…", court: "Répondez dans le carnet.", question: choix(["en phase : elles sont maximales au même instant", "en opposition de phase", "de fréquences différentes"], "Regardez le même instant sur les deux courbes.", "Exact.") },
+      { consigne: "Comparez les deux courbes : Us et Ue sont…", court: "Répondez dans le carnet.", question: choix(["en phase", "en opposition de phase", "de fréquences différentes"], "Regardez le même instant sur les deux courbes.", "Exact.") },
       { consigne: "Lisez Ue max sur la voie 1 (en V).", court: "Ue max (V) ?", question: { type: "nombre", unite: "", attendu: (faits) => N(faits).ue_max, tolerance: 0.15, aide: "Ue max = Sv1 × y.", bravo: "Exact." } },
       { consigne: "Lisez Us max sur la voie 2 (en V).", court: "Us max (V) ?", question: { type: "nombre", unite: "", attendu: (faits) => N(faits).us_max, tolerance: 0.3, aide: "Us max = Sv2 × y.", bravo: "Exact." } },
       { consigne: "Calculez Us max / Ue max.", court: "Us/Ue ?", question: { type: "nombre", unite: "", attendu: 3.2, tolerance: 0.15, aide: "Divisez vos deux lectures.", bravo: "Exact : 3,2." } },
-      { consigne: "R1 = 10 kΩ et R2 = 22 kΩ. Pour le montage non-inverseur, Us =…", court: "Répondez dans le carnet.", question: choix(["((R1 + R2)/R1)·Ue = (1 + R2/R1)·Ue", "−(R2/R1)·Ue", "(R2/R1)·Ue"], "Calculez (R1 + R2)/R1.", "Exact.") },
-      { consigne: "Sonorisation : microphone → amplificateur à AO → haut-parleur. Dans cette chaîne électronique, l'AO est…", court: "Répondez dans le carnet.", question: choix(["le circuit de traitement : il amplifie la tension du capteur (microphone) pour commander la sortie (haut-parleur)", "le capteur", "la sortie"], "Qui transforme le son en tension ? Qui produit le son ?", "Exact : capteur → traitement → sortie.") },
+      { consigne: "R1 = 10 kΩ et R2 = 22 kΩ. Pour le montage non-inverseur, Us =…", court: "Répondez dans le carnet.", question: choix(["(1 + R2/R1)·Ue", "−(R2/R1)·Ue", "(R2/R1)·Ue"], "Calculez (R1 + R2)/R1.", "Exact.") },
+      { consigne: "Sonorisation : microphone → amplificateur à AO → haut-parleur. Dans cette chaîne électronique, l'AO est…", court: "Répondez dans le carnet.", question: choix(["le traitement", "le capteur", "la sortie"], "Qui transforme le son en tension ? Qui produit le son ?", "Exact : capteur → traitement → sortie.") },
     ],
   };
 

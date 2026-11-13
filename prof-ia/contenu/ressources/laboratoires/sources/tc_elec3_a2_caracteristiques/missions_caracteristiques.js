@@ -44,8 +44,8 @@ Utilisé par : simulation.js.
     conclusion: "La caractéristique d'une lampe n'est pas une droite : U/I augmente avec I, car le filament chauffe et sa résistance augmente. La lampe n'est pas un conducteur ohmique.",
     courte: "Lampe : U/I augmente avec I.",
     questions: [
-      { consigne: "La caractéristique de la lampe…", court: "Répondez dans le carnet.", question: choix(["n'est pas une droite : U/I augmente avec I", "est une droite passant par l'origine", "est horizontale"], "Comparez U/I pour un petit et un grand courant.", "Exact.") },
-      { consigne: "Pourquoi la résistance U/I de la lampe augmente-t-elle avec l'intensité ?", court: "Répondez dans le carnet.", question: choix(["le filament chauffe, et la résistance d'un métal augmente avec la température", "le générateur s'use", "l'ampèremètre se trompe"], "Le filament devient de plus en plus lumineux, donc chaud.", "Exact : la lampe n'est pas un conducteur ohmique.") },
+      { consigne: "La caractéristique de la lampe…", court: "Répondez dans le carnet.", question: choix(["n'est pas une droite", "est une droite par l'origine", "est une droite horizontale"], "Comparez U/I pour un petit et un grand courant.", "Exact.") },
+      { consigne: "Pourquoi la résistance U/I de la lampe augmente-t-elle avec l'intensité ?", court: "Répondez dans le carnet.", question: choix(["le filament chauffe", "le générateur s'use", "l'ampèremètre se trompe"], "Le filament devient de plus en plus lumineux, donc chaud.", "Exact : la lampe n'est pas un conducteur ohmique.") },
     ],
   });
   LAMPE.etapes[1].consigne = "Faites varier la tension du générateur de 0 à 6 V (sans dépasser 6 V, la tension nominale de la lampe) : relevez au moins 6 points, dont quelques-uns sous 1 V.";
@@ -62,7 +62,7 @@ Utilisé par : simulation.js.
       { consigne: "Tableur : I (A) en colonne A, U (V) en colonne B. Tracez la caractéristique I = f(U) : I en ordonnée, U en abscisse.", court: "Tableur, puis I en fonction de U.", verifier: ({ feuille, faits, courbe }) => { const r = L.feuille_points(feuille, points(faits, "diode")); return r === true ? courbe_ok("B", "A")({ courbe }) : r; } },
       { consigne: "Lisez sur la courbe la tension de seuil de la diode (tension à partir de laquelle le courant augmente fortement), en V.", court: "Tension de seuil (V) ?", question: nombre(0.62, 0.08, "Là où la courbe se redresse.", "Exact : environ 0,6 V.") },
       { consigne: "Retournez la diode (échangez les fils sur A et K, sans toucher au voltmètre), réglez le générateur sur 5 V et relevez le point.", court: "Diode retournée, générateur à 5 V.", verifier: assez("diode", 1, (p) => p.U < -1 && Math.abs(p.I) < 1e-4) },
-      { consigne: "Diode retournée, l'intensité est nulle. La diode…", court: "Répondez dans le carnet.", question: choix(["ne laisse passer le courant que dans un sens, de A vers K, au-delà de la tension de seuil", "laisse passer le courant dans les deux sens", "est grillée"], "Comparez les deux sens.", "Exact.") },
+      { consigne: "Diode retournée, l'intensité est nulle. La diode…", court: "Répondez dans le carnet.", question: choix(["ne conduit que dans un sens", "conduit dans les deux sens", "est grillée"], "Comparez les deux sens.", "Exact.") },
     ],
   };
 

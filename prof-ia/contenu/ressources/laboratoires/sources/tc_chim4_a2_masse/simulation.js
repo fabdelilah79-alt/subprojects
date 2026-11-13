@@ -20,12 +20,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "ᴬ_ZX : Z protons, A − Z neutrons, Z électrons.",
     etapes: [
       construire("Construisez l'atome de carbone ¹²₆C : protons et neutrons dans le noyau, électrons sur les couches.", "Construisez ¹²₆C.", 6, 12),
-      { consigne: "Dans le symbole ¹²₆C, le nombre 12 est…", court: "Répondez dans le carnet.", question: choix(["le nombre de nucléons A : protons + neutrons", "le nombre de neutrons", "le nombre d'électrons"], "Comptez les aimants du noyau.", "Exact : A = Z + N, avec N = 6 neutrons.") },
+      { consigne: "Dans le symbole ¹²₆C, le nombre 12 est…", court: "Répondez dans le carnet.", question: choix(["le nombre de nucléons", "le nombre de neutrons", "le nombre d'électrons"], "Comptez les aimants du noyau.", "Exact : A = Z + N, avec N = 6 neutrons.") },
       { consigne: "La charge du noyau de carbone et celle de l'atome sont…", court: "Répondez dans le carnet.", question: choix(["noyau : +6e ; atome : 0", "noyau : 0 ; atome : +6e", "noyau : +12e ; atome : +6e"], "Seuls les protons (+e) et les électrons (−e) sont chargés.", "Exact : les 6 électrons (−6e) compensent les 6 protons.") },
       construire("Touchez « Tout ranger », puis construisez l'atome de sodium ²³₁₁Na : remplissez les couches dans l'ordre.", "Construisez ²³₁₁Na.", 11, 23, 11, true),
       construire("Retirez l'électron de la couche externe (M) : glissez-le hors de l'atome.", "Retirez l'électron externe.", 11, 23, 10, true),
       { consigne: "Vous avez obtenu une entité de 11 protons et 10 électrons. C'est…", court: "Répondez dans le carnet.", question: choix(["l'ion sodium Na⁺, de charge +e", "l'ion Na⁻, de charge −e", "un atome de néon (10 électrons)"], "Le noyau n'a pas changé : comparez le nombre de charges + et −.", "Exact : un ion monoatomique se forme quand un atome perd ou gagne des électrons ; son noyau ne change pas, c'est toujours l'élément sodium (Z = 11).") },
-      { consigne: "Un atome a 11 protons et 13 neutrons. C'est…", court: "Répondez dans le carnet.", question: choix(["un isotope du sodium : ²⁴₁₁Na", "un atome de magnésium", "un ion sodium"], "Quel nombre caractérise l'élément ?", "Exact : même Z, donc même élément ; les isotopes diffèrent par leur nombre de neutrons.") },
+      { consigne: "Un atome a 11 protons et 13 neutrons. C'est…", court: "Répondez dans le carnet.", question: choix(["un atome de sodium", "un atome de magnésium", "un ion sodium Na⁺"], "Quel nombre caractérise l'élément ?", "Exact : même Z, donc même élément ; les isotopes diffèrent par leur nombre de neutrons.") },
     ],
   };
 

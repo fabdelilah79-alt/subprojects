@@ -2295,8 +2295,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Calculez v3 = (y4 − y2) / (2τ), en m/s.", court: "v3 (m/s) ?", question: nombre("m/s", G * 3 * TAU, "y4 − y2 en mètre ; 2τ = 0,1 s.") },
       { consigne: "Calculez v7 = (y8 − y6) / (2τ), en m/s.", court: "v7 (m/s) ?", question: nombre("m/s", G * 7 * TAU, "y8 − y6 en mètre.") },
       { consigne: `Calculez Δp / Δt = m·(v7 − v3) / (t7 − t3), en newton (m = ${M * 1000} g).`, court: "Δp/Δt (N) ?", question: nombre("N", M * G, "t7 − t3 = 4τ = 0,2 s ; m en kg.") },
-      { consigne: "Comparez Δp/Δt au poids de la bille, P = m·g (g = 9,8 N/kg).", court: "Répondez dans le carnet.", question: choix(["Δp/Δt = P : la force qui agit sur la bille est égale à Δp/Δt", "Δp/Δt est nul", "Δp/Δt est dix fois plus grand que P"], `P = ${M} × 9,8.`, "Exact : F = Δp/Δt.") },
-      { consigne: "Le vecteur Δp = p7 − p3 est…", court: "Répondez dans le carnet.", question: choix(["vertical, vers le bas : comme le poids", "vertical, vers le haut", "nul"], "La vitesse augmente vers le bas.", "Exact : Δp a la direction et le sens de la force.") },
+      { consigne: "Comparez Δp/Δt au poids de la bille, P = m·g (g = 9,8 N/kg).", court: "Répondez dans le carnet.", question: choix(["Δp/Δt = P", "Δp/Δt = 0", "Δp/Δt = 10·P"], `P = ${M} × 9,8.`, "Exact : F = Δp/Δt.") },
+      { consigne: "Le vecteur Δp = p7 − p3 est…", court: "Répondez dans le carnet.", question: choix(["vertical, vers le bas", "vertical, vers le haut", "tangent à la trajectoire"], "La vitesse augmente vers le bas.", "Exact : Δp a la direction et le sens de la force.") },
     ],
   };
 
@@ -2310,8 +2310,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Appuyez sur « Lancer la bille » : elle roule sur le rail et le quitte au point O.", court: "Lancez la bille.", verifier: ({ faits }) => !!faits.lancer_h },
       { consigne: "Avec le fil vertical, mesurez la distance horizontale entre deux images successives. Elle est…", court: "Répondez dans le carnet.", question: choix(["constante", "de plus en plus grande", "de plus en plus petite"], "Comparez plusieurs intervalles sur le quadrillage.", "Exact : aucune force horizontale n'agit.") },
       { consigne: "Calculez la composante horizontale vx de la vitesse (en m/s).", court: "vx (m/s) ?", question: nombre("m/s", V0, "vx = distance horizontale entre deux images / τ (τ = 0,05 s).") },
-      { consigne: "Entre deux instants, le vecteur Δp…", court: "Répondez dans le carnet.", question: choix(["est vertical vers le bas : la force qui agit (le poids) est verticale", "est horizontal", "est tangent à la trajectoire"], "Seule la composante verticale de la vitesse change.", "Exact.") },
-      { consigne: "Inversement : une force constante agit sur un corps. Entre deux instants, Δp…", court: "Répondez dans le carnet.", question: choix(["a la direction et le sens de la force (F = Δp/Δt)", "est perpendiculaire à la force", "est toujours nul"], "C'est la relation que vous avez vérifiée.", "Exact.") },
+      { consigne: "Entre deux instants, le vecteur Δp…", court: "Répondez dans le carnet.", question: choix(["est vertical vers le bas", "est horizontal", "est tangent à la trajectoire"], "Seule la composante verticale de la vitesse change.", "Exact.") },
+      { consigne: "Inversement : une force constante agit sur un corps. Entre deux instants, Δp…", court: "Répondez dans le carnet.", question: choix(["a le sens de la force", "est perpendiculaire à la force", "est toujours nul"], "C'est la relation que vous avez vérifiée.", "Exact.") },
     ],
   };
 

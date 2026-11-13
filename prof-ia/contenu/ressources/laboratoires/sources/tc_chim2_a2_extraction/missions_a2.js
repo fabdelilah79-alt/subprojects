@@ -41,9 +41,9 @@ Utilisé par : simulation.js.
       { consigne: "Ajoutez quelques grains de pierre ponce dans le ballon (glissez-les du flacon jusqu'au col du ballon).", court: "Pierre ponce dans le ballon.", verifier: ({ faits }) => H(faits).ponce || false },
       { consigne: "Branchez le tuyau d'arrivée d'eau sur un embout du réfrigérant, puis ouvrez le robinet.", court: "Eau dans le réfrigérant.", verifier: eau_branchee, aide_geste: "Le bouton du robinet est à droite de celui-ci." },
       { consigne: "Allumez le chauffe-ballon (touche I/O) et observez jusqu'à recueillir 30 mL de distillat.", court: "Chauffez, recueillez 30 mL.", verifier: ({ faits }) => H(faits).volume >= 30 || false },
-      { consigne: "Le réfrigérant sert à…", court: "Répondez dans le carnet.", question: choix(["refroidir les vapeurs pour qu'elles redeviennent liquides", "chauffer le distillat", "filtrer les fleurs"], "Que se passe-t-il dans le tube intérieur ?", "Exact.") },
-      { consigne: "Dans l'éprouvette, l'huile essentielle de lavande (densité 0,88, non miscible à l'eau) se trouve…", court: "Répondez dans le carnet.", question: choix(["au-dessus de l'eau, en couche fine", "au fond, sous l'eau", "mélangée à l'eau"], "Comparez sa densité à celle de l'eau (1,00).", "Exact.") },
-      { consigne: "Pourquoi l'eau du réfrigérant entre-t-elle par le bas ?", court: "Répondez dans le carnet.", question: choix(["pour que le réfrigérant soit entièrement rempli d'eau froide", "pour que l'eau coule plus vite", "cela n'a aucune importance"], "Essayez en branchant le tuyau en haut.", "Exact.") },
+      { consigne: "Le réfrigérant sert à…", court: "Répondez dans le carnet.", question: choix(["condenser les vapeurs", "chauffer le distillat", "filtrer les fleurs"], "Que se passe-t-il dans le tube intérieur ?", "Exact.") },
+      { consigne: "Dans l'éprouvette, l'huile essentielle de lavande (densité 0,88, non miscible à l'eau) se trouve…", court: "Répondez dans le carnet.", question: choix(["au-dessus de l'eau", "au fond, sous l'eau", "mélangée à l'eau"], "Comparez sa densité à celle de l'eau (1,00).", "Exact.") },
+      { consigne: "Pourquoi l'eau du réfrigérant entre-t-elle par le bas ?", court: "Répondez dans le carnet.", question: choix(["pour le remplir entièrement", "pour que l'eau coule plus vite", "pour que l'eau soit plus froide"], "Essayez en branchant le tuyau en haut.", "Exact.") },
     ],
   };
 
@@ -55,12 +55,12 @@ Utilisé par : simulation.js.
     conclusion_courte: "Solvant non miscible ; phase supérieure : la moins dense.",
     etapes: [
       { consigne: "D'après le tableau, à 20 °C, le cyclohexane (fusion 6,5 °C, ébullition 81 °C) est…", court: "Répondez dans le carnet.", question: choix(["liquide", "solide", "gazeux"], "20 °C est entre 6,5 °C et 81 °C.", "Exact.") },
-      { consigne: "Pour extraire le diiode de l'eau, on choisit…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane : non miscible à l'eau, le diiode y est très soluble, et il est moins dangereux que le dichlorométhane", "l'éthanol", "le dichlorométhane"], "Lisez les colonnes « miscible » et « dangers ».", "Exact.") },
+      { consigne: "Pour extraire le diiode de l'eau, on choisit…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane", "l'éthanol", "le dichlorométhane"], "Lisez les colonnes « miscible » et « dangers ».", "Exact.") },
       { consigne: "Fermez le robinet de l'ampoule (touchez-le), puis versez toute l'eau iodée et tout le cyclohexane.", court: "Robinet fermé ; eau iodée, cyclohexane.", verifier: solvant_verse, aide_geste: "Portez le bécher au-dessus de l'ampoule, puis tournez la poignée pour l'incliner." },
-      { consigne: "Prévoyez : la phase supérieure sera…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane, moins dense que l'eau (0,78 < 1)", "l'eau, plus lourde", "on ne peut pas prévoir"], "Comparez les densités.", "Exact.") },
+      { consigne: "Prévoyez : la phase supérieure sera…", court: "Répondez dans le carnet.", question: choix(["le cyclohexane (d = 0,78)", "l'eau, plus lourde (d = 1)", "le diiode, coloré (d = 4,9)"], "Comparez les densités.", "Exact.") },
       { consigne: "Bouchez l'ampoule (touchez le bouchon posé sur la paillasse), prenez-la et secouez-la vivement, reposez-la sur l'anneau, puis dégazez (touchez le robinet).", court: "Bouchez, agitez, dégazez.", verifier: ({ faits }) => (A(faits).agitee && A(faits).degaze) || false, aide_geste: "Pendant le dégazage, l'ampoule est retournée, robinet vers le haut, loin du visage." },
       { consigne: "Laissez l'ampoule sur l'anneau jusqu'à ce que les deux phases soient bien séparées.", court: "Laissez décanter.", verifier: ({ faits }) => (A(faits).decante && A(faits).I2_org > 0.8) || false },
-      { consigne: "Après agitation, le diiode se trouve…", court: "Répondez dans le carnet.", question: choix(["dans la phase supérieure (cyclohexane), devenue violette ; la phase aqueuse s'est presque décolorée", "toujours dans l'eau", "il a disparu"], "Observez la couleur de chaque phase.", "Exact.") },
+      { consigne: "Après agitation, le diiode se trouve…", court: "Répondez dans le carnet.", question: choix(["dans la phase du haut", "dans la phase du bas", "dans les deux, à parts égales"], "Observez la couleur de chaque phase.", "Exact.") },
       { consigne: "Ôtez le bouchon (touchez le haut de l'ampoule), ouvrez le robinet et recueillez la phase aqueuse ; fermez le robinet juste avant la phase violette.", court: "Recueillez la phase aqueuse.", verifier: vidange, aide_geste: "Sans ôter le bouchon, le liquide ne coule pas." },
     ],
   };

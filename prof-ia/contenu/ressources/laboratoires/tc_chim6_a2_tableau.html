@@ -2587,9 +2587,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Période = couche ; colonne = électrons externes.",
     etapes: [
       { consigne: "Rangez les 18 cartes dans la classification : par Z croissant, une nouvelle ligne pour chaque nouvelle couche ; l'hélium va dans la colonne 18, avec les gaz nobles.", court: "Rangez les 18 cartes.", aide_geste: "Faites glisser chaque carte dans une case.", verifier: rangees },
-      { consigne: "Le numéro de la période (ligne) d'un élément est…", court: "Répondez dans le carnet.", question: choix(["le nombre de couches électroniques occupées", "le nombre d'électrons externes", "son numéro atomique"], "Regardez les formules électroniques d'une même ligne.", "Exact.") },
-      { consigne: "Les éléments d'une même colonne ont…", court: "Répondez dans le carnet.", question: choix(["le même nombre d'électrons sur leur couche externe", "la même masse", "le même nombre de couches"], "Comparez Li et Na, ou F et Cl.", "Exact : colonnes 1, 2 → 1, 2 électrons externes ; colonnes 13 à 18 → 3 à 8 (He : 2).") },
-      { consigne: "Les familles des colonnes 1, 17 et 18 s'appellent…", court: "Répondez dans le carnet.", question: choix(["les alcalins (sauf H), les halogènes, les gaz nobles", "les halogènes, les alcalins, les gaz nobles", "les gaz nobles, les alcalins, les halogènes"], "Pensez à l'activité précédente.", "Exact.") },
+      { consigne: "Le numéro de la période (ligne) d'un élément est…", court: "Répondez dans le carnet.", question: choix(["le nombre de couches occupées", "le nombre d'électrons externes", "le numéro atomique Z"], "Regardez les formules électroniques d'une même ligne.", "Exact.") },
+      { consigne: "Les éléments d'une même colonne ont…", court: "Répondez dans le carnet.", question: choix(["le même nombre d'électrons externes", "la même masse atomique", "le même nombre de couches occupées"], "Comparez Li et Na, ou F et Cl.", "Exact : colonnes 1, 2 → 1, 2 électrons externes ; colonnes 13 à 18 → 3 à 8 (He : 2).") },
+      { consigne: "Les familles des colonnes 1, 17 et 18 s'appellent…", court: "Répondez dans le carnet.", question: choix(["alcalins, halogènes, gaz nobles", "halogènes, alcalins, gaz nobles", "gaz nobles, alcalins, halogènes"], "Pensez à l'activité précédente.", "Exact.") },
       { consigne: "Le soufre est dans la 3e période, colonne 16. Combien d'électrons a-t-il sur sa couche externe ?", court: "Électrons externes du soufre ?", question: { type: "nombre", unite: "", attendu: 6, tolerance: 0, aide: "Colonne 13 : 3 électrons externes, colonne 14 : 4…", bravo: "Exact : (K)²(L)⁸(M)⁶." } },
     ],
   };
@@ -2607,7 +2607,7 @@ Utilisé par : page.html (dernier script).
       batir("PH3", "Le phosphore est sous l'azote : représentez la phosphine PH₃."),
       batir("SiH4", "Le silicium est sous le carbone : représentez le silane SiH₄."),
       batir("CCl4", "Représentez le tétrachlorométhane CCl₄."),
-      { consigne: "Le magnésium (colonne 2) et le chlore (colonne 17) forment le chlorure de magnésium, de formule…", court: "Répondez dans le carnet.", question: choix(["MgCl₂ (un ion Mg²⁺ pour deux ions Cl⁻)", "MgCl", "Mg₂Cl"], "Le composé est électriquement neutre.", "Exact.") },
+      { consigne: "Le magnésium (colonne 2) et le chlore (colonne 17) forment le chlorure de magnésium, de formule…", court: "Répondez dans le carnet.", question: choix(["MgCl₂", "MgCl", "Mg₂Cl"], "Le composé est électriquement neutre.", "Exact.") },
     ],
   };
 

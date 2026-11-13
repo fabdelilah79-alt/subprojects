@@ -3189,7 +3189,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Dans le tableur : I (A) en colonne A, U (V) en colonne B. Tracez U = f(I) et modélisez par une fonction affine.", court: "Tableur, puis U en fonction de I.", verifier: tableur_courbe("pile", 6) },
       { consigne: "La tension à vide (I = 0) est la force électromotrice E de la pile. Que vaut E (en V) ?", court: "E (V) ?", question: nombre(4.5, 0.03, "Ordonnée à l'origine de la droite.", "Exact.") },
       { consigne: "La pente de la droite vaut −r. Que vaut la résistance interne r de la pile (en Ω) ?", court: "r (Ω) ?", question: nombre(2, 0.12, "r = −(coefficient directeur), U en V et I en A.", "Exact : r ≈ 2 Ω.", true) },
-      { consigne: "La tension aux bornes d'une pile qui débite un courant I…", court: "Répondez dans le carnet.", question: choix(["diminue quand I augmente : U = E − r·I", "reste toujours égale à E", "augmente quand I augmente"], "La droite descend.", "Exact : c'est la loi d'Ohm pour un générateur.") },
+      { consigne: "La tension aux bornes d'une pile qui débite un courant I…", court: "Répondez dans le carnet.", question: choix(["diminue quand I augmente", "augmente quand I augmente", "reste toujours égale à E"], "La droite descend.", "Exact : c'est la loi d'Ohm pour un générateur.") },
       { consigne: "Calculez le courant de court-circuit Icc = E/r (en A). Ne le mesurez pas : il abîmerait la pile.", court: "Icc (A) ?", question: nombre(2.25, 0.12, "Icc = E / r.", "Exact : un courant très grand, d'où le danger du court-circuit.", true) },
     ],
   };

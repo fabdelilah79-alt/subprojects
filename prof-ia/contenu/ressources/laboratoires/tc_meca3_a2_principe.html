@@ -2805,7 +2805,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Au repos : P et R se compensent.",
     etapes: [
       { consigne: "Appuyez sur « Mettre l'air ». Ne touchez pas le palet : observez-le quelques secondes.", court: "Mettez l'air, observez le palet posé.", verifier: ({ faits }) => !!faits.immobile_avec_air },
-      { consigne: "Le palet reste immobile. Son poids P et l'action R de l'air…", court: "Répondez dans le carnet.", question: choix(["se compensent : P + R = 0 (somme des vecteurs nulle)", "n'existent pas", "le poussent tous deux vers le bas"], "Il ne tombe pas et ne bouge pas.", "Exact : les deux actions se compensent.") },
+      { consigne: "Le palet reste immobile. Son poids P et l'action R de l'air…", court: "Répondez dans le carnet.", question: choix(["se compensent", "n'existent pas", "s'additionnent"], "Il ne tombe pas et ne bouge pas.", "Exact : les deux actions se compensent.") },
       { consigne: "Un corps soumis à des actions qui se compensent est dit…", court: "Répondez dans le carnet.", question: choix(["pseudo-isolé", "isolé", "immobile pour toujours"], "Un corps isolé n'est soumis à aucune action.", "Exact. Un corps isolé, lui, n'est soumis à aucune action : c'est un cas idéal (loin de tout astre).") },
     ],
   };
@@ -2820,8 +2820,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Air en marche, appuyez sur « Enregistrer », puis lancez le palet : il glisse seul.", court: "Enregistrez un lancer, air en marche.", verifier: lancer_horizontal },
       { consigne: "Prenez la feuille. Pour i = 0 à 9, notez i en A et la distance MiMi+1 (cm), mesurée à la règle, en B.", court: "Tableur : i et MiMi+1 (i = 0 à 9).", verifier: tableau, aide_geste: "Posez le zéro de la règle sur Mi ; zoomez pour lire au millimètre." },
       { consigne: "Les distances MiMi+1 sont…", court: "Répondez dans le carnet.", question: choix(["égales : le mouvement est rectiligne uniforme", "de plus en plus petites : le palet ralentit", "de plus en plus grandes : le palet accélère"], "Comparez la colonne B.", "Exact : mouvement rectiligne uniforme.") },
-      { consigne: "Une fois lâché, le palet est-il poussé vers l'avant par une force ?", court: "Répondez dans le carnet.", question: choix(["Non : aucune force n'est nécessaire pour entretenir un mouvement rectiligne uniforme", "Oui : sans force motrice, il s'arrêterait", "Oui : la force de la main reste dans le palet"], "Après le lâcher, seuls le poids et l'action de l'air agissent : ils se compensent.", "Exact : c'est le principe d'inertie.") },
-      { consigne: "Énoncé du principe d'inertie : dans un référentiel terrestre, tout corps isolé ou pseudo-isolé…", court: "Répondez dans le carnet.", question: choix(["persévère dans son état de repos ou de mouvement rectiligne uniforme", "finit toujours par s'arrêter", "accélère jusqu'à une vitesse limite"], "Rassemblez vos deux observations : au repos, puis lancé.", "Exact.") },
+      { consigne: "Une fois lâché, le palet est-il poussé vers l'avant par une force ?", court: "Répondez dans le carnet.", question: choix(["Non : aucune force n'est nécessaire", "Oui : sans elle, il s'arrêterait", "Oui : la force de la main reste en lui"], "Après le lâcher, seuls le poids et l'action de l'air agissent : ils se compensent.", "Exact : c'est le principe d'inertie.") },
+      { consigne: "Énoncé du principe d'inertie : dans un référentiel terrestre, tout corps isolé ou pseudo-isolé…", court: "Répondez dans le carnet.", question: choix(["reste immobile ou en mouvement rectiligne uniforme", "finit toujours par s'arrêter, faute de force motrice", "accélère jusqu'à atteindre une vitesse limite"], "Rassemblez vos deux observations : au repos, puis lancé.", "Exact.") },
     ],
   };
 
@@ -2833,9 +2833,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Actions non compensées : pas de MRU.",
     etapes: [
       { consigne: "Appuyez sur « Enregistrer », puis lancez le palet vers la droite, depuis le haut de la table.", court: "Enregistrez un lancer sur la table inclinée.", verifier: lancer_incline, aide_geste: "Lancez doucement, parallèlement au bord du fond." },
-      { consigne: "Prenez la feuille et comparez les distances entre points successifs. Le mouvement est-il rectiligne uniforme ?", court: "Répondez dans le carnet.", question: choix(["Non : la trajectoire est courbe et les distances augmentent", "Oui, comme sur la table horizontale", "Non : le palet ralentit"], "Regardez la forme de la trajectoire et l'écart entre les points.", "Exact.") },
-      { consigne: "Sur la table inclinée, le poids P et l'action R de l'air…", court: "Répondez dans le carnet.", question: choix(["ne se compensent plus : le palet n'est pas pseudo-isolé", "se compensent toujours", "n'agissent plus"], "R reste perpendiculaire à la table, P reste vertical.", "Exact : le principe d'inertie ne s'applique pas.") },
-      { consigne: "Une sonde spatiale, très loin de tout astre, moteurs coupés, se déplace à 10 km/s. Elle…", court: "Répondez dans le carnet.", question: choix(["continue en ligne droite à 10 km/s : elle est isolée", "ralentit puis s'arrête", "tombe vers le bas"], "Aucune action ne s'exerce sur elle.", "Exact : c'est un corps (presque) isolé.") },
+      { consigne: "Prenez la feuille et comparez les distances entre points successifs. Le mouvement est-il rectiligne uniforme ?", court: "Répondez dans le carnet.", question: choix(["Non : courbe et accéléré", "Oui : comme à l'horizontale", "Non : droit mais ralenti"], "Regardez la forme de la trajectoire et l'écart entre les points.", "Exact.") },
+      { consigne: "Sur la table inclinée, le poids P et l'action R de l'air…", court: "Répondez dans le carnet.", question: choix(["ne se compensent plus", "se compensent toujours", "n'agissent plus du tout"], "R reste perpendiculaire à la table, P reste vertical.", "Exact : le principe d'inertie ne s'applique pas.") },
+      { consigne: "Une sonde spatiale, très loin de tout astre, moteurs coupés, se déplace à 10 km/s. Elle…", court: "Répondez dans le carnet.", question: choix(["continue tout droit à 10 km/s", "ralentit puis finit par s'arrêter", "tombe vers le bas de l'espace"], "Aucune action ne s'exerce sur elle.", "Exact : c'est un corps (presque) isolé.") },
     ],
   };
 

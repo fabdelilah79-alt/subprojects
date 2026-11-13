@@ -39,12 +39,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Une action modifie le mouvement.",
     etapes: [
       { consigne: "Touchez la bille en haut de la gouttière pour la lâcher. Rien n'est posé sur le plateau.", court: "Lâchez la bille, plateau vide.", verifier: lancer("libre"), aide_geste: "Touchez la bille arrêtée pour la remettre en haut." },
-      { consigne: "Sur la photographie, la trajectoire de la bille est…", court: "Répondez dans le carnet.", question: choix(["une droite, et la bille ralentit un peu (les images se rapprochent)", "une courbe", "une droite, et la bille accélère"], "Regardez l'alignement et l'écart des images.", "Exact.") },
-      { consigne: "Pourquoi la bille ralentit-elle un peu ?", court: "Répondez dans le carnet.", question: choix(["Le plateau et l'air frottent sur elle : ces actions la freinent", "La force qu'elle a reçue au départ s'épuise", "Son poids la tire vers l'arrière"], "Une bille ne « contient » pas de force.", "Exact : sans frottements, elle ne ralentirait pas.") },
+      { consigne: "Sur la photographie, la trajectoire de la bille est…", court: "Répondez dans le carnet.", question: choix(["une droite ; la bille ralentit", "une courbe ; la bille ralentit", "une droite ; la bille accélère"], "Regardez l'alignement et l'écart des images.", "Exact.") },
+      { consigne: "Pourquoi la bille ralentit-elle un peu ?", court: "Répondez dans le carnet.", question: choix(["Des frottements la freinent", "Sa force de départ s'épuise", "Son poids la tire en arrière"], "Une bille ne « contient » pas de force.", "Exact : sans frottements, elle ne ralentirait pas.") },
       { consigne: "Posez l'aimant à côté du trajet de la bille (pas dessus), puis relâchez la bille.", court: "Aimant près du trajet : relâchez la bille.", verifier: lancer("aimant") },
-      { consigne: "L'aimant agit sur la bille sans la toucher. Cette action à distance…", court: "Répondez dans le carnet.", question: choix(["modifie la direction du mouvement (et la vitesse)", "ne change rien au mouvement", "arrête toujours la bille"], "Comparez avec la première photographie.", "Exact.") },
+      { consigne: "L'aimant agit sur la bille sans la toucher. Cette action à distance…", court: "Répondez dans le carnet.", question: choix(["modifie son mouvement", "ne change rien au mouvement", "arrête toujours la bille"], "Comparez avec la première photographie.", "Exact.") },
       { consigne: "Rangez l'aimant. Posez la cale en bois en travers du trajet (touchez-la pour la tourner), puis relâchez la bille.", court: "Cale sur le trajet : relâchez la bille.", verifier: lancer("cale") },
-      { consigne: "Au choc, la cale exerce sur la bille une action de contact. Elle…", court: "Répondez dans le carnet.", question: choix(["change la direction et la valeur de la vitesse", "ne change que la couleur des images", "ne modifie pas le mouvement"], "Regardez la photographie après le choc.", "Exact.") },
+      { consigne: "Au choc, la cale exerce sur la bille une action de contact. Elle…", court: "Répondez dans le carnet.", question: choix(["modifie sa vitesse", "ne change rien à sa vitesse", "change sa masse"], "Regardez la photographie après le choc.", "Exact.") },
     ],
   };
 
@@ -56,9 +56,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Pseudo-isolé : il glisse sans s'arrêter.",
     etapes: [
       { consigne: "L'air est coupé. Lancez le palet d'un geste.", court: "Lancez le palet, air coupé.", verifier: glissade(false) },
-      { consigne: "Sans air, le palet s'arrête après quelques centimètres, parce que…", court: "Répondez dans le carnet.", question: choix(["la table frotte sur lui : une action de frottement le freine", "il n'a plus de force en lui", "son poids le pousse en arrière"], "Qu'est-ce qui touche le palet ?", "Exact.") },
+      { consigne: "Sans air, le palet s'arrête après quelques centimètres, parce que…", court: "Répondez dans le carnet.", question: choix(["la table frotte sur lui", "il n'a plus de force en lui", "son poids le pousse en arrière"], "Qu'est-ce qui touche le palet ?", "Exact.") },
       { consigne: "Appuyez sur « Mettre l'air », puis lancez de nouveau le palet.", court: "Mettez l'air, relancez le palet.", verifier: glissade(true) },
-      { consigne: "Avec l'air, le palet glisse loin, en ligne droite, sans ralentir. Les actions qui s'exercent sur lui sont…", court: "Répondez dans le carnet.", question: choix(["son poids et l'action de l'air, qui se compensent", "une force qui le pousse vers l'avant", "aucune action"], "La main ne le touche plus.", "Exact : aucune force ne le pousse vers l'avant.") },
+      { consigne: "Avec l'air, le palet glisse loin, en ligne droite, sans ralentir. Les actions qui s'exercent sur lui sont…", court: "Répondez dans le carnet.", question: choix(["son poids et l'air, qui se compensent", "une force qui le pousse vers l'avant", "aucune action, ni poids ni air"], "La main ne le touche plus.", "Exact : aucune force ne le pousse vers l'avant.") },
       { consigne: "Un corps soumis à des actions qui se compensent est dit…", court: "Répondez dans le carnet.", question: choix(["pseudo-isolé", "isolé", "en équilibre instable"], "Isolé : soumis à aucune action.", "Exact. Un corps isolé, lui, n'est soumis à aucune action (une sonde très loin de tout astre).") },
     ],
   };

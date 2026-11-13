@@ -19,12 +19,12 @@ Utilisé par : page.html (dernier script).
     conclusion: "Les trois dépôts donnent une tache à la même hauteur que la référence : le produit obtenu contient de l'acétate d'isoamyle, la même espèce que celle de la banane. Une espèce synthétique peut être identique à une espèce naturelle. Le produit obtenu donne aussi une petite tache d'alcool isoamylique : il n'est pas tout à fait pur ; l'arôme naturel contient d'autres espèces.",
     conclusion_courte: "Synthétique et naturel : même espèce, même Rf.",
     etapes: [
-      { consigne: "Pour savoir si l'espèce synthétisée est identique à l'espèce naturelle, on…", court: "Proposez une méthode.", question: choix(["fait une chromatographie du produit, de l'arôme naturel et de l'espèce pure (référence), sur la même plaque", "compare leurs couleurs", "les goûte"], "Quelle technique identifie une espèce par comparaison ?", "Exact.") },
+      { consigne: "Pour savoir si l'espèce synthétisée est identique à l'espèce naturelle, on…", court: "Proposez une méthode.", question: choix(["fait une chromatographie", "compare leurs couleurs", "compare leurs odeurs"], "Quelle technique identifie une espèce par comparaison ?", "Exact.") },
       ...preparation("ccm_arome", 3, "mélange de solvants"),
       { consigne: "Allumez la lampe UV et entourez au crayon chaque tache sombre.", court: "Révélation UV, taches entourées.", verifier: ({ faits }) => (C(faits).uv_vu && C(faits).cercles >= 5) || false },
-      { consigne: "Le produit obtenu (1) et l'arôme naturel (2) contiennent…", court: "Répondez dans le carnet.", question: choix(["de l'acétate d'isoamyle : chacun a une tache à la hauteur de la référence (3)", "des espèces différentes", "aucune espèce commune"], "Comparez les hauteurs des taches.", "Exact.") },
-      { consigne: "Le produit obtenu donne aussi une petite tache plus basse. On en déduit…", court: "Répondez dans le carnet.", question: choix(["qu'il contient encore un peu d'alcool isoamylique : il n'est pas tout à fait pur", "que la synthèse a échoué", "que la référence est impure"], "Que reste-t-il des réactifs ?", "Exact : on pourrait le purifier (par distillation).") },
-      { consigne: "Une espèce chimique synthétique, identique à une espèce naturelle…", court: "Répondez dans le carnet.", question: choix(["a les mêmes propriétés : c'est la même espèce chimique", "est forcément moins bonne", "est artificielle"], "Rappelez-vous le chapitre « Espèces chimiques ».", "Exact.") },
+      { consigne: "Le produit obtenu (1) et l'arôme naturel (2) contiennent…", court: "Répondez dans le carnet.", question: choix(["de l'acétate d'isoamyle", "des espèces différentes", "aucune espèce commune"], "Comparez les hauteurs des taches.", "Exact.") },
+      { consigne: "Le produit obtenu donne aussi une petite tache plus basse. On en déduit…", court: "Répondez dans le carnet.", question: choix(["qu'il n'est pas tout à fait pur", "que la synthèse a échoué", "que la référence est impure"], "Que reste-t-il des réactifs ?", "Exact : on pourrait le purifier (par distillation).") },
+      { consigne: "Une espèce chimique synthétique, identique à une espèce naturelle…", court: "Répondez dans le carnet.", question: choix(["a les mêmes propriétés", "est forcément moins bonne", "est une espèce artificielle"], "Rappelez-vous le chapitre « Espèces chimiques ».", "Exact.") },
     ],
   };
 

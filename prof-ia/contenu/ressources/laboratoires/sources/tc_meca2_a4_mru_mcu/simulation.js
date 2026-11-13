@@ -76,10 +76,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "MCU : v constante, direction qui tourne.",
     etapes: [
       { consigne: "Faites glisser l'anneau du fil jusqu'au mobile pour l'accrocher. Appuyez sur « Enregistrer », puis lancez le mobile : il tourne autour du clou.", court: "Accrochez le fil, enregistrez le mouvement.", verifier: mcu },
-      { consigne: "Prenez la feuille. Mesurez M1M3, M5M7 et M9M11 à la règle. Ces distances sont…", court: "Répondez dans le carnet.", question: choix(["égales : la valeur de la vitesse est constante", "de plus en plus grandes", "de plus en plus petites"], "Mesurez-les au millimètre près.", "Exact : le mouvement est uniforme.") },
+      { consigne: "Prenez la feuille. Mesurez M1M3, M5M7 et M9M11 à la règle. Ces distances sont…", court: "Répondez dans le carnet.", question: choix(["égales", "de plus en plus grandes", "de plus en plus petites"], "Mesurez-les au millimètre près.", "Exact : le mouvement est uniforme.") },
       { consigne: "Tracez les vecteurs vitesse en M2, M6 et M10 : faites glisser la pointe de chaque flèche (échelle : 1 cm ↔ 0,1 m/s).", court: "Tracez v2, v6 et v10.", verifier: vecteurs },
-      { consigne: "Dans un mouvement circulaire uniforme, le vecteur vitesse…", court: "Répondez dans le carnet.", question: choix(["garde la même valeur mais change de direction : il est toujours tangent au cercle", "ne change pas du tout", "est dirigé vers le clou"], "Comparez vos trois flèches.", "Exact.") },
-      { consigne: "Dans le référentiel géocentrique, la Lune tourne autour de la Terre sur une orbite presque circulaire, à vitesse constante. Son mouvement est…", court: "Répondez dans le carnet.", question: choix(["circulaire uniforme (à peu près)", "rectiligne uniforme", "immobile"], "Pensez à la trajectoire et à la vitesse.", "Exact, comme celui des satellites géostationnaires.") },
+      { consigne: "Dans un mouvement circulaire uniforme, le vecteur vitesse…", court: "Répondez dans le carnet.", question: choix(["change de direction, pas de valeur", "change de valeur, pas de direction", "ne change ni de valeur ni de direction"], "Comparez vos trois flèches.", "Exact.") },
+      { consigne: "Dans le référentiel géocentrique, la Lune tourne autour de la Terre sur une orbite presque circulaire, à vitesse constante. Son mouvement est…", court: "Répondez dans le carnet.", question: choix(["circulaire uniforme", "rectiligne uniforme", "circulaire accéléré"], "Pensez à la trajectoire et à la vitesse.", "Exact, comme celui des satellites géostationnaires.") },
     ],
   };
 

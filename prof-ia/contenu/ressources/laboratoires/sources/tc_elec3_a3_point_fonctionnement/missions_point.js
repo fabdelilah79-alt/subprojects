@@ -30,7 +30,7 @@ Utilisé par : simulation.js.
       { consigne: "Réalisez le circuit en série : pile, interrupteur, ampèremètre (200 mA) et lampe L. Voltmètre (V⎓ 20) aux bornes de la lampe. Fermez l'interrupteur.", court: "Pile, K, ampèremètre, lampe ; fermez K.", verifier: ({ faits }) => (M(faits).I > 0.01 && M(faits).U_lampe > 1) || false, aide_geste: "Le voltmètre directement aux bornes de la lampe." },
       { consigne: "Relevez l'intensité I du courant (en A).", court: "I (A) ?", question: { type: "nombre", unite: "A", attendu: (faits) => M(faits).I || 0.085, tolerance: 0.002, aide: "Lisez l'ampèremètre (1 mA = 0,001 A).", bravo: "Exact." } },
       { consigne: "Relevez la tension U aux bornes de la lampe (en V).", court: "U (V) ?", question: { type: "nombre", unite: "V", attendu: (faits) => M(faits).U_lampe || 4.3, tolerance: 0.02, aide: "Lisez le voltmètre.", bravo: "Exact." } },
-      { consigne: "Le couple (I, U) mesuré est le point de fonctionnement du circuit. La lampe…", court: "Répondez dans le carnet.", question: choix(["est sous-alimentée : U est inférieure à sa tension nominale de 6 V, elle brille faiblement", "fonctionne normalement", "est sur-alimentée"], "Comparez U à la tension écrite sur la lampe.", "Exact : la pile et la lampe sont mal adaptées.") },
+      { consigne: "Le couple (I, U) mesuré est le point de fonctionnement du circuit. La lampe…", court: "Répondez dans le carnet.", question: choix(["est sous-alimentée", "fonctionne normalement", "est sur-alimentée"], "Comparez U à la tension écrite sur la lampe.", "Exact : la pile et la lampe sont mal adaptées.") },
     ],
   };
 
@@ -44,7 +44,7 @@ Utilisé par : simulation.js.
       { consigne: "Relevez la caractéristique de la lampe L : alimentation réglable, ampèremètre (200 mA) et lampe en série, voltmètre aux bornes de la lampe ; au moins 6 points de 0 à 6 V.", court: "Caractéristique de la lampe (6 points).", verifier: ({ faits }) => (faits.points_lampe || []).length >= 6 || false, aide_geste: "Touches −1, +1, −0,1, +0,1 de l'alimentation." },
       { consigne: "Tableur : I (A) en A, U de la lampe (V) en B, et en C la tension de la pile pour la même intensité : U = 4,5 − 2·I. Graphique : B en fonction de A, et C en deuxième courbe.", court: "Tableur et graphique des deux caractéristiques.", verifier: feuille_graphique },
       { consigne: "Lisez sur le graphique l'intensité au point d'intersection des deux courbes (en A).", court: "I à l'intersection (A) ?", question: { type: "nombre", unite: "A", attendu: 0.085, tolerance: 0.007, aide: "Là où la courbe de la lampe croise la droite de la pile.", bravo: "Exact." } },
-      { consigne: "Comparez avec le point mesuré directement (paillasse 1). Le point d'intersection…", court: "Répondez dans le carnet.", question: choix(["correspond au point de fonctionnement mesuré", "n'a aucun rapport avec le circuit", "donne la tension nominale de la lampe"], "Comparez les intensités.", "Exact : les deux méthodes concordent.") },
+      { consigne: "Comparez avec le point mesuré directement (paillasse 1). Le point d'intersection…", court: "Répondez dans le carnet.", question: choix(["est le point mesuré", "est loin du point mesuré", "donne la tension nominale"], "Comparez les intensités.", "Exact : les deux méthodes concordent.") },
     ],
   };
 

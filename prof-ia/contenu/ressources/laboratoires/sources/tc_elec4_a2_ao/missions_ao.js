@@ -44,7 +44,7 @@ Utilisé par : simulation.js.
       { consigne: "Faites varier la tension de G de 0 à 9 V (touches fines près de 4,5 V) : relevez au moins 8 couples (ε, Us), avec ε négatif et positif.", court: "Au moins 8 couples (ε, Us).", verifier: ({ faits }) => { const p = T(faits).points || []; return (p.length >= 8 && p.some((q) => q.eps < 0) && p.some((q) => q.eps > 0)) || false; } },
       { consigne: "Tableur : ε en A, Us en B. Tracez Us en fonction de ε.", court: "Tableur, puis Us en fonction de ε.", verifier: feuille_transfert },
       { consigne: "Pour ε > 0, la sortie est saturée : Us = +Vsat. Que vaut Vsat (en V) ?", court: "Vsat (V) ?", question: { type: "nombre", unite: "", attendu: 13.5, tolerance: 0.15, aide: "Lisez V2 quand ε > 0.", bravo: "Exact : Vsat ≈ 13,5 V, un peu moins que la tension d'alimentation (15 V)." } },
-      { consigne: "Us bascule de −Vsat à +Vsat quand ε passe par 0. Le régime linéaire de l'AO correspond donc…", court: "Répondez dans le carnet.", question: choix(["à des valeurs de ε si petites (moins de 0,1 mV) que le voltmètre affiche 0 : en régime linéaire, ε ≈ 0", "à ε compris entre −13,5 V et +13,5 V", "à ε égal à Us"], "Le voltmètre a-t-il affiché un ε pour lequel Us était entre −13 V et +13 V ?", "Exact : AO idéal, ε = 0 en régime linéaire.") },
+      { consigne: "Us bascule de −Vsat à +Vsat quand ε passe par 0. Le régime linéaire de l'AO correspond donc…", court: "Répondez dans le carnet.", question: choix(["à ε ≈ 0", "à ε = Vsat", "à ε = Us"], "Le voltmètre a-t-il affiché un ε pour lequel Us était entre −13 V et +13 V ?", "Exact : AO idéal, ε = 0 en régime linéaire.") },
     ],
   };
 
@@ -58,8 +58,8 @@ Utilisé par : simulation.js.
     etapes: [
       { consigne: "L'AO est déjà alimenté. SORTIE du GBF → e+ ; fil de s → e− ; masse du GBF → 0. Oscilloscope : Y1 sur la SORTIE du GBF (Ue), Y2 sur s (Us), masse ⏚ sur 0.", court: "Montez le suiveur et l'oscilloscope.", verifier: ({ faits }) => (S(faits).monte && S(faits).ue_max > 0.3) || false, aide_geste: "Toutes les masses (GBF, oscilloscope, 0 de l'alimentation) sont reliées." },
       { consigne: "Réglez les deux voies sur la même sensibilité, les courbes entières dans l'écran.", court: "Même sensibilité sur les deux voies.", verifier: bien_regle("suiveur", true) },
-      { consigne: "Les deux courbes sont confondues. Pour le montage suiveur…", court: "Répondez dans le carnet.", question: choix(["Us = Ue : la sortie recopie la tension d'entrée", "Us = −Ue", "Us = 2·Ue"], "Comparez les deux courbes.", "Exact : ε = 0, donc V− = V+, soit Us = Ue.") },
-      { consigne: "Comme i+ = 0, le suiveur…", court: "Répondez dans le carnet.", question: choix(["ne prélève aucun courant au GBF : il transmet la tension sans perturber le circuit d'entrée", "amplifie la tension", "fournit l'énergie au GBF"], "Quel courant entre par e+ ?", "Exact.") },
+      { consigne: "Les deux courbes sont confondues. Pour le montage suiveur…", court: "Répondez dans le carnet.", question: choix(["Us = Ue", "Us = −Ue", "Us = 2·Ue"], "Comparez les deux courbes.", "Exact : ε = 0, donc V− = V+, soit Us = Ue.") },
+      { consigne: "Comme i+ = 0, le suiveur…", court: "Répondez dans le carnet.", question: choix(["ne prélève aucun courant au GBF", "amplifie la tension du GBF", "fournit de l'énergie au GBF"], "Quel courant entre par e+ ?", "Exact.") },
     ],
   };
 

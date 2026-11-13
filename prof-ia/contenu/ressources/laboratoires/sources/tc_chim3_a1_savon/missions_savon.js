@@ -17,9 +17,9 @@ Utilisé par : simulation.js.
     conclusion_courte: "Lire les pictogrammes ; se protéger ; trier les déchets.",
     etapes: [
       { consigne: "Touchez chaque flacon pour lire sa fiche de sécurité.", court: "Lisez les trois fiches.", verifier: ({ faits }) => (faits.fiches_lues || []).length >= 3 || false },
-      { consigne: "Le pictogramme de la soude (un liquide qui ronge une main et une surface) signifie…", court: "Répondez dans le carnet.", question: choix(["corrosif : la soude brûle la peau et les yeux", "inflammable", "dangereux pour l'environnement"], "Relisez la fiche de la soude.", "Exact.") },
-      { consigne: "Avant de prendre le bécher de soude, on met…", court: "Répondez dans le carnet.", question: choix(["des lunettes de protection et des gants, en plus de la blouse", "seulement la blouse", "rien : il suffit de faire attention"], "Que dit la fiche ?", "Exact.") },
-      { consigne: "L'éthanol est inflammable. Pour chauffer le mélange, on utilise…", court: "Répondez dans le carnet.", question: choix(["un chauffe-ballon et un réfrigérant à reflux : pas de flamme, et les vapeurs ne sortent pas", "un bec Bunsen", "une plaque chauffante, sans réfrigérant"], "Que se passerait-il si les vapeurs d'éthanol rencontraient une flamme ?", "Exact.") },
+      { consigne: "Le pictogramme de la soude (un liquide qui ronge une main et une surface) signifie…", court: "Répondez dans le carnet.", question: choix(["corrosif", "inflammable", "toxique"], "Relisez la fiche de la soude.", "Exact.") },
+      { consigne: "Avant de prendre le bécher de soude, on met…", court: "Répondez dans le carnet.", question: choix(["blouse, lunettes et gants", "la blouse seulement", "des gants seulement"], "Que dit la fiche ?", "Exact.") },
+      { consigne: "L'éthanol est inflammable. Pour chauffer le mélange, on utilise…", court: "Répondez dans le carnet.", question: choix(["un chauffe-ballon et un réfrigérant", "un bec Bunsen et un réfrigérant", "une plaque chauffante sans réfrigérant"], "Que se passerait-il si les vapeurs d'éthanol rencontraient une flamme ?", "Exact.") },
       { consigne: "À la fin, les restes de soude et d'éthanol…", court: "Répondez dans le carnet.", question: choix(["vont dans le bidon de récupération", "vont dans l'évier, avec beaucoup d'eau", "vont à la poubelle"], "Pensez à l'environnement.", "Exact : ils seront traités.") },
     ],
   };
@@ -36,10 +36,10 @@ Utilisé par : simulation.js.
       { consigne: "Ajoutez quelques grains de pierre ponce (par l'entonnoir).", court: "Pierre ponce.", verifier: ({ faits }) => R(faits).ponce || false },
       { consigne: "Rangez l'entonnoir dans son anneau, posez le réfrigérant sur le col du ballon, puis ouvrez l'eau (elle entre par le bas).", court: "Réfrigérant posé, eau ouverte.", verifier: ({ faits }) => (R(faits).refrigerant === "monte" && R(faits).eau) || false },
       { consigne: "Allumez le chauffe-ballon (touche I/O) et chauffez à reflux pendant 30 minutes (lisez le chronomètre).", court: "Reflux pendant 30 min.", verifier: ({ faits }) => { const r = R(faits); if (r.fuite) return "Des vapeurs s'échappent : le réfrigérant doit être posé et l'eau ouverte."; return r.avance >= 1 || false; } },
-      { consigne: "Le réfrigérant à boules sert à…", court: "Répondez dans le carnet.", question: choix(["condenser les vapeurs, qui retombent dans le ballon : on chauffe longtemps sans perdre de matière", "refroidir le ballon", "faire entrer de l'air"], "Regardez les gouttes dans le réfrigérant.", "Exact.") },
+      { consigne: "Le réfrigérant à boules sert à…", court: "Répondez dans le carnet.", question: choix(["condenser les vapeurs", "refroidir le ballon", "faire entrer de l'air"], "Regardez les gouttes dans le réfrigérant.", "Exact.") },
       { consigne: "Arrêtez le chauffage, laissez refroidir, ôtez le réfrigérant, puis versez le contenu du ballon dans le bécher d'eau salée.", court: "Versez dans l'eau salée.", verifier: ({ faits }) => R(faits).recu >= 10 || false, aide_geste: "Prenez le ballon par son col et inclinez-le au-dessus du bécher." },
-      { consigne: "Dans l'eau salée, le savon…", court: "Répondez dans le carnet.", question: choix(["est peu soluble : il se rassemble en grains qui flottent (relargage)", "se dissout complètement", "se transforme en huile"], "Que voyez-vous à la surface ?", "Exact.") },
-      { consigne: "L'écriture de la transformation est…", court: "Répondez dans le carnet.", question: choix(["huile + soude → savon + glycérol", "savon → huile + soude", "huile + eau → savon"], "Quels produits avez-vous mis dans le ballon ?", "Exact.") },
+      { consigne: "Dans l'eau salée, le savon…", court: "Répondez dans le carnet.", question: choix(["se rassemble en grains", "se dissout complètement", "redevient de l'huile"], "Que voyez-vous à la surface ?", "Exact.") },
+      { consigne: "L'écriture de la transformation est…", court: "Répondez dans le carnet.", question: choix(["huile + soude → savon + glycérol", "savon + glycérol → huile + soude", "huile + eau → savon + glycérol"], "Quels produits avez-vous mis dans le ballon ?", "Exact.") },
     ],
   };
 

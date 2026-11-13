@@ -31,10 +31,10 @@ Utilisé par : page.html (dernier script).
     conclusion: "Secoués, les tubes 1 (savon obtenu) et 2 (savon du commerce) se remplissent de mousse ; le tube 3 (eau seule, témoin) n'en donne pas. Le produit synthétisé a la même propriété que le savon du commerce : on a bien fabriqué un savon.",
     conclusion_courte: "Il mousse comme le savon du commerce.",
     etapes: [
-      { consigne: "Pour vérifier que le produit obtenu est un savon, on peut…", court: "Proposez une méthode.", question: choix(["le comparer à un savon du commerce : secouer chacun avec de l'eau et observer la mousse, avec de l'eau seule comme témoin", "le goûter", "regarder sa couleur"], "Que fait un savon dans l'eau ?", "Exact.") },
+      { consigne: "Pour vérifier que le produit obtenu est un savon, on peut…", court: "Proposez une méthode.", question: choix(["comparer sa mousse à un savon du commerce", "le goûter pour reconnaître son goût", "regarder sa couleur et son odeur"], "Que fait un savon dans l'eau ?", "Exact.") },
       { consigne: "Prenez chaque tube (il est bouché), secouez-le vivement, puis reposez-le dans le porte-tubes.", court: "Secouez les 3 tubes.", verifier: ({ faits }) => { const m = M(faits); return (m[1] > 0.5 && m[2] > 0.5) || false; } },
-      { consigne: "La mousse s'est formée…", court: "Répondez dans le carnet.", question: choix(["dans les tubes 1 et 2 ; pas dans le tube 3 (témoin)", "dans les trois tubes", "seulement dans le tube 2"], "Comparez au témoin.", "Exact.") },
-      { consigne: "On conclut que…", court: "Répondez dans le carnet.", question: choix(["le produit obtenu se comporte comme un savon : la synthèse a réussi", "le produit n'est pas un savon", "on ne peut rien dire"], "Comparez le tube 1 au tube 2.", "Exact.") },
+      { consigne: "La mousse s'est formée…", court: "Répondez dans le carnet.", question: choix(["dans les tubes 1 et 2", "dans les trois tubes", "dans le tube 2 seul"], "Comparez au témoin.", "Exact.") },
+      { consigne: "On conclut que…", court: "Répondez dans le carnet.", question: choix(["la synthèse a réussi", "le produit n'est pas un savon", "on ne peut rien conclure"], "Comparez le tube 1 au tube 2.", "Exact.") },
     ],
   };
 

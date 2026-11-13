@@ -23,7 +23,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Vérifiez : circuit série pile, interrupteur, ampèremètre et R ; mesurez I.", court: "Mesurez I avec R.", verifier: ({ faits }) => (mont(faits, "r").I > 0.05) || false },
       { consigne: "Ajoutez l'électrolyseur (E' = 1,7 V, r' = 8 Ω) en série avec R. Calculez I = (E − E')/(R + r + r') (en A).", court: "I = (E − E')/(R + r + r') (A) ?", question: nombre(2.8 / 57, 0.015, "(4,5 − 1,7) / (47 + 2 + 8).", "Exact : environ 49 mA.") },
       { consigne: "Vérifiez en mesurant I dans ce circuit.", court: "Mesurez I avec R et l'électrolyseur.", verifier: ({ faits }) => (mont(faits, "electrolyseur+r").I > 0.03) || false },
-      { consigne: "Les valeurs mesurées sont un peu plus petites que les valeurs calculées. Pourquoi ?", court: "Répondez dans le carnet.", question: choix(["l'ampèremètre a lui aussi une petite résistance (environ 1 Ω), qui s'ajoute à ΣR", "la loi de Pouillet est fausse", "le courant s'use dans le circuit"], "Toutes les résistances du circuit comptent.", "Exact.") },
+      { consigne: "Les valeurs mesurées sont un peu plus petites que les valeurs calculées. Pourquoi ?", court: "Répondez dans le carnet.", question: choix(["l'ampèremètre a une petite résistance", "la loi de Pouillet est fausse ici", "le courant s'use dans le circuit"], "Toutes les résistances du circuit comptent.", "Exact.") },
     ],
   };
 
@@ -35,11 +35,11 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Série : E = E1 + E2, r = r1 + r2.",
     etapes: [
       { consigne: "Reliez la borne + de la pile 1 à la borne − de la pile 2. Mesurez la tension à vide entre les deux bornes restées libres (V⎓ 20).", court: "Piles en série : tension à vide ?", verifier: ({ faits }) => (A(faits).serie && A(faits).u_vide > 8.5) || false },
-      { consigne: "Deux piles en série équivalent à un générateur de f.é.m.…", court: "Répondez dans le carnet.", question: choix(["E = E1 + E2 = 9 V, de résistance interne r = r1 + r2 = 4 Ω", "E = 4,5 V, comme une seule pile", "E = 9 V, sans résistance interne"], "Comparez la tension à vide à celle d'une pile.", "Exact.") },
+      { consigne: "Deux piles en série équivalent à un générateur de f.é.m.…", court: "Répondez dans le carnet.", question: choix(["E = 9 V et r = 4 Ω", "E = 4,5 V et r = 2 Ω", "E = 9 V et r = 0 Ω"], "Comparez la tension à vide à celle d'une pile.", "Exact.") },
       { consigne: "Branchez la lampe L (avec l'interrupteur) sur les deux piles en série, et fermez l'interrupteur.", court: "La lampe sur les deux piles.", verifier: ({ faits }) => (LA(faits).serie && LA(faits).eclat > 1.2) || false },
       { consigne: "La lampe brille plus que la normale : elle est sur-alimentée et risque de griller. Calculez la résistance R à ajouter en série pour qu'elle reçoive 6 V et 0,1 A : R = (E − U)/I − r (en Ω).", court: "R à ajouter (Ω) ?", question: { type: "nombre", unite: "Ω", attendu: 26, tolerance: 1.5, aide: "(9 − 6) / 0,1 − 4.", bravo: "Exact : on prend la valeur normalisée 27 Ω." } },
       { consigne: "Ajoutez la résistance R = 27 Ω en série avec la lampe.", court: "Ajoutez R = 27 Ω en série.", verifier: ({ faits }) => (LA(faits).avec_R && LA(faits).eclat > 0.85 && LA(faits).eclat < 1.15) || false },
-      { consigne: "Si l'on relie la borne + de la pile 1 à la borne + de la pile 2 (piles en opposition), la tension à vide vaut…", court: "Répondez dans le carnet.", question: choix(["0 V : les f.é.m. se retranchent", "9 V", "4,5 V"], "Les deux f.é.m. agissent en sens contraires.", "Exact.") },
+      { consigne: "Si l'on relie la borne + de la pile 1 à la borne + de la pile 2 (piles en opposition), la tension à vide vaut…", court: "Répondez dans le carnet.", question: choix(["0 V", "9 V", "4,5 V"], "Les deux f.é.m. agissent en sens contraires.", "Exact.") },
     ],
   };
 

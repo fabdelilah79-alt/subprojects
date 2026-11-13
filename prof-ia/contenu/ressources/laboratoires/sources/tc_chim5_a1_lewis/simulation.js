@@ -20,14 +20,14 @@ Utilisé par : page.html (dernier script).
     conclusion: "Les gaz nobles ont une couche externe pleine (2 électrons pour He, 8 pour Ne et Ar) : ils restent isolés. Les autres atomes gagnent ou perdent des électrons pour avoir la même structure que le gaz noble le plus proche : 2 électrons externes (règle du duet) ou 8 (règle de l'octet). Na → Na⁺, Mg → Mg²⁺, Cl → Cl⁻, O → O²⁻.",
     conclusion_courte: "Duet, octet : Na⁺, Mg²⁺, Cl⁻, O²⁻.",
     etapes: [
-      { consigne: "Lisez l'affiche des gaz nobles. Ces atomes restent isolés, parce que…", court: "Répondez dans le carnet.", question: choix(["leur couche externe est pleine : 2 électrons (He) ou 8 (Ne, Ar)", "ils n'ont pas d'électrons", "leur noyau est très lourd"], "Regardez la dernière couche de chacun.", "Exact : les autres atomes ne sont pas isolés ; ils s'associent ou forment des ions.") },
+      { consigne: "Lisez l'affiche des gaz nobles. Ces atomes restent isolés, parce que…", court: "Répondez dans le carnet.", question: choix(["leur couche externe est pleine", "ils n'ont aucun électron externe", "leur noyau est très lourd"], "Regardez la dernière couche de chacun.", "Exact : les autres atomes ne sont pas isolés ; ils s'associent ou forment des ions.") },
       { consigne: "Construisez l'atome de sodium ²³₁₁Na (couches remplies dans l'ordre K, L, M).", court: "Construisez ²³₁₁Na.", aide_geste: GESTE_ATOME, verifier: ion(11, 23, 11) },
       { consigne: "Le sodium perd l'électron de sa couche externe : retirez-le.", court: "Retirez l'électron externe.", verifier: ion(11, 23, 10) },
-      { consigne: "L'ion Na⁺ a la structure (K)²(L)⁸. Il est stable, car…", court: "Répondez dans le carnet.", question: choix(["sa couche externe a 8 électrons, comme le néon (règle de l'octet)", "il a autant d'électrons que de protons", "il n'a plus de couche M, donc plus d'électrons"], "Comparez avec l'affiche des gaz nobles.", "Exact.") },
+      { consigne: "L'ion Na⁺ a la structure (K)²(L)⁸. Il est stable, car…", court: "Répondez dans le carnet.", question: choix(["sa couche externe a 8 électrons", "il a autant d'électrons que de protons", "sa couche externe a 1 électron"], "Comparez avec l'affiche des gaz nobles.", "Exact.") },
       { consigne: "Touchez « Tout ranger ». Construisez l'atome de chlore ³⁵₁₇Cl, puis ajoutez l'électron qu'il gagne.", court: "Formez l'ion chlorure.", aide_geste: GESTE_ATOME, verifier: ion(17, 35, 18) },
-      { consigne: "L'ion obtenu a 17 protons et 18 électrons, (K)²(L)⁸(M)⁸. On le note…", court: "Répondez dans le carnet.", question: choix(["Cl⁻ : il a la structure de l'argon", "Cl⁺", "Ar"], "Une charge négative en trop.", "Exact : c'est l'ion chlorure.") },
-      { consigne: "Le magnésium (Z = 12) a la structure (K)²(L)⁸(M)². Il donne l'ion…", court: "Répondez dans le carnet.", question: choix(["Mg²⁺ (il perd ses 2 électrons externes)", "Mg⁶⁻ (il gagne 6 électrons)", "Mg⁺"], "Il est plus simple de perdre 2 électrons que d'en gagner 6.", "Exact.") },
-      { consigne: "L'oxygène (Z = 8) a la structure (K)²(L)⁶. Il donne l'ion…", court: "Répondez dans le carnet.", question: choix(["O²⁻ (il gagne 2 électrons : structure du néon)", "O⁶⁺", "O²⁺"], "Combien d'électrons lui manque-t-il pour avoir 8 électrons externes ?", "Exact.") },
+      { consigne: "L'ion obtenu a 17 protons et 18 électrons, (K)²(L)⁸(M)⁸. On le note…", court: "Répondez dans le carnet.", question: choix(["Cl⁻", "Cl⁺", "Ar"], "Une charge négative en trop.", "Exact : c'est l'ion chlorure.") },
+      { consigne: "Le magnésium (Z = 12) a la structure (K)²(L)⁸(M)². Il donne l'ion…", court: "Répondez dans le carnet.", question: choix(["Mg²⁺", "Mg²⁻", "Mg⁺"], "Il est plus simple de perdre 2 électrons que d'en gagner 6.", "Exact.") },
+      { consigne: "L'oxygène (Z = 8) a la structure (K)²(L)⁶. Il donne l'ion…", court: "Répondez dans le carnet.", question: choix(["O²⁻", "O²⁺", "O⁶⁺"], "Combien d'électrons lui manque-t-il pour avoir 8 électrons externes ?", "Exact.") },
     ],
   };
 
@@ -39,14 +39,14 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Duet pour H, octet pour C, N, O, Cl.",
     etapes: [
       batir("H2O", "Représentez la molécule d'eau H₂O : atomes, doublets liants, doublets non liants."),
-      { consigne: "Dans H₂O, l'atome d'oxygène a…", court: "Répondez dans le carnet.", question: choix(["2 doublets liants et 2 doublets non liants", "2 doublets liants seulement", "4 doublets liants"], "Comptez les traits autour de O.", "Exact : 4 doublets, soit 8 électrons (octet).") },
+      { consigne: "Dans H₂O, l'atome d'oxygène a…", court: "Répondez dans le carnet.", question: choix(["2 doublets liants, 2 non liants", "2 doublets liants, 1 non liant", "4 doublets liants, 0 non liant"], "Comptez les traits autour de O.", "Exact : 4 doublets, soit 8 électrons (octet).") },
       batir("NH3", "Représentez l'ammoniac NH₃."),
       batir("CH4", "Représentez le méthane CH₄."),
       batir("CO2", "Représentez le dioxyde de carbone CO₂ (le carbone est au milieu)."),
       batir("N2", "Représentez le diazote N₂."),
-      { consigne: "Dans N₂, les deux atomes d'azote sont unis par…", court: "Répondez dans le carnet.", question: choix(["une liaison triple (3 doublets liants)", "une liaison simple", "une liaison double"], "N forme 3 liaisons.", "Exact : N≡N, avec un doublet non liant sur chaque atome.") },
+      { consigne: "Dans N₂, les deux atomes d'azote sont unis par…", court: "Répondez dans le carnet.", question: choix(["une liaison triple", "une liaison simple", "une liaison double"], "N forme 3 liaisons.", "Exact : N≡N, avec un doublet non liant sur chaque atome.") },
       batir("C2H4", "Représentez l'éthylène C₂H₄."),
-      { consigne: "NO₂ a 5 + 6 + 6 = 17 électrons externes, un nombre impair. On en conclut que…", court: "Répondez dans le carnet.", question: choix(["on ne peut pas respecter l'octet pour tous ses atomes : le modèle de Lewis a des limites", "NO₂ n'existe pas", "l'azote forme 5 liaisons"], "Avec des doublets, le nombre d'électrons est toujours pair.", "Exact.") },
+      { consigne: "NO₂ a 5 + 6 + 6 = 17 électrons externes, un nombre impair. On en conclut que…", court: "Répondez dans le carnet.", question: choix(["le modèle de Lewis a des limites", "la molécule NO₂ n'existe pas", "l'azote forme cinq liaisons"], "Avec des doublets, le nombre d'électrons est toujours pair.", "Exact.") },
     ],
   };
 

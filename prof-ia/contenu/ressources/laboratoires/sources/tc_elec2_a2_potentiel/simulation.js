@@ -30,7 +30,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Alimentez la plaquette : reliez P à A et D à N.", court: "Reliez P à A et D à N.", verifier: ({ faits }) => faits.plaquette_alimentee || false, aide_geste: "Tirez un fil d'une borne à l'autre." },
       { consigne: "D est le point de référence (la masse). Réglez le multimètre sur V⎓ 20, branchez sa borne COM sur D et ne la bougez plus. Avec la borne VΩ, mesurez U_{AD}, U_{BD} et U_{CD}.", court: "COM sur D ; mesurez UAD, UBD, UCD.", verifier: ({ faits }) => mesurees(faits, ["AD", "BD", "CD"]), aide_geste: "Déplacez seulement le fil branché sur la borne VΩ." },
       { consigne: "Dans le tableur, écrivez les potentiels : V_{A} en A2, V_{B} en B2, V_{C} en C2, V_{D} en D2.", court: "Tableur : VA, VB, VC, VD.", verifier: ({ feuille, faits }) => ligne(feuille, [t(faits).AD, t(faits).BD, t(faits).CD, 0], ["A2 : V_{A} = U_{AD}.", "B2 : V_{B} = U_{BD}.", "C2 : V_{C} = U_{CD}.", "D2 : le potentiel de la masse est nul."]) },
-      { consigne: "Le potentiel d'un point, c'est…", court: "Répondez dans le carnet.", question: choix(["la tension entre ce point et le point de référence (la masse)", "l'intensité du courant en ce point", "la tension aux bornes du générateur"], "Où était branchée la borne COM ?", "Exact.") },
+      { consigne: "Le potentiel d'un point, c'est…", court: "Répondez dans le carnet.", question: choix(["sa tension par rapport à la masse", "l'intensité du courant en ce point", "la tension aux bornes du générateur"], "Où était branchée la borne COM ?", "Exact.") },
     ],
   };
 
@@ -56,9 +56,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Les potentiels dépendent de la masse ; les tensions, non.",
     etapes: [
       { consigne: "Prenez maintenant C comme masse : branchez la borne COM sur C et mesurez U_{AC}, U_{BC} et U_{DC}.", court: "COM sur C ; mesurez UAC, UBC, UDC.", verifier: ({ faits }) => mesurees(faits, ["AC", "BC", "DC"]) },
-      { consigne: "Avec la masse en C, le potentiel de D est…", court: "Répondez dans le carnet.", question: choix(["négatif : V_{D} = U_{DC} < 0", "toujours nul", "égal à 12 V"], "Regardez le signe de U_{DC}.", "Exact : D est à un potentiel plus bas que C.") },
+      { consigne: "Avec la masse en C, le potentiel de D est…", court: "Répondez dans le carnet.", question: choix(["négatif", "nul", "positif"], "Regardez le signe de U_{DC}.", "Exact : D est à un potentiel plus bas que C.") },
       { consigne: "Avec la masse en C, calculez U_{AB} = V_{A} − V_{B} (en V).", court: "UAB avec la masse en C (V) ?", question: { type: "nombre", unite: "V", attendu: (faits) => (t(faits).AC || 0) - (t(faits).BC || 0), tolerance: 0.015, aide: "Avec la masse en C : V_{A} = U_{AC} et V_{B} = U_{BC}.", bravo: "Exact : c'est la même valeur qu'avec la masse en D." } },
-      { consigne: "Quand on change de point de référence…", court: "Répondez dans le carnet.", question: choix(["les potentiels changent, mais les tensions entre deux points restent les mêmes", "les potentiels et les tensions changent", "rien ne change"], "Comparez V_{A} et U_{AB} avec les deux masses.", "Exact.") },
+      { consigne: "Quand on change de point de référence…", court: "Répondez dans le carnet.", question: choix(["les tensions ne changent pas", "les tensions changent aussi", "les potentiels ne changent pas"], "Comparez V_{A} et U_{AB} avec les deux masses.", "Exact.") },
     ],
   };
 

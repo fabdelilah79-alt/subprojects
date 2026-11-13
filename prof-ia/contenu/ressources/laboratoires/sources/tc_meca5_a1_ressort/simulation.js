@@ -50,8 +50,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Accrochez la masse de 200 g sous ce ressort et attendez qu'il s'immobilise.", court: "Accrochez 200 g.", verifier: ({ faits }) => mesurees(faits, "r2_").some((m) => Math.abs(m - 0.2) < 1e-6) || false },
       { consigne: `Lisez la longueur l du ressort (sa longueur à vide est l0 = ${R2.l0_cm} cm), en cm.`, court: "Longueur l (cm) ?", question: { type: "nombre", unite: "cm", attendu: longueur(R2, 0.2), tolerance: 0.15, aide: "Pointe de l'index rouge ; zoomez.", bravo: "Exact." } },
       { consigne: "Calculez sa raideur K = T / Δl (en N/m).", court: "Raideur K (N/m) ?", question: { type: "nombre", unite: "N/m", attendu: R2.raideur, tolerance_relative: 0.06, aide: "T = 0,2 × 9,81 N ; Δl en mètre.", bravo: "Exact." } },
-      { consigne: "Le ressort le plus raide…", court: "Répondez dans le carnet.", question: choix(["a la plus grande raideur K : il s'allonge moins sous la même tension", "a la plus petite raideur K", "s'allonge le plus"], "Comparez les deux valeurs de K.", "Exact.") },
-      { consigne: "Pour étalonner un dynamomètre, on…", court: "Répondez dans le carnet.", question: choix(["accroche des masses connues et on marque la position de l'index pour chaque poids P = m·g", "mesure la longueur du ressort à vide seulement", "chauffe le ressort"], "Le dynamomètre est un ressort gradué en newtons.", "Exact.") },
+      { consigne: "Le ressort le plus raide…", court: "Répondez dans le carnet.", question: choix(["a la plus grande raideur K", "a la plus petite raideur K", "s'allonge le plus"], "Comparez les deux valeurs de K.", "Exact.") },
+      { consigne: "Pour étalonner un dynamomètre, on…", court: "Répondez dans le carnet.", question: choix(["accroche des masses connues", "mesure sa longueur à vide", "chauffe le ressort"], "Le dynamomètre est un ressort gradué en newtons.", "Exact.") },
     ],
   };
 

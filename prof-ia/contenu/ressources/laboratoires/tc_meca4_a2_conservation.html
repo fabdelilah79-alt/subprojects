@@ -2884,8 +2884,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Appuyez sur « Enregistrer », puis touchez le fil pour le couper.", court: "Enregistrez, coupez le fil.", verifier: explosion(M + S, M) },
       nombre("vA (m/s) ?", "A", "vA = A0A10 / (10τ), avec A0A10 en mètre."),
       nombre("vB (m/s) ?", "B", "vB = B0B10 / (10τ)."),
-      { consigne: `Calculez pA = mA·vA (mA = ${(M + S) * 1000} g) et pB = mB·vB (mB = ${M * 1000} g). Les vecteurs pA et pB…`, court: "Répondez dans le carnet.", question: choix(["ont la même valeur et des sens opposés : pA + pB = 0", "sont égaux (même sens)", "n'ont aucun rapport"], "Le mobile le plus lourd part moins vite.", "Exact.") },
-      { consigne: "La quantité de mouvement du système {A, B} était nulle avant de couper le fil. Après, elle est…", court: "Répondez dans le carnet.", question: choix(["toujours nulle : elle se conserve", "égale à pA", "plus grande"], "Additionnez les deux vecteurs.", "Exact : le système est pseudo-isolé, sa quantité de mouvement se conserve.") },
+      { consigne: `Calculez pA = mA·vA (mA = ${(M + S) * 1000} g) et pB = mB·vB (mB = ${M * 1000} g). Les vecteurs pA et pB…`, court: "Répondez dans le carnet.", question: choix(["sont opposés", "sont égaux", "n'ont aucun lien"], "Le mobile le plus lourd part moins vite.", "Exact.") },
+      { consigne: "La quantité de mouvement du système {A, B} était nulle avant de couper le fil. Après, elle est…", court: "Répondez dans le carnet.", question: choix(["toujours nulle", "égale à pA", "plus grande"], "Additionnez les deux vecteurs.", "Exact : le système est pseudo-isolé, sa quantité de mouvement se conserve.") },
     ],
   };
 
@@ -2897,7 +2897,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Système pseudo-isolé : p se conserve.",
     etapes: [
       { consigne: "Touchez les mobiles pour les remettre contre le ressort, retirez la surcharge, appuyez sur « Enregistrer », puis coupez le fil.", court: "Sans surcharge : enregistrez, coupez le fil.", verifier: explosion(M, M) },
-      { consigne: "Prenez la feuille. Les vitesses vA et vB sont maintenant…", court: "Répondez dans le carnet.", question: choix(["égales : mA = mB, donc vA = vB", "toujours différentes", "nulles"], "Comparez A0A10 et B0B10.", "Exact.") },
+      { consigne: "Prenez la feuille. Les vitesses vA et vB sont maintenant…", court: "Répondez dans le carnet.", question: choix(["égales", "différentes", "nulles"], "Comparez A0A10 et B0B10.", "Exact.") },
       { consigne: "Pour tout système isolé ou pseudo-isolé, la quantité de mouvement totale…", court: "Répondez dans le carnet.", question: choix(["se conserve", "augmente", "diminue jusqu'à zéro"], "C'est ce que montrent vos deux expériences.", "Exact : c'est la loi de conservation de la quantité de mouvement.") },
       { consigne: "Deux patineurs immobiles, de 60 kg et 40 kg, se repoussent. Le premier part à 2 m/s. À quelle vitesse part le second (en m/s) ?", court: "Vitesse du second patineur (m/s) ?", question: { type: "nombre", unite: "m/s", attendu: 3, tolerance: 0.05, aide: "60 × 2 = 40 × v.", bravo: "Exact : 3 m/s, en sens opposé." } },
     ],

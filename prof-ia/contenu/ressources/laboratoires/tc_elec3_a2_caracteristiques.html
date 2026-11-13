@@ -3542,8 +3542,8 @@ Utilisé par : simulation.js.
     conclusion: "La caractéristique d'une lampe n'est pas une droite : U/I augmente avec I, car le filament chauffe et sa résistance augmente. La lampe n'est pas un conducteur ohmique.",
     courte: "Lampe : U/I augmente avec I.",
     questions: [
-      { consigne: "La caractéristique de la lampe…", court: "Répondez dans le carnet.", question: choix(["n'est pas une droite : U/I augmente avec I", "est une droite passant par l'origine", "est horizontale"], "Comparez U/I pour un petit et un grand courant.", "Exact.") },
-      { consigne: "Pourquoi la résistance U/I de la lampe augmente-t-elle avec l'intensité ?", court: "Répondez dans le carnet.", question: choix(["le filament chauffe, et la résistance d'un métal augmente avec la température", "le générateur s'use", "l'ampèremètre se trompe"], "Le filament devient de plus en plus lumineux, donc chaud.", "Exact : la lampe n'est pas un conducteur ohmique.") },
+      { consigne: "La caractéristique de la lampe…", court: "Répondez dans le carnet.", question: choix(["n'est pas une droite", "est une droite par l'origine", "est une droite horizontale"], "Comparez U/I pour un petit et un grand courant.", "Exact.") },
+      { consigne: "Pourquoi la résistance U/I de la lampe augmente-t-elle avec l'intensité ?", court: "Répondez dans le carnet.", question: choix(["le filament chauffe", "le générateur s'use", "l'ampèremètre se trompe"], "Le filament devient de plus en plus lumineux, donc chaud.", "Exact : la lampe n'est pas un conducteur ohmique.") },
     ],
   });
   LAMPE.etapes[1].consigne = "Faites varier la tension du générateur de 0 à 6 V (sans dépasser 6 V, la tension nominale de la lampe) : relevez au moins 6 points, dont quelques-uns sous 1 V.";
@@ -3560,7 +3560,7 @@ Utilisé par : simulation.js.
       { consigne: "Tableur : I (A) en colonne A, U (V) en colonne B. Tracez la caractéristique I = f(U) : I en ordonnée, U en abscisse.", court: "Tableur, puis I en fonction de U.", verifier: ({ feuille, faits, courbe }) => { const r = L.feuille_points(feuille, points(faits, "diode")); return r === true ? courbe_ok("B", "A")({ courbe }) : r; } },
       { consigne: "Lisez sur la courbe la tension de seuil de la diode (tension à partir de laquelle le courant augmente fortement), en V.", court: "Tension de seuil (V) ?", question: nombre(0.62, 0.08, "Là où la courbe se redresse.", "Exact : environ 0,6 V.") },
       { consigne: "Retournez la diode (échangez les fils sur A et K, sans toucher au voltmètre), réglez le générateur sur 5 V et relevez le point.", court: "Diode retournée, générateur à 5 V.", verifier: assez("diode", 1, (p) => p.U < -1 && Math.abs(p.I) < 1e-4) },
-      { consigne: "Diode retournée, l'intensité est nulle. La diode…", court: "Répondez dans le carnet.", question: choix(["ne laisse passer le courant que dans un sens, de A vers K, au-delà de la tension de seuil", "laisse passer le courant dans les deux sens", "est grillée"], "Comparez les deux sens.", "Exact.") },
+      { consigne: "Diode retournée, l'intensité est nulle. La diode…", court: "Répondez dans le carnet.", question: choix(["ne conduit que dans un sens", "conduit dans les deux sens", "est grillée"], "Comparez les deux sens.", "Exact.") },
     ],
   };
 
@@ -3590,8 +3590,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Réalisez le montage : SORTIE du GBF vers la résistance R, R vers la cathode K de la Zener, anode A vers la masse du GBF. Branchez l'oscilloscope aux bornes de la Zener : Y1 sur K, masse sur A.", court: "GBF, R et Zener ; oscilloscope sur la Zener.", verifier: ecretee, aide_geste: "Le GBF délivre une sinusoïde de 8 V d'amplitude." },
       { consigne: "Lisez la tension maximale aux bornes de la Zener (en V).", court: "Umax aux bornes de la Zener (V) ?", question: { type: "nombre", unite: "V", attendu: (faits) => O(faits).u_max || 5.1, tolerance: 0.25, aide: "Sv × nombre de divisions au-dessus du niveau de la masse.", bravo: "Exact : c'est la tension Zener, environ 5,1 V." } },
-      { consigne: "La sinusoïde du GBF monte jusqu'à 8 V, mais la tension aux bornes de la Zener ne dépasse pas 5,1 V. En effet…", court: "Répondez dans le carnet.", question: choix(["au-delà de Uz, la Zener conduit en sens inverse et maintient sa tension à Uz", "le GBF est réglé trop bas", "la Zener ne conduit jamais en sens inverse"], "La partie haute de la courbe est coupée à plat.", "Exact.") },
-      { consigne: "Pendant l'alternance négative, la tension reste vers −0,7 V. La Zener se comporte alors…", court: "Répondez dans le carnet.", question: choix(["comme une diode ordinaire passante en sens direct", "comme un interrupteur ouvert", "comme une résistance de 470 Ω"], "Dans ce sens, le courant va de A vers K.", "Exact.") },
+      { consigne: "La sinusoïde du GBF monte jusqu'à 8 V, mais la tension aux bornes de la Zener ne dépasse pas 5,1 V. En effet…", court: "Répondez dans le carnet.", question: choix(["la Zener conduit en inverse au-delà de Uz", "la Zener ne conduit jamais en sens inverse", "le GBF est réglé trop bas pour la Zener"], "La partie haute de la courbe est coupée à plat.", "Exact.") },
+      { consigne: "Pendant l'alternance négative, la tension reste vers −0,7 V. La Zener se comporte alors…", court: "Répondez dans le carnet.", question: choix(["comme une diode passante", "comme un interrupteur ouvert", "comme une résistance"], "Dans ce sens, le courant va de A vers K.", "Exact.") },
     ],
   };
 
@@ -3603,7 +3603,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "CTN : R diminue si θ augmente ; LDR : R diminue si la lumière augmente.",
     etapes: [
       { consigne: "Branchez l'ohmmètre (calibre 20 kΩ, puis 200 kΩ si besoin) aux bornes de la thermistance. Plongez sa sonde dans l'eau glacée, puis dans l'eau du robinet et dans l'eau chaude ; attendez chaque fois que la mesure se stabilise.", court: "CTN : eau glacée, robinet, chaude.", verifier: ({ faits }) => Object.keys(faits.mesures_ctn || {}).length >= 3 || false, aide_geste: "Faites glisser la sonde noire dans un bécher." },
-      { consigne: "Quand la température augmente, la résistance de la thermistance CTN…", court: "Répondez dans le carnet.", question: choix(["diminue (coefficient de température négatif)", "augmente", "ne change pas"], "Comparez les trois mesures.", "Exact.") },
+      { consigne: "Quand la température augmente, la résistance de la thermistance CTN…", court: "Répondez dans le carnet.", question: choix(["diminue", "augmente", "ne change pas"], "Comparez les trois mesures.", "Exact.") },
       { consigne: "Branchez l'ohmmètre aux bornes de la photorésistance. Mesurez sa résistance à la lumière de la salle, puis éclairée de près par la lampe de poche, puis sous le cache noir.", court: "LDR : salle, lampe proche, cache.", verifier: ({ faits }) => Object.keys(faits.mesures_ldr || {}).length >= 3 || false, aide_geste: "Approchez la lampe de poche à moins de 10 cm ; posez le cache sur la cellule." },
       { consigne: "Plus la photorésistance est éclairée…", court: "Répondez dans le carnet.", question: choix(["plus sa résistance est petite", "plus sa résistance est grande", "sa résistance ne dépend pas de la lumière"], "Comparez la mesure sous le cache et celle avec la lampe.", "Exact.") },
       { consigne: "On veut allumer automatiquement l'éclairage d'une rue à la tombée de la nuit. Quel dipôle commandé utiliser comme capteur ?", court: "Répondez dans le carnet.", question: choix(["une photorésistance", "une thermistance", "une diode Zener"], "Quelle grandeur change à la tombée de la nuit ?", "Exact.") },

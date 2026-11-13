@@ -30,8 +30,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez l'angle φ du plan au moment où le pavé a démarré (en degrés).", court: "Angle φ (°) ?", question: { type: "nombre", unite: "°", attendu: (f) => f.glissement.bois, tolerance: 1, aide: "Lisez le rapporteur fixé à la charnière.", bravo: "Exact." } },
       { consigne: "Calculez le coefficient de frottement k = tan φ.", court: "k = tan φ ?", question: { type: "nombre", unite: "", attendu: (f) => Math.tan((f.glissement.bois * Math.PI) / 180), tolerance: 0.03, aide: "Calculatrice en degrés.", bravo: "Exact." } },
       { consigne: "Recommencez avec le pavé à semelle de caoutchouc (baissez d'abord le plan).", court: "Pavé à semelle de caoutchouc.", verifier: angle_note("caoutchouc") },
-      { consigne: "Pour le caoutchouc sur le bois, le coefficient de frottement est…", court: "Répondez dans le carnet.", question: choix(["plus grand : il faut incliner davantage le plan", "le même", "plus petit"], "Comparez les deux angles.", "Exact : k dépend des surfaces en contact.") },
-      { consigne: "Avant le glissement, le pavé est en équilibre sous son poids P et la réaction R du plan. R est…", court: "Répondez dans le carnet.", question: choix(["verticale, vers le haut, et inclinée d'un angle θ sur la normale au plan : sa composante parallèle au plan est la force de frottement", "perpendiculaire au plan", "nulle"], "Deux forces à l'équilibre sont opposées.", "Exact.") },
+      { consigne: "Pour le caoutchouc sur le bois, le coefficient de frottement est…", court: "Répondez dans le carnet.", question: choix(["plus grand", "le même", "plus petit"], "Comparez les deux angles.", "Exact : k dépend des surfaces en contact.") },
+      { consigne: "Avant le glissement, le pavé est en équilibre sous son poids P et la réaction R du plan. R est…", court: "Répondez dans le carnet.", question: choix(["verticale, vers le haut", "perpendiculaire au plan", "parallèle au plan"], "Deux forces à l'équilibre sont opposées.", "Exact.") },
     ],
   };
 
@@ -46,8 +46,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Lisez la force maximale F_max sur l'index noir (en N).", court: "F_max (N) ?", question: { type: "nombre", unite: "N", attendu: L.PAVES.bois.statique * P, tolerance: 0.05, aide: "Un petit trait vaut 0,05 N.", bravo: "Exact." } },
       { consigne: "Ramenez le pavé à gauche, posez la masse de 200 g sur le pavé et recommencez.", court: "Avec 200 g sur le pavé.", verifier: traction(200) },
       { consigne: "Lisez la nouvelle force maximale (en N).", court: "F_max (N) ?", question: { type: "nombre", unite: "N", attendu: L.PAVES.bois.statique * 2 * P, tolerance: 0.06, aide: "Le poids a doublé.", bravo: "Exact." } },
-      { consigne: "Le rapport F_max / P…", court: "Répondez dans le carnet.", question: choix(["est le même dans les deux cas : c'est le coefficient de frottement k, égal à tan φ", "double quand le poids double", "est nul"], "P = 1,96 N, puis 3,92 N.", "Exact.") },
-      { consigne: "Dans la vie courante, le frottement…", court: "Répondez dans le carnet.", question: choix(["est indispensable : pour marcher, freiner, tenir un objet", "est toujours nuisible", "n'existe qu'au laboratoire"], "Imaginez un sol sans frottement.", "Exact : on cherche parfois à le réduire (huile), parfois à l'augmenter (pneus).") },
+      { consigne: "Le rapport F_max / P…", court: "Répondez dans le carnet.", question: choix(["reste le même : c'est k", "double quand P double", "est nul à l'équilibre"], "P = 1,96 N, puis 3,92 N.", "Exact.") },
+      { consigne: "Dans la vie courante, le frottement…", court: "Répondez dans le carnet.", question: choix(["est souvent indispensable", "est toujours nuisible", "n'existe qu'au laboratoire"], "Imaginez un sol sans frottement.", "Exact : on cherche parfois à le réduire (huile), parfois à l'augmenter (pneus).") },
     ],
   };
 

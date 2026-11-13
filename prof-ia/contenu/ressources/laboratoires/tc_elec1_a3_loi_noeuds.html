@@ -2974,8 +2974,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Recopiez dans le tableur les trois intensités mesurées (en mA), en A2, B2 et C2.", court: "Tableur : les trois intensités.", verifier: tableau_serie },
       { consigne: "Dans un circuit en série, l'intensité du courant…", court: "Répondez dans le carnet.", question: choix(["est la même en tout point du circuit", "diminue après chaque lampe", "est plus grande près de la borne +"], "Comparez les trois valeurs du tableur.", "Exact : le courant ne s'use pas.") },
       { consigne: "Le multimètre étant branché dans le circuit fermé, tournez son commutateur sur 20 mA.", court: "Calibre 20 mA.", verifier: ({ faits }) => (S(faits).mode === "20mA" && S(faits).depasse) || false },
-      { consigne: "L'écran n'affiche plus qu'un « 1 » à gauche. Cela signifie que…", court: "Répondez dans le carnet.", question: choix(["l'intensité dépasse le calibre : il faut un calibre plus grand", "l'intensité vaut 1 mA", "le multimètre est en panne"], "Le calibre est la plus grande valeur mesurable.", "Exact.") },
-      { consigne: "Pour mesurer cette intensité, le meilleur calibre est…", court: "Répondez dans le carnet.", question: choix(["200 mA : le plus petit calibre supérieur à la valeur", "10 A : le plus grand calibre", "20 mA : le plus petit calibre"], "Il faut un calibre assez grand, mais le plus précis possible.", "Exact.") },
+      { consigne: "L'écran n'affiche plus qu'un « 1 » à gauche. Cela signifie que…", court: "Répondez dans le carnet.", question: choix(["I dépasse le calibre choisi", "I vaut 1 mA exactement", "le multimètre est en panne"], "Le calibre est la plus grande valeur mesurable.", "Exact.") },
+      { consigne: "Pour mesurer cette intensité, le meilleur calibre est…", court: "Répondez dans le carnet.", question: choix(["200 mA", "10 A", "20 mA"], "Il faut un calibre assez grand, mais le plus précis possible.", "Exact.") },
     ],
   };
 
@@ -2991,7 +2991,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Dans le tableur : I en A2, I1 en B2, I2 en C2 (en mA), puis calculez I1 + I2 en D2.", court: "Tableur : I, I1, I2, I1 + I2.", verifier: tableau_derivation },
       { consigne: "Comparez I et I1 + I2. Au nœud…", court: "Répondez dans le carnet.", question: choix(["I = I1 + I2 : le courant principal se partage entre les branches", "I = I1 = I2", "I1 + I2 est plus petit que I : une partie du courant se perd"], "Regardez les colonnes A et D.", "Exact : c'est la loi des nœuds.") },
       { consigne: "On ajoute une troisième lampe en dérivation. A mesure 0,45 A, A1 0,1 A et A2 0,05 A. Quelle est l'intensité I3 dans la troisième lampe (en A) ?", court: "I3 (A) ?", question: { type: "nombre", unite: "A", attendu: 0.3, tolerance: 0.005, aide: "I = I1 + I2 + I3.", bravo: "Exact : I3 = 0,3 A." } },
-      { consigne: "La loi des nœuds traduit…", court: "Répondez dans le carnet.", question: choix(["la conservation de la charge : les charges ne s'accumulent pas au nœud et ne disparaissent pas", "l'usure du courant dans les lampes", "la fabrication de charges par le générateur"], "Que deviennent les électrons qui arrivent au nœud ?", "Exact.") },
+      { consigne: "La loi des nœuds traduit…", court: "Répondez dans le carnet.", question: choix(["la conservation de la charge", "l'usure du courant dans les lampes", "la création de charges au nœud"], "Que deviennent les électrons qui arrivent au nœud ?", "Exact.") },
     ],
   };
 

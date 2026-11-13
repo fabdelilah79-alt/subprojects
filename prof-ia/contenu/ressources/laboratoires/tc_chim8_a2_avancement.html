@@ -3818,14 +3818,14 @@ Utilisé par : page.html (dernier script).
     conclusion: "Tant que l'hydrogénocarbonate est le réactif limitant, la quantité de CO₂ formée est égale à sa quantité : l'avancement maximal augmente avec la masse introduite. Au-delà de 5,0 mmol (0,42 g), c'est l'acide éthanoïque qui est limitant : l'avancement maximal ne change plus, xmax = 5,0 mmol. L'avancement maximal est fixé par le réactif limitant, celui qui est entièrement consommé.",
     conclusion_courte: "xmax est fixé par le réactif limitant.",
     etapes: [
-      { consigne: "Équation : CH₃COOH + HCO₃⁻ → CH₃COO⁻ + CO₂ + H₂O. Le gaz recueilli dans l'éprouvette est…", court: "Répondez dans le carnet.", question: choix(["du dioxyde de carbone CO₂", "du dihydrogène H₂", "de la vapeur d'eau"], "Lisez l'équation.", "Exact.") },
+      { consigne: "Équation : CH₃COOH + HCO₃⁻ → CH₃COO⁻ + CO₂ + H₂O. Le gaz recueilli dans l'éprouvette est…", court: "Répondez dans le carnet.", question: choix(["du dioxyde de carbone", "du dihydrogène", "de la vapeur d'eau"], "Lisez l'équation.", "Exact.") },
       ...MASSES.map((m, k) => ({
         consigne: `Essai ${k + 1} : pesez ${v(m)} g d'hydrogénocarbonate de sodium, versez-le dans l'erlenmeyer, placez l'erlenmeyer sous le bouchon du montage, puis ouvrez le robinet de l'ampoule. Lisez le volume de gaz, puis touchez « Nouvel essai ».`,
         court: `Essai ${k + 1} : ${v(m)} g.`, aide_geste: "Coupelle sur la balance, tare, spatule ; coupelle lâchée au-dessus de l'erlenmeyer ; erlenmeyer glissé sous le bouchon ; robinet touché.", verifier: essai(k),
       })),
       { consigne: "Au tableur : m (A) et V (B) de chaque essai (lignes 2 à 5), puis n(NaHCO₃) en mmol (C) et n(CO₂) en mmol (D).", court: "Tableur : m, V, n, n.", verifier: mesures },
       { consigne: "Tracez n(CO₂) (colonne D) en fonction de n(NaHCO₃) (colonne C).", court: "Graphique n(CO₂) = f(n(NaHCO₃)).", verifier: ({ courbe: c }) => (c.x === "C" && c.y === "D" && c.n >= 4) || false },
-      { consigne: "Pour les essais 1 et 2, n(CO₂) = n(NaHCO₃). Le réactif limitant est alors…", court: "Répondez dans le carnet.", question: choix(["l'hydrogénocarbonate de sodium", "l'acide éthanoïque", "aucun des deux"], "Lequel est entièrement consommé ?", "Exact : il est entièrement consommé.") },
+      { consigne: "Pour les essais 1 et 2, n(CO₂) = n(NaHCO₃). Le réactif limitant est alors…", court: "Répondez dans le carnet.", question: choix(["l'hydrogénocarbonate", "l'acide éthanoïque", "aucun des deux"], "Lequel est entièrement consommé ?", "Exact : il est entièrement consommé.") },
       { consigne: "Pour les essais 3 et 4, le volume de CO₂ ne change plus. Le réactif limitant est…", court: "Répondez dans le carnet.", question: choix(["l'acide éthanoïque", "l'hydrogénocarbonate de sodium", "le dioxyde de carbone"], "n(acide) = 10,0 mL × 0,50 mol/L.", "Exact : il reste de la poudre au fond de l'erlenmeyer.") },
       { consigne: "Quel est l'avancement maximal xmax des essais 3 et 4 ?", court: "xmax (mmol) ?", question: { type: "nombre", unite: "mmol", attendu: 5, tolerance: 0.3, aide: "xmax = n(acide) = C × V.", bravo: "Exact : xmax = 5,0 mmol, soit 120 mL de CO₂." } },
     ],

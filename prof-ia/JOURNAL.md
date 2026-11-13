@@ -1637,3 +1637,17 @@ Problèmes restants : 1re année du bac et tronc commun encore à réécrire (la
   dans 139 ; 14 cas « plus de 1,2 fois plus longue », tous de quelques lettres. Contrôle des 167 laboratoires : aucun ne plante.
 
 Problèmes restants : tronc commun encore à réécrire.
+
+## 2026-11-13 — Questions du carnet : réponses de longueur égale (tronc commun) ; bilan
+
+- 241 questions à choix réécrites dans 52 des 53 laboratoires du tronc commun (chimie, électricité, mécanique) : bonne
+  réponse réduite à l'essentiel, mauvaises réponses de même forme (conceptions de la fiche : « une force entretient le
+  mouvement », « le courant s'use », « une espèce synthétique est moins bonne », signes et sens inversés...).
+- Mesure sur les 320 questions du tronc commun : la bonne réponse est la plus longue dans 90 questions (28 %), plus courte
+  dans 164.
+- Bilan des 1 025 questions à choix des 167 laboratoires : la bonne réponse est la plus longue dans 286 questions (28 %,
+  contre 86 % avant ce travail), plus courte dans 531 ; 36 cas « plus de 1,2 fois plus longue », tous de quelques lettres.
+  Elle est affichée en premier dans 34 % des cas (ordre mélangé). Contrôle des 167 laboratoires : aucun ne plante.
+
+Problèmes restants : une question à deux choix (« ne change pas » / « change ») garde une bonne réponse plus longue : le nombre
+de choix n'a pas été changé, pour ne pas casser les scénarios de test qui répondent par position.
