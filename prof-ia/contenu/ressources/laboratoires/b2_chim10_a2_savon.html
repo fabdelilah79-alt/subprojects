@@ -6408,7 +6408,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Par l'entonnoir, versez dans le ballon l'huile, la soude puis l'éthanol ; ajoutez la pierre ponce.", court: "Réactifs et pierre ponce.", aide_geste: "Portez chaque bécher au-dessus de l'entonnoir, puis inclinez-le avec la poignée.", verifier: ({ faits }) => { const r = R(faits); return (r.huile >= 15 && r.soude >= 15 && r.ethanol >= 15 && r.ponce) || false; } },
       { consigne: "Rangez l'entonnoir, posez le réfrigérant, ouvrez l'eau et chauffez à reflux pendant 30 minutes.", court: "Reflux pendant 30 min.", verifier: ({ faits }) => { const r = R(faits); if (r.fuite) return "Des vapeurs s'échappent : le réfrigérant doit être posé et l'eau ouverte."; return r.avance >= 1 || false; } },
       { consigne: "L'équation de la saponification d'un triester du glycérol est…", court: "Répondez dans le carnet.", question: choix(["triester + 3 HO⁻ → glycérol + 3 R–COO⁻", "triester + 3 H₂O ⇌ glycérol + 3 R–COOH", "glycérol + 3 R–COO⁻ → triester + 3 HO⁻"], "La soude apporte les ions HO⁻ ; le savon est un carboxylate.", "Exact.") },
-      { consigne: "Contrairement à l'hydrolyse d'un ester par l'eau, la saponification est…", court: "Répondez dans le carnet.", question: choix(["totale : l'ion carboxylate formé ne réagit pas avec l'alcool", "limitée à 33 %", "impossible sans catalyseur"], "Comparez avec le chapitre précédent.", "Exact.") },
+      { consigne: "Contrairement à l'hydrolyse d'un ester par l'eau, la saponification est…", court: "Répondez dans le carnet.", question: choix(["totale", "limitée à 33 %", "limitée à 67 %"], "Comparez avec le chapitre précédent.", "Exact.") },
       { consigne: "Arrêtez le chauffage, laissez refroidir, ôtez le réfrigérant et versez le contenu du ballon dans l'eau salée.", court: "Relargage dans l'eau salée.", aide_geste: "Prenez le ballon par son col et inclinez-le au-dessus du bécher.", verifier: ({ faits }) => R(faits).recu >= 10 || false },
     ],
   };
@@ -6421,8 +6421,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Mousse ; Ca²⁺ précipite le savon ; émulsion de l'huile.",
     etapes: [
       { consigne: "Prenez chaque tube, secouez-le vivement, puis reposez-le dans le porte-tubes ; comparez.", court: "Secouez les 4 tubes.", aide_geste: "Faites glisser le tube vivement de gauche à droite plusieurs fois, puis lâchez-le près du porte-tubes.", verifier: secouer },
-      { consigne: "Dans l'eau calcaire (tube 2), le savon mousse mal parce que…", court: "Répondez dans le carnet.", question: choix(["les ions Ca²⁺ précipitent les ions carboxylates : 2 R–COO⁻ + Ca²⁺ → (R–COO)₂Ca", "l'eau calcaire est trop chaude", "le savon s'y dissout trop bien"], "Regardez le trouble blanc du tube 2.", "Exact.") },
-      { consigne: "Après agitation, l'huile reste dispersée dans le tube 3 et pas dans le tube 4, car…", court: "Répondez dans le carnet.", question: choix(["les ions carboxylates entourent les gouttelettes d'huile : queue hydrophobe dans l'huile, tête hydrophile dans l'eau", "le savon dissout l'huile en la détruisant", "l'huile est plus dense que l'eau savonneuse"], "Lisez le document « L'ion carboxylate » si besoin.", "Exact.") },
+      { consigne: "Dans l'eau calcaire (tube 2), le savon mousse mal parce que…", court: "Répondez dans le carnet.", question: choix(["les ions Ca²⁺ précipitent les ions carboxylates", "les ions Ca²⁺ détruisent la chaîne carbonée", "les ions Cl⁻ de l'eau neutralisent le savon"], "Regardez le trouble blanc du tube 2.", "Exact.") },
+      { consigne: "Après agitation, l'huile reste dispersée dans le tube 3 et pas dans le tube 4, car…", court: "Répondez dans le carnet.", question: choix(["les ions carboxylates entourent les gouttelettes d'huile", "le savon transforme l'huile en une espèce soluble", "le savon rend l'huile plus dense que l'eau"], "Lisez le document « L'ion carboxylate » si besoin.", "Exact.") },
     ],
   };
 
@@ -6434,8 +6434,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Tête hydrophile, queue hydrophobe ; catalyseur sélectif.",
     etapes: [
       { consigne: "Lisez les quatre documents.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, puis pour le refermer.", verifier: ({ faits }) => (faits.docs_savon || []).length >= 4 || false },
-      { consigne: "Dans l'ion C₁₇H₃₅–COO⁻…", court: "Répondez dans le carnet.", question: choix(["–COO⁻ est la partie hydrophile, la chaîne C₁₇H₃₅– la partie hydrophobe", "la chaîne carbonée est hydrophile", "tout l'ion est hydrophobe"], "Ce qui est chargé est attiré par l'eau.", "Exact.") },
-      { consigne: "Un catalyseur…", court: "Répondez dans le carnet.", question: choix(["accélère la transformation sans être consommé, sans changer l'état final ; il peut être sélectif", "augmente le rendement à l'équilibre", "est un réactif comme les autres"], "Relisez « Catalyse et industrie ».", "Exact.") },
+      { consigne: "Dans l'ion C₁₇H₃₅–COO⁻…", court: "Répondez dans le carnet.", question: choix(["–COO⁻ est hydrophile, C₁₇H₃₅– hydrophobe", "–COO⁻ est hydrophobe, C₁₇H₃₅– hydrophile", "–COO⁻ et C₁₇H₃₅– sont tous deux hydrophiles"], "Ce qui est chargé est attiré par l'eau.", "Exact.") },
+      { consigne: "Un catalyseur…", court: "Répondez dans le carnet.", question: choix(["accélère sans être consommé ni changer l'état final", "accélère et augmente le rendement à l'équilibre", "est consommé, comme les autres réactifs"], "Relisez « Catalyse et industrie ».", "Exact.") },
     ],
   };
 

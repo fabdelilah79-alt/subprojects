@@ -53,10 +53,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Acide + alcool ⇌ ester + eau ; « alcanoate d'alkyle ».",
     etapes: [
       { consigne: "Rangez les huit formules selon leur groupe caractéristique.", court: "Rangez les formules.", aide_geste: "Faites glisser chaque étiquette dans une colonne.", verifier: tri },
-      { consigne: "L'équation de l'estérification de l'acide éthanoïque par l'éthanol est…", court: "Répondez dans le carnet.", question: choix(["CH₃–COOH + CH₃–CH₂–OH ⇌ CH₃–COO–CH₂–CH₃ + H₂O", "CH₃–COOH + CH₃–CH₂–OH → CH₃–CO–O–CO–CH₃ + H₂", "CH₃–COOH + H₂O ⇌ CH₃–COO⁻ + H₃O⁺"], "Un acide et un alcool donnent un ester et de l'eau.", "Exact.") },
+      { consigne: "L'équation de l'estérification de l'acide éthanoïque par l'éthanol est…", court: "Répondez dans le carnet.", question: choix(["CH₃–COOH + CH₃–CH₂–OH ⇌ CH₃–COO–CH₂–CH₃ + H₂O", "CH₃–COOH + CH₃–CH₂–OH ⇌ CH₃–CH₂–COO–CH₃ + H₂O", "CH₃–COOH + CH₃–CH₂–OH → CH₃–COO–CH₂–CH₃ + H₂"], "Un acide et un alcool donnent un ester et de l'eau.", "Exact.") },
       { consigne: "Le nom de CH₃–COO–CH₂–CH₃ est…", court: "Répondez dans le carnet.", question: choix(["éthanoate d'éthyle", "éthanoate de méthyle", "propanoate de méthyle"], "D'abord la partie qui vient de l'acide (–oate), puis celle qui vient de l'alcool (–yle).", "Exact.") },
-      { consigne: "H–COO–CH₃ s'obtient à partir de…", court: "Répondez dans le carnet.", question: choix(["l'acide méthanoïque et le méthanol (c'est le méthanoate de méthyle)", "l'acide éthanoïque et l'eau", "le méthanol seul"], "Coupez l'ester entre C=O–O et la chaîne de l'alcool.", "Exact.") },
-      { consigne: "L'ester de l'acide propanoïque et de l'éthanol, à cinq atomes de carbone, s'appelle…", court: "Répondez dans le carnet.", question: choix(["propanoate d'éthyle : CH₃–CH₂–COO–CH₂–CH₃", "éthanoate de propyle", "pentanoate"], "Acide propanoïque : 3 C ; éthanol : 2 C.", "Exact.") },
+      { consigne: "H–COO–CH₃ s'obtient à partir de…", court: "Répondez dans le carnet.", question: choix(["l'acide méthanoïque et le méthanol", "l'acide éthanoïque et le méthanol", "l'acide méthanoïque et l'éthanol"], "Coupez l'ester entre C=O–O et la chaîne de l'alcool.", "Exact.") },
+      { consigne: "L'ester de l'acide propanoïque et de l'éthanol, à cinq atomes de carbone, s'appelle…", court: "Répondez dans le carnet.", question: choix(["propanoate d'éthyle", "éthanoate de propyle", "pentanoate d'éthyle"], "Acide propanoïque : 3 C ; éthanol : 2 C.", "Exact.") },
     ],
   };
 
@@ -69,7 +69,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Ajoutez deux gouttes de phénolphtaléine dans le bécher A, posez-le sur l'agitateur, remplissez la burette et titrez jusqu'à la première teinte rose qui persiste.", court: "Titrage du bécher A.", aide_geste: "Touchez la clé du robinet : goutte à goutte ou fermé ; glissez-la vers le haut pour un filet. Lisez le volume dans la loupe.", verifier: titre("A", E.VE_60) },
       { consigne: "Volume équivalent VE (mL) ?", court: "VE (mL) ?", question: { type: "nombre", unite: "mL", attendu: (f) => VE(f, "A") ?? E.VE_60, tolerance: 0.15, aide: "Lisez la burette à la première teinte rose persistante.", bravo: "Exact." } },
-      { consigne: "On verse le tube dans l'eau glacée et on titre aussitôt, car…", court: "Répondez dans le carnet.", question: choix(["le froid et la dilution bloquent l'estérification, et la soude ne réagit presque pas avec l'ester à froid", "l'eau glacée dissout l'ester", "le froid accélère le titrage"], "C'est une trempe, comme en cinétique.", "Exact.") },
+      { consigne: "On verse le tube dans l'eau glacée et on titre aussitôt, car…", court: "Répondez dans le carnet.", question: choix(["le froid bloque l'estérification et la saponification", "le froid rend l'acide éthanoïque plus facile à titrer", "l'eau glacée dissout l'ester et le sépare de l'acide"], "C'est une trempe, comme en cinétique.", "Exact.") },
       { consigne: "Avancement x de l'estérification dans le tube à 60 min (mmol) ?", court: "x (mmol) ?", question: relatif("mmol", (f) => 20 - (VE(f, "A") ?? E.VE_60), 0.02, "n(acide restant) = C·VE ; x = 20 − n(acide restant), en mmol.", "Exact.") },
     ],
   };
@@ -86,8 +86,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Avancement final x_f (mmol) ?", court: "x_f (mmol) ?", question: relatif("mmol", 13.3, 0.03, "Valeur vers laquelle tend la courbe.", "Exact.") },
       { consigne: "Rendement de l'estérification (%) ?", court: "Rendement (%) ?", question: relatif("%", 66.7, 0.04, "r = x_f / x_max, avec x_max = 20 mmol.", "Exact : 67 %.") },
       { consigne: "Constante d'équilibre K = [ester][eau] / ([acide][alcool]) ?", court: "K ?", question: relatif("", 4, 0.1, "Le volume se simplifie : K = x_f² / (20 − x_f)².", "Exact : K = 4.") },
-      { consigne: "D'après l'affiche, l'hydrolyse de 20 mmol d'ester par 20 mmol d'eau…", court: "Répondez dans le carnet.", question: choix(["est lente et limitée à 6,7 mmol (33 %) : elle conduit au même équilibre que l'estérification", "est totale", "est rapide et donne 20 mmol d'acide"], "Comparez 6,7 et 20 − 13,3.", "Exact : ce sont deux transformations inverses.") },
-      { consigne: "D'après l'affiche des conditions, chauffer ou ajouter de l'acide sulfurique…", court: "Répondez dans le carnet.", question: choix(["fait atteindre l'équilibre plus vite sans changer l'avancement final", "augmente le rendement final", "n'a aucun effet"], "Comparez les avancements à 60 min et à l'état final.", "Exact : l'acide sulfurique est un catalyseur.") },
+      { consigne: "D'après l'affiche, l'hydrolyse de 20 mmol d'ester par 20 mmol d'eau…", court: "Répondez dans le carnet.", question: choix(["est limitée à 6,7 mmol d'acide (33 %)", "est limitée à 13,3 mmol d'acide (67 %)", "est totale : 20 mmol d'acide (100 %)"], "Comparez 6,7 et 20 − 13,3.", "Exact : ce sont deux transformations inverses.") },
+      { consigne: "D'après l'affiche des conditions, chauffer ou ajouter de l'acide sulfurique…", court: "Répondez dans le carnet.", question: choix(["accélère, sans changer l'avancement final", "accélère et augmente l'avancement final", "ne change ni la vitesse ni l'état final"], "Comparez les avancements à 60 min et à l'état final.", "Exact : l'acide sulfurique est un catalyseur.") },
     ],
   };
 
@@ -100,9 +100,9 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Titrez le bécher B : remplissez la burette, deux gouttes de phénolphtaléine, B sur l'agitateur.", court: "Titrage du bécher B.", verifier: titre("B", E.VE_EXCES) },
       { consigne: "Rendement de l'estérification dans B (%) ?", court: "Rendement (%) ?", question: relatif("%", (f) => (20 - (VE(f, "B") ?? E.VE_EXCES)) / 20 * 100, 0.03, "x_f = 20 − C·VE ; l'acide est le réactif limitant.", "Exact : environ 90 %.") },
-      { consigne: "L'excès d'éthanol augmente le rendement, car…", court: "Répondez dans le carnet.", question: choix(["ajouter un réactif diminue Qr : Qr < K, le système évolue dans le sens direct", "l'éthanol est un catalyseur", "K augmente"], "K ne dépend que de la température.", "Exact.") },
-      { consigne: "Un autre moyen d'augmenter le rendement est…", court: "Répondez dans le carnet.", question: choix(["éliminer un produit au fur et à mesure (eau, ou ester distillé)", "ajouter de l'eau", "ajouter un catalyseur"], "Que devient Qr si l'on enlève un produit ?", "Exact.") },
-      { consigne: "En synthèse, on chauffe à reflux pour…", court: "Répondez dans le carnet.", question: choix(["accélérer la transformation sans perdre de matière : les vapeurs se condensent et retombent dans le ballon", "augmenter K", "rendre la transformation totale"], "La température est un facteur cinétique.", "Exact.") },
+      { consigne: "L'excès d'éthanol augmente le rendement, car…", court: "Répondez dans le carnet.", question: choix(["il rend Qr < K : sens direct", "il augmente K : sens direct", "il catalyse la réaction : sens direct"], "K ne dépend que de la température.", "Exact.") },
+      { consigne: "Un autre moyen d'augmenter le rendement est…", court: "Répondez dans le carnet.", question: choix(["éliminer l'eau au fur et à mesure", "ajouter de l'eau au mélange", "ajouter de l'acide sulfurique"], "Que devient Qr si l'on enlève un produit ?", "Exact.") },
+      { consigne: "En synthèse, on chauffe à reflux pour…", court: "Répondez dans le carnet.", question: choix(["accélérer sans perdre de matière", "augmenter la constante K", "rendre la transformation totale"], "La température est un facteur cinétique.", "Exact.") },
     ],
   };
 

@@ -58,7 +58,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Allumez la balance, posez une coupelle vide sur le plateau et tarez (touche T).", court: "Coupelle tarée.", verifier: ({ faits }) => (PS(faits).coupelle && PS(faits).lecture === 0) || false },
       { consigne: "Avec la spatule, versez de l'acide salicylique dans la coupelle jusqu'à lire 3,00 g.", court: "Pesez 3,00 g.", aide_geste: "Sortez la spatule du pot et tenez-la au-dessus de la coupelle ; éloignez-la quand la balance approche de 3,00 g.", verifier: peser_as },
       { consigne: "Quantité de matière d'acide salicylique pesée (mmol) ?", court: "n (mmol) ?", question: nombre("mmol", n_as, 0.4, "n = m / M, avec M = 138 g/mol.", "Exact.") },
-      { consigne: "On introduit l'acide salicylique dans un ballon sec, car…", court: "Répondez dans le carnet.", question: choix(["l'eau détruirait l'anhydride éthanoïque : C₄H₆O₃ + H₂O → 2 C₂H₄O₂", "l'acide salicylique se dissout dans l'eau", "le verre mouillé casse à la chaleur"], "Que donne un anhydride avec l'eau ?", "Exact.") },
+      { consigne: "On introduit l'acide salicylique dans un ballon sec, car…", court: "Répondez dans le carnet.", question: choix(["l'eau détruirait l'anhydride éthanoïque", "l'eau dissoudrait l'acide salicylique", "l'eau ralentirait le catalyseur acide"], "Que donne un anhydride avec l'eau ?", "Exact.") },
     ],
   };
 
@@ -73,10 +73,10 @@ Utilisé par : page.html (dernier script).
       { consigne: "Le ballon sec contient déjà l'acide salicylique que vous avez pesé. Par l'entonnoir, versez-y l'anhydride éthanoïque.", court: "Anhydride dans le ballon.", aide_geste: "Portez le bécher au-dessus de l'entonnoir, puis inclinez-le avec la poignée.", verifier: ({ faits }) => (R(faits).anhydride_acetique >= 5 || R(faits).brut_aspirine > 5) || false },
       { consigne: "Ajoutez trois gouttes d'acide sulfurique avec le compte-gouttes, puis quelques grains de pierre ponce.", court: "Catalyseur et pierre ponce.", aide_geste: "Sortez la pipette du flacon, tenez-la au-dessus de l'entonnoir et appuyez sur la poire.", verifier: ({ faits }) => (R(faits).ox_sulfurique >= 0.1 && R(faits).ponce) || false },
       { consigne: "Rangez l'entonnoir, posez le réfrigérant, ouvrez l'eau et allumez le chauffe-ballon (réglé sur 65 °C) et chauffez à reflux pendant 20 minutes (chronomètre).", court: "Reflux à 65 °C, 20 min.", verifier: chauffe },
-      { consigne: "L'équation de la synthèse est…", court: "Répondez dans le carnet.", question: choix(["C₇H₆O₃ + C₄H₆O₃ → C₉H₈O₄ + C₂H₄O₂ (aspirine + acide éthanoïque)", "C₇H₆O₃ + C₂H₄O₂ ⇌ C₉H₈O₄ + H₂O", "C₇H₆O₃ + C₄H₆O₃ → C₉H₈O₄ + H₂O"], "Un anhydride réagit avec le groupe –OH en donnant un ester et un acide carboxylique.", "Exact.") },
-      { consigne: "On utilise l'anhydride éthanoïque plutôt que l'acide éthanoïque, car la réaction est…", court: "Répondez dans le carnet.", question: choix(["rapide et totale : il ne se forme pas d'eau, donc pas d'hydrolyse de l'ester", "plus lente mais moins chère", "limitée à 67 %, comme toute estérification"], "Comparez avec l'estérification du chapitre précédent.", "Exact.") },
-      { consigne: "L'acide sulfurique…", court: "Répondez dans le carnet.", question: choix(["est un catalyseur : il accélère la transformation sans figurer dans le bilan ni changer l'état final", "est un réactif consommé", "augmente le rendement final"], "On l'a mis en très petite quantité ; on le retrouve à la fin.", "Exact.") },
-      { consigne: "On chauffe doucement (65 °C) plutôt qu'à ébullition, car…", court: "Répondez dans le carnet.", question: choix(["avec le catalyseur, la transformation est déjà assez rapide à 65 °C ; plus chaud, l'aspirine se dégraderait et l'anhydride s'évaporerait", "la réaction n'a lieu qu'à 65 °C exactement", "un catalyseur ne fonctionne qu'à froid"], "La température est un facteur cinétique, mais elle a des limites.", "Exact.") },
+      { consigne: "L'équation de la synthèse est…", court: "Répondez dans le carnet.", question: choix(["C₇H₆O₃ + C₄H₆O₃ → C₉H₈O₄ + C₂H₄O₂", "C₇H₆O₃ + C₂H₄O₂ ⇌ C₉H₈O₄ + H₂O", "C₇H₆O₃ + C₄H₆O₃ → C₉H₈O₄ + H₂O"], "Un anhydride réagit avec le groupe –OH en donnant un ester et un acide carboxylique.", "Exact.") },
+      { consigne: "On utilise l'anhydride éthanoïque plutôt que l'acide éthanoïque, car la réaction est…", court: "Répondez dans le carnet.", question: choix(["rapide et totale", "lente mais totale", "rapide mais limitée"], "Comparez avec l'estérification du chapitre précédent.", "Exact.") },
+      { consigne: "L'acide sulfurique…", court: "Répondez dans le carnet.", question: choix(["accélère la transformation sans être consommé", "est consommé : il apporte un groupe à l'aspirine", "augmente le rendement en déplaçant l'équilibre"], "On l'a mis en très petite quantité ; on le retrouve à la fin.", "Exact.") },
+      { consigne: "On chauffe doucement (65 °C) plutôt qu'à ébullition, car…", court: "Répondez dans le carnet.", question: choix(["avec le catalyseur, 65 °C suffit ; plus chaud dégraderait l'aspirine", "la réaction n'est possible qu'entre 60 et 70 °C exactement", "un catalyseur perd son effet au-dessus de 65 °C"], "La température est un facteur cinétique, mais elle a des limites.", "Exact.") },
       { consigne: "Arrêtez le chauffage, laissez refroidir, ôtez le réfrigérant, puis versez le contenu du ballon dans l'eau glacée.", court: "Versez dans l'eau glacée.", aide_geste: "Prenez le ballon par son col et inclinez-le au-dessus du bécher.", verifier: ({ faits }) => R(faits).recu >= 15 || false },
     ],
   };
@@ -91,7 +91,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Posez un papier filtre dans le Büchner et mouillez-le avec la pissette.", court: "Papier posé et mouillé.", verifier: ({ faits }) => (F(faits).papier && F(faits).mouille) || false },
       { consigne: "Ouvrez le robinet de la trompe à eau, puis versez tout le mélange dans le Büchner.", court: "Vide, mélange versé.", verifier: ({ faits }) => (F(faits).vide && F(faits).residu && F(faits).filtrat >= 15) || false },
       { consigne: "Arrêtez : débranchez d'abord le tuyau de la fiole, puis fermez le robinet.", court: "Tuyau débranché, robinet fermé.", verifier: ({ faits }) => { const f = F(faits); if (f.retour) return "Retour d'eau : il fallait débrancher le tuyau avant de fermer le robinet."; return (!f.vide && !f.branche) || false; } },
-      { consigne: "On rince les cristaux à l'eau glacée, car…", court: "Répondez dans le carnet.", question: choix(["l'aspirine est très peu soluble à froid : on en perd moins", "l'eau glacée sèche plus vite", "l'eau chaude la décolorerait"], "Pensez à la solubilité.", "Exact.") },
+      { consigne: "On rince les cristaux à l'eau glacée, car…", court: "Répondez dans le carnet.", question: choix(["l'aspirine y est très peu soluble", "l'eau glacée sèche plus vite les cristaux", "l'eau glacée détruit l'acide salicylique"], "Pensez à la solubilité.", "Exact.") },
     ],
   };
 
@@ -105,7 +105,7 @@ Utilisé par : page.html (dernier script).
       { consigne: "Allumez la balance, posez une coupelle vide sur le plateau et tarez (touche T).", court: "Coupelle tarée.", verifier: ({ faits }) => (P(faits).coupelle && P(faits).lecture === 0) || false },
       { consigne: "Avec la spatule, versez tout le produit sec dans la coupelle, puis lisez la masse.", court: "Pesez tout le produit.", aide_geste: "Sortez la spatule du pot et tenez-la au-dessus de la coupelle ; retournez au pot pour la recharger.", verifier: peser },
       { consigne: "Quantité de matière d'acide salicylique (mmol) ?", court: "n(acide salicylique) ?", question: nombre("mmol", n_as, 0.4, "n = m / 138, avec la masse que vous avez pesée.", "Exact : 21,7 mmol.") },
-      { consigne: "Le réactif limitant est…", court: "Répondez dans le carnet.", question: choix(["l'acide salicylique : n(anhydride) = 6,0 × 1,08 / 102 ≈ 63,5 mmol est plus grand", "l'anhydride éthanoïque", "l'acide sulfurique"], "Calculez n(anhydride).", "Exact.") },
+      { consigne: "Le réactif limitant est…", court: "Répondez dans le carnet.", question: choix(["l'acide salicylique (21,7 mmol)", "l'anhydride éthanoïque (63,5 mmol)", "l'acide sulfurique (quelques gouttes)"], "Calculez n(anhydride).", "Exact.") },
       { consigne: "Rendement de la synthèse (%) ?", court: "Rendement (%) ?", question: nombre("%", (f) => ((P(f).lecture || M_OBT) / 180 * 1000 / n_as(f)) * 100, 2, "r = (m/180) / n(acide salicylique) × 100.", "Exact : environ 82 %.") },
     ],
   };
@@ -119,8 +119,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Posez le bécher sur l'agitateur, mettez l'agitation, ajoutez deux gouttes de phénolphtaléine, remplissez la burette et titrez jusqu'à la première teinte rose qui persiste.", court: "Titrage du comprimé.", aide_geste: "Touchez la clé du robinet : goutte à goutte ou fermé ; glissez-la vers le haut pour un filet.", verifier: titre },
       { consigne: "Masse d'aspirine dans le comprimé (mg) ?", court: "m (mg) ?", question: nombre("mg", (f) => 0.2 * (T(f).VE || VE_TH) * 180, 12, "n = C·VE ; m = n × 180.", "Exact : le comprimé contient bien 500 mg.") },
-      { consigne: "On titre à froid et rapidement, car…", court: "Répondez dans le carnet.", question: choix(["à chaud, la soude réagirait aussi avec le groupe ester (saponification) : on favorise une seule réaction", "le froid accélère le titrage", "la phénolphtaléine ne vire qu'à froid"], "L'aspirine porte un groupe –COOH et un groupe ester.", "Exact.") },
-      { consigne: "Dans l'industrie, un catalyseur sélectif…", court: "Répondez dans le carnet.", question: choix(["accélère une seule des réactions possibles : il oriente le système vers le produit voulu", "rend toutes les réactions totales", "déplace l'équilibre"], "Un catalyseur agit sur la vitesse, pas sur l'état final.", "Exact.") },
+      { consigne: "On titre à froid et rapidement, car…", court: "Répondez dans le carnet.", question: choix(["à chaud, la soude saponifierait aussi l'ester", "à froid, la soude réagit plus vite avec l'acide", "à chaud, la phénolphtaléine ne vire plus"], "L'aspirine porte un groupe –COOH et un groupe ester.", "Exact.") },
+      { consigne: "Dans l'industrie, un catalyseur sélectif…", court: "Répondez dans le carnet.", question: choix(["n'accélère qu'une des réactions possibles", "rend totales toutes les réactions possibles", "déplace l'équilibre vers le produit voulu"], "Un catalyseur agit sur la vitesse, pas sur l'état final.", "Exact.") },
     ],
   };
 

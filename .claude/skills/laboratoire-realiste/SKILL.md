@@ -154,6 +154,8 @@ un pictogramme ni à une forme abstraite.
   `outils_pointage.js` (pointer(page, images, { origine }) : étalonnage, origine, pointage d'après objet(k), export).
   `outils_verser.js` (verser un récipient tenu en tournant sa poignée ; aller(page, n) : voir une paillasse pour mettre au
   point les gestes ; le ballon de 250 mL ne coule qu'incliné presque à 135°).
+- `extraire_questions.js <préfixe>` (liste des questions à choix, avec « longue » quand la bonne réponse est la plus longue) et
+  `appliquer_choix.py corrections.json questions.json` (remplace la liste complète des options d'une question : [{l, c, options}]).
 - `regression_reflux.js` : rejoue le montage à reflux d'une paillasse de poste_synthese.js (réactifs, reflux, réfrigérant
   rangé derrière le récepteur, versement) ; à lancer après toute modification de montage_reflux.js ou poste_synthese.js.
   Pour lire les faits : remplacer `Labo.missions.noter` pour copier dans `window.notes` (voir `exemple_scenario.js`).

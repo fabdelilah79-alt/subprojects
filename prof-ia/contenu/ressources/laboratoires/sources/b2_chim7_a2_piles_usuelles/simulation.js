@@ -25,10 +25,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Énergie chimique → électrique ; collecte et recyclage.",
     etapes: [
       { consigne: "Lisez les quatre documents.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, puis pour le refermer.", verifier: ({ faits }) => (faits.docs_piles || []).length >= 4 || false },
-      { consigne: "Une pile convertit…", court: "Répondez dans le carnet.", question: choix(["de l'énergie chimique en énergie électrique, par une transformation spontanée", "de l'énergie électrique en énergie chimique", "de la chaleur en électricité"], "Relisez « Histoire des piles ».", "Exact.") },
+      { consigne: "Une pile convertit…", court: "Répondez dans le carnet.", question: choix(["de l'énergie chimique en énergie électrique", "de l'énergie électrique en énergie chimique", "de l'énergie thermique en énergie électrique"], "Relisez « Histoire des piles ».", "Exact.") },
       { consigne: "Quantité d'électricité maximale Q (C) d'une pile alcaline de 2 400 mAh ?", court: "Q (C) ?", question: { type: "nombre", unite: "C", attendu: 2.4 * 3600, tolerance_relative: 0.02, aide: "Q = I·Δt : 2 400 mAh = 2,4 A × 3 600 s.", bravo: "Exact : 8 640 C." } },
-      { consigne: "Une batterie de voiture donne 12 V, car…", court: "Répondez dans le carnet.", question: choix(["elle contient six éléments au plomb de 2 V en série", "un élément au plomb donne 12 V", "elle est rechargée en roulant"], "Relisez « Accumulateurs ».", "Exact.") },
-      { consigne: "Une pile usagée doit…", court: "Répondez dans le carnet.", question: choix(["être déposée dans un point de collecte : elle contient des métaux toxiques que l'on recycle", "être jetée avec les ordures ménagères", "être brûlée"], "Relisez « Dangers et recyclage ».", "Exact.") },
+      { consigne: "Une batterie de voiture donne 12 V, car…", court: "Répondez dans le carnet.", question: choix(["elle a six éléments de 2 V en série", "elle a six éléments de 2 V en parallèle", "chacun de ses éléments donne 12 V"], "Relisez « Accumulateurs ».", "Exact.") },
+      { consigne: "Une pile usagée doit…", court: "Répondez dans le carnet.", question: choix(["être déposée dans un point de collecte", "être jetée avec les ordures ménagères", "être enterrée loin des habitations"], "Relisez « Dangers et recyclage ».", "Exact.") },
     ],
   };
 
@@ -40,7 +40,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Accumulateur : rechargeable (transformation forcée).",
     etapes: [
       { consigne: "Rangez les huit étiquettes dans le tableau.", court: "Rangez les étiquettes.", aide_geste: "Faites glisser chaque étiquette dans une colonne.", verifier: tri },
-      { consigne: "Recharger un accumulateur, c'est…", court: "Répondez dans le carnet.", question: choix(["lui imposer avec un générateur une transformation forcée, inverse de celle qui a lieu quand il débite", "le laisser se reposer", "lui ajouter de l'électrolyte"], "Relisez « Accumulateurs ».", "Exact.") },
+      { consigne: "Recharger un accumulateur, c'est…", court: "Répondez dans le carnet.", question: choix(["lui imposer une transformation forcée", "le laisser débiter jusqu'à l'équilibre", "lui ajouter de l'électrolyte neuf"], "Relisez « Accumulateurs ».", "Exact.") },
     ],
   };
 

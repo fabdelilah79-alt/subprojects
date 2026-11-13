@@ -1601,3 +1601,14 @@ Problème restant : le ballon contient toujours 3,00 g, quelle que soit la masse
 Problèmes restants : dans 884 questions sur 1 025, la bonne réponse est la plus longue (elle se devine) : à réécrire, chapitre
 par chapitre ; les durées par mission sont des estimations (10 à 20 min le plus souvent) ; une fraction dont le dénominateur
 est une phrase (« durée à 120 °C ») n'est posée qu'avec son premier mot au dénominateur.
+
+## 2026-11-13 — Questions du carnet : réponses de longueur égale (chimie de 2e année du bac)
+
+- 104 questions à choix réécrites dans les 19 laboratoires de chimie de 2e année du bac : bonne réponse réduite à l'essentiel,
+  mauvaises réponses de même longueur et de même forme, tirées d'erreurs fréquentes (sens inverse, K qui change, catalyseur
+  qui augmente le rendement, anode et cathode inversées...). Les explications restent dans les conclusions et les aides.
+- Mesure : la bonne réponse n'est plus nettement plus longue (plus de 1,2 fois la plus longue des autres) dans aucune des
+  109 questions de chimie de 2e année (avant : presque toutes). Parcours de l'aspirine et du savon rejoués : tout passe.
+- Outils de la compétence : extraire_questions.js, appliquer_choix.py.
+
+Reste à faire : physique de 2e année du bac (environ 330 questions), puis 1re année et tronc commun.

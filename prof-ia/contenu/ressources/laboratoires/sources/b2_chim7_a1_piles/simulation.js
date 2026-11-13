@@ -23,8 +23,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Transfert direct d'électrons entre espèces mélangées.",
     etapes: [
       { consigne: "Mettez le fil de cuivre dans le tube 1 (ions Ag⁺) et le clou en fer dans le tube 2 (ions Cu²⁺) ; observez.", court: "Cuivre → tube 1 ; fer → tube 2.", aide_geste: "Faites glisser le métal au-dessus du tube et lâchez-le.", verifier: ({ faits }) => (MEL(faits).t1?.Ag_depose > 0.05 && MEL(faits).t2?.Cu_depose > 0.03) || false },
-      { consigne: "Pour Cu + 2 Ag⁺ ⇌ Cu²⁺ + 2 Ag, au départ…", court: "Répondez dans le carnet.", question: choix(["Qr,i = [Cu²⁺] / [Ag⁺]² = 0 < K : le sens direct est spontané, comme on l'observe (dépôt d'argent)", "Qr,i > K : sens inverse", "Qr,i = K : rien ne se passe"], "Il n'y a pas d'ions Cu²⁺ au départ ; les solides ne figurent pas dans Qr.", "Exact.") },
-      { consigne: "Dans ces tubes, les électrons…", court: "Répondez dans le carnet.", question: choix(["passent directement du métal aux ions, au contact : aucun courant n'est utilisable", "traversent un fil extérieur", "restent sur le métal"], "Il n'y a aucun circuit.", "Exact : pour obtenir un courant, on sépare les couples : c'est la pile.") },
+      { consigne: "Pour Cu + 2 Ag⁺ ⇌ Cu²⁺ + 2 Ag, au départ…", court: "Répondez dans le carnet.", question: choix(["Qr,i = 0 < K : sens direct", "Qr,i > K : sens inverse", "Qr,i = K : pas d'évolution"], "Il n'y a pas d'ions Cu²⁺ au départ ; les solides ne figurent pas dans Qr.", "Exact.") },
+      { consigne: "Dans ces tubes, les électrons…", court: "Répondez dans le carnet.", question: choix(["passent du métal aux ions, au contact", "traversent un fil extérieur au tube", "passent des ions au métal, au contact"], "Il n'y a aucun circuit.", "Exact : pour obtenir un courant, on sépare les couples : c'est la pile.") },
     ],
   };
 
@@ -36,12 +36,12 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Pôle + : argent ; pôle − : cuivre ; E ≈ 0,43 V.",
     etapes: [
       { consigne: "Branchez le voltmètre (V⎓, calibre 2 V) entre les deux lames, puis posez le pont salin.", court: "Voltmètre ; pont salin.", aide_geste: "Touchez le pont salin pour le poser sur les béchers.", verifier: tension("pile_cu_ag") },
-      { consigne: "Le pont salin…", court: "Répondez dans le carnet.", question: choix(["ferme le circuit et maintient l'électroneutralité des solutions en laissant passer des ions", "apporte des électrons", "sert seulement à tenir les béchers"], "Sans lui, le voltmètre lit 0.", "Exact.") },
+      { consigne: "Le pont salin…", court: "Répondez dans le carnet.", question: choix(["ferme le circuit en laissant passer des ions", "ferme le circuit en laissant passer des électrons", "sépare les solutions sans rien laisser passer"], "Sans lui, le voltmètre lit 0.", "Exact.") },
       { consigne: "Force électromotrice E de la pile (V) ?", court: "E (V) ?", question: relatif("V", (f) => Math.abs(P(f, "pile_cu_ag").U_21 ?? 0.43), 0.03, "C'est la valeur absolue lue au voltmètre (courant nul).", "Exact.") },
       { consigne: "Le pôle positif de la pile est…", court: "Répondez dans le carnet.", question: choix(["la lame d'argent", "la lame de cuivre", "le pont salin"], "Le voltmètre lit U positive quand sa borne VΩ est sur le pôle +.", "Exact.") },
       { consigne: "Montez en série la pile, la résistance R et l'ampèremètre (A⎓, calibre 20 mA).", court: "Pile + R + ampèremètre.", verifier: courant("pile_cu_ag") },
-      { consigne: "Dans le circuit extérieur et dans le pont salin…", court: "Répondez dans le carnet.", question: choix(["les électrons vont du cuivre vers l'argent par les fils ; dans le pont, les ions NO₃⁻ vont vers le cuivre, les K⁺ vers l'argent", "les électrons traversent le pont salin", "le courant va du cuivre vers l'argent dans les fils"], "Le courant sort par le pôle +.", "Exact.") },
-      { consigne: "Les réactions aux électrodes sont…", court: "Répondez dans le carnet.", question: choix(["pôle − : Cu → Cu²⁺ + 2 e⁻ ; pôle + : Ag⁺ + e⁻ → Ag ; bilan Cu + 2 Ag⁺ → Cu²⁺ + 2 Ag", "pôle − : Ag → Ag⁺ + e⁻ ; pôle + : Cu²⁺ + 2 e⁻ → Cu", "il n'y a pas de réaction, seulement des électrons"], "Comparez avec le tube 1 de la paillasse 1.", "Exact.") },
+      { consigne: "Dans le circuit extérieur et dans le pont salin…", court: "Répondez dans le carnet.", question: choix(["e⁻ : du cuivre vers l'argent ; NO₃⁻ vers le cuivre", "e⁻ : de l'argent vers le cuivre ; NO₃⁻ vers l'argent", "e⁻ : du cuivre vers l'argent, puis à travers le pont"], "Le courant sort par le pôle +.", "Exact.") },
+      { consigne: "Les réactions aux électrodes sont…", court: "Répondez dans le carnet.", question: choix(["pôle − : Cu → Cu²⁺ + 2 e⁻ ; pôle + : Ag⁺ + e⁻ → Ag", "pôle − : Ag → Ag⁺ + e⁻ ; pôle + : Cu²⁺ + 2 e⁻ → Cu", "pôle − : Ag⁺ + e⁻ → Ag ; pôle + : Cu → Cu²⁺ + 2 e⁻"], "Comparez avec le tube 1 de la paillasse 1.", "Exact.") },
     ],
   };
 
@@ -54,11 +54,11 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Posez le pont salin et mesurez la f.é.m. de la pile.", court: "Pont salin ; f.é.m.", verifier: tension("pile_fe_cu") },
       { consigne: "Force électromotrice E (V) ?", court: "E (V) ?", question: relatif("V", (f) => Math.abs(P(f, "pile_fe_cu").U_21 ?? 0.78), 0.03, "Valeur lue au voltmètre.", "Exact.") },
-      { consigne: "Le pôle négatif de cette pile est…", court: "Répondez dans le carnet.", question: choix(["la lame de fer : le fer est oxydé (Fe → Fe²⁺ + 2 e⁻)", "la lame de cuivre", "le pont salin"], "Le fer est plus réducteur que le cuivre.", "Exact.") },
+      { consigne: "Le pôle négatif de cette pile est…", court: "Répondez dans le carnet.", question: choix(["la lame de fer, qui est oxydée", "la lame de cuivre, qui est oxydée", "la lame de fer, qui est réduite"], "Le fer est plus réducteur que le cuivre.", "Exact.") },
       { consigne: "Faites débiter la pile dans R avec l'ampèremètre en série.", court: "Pile + R + ampèremètre.", verifier: courant("pile_fe_cu") },
       { consigne: "Quantité d'électricité Q (C) débitée en 1 h avec ce courant ?", court: "Q en 1 h (C) ?", question: relatif("C", (f) => (P(f, "pile_fe_cu").I_lu || 3.1) * 1e-3 * 3600, 0.03, "Q = I·Δt, I en A et Δt en s.", "Exact.") },
       { consigne: "Masse de fer consommée en 1 h (mg) ?", court: "m(Fe) en 1 h (mg) ?", question: relatif("mg", (f) => ((P(f, "pile_fe_cu").I_lu || 3.1) * 1e-3 * 3600 * 55.8 * 1000) / (2 * 96500), 0.04, "n(Fe) = n(e⁻) / 2 = Q / (2F) ; m = n·M.", "Exact.") },
-      { consigne: "Une pile est usée quand…", court: "Répondez dans le carnet.", question: choix(["le système atteint l'équilibre (Qr = K) ou qu'un réactif est épuisé : la f.é.m. s'annule", "le pont salin sèche toujours avant", "la résistance chauffe"], "Une pile qui débite est un système hors d'équilibre.", "Exact.") },
+      { consigne: "Une pile est usée quand…", court: "Répondez dans le carnet.", question: choix(["le système atteint l'équilibre : Qr = K", "le pont salin a laissé passer tous ses ions", "la résistance a reçu toute son énergie"], "Une pile qui débite est un système hors d'équilibre.", "Exact.") },
     ],
   };
 

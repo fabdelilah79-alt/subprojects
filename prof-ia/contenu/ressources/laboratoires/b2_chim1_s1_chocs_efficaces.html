@@ -5066,8 +5066,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Réaction : chocs efficaces seulement.",
     etapes: [
       { consigne: "Avec 30 particules A, 30 particules B et 300 K, touchez « Lancer » et observez l'essai jusqu'au bout.", court: "Essai : 30 A, 30 B, 300 K.", verifier: essai(30, 30, 300) },
-      { consigne: "Les particules A et B se rencontrent souvent, mais elles forment C…", court: "Répondez dans le carnet.", question: choix(["seulement quand le choc est assez énergique : c'est un choc efficace", "à chaque rencontre", "quand elles s'arrêtent l'une contre l'autre"], "Comparez le nombre de chocs et le nombre de C formés.", "Exact.") },
-      { consigne: "Les chocs efficaces représentent…", court: "Répondez dans le carnet.", question: choix(["une petite partie des chocs A–B", "tous les chocs", "exactement la moitié des chocs"], "Regardez la part des chocs A–B efficaces.", "Exact.") },
+      { consigne: "Les particules A et B se rencontrent souvent, mais elles forment C…", court: "Répondez dans le carnet.", question: choix(["seulement lors d'un choc assez énergique", "à chaque rencontre, quelle qu'elle soit", "seulement quand elles sont immobiles"], "Comparez le nombre de chocs et le nombre de C formés.", "Exact.") },
+      { consigne: "Les chocs efficaces représentent…", court: "Répondez dans le carnet.", question: choix(["une petite partie des chocs A–B", "presque tous les chocs A–B", "exactement la moitié des chocs A–B"], "Regardez la part des chocs A–B efficaces.", "Exact.") },
     ],
   };
 
@@ -5079,8 +5079,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Plus concentré : plus de chocs efficaces par seconde.",
     etapes: [
       { consigne: "Réglez 60 particules A et 60 particules B (300 K) et lancez un essai.", court: "Essai : 60 A, 60 B, 300 K.", aide_geste: "Touches + et − à droite des réglages.", verifier: essai(60, 60, 300) },
-      { consigne: "Avec deux fois plus de particules A et B dans la même boîte…", court: "Répondez dans le carnet.", question: choix(["il y a beaucoup plus de chocs (et de chocs efficaces) par seconde : C se forme plus vite", "le nombre de chocs par seconde ne change pas", "les chocs deviennent plus énergiques"], "Comparez les compteurs des deux essais.", "Exact : environ quatre fois plus de chocs A–B.") },
-      { consigne: "Au cours d'un essai, la courbe du nombre de C s'aplatit, car…", court: "Répondez dans le carnet.", question: choix(["il reste de moins en moins de particules A et B : les chocs efficaces deviennent rares", "les particules ralentissent", "les particules C empêchent toute réaction"], "Regardez la boîte à la fin de l'essai.", "Exact.") },
+      { consigne: "Avec deux fois plus de particules A et B dans la même boîte…", court: "Répondez dans le carnet.", question: choix(["les chocs sont plus fréquents : C se forme plus vite", "les chocs sont plus énergiques : C se forme plus vite", "les chocs sont aussi fréquents : C se forme au même rythme"], "Comparez les compteurs des deux essais.", "Exact : environ quatre fois plus de chocs A–B.") },
+      { consigne: "Au cours d'un essai, la courbe du nombre de C s'aplatit, car…", court: "Répondez dans le carnet.", question: choix(["A et B s'épuisent : les chocs efficaces se raréfient", "les particules ralentissent au cours du temps", "les particules C bloquent toute nouvelle réaction"], "Regardez la boîte à la fin de l'essai.", "Exact.") },
     ],
   };
 
@@ -5092,8 +5092,8 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Plus chaud : chocs plus énergiques, plus souvent efficaces.",
     etapes: [
       { consigne: "Revenez à 30 A et 30 B, réglez 400 K et lancez un essai.", court: "Essai : 30 A, 30 B, 400 K.", verifier: essai(30, 30, 400) },
-      { consigne: "À 400 K, par rapport à 300 K…", court: "Répondez dans le carnet.", question: choix(["les chocs ne sont guère plus nombreux, mais ils sont beaucoup plus souvent efficaces : C se forme plus vite", "les chocs sont beaucoup moins énergiques", "la température ne change rien aux chocs"], "Comparez la part des chocs efficaces et les courbes des deux essais.", "Exact : la part des chocs efficaces augmente beaucoup.") },
-      { consigne: "Au laboratoire, le tube d'iodure et d'eau oxygénée brunit plus vite à 70 °C, car…", court: "Répondez dans le carnet.", question: choix(["les chocs efficaces entre H₂O₂ et I⁻ sont plus nombreux par seconde", "le diiode est plus coloré à chaud", "l'eau s'évapore"], "Même interprétation que dans la simulation.", "Exact.") },
+      { consigne: "À 400 K, par rapport à 300 K…", court: "Répondez dans le carnet.", question: choix(["les chocs sont bien plus souvent efficaces", "les chocs sont bien moins énergiques", "les chocs sont deux fois moins nombreux"], "Comparez la part des chocs efficaces et les courbes des deux essais.", "Exact : la part des chocs efficaces augmente beaucoup.") },
+      { consigne: "Au laboratoire, le tube d'iodure et d'eau oxygénée brunit plus vite à 70 °C, car…", court: "Répondez dans le carnet.", question: choix(["il y a plus de chocs efficaces par seconde", "le diiode est beaucoup plus coloré à chaud", "l'eau s'évapore et concentre le diiode"], "Même interprétation que dans la simulation.", "Exact.") },
     ],
   };
 

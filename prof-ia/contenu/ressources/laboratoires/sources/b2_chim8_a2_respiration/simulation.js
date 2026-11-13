@@ -27,10 +27,10 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Spontanée (pile) → énergie → forcée (électrolyse).",
     etapes: [
       { consigne: "Branchez la pile, l'ampèremètre (A⎓, calibre 200 mA) et le tube en U en série.", court: "Pile + ampèremètre + tube en U.", verifier: ({ faits }) => (P(faits).I_lu > 30) || false },
-      { consigne: "Dans ce montage…", court: "Répondez dans le carnet.", question: choix(["la pile est le siège d'une transformation spontanée qui fournit l'énergie ; l'électrolyse, forcée, la reçoit", "les deux transformations sont spontanées", "l'électrolyse fournit l'énergie à la pile"], "Sans pile, l'électrolyse n'aurait pas lieu.", "Exact.") },
+      { consigne: "Dans ce montage…", court: "Répondez dans le carnet.", question: choix(["la pile, spontanée, fournit l'énergie à l'électrolyse", "l'électrolyse, spontanée, fournit l'énergie à la pile", "la pile et l'électrolyse sont toutes deux spontanées"], "Sans pile, l'électrolyse n'aurait pas lieu.", "Exact.") },
       { consigne: "Mesurez la tension aux bornes du tube en U (V⎓, calibre 20 V).", court: "U aux bornes du tube.", verifier: ({ faits }) => (P(faits).U_tube > 2) || false },
       { consigne: "Puissance électrique (W) reçue par le tube en U ?", court: "P (W) ?", question: { type: "nombre", unite: "W", attendu: (f) => (P(f).U_tube || 4.3) * (P(f).I_lu || 118) * 1e-3, tolerance_relative: 0.05, aide: "P = U·I, I en ampères.", bravo: "Exact : c'est l'énergie par seconde que la pile fournit à l'électrolyse." } },
-      { consigne: "Chez les êtres vivants, ce rôle de la pile est joué par…", court: "Répondez dans le carnet.", question: choix(["la respiration : transformation spontanée qui fournit l'énergie de transformations forcées", "la photosynthèse", "la digestion seule, sans aucune transformation chimique"], "Lisez les documents de la paillasse 2 si besoin.", "Exact.") },
+      { consigne: "Chez les êtres vivants, ce rôle de la pile est joué par…", court: "Répondez dans le carnet.", question: choix(["la respiration", "la photosynthèse", "la lumière du Soleil"], "Lisez les documents de la paillasse 2 si besoin.", "Exact.") },
     ],
   };
 
@@ -42,9 +42,9 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Respiration spontanée ; photosynthèse forcée.",
     etapes: [
       { consigne: "Lisez les quatre documents.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir, puis pour le refermer.", verifier: ({ faits }) => (faits.docs_forcees || []).length >= 4 || false },
-      { consigne: "Pour chromer un robinet par électrolyse, le robinet est…", court: "Répondez dans le carnet.", question: choix(["la cathode : les ions Cr³⁺ y sont réduits en chrome", "l'anode : le chrome y est oxydé", "plongé sans être relié au générateur"], "Relisez « Dépôts électrolytiques ».", "Exact.") },
-      { consigne: "La photosynthèse 6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂ est…", court: "Répondez dans le carnet.", question: choix(["une transformation forcée : elle a besoin de l'énergie de la lumière", "une transformation spontanée, comme la respiration", "une transformation qui ne met en jeu aucune énergie"], "Que se passe-t-il à l'obscurité ?", "Exact.") },
-      { consigne: "La respiration et la photosynthèse…", court: "Répondez dans le carnet.", question: choix(["sont des transformations inverses : la première est spontanée, la seconde forcée", "sont une seule et même transformation", "sont toutes deux forcées par la lumière"], "Comparez leurs équations.", "Exact.") },
+      { consigne: "Pour chromer un robinet par électrolyse, le robinet est…", court: "Répondez dans le carnet.", question: choix(["la cathode : Cr³⁺ y est réduit", "l'anode : Cr³⁺ y est réduit", "l'anode : le chrome y est oxydé"], "Relisez « Dépôts électrolytiques ».", "Exact.") },
+      { consigne: "La photosynthèse 6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂ est…", court: "Répondez dans le carnet.", question: choix(["forcée, par l'énergie de la lumière", "spontanée, comme la respiration", "spontanée, mais très lente la nuit"], "Que se passe-t-il à l'obscurité ?", "Exact.") },
+      { consigne: "La respiration et la photosynthèse…", court: "Répondez dans le carnet.", question: choix(["sont inverses : l'une spontanée, l'autre forcée", "sont inverses : toutes deux spontanées", "sont la même transformation, à deux vitesses"], "Comparez leurs équations.", "Exact.") },
     ],
   };
 
@@ -56,7 +56,7 @@ Utilisé par : page.html (dernier script).
     conclusion_courte: "Forcée : il faut fournir de l'énergie.",
     etapes: [
       { consigne: "Rangez les huit étiquettes dans le tableau.", court: "Rangez les étiquettes.", aide_geste: "Faites glisser chaque étiquette dans une colonne.", verifier: tri },
-      { consigne: "Une transformation forcée…", court: "Répondez dans le carnet.", question: choix(["fait évoluer le système dans le sens inverse du sens spontané, grâce à de l'énergie reçue de l'extérieur", "se fait toujours plus vite qu'une transformation spontanée", "fait évoluer le système vers l'équilibre"], "Pensez au générateur de l'électrolyse et à la lumière de la photosynthèse.", "Exact.") },
+      { consigne: "Une transformation forcée…", court: "Répondez dans le carnet.", question: choix(["évolue en sens inverse du sens spontané", "évolue toujours vers l'équilibre", "est toujours plus rapide qu'une spontanée"], "Pensez au générateur de l'électrolyse et à la lumière de la photosynthèse.", "Exact.") },
     ],
   };
 

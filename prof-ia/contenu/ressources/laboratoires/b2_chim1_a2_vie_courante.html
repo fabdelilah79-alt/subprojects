@@ -5075,8 +5075,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Lisez les deux documents au mur.", court: "Lisez les documents.", aide_geste: "Touchez un document pour l'ouvrir.", verifier: ({ faits }) => (faits.docs_autocuiseur || []).length >= 2 },
       { consigne: "Tableur : pour les quatre aliments, durée à 100 °C en A, durée à 120 °C en B, rapport =A2/B2 en C.", court: "Tableur : durées, rapport.", verifier: cuisson },
-      { consigne: "Dans l'autocuiseur, la cuisson est plus rapide, car…", court: "Répondez dans le carnet.", question: choix(["l'eau y bout à 120 °C : à plus haute température, les transformations de la cuisson sont plus rapides", "la pression écrase les aliments", "il y a plus de vapeur qui cuit les aliments"], "Relisez « L'autocuiseur ».", "Exact : la température est un facteur cinétique.") },
-      { consigne: "En moyenne, la cuisson est plus rapide d'environ…", court: "Répondez dans le carnet.", question: choix(["3 à 4 fois", "20 fois", "1,2 fois"], "Regardez la colonne C.", "Exact.") },
+      { consigne: "Dans l'autocuiseur, la cuisson est plus rapide, car…", court: "Répondez dans le carnet.", question: choix(["l'eau y bout à 120 °C : la cuisson est accélérée", "la pression écrase les aliments et les attendrit", "la vapeur, plus abondante, cuit mieux les aliments"], "Relisez « L'autocuiseur ».", "Exact : la température est un facteur cinétique.") },
+      { consigne: "En moyenne, la cuisson est plus rapide d'environ…", court: "Répondez dans le carnet.", question: choix(["3 à 4 fois", "10 à 20 fois", "1,1 à 1,2 fois"], "Regardez la colonne C.", "Exact.") },
     ],
   };
 
@@ -5089,8 +5089,8 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Placez le tube 2 dans le bain de glace et attendez qu'il soit froid.", court: "Tube 2 dans la glace.", aide_geste: "Faites glisser le tube jusqu'à une place du bain.", verifier: ({ faits }) => ((TF(faits).t2 || {}).glace && (TF(faits).t2 || {}).T <= 5 && !(TF(faits).t1 || {}).glace) || false },
       { consigne: "Versez 10 gouttes d'eau oxygénée dans chaque tube et comparez-les pendant deux minutes.", court: "Eau oxygénée ; comparez.", verifier: ({ faits }) => { const a = TF(faits).t1 || {}, b = TF(faits).t2 || {}; return (a.peroxyde >= 0.4 && b.peroxyde >= 0.4 && a.I2 >= 2 && a.I2 > 3 * b.I2) || false; } },
-      { consigne: "Dans le bain de glace, la transformation est…", court: "Répondez dans le carnet.", question: choix(["beaucoup plus lente : le froid ralentit les transformations", "plus rapide", "arrêtée pour toujours"], "Comparez les couleurs des deux tubes.", "Exact.") },
-      { consigne: "Lisez le document « Conserver les aliments ». Au congélateur, les aliments se conservent des mois, car…", court: "Lisez le document ; répondez.", question: choix(["à −18 °C, les transformations qui les altèrent sont très lentes", "le froid tue toujours tous les microbes", "le froid empêche l'air d'entrer"], "Relisez le document.", "Exact.") },
+      { consigne: "Dans le bain de glace, la transformation est…", court: "Répondez dans le carnet.", question: choix(["beaucoup plus lente", "beaucoup plus rapide", "arrêtée pour toujours"], "Comparez les couleurs des deux tubes.", "Exact.") },
+      { consigne: "Lisez le document « Conserver les aliments ». Au congélateur, les aliments se conservent des mois, car…", court: "Lisez le document ; répondez.", question: choix(["à −18 °C, leurs altérations sont très lentes", "à −18 °C, tous les microbes sont tués", "à −18 °C, l'air ne peut plus les atteindre"], "Relisez le document.", "Exact.") },
     ],
   };
 

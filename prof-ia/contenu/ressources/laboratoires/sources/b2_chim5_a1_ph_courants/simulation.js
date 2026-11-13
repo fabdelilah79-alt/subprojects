@@ -37,7 +37,7 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Mesurez le pH des cinq produits.", court: "pH des cinq produits.", aide_geste: "Bécher sur l'agitateur, agitation, électrode plongée, valeur stable ; arrêtez l'agitateur, remontez l'électrode, puis déplacez le bécher doucement.", verifier: ({ faits }) => PRODUITS.every(([id]) => MP(faits)[id] !== undefined) || false },
       { consigne: "Tableur : pH en A, [H₃O⁺] en B, [HO⁻] en C, pour les cinq produits.", court: "Tableur : pH, [H₃O⁺], [HO⁻].", aide_geste: "En B : =10^(-A2) ; en C : =10^(-14)/B2.", verifier: tableau },
-      { consigne: "À 25 °C, les produits basiques sont…", court: "Répondez dans le carnet.", question: choix(["la solution de bicarbonate de sodium et l'eau de Javel diluée : pH > 7, [HO⁻] > [H₃O⁺]", "le jus de citron et le vinaigre", "le lait seulement"], "Comparez le pH à 7.", "Exact.") },
+      { consigne: "À 25 °C, les produits basiques sont…", court: "Répondez dans le carnet.", question: choix(["le bicarbonate et l'eau de Javel diluée", "le jus de citron et le vinaigre blanc", "le lait entier et le jus de citron"], "Comparez le pH à 7.", "Exact.") },
       { consigne: "[HO⁻] dans le jus de citron (mol/L) ?", court: "[HO⁻] (citron) ?", question: relatif("mol/L", (f) => 1e-14 / 10 ** -(MP(f).citron || 2.3), 0.05, "[HO⁻] = Ke / [H₃O⁺].", "Exact : il y a des ions HO⁻ même dans une solution acide.") },
     ],
   };
@@ -51,10 +51,10 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Mesurez le pH des trois solutions.", court: "pH des trois solutions.", verifier: ({ faits }) => ["hcl", "soude2", "soude3"].every((k) => ME(faits)[k] !== undefined) || false },
       { consigne: "Pour l'hydroxyde de sodium à 1,0 × 10⁻³ mol/L, calculez [H₃O⁺]·[HO⁻].", court: "[H₃O⁺]·[HO⁻] ?", question: relatif("", (f) => 10 ** -(ME(f).soude3 || 11) * 1e-3, 0.1, "[H₃O⁺] = 10^(−pH) ; [HO⁻] = 1,0 × 10⁻³ mol/L.", "Exact : 1,0 × 10⁻¹⁴.") },
-      { consigne: "Le produit [H₃O⁺]·[HO⁻]…", court: "Répondez dans le carnet.", question: choix(["est le même dans toutes les solutions aqueuses à 25 °C : c'est Ke = 1,0 × 10⁻¹⁴, constante de 2 H₂O ⇌ H₃O⁺ + HO⁻", "dépend de la concentration de la soude", "vaut 14"], "Faites le calcul avec les trois solutions.", "Exact.") },
-      { consigne: "Lisez le document « Le pH dans le corps humain ». Le sang est…", court: "Lisez le document ; répondez.", aide_geste: "Touchez le document pour l'ouvrir.", question: choix(["légèrement basique (pH 7,35 à 7,45)", "acide", "neutre"], "Comparez à 7.", "Exact.") },
+      { consigne: "Le produit [H₃O⁺]·[HO⁻]…", court: "Répondez dans le carnet.", question: choix(["vaut Ke = 1,0 × 10⁻¹⁴ dans toute solution à 25 °C", "vaut 1,0 × 10⁻⁷ dans toute solution à 25 °C", "dépend de la solution : il est plus grand si elle est basique"], "Faites le calcul avec les trois solutions.", "Exact.") },
+      { consigne: "Lisez le document « Le pH dans le corps humain ». Le sang est…", court: "Lisez le document ; répondez.", aide_geste: "Touchez le document pour l'ouvrir.", question: choix(["légèrement basique (pH 7,35 à 7,45)", "légèrement acide (pH 6,35 à 6,45)", "exactement neutre (pH 7,00)"], "Comparez à 7.", "Exact.") },
       { consigne: "La constante d'acidité du couple CO₂,H₂O / HCO₃⁻ s'écrit…", court: "Répondez dans le carnet.", question: choix(["KA = [HCO₃⁻]·[H₃O⁺] / [CO₂,H₂O]", "KA = [CO₂,H₂O] / ([HCO₃⁻]·[H₃O⁺])", "KA = [HCO₃⁻] + [H₃O⁺]"], "KA est Qr,éq de la réaction de l'acide avec l'eau.", "Exact.") },
-      { consigne: "Dans le sang (pH = 7,4 ; pKA = 6,4), l'espèce qui prédomine est…", court: "Répondez dans le carnet.", question: choix(["HCO₃⁻ : pH > pKA, et [HCO₃⁻] / [CO₂,H₂O] = 10", "CO₂,H₂O", "aucune : elles sont en même quantité"], "pH = pKA + log([HCO₃⁻] / [CO₂,H₂O]).", "Exact.") },
+      { consigne: "Dans le sang (pH = 7,4 ; pKA = 6,4), l'espèce qui prédomine est…", court: "Répondez dans le carnet.", question: choix(["HCO₃⁻, car pH > pKA", "CO₂,H₂O, car pH > pKA", "aucune, car pH ≈ pKA"], "pH = pKA + log([HCO₃⁻] / [CO₂,H₂O]).", "Exact.") },
     ],
   };
 

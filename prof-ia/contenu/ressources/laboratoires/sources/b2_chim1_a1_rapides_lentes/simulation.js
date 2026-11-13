@@ -35,10 +35,10 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Versez quelques gouttes de permanganate dans le tube 1, puis du thiosulfate dans le tube 2 jusqu'à ce qu'il soit incolore.", court: "Tubes 1 et 2.", aide_geste: "Sortez la pipette du flacon, lâchez-la au-dessus du tube, appuyez sur la poire ; remettez-la dans son flacon.", verifier: ({ faits }) => ((TR(faits).t1 || {}).permanganate >= 0.1 && (TR(faits).t2 || {}).thiosulfate > 0 && (TR(faits).t2 || {}).I2 < 0.05) || false },
       { consigne: "Versez 10 gouttes d'eau oxygénée dans le tube 3 et 20 gouttes d'acide chlorhydrique dans le tube 4 ; observez pendant deux minutes.", court: "Tubes 3 et 4 ; observez.", verifier: ({ faits }) => ((TR(faits).t3 || {}).I2 >= 2 && (TR(faits).t4 || {}).S >= 1.7) || false },
-      { consigne: "Les transformations des tubes 1 et 2 sont…", court: "Répondez dans le carnet.", question: choix(["rapides : elles semblent achevées dès que les réactifs sont mélangés", "lentes : on les voit évoluer pendant des minutes", "impossibles"], "Chaque goutte est décolorée aussitôt.", "Exact.") },
-      { consigne: "Les transformations des tubes 3 et 4 sont…", court: "Répondez dans le carnet.", question: choix(["lentes : leur évolution se voit à l'œil pendant des secondes ou des minutes", "rapides", "totales et instantanées"], "La couleur et le trouble apparaissent peu à peu.", "Exact.") },
-      { consigne: "Équation de la transformation du tube 3 :", court: "Répondez dans le carnet.", question: choix(["H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O", "H₂O₂ + I⁻ → I₂ + H₂O", "I₂ + 2 H₂O → H₂O₂ + 2 I⁻"], "Demi-équations : H₂O₂ + 2 H⁺ + 2 e⁻ = 2 H₂O ; 2 I⁻ = I₂ + 2 e⁻.", "Exact.") },
-      { consigne: "Dans cette transformation…", court: "Répondez dans le carnet.", question: choix(["l'oxydant H₂O₂ (couple H₂O₂/H₂O) capte des électrons ; le réducteur I⁻ (couple I₂/I⁻) en cède", "l'oxydant est I⁻ ; le réducteur est H₂O₂", "il n'y a pas de transfert d'électrons"], "Un oxydant capte des électrons.", "Exact.") },
+      { consigne: "Les transformations des tubes 1 et 2 sont…", court: "Répondez dans le carnet.", question: choix(["rapides : elles semblent finies dès le mélange", "lentes : on les voit évoluer pendant des minutes", "impossibles : rien ne se passe dans ces tubes"], "Chaque goutte est décolorée aussitôt.", "Exact.") },
+      { consigne: "Les transformations des tubes 3 et 4 sont…", court: "Répondez dans le carnet.", question: choix(["lentes : on les voit évoluer pendant des minutes", "rapides : elles semblent finies dès le mélange", "instantanées, mais très peu colorées au début"], "La couleur et le trouble apparaissent peu à peu.", "Exact.") },
+      { consigne: "Équation de la transformation du tube 3 :", court: "Répondez dans le carnet.", question: choix(["H₂O₂ + 2 I⁻ + 2 H⁺ → I₂ + 2 H₂O", "H₂O₂ + 2 I⁻ → I₂ + 2 H₂O + 2 H⁺", "H₂O₂ + I⁻ + H⁺ → I₂ + 2 H₂O"], "Demi-équations : H₂O₂ + 2 H⁺ + 2 e⁻ = 2 H₂O ; 2 I⁻ = I₂ + 2 e⁻.", "Exact.") },
+      { consigne: "Dans cette transformation…", court: "Répondez dans le carnet.", question: choix(["H₂O₂ capte des électrons, I⁻ en cède", "I⁻ capte des électrons, H₂O₂ en cède", "H₂O₂ et I⁻ échangent des protons H⁺"], "Un oxydant capte des électrons.", "Exact.") },
     ],
   };
 
@@ -51,10 +51,10 @@ Utilisé par : page.html (dernier script).
     etapes: [
       { consigne: "Placez le tube 2 dans le bain-marie et attendez qu'il soit chaud (laissez le tube 1 dans le porte-tubes).", court: "Tube 2 au bain-marie.", aide_geste: "Faites glisser le tube jusqu'à une place du bain-marie.", verifier: ({ faits }) => ((TT(faits).t2 || {}).bain && (TT(faits).t2 || {}).T >= 60 && !(TT(faits).t1 || {}).bain) || false },
       { consigne: "Versez 10 gouttes d'eau oxygénée dans le tube 1, puis 10 gouttes dans le tube 2 ; comparez leurs couleurs.", court: "Eau oxygénée dans 1 et 2.", verifier: ({ faits }) => { const a = TT(faits).t1 || {}, b = TT(faits).t2 || {}; return (a.peroxyde >= 0.4 && b.peroxyde >= 0.4 && b.I2 >= 8 && b.I2 > 3 * a.I2) || false; } },
-      { consigne: "La transformation est la plus rapide…", court: "Répondez dans le carnet.", question: choix(["dans le tube chaud : la température est un facteur cinétique", "dans le tube froid", "de la même façon dans les deux tubes"], "Le tube 2 brunit bien plus vite.", "Exact.") },
+      { consigne: "La transformation est la plus rapide…", court: "Répondez dans le carnet.", question: choix(["dans le tube chaud : la température l'accélère", "dans le tube froid : le froid la concentre", "dans les deux tubes : elle ne dépend que des réactifs"], "Le tube 2 brunit bien plus vite.", "Exact.") },
       { consigne: "Versez 20 gouttes de liqueur de Fehling dans le tube 3 (glucose), laissé dans le porte-tubes, et observez.", court: "Fehling dans le tube 3.", verifier: ({ faits }) => ((TT(faits).t3 || {}).fehling >= 0.8 && !(TT(faits).t3 || {}).bain) || false },
       { consigne: "Placez maintenant le tube 3 dans le bain-marie et observez.", court: "Tube 3 au bain-marie.", verifier: ({ faits }) => ((TT(faits).t3 || {}).avance >= 0.5) || false },
-      { consigne: "À 20 °C, rien ne se voit ; à 70 °C, le précipité rouge brique apparaît :", court: "Répondez dans le carnet.", question: choix(["à 20 °C, la transformation est si lente qu'on ne la voit pas ; la chaleur l'accélère", "le glucose n'existe qu'à chaud", "la liqueur de Fehling ne réagit jamais à 20 °C, même en des années"], "Une transformation très lente semble ne pas avoir lieu.", "Exact.") },
+      { consigne: "À 20 °C, rien ne se voit ; à 70 °C, le précipité rouge brique apparaît :", court: "Répondez dans le carnet.", question: choix(["à 20 °C, elle est si lente qu'on ne la voit pas", "à 20 °C, le glucose ne peut pas du tout réagir", "à 70 °C, la liqueur de Fehling change de nature"], "Une transformation très lente semble ne pas avoir lieu.", "Exact.") },
     ],
   };
 
@@ -68,8 +68,8 @@ Utilisé par : page.html (dernier script).
       { consigne: "Mettez le chronomètre à zéro. Versez 20 gouttes d'acide chlorhydrique dans le tube 1 en déclenchant le chronomètre ; arrêtez-le quand la croix n'est plus visible.", court: "Tube 1 : acide, chronomètre.", verifier: ({ faits }) => ((TC(faits).t1 || {}).t_croix > 0) || false },
       { consigne: "Recommencez avec le tube 2, puis le tube 3.", court: "Tubes 2 et 3.", verifier: ({ faits }) => tous(faits) || false },
       { consigne: "Tableur : concentration c en A, durée t en B (une ligne par tube).", court: "Tableur : c, t.", verifier: tableau },
-      { consigne: "Plus la solution de thiosulfate est concentrée…", court: "Répondez dans le carnet.", question: choix(["plus la croix disparaît tôt : la concentration des réactifs est un facteur cinétique", "plus la croix disparaît tard", "la durée ne dépend pas de la concentration"], "Comparez les durées du tableur.", "Exact.") },
-      { consigne: "La croix disparaît, car…", court: "Répondez dans le carnet.", question: choix(["du soufre solide très fin se forme peu à peu et trouble la solution", "l'acide dissout l'encre de la croix", "le tube se couvre de buée"], "S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O.", "Exact.") },
+      { consigne: "Plus la solution de thiosulfate est concentrée…", court: "Répondez dans le carnet.", question: choix(["plus la croix disparaît tôt", "plus la croix disparaît tard", "plus la croix reste visible longtemps"], "Comparez les durées du tableur.", "Exact.") },
+      { consigne: "La croix disparaît, car…", court: "Répondez dans le carnet.", question: choix(["du soufre très fin se forme et trouble la solution", "l'acide dissout peu à peu l'encre de la croix", "de la buée se dépose sur la paroi du bécher"], "S₂O₃²⁻ + 2 H⁺ → S + SO₂ + H₂O.", "Exact.") },
     ],
   };
 
