@@ -142,5 +142,15 @@
       "font-weight",
       "text-anchor"
     ]
+  },
+  "exploitation": {
+    "active": true,
+    "attente_max_s": 120,
+    "titre_tableau": "Vos mesures",
+    "suite_tableau": "(suite)",
+    "premier_numero_beat": 60,
+    "ton_attente": "neutre",
+    "phrase_attente": "Je regarde vos mesures. Un instant, s'il vous plaît.",
+    "tours_de_correction": 1
   }
 }

@@ -2,7 +2,7 @@
 Rôle : faux client Claude pour les tests : il répond comme l'API, sans réseau ni clé, avec des réponses préparées.
 Reçoit : les requêtes construites par serveur/agents/appel_ia.py.
 Produit : des messages imitant l'API (stop_reason, content, usage, model) ; la liste des agents appelés.
-Utilisé par : serveur/tests/test_agents.py et serveur/tests/test_questions.py.
+Utilisé par : serveur/tests/test_agents.py, test_questions.py et test_exploitation.py.
 """
 import json
 from types import SimpleNamespace as N
@@ -53,6 +53,20 @@ ARCHITECTURE = {
     "prediction": {"beat_id": "p2_b02", "ancre": "Lequel"},
 }
 
+EXPLOITATION = {
+    "beats": [
+        {"texte_dit": "Voici votre graphique : vos points sont presque alignés.", "ton": "enthousiaste",
+         "actions": [{"type": "figure_eleve", "ancre": "votre graphique"},
+                     {"type": "ecrire", "ancre": "presque alignés", "texte": "θ(t) : une droite", "style": "normal", "zone": "gauche"}]},
+        {"texte_dit": "La vitesse angulaire est donc constante : la rotation est uniforme.", "ton": "lent_et_clair",
+         "actions": [{"type": "formule", "ancre": "uniforme", "latex": "\\theta = \\omega t + \\theta_0", "style": "a_retenir", "zone": "a_retenir"}]},
+    ],
+    "question": {"beat": 1, "ancre": "La vitesse angulaire", "question": "Entre deux étincelles, A et B tournent…",
+                 "choix": [{"texte": "du même angle", "juste": True, "reaction": "Oui, regardez vos mesures de thêta."},
+                           {"texte": "A plus que B", "juste": False, "reaction": "Comparez les angles de A et de B dans votre tableau."}]},
+    "commentaire": "Mesures correctes ; formules justes.",
+}
+
 REPONDEUR = {"reponse_orale": "Oméga est la vitesse angulaire.", "ecrit_brouillon": "ω en rad/s", "hors_programme": False}
 
 
@@ -77,7 +91,7 @@ def agent_de(requete):
     """Reconnaît l'agent appelé d'après les champs obligatoires du schéma demandé."""
     champs = set(requete["output_config"]["format"]["schema"]["required"])
     for agent, marque in (("pedagogique", "objectif"), ("architecture", "placements"), ("chef", "valide"),
-                          ("repondeur", "reponse_orale"), ("voix", "branches")):
+                          ("repondeur", "reponse_orale"), ("voix", "branches"), ("exploitation", "question")):
         if marque in champs:
             return agent
     return "ecriture"
@@ -91,7 +105,7 @@ class FauxClaude:
         self.appels, self.requetes, self.fin = [], [], fin
         self.avis_chef = list(avis_chef or [{"valide": True, "corrections": [], "commentaire": "Bien."}])
         self.reponses = {"pedagogique": PLAN, "voix": VOIX, "ecriture": ECRITURE,
-                         "architecture": ARCHITECTURE, "repondeur": REPONDEUR}
+                         "architecture": ARCHITECTURE, "repondeur": REPONDEUR, "exploitation": EXPLOITATION}
 
     def avis_suivant(self):
         """Donne l'avis suivant du chef (le dernier se répète)."""

@@ -43,7 +43,9 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/js/demo_tableau.js | Fait fonctionner la démonstration : boutons, état, texte dit, actions pas encore gérées. |
 | client/js/lecteur/lecteur.js | Joue une partition beat par beat ; une seule écriture à la fois. |
 | client/js/lecteur/horloge.js | Horloge de lecture : pause, reprise, accélération (« Beat suivant »). Ajoutée à l'étape 3. |
-| client/js/tableau/tableau.js | Le tableau : une page par onglet, exécute les actions ecrire, formule, nouveau_tableau. |
+| client/js/tableau/tableau.js | Le tableau : une page par onglet, exécute les actions ecrire, formule, nouveau_tableau, figure_eleve. |
+| client/js/tableau/figure_eleve.js | Pose au tableau la figure de l'élève (graphique de sa tablette), comme une feuille fixée par deux rubans. |
+| client/js/exploitation.js | Après l'observation d'un laboratoire, demande les beats d'exploitation des mesures et les insère dans la partition (attente limitée). |
 | client/js/tableau/zones.js | Calcule les zones et y réserve la place ; signale une zone pleine dans la console. |
 | client/js/tableau/ecriture.js | Écrit un texte en police manuscrite, révélé de gauche à droite, ligne par ligne. |
 | client/js/tableau/formule.js | Écrit une formule KaTeX (et mhchem), révélée de gauche à droite. |
@@ -83,11 +85,14 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | serveur/cles.py | Lit les clés d'API dans .env (jamais dans le code) ; dit si une clé est présente ; message clair si elle manque. |
 | serveur/agents/appel_ia.py | Seul fichier qui parle à l'API Claude : contexte en cache, sortie JSON imposée par un schéma, effort, repli, nouveaux essais, coût. |
 | serveur/agents/commun.py | Contexte stable partagé par les agents (règles, cours, ressources du chapitre du cours, partition modèle) et appel d'un agent. |
-| serveur/agents/pedagogique.py, voix.py, ecriture.py, architecture.py, chef.py, repondeur.py | Les six agents : chacun lit son prompt (prompts/<nom>.md) et répond au format de schemas/agents/<nom>.schema.json. |
+| serveur/agents/pedagogique.py, voix.py, ecriture.py, architecture.py, chef.py, repondeur.py, exploitation.py | Les sept agents (exploitation : après un laboratoire, exploite les mesures de l'élève) : chacun lit son prompt (prompts/<nom>.md) et répond au format de schemas/agents/<nom>.schema.json. |
 | prompts/commun.md + prompts/<agent>.md | Les consignes des agents, en français. Seul endroit où elles sont écrites. |
 | schemas/plan_pedagogique.schema.json, schemas/agents/*.schema.json | Format imposé à la réponse de chaque agent. |
 | serveur/pipeline/assemblage.py | Construit la partition à partir des réponses des agents (le code, pas l'IA, écrit la partition). |
 | serveur/pipeline/orchestrateur.py | Enchaîne les agents, la relecture du chef (deux tours de corrections au plus), la validation et la voix. |
+| serveur/pipeline/exploitation.py | Après un laboratoire : données de l'agent exploitation (mission, relevé, prédiction, suite), beats vérifiés dans la partition (un tour de correction), voix, journal. |
+| serveur/pipeline/exploitation_beats.py | Réponse de l'agent exploitation -> beats : tableau « Vos mesures », figure de l'élève, question en prédiction, tableau « suite ». |
+| serveur/routes/exploitation.py | POST /api/eleve/<pseudonyme>/parties/<n>/exploitation : beats d'exploitation des mesures (liste vide : le cours continue). |
 | serveur/pipeline/donnees_eleve.py | Ce que l'agent pédagogique sait de l'élève : réponses au QCM de la partie, profil, partie précédente, prédictions et questions. Jamais le nom. |
 | serveur/pipeline/file_attente.py | Prépare les parties de chaque élève en arrière-plan (N, puis N+1 pendant qu'il suit N) ; repli sur la partie validée. |
 | serveur/routes/classe.py | /api/eleve/<pseudonyme>/etat (préparation des parties) et /api/eleve/<pseudonyme>/parties/<n> (partition servie, notée au journal). |
@@ -105,7 +110,7 @@ Carte des fichiers du projet et explication des réglages. Mise à jour à la fi
 | client/css/classe.css | Mise en page de la classe (tableau + colonne de l'élève), brouillon, panneau d'attente. |
 | client/fin.html | Remerciement à la fin de la séance. |
 | serveur/tests/faux_claude.py | Faux client Claude pour les tests : jamais d'appel réel ni de clé. |
-| serveur/tests/test_agents.py, test_classe.py, test_questions.py, test_export.py, test_releves.py | Testent agents et orchestrateur, file d'attente et classe, main levée, export, relevés de laboratoire (rangement, figure nettoyée, routes). |
+| serveur/tests/test_agents.py, test_classe.py, test_questions.py, test_export.py, test_releves.py, test_exploitation.py | Testent agents et orchestrateur, file d'attente et classe, main levée, export, relevés de laboratoire (rangement, figure nettoyée, routes), exploitation des mesures (beats, refus des chiffres dits, sans clé). |
 
 | contenu/orientations/instructionsPC lycee.pdf | Document officiel (2007, en arabe) : orientations pédagogiques et programmes de physique-chimie du lycée. |
 | contenu/orientations/index.json | Niveaux, filières, horaires annuels et liste des 63 chapitres. |

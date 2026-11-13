@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from serveur.configuration import chemin_projet, lire_config
-from serveur.routes import classe, eleve, parties, qcm, questions, releves
+from serveur.routes import classe, eleve, exploitation, parties, qcm, questions, releves
 
 
 def creer_application():
@@ -21,6 +21,7 @@ def creer_application():
     application.include_router(classe.routeur)
     application.include_router(questions.routeur)
     application.include_router(releves.routeur)
+    application.include_router(exploitation.routeur)
     application.mount("/audio", StaticFiles(directory=chemin_projet("cache_audio")), name="audio")
     ressources = StaticFiles(directory=chemin_projet("contenu") / "ressources", html=True)
     application.mount("/ressources", ressources, name="ressources")

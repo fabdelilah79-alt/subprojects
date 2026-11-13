@@ -34,6 +34,12 @@
       "modele": "claude-haiku-4-5-20251001",
       "max_tokens": 4000,
       "repli": false
+    },
+    "exploitation": {
+      "modele": "claude-sonnet-5-5",
+      "effort": "low",
+      "max_tokens": 16000,
+      "repli": true
     }
   },
   "nouvelles_tentatives_max": 2,
@@ -50,7 +56,7 @@
     "claude-sonnet-5-5": {
       "entree": 2,
       "sortie": 10,
-      "cache_lecture": 0.2,
+      "cache_lecture": 0.1,
       "cache_ecriture": 2.5
     },
     "claude-haiku-4-5-20251001": {

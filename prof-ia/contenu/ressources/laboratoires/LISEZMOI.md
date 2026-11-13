@@ -883,3 +883,5 @@ explique, à partir des mesures et des figures de l'élève.
   `b1_chim4_a3_conductimetrique` équivalence, `b1_opt1_a2_lois` observations, `b2_elec3_a1_decharge` équation,
   `b2_nucl1_a1_becquerel` désintégrations, `b2_nucl2_a1_energie` bilans) ne sont plus au manifeste : en mode cours, elles
   finiraient dès l'ouverture ; c'est le professeur qui les traite (433 ressources, dont 424 missions).
+- Le relevé porte aussi les **questions de la mission** (énoncé, choix — le premier est juste — ou valeur attendue
+  calculée d'après les mesures de l'élève, unité, aide) : le professeur IA peut en poser une après l'observation.

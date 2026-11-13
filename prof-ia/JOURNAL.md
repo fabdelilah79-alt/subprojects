@@ -1690,3 +1690,39 @@ explique avec ces mesures, et montre la figure de l'élève au tableau).
   58 tests réussis ; structure conforme.
 
 Problème restant : les agents ne lisent pas encore ces relevés (étape 3).
+
+## 2026-11-13 — Le professeur exploite les mesures de l'élève après un laboratoire (étape 3) ; essai de la vraie voix Gemini
+
+Étape 3 (accord de l'enseignant) :
+- Nouvel agent **exploitation** (`serveur/agents/exploitation.py`, `prompts/exploitation.md`,
+  `schemas/agents/exploitation.schema.json` ; modèle claude-sonnet-5-5, effort low, dans config/modeles.json) : après
+  « J'ai terminé » sur une mission de laboratoire, il écrit 2 à 5 beats à partir du relevé de l'élève (ses valeurs, ses
+  formules, sa courbe), avec au plus une question du laboratoire posée comme une prédiction (une réaction par choix).
+- `serveur/pipeline/exploitation.py` et `exploitation_beats.py` : beats vérifiés dans la partition de l'élève (schéma,
+  ancres, zones, tons ; un chiffre dit est une erreur ; un tour de correction), puis voix ; événement « exploitation » au
+  journal (beats, durée, coût, commentaire pour l'enseignant). Route `POST /api/eleve/<p>/parties/<n>/exploitation`.
+  Sans relevé, sans clé ou en cas d'erreur : liste vide, le cours continue comme prévu (réglages : bloc « exploitation »
+  de config/application.json ; attente maximale 120 s côté navigateur).
+- Tableau : nouveau tableau « Vos mesures », nouvelle action `figure_eleve` (schéma de la partition) : la figure de
+  l'élève posée comme une feuille fixée au tableau (`client/js/tableau/figure_eleve.js`) ; puis un tableau « … (suite) »
+  pour l'explication prévue. `client/js/exploitation.js` insère les beats ; la question se pose à gauche quand la figure
+  est affichée (interaction.css).
+- Laboratoires : le relevé porte les questions de la mission et la valeur attendue d'après les mesures de l'élève
+  (rotation : ω = 3,75 rad/s, v = R·ω = 0,45 m/s). 167 laboratoires réassemblés ; mode cours et mode normal sans erreur.
+- Tests : `serveur/tests/test_exploitation.py` (3 tests, faux client Claude) ; essai de bout en bout dans le navigateur
+  avec le faux client : laboratoire, mesures, « J'ai terminé », tableau « Vos mesures » avec la figure et la question,
+  réponse, puis suite de l'explication. 61 tests ; structure conforme.
+
+Essai réel de la voix Gemini (clé de l'enseignant, rangée dans .env, jamais dans git) :
+- Modèles présents : gemini-3.8-flash-tts et gemini-3.8-flash-lite-tts. Un appel : environ 7 s.
+- **Défaut trouvé** : le modèle lisait à voix haute la consigne de style placée avant le texte (20,4 s au lieu de 5,4 s
+  pour une phrase de 82 caractères) ; l'instruction système est refusée (« Developer instruction is not enabled »).
+  Corrigé : `gabarit_demande` = « {texte} » (config/voix.json) ; le ton n'est donc plus transmis à la voix.
+- **Défaut trouvé** : « client has been closed » quand plusieurs audios sont produits à la fois (chaque fil créait son
+  client Gemini) ; corrigé par un verrou dans `serveur/voix/gemini_tts.py`.
+- Clé gratuite : 10 demandes par jour et par modèle ; une partie en demande 15 à 20 : la voix d'une partie entière n'a
+  pas pu être produite.
+
+Problèmes restants : les agents n'ont pas été essayés pour de vrai (il faut une clé ANTHROPIC_API_KEY) ; l'exploitation
+n'est pas relue par l'agent chef (pour ne pas faire attendre l'élève) ; les parties validées utilisent encore les anciennes
+animations ; CLAUDE.md liste six agents (l'enseignant peut y ajouter l'agent exploitation).

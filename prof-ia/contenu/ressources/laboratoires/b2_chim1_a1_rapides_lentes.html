@@ -2060,7 +2060,9 @@ Rôle : relevé des mesures d'une mission pour le professeur IA (mode cours) : f
        tableau de la tablette (valeurs et formules de l'élève), courbe (points, modèle, équation) et figure (SVG autonome) ;
        bouton « Envoyer au professeur » sur la tablette.
 Reçoit : la mission ; la feuille et la courbe de la tablette (Labo.tablette).
-Produit : Labo.releve(mission) -> { mission, titre, faits, tableau, courbe, figure } (données JSON, sans objet de la page) ;
+Produit : Labo.releve(mission) -> { mission, titre, faits, tableau, courbe, figure, questions } (données JSON, sans objet
+          de la page ; questions : celles du carnet, que le professeur peut poser, avec la réponse attendue d'après les
+          mesures de l'élève) ;
           Labo.releve.bouton() : ajoute le bouton à la barre de la tablette.
 Utilisé par : missions.js (message « releve » en fin de mission), demarrage.js (bouton, en mode cours).
 */
@@ -2116,6 +2118,17 @@ Utilisé par : missions.js (message « releve » en fin de mission), demarrage.j
     return new XMLSerializer().serializeToString(copie);
   }
 
+  function questions(m) {
+    // Les questions de la mission (passées en mode cours) : énoncé, choix (le premier est juste) ou valeur attendue.
+    return m.etapes.filter((e) => e.question).map((e) => {
+      const q = e.question;
+      let attendu = null;
+      try { attendu = typeof q.attendu === "function" ? q.attendu(L.missions.faits()) : q.attendu ?? null; } catch { attendu = null; }
+      return propre({ consigne: e.consigne, type: q.type, options: q.options || null, bonne: q.options ? q.bonne : null,
+        attendu, unite: q.unite || null, aide: q.aide || null });
+    });
+  }
+
   function courbe() {
     // Ce que l'élève a tracé : grandeurs choisies, points, modèle et équation affichée.
     const c = L.tablette.courbe();
@@ -2133,7 +2146,7 @@ Utilisé par : missions.js (message « releve » en fin de mission), demarrage.j
     try {
       const c = courbe();
       return { mission: m.id, titre: m.titre, faits: faits(), tableau: tableau(L.tablette.feuille(m.id)),
-        courbe: c, figure: c ? figure(L.tablette.page_courbe()) : null };
+        courbe: c, figure: c ? figure(L.tablette.page_courbe()) : null, questions: questions(m) };
     } catch (erreur) {
       return { mission: m.id, titre: m.titre, erreur: String(erreur.message || erreur) };
     }

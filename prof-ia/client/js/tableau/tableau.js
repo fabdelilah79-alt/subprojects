@@ -2,16 +2,17 @@
 Rôle : le tableau vert. Il crée une page par tableau et exécute les actions d'écriture.
 Reçoit : l'endroit de la page où dessiner, la barre d'onglets, les réglages de config/tableau.json,
          et, si besoin, sur_onglet(choisi, courant) : appelé quand l'élève clique sur un onglet.
-Produit : un objet avec executer(action, horloge), gere(type) et ouvrir_page(titre).
+Produit : un objet avec executer(action, horloge), gere(type) et ouvrir_page(titre) ; figure de l'élève : figure_eleve.js.
 Utilisé par : client/js/demo_tableau.js et client/js/classe.js.
 */
 import { dessiner } from "./dessin.js";
 import { creer_element_svg, ecrire_texte } from "./ecriture.js";
+import { poser_figure } from "./figure_eleve.js";
 import { ecrire_formule } from "./formule.js";
 import { creer_onglets } from "./onglets.js";
 import { creer_zones } from "./zones.js";
 
-const ACTIONS_GEREES = new Set(["nouveau_tableau", "ecrire", "formule", "dessiner"]);
+const ACTIONS_GEREES = new Set(["nouveau_tableau", "ecrire", "formule", "dessiner", "figure_eleve"]);
 
 async function charger_police(reglages) {
   // Attend que la police manuscrite soit prête, pour mesurer les textes correctement.
@@ -44,7 +45,6 @@ export async function creer_tableau(planche, barre_onglets, reglages, sur_onglet
   const afficher = (numero) => pages.forEach((page, i) => page.svg.classList.toggle("cache", i !== numero));
   const choisir = (numero) => { afficher(numero); sur_onglet?.(numero, pages.indexOf(page_ecriture)); };
   const onglets = creer_onglets(barre_onglets, choisir);
-
   function nouvelle_page(titre, pour_le_cours = true) {
     // Ouvre un nouveau tableau ; les anciens restent consultables. Le catalogue n'en devient pas la page d'écriture.
     const page = creer_page(planche, reglages);
@@ -58,6 +58,7 @@ export async function creer_tableau(planche, barre_onglets, reglages, sur_onglet
     // Exécute une action au tableau et attend qu'elle soit finie.
     if (action.type === "nouveau_tableau") return nouvelle_page(action.titre);
     const page = page_ecriture ?? nouvelle_page("Tableau");
+    if (action.type === "figure_eleve") return poser_figure(page, action, reglages);
     const couleur = couleur_de(action, reglages);
     if (action.type === "ecrire") return ecrire_texte(page, action, couleur, reglages, horloge);
     if (action.type === "dessiner") return dessiner(page, action, couleur, reglages, horloge);

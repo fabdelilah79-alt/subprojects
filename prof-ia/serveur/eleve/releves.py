@@ -128,5 +128,5 @@ def pour_agents(pseudonyme):
         tableau = r.get("tableau") or {}
         courts.append({"ressource": r.get("ressource"), "mission": r.get("titre"), "faits": r.get("faits"),
                        "tableau": {**tableau, "lignes": (tableau.get("lignes") or [])[:lignes_max]},
-                       "courbe": r.get("courbe"), "figure": r.get("figure", False)})
+                       "courbe": r.get("courbe"), "questions": r.get("questions") or [], "figure": r.get("figure", False)})
     return courts

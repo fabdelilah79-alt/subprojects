@@ -42,7 +42,8 @@ def options_accueil():
     """Renvoie les cours, les classes et l'intervalle de suivi de la préparation (pages d'attente et de classe)."""
     reglages = lire_config("application")
     return {"cours": reglages["cours"], "classes": reglages["classes"],
-            "intervalle_suivi_s": reglages["generation"]["intervalle_suivi_s"]}
+            "intervalle_suivi_s": reglages["generation"]["intervalle_suivi_s"],
+            "exploitation": {c: reglages["exploitation"][c] for c in ("attente_max_s", "phrase_attente")}}
 
 
 @routeur.post("/evenements")
