@@ -4,8 +4,8 @@ Rôle : paillasse de synthèse au chauffage à reflux : lunettes et gants à met
        (catalyseur), pierre ponce, montage à reflux, chronomètre, et un bécher récepteur où l'on verse ensuite le
        contenu refroidi du ballon (on y suit une transformation : relargage, lavage...).
 Reçoit : { fait, T_eb, duree, reagir(contenu, d), reactifs : [{ id, x, contenu, texte, pictos }], gouttes : { liquide, texte }
-         ou null, recepteur : { profil, contenu, etiquette }, evoluer_recepteur(contenu, dt), mesure(recepteur) -> nombre, refrigerant_derriere (facultatif, faux par
-         défaut : voir montage_reflux.js) }.
+         ou null, recepteur : { profil, contenu, etiquette }, evoluer_recepteur(contenu, dt), mesure(recepteur) -> nombre, refrigerant_derriere, T_consigne,
+         ballon_initial (facultatifs, absents par défaut : voir montage_reflux.js) }.
 Produit : Labo.poste_synthese(reglage) -> fabrique(groupe) -> { pense_bete } ; fait « <fait> » = { epi, <réactifs> (mL dans
           le ballon), état du montage (montage_reflux.js), recu (mesure du récepteur) }.
 Utilisé par : les simulations de synthèse (savon, arôme de banane).
@@ -44,7 +44,7 @@ Utilisé par : les simulations de synthèse (savon, arôme de banane).
       const r = !m ? "" : m.refrigerant === "monte" ? "Ôtez d'abord le réfrigérant." : m.entonnoir === "col" ? "Ôtez d'abord l'entonnoir." : m.chauffe ? "Arrêtez d'abord le chauffage." : (m.ballon.c.T ?? 20) > 45 ? "Laissez refroidir le ballon : il est encore chaud." : "";
       if (r) dire(r); return !r;
     };
-    m = L.montage_reflux(ctx, { T_eb: cfg.T_eb, duree: cfg.duree, reagir: cfg.reagir, dire, autoriser_ballon, ponce_x: cfg.gouttes ? 620 : 700, refrigerant_derriere: cfg.refrigerant_derriere });
+    m = L.montage_reflux(ctx, { T_eb: cfg.T_eb, duree: cfg.duree, reagir: cfg.reagir, dire, autoriser_ballon, ponce_x: cfg.gouttes ? 620 : 700, refrigerant_derriere: cfg.refrigerant_derriere, T_consigne: cfg.T_consigne, ballon_initial: cfg.ballon_initial });
     const px = cfg.gouttes ? 620 : 700;
     ctx.obstacles.push([px - 24, px + 24]); if (cfg.gouttes) ctx.obstacles.push([660, 720]);
     const rec = reactifs(ctx, cfg, epi, dire);

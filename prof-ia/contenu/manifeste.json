@@ -5850,7 +5850,7 @@
       "id": "b2_chim10_a1_aspirine",
       "type": "simulation",
       "fichier": "laboratoires/b2_chim10_a1_aspirine.html",
-      "description": "Paillasse 1 : montage à reflux, 3,00 g d'acide salicylique, 6,0 mL d'anhydride éthanoïque (en excès), trois gouttes d'acide sulfurique (catalyseur ; sans lui, la transformation est environ sept fois plus lente), 15 min de reflux, puis versement dans l'eau glacée où l'aspirine cristallise. Paillasse 2 : filtration sous vide des cristaux. Paillasse 3 : pesée de l'aspirine sèche (3,20 g) : n(max) = 21,7 mmol, rendement 82 %. Paillasse 4 : titrage direct, à froid, d'un comprimé d'aspirine 500 par la soude à 0,20 mol/L (VE = 13,9 mL, 500 mg).",
+      "description": "Paillasse 1 : pesée de 3,00 g d'acide salicylique (balance au centième, coupelle tarée, spatule). Paillasse 2 : montage à reflux, le ballon sec contient l'acide salicylique pesé ; 6,0 mL d'anhydride éthanoïque (en excès), trois gouttes d'acide sulfurique (catalyseur ; sans lui, la transformation est environ sept fois plus lente), chauffe-ballon réglé sur 65 °C pendant 20 min (sans ébullition), puis versement dans l'eau glacée où l'aspirine cristallise. Paillasse 3 : filtration sous vide des cristaux. Paillasse 4 : pesée de l'aspirine sèche (3,20 g) : n(max) = 21,7 mmol, rendement 82 %. Paillasse 5 : titrage direct, à froid, d'un comprimé d'aspirine 500 par la soude à 0,20 mol/L (VE = 13,9 mL, 500 mg).",
       "phase_poe": "observation",
       "manipulable": "Glisser-déposer le matériel, toucher les appareils, zoomer à deux doigts ; tableur et graphique sur la tablette ; répondre aux questions du carnet de laboratoire.",
       "chapitre": "2bac/chim10_controle",
@@ -5861,9 +5861,14 @@
       ],
       "missions": [
         {
+          "titre": "Peser l'acide salicylique",
+          "ce_que_fait_l_eleve": "Pèse 3,00 g d'acide salicylique et calcule sa quantité de matière.",
+          "conclusion": "On pèse 3,00 g d'acide salicylique dans une coupelle tarée, soit n = 3,00 / 138 = 21,7 mmol ; on l'introduit dans un ballon sec avec un entonnoir à poudre. Le ballon doit être sec : l'eau détruirait l'anhydride éthanoïque (C₄H₆O₃ + H₂O → 2 C₂H₄O₂)."
+        },
+        {
           "titre": "Synthèse de l'aspirine",
-          "ce_que_fait_l_eleve": "Synthétise l'aspirine à reflux avec l'anhydride éthanoïque et l'acide sulfurique comme catalyseur, puis la fait cristalliser dans l'eau glacée.",
-          "conclusion": "L'acide salicylique réagit avec l'anhydride éthanoïque : C₇H₆O₃ + C₄H₆O₃ → C₉H₈O₄ + C₂H₄O₂ (aspirine + acide éthanoïque). Avec un anhydride, la réaction est rapide et totale : elle ne forme pas d'eau, donc pas d'hydrolyse inverse, contrairement à l'estérification par un acide. L'acide sulfurique est un catalyseur : il accélère la transformation, n'apparaît pas dans le bilan et ne change pas l'état final. Dans l'eau glacée, l'aspirine, peu soluble à froid, cristallise et l'anhydride restant est détruit."
+          "ce_que_fait_l_eleve": "Chauffe à reflux doux (65 °C) l'acide salicylique avec l'anhydride éthanoïque et l'acide sulfurique comme catalyseur, puis fait cristalliser l'aspirine dans l'eau glacée.",
+          "conclusion": "L'acide salicylique réagit avec l'anhydride éthanoïque : C₇H₆O₃ + C₄H₆O₃ → C₉H₈O₄ + C₂H₄O₂ (aspirine + acide éthanoïque). Avec un anhydride, la réaction est rapide et totale : elle ne forme pas d'eau, donc pas d'hydrolyse inverse, contrairement à l'estérification par un acide. L'acide sulfurique est un catalyseur : il accélère la transformation, n'apparaît pas dans le bilan et ne change pas l'état final ; grâce à lui, un chauffage doux (65 °C, 20 min) suffit, sans dégrader l'aspirine. Dans l'eau glacée, l'aspirine, peu soluble à froid, cristallise et l'anhydride restant est détruit."
         },
         {
           "titre": "Recueillir les cristaux",
@@ -5881,7 +5886,7 @@
           "conclusion": "À l'équivalence, n(aspirine) = C·VE = 0,20 × 13,9 × 10⁻³ = 2,78 mmol, soit 500 mg : le comprimé est conforme. On titre à froid et vite pour ne faire réagir que le groupe acide –COOH : à chaud, la soude saponifierait aussi le groupe ester. Parmi plusieurs réactions possibles, les conditions (température, durée, catalyseur sélectif) permettent d'en favoriser une."
         }
       ],
-      "duree_min": 90,
+      "duree_min": 100,
       "conceptions": [
         "Un catalyseur augmente le rendement.",
         "Toute synthèse d'ester est limitée.",

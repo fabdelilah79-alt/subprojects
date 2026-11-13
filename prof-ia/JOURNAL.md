@@ -1561,9 +1561,7 @@ pendant un titrage rapide seulement.
   savon et stable, 40 % sans savon puis 0 après 8 s (l'huile remonte).
 - Outil de test ajouté à la compétence : outils_verser.js (verser en tournant la poignée ; aller à une paillasse).
 
-Problèmes restants : l'acide salicylique est versé d'un bécher (comme un liquide) au lieu d'être pesé puis introduit ; la
-température du reflux (120 °C) est celle d'une ébullition du mélange, alors que beaucoup de protocoles chauffent à 60–80 °C au
-bain-marie ; l'anhydride en excès n'est pas suivi séparément ; la mousse et
+Problèmes restants : l'anhydride en excès n'est pas suivi séparément ; la mousse et
 l'émulsion sont des modèles simples (pas de dépendance à la quantité de savon).
 
 ## 2026-11-12 — Réfrigérant rangé derrière les récipients (synthèses à reflux)
@@ -1575,3 +1573,15 @@ l'émulsion sont des modèles simples (pas de dépendance à la quantité de sav
   terminé, mélange versé, aucune erreur ; parcours complets des deux simulations du chapitre 10 rejoués : tout passe.
 
 Problème restant : le ballon tenu au-dessus du récepteur, une fois vidé, reste tenu tant qu'on ne le touche pas.
+
+## 2026-11-13 — Aspirine : pesée de l'acide salicylique et chauffage doux
+
+- Nouvelle paillasse 1 : pesée de 3,00 g d'acide salicylique (pesees_aspirine.js, qui regroupe aussi la pesée du produit) ;
+  le ballon du montage contient ensuite l'acide pesé (option commune `ballon_initial`) ; seul l'anhydride est versé.
+- Chauffage : chauffe-ballon réglé sur 65 °C pendant 20 min (option commune `T_consigne`) : pas d'ébullition ni de perte de
+  vapeurs ; question sur l'intérêt d'un chauffage doux avec un catalyseur.
+- Mesuré dans le test : 2,97 g pesés (21,5 mmol) ; T = 65 °C, ébullition : non ; 8,1 mL de mélange formé ; 3,20 g d'aspirine
+  (rendement 82,9 % avec la masse pesée) ; titrage 13,93 mL. Régression : reflux des trois anciennes synthèses et parcours du
+  savon de 2e année du bac rejoués.
+
+Problème restant : le ballon contient toujours 3,00 g, quelle que soit la masse pesée à 0,05 g près (la masse pesée sert aux calculs).

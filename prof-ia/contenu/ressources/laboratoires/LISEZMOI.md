@@ -829,7 +829,7 @@ Aucun fichier commun nouveau ni modifié (banc de titrage, tri, tableur réutili
 
 | Fichier | Activité de la fiche | Objectifs | Ce que l'élève fait |
 |---|---|---|---|
-| b2_chim10_a1_aspirine.html | Synthèse de l'aspirine | O1, O4 | Reflux de l'acide salicylique avec l'anhydride éthanoïque et l'acide sulfurique (catalyseur), cristallisation dans l'eau glacée, filtration sous vide, pesée (3,20 g, rendement 82 %) ; titrage direct d'un comprimé à froid (VE = 13,9 mL, 500 mg) : on favorise la réaction acide-base, pas la saponification. |
+| b2_chim10_a1_aspirine.html | Synthèse de l'aspirine | O1, O4 | Pesée de 3,00 g d'acide salicylique ; reflux doux (65 °C, 20 min) avec l'anhydride éthanoïque et l'acide sulfurique (catalyseur), cristallisation dans l'eau glacée, filtration sous vide, pesée (3,20 g, rendement 82 %) ; titrage direct d'un comprimé à froid (VE = 13,9 mL, 500 mg) : on favorise la réaction acide-base, pas la saponification. |
 | b2_chim10_a2_savon.html | Préparation d'un savon et étude de ses propriétés | O2, O3, O4 | Saponification à reflux et relargage (paillasse du tronc commun) ; tubes secoués : mousse, eau calcaire (précipité), émulsion de l'huile comparée à un témoin ; documents : ion carboxylate, micelles, eau calcaire, catalyse sélective. |
 
 Aucun fichier commun nouveau ni modifié. `pages.py` donne à ce chapitre les scripts de la synthèse de l'acide benzoïque
@@ -841,3 +841,10 @@ Fichiers communs modifiés : `montage_reflux.js`, `reflux_gestes.js` et `poste_s
 (désactivée par défaut) : une fois rangé sur la paillasse, le réfrigérant couché passe derrière les récipients au lieu de
 devant le bécher récepteur. Elle est activée dans les quatre synthèses à reflux : tc_chim3_a1_savon, tc_chim3_a2_arome,
 b1_chim6_a3_benzoique, b2_chim10_a1_aspirine (et b2_chim10_a2_savon, qui reprend la paillasse du savon).
+
+## Correction : pesée de l'acide salicylique et chauffage doux (aspirine)
+
+Fichiers communs modifiés : `montage_reflux.js` et `poste_synthese.js` reçoivent deux options, absentes par défaut :
+`T_consigne` (le chauffe-ballon maintient cette température, sans ébullition si elle est sous T_eb) et `ballon_initial`
+(contenu déjà dans le ballon). Seule b2_chim10_a1_aspirine les utilise : l'acide salicylique est pesé (nouvelle paillasse 1),
+puis le ballon sec le contient ; le chauffage se fait à 65 °C pendant 20 min.

@@ -7,7 +7,9 @@ Rôle : montage de chauffage à reflux aux vraies dimensions, que l'élève asse
        réaction avance (cfg.reagir) ; arrêté, le ballon refroidit.
 Reçoit : le contexte de la paillasse (avec ctx.ecoulement) et { T_eb (°C), duree (min de reflux), reagir(contenu, d_avance),
          dire(texte), autoriser_ballon(), ponce_x (place du flacon de pierre ponce), refrigerant_derriere (faux par défaut : le
-         réfrigérant rangé sur la paillasse passe derrière les récipients au lieu de devant) }.
+         réfrigérant rangé sur la paillasse passe derrière les récipients au lieu de devant), T_consigne (°C, facultatif : le
+         chauffe-ballon maintient cette température, sans ébullition si elle est sous T_eb), ballon_initial (contenu déjà
+         dans le ballon au départ, facultatif) }.
 Produit : Labo.montage_reflux(ctx, cfg) -> s { ballon, avance, T, ebullition, perte, ponce, entonnoir, refrigerant, eau,
           chauffe, tic(dt_min), etat() } (le temps est donné par le chronomètre de la paillasse).
 Utilisé par : les simulations de synthèse (savon, arôme).
@@ -40,13 +42,13 @@ Utilisé par : les simulations de synthèse (savon, arôme).
 
   function evoluer(s, cfg, dt) {
     // Température, ébullition, reflux ou perte de vapeurs, avancement de la réaction.
-    const c = s.ballon.c, V = c.volume(), T = c.T ?? 20;
-    c.T = s.chauffe && V > 1 ? Math.min(cfg.T_eb, T + (cfg.T_eb + 15 - T) * (1 - Math.exp(-dt / 3))) : 20 + (T - 20) * Math.exp(-dt / 8);
+    const c = s.ballon.c, V = c.volume(), T = c.T ?? 20, cible = Math.min(cfg.T_consigne ?? cfg.T_eb, cfg.T_eb);
+    c.T = s.chauffe && V > 1 ? Math.min(cible, T + (cible + 15 - T) * (1 - Math.exp(-dt / 3))) : 20 + (T - 20) * Math.exp(-dt / 8);
     s.ebullition = s.chauffe && V > 1 && c.T >= cfg.T_eb - 0.3;
     s.soubresauts = s.ebullition && !s.ponce;
     s.fuite = s.ebullition && !(s.refrigerant === "monte" && s.eau);
     if (s.fuite) { const v = Math.min(V, 1.5 * dt); c.retirer(v, "haut"); s.perte += v; }
-    if (c.T > cfg.T_eb - 8 && s.avance < 1) { const d = Math.min(1 - s.avance, dt / cfg.duree); s.avance += d; cfg.reagir(c, d); }
+    if (c.T > cible - 8 && s.avance < 1) { const d = Math.min(1 - s.avance, dt / cfg.duree); s.avance += d; cfg.reagir(c, d); }
     if (s.avance > 0) s.ballon.sig = null;
   }
 
@@ -56,7 +58,7 @@ Utilisé par : les simulations de synthèse (savon, arôme).
     support(ctx.fond); ctx.obstacles = (ctx.obstacles || []).concat([[130, 450]]);
     s.g_tuyaux = L.svg("g", { "pointer-events": "none" }, ctx.fond);
     const chauffe = L.chauffe_ballon(ctx.fond, ctx.devant, S0.CH);
-    s.ballon = L.recipient(ctx, { id: "ballon", profil: "ballon_250", x: S0.X, y: 496 });
+    s.ballon = L.recipient(ctx, { id: "ballon", profil: "ballon_250", x: S0.X, y: 496, ...(cfg.ballon_initial ? { contenu: cfg.ballon_initial } : {}) });
     L.manipuler(ctx, s.ballon, { sol: SOL, supports: [{ x: S0.X, y: 496 }], pose_libre: false, autoriser: cfg.autoriser_ballon });
     const g_bulles = L.svg("g", { "pointer-events": "none" }, ctx.objets);
     L.gestes_reflux(ctx, s);

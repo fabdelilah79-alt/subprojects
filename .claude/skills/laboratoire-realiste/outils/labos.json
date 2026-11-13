@@ -3418,8 +3418,8 @@
    "O1",
    "O4"
   ],
-  "duree_min": 90,
-  "description": "Paillasse 1 : montage à reflux, 3,00 g d'acide salicylique, 6,0 mL d'anhydride éthanoïque (en excès), trois gouttes d'acide sulfurique (catalyseur ; sans lui, la transformation est environ sept fois plus lente), 15 min de reflux, puis versement dans l'eau glacée où l'aspirine cristallise. Paillasse 2 : filtration sous vide des cristaux. Paillasse 3 : pesée de l'aspirine sèche (3,20 g) : n(max) = 21,7 mmol, rendement 82 %. Paillasse 4 : titrage direct, à froid, d'un comprimé d'aspirine 500 par la soude à 0,20 mol/L (VE = 13,9 mL, 500 mg).",
+  "duree_min": 100,
+  "description": "Paillasse 1 : pesée de 3,00 g d'acide salicylique (balance au centième, coupelle tarée, spatule). Paillasse 2 : montage à reflux, le ballon sec contient l'acide salicylique pesé ; 6,0 mL d'anhydride éthanoïque (en excès), trois gouttes d'acide sulfurique (catalyseur ; sans lui, la transformation est environ sept fois plus lente), chauffe-ballon réglé sur 65 °C pendant 20 min (sans ébullition), puis versement dans l'eau glacée où l'aspirine cristallise. Paillasse 3 : filtration sous vide des cristaux. Paillasse 4 : pesée de l'aspirine sèche (3,20 g) : n(max) = 21,7 mmol, rendement 82 %. Paillasse 5 : titrage direct, à froid, d'un comprimé d'aspirine 500 par la soude à 0,20 mol/L (VE = 13,9 mL, 500 mg).",
   "conceptions": [
    "Un catalyseur augmente le rendement.",
    "Toute synthèse d'ester est limitée.",
@@ -3427,7 +3427,8 @@
    "Un titrage par la soude dose toujours tous les groupes d'une molécule."
   ],
   "faire": [
-   "Synthétise l'aspirine à reflux avec l'anhydride éthanoïque et l'acide sulfurique comme catalyseur, puis la fait cristalliser dans l'eau glacée.",
+   "Pèse 3,00 g d'acide salicylique et calcule sa quantité de matière.",
+   "Chauffe à reflux doux (65 °C) l'acide salicylique avec l'anhydride éthanoïque et l'acide sulfurique comme catalyseur, puis fait cristalliser l'aspirine dans l'eau glacée.",
    "Recueille les cristaux d'aspirine par filtration sous vide.",
    "Pèse l'aspirine sèche, identifie le réactif limitant et calcule le rendement.",
    "Titre un comprimé d'aspirine à froid par la soude et vérifie qu'il contient 500 mg d'aspirine."
