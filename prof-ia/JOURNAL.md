@@ -1766,3 +1766,8 @@ choix de l'ambiance par l'élève, sons discrets.
   conforme.
 
 Problème restant : le rapporteur du pavé est petit (lecture de l'angle au degré près difficile hors des crans).
+
+## 2026-11-15 — Rapporteur du pavé agrandi
+
+- `b1_meca2_a1_translation/pave_dessin.js` : rapporteur de rayon 108 px (au lieu de 62), un trait par degré, nombres plus
+  gros, crans rouges à 30° et 60° ; essais rejoués : 0°, 30° et 60° exacts. Structure conforme ; 61 tests.

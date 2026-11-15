@@ -2663,16 +2663,16 @@ Utilisé par : poste_pave.js.
   }
 
   function rapporteur(g, H) {
-    // Quart de rapporteur transparent centré sur le crochet : un trait tous les 5°, un nombre tous les 10°.
-    const R = 62, p = (r, d) => ({ x: H.x + r * Math.cos((d * Math.PI) / 180), y: H.y - r * Math.sin((d * Math.PI) / 180) });
+    // Quart de rapporteur transparent centré sur le crochet (rayon 108 px) : un trait par degré, plus long tous les 5°,
+    // un nombre tous les 10° ; crans rouges à 30° et 60° : le fil s'y cale (poste_pave.js).
+    const R = 108, p = (r, d) => ({ x: H.x + r * Math.cos((d * Math.PI) / 180), y: H.y - r * Math.sin((d * Math.PI) / 180) });
     L.svg("path", { d: `M${H.x} ${H.y} H${H.x + R} A${R} ${R} 0 0 0 ${H.x} ${H.y - R} Z`, fill: "#dfeef6", opacity: 0.45, stroke: "#6d8a99", "stroke-width": 0.8 }, g);
-    for (let d = 0; d <= 90; d += 5) {
-      const a = p(R, d), b = p(R - (d % 10 ? 4 : 7), d);
-      L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: "#203845", "stroke-width": 0.6 }, g);
-      if (d % 10 === 0) { const t = p(R - 13, d); L.texte(g, t.x, t.y + 2.5, String(d), { "font-size": 6.5, "font-weight": 700, fill: "#203845" }); }
+    for (let d = 0; d <= 90; d += 1) {
+      const a = p(R, d), b = p(R - (d % 10 === 0 ? 11 : d % 5 === 0 ? 8 : 4), d);
+      L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: "#203845", "stroke-width": d % 5 ? 0.4 : 0.7 }, g);
+      if (d % 10 === 0) { const t = p(R - 20, d); L.texte(g, t.x, t.y + 3, String(d), { "font-size": 9, "font-weight": 700, fill: "#203845" }); }
     }
-    // Crans rouges à 30° et 60° : le fil s'y cale (poste_pave.js).
-    for (const d of [30, 60]) { const c = p(R + 3, d); L.svg("circle", { cx: c.x, cy: c.y, r: 2.4, fill: "#c0392b", stroke: "#7d2018", "stroke-width": 0.5 }, g); }
+    for (const d of [30, 60]) { const c = p(R + 4, d); L.svg("circle", { cx: c.x, cy: c.y, r: 3, fill: "#c0392b", stroke: "#7d2018", "stroke-width": 0.5 }, g); }
   }
 
   L.pave_dessin = { regle, pave, rapporteur, MM, X0, LONG };
