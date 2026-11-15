@@ -16,7 +16,8 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
     // Mur peint, carrelage, bloc de trois prises électriques (à droite, pour les appareils branchés sur le secteur).
     L.svg("rect", { x: 0, y: 0, width: L.LARGEUR, height: P.fond, fill: "url(#mur)" }, g);
     L.svg("rect", { x: 0, y: 96, width: L.LARGEUR, height: P.fond - 96, fill: "url(#carrelage)" }, g);
-    L.svg("rect", { x: 0, y: 92, width: L.LARGEUR, height: 5, fill: "#b9bdb5" }, g);
+    L.svg("rect", { x: 0, y: 92, width: L.LARGEUR, height: 5, fill: L.ambiance().plinthe }, g);
+    L.ambiance.frise(g, 97);
     L.svg("rect", { x: 834, y: 106, width: 142, height: 48, rx: 5, fill: "#f7f7f4", stroke: "#b8bbb4" }, g);
     for (const p of L.PRISES_MUR) {
       L.svg("circle", { cx: p.x, cy: p.y, r: 15, fill: "#e6e7e2", stroke: "#c4c7c0" }, g);
@@ -40,9 +41,9 @@ Utilisé par : les simulations d'électricité (décor « aucun » dans demarrer
     L.svg("rect", { x: 0, y: P.fond, width: L.LARGEUR, height: 8, fill: "#000", opacity: 0.25 }, g);
     L.svg("rect", { x: 0, y: P.fond + 40, width: L.LARGEUR, height: 200, fill: "url(#reflet)", opacity: 0.7 }, g);
     L.svg("rect", { x: 0, y: P.avant, width: L.LARGEUR, height: P.placard - P.avant, fill: "url(#bord)" }, g);
-    L.svg("rect", { x: 0, y: P.placard, width: L.LARGEUR, height: L.HAUTEUR - P.placard, fill: "url(#facade)" }, g);
+    L.svg("rect", { x: 0, y: P.placard, width: L.LARGEUR, height: L.HAUTEUR - P.placard, fill: "url(#placard)" }, g);
     for (let x = 0; x < L.LARGEUR; x += 256) {
-      L.svg("rect", { x: x + 6, y: P.placard + 6, width: 244, height: 40, fill: "none", stroke: "#5d6567", "stroke-width": 1.5 }, g);
+      L.svg("rect", { x: x + 6, y: P.placard + 6, width: 244, height: 40, fill: "none", stroke: L.ambiance().cadre_placard, "stroke-width": 1.5 }, g);
       L.svg("rect", { x: x + 108, y: P.placard + 14, width: 40, height: 6, rx: 3, fill: "url(#metal-h)" }, g);
     }
   }

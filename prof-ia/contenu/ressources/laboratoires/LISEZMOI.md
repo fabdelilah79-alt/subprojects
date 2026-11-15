@@ -891,3 +891,13 @@ explique, à partir des mesures et des figures de l'élève.
   le ticket affiche « ▾ toucher pour lire la suite » : un appui l'agrandit, le suivant le plie, le troisième le remet à sa
   place ; à l'étape suivante, il reprend sa place. Trois laboratoires sans pense-bête (gravitation, altitude, relativité)
   gardent la place par défaut, en haut à gauche, sur le décor.
+
+## Ambiance zellige (choix de l'enseignant)
+
+- Nouveau fichier commun `ambiance.js` : les couleurs du décor de **tous** les laboratoires à un seul endroit. Ambiance
+  « zellige » par défaut : mur crème, carrelage blanc cassé, plinthe bleu de Fès, frise de zellige (étoiles à huit
+  branches bleues et vertes, cœur ocre, losanges en terre cuite) sous la plinthe, paillasse sombre (la verrerie reste bien
+  visible), placards bleu de Fès. L'ancienne ambiance grise reste disponible : ajouter `ambiance=actuelle` à l'adresse.
+- Fichiers communs modifiés : `materiaux.js` (dégradés du décor lus dans l'ambiance ; nouveau dégradé `placard`, le
+  dégradé `facade` reste gris pour les boîtiers d'appareils), `decor.js` et `circuit_decor.js` (plinthe, frise, placards).
+  `ambiance.js` ajouté aux 167 pages. Contrôle : 167 laboratoires sans erreur, en mode normal et en mode cours.

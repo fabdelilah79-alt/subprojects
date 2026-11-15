@@ -31,6 +31,8 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 
 ## 2. Réalisme visuel (liste de contrôle à passer sur chaque capture)
 
+- Couleurs du décor (mur, carrelage, frise, paillasse, placards) : seulement dans `commun/ambiance.js` (zellige par
+  défaut) ; `url(#facade)` reste le gris des boîtiers d'appareils, `url(#placard)` celui des placards.
 - Scène 1024 × 640 en perspective 2,5D (`L.boitier`, ombres `L.ombre_sol`) ; **rien ne flotte** : tout est posé sur la
   paillasse ou fixé au mur, avec son ombre ; les objets cachés derrière d'autres le sont dans le bon ordre.
 - **Tout câble est branché jusqu'au bout** : cordon secteur jusqu'à une prise murale (`L.cordon_secteur`, `c.prise()`),

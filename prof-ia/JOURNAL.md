@@ -1741,3 +1741,15 @@ animations ; CLAUDE.md liste six agents (l'enseignant peut y ajouter l'agent exp
 
 Problème restant : dans les petits tickets (câblages en électricité), l'écriture resserrée est petite quand le
 laboratoire n'est pas en plein écran.
+
+## 2026-11-15 — Ambiance zellige dans tous les laboratoires
+
+- Choix de l'enseignant parmi six aperçus : « zellige ». Nouveau fichier commun `commun/ambiance.js` (couleurs du décor
+  à un seul endroit, frise de zellige alignée sur ses carreaux) ; `materiaux.js`, `decor.js`, `circuit_decor.js` lisent
+  l'ambiance ; nouveau dégradé `placard` (le dégradé `facade` reste gris : il sert aussi aux boîtiers d'appareils :
+  éclateur, soufflerie, réglages des postes de mécanique). L'ancienne ambiance : `ambiance=actuelle` dans l'adresse.
+- Gros plan de la frise relu (étoiles entières après correction de l'alignement du motif) ; 167 laboratoires sans
+  erreur en mode normal et en mode cours ; 61 tests ; structure conforme.
+
+Reste à décider (idées proposées) : lumière d'une fenêtre, retours de réussite (halo, tampon sur le ticket), progression,
+choix de l'ambiance par l'élève, sons discrets.
