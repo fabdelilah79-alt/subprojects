@@ -18,6 +18,14 @@ Utilisé par : poste_rotation.js.
     const point = (r) => ({ x: O.x + r * Math.cos(table.solide.angle), y: O.y + r * Math.sin(table.solide.angle) });
     table.marques = () => ({ a: point(RA), b: point(RB) });
     table.immobile = () => Math.abs(table.solide.omega) < 0.02;
+    // L'enregistrement s'arrête seul après 21 étincelles ou avant un tour complet (sinon les points se recouvrent).
+    table.max_points = 21;
+    table.assez_enregistre = (points) => {
+      const a = (q) => Math.atan2(q.b.y - O.y, q.b.x - O.x);
+      let tour = 0;
+      for (let k = 1; k < points.length; k++) { let d = a(points[k]) - a(points[k - 1]); if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; tour += d; }
+      return Math.abs(tour) > 5.6;
+    };
     table.dessiner_mobile = function () {
       // Barre d'aluminium du clou jusqu'au-delà de B, deux palets (le plus lointain d'abord), étiquettes A et B.
       const o = ve(O.x, O.y), a = ve(point(RA).x, point(RA).y), b = ve(point(RB).x, point(RB).y), bout = ve(point(RB + 20).x, point(RB + 20).y);

@@ -1753,3 +1753,16 @@ laboratoire n'est pas en plein écran.
 
 Reste à décider (idées proposées) : lumière d'une fenêtre, retours de réussite (halo, tampon sur le ticket), progression,
 choix de l'ambiance par l'élève, sons discrets.
+
+## 2026-11-15 — Corrections : angle du fil (travail d'une force) et feuille d'enregistrement de la rotation
+
+- Remarques de l'enseignant : angle difficile à garder à 30° et 60° ; points de la rotation mal ordonnés, enregistrement
+  qui ne s'arrête pas, noms des points qui couvrent l'enregistrement.
+- Pavé tiré (`b1_meca2_a1_translation/poste_pave.js`, `pave_dessin.js`, `simulation.js`) : crans à 0°, 30° et 60° ; le fil
+  reste calé pendant tout le trajet si le pavé part sur un cran. Test avec une main qui tremble : 30,0° et 60,0°, écart 0°.
+- Rotation (`b1_meca1_a2_enregistrement`, `commun/eclateur.js`, `feuille_enregistrement.js`, `poste_coussin_air.js`) :
+  arrêt seul à 21 points ou avant un tour ; numéros sur le rayon, à l'extérieur des arcs ; règle rangée en bas.
+- 167 laboratoires sans erreur dans les deux modes ; régression d'une autre table à coussin d'air ; 61 tests ; structure
+  conforme.
+
+Problème restant : le rapporteur du pavé est petit (lecture de l'angle au degré près difficile hors des crans).

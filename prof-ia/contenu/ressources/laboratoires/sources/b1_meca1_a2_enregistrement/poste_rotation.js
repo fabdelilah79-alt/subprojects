@@ -14,7 +14,8 @@ Utilisé par : simulation.js.
     L.texte(g, 869, 80, "OA = 6,0 cm ; OB = 12,0 cm", { "font-size": 9.5, fill: "#222" });
     L.texte(g, 869, 96, "Les étincelles marquent A et B toutes les τ.", { "font-size": 9, fill: "#222" });
     // La table vient après la fiche : la feuille relevée passe devant elle.
-    const poste = L.poste_coussin_air(g, { nom: "rotation", outils: ["regle", "rapporteur"] });
+    // La règle est rangée en bas de la feuille : elle ne cache pas l'arc de B (rayon 12 cm autour du clou).
+    const poste = L.poste_coussin_air(g, { nom: "rotation", outils: ["regle", "rapporteur"], departs: { regle: { x: 30, y: 366 } } });
     L.solide_pivotant(poste.table);
     return { pense_bete: poste.pense_bete };
   };

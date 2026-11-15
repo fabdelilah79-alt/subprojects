@@ -47,6 +47,8 @@ Utilisé par : poste_pave.js.
       L.svg("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: "#203845", "stroke-width": 0.6 }, g);
       if (d % 10 === 0) { const t = p(R - 13, d); L.texte(g, t.x, t.y + 2.5, String(d), { "font-size": 6.5, "font-weight": 700, fill: "#203845" }); }
     }
+    // Crans rouges à 30° et 60° : le fil s'y cale (poste_pave.js).
+    for (const d of [30, 60]) { const c = p(R + 3, d); L.svg("circle", { cx: c.x, cy: c.y, r: 2.4, fill: "#c0392b", stroke: "#7d2018", "stroke-width": 0.5 }, g); }
   }
 
   L.pave_dessin = { regle, pave, rapporteur, MM, X0, LONG };

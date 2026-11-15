@@ -1,7 +1,8 @@
 /*
 Rôle : éclateur (générateur d'étincelles) relié au mobile : bouton rotatif de la durée τ (20, 40 ou 60 ms) et
        bouton « Enregistrer ». Pendant l'enregistrement, une étincelle marque un point sur la feuille toutes les τ.
-       Un nouvel enregistrement se fait sur une feuille neuve ; il s'arrête seul après 30 points ou à l'arrêt du mobile.
+       Un nouvel enregistrement se fait sur une feuille neuve ; il s'arrête seul après 30 points (ou mobile.max_points),
+       quand mobile.assez_enregistre(points) le demande (solide en rotation : avant un tour complet), ou à l'arrêt du mobile.
 Reçoit : le groupe SVG, le mobile (Labo.CoussinAir), la position du boîtier.
 Produit : new Labo.Eclateur(parent, mobile, x, y) : points (liste { t, x, y } en s et mm), tau_s ;
           fait noté « enregistrement » = { tau_s, points, fil, table, air, masse_kg } à la fin de chaque enregistrement.
@@ -77,7 +78,7 @@ Utilisé par : les simulations de mouvement avec la table à coussin d'air.
       this.points.push({ t: Math.round(this.prochain * 1000) / 1000, x: m.pos.x, y: m.pos.y, ...(m.marques ? m.marques() : {}) });
       this.prochain += this.tau_s;
       L.annoncer("etincelle", { mobile: this.mobile, point: this.points[this.points.length - 1], points: this.points });
-      if (this.points.length >= MAX_POINTS) this.finir();
+      if (this.points.length >= (m.max_points || MAX_POINTS) || m.assez_enregistre?.(this.points)) this.finir();
     }
     if (this.points.length > 1 && m.immobile()) this.finir();
   };

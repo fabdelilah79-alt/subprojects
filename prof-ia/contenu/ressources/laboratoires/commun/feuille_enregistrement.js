@@ -64,20 +64,27 @@ Utilisé par : outils_mesure.js et les simulations de mouvement.
     return { x: p.x + n.x * cote * 10, y: p.y + n.y * cote * 10 + 2.6 };
   }
 
+  function place_radiale(axe, p) {
+    // Solide en rotation : numéro sur le rayon du point, toujours à l'extérieur de son arc (là où il y a de la place),
+    // pour que les numéros ne couvrent ni les points ni l'autre arc.
+    const o = vers_feuille(axe.x, axe.y), l = Math.hypot(p.x - o.x, p.y - o.y) || 1;
+    return { x: p.x + ((p.x - o.x) / l) * 13, y: p.y + ((p.y - o.y) / l) * 13 + 2.4 };
+  }
+
   F.ouvrir = function () {
     // Prend la feuille en main : points à l'échelle, numérotés M0, M1... (ou A0, B0...) dans l'ordre des étincelles.
     this.dessin.replaceChildren();
     for (const [nom, points] of series(this.points)) {
-      const pas = nom === "M" ? 1 : 2;
+      const pas = nom === "M" ? 1 : (this.mobile.axe && nom === "A" ? 4 : 2);  // petit arc de A : un numéro sur quatre
       let dernier = null;
       points.forEach((pt, i) => {
         // Deux séries (A et B) : un numéro sur deux ; pas de numéro à moins de 9 mm du précédent (points serrés).
         const p = vers_feuille(pt.x, pt.y);
         L.svg("circle", { cx: p.x, cy: p.y, r: 1.6, fill: "#111" }, this.dessin);
-        if (i % pas || (dernier && Math.hypot(pt.x - dernier.x, pt.y - dernier.y) < 9)) return;
+        if (i % pas || (dernier && Math.hypot(pt.x - dernier.x, pt.y - dernier.y) < (this.mobile.axe ? 12 : 9))) return;
         dernier = pt;
-        const e = place_numero(points, i, p, (i / pas) % 2 ? 1 : -1);
-        L.texte(this.dessin, e.x, e.y, `${nom}${i}`, { class: "etiquette-carton", "font-size": 7.5, fill: "#666" });
+        const e = this.mobile.axe ? place_radiale(this.mobile.axe, p) : place_numero(points, i, p, (i / pas) % 2 ? 1 : -1);
+        L.texte(this.dessin, e.x, e.y, `${nom}${i}`, { class: "etiquette-carton", "font-size": this.mobile.axe ? 6.5 : 7.5, fill: "#666" });
       });
     }
     if (this.mobile.axe) {

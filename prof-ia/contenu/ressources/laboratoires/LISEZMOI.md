@@ -901,3 +901,19 @@ explique, à partir des mesures et des figures de l'élève.
 - Fichiers communs modifiés : `materiaux.js` (dégradés du décor lus dans l'ambiance ; nouveau dégradé `placard`, le
   dégradé `facade` reste gris pour les boîtiers d'appareils), `decor.js` et `circuit_decor.js` (plinthe, frise, placards).
   `ambiance.js` ajouté aux 167 pages. Contrôle : 167 laboratoires sans erreur, en mode normal et en mode cours.
+
+## Corrections signalées par l'enseignant : angle du fil (travail) et feuille de la rotation
+
+- `b1_meca2_a1_translation` (pavé tiré) : l'angle était difficile à garder à 30° et 60° (quand on tire dans la direction du
+  fil, le pavé avance et l'angle augmente). Maintenant, à moins de 6° de 0°, 30° ou 60°, le fil **se cale** sur le repère
+  (crans rouges sur le rapporteur) ; si le pavé part sur un cran, le fil y reste calé pendant tout le trajet, jusqu'à ce
+  qu'on lâche l'anneau. Hors des crans, l'angle reste libre. Essai (main qui tremble de ± 3°, visée 33° et 57°) : essais
+  à 30,0° et 60,0°, écart 0°, F = 1,84 N et 2,32 N (valeurs théoriques).
+- `b1_meca1_a2_enregistrement` (rotation) : l'enregistrement **s'arrête seul** après 21 étincelles ou avant un tour
+  complet (il allait jusqu'à 30 points et les points se recouvraient) ; les **numéros** sont à l'extérieur de chaque arc,
+  sur le rayon du point (B0, B2, B4… ; A0, A4, A8…), ils ne couvrent plus les points ; la **règle** est rangée en bas de la
+  feuille.
+- Fichiers communs modifiés, sans effet sur les autres laboratoires : `eclateur.js` (options du mobile `max_points` et
+  `assez_enregistre(points)`), `feuille_enregistrement.js` (numéros sur le rayon seulement pour un solide à axe fixe),
+  `poste_coussin_air.js` (option `departs` : où ranger un outil). Régression : `tc_meca2_a2_repere` (30 points, numéros M
+  inchangés).

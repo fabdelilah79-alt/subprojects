@@ -1,7 +1,7 @@
 /*
 Rôle : paillasse « table à coussin d'air » prête à l'emploi : table posée sur la paillasse (à plat, ou inclinée
        par une cale), mobile autoporteur, éclateur, feuille d'enregistrement et outils de mesure demandés.
-Reçoit : le groupe SVG de la paillasse et { nom, inclinaison_mm_s2, fil, soufflerie, outils: ["transparent", "regle"], vecteurs }.
+Reçoit : le groupe SVG de la paillasse et { nom, inclinaison_mm_s2, fil, soufflerie, outils: ["transparent", "regle"], departs (facultatif : { regle: { x, y } }), vecteurs }.
 Produit : Labo.poste_coussin_air(groupe, reglages) -> { pense_bete, table, eclateur, feuille, outils }.
 Utilisé par : les simulations de mouvement (tc_meca2_a2_repere, tc_meca2_a3_vitesse, tc_meca2_a4_mru_mcu).
 */
@@ -25,7 +25,7 @@ Utilisé par : les simulations de mouvement (tc_meca2_a2_repere, tc_meca2_a3_vit
     const dessus = L.svg("g", { class: "calque-dessus" }, g);
     const feuille = new L.Feuille(table, dessus, table);
     const outils = reglages.soufflerie ? { soufflerie: L.soufflerie(g, table, 16, 410) } : {};
-    for (const nom of reglages.outils || []) outils[nom] = L[nom](feuille);
+    for (const nom of reglages.outils || []) outils[nom] = L[nom](feuille, reglages.departs?.[nom]);  // departs : où ranger un outil (facultatif)
     // Avec un fil, les flèches n'apparaissent que pour un enregistrement circulaire (fil accroché).
     const quand = reglages.fil ? () => !!table.fil_accroche : () => true;
     if (reglages.vecteurs) outils.vecteurs = L.vecteurs_vitesse(feuille, { ...reglages.vecteurs, quand: reglages.vecteurs.quand || quand });
