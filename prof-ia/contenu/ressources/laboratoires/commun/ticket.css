@@ -10,7 +10,9 @@ Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement vi
   top: 46px;
   width: 262px;
   max-height: 330px;
-  padding: 14px 14px 12px;
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
   background: #fbe98a;
   border-top: 22px solid #f3dc6b;
   box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.22);
@@ -30,21 +32,26 @@ Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement vi
   transform: rotate(2deg);
 }
 
+.ticket-contenu {
+  min-height: 0;
+  overflow-y: auto;
+}
+
 .ticket-contenu > p {
-  margin: 0 0 6px;
+  margin: 0 0 calc(5px * var(--echelle, 1));
 }
 
 .ticket-titre {
-  font: 500 17px/1.1 var(--main);
+  font: 500 calc(17px * var(--echelle, 1))/1.1 var(--main);
   color: #6b5300;
 }
 
 .ticket-texte {
-  font: 500 19px/1.12 var(--main);
+  font: 500 calc(19px * var(--echelle, 1))/1.12 var(--main);
 }
 
 .ticket-astuce {
-  font: 500 16px/1.1 var(--main);
+  font: 500 calc(16px * var(--echelle, 1))/1.1 var(--main);
   color: #5a4a12;
 }
 
@@ -53,7 +60,7 @@ Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement vi
 }
 
 .ticket-message {
-  font: 500 17px/1.1 var(--main);
+  font: 500 calc(17px * var(--echelle, 1))/1.1 var(--main);
   color: var(--stylo-rouge);
 }
 
@@ -68,8 +75,31 @@ Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement vi
   cursor: pointer;
 }
 
+.ticket.deborde::after {
+  content: "▾ toucher pour lire la suite";
+  position: absolute;
+  right: 8px;
+  bottom: 2px;
+  padding: 0 4px;
+  font: 600 10px var(--interface);
+  color: #6b5300;
+  background: #fbe98a;
+}
+
+.ticket.grand {
+  z-index: 5;
+  box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.32);
+}
+
 .ticket.plie {
-  max-height: 46px;
+  height: auto;
+  max-height: 64px;
+}
+
+.ticket.plie .ticket-titre {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ticket.plie .ticket-contenu > :not(.ticket-titre) {

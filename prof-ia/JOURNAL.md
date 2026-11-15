@@ -1726,3 +1726,18 @@ Essai réel de la voix Gemini (clé de l'enseignant, rangée dans .env, jamais d
 Problèmes restants : les agents n'ont pas été essayés pour de vrai (il faut une clé ANTHROPIC_API_KEY) ; l'exploitation
 n'est pas relue par l'agent chef (pour ne pas faire attendre l'élève) ; les parties validées utilisent encore les anciennes
 animations ; CLAUDE.md liste six agents (l'enseignant peut y ajouter l'agent exploitation).
+
+## 2026-11-15 — Le ticket jaune ne cache plus le matériel ; aperçus d'ambiances de couleur
+
+- Remarque de l'enseignant : le ticket jaune du mode cours cachait du matériel (multimètre, potence). Cause : il montrait
+  la consigne complète et l'astuce (jusqu'à environ 400 caractères), sur 262 × 330 px, par-dessus la scène, alors que
+  chaque laboratoire n'avait laissé libre que la place du pense-bête (230 × 175 en général).
+- Correction (`commun/ticket.js`, `commun/ticket.css`) : le ticket prend la place et la taille du pense-bête de la
+  paillasse ; écriture resserrée jusqu'à 72 % ; sinon « ▾ toucher pour lire la suite » (agrandi, plié, à sa place).
+  Mesure sur les 468 étapes de manipulation des premières missions : 179 à pleine taille, médiane 92 %, 29 étapes qui
+  demandent d'agrandir le ticket. 167 laboratoires sans erreur dans les deux modes ; 61 tests ; structure conforme.
+- Aperçus de six ambiances de couleur (actuelle, lumineuse, zellige, bois et sauge, nuit, vive) sur deux laboratoires,
+  sans modifier le code : en attente du choix de l'enseignant.
+
+Problème restant : dans les petits tickets (câblages en électricité), l'écriture resserrée est petite quand le
+laboratoire n'est pas en plein écran.

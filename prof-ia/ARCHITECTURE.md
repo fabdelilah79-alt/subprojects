@@ -272,7 +272,7 @@ Codes des filières : TCS, TCT (tronc commun) ; SE, ST, SM (1re année) ; SVT, S
 | contenu/ressources/laboratoires/commun/carnet.js | Carnet de laboratoire : missions, étapes cochées, questions, données, tampon. |
 | contenu/ressources/laboratoires/commun/carnet_ecriture.js | Écriture des textes du carnet comme dans un cahier (indices, exposants, fractions posées, unités en ligne) ; ordre des choix mélangé, stable. |
 | contenu/ressources/laboratoires/commun/missions.js | Moteur des missions : vérifications automatiques, réponses, passage d'une mission à l'autre, postMessage ; mode cours (« &prof=1 ») : étapes « question » passées, relevé envoyé en fin de mission. |
-| contenu/ressources/laboratoires/commun/ticket.js | Mode cours : ticket jaune (consigne complète, astuce, message de vérification), pliable et déplaçable, à la place du carnet. |
+| contenu/ressources/laboratoires/commun/ticket.js | Mode cours : ticket jaune (consigne complète, astuce, message de vérification) posé à la place et à la taille du pense-bête de la paillasse, écriture resserrée si besoin ; « toucher pour lire la suite » (agrandi, plié, à sa place), déplaçable ; remplace le carnet. |
 | contenu/ressources/laboratoires/commun/ticket.css | Style du ticket jaune et du bouton « Envoyer au professeur ». |
 | contenu/ressources/laboratoires/commun/releve.js | Mode cours : relevé des mesures pour le professeur IA (faits, tableau avec formules, courbe, figure SVG) ; bouton « Envoyer au professeur » de la tablette. |
 | contenu/ressources/laboratoires/commun/tri.js | Tableau magnétique : étiquettes à classer dans des colonnes (nombre d'étiquettes par ligne réglable). |

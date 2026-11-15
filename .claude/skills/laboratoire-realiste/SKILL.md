@@ -89,7 +89,8 @@ un pictogramme ni à une forme abstraite.
   dans une partie du cours ; une ressource du manifeste par mission). Pas de dépendance à une autre mission sans valeur de
   repli (`?? valeur par défaut`), consignes qui se comprennent sans avoir fait la mission précédente.
 - **Mode cours** (`#mission=<id>&prof=1`, ouvert par l'application) : pas de carnet, consignes sur le ticket jaune
-  (`ticket.js`), étapes « question » passées (le professeur IA les pose), relevé des mesures envoyé (`releve.js`). Donc :
+  (`ticket.js`, à la place et à la taille du pense-bête : **garder libre la place du pense-bête**), étapes « question »
+  passées (le professeur IA les pose), relevé des mesures envoyé (`releve.js`). Donc :
   la **consigne** de chaque étape de manipulation doit se suffire à elle-même (elle s'affiche en entier sur le ticket,
   environ 400 caractères au plus avec l'astuce) ; une mission doit se terminer par des gestes, le tableur ou le graphique,
   jamais par une question seule ; ce qui doit servir au professeur doit être **noté comme fait** (`L.missions.noter`) ou

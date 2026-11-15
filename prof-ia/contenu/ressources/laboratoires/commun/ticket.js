@@ -1,14 +1,50 @@
 /*
 Rôle : ticket jaune du laboratoire en mode cours (le carnet est retiré) : il montre la consigne complète de l'étape
        en cours, l'astuce de geste et le message de vérification (ce qu'il faut corriger) ; un toucher le plie ou le déplie,
-       un glissé le déplace (s'il cache du matériel).
+       un glissé le déplace. Il prend la place et la taille du pense-bête de la paillasse (la place que chaque laboratoire
+       a laissée libre) ; un texte long s'écrit un peu plus serré ; s'il ne tient toujours pas, « toucher pour lire la
+       suite » : un appui l'agrandit le temps de lire (appuis successifs : agrandi, plié, à sa place).
        Les étapes « question » ne sont pas comptées : c'est le professeur IA qui les pose.
 Reçoit : l'étage de la scène ; les annonces « missions » (Labo.missions.etat()).
 Produit : Labo.ticket.creer(etage) : le ticket posé en haut à gauche de la scène, au-dessus du décor.
 Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, quand Labo.mode_prof est vrai).
 */
 (function (L) {
-  const tk = { element: null, contenu: null, plie: false, signature: "", pos: { x: 22, y: 46 } };
+  const tk = { element: null, contenu: null, etat: "normal", signature: "", pos: { x: 22, y: 46 }, deplace: false };
+  const ECHELLE_MIN = 0.72;
+
+  function place_du_pense_bete(m) {
+    // Position et taille du pense-bête (caché) de la paillasse de la mission, ou null s'il n'y en a pas.
+    const groupe = document.querySelectorAll('[clip-path="url(#cadre-paillasse)"]')[m.paillasse];
+    const feuille = groupe?.querySelector(".pense-bete"), fond = feuille?.querySelectorAll("rect")[1];
+    const t = (feuille?.getAttribute("transform") || "").match(/translate\(([-\d.]+)[ ,]+([-\d.]+)\)/);
+    return t && fond ? { x: Number(t[1]), y: Number(t[2]), l: Number(fond.getAttribute("width")), h: Number(fond.getAttribute("height")) } : null;
+  }
+
+  function ajuster(m) {
+    // Pose le ticket à la place du pense-bête, puis resserre l'écriture jusqu'à ce que le texte tienne (sinon il défile).
+    const el = tk.element, p = place_du_pense_bete(m);
+    if (p && !tk.deplace) Object.assign(tk.pos, { x: p.x, y: p.y });
+    Object.assign(el.style, { left: `${tk.pos.x}px`, top: `${tk.pos.y}px` });
+    if (p) Object.assign(el.style, { width: `${p.l}px`, height: tk.etat === "normal" ? `${p.h}px` : "" });
+    let echelle = 1;
+    el.style.setProperty("--echelle", echelle);
+    while (tk.etat === "normal" && deborde() && echelle > ECHELLE_MIN) {
+      echelle = Math.round((echelle - 0.04) * 100) / 100;
+      el.style.setProperty("--echelle", echelle);
+    }
+    el.classList.toggle("deborde", tk.etat === "normal" && deborde());
+  }
+
+  const deborde = () => tk.contenu.scrollHeight > tk.contenu.clientHeight + 1;
+
+  function toucher() {
+    // Appui bref : à sa place -> agrandi (si le texte déborde) ou plié ; agrandi -> plié ; plié -> à sa place.
+    const suivant = { normal: tk.element.classList.contains("deborde") ? "grand" : "plie", grand: "plie", plie: "normal" };
+    tk.etat = suivant[tk.etat];
+    tk.signature = "";
+    ecrire(L.missions.etat());
+  }
 
   function gestes(m) {
     // Les étapes de manipulation (sans les questions) et le rang de l'étape en cours parmi elles.
@@ -37,13 +73,18 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
   function ecrire(e) {
     // Réécrit le ticket quand la mission affichée change d'étape ou reçoit un message.
     const m = e.missions[e.vue], message = e.messages[m.id];
-    const signature = JSON.stringify([e.vue, m.etape, m.accomplie, message, tk.plie]);
+    const etape_vue = JSON.stringify([e.vue, m.etape, m.accomplie]);
+    if (etape_vue !== tk.etape_vue && tk.etat === "grand") tk.etat = "normal";  // nouvelle étape : le ticket reprend sa place
+    tk.etape_vue = etape_vue;
+    const signature = JSON.stringify([etape_vue, message, tk.etat]);
     if (signature === tk.signature) return;
     tk.signature = signature;
     tk.contenu.replaceChildren();
-    tk.element.classList.toggle("plie", tk.plie);
+    tk.element.classList.toggle("plie", tk.etat === "plie");
+    tk.element.classList.toggle("grand", tk.etat === "grand");
     if (m.accomplie) fin(e, m);
     else etape(e, m);
+    ajuster(m);
   }
 
   L.ticket = {
@@ -56,11 +97,13 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
         debut: (e) => (e.target.closest("button") ? null : { ...tk.pos }),
         deplacer: (p) => {
           tk.pos = { x: Math.max(0, Math.min(760, p.x)), y: Math.max(24, Math.min(560, p.y)) };
+          tk.deplace = true;
           Object.assign(tk.element.style, { left: `${tk.pos.x}px`, top: `${tk.pos.y}px` });
         },
-        toucher: () => { tk.plie = !tk.plie; ecrire(L.missions.etat()); },
+        toucher,
       });
       L.ecouter("missions", ecrire);
+      document.fonts?.ready.then(() => { tk.signature = ""; ecrire(L.missions.etat()); });
     },
   };
 })(window.Labo);

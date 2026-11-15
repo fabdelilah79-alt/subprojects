@@ -885,3 +885,9 @@ explique, à partir des mesures et des figures de l'élève.
   finiraient dès l'ouverture ; c'est le professeur qui les traite (433 ressources, dont 424 missions).
 - Le relevé porte aussi les **questions de la mission** (énoncé, choix — le premier est juste — ou valeur attendue
   calculée d'après les mesures de l'élève, unité, aide) : le professeur IA peut en poser une après l'observation.
+- Correction (remarque de l'enseignant : « le ticket cache le matériel ») : le ticket prend maintenant **la place et la
+  taille du pense-bête** de la paillasse, c'est-à-dire la place que chaque laboratoire a laissée libre. Un texte long
+  s'écrit plus serré (jusqu'à 72 % de la taille) ; s'il ne tient toujours pas (29 étapes sur 468, surtout des câblages),
+  le ticket affiche « ▾ toucher pour lire la suite » : un appui l'agrandit, le suivant le plie, le troisième le remet à sa
+  place ; à l'étape suivante, il reprend sa place. Trois laboratoires sans pense-bête (gravitation, altitude, relativité)
+  gardent la place par défaut, en haut à gauche, sur le décor.
