@@ -5,7 +5,7 @@ Rôle : dessins du tableau de Lewis : tableau blanc et quadrillage, aimants d'at
 Reçoit : les groupes SVG, l'état du tableau (tableau_lewis.js) et la position des nœuds du quadrillage.
 Produit : Labo.cadre_lewis(g, G), Labo.aimant_atome(g, el), Labo.dessin_lewis(g, etat, noeud, rendre_glissable),
           Labo.reserve_lewis(g, elements, choix, poser(el, point), dire), Labo.bouton_texte(g, x, y, texte, action).
-Utilisé par : tableau_lewis.js ; L.bouton_texte : aussi les postes de chimie (option « relief=1 » : largeur adaptée au texte).
+Utilisé par : tableau_lewis.js.
 */
 (function (L) {
   const COULEUR = { H: ["#f4f4f2", "#222"], C: ["#2b2b2b", "#fff"], N: ["#2f5fc4", "#fff"], O: ["#d0312d", "#fff"], Cl: ["#2f9a3c", "#fff"], F: ["#9ad46a", "#222"], Si: ["#d8c49a", "#222"], P: ["#f08a24", "#fff"], S: ["#f2d22e", "#222"] };
@@ -67,9 +67,7 @@ Utilisé par : tableau_lewis.js ; L.bouton_texte : aussi les postes de chimie (o
   L.bouton_texte = function (g, x, y, texte, action) {
     // Bouton arrondi avec un texte (au toucher).
     const b = L.svg("g", { class: "bouton-texte", role: "button", "aria-label": texte }, g);
-    const l = L.relief ? Math.max(76, texte.length * 5.6 + 18) : 76;
-    if (L.relief) L.svg("rect", { x: x - l / 2, y: y - 9, width: l, height: 22, rx: 11, fill: "#5d6a74" }, b);
-    L.svg("rect", { x: x - l / 2, y: y - 11, width: l, height: 22, rx: 11, fill: "#e9eef2", stroke: "#8a96a0" }, b);
+    L.svg("rect", { x: x - 38, y: y - 11, width: 76, height: 22, rx: 11, fill: "#e9eef2", stroke: "#8a96a0" }, b);
     L.texte(b, x, y + 3, texte, { "font-size": 9, "font-weight": 700, fill: "#23315a" });
     L.glissable(b, { soulever: false, debut: () => ({ x: 0, y: 0 }), toucher: action });
     return b;

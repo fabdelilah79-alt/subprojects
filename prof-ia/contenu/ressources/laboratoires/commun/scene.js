@@ -2,8 +2,7 @@
 Rôle : scène fixe de 1024 × 640 px mise à l'échelle de l'écran (même mise en page sur téléphone, portable, TBI),
        avec zoom à deux doigts jusqu'à 5×, molette, déplacement de la vue zoomée et double-tap pour revenir.
 Reçoit : l'écran (#ecran, tout l'espace disponible) et l'étage (#etage, la scène de 1024 × 640).
-Produit : Labo.scene : vers_scene(evenement) -> coordonnées dans la scène ; zoom(), zoomer(zoom, x, y) ;
-         annonce « pince » au début d'un zoom.
+Produit : Labo.scene : vers_scene(evenement) -> coordonnées dans la scène ; annonce « pince » au début d'un zoom.
 Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
 */
 (function (L) {
@@ -135,10 +134,5 @@ Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
       return { x: (p.x - vue.gauche) / echelle, y: (p.y - vue.haut) / echelle };
     },
     pince_active: () => pince !== null,
-    zoom: () => vue.zoom,
-    zoomer(zoom, x = ecran.clientWidth / 2, y = ecran.clientHeight / 2) {
-      // Zoome la vue autour d'un point de l'écran (zoom 1 : la scène entière) ; utilisé par mobile.js.
-      zoomer_autour(zoom, x, y);
-    },
   };
 })(window.Labo);
