@@ -1,10 +1,10 @@
 /*
 Rôle : prototype « titrage en 2,5D » : appareils réalistes en volume (trois faces, lumière d'en haut à gauche) : potence
        (socle lourd, tige chromée, noix et pince), agitateur magnétique (plateau blanc, boutons, voyant), pH-mètre (afficheur,
-       touches, bras porte-électrode, électrode et câble), pissette, flacon ambré étiqueté.
+       touches, prise sur le côté), support d'électrode séparé, électrode et câble, pissette, flacon ambré étiqueté.
 Reçoit : le groupe SVG et la position de chaque appareil (x, y : coin avant gauche du pied, ou milieu du pied).
-Produit : P.boite(g, x, y, l, h, p, couleurs), P.potence(g, …), P.agitateur(g, …) -> { plateau }, P.ph_metre(g, …) -> { ecran },
-          P.electrode(g, …), P.pissette(g, x, y), P.flacon(g, x, y).
+Produit : P.boite(g, x, y, l, h, p, couleurs), P.potence(g, …), P.agitateur(g, …) -> { plateau }, P.ph_metre(g, …) -> { ecran, prise },
+          P.support_electrode(g, x, y) -> { bras }, P.electrode(g, …), P.pissette(g, x, y), P.flacon(g, x, y).
 Utilisé par : prototype.html (proposition ; aucun laboratoire n'est modifié).
 */
 (function (P) {
@@ -55,16 +55,28 @@ Utilisé par : prototype.html (proposition ; aucun laboratoire n'est modifié).
     const ecran = el("text", { x: x + 108, y: y - 37, "text-anchor": "end", "font-family": "monospace", "font-size": 21, "font-weight": 700, fill: "#14301a" }, b);
     el("text", { x: x + 20, y: y - 49, "font-family": "system-ui", "font-size": 8, "font-weight": 700, fill: "#14301a" }, b).textContent = "pH";
     ["#ffd166", "#ffffff", "#ffffff"].forEach((c, i) => el("rect", { x: x + 14 + i * 36, y: y - 20, width: 28, height: 11, rx: 3, fill: c, stroke: "#0d3c7a" }, b));
-    el("rect", { x: x + 20, y: y - 150, width: 7, height: 82, fill: "url(#chrome)" }, b);
-    return { ecran, bras: { x: x + 23, y: y - 150 } };
+    el("circle", { cx: x - 1, cy: y - 40, r: 5, fill: "#263238", stroke: "#0d3c7a" }, b);
+    return { ecran, prise: { x: x - 1, y: y - 40 } };
   };
 
-  P.electrode = function (g, bras, x, haut, surface, bas) {
-    // Bras horizontal jusqu'au bécher, électrode de verre (partie plongée : décalée et élargie, comme réfractée), câble noir.
+  P.support_electrode = function (g, x, y) {
+    // Support d'électrode posé sur la paillasse : socle rond lourd, tige chromée, noix ; renvoie le haut de la tige.
+    const b = el("g", { class: "support-electrode" }, g);
+    P.ombre(b, x, y, 26);
+    el("path", { d: `M${x - 26} ${y - 8} V${y} A26 ${26 * P.K} 0 0 0 ${x + 26} ${y} V${y - 8}`, fill: "#263238" }, b);
+    el("ellipse", { cx: x, cy: y - 8, rx: 26, ry: 26 * P.K, fill: "#455a64" }, b);
+    el("rect", { x: x - 3.5, y: y - 150, width: 7, height: 142, fill: "url(#chrome)" }, b);
+    el("rect", { x: x - 8, y: y - 154, width: 16, height: 14, rx: 3, fill: "url(#acier-sombre)" }, b);
+    return { bras: { x, y: y - 147 } };
+  };
+
+  P.electrode = function (g, bras, prise, x, haut, surface, bas) {
+    // Bras horizontal du support jusqu'au bécher, électrode (partie plongée vue à travers le liquide), câble jusqu'à la
+    // prise du côté gauche du pH-mètre (il ne passe pas devant l'écran).
     const b = el("g", { class: "electrode" }, g);
     el("rect", { x, y: bras.y - 4, width: bras.x - x + 4, height: 8, rx: 3, fill: "url(#chrome)" }, b);
     el("rect", { x: x - 9, y: bras.y - 8, width: 18, height: 16, rx: 3, fill: "url(#acier-sombre)" }, b);
-    el("path", { d: `M${x} ${bras.y - 8} C${x} ${bras.y - 40} ${bras.x + 60} ${bras.y - 50} ${bras.x + 70} ${bras.y + 70}`, stroke: "#1c1f22", "stroke-width": 3, fill: "none" }, b);
+    el("path", { d: `M${x} ${bras.y - 8} C${x} ${bras.y - 44} ${prise.x - 50} ${bras.y - 40} ${prise.x - 34} ${prise.y - 70} S${prise.x - 22} ${prise.y} ${prise.x - 4} ${prise.y}`, stroke: "#1c1f22", "stroke-width": 3, fill: "none" }, b);
     el("rect", { x: x - 6, y: haut, width: 12, height: surface - haut, rx: 2, fill: "#263238" }, b);
     el("rect", { x: x - 6, y: haut + 4, width: 12, height: 6, fill: "#ffd166" }, b);
     el("rect", { x: x - 5, y: surface, width: 12, height: bas - surface - 6, fill: "#37474f" }, b);

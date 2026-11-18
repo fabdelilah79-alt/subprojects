@@ -30,12 +30,13 @@ Utilisé par : l'enseignant (ouvrir ce fichier dans un navigateur).
     P.decor(el("g", {}, svg));
     const objets = el("g", {}, svg);
     P.potence(objets, 250, 452);
-    const ph = P.ph_metre(objets, 590, 492);
+    const support = P.support_electrode(objets, 548, 452);
+    const ph = P.ph_metre(objets, 610, 500);
     const agit = P.agitateur(objets, 360, 520);
     const burette = P.burette(objets, { x: 435, haut: 92, bas: 372 });
     const surface_prevue = agit.plateau.y - 100 * 0.55;
     const becher = P.becher(objets, { x: agit.plateau.x, y: agit.plateau.y, r: 44, h: 100, niveau: 0.55 });
-    P.electrode(objets, ph.bras, 470, ph.bras.y + 6, surface_prevue, agit.plateau.y - 14);
+    P.electrode(objets, support.bras, ph.prise, 470, support.bras.y + 6, surface_prevue, agit.plateau.y - 14);
     P.pissette(objets, 790, 520);
     P.flacon(objets, 900, 505);
     const goutte = el("ellipse", { rx: 2.6, ry: 3.6, fill: "#d6eaf8", stroke: "#5d8fb3", "stroke-width": 0.6 }, objets);

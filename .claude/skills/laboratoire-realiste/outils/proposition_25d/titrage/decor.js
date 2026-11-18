@@ -14,9 +14,10 @@ Utilisé par : prototype.html (proposition ; aucun laboratoire n'est modifié).
     // Mur dégradé, carrelage blanc avec quelques carreaux de couleur, plinthe.
     el("rect", { width: 1024, height: P.SOL, fill: "#bfe8e3" }, g);
     el("rect", { width: 1024, height: 150, fill: "#d9f3ef", opacity: 0.6 }, g);
+    // Une seule rangée décorative régulière : un carreau de couleur sur quatre, couleurs en alternance.
     const couleurs = ["#ffd166", "#ff8c69", "#4ecdc4", "#9b8cff"];
     for (let x = 0; x < 1024; x += 40) for (let y = 196; y < P.SOL; y += 32) {
-      const n = (x * 7 + y * 3) % 17, c = n === 0 ? couleurs[(x / 40) % 4] : "#fbfdfc";
+      const i = x / 40, c = y === 228 && i % 4 === 1 ? couleurs[((i - 1) / 4) % 4] : "#fbfdfc";
       el("rect", { x: x + 0.5, y: y + 0.5, width: 39, height: 31, fill: c, stroke: "#cfe3df" }, g);
     }
     el("rect", { y: 190, width: 1024, height: 7, fill: "#2a9d8f" }, g);
@@ -45,15 +46,18 @@ Utilisé par : prototype.html (proposition ; aucun laboratoire n'est modifié).
 
   function etagere(g) {
     // Étagère de bois avec flacons de couleur (fioles, flacon rond) et une horloge au-dessus.
-    el("rect", { x: 420, y: 120, width: 260, height: 9, rx: 2, fill: "#c98d4b" }, g);
-    el("rect", { x: 420, y: 129, width: 260, height: 4, fill: "#8a5a2b" }, g);
-    [["#ff8c69", 440, 44], ["#4ecdc4", 482, 34], ["#ffd166", 520, 50], ["#9b8cff", 566, 38], ["#ef476f", 606, 46], ["#06d6a0", 646, 30]].forEach(([c, x, h]) => {
+    // Étagère à droite de la burette (x ≥ 480) ; l'horloge, à gauche, ne touche ni la tige de la potence ni les flacons.
+    el("rect", { x: 480, y: 120, width: 240, height: 9, rx: 2, fill: "#c98d4b" }, g);
+    el("rect", { x: 480, y: 129, width: 240, height: 4, fill: "#8a5a2b" }, g);
+    [["#ff8c69", 496, 44], ["#4ecdc4", 534, 34], ["#ffd166", 570, 50], ["#9b8cff", 612, 38], ["#ef476f", 648, 46], ["#06d6a0", 686, 30]].forEach(([c, x, h]) => {
       el("rect", { x, y: 120 - h, width: 24, height: h, rx: 5, fill: c, opacity: 0.85 }, g);
       el("rect", { x: x + 7, y: 112 - h, width: 10, height: 9, rx: 2, fill: "#3d4a55" }, g);
       el("rect", { x: x + 4, y: 124 - h, width: 4, height: h - 10, rx: 2, fill: "#fff", opacity: 0.45 }, g);
     });
-    el("circle", { cx: 550, cy: 50, r: 26, fill: "#ffffff", stroke: "#264653", "stroke-width": 4 }, g);
-    el("path", { d: "M550 50 V33 M550 50 L562 56", stroke: "#264653", "stroke-width": 3, "stroke-linecap": "round" }, g);
+    el("circle", { cx: 362, cy: 66, r: 26, fill: "#ffffff", stroke: "#264653", "stroke-width": 4 }, g);
+    for (let h = 0; h < 12; h++) { const a = (h * Math.PI) / 6; el("line", { x1: 362 + 19 * Math.sin(a), y1: 66 - 19 * Math.cos(a), x2: 362 + 22 * Math.sin(a), y2: 66 - 22 * Math.cos(a), stroke: "#264653", "stroke-width": h % 3 ? 1 : 2 }, g); }
+    el("path", { d: "M362 66 V51 M362 66 L373 72", stroke: "#264653", "stroke-width": 3, "stroke-linecap": "round" }, g);
+    el("circle", { cx: 362, cy: 66, r: 2.5, fill: "#ef476f" }, g);
   }
 
   function paillasse(g) {
