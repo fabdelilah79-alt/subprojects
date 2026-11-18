@@ -48,6 +48,10 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 - Les éléments réglables montrent leur état (cale posée sous la table, cale prise sur la paillasse estompée…).
 - Unités et nombres écrits à la française (virgule, espaces fines), symboles corrects (µ, Ω, ⏚, ², indices).
 
+**Proposition 2,5D (en attente de validation de l'enseignant)** : `GUIDE_25D.md` (vue, lumière, ombres, physique et
+rendu des liquides, liaisons, téléphone) ; banc d'essai `outils/banc_25d.html`, test `node outils/test_25d.js`. Tant
+qu'elle n'est pas validée, ne rien changer dans les laboratoires existants.
+
 ## 2 bis. Dessin du matériel (remarque de l'enseignant : « pas des choses bizarres à l'œil »)
 
 Chaque objet doit ressembler au **vrai matériel d'un laboratoire de lycée** (catalogues de fournisseurs scolaires), pas à
