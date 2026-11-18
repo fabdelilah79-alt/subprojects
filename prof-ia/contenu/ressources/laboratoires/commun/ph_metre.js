@@ -8,13 +8,29 @@ Rôle : pH-mètre de paillasse aux vraies dimensions : boîtier (110 mm × 95 mm
 Reçoit : le contexte de la paillasse et { x (milieu du boîtier), sol, e, tige (x de la tige), sonde_x, haut, bas (y du bas
          de l'électrode, levée et plongée), recipients(), agite(r), etalonne (vrai : déjà étalonné) }.
 Produit : Labo.ph_metre(ctx, reglage) -> { etat() -> { plonge, dans (id), pH (vrai), affiche (nombre), stable, cal7, cal4 } }.
-Utilisé par : les simulations acide-base (2e année du bac).
+Utilisé par : les simulations acide-base (2e année du bac). Option « relief=1 » (relief.js) : boîtier en relief.
 */
 (function (L) {
   const LONG = 130, BULBE = 14, R = 6;
 
+  function boitier_relief(g, x, sol, e) {
+    // Variante en relief (option relief=1) : dessus vu d'en haut avec la prise BNC (cylindre), face ombrée, afficheur enfoncé.
+    const l = 110 * e, h = 95 * e, y = sol - h, k = L.boite_relief(g, x - l / 2, sol, l, h - 3, 14 * e, { face: "#cfd8de", dessus: "#e6ecef" });
+    L.afficheur_relief(g, x - l / 2 + 9, y + 9, l - 18, 32, "#b7c3a6");
+    L.texte(g, x - l / 2 + 18, y + 22, "pH", { "font-size": 8, "font-weight": 700, fill: "#1b1f17" });
+    L.texte(g, x, y + h - 8, "pH-MÈTRE", { "font-size": 7.5, "font-weight": 700, fill: "#37474f" });
+    const px = x + l / 2 - 16, py = k.dessus + 7;
+    L.svg("ellipse", { cx: px, cy: py + 1, rx: 6, ry: 2.2, fill: "#000", opacity: 0.35 }, g);
+    L.svg("rect", { x: px - 5, y: py - 7, width: 10, height: 7, fill: "url(#metal)", stroke: "#444", "stroke-width": 0.6 }, g);
+    L.svg("ellipse", { cx: px, cy: py - 7, rx: 5, ry: 1.8, fill: "#d9dee2", stroke: "#444", "stroke-width": 0.6 }, g);
+    const ecran = L.texte(g, x + l / 2 - 14, y + 34, "", { "font-size": 20, "font-family": "monospace", "font-weight": 700, fill: "#1b1f17", "text-anchor": "end" });
+    const message = L.texte(g, x, y + 52, "", { "font-size": 6.5, "font-weight": 700, fill: "#37474f" });
+    return { ecran, message, prise: { x: px, y: py - 7 }, y };
+  }
+
   function boitier(g, x, sol, e) {
     // Boîtier bleu-gris, afficheur, touches et prise BNC ; renvoie l'écran, la zone de message et la prise.
+    if (L.relief) return boitier_relief(g, x, sol, e);
     const l = 110 * e, h = 95 * e, y = sol - h;
     L.ombre_sol(g, x, sol + 2, l * 0.55, 5, 0.4);
     L.svg("rect", { x: x - l / 2, y, width: l, height: h, rx: 6, fill: "#cfd8de", stroke: "#6f7d86" }, g);
@@ -30,7 +46,8 @@ Utilisé par : les simulations acide-base (2e année du bac).
   function touche(ctx, x, y, texte, action) {
     // Touche en caoutchouc gris foncé, au-dessus des câbles.
     const t = L.svg("g", { class: "touche-ph", role: "button", "aria-label": texte }, ctx.haut);
-    L.svg("rect", { x: x - 16, y: y - 7, width: 32, height: 14, rx: 4, fill: "#3b4147", stroke: "#1d2125" }, t);
+    if (L.relief) L.touche_relief(t, x, y, 32, 14);
+    else L.svg("rect", { x: x - 16, y: y - 7, width: 32, height: 14, rx: 4, fill: "#3b4147", stroke: "#1d2125" }, t);
     L.texte(t, x, y + 3, texte, { "font-size": 6.5, "font-weight": 700, fill: "#eef2f4" });
     L.glissable(t, { soulever: false, debut: () => ({ x, y }), toucher: action });
   }

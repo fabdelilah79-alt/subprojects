@@ -6,14 +6,32 @@ Rôle : agitateur magnétique aux vraies dimensions (boîtier de 150 mm × 60 mm
 Reçoit : le contexte de la paillasse et { x (milieu), sol, e (px/mm) }.
 Produit : Labo.agitateur_magnetique(ctx, reglage) -> { station (support { x, y }), vitesse() (0, 1 ou 2),
           agite(r) (vrai si le récipient r est sur le plateau et que le barreau tourne), suivre(r) (dessine le barreau de r) }.
-Utilisé par : les postes de titrage.
+Utilisé par : les postes de titrage. Option « relief=1 » (relief.js) : boîtier dessiné en relief.
 */
 (function (L) {
   const LARG = 150, HAUT = 60, BARREAU = 25;
 
+  function boitier_relief(g, x, sol, e, vitesse) {
+    // Variante en relief (option relief=1) : dessus vu d'en haut avec sa plaque de céramique, face avant ombrée, bouton
+    // saillant, voyant qui luit ; le milieu du dessus reste à la hauteur de la station (sol - 60 mm).
+    const l = LARG * e, p = 18 * e, h = HAUT * e - p / 2 - 3, k = L.boite_relief(g, x - l / 2, sol, l, h, p, { face: "#5d6870", dessus: "#c9d0d4" });
+    L.svg("rect", { x: x - l / 2 + 12, y: k.dessus + 3, width: l - 24, height: p - 4, rx: 4, fill: "#f7f7f3", stroke: "#aeb3ac" }, g);
+    L.svg("rect", { x: x - l / 2 + 16, y: k.dessus + 4.5, width: l - 32, height: 1.6, rx: 0.8, fill: "#fff" }, g);
+    const bx = x + l * 0.3, by = sol - 28 * e, a = vitesse * 1.2 - 1.2;
+    L.svg("circle", { cx: bx + 1.5, cy: by + 2.5, r: 9.5 * e, fill: "#000", opacity: 0.35 }, g);
+    L.svg("circle", { cx: bx, cy: by, r: 9 * e, fill: "url(#acier)", stroke: "#111" }, g);
+    L.svg("circle", { cx: bx, cy: by, r: 6 * e, fill: "#2a2f33" }, g);
+    L.svg("line", { x1: bx, y1: by, x2: bx + 6 * e * Math.sin(a), y2: by - 6 * e * Math.cos(a), stroke: "#fff", "stroke-width": 1.8, "stroke-linecap": "round" }, g);
+    if (vitesse) L.svg("circle", { cx: x + l * 0.12, cy: by, r: 6 * e, fill: "#5cff7a", opacity: 0.3 }, g);
+    L.svg("circle", { cx: x + l * 0.12, cy: by, r: 2.6 * e, fill: vitesse ? "#5cff7a" : "#2c4a30", stroke: "#111" }, g);
+    L.texte(g, x - l * 0.2, by - 6 * e, "AGITATEUR", { "font-size": 6.5, "font-weight": 700, fill: "#e8ecef" });
+    L.texte(g, x - l * 0.2, by + 6 * e, ["arrêt", "lent", "rapide"][vitesse], { "font-size": 6, fill: "#cfd6db" });
+  }
+
   function boitier(g, x, sol, e, vitesse) {
-    // Boîtier gris, plateau blanc, bouton de réglage, voyant, inscription.
+    // Boîtier gris, plateau blanc, bouton de réglage, voyant, inscription (en relief si l'option relief=1 est active).
     g.replaceChildren();
+    if (L.relief) return boitier_relief(g, x, sol, e, vitesse);
     const y = sol - HAUT * e, l = LARG * e;
     L.ombre_sol(g, x, sol + 2, l * 0.55, 5, 0.4);
     L.svg("rect", { x: x - l / 2, y: y + 6 * e, width: l, height: (HAUT - 6) * e, rx: 4, fill: "#5d6870", stroke: "#2e353a" }, g);

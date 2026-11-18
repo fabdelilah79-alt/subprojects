@@ -917,3 +917,15 @@ explique, à partir des mesures et des figures de l'élève.
   `assez_enregistre(points)`), `feuille_enregistrement.js` (numéros sur le rayon seulement pour un solide à axe fixe),
   `poste_coussin_air.js` (option `departs` : où ranger un outil). Régression : `tc_meca2_a2_repere` (30 points, numéros M
   inchangés).
+
+## Proposition à valider : relief et confort sur téléphone (18/11/2026)
+
+- Deux options **désactivées par défaut**, à ajouter à l'adresse : `relief=1` (agitateur magnétique et pH-mètre dessinés
+  en relief, bouton « Remplir la burette » dont le texte tient dans le bouton) et `mobile=1` (bouton « Missions » dans la
+  bande libre de l'écran ; double-toucher pour agrandir ; doigt aimanté : un toucher jusqu'à 30 px à côté d'un objet le
+  saisit ; « tournez le téléphone » en portrait ; menu : « Y aller », « Recommencer », « Plein écran »).
+- Seules deux pages les chargent pour l'essai : `b2_chim5_a2_titrage_ph` et `b2_chim5_a1_ph_courants`.
+- Fichiers communs modifiés sans changement visible sans option (vérifié : dessin identique à avant) : `scene.js` (zoom(),
+  zoomer()), `missions.js` (ouvrir(), adresse « depart=<id> »), `agitateur_magnetique.js`, `ph_metre.js`, `lewis_dessin.js`.
+- Test : `node test_mobile.js` dans `.claude/skills/laboratoire-realiste/outils/`.
+

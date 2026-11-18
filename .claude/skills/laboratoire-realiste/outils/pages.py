@@ -114,6 +114,9 @@ for sid, (titre, role) in SIMS.items():
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux
     if sid.startswith('b2_meca6'): scripts = MECA + ['../../commun/' + f for f in MECA6 if os.path.exists(B + 'commun/' + f)] + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux
+    # Propositions à valider (options « relief=1 » et « mobile=1 », désactivées par défaut) : seulement les pages demandées.
+    if sys.argv[1:] and sid in sys.argv[1:] and os.path.exists(B + 'commun/mobile.js'): scripts = scripts[:-len(locaux)] + ['../../commun/' + f for f in ['relief.js', 'mobile.js', 'menu_missions.js']] + locaux
+    css_mobile = '  <link rel="stylesheet" href="../../commun/mobile.css">\n' if '../../commun/mobile.js' in scripts else ''
     html = f'''<!doctype html>
 <!--
 Rôle : {role}
@@ -130,7 +133,7 @@ Utilisé par : outils/assembler_laboratoire.py, qui en fait un seul fichier auto
   <link rel="stylesheet" href="../../commun/tablette.css">
   <link rel="stylesheet" href="../../commun/carnet.css">
   <link rel="stylesheet" href="../../commun/ticket.css">
-</head>
+{css_mobile}</head>
 <body>
   <div id="ecran"><div id="etage"></div></div>
 ''' + ''.join(f'  <script src="{s}"></script>\n' for s in scripts) + '''</body>

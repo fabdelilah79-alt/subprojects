@@ -1771,3 +1771,20 @@ Problème restant : le rapporteur du pavé est petit (lecture de l'angle au degr
 
 - `b1_meca2_a1_translation/pave_dessin.js` : rapporteur de rayon 108 px (au lieu de 62), un trait par degré, nombres plus
   gros, crans rouges à 30° et 60° ; essais rejoués : 0°, 30° et 60° exacts. Structure conforme ; 61 tests.
+
+## 2026-11-18 — Proposition : relief et confort sur téléphone (laboratoire existant gardé)
+
+- Demande de l'enseignant : garder le laboratoire tel qu'il est, soigner les détails, plus de 2,5D, plus utilisable sur
+  téléphone. Constat sur téléphone : scène réduite à la moitié (bouton de l'agitateur : 15 px de large), bandes noires
+  en portrait, texte « Remplir la burette » qui déborde, agitateur et pH-mètre dessinés à plat, missions sans menu.
+- Nouveaux fichiers communs : `relief.js`, `mobile.js`, `menu_missions.js`, `mobile.css` (options `relief=1`, `mobile=1`,
+  désactivées par défaut). Petits ajouts dans `scene.js`, `missions.js`, `agitateur_magnetique.js`, `ph_metre.js`,
+  `lewis_dessin.js` : sans option, le dessin de la scène est identique à avant (comparaison du SVG, deux laboratoires,
+  deux modes). Pages et fichiers assemblés : seulement les deux laboratoires de pH, pour l'essai.
+- Test `test_mobile.js` (téléphone simulé) : 10 vérifications réussies ; sans l'aimant, le même toucher ne fait rien.
+  Geste complet du titrage rejoué avec et sans option : même pH (3,44). 61 tests ; structure conforme.
+
+Problèmes restants : sur un petit téléphone (iPhone SE), le bouton « Missions » couvre le coin de l'affiche des
+indicateurs ; le double-toucher n'est pas vérifié sur un vrai iPhone (Safari) ; « Recommencer » remet à zéro toutes les
+paillasses ; le relief n'est fait que pour l'agitateur, le pH-mètre et le bouton texte.
+

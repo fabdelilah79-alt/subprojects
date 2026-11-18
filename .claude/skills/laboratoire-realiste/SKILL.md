@@ -48,6 +48,11 @@ Cette compétence rassemble ses demandes et tout ce qui a été appris chapitre 
 - Les éléments réglables montrent leur état (cale posée sous la table, cale prise sur la paillasse estompée…).
 - Unités et nombres écrits à la française (virgule, espaces fines), symboles corrects (µ, Ω, ⏚, ², indices).
 
+**Proposition relief + téléphone (en attente de validation)** : options `relief=1` et `mobile=1` (`commun/relief.js`,
+`mobile.js`, `menu_missions.js`, `mobile.css`), chargées seulement par les pages des deux laboratoires de pH ; test
+`outils/test_mobile.js`. Après validation : les ajouter à toutes les pages (`pages.py`) et dessiner les autres boîtiers avec
+`L.boite_relief`.
+
 **Proposition 2,5D (en attente de validation de l'enseignant)** : `GUIDE_25D.md` (vue, lumière, ombres, physique et
 rendu des liquides, liaisons, téléphone) ; banc d'essai `outils/banc_25d.html`, test `node outils/test_25d.js`. Tant
 qu'elle n'est pas validée, ne rien changer dans les laboratoires existants.

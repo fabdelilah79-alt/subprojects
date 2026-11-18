@@ -3,8 +3,9 @@ Rôle : moteur des missions du laboratoire : étape en cours, vérification auto
        questions du carnet, passage d'une paillasse à l'autre, messages envoyés à la page du professeur.
 Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra ; l'adresse
          de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours) ;
-         « &prof=1 » (ajouté par l'application) : mode cours, le professeur IA pose les questions et explique.
-Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), faits(), envoyer_releve(), etat() ;
+         « &prof=1 » (ajouté par l'application) : mode cours, le professeur IA pose les questions et explique ;
+         « depart=<id> » (menu des missions, « Recommencer ») : toutes les missions, en commençant par celle-ci.
+Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), ouvrir(numero), faits(), envoyer_releve(), etat() ;
          Labo.mode_prof (vrai en mode cours : pas de carnet, les étapes « question » passent toutes seules,
          les mesures partent au professeur : message « releve ») ;
          annonce « missions » à chaque changement ; postMessage { source: "laboratoire", type, ... } au parent.
@@ -62,9 +63,11 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
   function mission_seule() {
     // Mission demandée par l'adresse (#mission=<id>) : on l'ouvre directement, sans les autres ; caméra posée sur sa paillasse.
     const id = (window.location.hash.match(/mission=([a-z0-9_]+)/) || [])[1], n = etat.missions.findIndex((m) => m.id === id);
-    if (n < 0) return;
-    Object.assign(etat, { seule: n, courante: n, vue: n });
-    camera.dataset.x = -L.LARGEUR * mission(n).paillasse;
+    const depart = (window.location.hash.match(/[#&]depart=([a-z0-9_]+)/) || [])[1], d = etat.missions.findIndex((m) => m.id === depart);
+    if (n < 0 && d >= 0) Object.assign(etat, { courante: d, vue: d });
+    if (n < 0 && d < 0) return;
+    if (n >= 0) Object.assign(etat, { seule: n, courante: n, vue: n });
+    camera.dataset.x = -L.LARGEUR * mission(etat.vue).paillasse;
     camera.setAttribute("transform", `translate(${camera.dataset.x} 0)`);
   }
 
@@ -116,6 +119,13 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       etat.debut[mission(numero).id] ??= performance.now();
       deplacer_camera(numero);
       L.annoncer("missions", L.missions.etat());
+    },
+    ouvrir(numero) {
+      // Ouvre directement une mission, même si les précédentes ne sont pas finies (menu des missions, mobile.js).
+      if (etat.seule !== null || !mission(numero)) return;
+      etat.courante = Math.max(etat.courante, numero);
+      L.missions.aller(numero);
+      verifier();
     },
     faits() {
       // Les faits notés par les paillasses (lecture seule, pour le relevé).
