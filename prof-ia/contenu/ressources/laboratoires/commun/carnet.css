@@ -166,6 +166,8 @@ Utilisé par : la page de chaque simulation (avec labo.css).
   cursor: pointer;
 }
 
+.carnet-commandes { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 4px; }
+
 .carnet-message { margin: 4px 0 0; font: 500 21px/1.15 var(--main); }
 .carnet-message.faux { color: var(--stylo-rouge); }
 .carnet-message.juste { color: var(--stylo-vert); }

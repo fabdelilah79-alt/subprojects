@@ -1771,3 +1771,19 @@ Problème restant : le rapporteur du pavé est petit (lecture de l'angle au degr
 
 - `b1_meca2_a1_translation/pave_dessin.js` : rapporteur de rayon 108 px (au lieu de 62), un trait par degré, nombres plus
   gros, crans rouges à 30° et 60° ; essais rejoués : 0°, 30° et 60° exacts. Structure conforme ; 61 tests.
+
+## 2026-11-19 — Commande au doigt ; missions à recommencer ou à passer
+
+- La proposition « relief et confort sur téléphone » du 18/11 a été retirée à la demande de l'enseignant.
+- Demande : approcher un peu les simulations, les commander au doigt sur téléphone, recommencer une mission et passer à
+  la suivante sans l'avoir finie ; garder la scène de taille fixe (pas de déformation dans le cadre).
+- `tactile.js` (nouveau, 167 pages) : doigt aimanté, double-toucher (zoom ×2 ou retour) ; `scene.js` : le double-clic sur
+  le fond approche ou revient (avant : il revenait seulement) ; `missions.js` : aller() ouvre toute mission,
+  recommencer() ; `carnet.js`, `carnet.css`, `ticket.js`, `ticket.css` : boutons « Recommencer » et « Passer à la mission ».
+- Contrôles : 167 laboratoires assemblés sans erreur (mode élève et mode cours) ; `test_tactile_missions.js` : 13
+  vérifications réussies ; scénario de référence `exemple_scenario.js` rejoué (deux missions accomplies, aucune erreur) ;
+  61 tests ; structure conforme.
+
+Problèmes restants : « Recommencer » remet à zéro tout le laboratoire (toutes les paillasses) ; le double-toucher n'a pas été
+essayé sur un vrai iPhone ; un double-clic sur le fond, à l'ordinateur, approche maintenant la scène (un autre la remet).
+

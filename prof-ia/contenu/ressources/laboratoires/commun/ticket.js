@@ -6,7 +6,8 @@ Rôle : ticket jaune du laboratoire en mode cours (le carnet est retiré) : il m
        suite » : un appui l'agrandit le temps de lire (appuis successifs : agrandi, plié, à sa place).
        Les étapes « question » ne sont pas comptées : c'est le professeur IA qui les pose.
 Reçoit : l'étage de la scène ; les annonces « missions » (Labo.missions.etat()).
-Produit : Labo.ticket.creer(etage) : le ticket posé en haut à gauche de la scène, au-dessus du décor.
+Produit : Labo.ticket.creer(etage) : le ticket posé en haut à gauche de la scène, au-dessus du décor ; en bas,
+         « Recommencer » et « Mission suivante » (même si la mission n'est pas finie).
 Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, quand Labo.mode_prof est vrai).
 */
 (function (L) {
@@ -61,6 +62,16 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
     suite.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.aller(e.vue + 1); });
   }
 
+  function pied(e) {
+    // Bas du ticket : « Recommencer » (laboratoire remis à l'état de départ) et « Mission suivante » s'il y en a une.
+    tk.pied.replaceChildren();
+    const refaire = L.html("button", { type: "button", class: "ticket-bouton" }, tk.pied, "Recommencer");
+    refaire.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.recommencer(); });
+    if (e.seule !== null || e.vue + 1 >= e.missions.length || e.missions[e.vue].accomplie) return;
+    const suite = L.html("button", { type: "button", class: "ticket-bouton" }, tk.pied, "Mission suivante");
+    suite.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.aller(e.vue + 1); });
+  }
+
   function etape(e, m) {
     // Étape en cours : consigne, astuce de geste, message de vérification.
     const { total, rang } = gestes(m), en_cours = m.etapes[m.etape], message = e.messages[m.id];
@@ -84,6 +95,7 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
     tk.element.classList.toggle("grand", tk.etat === "grand");
     if (m.accomplie) fin(e, m);
     else etape(e, m);
+    pied(e);
     ajuster(m);
   }
 
@@ -93,6 +105,7 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
       tk.element = L.html("section", { class: "ticket", "aria-label": "Consignes de l'expérience", "aria-live": "polite" }, etage);
       L.html("div", { class: "ticket-scotch" }, tk.element);
       tk.contenu = L.html("div", { class: "ticket-contenu" }, tk.element);
+      tk.pied = L.html("div", { class: "ticket-pied" }, tk.element);
       L.glissable(tk.element, {
         debut: (e) => (e.target.closest("button") ? null : { ...tk.pos }),
         deplacer: (p) => {

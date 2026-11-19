@@ -114,6 +114,8 @@ for sid, (titre, role) in SIMS.items():
     if sid == 'b2_meca2_s4_satellites': scripts = MECA + ['../../commun/' + f for f in ORBITES] + locaux
     if sid.startswith('b2_meca6'): scripts = MECA + ['../../commun/' + f for f in MECA6 if os.path.exists(B + 'commun/' + f)] + locaux
     if sid.startswith(('b2_ondes', 'b2_nucl')): scripts = PHYS + ['../../commun/' + f for f in ONDES if os.path.exists(B + 'commun/' + f)] + locaux
+    if '../../commun/glisser.js' in scripts and '../../commun/tactile.js' not in scripts:
+        scripts.insert(scripts.index('../../commun/glisser.js') + 1, '../../commun/tactile.js')  # doigt aimanté, double-toucher
     html = f'''<!doctype html>
 <!--
 Rôle : {role}

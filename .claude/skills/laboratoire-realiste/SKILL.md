@@ -144,6 +144,9 @@ un pictogramme ni à une forme abstraite.
   (`const D = L.tubes_dessin`) doit être nommé pour passer avant (ex. `dessin_tubes.js` avant `poste_tubes.js`).
 - `L.documents_mur` place la vue « document ouvert » au moment de l'appel : l'appeler tôt (affiches derrière le matériel),
   puis, à la fin du poste, `g.append(g.querySelector(".document-ouvert"))` pour que le document ouvert passe devant tout.
+- Commande au doigt : `tactile.js` (après `glisser.js` dans chaque page, `pages.py` l'ajoute) aimante un toucher vers le
+  `.glissable` le plus proche (24 px) ; un objet doit donc être `L.glissable` pour en profiter. Missions : `aller(n)` ouvre
+  toute mission, `recommencer()` recharge avec « depart=<id> ». Test : `outils/test_tactile_missions.js`.
 - Un objet fin (fil, anse, aiguille) se touche mal : lui ajouter une zone invisible (`opacity: 0.001`) autour de lui.
 - Pendule (pesant ou simple) : `commun/pendule_pesant.js` (modèle exact en sin θ, période selon l'amplitude) et
   `pendule_pesant_dessin.js`, paillasse complète `poste_pendule_pesant.js` (variante « énergies ») ; une masse sur un objet qui tourne se saisit dans les deux sens : le geste décide (le long de

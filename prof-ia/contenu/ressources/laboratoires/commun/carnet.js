@@ -2,7 +2,8 @@
 Rôle : carnet de laboratoire posé sur la paillasse : un toucher l'ouvre ; il montre les missions (marque-pages),
        l'objectif, les étapes cochées au fur et à mesure, la question à laquelle répondre et le tampon de réussite.
 Reçoit : l'étage de la scène ; les annonces « missions » ; les réponses de l'élève (choix ou nombre).
-Produit : Labo.carnet : creer(), ouvrir(), fermer() ; appelle Labo.missions.repondre() et Labo.missions.aller().
+Produit : Labo.carnet : creer(), ouvrir(), fermer() ; appelle Labo.missions.repondre(), aller() et recommencer()
+         (boutons « Recommencer » et « Passer à la mission suivante », même si la mission n'est pas finie).
 Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules, ordre des choix).
 */
 (function (L) {
@@ -37,13 +38,12 @@ Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules,
   }
 
   function marque_pages(page, e) {
-    // Un marque-page par mission ; les missions pas encore ouvertes sont grisées.
+    // Un marque-page par mission ; on peut ouvrir n'importe quelle mission, même si la précédente n'est pas finie.
     const rangee = L.html("div", { class: "carnet-marques" }, page);
     e.missions.forEach((m, i) => {
       if (e.seule !== null && i !== e.seule) return;
       const b = L.html("button", { type: "button", class: "carnet-marque" + (m.accomplie ? " accomplie" : "") }, rangee, e.seule !== null ? "Mission" : `Mission ${i + 1}`);
       b.setAttribute("aria-pressed", String(i === e.vue));
-      if (i > e.courante) b.disabled = true;
       b.addEventListener("click", () => L.missions.aller(i));
     });
   }
@@ -59,6 +59,16 @@ Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules,
       if (message) L.ecrire_riche(L.html("p", { class: "carnet-message " + (message.juste ? "juste" : "faux"), role: "status" }, li), message.texte);
       else if (etape.aide_geste) L.ecrire_riche(L.html("p", { class: "carnet-astuce" }, li), etape.aide_geste);
     });
+  }
+
+  function commandes(page, e) {
+    // « Recommencer » (laboratoire remis à l'état de départ) et, si la mission n'est pas finie, « Passer à la mission suivante ».
+    const rangee = L.html("div", { class: "carnet-commandes" }, page);
+    const refaire = L.html("button", { type: "button", class: "carnet-bouton" }, rangee, "Recommencer");
+    refaire.addEventListener("click", () => L.missions.recommencer());
+    if (e.seule !== null || e.vue + 1 >= e.missions.length || e.missions[e.vue].accomplie) return;
+    const suite = L.html("button", { type: "button", class: "carnet-bouton" }, rangee, `Passer à la mission ${e.vue + 2}`);
+    suite.addEventListener("click", () => L.missions.aller(e.vue + 1));
   }
 
   function fin_de_mission(page, e) {
@@ -93,6 +103,7 @@ Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules,
     }
     etapes(c.page, m, message);
     if (m.accomplie) fin_de_mission(c.page, e);
+    commandes(c.page, e);
   }
 
   L.carnet = {

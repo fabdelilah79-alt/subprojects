@@ -547,6 +547,8 @@ Utilisé par : la page de chaque simulation (avec labo.css).
   cursor: pointer;
 }
 
+.carnet-commandes { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 4px; }
+
 .carnet-message { margin: 4px 0 0; font: 500 21px/1.15 var(--main); }
 .carnet-message.faux { color: var(--stylo-rouge); }
 .carnet-message.juste { color: var(--stylo-vert); }
@@ -664,11 +666,23 @@ Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement vi
   cursor: pointer;
 }
 
+.ticket-pied {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  padding-top: 4px;
+  height: 30px;
+}
+
+.ticket.plie .ticket-pied {
+  display: none;
+}
+
 .ticket.deborde::after {
   content: "▾ toucher pour lire la suite";
   position: absolute;
   right: 8px;
-  bottom: 2px;
+  bottom: 38px;
   padding: 0 4px;
   font: 600 10px var(--interface);
   color: #6b5300;
@@ -1027,13 +1041,15 @@ Utilisé par : toutes les simulations (Labo.materiaux), avant de dessiner.
   <script>
 /*
 Rôle : scène fixe de 1024 × 640 px mise à l'échelle de l'écran (même mise en page sur téléphone, portable, TBI),
-       avec zoom à deux doigts jusqu'à 5×, molette, déplacement de la vue zoomée et double-tap pour revenir.
+       avec zoom à deux doigts jusqu'à 5×, molette, déplacement de la vue zoomée ; double-clic ou double-toucher sur le
+       fond : la scène s'approche ×2 autour du point (proportions gardées), puis revient à la scène entière.
 Reçoit : l'écran (#ecran, tout l'espace disponible) et l'étage (#etage, la scène de 1024 × 640).
-Produit : Labo.scene : vers_scene(evenement) -> coordonnées dans la scène ; annonce « pince » au début d'un zoom.
+Produit : Labo.scene : vers_scene(evenement) -> coordonnées dans la scène ; zoom() ; basculer(evenement) ;
+         annonce « pince » au début d'un zoom.
 Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
 */
 (function (L) {
-  const ZOOM_MAX = 5;
+  const ZOOM_MAX = 5, ZOOM_APPROCHE = 2;
   const vue = { base: 1, zoom: 1, gauche: 0, haut: 0 };
   const doigts = new Map();
   let pince = null;
@@ -1149,7 +1165,7 @@ Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
       window.addEventListener("pointerup", doigt_leve);
       window.addEventListener("pointercancel", doigt_leve);
       ecran.addEventListener("wheel", molette, { passive: false });
-      ecran.addEventListener("dblclick", (e) => { if (!e.labo_pris) { vue.zoom = 1; appliquer(); } });
+      ecran.addEventListener("dblclick", (e) => { if (!e.labo_pris && e.target instanceof SVGElement) L.scene.basculer(e); });
       document.addEventListener("gesturestart", (e) => e.preventDefault());
       window.addEventListener("resize", ajuster);
       ajuster();
@@ -1161,6 +1177,14 @@ Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
       return { x: (p.x - vue.gauche) / echelle, y: (p.y - vue.haut) / echelle };
     },
     pince_active: () => pince !== null,
+    zoom: () => vue.zoom,
+    basculer(e) {
+      // Double-clic (ou double-toucher, tactile.js) sur le fond : approche ×2 autour du point, ou revient à la scène entière.
+      if (performance.now() - (vue.bascule || 0) < 500) return;
+      vue.bascule = performance.now();
+      const p = position_ecran(e);
+      zoomer_autour(vue.zoom > 1.01 ? 1 : ZOOM_APPROCHE, p.x, p.y);
+    },
   };
 })(window.Labo);
 </script>
@@ -1253,6 +1277,55 @@ Utilisé par : les objets de toutes les simulations, tablette.js, carnet.js.
       L.placer(element, de.x + (vers.x - de.x) * k, de.y + (vers.y - de.y) * k);
     }, fin);
   };
+})(window.Labo);
+</script>
+  <script>
+/*
+Rôle : commande au doigt plus facile sur téléphone et tablette : doigt « aimanté » (un toucher un peu à côté d'un petit
+       objet manipulable le saisit quand même) ; double-toucher sur le fond : la scène s'approche ×2 ou revient
+       (Labo.scene.basculer : la scène garde sa taille fixe de 1024 × 640 et ses proportions). Rien ne change à la souris.
+Reçoit : les gestes du doigt sur l'écran (#ecran) ; Labo.scene (zoom).
+Produit : les deux gestes, branchés au chargement de la page.
+Utilisé par : la page de chaque simulation (après scene.js et glisser.js).
+*/
+(function (L) {
+  const PORTEES_PX = [8, 16, 24], DIRECTIONS = 12, ZOOM_SANS_AIMANT = 1.5, DOUBLE_MS = 350, DOUBLE_PX = 30;
+  let dernier = null;
+
+  function objet_proche(x, y) {
+    // Cherche, en cercles de plus en plus grands autour du doigt, un point qui tombe sur un objet manipulable.
+    for (const r of PORTEES_PX) for (let k = 0; k < DIRECTIONS; k++) {
+      const a = (k * 2 * Math.PI) / DIRECTIONS, el = document.elementFromPoint(x + r * Math.cos(a), y + r * Math.sin(a));
+      if (el instanceof SVGElement && el.closest(".glissable")) return el;
+    }
+    return null;
+  }
+
+  function aimanter(e) {
+    // Doigt posé sur le fond tout près d'un objet (scène peu agrandie) : le geste est donné à cet objet.
+    if (!e.isTrusted || e.pointerType !== "touch" || !(e.target instanceof SVGElement) || e.target.closest(".glissable")) return;
+    if (L.scene.zoom() > ZOOM_SANS_AIMANT || L.scene.pince_active()) return;
+    const el = objet_proche(e.clientX, e.clientY);
+    if (!el) return;
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    const champs = ["pointerId", "pointerType", "isPrimary", "clientX", "clientY", "screenX", "screenY", "width", "height", "pressure"];
+    const copie = Object.fromEntries(champs.map((c) => [c, e[c]]));
+    el.dispatchEvent(new PointerEvent("pointerdown", { ...copie, bubbles: true, cancelable: true, composed: true, button: 0, buttons: 1 }));
+  }
+
+  function double_toucher(e) {
+    // Deux touchers rapides au même endroit du fond (aucun objet saisi) : la scène s'approche, ou revient.
+    if (e.pointerType !== "touch" || e.labo_pris || !(e.target instanceof SVGElement)) return;
+    const t = performance.now();
+    if (dernier && t - dernier.t < DOUBLE_MS && Math.hypot(e.clientX - dernier.x, e.clientY - dernier.y) < DOUBLE_PX) {
+      L.scene.basculer(e);
+      dernier = null;
+    } else dernier = { t, x: e.clientX, y: e.clientY };
+  }
+
+  window.addEventListener("pointerdown", aimanter, true);
+  window.addEventListener("load", () => document.getElementById("ecran")?.addEventListener("pointerdown", double_toucher));
 })(window.Labo);
 </script>
   <script>
@@ -1846,7 +1919,8 @@ Utilisé par : la page de chaque simulation, missions.js (feuille de la mission)
 Rôle : carnet de laboratoire posé sur la paillasse : un toucher l'ouvre ; il montre les missions (marque-pages),
        l'objectif, les étapes cochées au fur et à mesure, la question à laquelle répondre et le tampon de réussite.
 Reçoit : l'étage de la scène ; les annonces « missions » ; les réponses de l'élève (choix ou nombre).
-Produit : Labo.carnet : creer(), ouvrir(), fermer() ; appelle Labo.missions.repondre() et Labo.missions.aller().
+Produit : Labo.carnet : creer(), ouvrir(), fermer() ; appelle Labo.missions.repondre(), aller() et recommencer()
+         (boutons « Recommencer » et « Passer à la mission suivante », même si la mission n'est pas finie).
 Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules, ordre des choix).
 */
 (function (L) {
@@ -1881,13 +1955,12 @@ Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules,
   }
 
   function marque_pages(page, e) {
-    // Un marque-page par mission ; les missions pas encore ouvertes sont grisées.
+    // Un marque-page par mission ; on peut ouvrir n'importe quelle mission, même si la précédente n'est pas finie.
     const rangee = L.html("div", { class: "carnet-marques" }, page);
     e.missions.forEach((m, i) => {
       if (e.seule !== null && i !== e.seule) return;
       const b = L.html("button", { type: "button", class: "carnet-marque" + (m.accomplie ? " accomplie" : "") }, rangee, e.seule !== null ? "Mission" : `Mission ${i + 1}`);
       b.setAttribute("aria-pressed", String(i === e.vue));
-      if (i > e.courante) b.disabled = true;
       b.addEventListener("click", () => L.missions.aller(i));
     });
   }
@@ -1903,6 +1976,16 @@ Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules,
       if (message) L.ecrire_riche(L.html("p", { class: "carnet-message " + (message.juste ? "juste" : "faux"), role: "status" }, li), message.texte);
       else if (etape.aide_geste) L.ecrire_riche(L.html("p", { class: "carnet-astuce" }, li), etape.aide_geste);
     });
+  }
+
+  function commandes(page, e) {
+    // « Recommencer » (laboratoire remis à l'état de départ) et, si la mission n'est pas finie, « Passer à la mission suivante ».
+    const rangee = L.html("div", { class: "carnet-commandes" }, page);
+    const refaire = L.html("button", { type: "button", class: "carnet-bouton" }, rangee, "Recommencer");
+    refaire.addEventListener("click", () => L.missions.recommencer());
+    if (e.seule !== null || e.vue + 1 >= e.missions.length || e.missions[e.vue].accomplie) return;
+    const suite = L.html("button", { type: "button", class: "carnet-bouton" }, rangee, `Passer à la mission ${e.vue + 2}`);
+    suite.addEventListener("click", () => L.missions.aller(e.vue + 1));
   }
 
   function fin_de_mission(page, e) {
@@ -1937,6 +2020,7 @@ Utilisé par : la page de chaque simulation (avec carnet_ecriture.js : formules,
     }
     etapes(c.page, m, message);
     if (m.accomplie) fin_de_mission(c.page, e);
+    commandes(c.page, e);
   }
 
   L.carnet = {
@@ -2086,7 +2170,8 @@ Rôle : ticket jaune du laboratoire en mode cours (le carnet est retiré) : il m
        suite » : un appui l'agrandit le temps de lire (appuis successifs : agrandi, plié, à sa place).
        Les étapes « question » ne sont pas comptées : c'est le professeur IA qui les pose.
 Reçoit : l'étage de la scène ; les annonces « missions » (Labo.missions.etat()).
-Produit : Labo.ticket.creer(etage) : le ticket posé en haut à gauche de la scène, au-dessus du décor.
+Produit : Labo.ticket.creer(etage) : le ticket posé en haut à gauche de la scène, au-dessus du décor ; en bas,
+         « Recommencer » et « Mission suivante » (même si la mission n'est pas finie).
 Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, quand Labo.mode_prof est vrai).
 */
 (function (L) {
@@ -2141,6 +2226,16 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
     suite.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.aller(e.vue + 1); });
   }
 
+  function pied(e) {
+    // Bas du ticket : « Recommencer » (laboratoire remis à l'état de départ) et « Mission suivante » s'il y en a une.
+    tk.pied.replaceChildren();
+    const refaire = L.html("button", { type: "button", class: "ticket-bouton" }, tk.pied, "Recommencer");
+    refaire.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.recommencer(); });
+    if (e.seule !== null || e.vue + 1 >= e.missions.length || e.missions[e.vue].accomplie) return;
+    const suite = L.html("button", { type: "button", class: "ticket-bouton" }, tk.pied, "Mission suivante");
+    suite.addEventListener("click", (ev) => { ev.stopPropagation(); L.missions.aller(e.vue + 1); });
+  }
+
   function etape(e, m) {
     // Étape en cours : consigne, astuce de geste, message de vérification.
     const { total, rang } = gestes(m), en_cours = m.etapes[m.etape], message = e.messages[m.id];
@@ -2164,6 +2259,7 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
     tk.element.classList.toggle("grand", tk.etat === "grand");
     if (m.accomplie) fin(e, m);
     else etape(e, m);
+    pied(e);
     ajuster(m);
   }
 
@@ -2173,6 +2269,7 @@ Utilisé par : demarrage.js (à la place du carnet et des pense-bêtes du mur, q
       tk.element = L.html("section", { class: "ticket", "aria-label": "Consignes de l'expérience", "aria-live": "polite" }, etage);
       L.html("div", { class: "ticket-scotch" }, tk.element);
       tk.contenu = L.html("div", { class: "ticket-contenu" }, tk.element);
+      tk.pied = L.html("div", { class: "ticket-pied" }, tk.element);
       L.glissable(tk.element, {
         debut: (e) => (e.target.closest("button") ? null : { ...tk.pos }),
         deplacer: (p) => {
@@ -2304,8 +2401,10 @@ Rôle : moteur des missions du laboratoire : étape en cours, vérification auto
        questions du carnet, passage d'une paillasse à l'autre, messages envoyés à la page du professeur.
 Reçoit : la définition des missions (titre, objectif, paillasse, entêtes du tableur, étapes) et le groupe caméra ; l'adresse
          de la page peut finir par « #mission=<id> » : seule cette mission est proposée (observation courte dans un cours) ;
-         « &prof=1 » (ajouté par l'application) : mode cours, le professeur IA pose les questions et explique.
-Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero), faits(), envoyer_releve(), etat() ;
+         « &prof=1 » (ajouté par l'application) : mode cours, le professeur IA pose les questions et explique ;
+         « depart=<id> » (écrit par « Recommencer ») : toutes les missions, en reprenant à celle-ci.
+Produit : Labo.missions : demarrer(), noter(cle, valeur), repondre(valeur), aller(numero) (même si la précédente n'est pas finie),
+         recommencer(), faits(), envoyer_releve(), etat() ;
          Labo.mode_prof (vrai en mode cours : pas de carnet, les étapes « question » passent toutes seules,
          les mesures partent au professeur : message « releve ») ;
          annonce « missions » à chaque changement ; postMessage { source: "laboratoire", type, ... } au parent.
@@ -2363,9 +2462,10 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
   function mission_seule() {
     // Mission demandée par l'adresse (#mission=<id>) : on l'ouvre directement, sans les autres ; caméra posée sur sa paillasse.
     const id = (window.location.hash.match(/mission=([a-z0-9_]+)/) || [])[1], n = etat.missions.findIndex((m) => m.id === id);
-    if (n < 0) return;
-    Object.assign(etat, { seule: n, courante: n, vue: n });
-    camera.dataset.x = -L.LARGEUR * mission(n).paillasse;
+    const reprise = (window.location.hash.match(/[#&]depart=([a-z0-9_]+)/) || [])[1], d = etat.missions.findIndex((m) => m.id === reprise);
+    if (n < 0 && d < 0) return;
+    Object.assign(etat, n >= 0 ? { seule: n, courante: n, vue: n } : { courante: d, vue: d });
+    camera.dataset.x = -L.LARGEUR * mission(etat.vue).paillasse;
     camera.setAttribute("transform", `translate(${camera.dataset.x} 0)`);
   }
 
@@ -2411,12 +2511,20 @@ Utilisé par : la page de chaque simulation, carnet.js, tablette.js.
       verifier();
     },
     aller(numero) {
-      // Ouvre une mission déjà accessible et va à sa paillasse.
-      if (numero > etat.courante || (etat.seule !== null && numero !== etat.seule)) return;
+      // Ouvre une mission et va à sa paillasse, même si la précédente n'est pas finie (l'élève choisit).
+      if (!mission(numero) || (etat.seule !== null && numero !== etat.seule)) return;
+      etat.courante = Math.max(etat.courante, numero);
       etat.vue = numero;
       etat.debut[mission(numero).id] ??= performance.now();
       deplacer_camera(numero);
-      L.annoncer("missions", L.missions.etat());
+      verifier();
+    },
+    recommencer() {
+      // Recharge le laboratoire (tout revient à l'état de départ) et reprend à la mission affichée.
+      const m = mission(), reglages = window.location.hash.replace(/^#/, "").split("&").filter((r) => r && !r.startsWith("depart="));
+      if (etat.seule === null) history.replaceState(null, "", "#" + [...reglages, `depart=${m.id}`].join("&"));
+      prevenir_parent("mission_recommencee", { mission: m.id });
+      window.location.reload();
     },
     faits() {
       // Les faits notés par les paillasses (lecture seule, pour le relevé).

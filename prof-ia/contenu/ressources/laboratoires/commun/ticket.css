@@ -75,11 +75,23 @@ Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement vi
   cursor: pointer;
 }
 
+.ticket-pied {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  padding-top: 4px;
+  height: 30px;
+}
+
+.ticket.plie .ticket-pied {
+  display: none;
+}
+
 .ticket.deborde::after {
   content: "▾ toucher pour lire la suite";
   position: absolute;
   right: 8px;
-  bottom: 2px;
+  bottom: 38px;
   padding: 0 4px;
   font: 600 10px var(--interface);
   color: #6b5300;

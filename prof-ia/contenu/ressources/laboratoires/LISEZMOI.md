@@ -917,3 +917,15 @@ explique, à partir des mesures et des figures de l'élève.
   `assez_enregistre(points)`), `feuille_enregistrement.js` (numéros sur le rayon seulement pour un solide à axe fixe),
   `poste_coussin_air.js` (option `departs` : où ranger un outil). Régression : `tc_meca2_a2_repere` (30 points, numéros M
   inchangés).
+
+## Commande au doigt, missions à recommencer ou à passer (19/11/2026)
+
+- La scène garde sa taille fixe de 1024 × 640 px, mise à l'échelle d'un bloc (rien n'est étiré ni recadré).
+- Nouveau fichier commun `tactile.js` (ajouté aux 167 pages, juste après `glisser.js`) : doigt aimanté (un toucher jusqu'à
+  24 px à côté d'un petit objet le saisit quand même) ; double-toucher sur le fond : la scène s'approche ×2 autour du point,
+  un autre double-toucher la remet entière. À la souris, le double-clic sur le fond fait de même (`scene.js`).
+- Missions (`missions.js`, `carnet.js`, `ticket.js`) : on peut ouvrir une mission même si la précédente n'est pas finie
+  (marque-pages du carnet, bouton « Passer à la mission N ») ; « Recommencer » (carnet, et ticket jaune du mode cours)
+  recharge le laboratoire à son état de départ et reprend à la mission affichée (adresse « depart=<id> »).
+- Test : `node test_tactile_missions.js` dans `.claude/skills/laboratoire-realiste/outils/` (téléphone simulé).
+
