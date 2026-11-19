@@ -54,3 +54,9 @@ Utilisé par : client/demo_tableau.html (et plus tard la page de classe).
   margin: 0;
   font-size: var(--taille-petite);
 }
+
+/* Laboratoire : la mission demandée est réussie, la consigne invite à revenir au cours. */
+.cadre-media-barre.mission-accomplie .cadre-media-consigne {
+  font-weight: 700;
+  color: var(--tableau);
+}

@@ -2,7 +2,7 @@
 Rôle : tablette numérique posée sur la paillasse : un toucher la prend en main (elle se redresse en 3D),
        le bouton rond la repose ; on la déplace par son bord. Deux applications : Tableur et Graphique.
 Reçoit : l'étage de la scène, les missions (une feuille de calcul par mission), où elle est posée.
-Produit : Labo.tablette : creer(), feuille(id), lever(), poser().
+Produit : Labo.tablette : creer(), feuille(id), courbe(), page_courbe(), lever(), poser().
 Utilisé par : la page de chaque simulation, missions.js (feuille de la mission).
 */
 (function (L) {
@@ -86,6 +86,14 @@ Utilisé par : la page de chaque simulation, missions.js (feuille de la mission)
     feuille(id = t.vue) {
       // Feuille de calcul d'une mission (par défaut celle de la mission affichée).
       return t.feuilles[id].feuille;
+    },
+    courbe() {
+      // Application « Graphique » (pour le relevé envoyé au professeur).
+      return t.courbe;
+    },
+    page_courbe() {
+      // Page HTML du graphique (pour copier la figure).
+      return t.pages.courbe;
     },
     lever() {
       // Prend la tablette en main.

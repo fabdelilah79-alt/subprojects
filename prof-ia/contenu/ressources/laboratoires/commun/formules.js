@@ -1,12 +1,14 @@
 /*
-Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2...) sans jamais exécuter de code.
+Rôle : calculer les formules du tableur de la tablette (=B2/A2, =9,81*A3, =(B2-B3)^2, =COS(A2*PI()/180), =LN(B2)...) sans jamais
+       exécuter de code. Fonctions : RACINE, ABS, PI, COS et SIN (angle en radians, comme dans un tableur ordinaire),
+       LN (logarithme népérien, d'un nombre positif) et EXP.
 Reçoit : le texte d'une formule et une fonction qui lit la valeur d'une cellule (« A2 » -> nombre).
 Produit : Labo.formules.calculer(texte, lire) -> nombre (ou lève une erreur « #ERREUR ») ;
          Labo.formules.decaler(texte, lignes) -> la formule recopiée plus bas (A2 -> A3).
 Utilisé par : tableur.js.
 */
 (function (L) {
-  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI)|([-+*/^();]))/iy;
+  const JETON = /\s*(?:(\d+(?:[.,]\d+)?(?:e[+-]?\d+)?)|([A-Za-z]+\d+)|(RACINE|ABS|PI|COS|SIN|LN|EXP)|([-+*/^();]))/iy;
 
   function decouper(texte) {
     // Découpe la formule en jetons : nombres, cellules, fonctions, opérateurs.
@@ -34,12 +36,13 @@ Utilisé par : tableur.js.
       const j = jetons[i++] || {};
       if (j.nombre !== undefined) return j.nombre;
       if (j.cellule) return lire(j.cellule);
-      if (j.fonction === "PI") return Math.PI;
+      if (j.fonction === "PI") { if (voir().signe === "(" && (jetons[i + 1] || {}).signe === ")") i += 2; return Math.PI; }
       if (j.fonction) {
         if (!prendre("(")) throw new Error("#ERREUR");
         const v = somme();
         if (!prendre(")")) throw new Error("#ERREUR");
-        return j.fonction === "RACINE" ? Math.sqrt(v) : Math.abs(v);
+        if (j.fonction === "LN" && !(v > 0)) throw new Error("#ERREUR");
+        return { RACINE: Math.sqrt, ABS: Math.abs, COS: Math.cos, SIN: Math.sin, LN: Math.log, EXP: Math.exp }[j.fonction](v);
       }
       if (j.signe === "(") { const v = somme(); if (!prendre(")")) throw new Error("#ERREUR"); return v; }
       throw new Error("#ERREUR");

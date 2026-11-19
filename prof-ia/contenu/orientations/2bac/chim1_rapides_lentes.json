@@ -84,6 +84,9 @@
       ],
       "orientations": [
         "Interprétation microscopique qualitative uniquement ; on peut l'illustrer par une simulation."
+      ],
+      "activites": [
+        "Modéliser au niveau microscopique (chocs efficaces) l'influence de la concentration et de la température, à l'aide d'un logiciel de simulation."
       ]
     }
   ]

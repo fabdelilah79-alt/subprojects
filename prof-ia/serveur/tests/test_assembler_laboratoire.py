@@ -47,3 +47,16 @@ def test_vraies_simulations():
     assert dossiers
     for dossier in dossiers:
         assert not EXTERNE.search(assembler(dossier)), dossier.name
+
+
+def test_chaque_laboratoire_est_au_manifeste():
+    """Chaque simulation de sources/ a ses missions dans contenu/manifeste.json (une fiche par mission, ouverte par
+    « #mission=<id> »), avec son chapitre et ses objectifs."""
+    import json
+    contenu = chemin_projet("contenu")
+    fiches = json.loads((contenu / "manifeste.json").read_text(encoding="utf-8"))["ressources"]
+    for dossier in sorted((contenu / "ressources" / "laboratoires" / "sources").iterdir()):
+        missions = [r for r in fiches if r.get("laboratoire") == dossier.name]
+        assert missions, f"{dossier.name} absent du manifeste"
+        for r in missions:
+            assert r["chapitre"] and r["objectifs"] and r["fichier"].startswith(f"laboratoires/{dossier.name}.html#mission=")

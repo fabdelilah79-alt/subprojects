@@ -116,11 +116,19 @@
         "Temps caractéristique : abscisse de l'intersection de la tangente à l'origine avec l'asymptote vlim.",
         "Méthode numérique itérative (Euler) : discuter l'importance du pas et la validité du modèle.",
         "Particules chargées : appliquer ΣF = m·a ou ΣF = dp/dt (points matériels) ; oscilloscope ; spectrographe de masse, cyclotron.",
-        "Satellites : se limiter aux mouvements circulaires uniformes ; satellite géostationnaire ; simulations de mise en orbite."
+        "Satellites : se limiter aux mouvements circulaires uniformes ; satellite géostationnaire ; simulations de mise en orbite.",
+        "Satellites : référentiel héliocentrique pour la Terre et les planètes, géocentrique pour les satellites de communication et de télévision ; le satellite géostationnaire est immobile par rapport à la Terre.",
+        "Loi de gravitation universelle donnée pour des corps à répartition sphérique de masse."
       ],
       "hors_programme": [
         "Particule chargée dont la vitesse initiale n'est pas perpendiculaire au champ magnétique.",
         "Orbites elliptiques (étude dynamique)."
+      ],
+      "activites": [
+        "Exploiter des chronophotographies de chutes verticales de billes de même forme et de masses différentes dans deux liquides : vitesse limite, régimes initial et permanent, temps caractéristique, influence de la masse, modélisation de la force de frottement.",
+        "Observer la trajectoire d'électrons dans un champ électrostatique uniforme (E parallèle puis perpendiculaire à la vitesse initiale) ; influence de la valeur de E sur la déviation.",
+        "Observer la trajectoire d'électrons dans un champ magnétique uniforme perpendiculaire à leur vitesse initiale.",
+        "Documents pour présenter les référentiels ; textes historiques ; logiciels de simulation de la mise en orbite et des lois de Kepler."
       ]
     }
   ]

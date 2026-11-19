@@ -1,13 +1,15 @@
 /*
 Rôle : faire fonctionner la classe : jouer les parties de l'élève l'une après l'autre, avec la main levée.
 Reçoit : le pseudonyme de la séance ; les réglages du tableau, le manifeste et les parties préparées (via api.js).
-Produit : le cours au tableau ; les événements partie_commencee, partie_terminee, retour_onglet ;
+Produit : le cours au tableau ; les événements partie_commencee, partie_terminee, retour_onglet ; après un laboratoire,
+          l'exploitation des mesures de l'élève (exploitation.js) ;
           entre deux parties, une attente utile si la suivante n'est pas prête ; à la fin, le questionnaire de fin.
 Utilisé par : client/classe.html.
 */
 import { envoyer_evenement, lire_etat_parties, lire_manifeste, lire_options_accueil, lire_partie_eleve,
   lire_reglages_tableau } from "./api.js";
 import { attendre_partie } from "./classe_attente.js";
+import { creer_exploitation } from "./exploitation.js";
 import { creer_main_levee } from "./interaction/main_levee.js";
 import { creer_prediction } from "./interaction/prediction.js";
 import { creer_voix } from "./lecteur/audio.js";
@@ -66,8 +68,9 @@ async function preparer(pseudonyme) {
   const main_levee = creer_main_levee(pseudonyme, voix, afficher_texte_dit, () => cours, signaler);
   const executants = [tableau, creer_cadre_media(planche, reglages, manifeste, signaler),
     creer_prediction(planche, voix, signaler, afficher_texte_dit)];
-  const contexte = { executants, voix, reglages, horloge, rappels: creer_rappels(cours, nombre),
-    entre_beats: () => main_levee.repondre(horloge) };
+  const exploitation = creer_exploitation(pseudonyme, manifeste, options.exploitation, afficher_texte_dit, signaler);
+  const entre_beats = async (index, beat) => { await main_levee.repondre(horloge); await exploitation.apres_beat(cours, index, beat); };
+  const contexte = { executants, voix, reglages, horloge, rappels: creer_rappels(cours, nombre), entre_beats };
   return { contexte, cours, nombre, main_levee, intervalle_s: options.intervalle_suivi_s };
 }
 
@@ -82,7 +85,7 @@ async function faire_cours(pseudonyme) {
     etat.textContent = `Partie ${numero} sur ${nombre}`;
     await attendre_partie(pseudonyme, numero, planche, precedente, intervalle_s);
     const partition = await lire_partie_eleve(pseudonyme, numero);
-    Object.assign(cours, { partie: numero, deja: [] });
+    Object.assign(cours, { partie: numero, deja: [], partition });
     signaler("partie_commencee", { partie: numero, source: partition.generation.source });
     await creer_lecteur(partition, contexte).jouer();
     signaler("partie_terminee", { partie: numero });

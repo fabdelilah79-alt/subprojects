@@ -1,12 +1,14 @@
 /*
 Rôle : scène fixe de 1024 × 640 px mise à l'échelle de l'écran (même mise en page sur téléphone, portable, TBI),
-       avec zoom à deux doigts jusqu'à 5×, molette, déplacement de la vue zoomée et double-tap pour revenir.
+       avec zoom à deux doigts jusqu'à 5×, molette, déplacement de la vue zoomée ; double-clic ou double-toucher sur le
+       fond : la scène s'approche ×2 autour du point (proportions gardées), puis revient à la scène entière.
 Reçoit : l'écran (#ecran, tout l'espace disponible) et l'étage (#etage, la scène de 1024 × 640).
-Produit : Labo.scene : vers_scene(evenement) -> coordonnées dans la scène ; annonce « pince » au début d'un zoom.
+Produit : Labo.scene : vers_scene(evenement) -> coordonnées dans la scène ; zoom() ; basculer(evenement) ;
+         annonce « pince » au début d'un zoom.
 Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
 */
 (function (L) {
-  const ZOOM_MAX = 5;
+  const ZOOM_MAX = 5, ZOOM_APPROCHE = 2;
   const vue = { base: 1, zoom: 1, gauche: 0, haut: 0 };
   const doigts = new Map();
   let pince = null;
@@ -122,7 +124,7 @@ Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
       window.addEventListener("pointerup", doigt_leve);
       window.addEventListener("pointercancel", doigt_leve);
       ecran.addEventListener("wheel", molette, { passive: false });
-      ecran.addEventListener("dblclick", (e) => { if (!e.labo_pris) { vue.zoom = 1; appliquer(); } });
+      ecran.addEventListener("dblclick", (e) => { if (!e.labo_pris && e.target instanceof SVGElement) L.scene.basculer(e); });
       document.addEventListener("gesturestart", (e) => e.preventDefault());
       window.addEventListener("resize", ajuster);
       ajuster();
@@ -134,5 +136,13 @@ Utilisé par : glisser.js, tablette.js, carnet.js et toutes les simulations.
       return { x: (p.x - vue.gauche) / echelle, y: (p.y - vue.haut) / echelle };
     },
     pince_active: () => pince !== null,
+    zoom: () => vue.zoom,
+    basculer(e) {
+      // Double-clic (ou double-toucher, tactile.js) sur le fond : approche ×2 autour du point, ou revient à la scène entière.
+      if (performance.now() - (vue.bascule || 0) < 500) return;
+      vue.bascule = performance.now();
+      const p = position_ecran(e);
+      zoomer_autour(vue.zoom > 1.01 ? 1 : ZOOM_APPROCHE, p.x, p.y);
+    },
   };
 })(window.Labo);

@@ -11,8 +11,9 @@
     "modele_repondeur": "gemini-3.8-flash-lite-tts",
     "voix": "Charon",
     "frequence_hz": 24000,
-    "gabarit_demande": "{consigne} Lis à voix haute, sans rien ajouter, le texte suivant :\n{texte}",
-    "cout_par_million_caracteres": 16
+    "gabarit_demande": "{texte}",
+    "cout_par_million_caracteres": 16,
+    "note_gabarit": "Essai réel du 13/11/2026 : gemini-3.8-flash-tts lit à voix haute toute consigne placée avant le texte (durée doublée) et refuse l'instruction système ; on n'envoie donc que le texte. Pour remettre une consigne : par exemple « {consigne} {texte} »."
   },
   "elevenlabs": {
     "modele_cours": "eleven_v4",

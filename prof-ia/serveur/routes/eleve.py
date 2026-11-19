@@ -2,7 +2,8 @@
 Rôle : routes de l'accueil de l'élève.
 Reçoit : les demandes sur /api/accueil, l'inscription (/api/eleve) et les événements (/api/evenements).
 Produit : les cours et les classes ; un pseudonyme pour chaque élève (le nom ne quitte pas le serveur) ;
-          les événements, enregistrés dans le journal de recherche (sorties/journaux/journal.sqlite).
+          les événements, enregistrés dans le journal de recherche (sorties/journaux/journal.sqlite) ; le relevé d'un
+          laboratoire (« laboratoire_releve ») est aussi rangé dans le dossier de l'élève (serveur/eleve/releves.py).
 Utilisé par : serveur/main.py ; appelé depuis client/js/api.js.
 """
 from datetime import datetime
@@ -12,7 +13,8 @@ from pydantic import BaseModel
 
 from serveur.configuration import lire_config
 from serveur.donnees import journal_recherche
-from serveur.donnees.stockage import ecrire, forme_valide
+from serveur.donnees.stockage import PseudonymeInconnu, ecrire, forme_valide
+from serveur.eleve import releves
 from serveur.eleve.pseudonymes import attribuer
 
 routeur = APIRouter(prefix="/api")
@@ -40,15 +42,27 @@ def options_accueil():
     """Renvoie les cours, les classes et l'intervalle de suivi de la préparation (pages d'attente et de classe)."""
     reglages = lire_config("application")
     return {"cours": reglages["cours"], "classes": reglages["classes"],
-            "intervalle_suivi_s": reglages["generation"]["intervalle_suivi_s"]}
+            "intervalle_suivi_s": reglages["generation"]["intervalle_suivi_s"],
+            "exploitation": {c: reglages["exploitation"][c] for c in ("attente_max_s", "phrase_attente")}}
 
 
 @routeur.post("/evenements")
 def recevoir_evenement(evenement: Evenement):
     """Reçoit un événement et l'enregistre dans le journal de recherche (sous le pseudonyme seulement)."""
     pseudonyme = evenement.pseudonyme if forme_valide(evenement.pseudonyme) else None
-    journal_recherche.ajouter(pseudonyme, evenement.type, evenement.donnees, evenement.horodatage)
+    donnees = evenement.donnees
+    if evenement.type == "laboratoire_releve" and pseudonyme:
+        donnees = ranger_releve(pseudonyme, donnees)
+    journal_recherche.ajouter(pseudonyme, evenement.type, donnees, evenement.horodatage)
     return {"recu": True}
+
+
+def ranger_releve(pseudonyme, donnees):
+    """Range le relevé dans le dossier de l'élève ; le journal en garde une copie sans la figure (rangée à part)."""
+    try:
+        return releves.ranger(pseudonyme, donnees)
+    except (releves.ReleveInvalide, PseudonymeInconnu) as erreur:
+        return {**{c: v for c, v in donnees.items() if c != "figure"}, "rangement": str(erreur)}
 
 
 @routeur.post("/eleve")

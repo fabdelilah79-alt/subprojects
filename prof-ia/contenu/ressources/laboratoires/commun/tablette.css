@@ -114,8 +114,9 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur-barre,
 .courbe-barre {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px 8px;
   margin-bottom: 6px;
   font-size: 15px;
 }
@@ -183,6 +184,10 @@ Utilisé par : la page de chaque simulation (avec labo.css).
 .tableur input:focus {
   outline: 2px solid #1f6f4a;
   outline-offset: -2px;
+}
+
+.courbe-barre .tablette-bouton {
+  white-space: nowrap;
 }
 
 .courbe-barre select {

@@ -59,7 +59,7 @@
       "type": "object",
       "required": ["type"],
       "properties": {
-        "type": { "enum": ["ecrire", "formule", "dessiner", "media", "prediction", "pause", "nouveau_tableau"] }
+        "type": { "enum": ["ecrire", "formule", "dessiner", "media", "prediction", "pause", "nouveau_tableau", "figure_eleve"] }
       },
       "allOf": [
         { "if": { "properties": { "type": { "const": "ecrire" } } }, "then": { "$ref": "#/$defs/ecrire" } },
@@ -68,7 +68,8 @@
         { "if": { "properties": { "type": { "const": "media" } } }, "then": { "$ref": "#/$defs/media" } },
         { "if": { "properties": { "type": { "const": "prediction" } } }, "then": { "$ref": "#/$defs/prediction" } },
         { "if": { "properties": { "type": { "const": "pause" } } }, "then": { "$ref": "#/$defs/pause" } },
-        { "if": { "properties": { "type": { "const": "nouveau_tableau" } } }, "then": { "$ref": "#/$defs/nouveau_tableau" } }
+        { "if": { "properties": { "type": { "const": "nouveau_tableau" } } }, "then": { "$ref": "#/$defs/nouveau_tableau" } },
+        { "if": { "properties": { "type": { "const": "figure_eleve" } } }, "then": { "$ref": "#/$defs/figure_eleve" } }
       ]
     },
     "ecrire": {
@@ -168,6 +169,18 @@
       "description": "Ouvrir un nouvel onglet de tableau. Jamais d'effacement.",
       "required": ["titre"],
       "properties": { "type": true, "titre": { "type": "string", "minLength": 1 } },
+      "additionalProperties": false
+    },
+    "figure_eleve": {
+      "description": "Montrer au tableau la figure que l'élève a tracée dans le laboratoire (graphique de sa tablette), comme une feuille fixée au tableau. Ajoutée par le code après l'observation.",
+      "allOf": [{ "$ref": "#/$defs/ancrage" }],
+      "required": ["zone", "url"],
+      "properties": {
+        "type": true, "ancre": true, "debut_s": true,
+        "zone": { "type": "string" },
+        "url": { "description": "Adresse de la figure nettoyée par le serveur.", "type": "string", "pattern": "^/api/eleve/[A-Z]+[0-9]+/releves/[a-z0-9_]+/figure\\.svg$" },
+        "legende": { "type": "string" }
+      },
       "additionalProperties": false
     }
   }

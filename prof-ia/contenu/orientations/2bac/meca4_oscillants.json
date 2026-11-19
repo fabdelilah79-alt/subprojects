@@ -118,7 +118,11 @@
         }
       ],
       "orientations": [
-        "Le solide-ressort est aussi étudié en exercice en position verticale ou inclinée."
+        "Le solide-ressort est aussi étudié en exercice en position verticale ou inclinée.",
+        "Le pendule simple est présenté comme un modèle du pendule pesant ; on donne l'expression de sa période propre."
+      ],
+      "activites": [
+        "Pendule pesant : expériences montrant l'isochronisme des petites oscillations et l'influence de l'amortissement sur l'amplitude."
       ]
     }
   ]

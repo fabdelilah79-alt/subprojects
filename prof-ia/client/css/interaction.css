@@ -34,3 +34,9 @@ Utilisé par : client/demo_tableau.html (et plus tard la page de classe).
   font-size: var(--taille-chapeau);
   font-weight: 600;
 }
+
+/* Tableau « Vos mesures » : la figure de l'élève est à droite ; la question se pose à gauche pour la laisser visible. */
+.planche:has(.page-tableau:not(.cache) .figure-eleve) .prediction {
+  right: auto;
+  left: 3%;
+}

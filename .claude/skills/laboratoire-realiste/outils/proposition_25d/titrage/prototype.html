@@ -1,0 +1,60 @@
+<!doctype html>
+<!--
+Rôle : prototype « paillasse de titrage en 2,5D, couleurs gaies » à valider par l'enseignant : décor lumineux, matériel
+       réaliste en volume, liquides avec surface ovale et ménisque, gouttes qui tombent de la burette (onde à la surface),
+       barreau aimanté qui tourne, pH qui monte. Aucun laboratoire n'est modifié : tout est dans ce dossier.
+Reçoit : rien.
+Produit : la scène 1024 × 640 animée.
+Utilisé par : l'enseignant (ouvrir ce fichier dans un navigateur).
+-->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Titrage 2,5D</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #12343b; }
+    svg { display: block; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <svg id="scene" viewBox="0 0 1024 640" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Paillasse de titrage"></svg>
+  <script src="matieres.js"></script>
+  <script src="decor.js"></script>
+  <script src="verre.js"></script>
+  <script src="appareils.js"></script>
+  <script>
+    // Assemblage de la scène, du fond vers l'avant, puis animation (gouttes, onde, barreau, pH).
+    const svg = document.getElementById("scene"), el = P.el;
+    P.matieres(svg);
+    P.decor(el("g", {}, svg));
+    const objets = el("g", {}, svg);
+    P.potence(objets, 250, 452);
+    const support = P.support_electrode(objets, 548, 452);
+    const ph = P.ph_metre(objets, 610, 500);
+    const agit = P.agitateur(objets, 360, 520);
+    const burette = P.burette(objets, { x: 435, haut: 92, bas: 372 });
+    const surface_prevue = agit.plateau.y - 100 * 0.55;
+    const becher = P.becher(objets, { x: agit.plateau.x, y: agit.plateau.y, r: 44, h: 100, niveau: 0.55 });
+    P.electrode(objets, support.bras, ph.prise, 470, support.bras.y + 6, surface_prevue, agit.plateau.y - 14);
+    P.pissette(objets, 790, 520);
+    P.flacon(objets, 900, 505);
+    const goutte = el("ellipse", { rx: 2.6, ry: 3.6, fill: "#d6eaf8", stroke: "#5d8fb3", "stroke-width": 0.6 }, objets);
+    const onde = el("ellipse", { fill: "none", stroke: "#fce4ec", "stroke-width": 1.2 }, objets);
+    let pH = 3.4;
+    function image(ms) {
+      // Une goutte toutes les 1,2 s : chute accélérée, puis petite onde ovale à la surface ; le pH monte peu à peu.
+      const t = ms / 1000, c = (t % 1.2) / 1.2, chute = Math.min(1, c / 0.45);
+      const y = burette.pointe.y + 4 + (becher.surface_y - burette.pointe.y - 4) * chute * chute;
+      goutte.setAttribute("cx", burette.pointe.x); goutte.setAttribute("cy", y); goutte.setAttribute("opacity", chute < 1 ? 1 : 0);
+      const o = Math.max(0, (c - 0.45) / 0.55), rx = 3 + 26 * o;
+      onde.setAttribute("cx", burette.pointe.x); onde.setAttribute("cy", becher.surface_y); onde.setAttribute("rx", rx); onde.setAttribute("ry", rx * P.K); onde.setAttribute("opacity", c > 0.45 ? 1 - o : 0);
+      pH = Math.min(8.6, 3.4 + t * 0.12);
+      ph.ecran.textContent = pH.toFixed(2).replace(".", ",");
+      becher.animer(t);
+      requestAnimationFrame(image);
+    }
+    requestAnimationFrame(image);
+  </script>
+</body>
+</html>

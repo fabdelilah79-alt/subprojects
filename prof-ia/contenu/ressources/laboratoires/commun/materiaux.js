@@ -47,16 +47,19 @@ Utilisé par : toutes les simulations (Labo.materiaux), avant de dessiner.
 
   function decor(defs) {
     // Mur, carrelage, paillasse, façade des placards, bois.
-    degrade(defs, "mur", [[0, "#d9dcd5"], [1, "#c5c9c1"]], 0, 1);
-    degrade(defs, "paillasse", [[0, "#4b5359"], [0.55, "#353b40"], [1, "#2a2f33"]], 0, 1);
-    degrade(defs, "bord", [[0, "#5c656c"], [1, "#22262a"]], 0, 1);
-    degrade(defs, "facade", [[0, "#8a9497"], [1, "#6c7578"]], 0, 1);
+    const a = L.ambiance();  // couleurs du décor : ambiance.js (zellige par défaut)
+    degrade(defs, "mur", [[0, a.mur[0]], [1, a.mur[1]]], 0, 1);
+    degrade(defs, "paillasse", [[0, a.paillasse[0]], [0.55, a.paillasse[1]], [1, a.paillasse[2]]], 0, 1);
+    degrade(defs, "bord", [[0, a.bord[0]], [1, a.bord[1]]], 0, 1);
+    degrade(defs, "facade", [[0, "#8a9497"], [1, "#6c7578"]], 0, 1);  // boîtiers d'appareils : toujours gris
+    degrade(defs, "placard", [[0, a.placard[0]], [1, a.placard[1]]], 0, 1);
     degrade(defs, "bois", [[0, "#b98a57"], [0.5, "#d9ab74"], [1, "#a17444"]], 0, 1);
     degrade(defs, "bois-face", [[0, "#8d6337"], [1, "#6d4a26"]], 0, 1);
     degrade(defs, "reflet", [[0, "#ffffff", 0], [0.5, "#ffffff", 0.08], [1, "#ffffff", 0]]);
     const motif = L.svg("pattern", { id: "carrelage", width: 48, height: 32, patternUnits: "userSpaceOnUse" }, defs);
-    L.svg("rect", { width: 48, height: 32, fill: "#eef0ec" }, motif);
-    L.svg("path", { d: "M0 0.5H48M0.5 0V32", stroke: "#c9cdc6", "stroke-width": 1 }, motif);
+    L.svg("rect", { width: 48, height: 32, fill: a.carreau }, motif);
+    L.svg("path", { d: "M0 0.5H48M0.5 0V32", stroke: a.joint, "stroke-width": 1 }, motif);
+    L.ambiance.motif(defs);
   }
 
   function matieres(defs) {

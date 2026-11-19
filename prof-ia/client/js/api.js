@@ -52,6 +52,11 @@ export function envoyer_evenement(type, donnees) {
   return envoyer("/api/evenements", corps);
 }
 
+export function demander_exploitation(pseudonyme, numero, ressource) {
+  // Après l'observation d'un laboratoire : les beats où le professeur exploite les mesures de l'élève (liste vide sinon).
+  return envoyer(`/api/eleve/${pseudonyme}/parties/${numero}/exploitation`, { ressource });
+}
+
 export function inscrire_eleve(nom, classe, cours) {
   // Envoie l'inscription ; le serveur renvoie un pseudonyme (le nom ne sert qu'à la correspondance).
   return envoyer("/api/eleve", { nom, classe, cours });

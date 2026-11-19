@@ -14,7 +14,8 @@ Utilisé par : toutes les simulations.
     // Mur peint, plinthe de carrelage blanc derrière le plan de travail, prise électrique.
     L.svg("rect", { x: 0, y: 0, width: L.LARGEUR, height: P.fond, fill: "url(#mur)" }, g);
     L.svg("rect", { x: 0, y: 250, width: L.LARGEUR, height: P.fond - 250, fill: "url(#carrelage)" }, g);
-    L.svg("rect", { x: 0, y: 246, width: L.LARGEUR, height: 5, fill: "#b9bdb5" }, g);
+    L.svg("rect", { x: 0, y: 246, width: L.LARGEUR, height: 5, fill: L.ambiance().plinthe }, g);
+    L.ambiance.frise(g, 251);
     const prise = L.svg("g", { transform: "translate(940 300)" }, g);
     L.svg("rect", { x: 0, y: 0, width: 44, height: 44, rx: 4, fill: "#f7f7f4", stroke: "#b8bbb4" }, prise);
     L.svg("circle", { cx: 22, cy: 22, r: 13, fill: "#e6e7e2", stroke: "#c4c7c0" }, prise);
@@ -28,9 +29,9 @@ Utilisé par : toutes les simulations.
     L.svg("rect", { x: 0, y: P.fond, width: L.LARGEUR, height: 8, fill: "#000", opacity: 0.25 }, g);
     L.svg("rect", { x: 0, y: P.fond + 20, width: L.LARGEUR, height: 90, fill: "url(#reflet)", opacity: 0.8 }, g);
     L.svg("rect", { x: 0, y: P.avant, width: L.LARGEUR, height: P.placard - P.avant, fill: "url(#bord)" }, g);
-    L.svg("rect", { x: 0, y: P.placard, width: L.LARGEUR, height: L.HAUTEUR - P.placard, fill: "url(#facade)" }, g);
+    L.svg("rect", { x: 0, y: P.placard, width: L.LARGEUR, height: L.HAUTEUR - P.placard, fill: "url(#placard)" }, g);
     for (let x = 0; x < L.LARGEUR; x += 256) {
-      L.svg("rect", { x: x + 6, y: P.placard + 6, width: 244, height: 40, fill: "none", stroke: "#5d6567", "stroke-width": 1.5 }, g);
+      L.svg("rect", { x: x + 6, y: P.placard + 6, width: 244, height: 40, fill: "none", stroke: L.ambiance().cadre_placard, "stroke-width": 1.5 }, g);
       L.svg("rect", { x: x + 108, y: P.placard + 14, width: 40, height: 6, rx: 3, fill: "url(#metal-h)" }, g);
     }
   }
@@ -79,8 +80,9 @@ Utilisé par : toutes les simulations.
       L.svg("text", { x: 1000, y: 30, "text-anchor": "end", class: "numero-paillasse" }, g).textContent = `Paillasse ${numero + 1}`;
     },
     pense_bete(g, x, y, largeur = 250, hauteur = 175) {
-      // Colle au mur une feuille jaune ; ecrire(titre, texte) y écrit la consigne à la main.
+      // Colle au mur une feuille jaune ; ecrire(titre, texte) y écrit la consigne à la main (cachée en mode cours : ticket.js).
       const feuille = L.svg("g", { transform: `translate(${x} ${y}) rotate(-1.5)`, class: "pense-bete" }, g);
+      if (L.mode_prof) feuille.style.display = "none";
       L.svg("rect", { x: 3, y: 4, width: largeur, height: hauteur, fill: "#000", opacity: 0.18, filter: "url(#flou)" }, feuille);
       L.svg("rect", { width: largeur, height: hauteur, fill: "#fbe98a" }, feuille);
       L.svg("rect", { width: largeur, height: 22, fill: "#f3dc6b" }, feuille);

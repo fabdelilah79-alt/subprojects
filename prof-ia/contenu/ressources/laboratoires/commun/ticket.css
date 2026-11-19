@@ -1,0 +1,127 @@
+/*
+Rôle : style du ticket jaune du mode cours (consignes de l'expérience) et du bouton « Envoyer au professeur » de la tablette.
+Reçoit : les variables de labo.css (--main, --encre, --stylo-rouge, --interface).
+Produit : une feuille jaune collée en haut à gauche de la scène, écrite à la main ; pliée, il ne reste que son titre.
+Utilisé par : la page de chaque simulation (ticket.js, releve.js), seulement visible en mode cours.
+*/
+.ticket {
+  position: absolute;
+  left: 22px;
+  top: 46px;
+  width: 262px;
+  max-height: 330px;
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  background: #fbe98a;
+  border-top: 22px solid #f3dc6b;
+  box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.22);
+  transform: rotate(-1.2deg);
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--encre);
+}
+
+.ticket-scotch {
+  position: absolute;
+  left: calc(50% - 30px);
+  top: -30px;
+  width: 60px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  transform: rotate(2deg);
+}
+
+.ticket-contenu {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.ticket-contenu > p {
+  margin: 0 0 calc(5px * var(--echelle, 1));
+}
+
+.ticket-titre {
+  font: 500 calc(17px * var(--echelle, 1))/1.1 var(--main);
+  color: #6b5300;
+}
+
+.ticket-texte {
+  font: 500 calc(19px * var(--echelle, 1))/1.12 var(--main);
+}
+
+.ticket-astuce {
+  font: 500 calc(16px * var(--echelle, 1))/1.1 var(--main);
+  color: #5a4a12;
+}
+
+.ticket-astuce::before {
+  content: "Astuce : ";
+}
+
+.ticket-message {
+  font: 500 calc(17px * var(--echelle, 1))/1.1 var(--main);
+  color: var(--stylo-rouge);
+}
+
+.ticket-bouton,
+.tablette-envoyer {
+  font: 600 12px var(--interface);
+  border: 1px solid var(--encre);
+  border-radius: 3px;
+  background: #fffdf2;
+  color: var(--encre);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.ticket-pied {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  padding-top: 4px;
+  height: 30px;
+}
+
+.ticket.plie .ticket-pied {
+  display: none;
+}
+
+.ticket.deborde::after {
+  content: "▾ toucher pour lire la suite";
+  position: absolute;
+  right: 8px;
+  bottom: 38px;
+  padding: 0 4px;
+  font: 600 10px var(--interface);
+  color: #6b5300;
+  background: #fbe98a;
+}
+
+.ticket.grand {
+  z-index: 5;
+  box-shadow: 4px 6px 14px rgba(0, 0, 0, 0.32);
+}
+
+.ticket.plie {
+  height: auto;
+  max-height: 64px;
+}
+
+.ticket.plie .ticket-titre {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ticket.plie .ticket-contenu > :not(.ticket-titre) {
+  display: none;
+}
+
+.tablette-envoyer {
+  margin-left: auto;
+  margin-right: 8px;
+  background: #e9f4ec;
+  border-color: #1e6b3a;
+  color: #1e6b3a;
+}
